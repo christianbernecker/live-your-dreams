@@ -1,0 +1,29 @@
+{
+  "name": "@lifeyourdreams/designsystem-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Life Your Dreams Design System Dokumentation",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "build-storybook": "storybook build",
+    "preview": "serve storybook-static"
+  },
+  "dependencies": {
+    "@lifeyourdreams/design-system": "workspace:*",
+    "@lifeyourdreams/design-system-react": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^7.6.0",
+    "@storybook/addon-docs": "^7.6.0",
+    "@storybook/addon-interactions": "^7.6.0",
+    "@storybook/react": "^7.6.0",
+    "@storybook/react-vite": "^7.6.0",
+    "storybook": "^7.6.0",
+    "serve": "^14.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0"
+  }
+}

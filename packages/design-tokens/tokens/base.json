@@ -1,0 +1,61 @@
+{
+  "color": {
+    "brand": { 
+      "primary": { "value": "#000066" }, 
+      "secondary": { "value": "#3366CC" } 
+    },
+    "semantic": {
+      "success": { "value": "#16a34a" },
+      "warning": { "value": "#f59e0b" },
+      "error":   { "value": "#dc2626" },
+      "info":    { "value": "#2563eb" }
+    },
+    "surface": { 
+      "default": { "value": "#FFFFFF" }, 
+      "elevated": { "value": "#F8FAFC" }, 
+      "overlay": { "value": "rgba(11,18,32,.6)" } 
+    }
+  },
+  "focus": { 
+    "ring": { 
+      "width": { "value": "2px" }, 
+      "color": { "value": "{color.brand.secondary.value}" } 
+    } 
+  },
+  "border": { 
+    "width": { 
+      "sm": { "value": "1px" }, 
+      "md": { "value": "2px" } 
+    } 
+  },
+  "radius": { 
+    "sm": { "value": "4px" }, 
+    "md": { "value": "8px" }, 
+    "lg": { "value": "12px" }, 
+    "xl": { "value": "16px" }, 
+    "2xl": { "value": "20px" } 
+  },
+  "shadow": {
+    "sm": { "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
+    "md": { "value": "0 4px 6px -1px rgb(0 0 0 / 0.1)" },
+    "lg": { "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)" },
+    "xl": { "value": "0 20px 25px -5px rgb(0 0 0 / 0.1)" }
+  },
+  "z": { 
+    "modal": { "value": 1000 }, 
+    "popover": { "value": 900 }, 
+    "header": { "value": 800 } 
+  },
+  "opacity": { 
+    "disabled": { "value": 0.5 } 
+  },
+  "easing": { 
+    "standard": { "value": "cubic-bezier(.2,.0,.2,1)" }, 
+    "emphasized": { "value": "cubic-bezier(.2,0,0,1)" } 
+  },
+  "chart": { 
+    "palette": { 
+      "value": ["#2563eb","#059669","#d97706","#db2777","#14b8a6","#7c3aed","#ef4444","#22c55e"] 
+    } 
+  }
+}
