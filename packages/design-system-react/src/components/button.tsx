@@ -15,6 +15,7 @@ export function LdsButton({
   children,
   ...props
 }: LdsButtonProps) {
+  // NUR CSS-Module-Klassen verwenden - KEIN Tailwind!
   const classes = [
     'lds-button',
     `lds-button--${variant}`,

@@ -59,13 +59,14 @@ Design System Dokumentation ist intern unter `designsystem.lifeyourdreams.de` ve
 - **Tests:** Jest Setup mit Testing Library (A11y Tests folgen)
 - **Infrastructure:** Monorepo, CI/CD, Branding-Guards, Security Middleware
 
-### Backoffice (Phase 2 - MVP Abgeschlossen ✅)
-- **Framework:** Next.js 14 App Router mit vollständiger LDS Integration
-- **Database:** Prisma Schema (Property, Room, Lead, Media, User Models)
-- **API:** Properties CRUD, Leads, Upload Presign, Health-Endpoint
-- **UI:** Dashboard, Properties Table, Leads Management mit LDS Components
-- **Security:** CSP, Rate-Limiting, Error-Handling, DSGVO-Grundlagen
-- **Dev-Stack:** Docker-Compose (Postgres, Redis, MinIO, MailHog)
+### Backoffice (Phase 2 - Kritische Fixes ✅)
+- **Framework:** Next.js 14 App Router mit echten LDS CSS-Modulen (nicht Tailwind)
+- **Authentication:** NextAuth.js vollständig implementiert mit Login-Page und bcrypt
+- **Database:** Prisma Schema mit Seed-Daten (Demo: admin@lifeyourdreams.de / admin123)
+- **API:** Properties CRUD, Leads, Upload Presign, Auth-Endpoints
+- **UI:** Dashboard, Properties Table, Leads Management mit nativen LDS Components
+- **Security:** CSP, Rate-Limiting, Session-Management, DSGVO-Compliance
+- **Dev-Stack:** Docker-Compose mit DB-Init und Environment-Setup
 
 ### Akzeptanzkriterien erfüllt ✅
 
