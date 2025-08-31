@@ -1,6 +1,6 @@
 'use client';
 
-import { LdsButton } from '@lifeyourdreams/design-system-react';
+import { LdsButton } from '@liveyourdreams/design-system-react';
 import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
@@ -11,7 +11,7 @@ export default function HomePage() {
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-brand mb-4">
-            Life Your Dreams
+            Live Your Dreams
           </h1>
           <p className="text-xl text-gray-600 mb-8">
             Backoffice für Immobilienvermarktung

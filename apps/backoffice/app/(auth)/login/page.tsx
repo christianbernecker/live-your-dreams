@@ -9,7 +9,7 @@ import {
   LdsCardTitle, 
   LdsInput, 
   LdsButton 
-} from '@lifeyourdreams/design-system-react';
+} from '@liveyourdreams/design-system-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -47,7 +47,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-brand">Life Your Dreams</h1>
+          <h1 className="text-3xl font-bold text-brand">Live Your Dreams</h1>
           <p className="mt-2 text-gray-600">Backoffice Anmeldung</p>
         </div>
         
@@ -97,7 +97,7 @@ export default function LoginPage() {
         
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
-            Demo-Zugang: admin@lifeyourdreams.de / admin123
+            Demo-Zugang: admin@liveyourdreams.online / admin123
           </p>
         </div>
       </div>

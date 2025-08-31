@@ -116,8 +116,8 @@ export const POST = handle(async (req: NextRequest) => {
       });
       
       await transporter.sendMail({
-        from: process.env.SMTP_FROM || 'no-reply@lifeyourdreams.local',
-        to: process.env.SALES_MAIL || 'sales@lifeyourdreams.local',
+        from: process.env.SMTP_FROM || 'no-reply@liveyourdreams.local',
+        to: process.env.SALES_MAIL || 'sales@liveyourdreams.local',
         subject: `Neuer Lead: ${property.city} ${property.postcode}`,
         text: JSON.stringify(redact({ propertyId, email, phone, name, message, ip }), null, 2)
       });

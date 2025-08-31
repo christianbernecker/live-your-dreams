@@ -4,7 +4,7 @@ import {
   LdsCardTitle, 
   LdsButton,
   LdsBadge
-} from '@lifeyourdreams/design-system-react';
+} from '@liveyourdreams/design-system-react';
 
 // Mock dashboard data
 const dashboardData = {

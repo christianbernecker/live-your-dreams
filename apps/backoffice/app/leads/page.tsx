@@ -9,7 +9,7 @@ import {
   LdsTableHeaderCell,
   LdsTableCell,
   LdsBadge
-} from '@lifeyourdreams/design-system-react';
+} from '@liveyourdreams/design-system-react';
 
 // Mock data for development
 const mockLeads = [
