@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Life Your Dreams – Business-Strategie (v15.14 Local)</title>
+  <style>
+    :root {
+      --deep-blue:#000066;
+      --royal-blue:#3366CC;
+      --accent:#E8F0FE;
+      --grey:#666666;
+      --line:#E5E7EB;
+      --text:#111;
+      --bg:#fff;
+      --maxw: 1080px;
+      --sidebar-w: 300px;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+    body{font: 16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans";}
+    a{color:var(--royal-blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .layout{display:flex;min-height:100vh}
+    .sidebar{position:sticky;top:0;align-self:flex-start;height:100vh;overflow:auto;padding:24px;border-right:1px solid var(--line);width:var(--sidebar-w);background:#F7FAFF}
+    .sidebar h2{margin:0 0 12px;font-size:18px;color:var(--deep-blue)}
+    .toc a{display:block;padding:6px 8px;border-radius:8px;color:#222}
+    .toc a.active{background:var(--accent)}
+    .content{flex:1;display:flex;justify-content:center}
+    .container{max-width:var(--maxw);width:100%;padding:32px}
+
+    /* Cover — stricter centering */
+    .cover{display:grid;place-items:center;text-align:center; padding:64px 24px 16px; row-gap:10px}
+    .cover .logo{display:flex;align-items:center;justify-content:center}
+    .cover img{width:260px;height:auto;display:block;margin:0 auto;}
+    .title{font-size:34px;color:var(--royal-blue);margin:6px 0}
+    .claim{margin:4px 0 6px; color:#222;font-size:18px}
+    .date{color:#555;margin:0}
+    hr.div{border:0;border-top:1px solid var(--line);margin:22px auto 0;max-width:820px}
+
+    /* Content */
+    h1{font-size:26px;color:var(--royal-blue);margin:44px 0 10px}
+    h2{font-size:19px;color:var(--royal-blue);margin:22px 0 8px}
+    p,li{max-width:85ch}
+    .section{padding-bottom:18px;border-bottom:1px solid var(--line);}
+    .muted{color:#666}
+
+    /* Callouts */
+    .callout{background:var(--accent);padding:12px 14px;border-radius:12px;margin:12px 0;display:flex;gap:12px;align-items:flex-start;border:1px solid #dbeafe}
+    .callout .icon{font-weight:700}
+
+    /* Business Model Canvas Grid */
+    .bmc-grid{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(4,auto);gap:2px;margin:16px 0;background:#e5e7eb;border-radius:8px;overflow:hidden}
+    .bmc-box{background:white;padding:12px;min-height:120px;border-radius:6px;margin:1px}
+    .bmc-box h3{font-size:14px;font-weight:600;color:var(--deep-blue);margin:0 0 8px;line-height:1.2}
+    .bmc-box ul{margin:0;padding:0;list-style:none;font-size:13px;line-height:1.4}
+    .bmc-box li{margin:0 0 4px;color:#374151}
+    .bmc-key-partners{grid-row:1/5;grid-column:1}
+    .bmc-key-activities{grid-row:1/2;grid-column:2}
+    .bmc-key-resources{grid-row:2/3;grid-column:2}
+    .bmc-value-prop{grid-row:1/3;grid-column:3}
+    .bmc-customer-rel{grid-row:1/2;grid-column:4}
+    .bmc-channels{grid-row:2/3;grid-column:4}
+    .bmc-customer-segments{grid-row:1/3;grid-column:5}
+    .bmc-cost-structure{grid-row:3/5;grid-column:1/4}
+    .bmc-revenue-streams{grid-row:3/5;grid-column:4/6}
+
+    /* Highlight boxes */
+    .highlight{background:#f8fafc;border-left:4px solid var(--royal-blue);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+
+    /* Brand blocks with generous whitespace (Schutzraum) */
+    .brand-logos{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;margin:14px 0 8px}
+    .logo-card{flex:1 1 420px; display:flex; align-items:center; justify-content:center; padding:28px; border:1px solid #e5e7eb; border-radius:16px; background:#fff; box-shadow:0 1px 0 rgba(0,0,0,.02)}
+    .logo-card img{height:140px; width:auto; object-fit:contain; display:block;}
+    .brand-caption{font-size:14px;color:#374151;margin-top:6px}
+
+    /* Color palette */
+    .palette{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:16px;margin:12px 0}
+    .swatch{border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+    .swatch .chip{height:72px}
+    .swatch .label{padding:10px 12px;font-size:14px}
+
+    /* Print */
+    @page { size: A4; margin: 15mm; }
+    @media print {
+      .layout{flex-direction:column}
+      .sidebar{display:none}
+      .cover{page-break-after: always;}
+      .container{padding:0}
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Inhalt</h2>
+      <nav class="toc" id="toc">
+        <a href="#ch0">0) Changelog (Kompakt)</a>
+        <a href="#ch1">1) Management Summary</a>
+        <a href="#ch2">2) Ausgangspunkt &amp; Problemdefinition</a>
+        <a href="#ch3">3) Vision &amp; Leitbild</a>
+        <a href="#ch4">4) Markt- &amp; Wettbewerbsanalyse</a>
+        <a href="#ch5">5) Value Proposition</a>
+        <a href="#ch6">6) Business Model Canvas</a>
+        <a href="#ch7">7) Markenstrategie</a>
+        <a href="#ch8">8) Rolle von Immoscout &amp; Co.</a>
+        <a href="#ch9">9) Transparenz- &amp; Datenstrategie</a>
+        <a href="#ch10">10) Customer Journey</a>
+        <a href="#ch11">11) Pricing &amp; Geschäftsmodell</a>
+        <a href="#ch12">12) Go-to-Market-Strategie</a>
+        <a href="#ch13">13) Marketing &amp; Kommunikation</a>
+        <a href="#ch14">14) Vertrauensbausteine</a>
+        <a href="#ch15">15) Organisation &amp; Rollen</a>
+        <a href="#ch16">16) Compliance &amp; Rechtsstrategie</a>
+        <a href="#ch16a">16a) Qualifizierung &amp; Launch-Voraussetzung (IHK)</a>
+        <a href="#ch17">17) Risiken &amp; Herausforderungen</a>
+        <a href="#ch18">18) KPIs &amp; Erfolgsmessung</a>
+        <a href="#ch19">19) Roadmap</a>
+        <a href="#ch20">20) Anhang / Checklisten</a>
+        <a href="#ch21">21) CI-Guidelines &amp; Designrichtlinien</a>
+        <a href="#ch22">22) Detaillierter Changelog</a>
+      </nav>
+      <small class="muted">TOC nur Ebene 1 • klickbar</small>
+    </aside>
+
+    <main class="content">
+      <div class="container">
+
+        <!-- Cover -->
+        <section class="cover">
+          <div class="logo"><img src="file:///Users/christianbernecker/life-your-dreams/CI/exports/Live_Your_Dreams_Perfect.svg" alt="Life Your Dreams Logo (Dachmarke)" /></div>
+          <h1 class="title">Life Your Dreams – Business‑Strategie</h1>
+          <p class="date">29.08.2025</p>
+          <p class="claim">Wohnträume erfüllen – fair, transparent, sicher</p>
+          <hr class="div" />
+        </section>
+
+        <!-- Content (wie v11, mit Logo-Beschreibung erweitert) -->
+
+        <section id="ch0" class="section">
+          <h1>0) Changelog (Kompakt)</h1>
+          <p class="muted">Version 15.14 (aktuell): Must-Fix Patches für rechtliche Konsistenz umgesetzt (§34c als Pivot-Option, Preis-Claims entfernt, Scout-Policy harmonisiert, AGB entschärft).</p>
+          <p class="muted">Version 13: Business Model Canvas und umfassende Rechtsstrategie integriert. Version 12: Grundstruktur und Markenarchitektur etabliert.</p>
+          <p class="muted">Detaillierter Changelog: siehe Kapitel 22</p>
+        </section>
+
+        <section id="ch1" class="section">
+          <h1>1) Management Summary</h1>
+          
+          <div class="highlight">
+            <strong>Vision:</strong> Life Your Dreams etabliert einen neuen Standard für Immobilienvermarktung durch faire Pauschalen, radikale Transparenz und digitale Convenience.
+          </div>
+
+          <h2>Geschäftsmodell</h2>
+          <p>Wir durchbrechen das traditionelle erfolgsabhängige Provisionsmodell mit einem <strong>Festpreis‑Service</strong> für Immobilienverkäufer. Anstatt 3‑6% Courtage zahlen Kunden einen transparenten Basis‑Service ab 1.000€ mit modularen Zusatzleistungen: professionelle Aufbereitung, TÜV‑Prüfung, 360°‑Rundgänge und juristische Absicherung.</p>
+
+          <h2>Marktdifferenzierung</h2>
+          <p>Portale bleiben <strong>Reichweitenkanäle</strong> mit 70%‑Präsentation, während unsere Microsite die vollständige, visuell hochwertige 100%‑Darstellung bietet. Vertrauen schaffen wir durch TÜV‑Verifizierung und anwaltliche Vertragsprüfung – inspiriert von CarNow's Transparenz‑Ansatz.</p>
+
+          <h2>Finanzielle Projektion</h2>
+          <p><strong>Finanzielle Ziele (tbd nach Pilot):</strong> Betriebskosten, Break‑Even‑Point und Deckungsbeiträge werden nach ersten Pilot‑Erfahrungen mit realen Kundenentscheidungen und Modulnutzung definiert.</p>
+
+          <h2>Rechtliche Positionierung</h2>
+          <p>Unser Festpreis‑Modell qualifiziert als <strong>Dienstleistungsvertrag</strong> (§ 611 BGB) statt klassischer Maklervertrag (§ 652 BGB). Dies reduziert rechtliche Risiken erheblich, da keine erfolgsabhängige Vergütung vorliegt. IHK‑Maklerprüfung vor Produktlaunch sichert fachliche Legitimität.</p>
+
+          <h2>Go‑to‑Market</h2>
+          <p>Pilotstart München mit lokaler Submarke "Wohnen in München", dann schrittweise Expansion. Dachmarke "Life Your Dreams" für Vertrauen und Partnerkommunikation, Submarken für SEO und lokale Nähe.</p>
+
+          <div class="highlight">
+            <strong>Nächste Meilensteine:</strong> IHK‑Maklerprüfung, TÜV‑Partnership, Pilot mit ersten 10 Objekten, MVP‑Launch Q2/2025
+          </div>
+        </section>
+
+        <section id="ch2" class="section">
+          <h1>2) Ausgangspunkt &amp; Problemdefinition</h1>
+          
+          <h2>2.1 Das Kostenproblem im deutschen Immobilienmarkt</h2>
+          <p>Maklerprovisionen in Deutschland sind mit 3,57% pro Seite (7,14% gesamt) extrem hoch. Bei einer typischen 800.000€ Immobilie entstehen Kosten von <strong>57.120€</strong> für oft fragwürdige Leistungsqualität.</p>
+          
+          <div class="highlight">
+            <strong>Kostenvergleich:</strong> Traditionelle Maklerprovision 57.120€ vs. unser Festpreis [wird nach Pilot mit realen KPIs konkretisiert]
+          </div>
+
+          <h2>2.2 Qualitätsprobleme der traditionellen Maklerbranche</h2>
+          <ul>
+            <li><strong>Intransparente Exposés:</strong> Lückenhafte Unterlagen, Verzögerungen im Prozess</li>
+            <li><strong>Fehlende visuelle Qualität:</strong> Schlechte Fotos, keine Grundrisse, unklare Nebenkosten</li>
+            <li><strong>Mangelnde Rechtssicherheit:</strong> Bedarf an neutraler, verständlicher Erläuterung</li>
+            <li><strong>Ineffiziente Koordination:</strong> Zeitersparnis durch Vorqualifizierung von Interessenten</li>
+            <li><strong>Lokale Marktkenntnis:</strong> Oft nicht transparent kommuniziert</li>
+          </ul>
+
+          <h2>2.3 Zielgruppendefinition</h2>
+          <p><strong>Primäre Zielgruppe:</strong> Immobilienverkäufer aller Demografien, die grundsätzlich ohne Maklerprovision verkaufen möchten</p>
+          <p><strong>Sekundäre Zielgruppe:</strong> Verkäufer, die Maklercourtage als unfair/unsinnig empfinden und für alternative Lösungen offen sind</p>
+          
+          <div class="highlight">
+            <strong>Keine demografische Einschränkung:</strong> Das Provisionsproblem betrifft alle Verkäufer gleichermaßen - prozentual identisch, absolut bei höheren Objektwerten noch schmerzlicher
+          </div>
+
+          <h2>2.4 Kritische Würdigung der Maklerleistung</h2>
+          <p>Selbst "günstige" Anbieter wie McMakler oder Homeday verlangen noch 1-2% Provision. Bei 800.000€ sind das immer noch 8.000-16.000€ - deutlich mehr als unser Basis‑Service [Preis wird nach Pilot definiert].</p>
+
+          <h2>2.5 Unser Lösungsansatz</h2>
+          <ul>
+            <li><strong>Modulare Objektaufbereitung:</strong> Standardisierte Prozesse, professionelle Inhalte, optionale Premium-Services</li>
+            <li><strong>Hybrid-Strategie:</strong> ImmoScout24 als Reichweitenkanal mit vollständigem Exposé, Microsite als Mehrwert mit zusätzlichen Medien</li>
+            <li><strong>Rechtliche Klarstellung:</strong> Wir sind Vermarktungsservice, kein Makler - keine Beratung, keine Haftung, nur optimale Präsentation</li>
+            <li><strong>Transparenz-First:</strong> Alle Kosten vorab bekannt, keine versteckten Gebühren, klare Leistungsabgrenzung</li>
+          </ul>
+
+          <h2>2.6 Münchener Pilot mit eigenen Objekten</h2>
+          <div class="highlight">
+            <strong>Startkapital:</strong> Zwei eigene Verkaufsobjekte als Proof of Concept - 3-Zimmer-Wohnung in Schwabing und Reihenmittelhaus in München-Aubing
+          </div>
+          <p>Diese eigenen Objekte lösen das klassische Henne-Ei-Problem jeder Plattform: Wir haben sofort Angebote und können alle Prozesse ohne Kundenrisiko perfektionieren.</p>
+        </section>
+
+        <section id="ch3" class="section">
+          <h1>3) Vision &amp; Leitbild</h1>
+          <p>„Wohnträume erfüllen – fair, transparent, sicher." Werte: Fairness, Transparenz, Sicherheit, Professionalität, Respekt.</p>
+        </section>
+
+        <section id="ch4" class="section">
+          <h1>4) Markt‑ &amp; Wettbewerbsanalyse</h1>
+          
+          <h2>4.1 Traditioneller Maklermarkt (Deutschland/Europa)</h2>
+          <p>Die Marktreife für transparente, pauschalpreisbasierte Modelle ist hoch. Europaweit unterscheiden sich Provisionshöhe, Zahlungslogik und Transparenzgrad erheblich. Unser Modell fokussiert auf <strong>Fairness</strong> (Pauschale statt Prozent), <strong>Transparenz</strong> (Datenraum) und <strong>Vertrauen</strong> (TÜV/Anwalt) und ergänzt Portale statt sie zu ersetzen.</p>
+
+          <h2>4.2 Wettbewerbslandschaft Deutschland</h2>
+          
+          <h2>Etablierte Discount-Makler</h2>
+          <ul>
+            <li><strong>McMakler:</strong> 1,5-2% Provision - bei 800k€ = 12.000-16.000€</li>
+            <li><strong>Homeday:</strong> 1,49% Provision - bei 800k€ = 11.920€</li>
+            <li><strong>ImmoVerkauf24:</strong> Vermitteln Makler mit reduzierten Provisionen</li>
+          </ul>
+
+          <div class="highlight">
+            <strong>Unser Vorteil:</strong> Selbst "günstige" 1-2% Provisionen sind deutlich teurer als unser Basis‑Service [Preis wird nach Pilot definiert]
+          </div>
+
+          <h2>4.3 Portal-Strategie: Scout24 als Reichweiten-Partner</h2>
+          <p><strong>Vollständiges Exposé auf ImmoScout24:</strong></p>
+          <ul>
+            <li>Wichtigste Objektdaten und Teaser-Bilder für Aufmerksamkeit</li>
+                          <li>Details auf unserer Objektseite verfügbar</li>
+            <li>Dort: 360°-Rundgänge, detaillierte Nachbarschaftsinfos, interaktive Grundrisse</li>
+            <li>Käufer-Magnet durch Zusatzinformationen, die nur bei uns verfügbar sind</li>
+          </ul>
+
+          <h2>4.4 Best Practice: CarNow-Transparenz für Immobilien</h2>
+          <ul>
+            <li><strong>Kostentransparenz:</strong> Kaufpreis + alle Nebenkosten (GrESt, Notar, Grundbuch) sichtbar</li>
+            <li><strong>Convenience:</strong> Self-Service Portal für Käufer, Online-Terminbuchung</li>
+            <li><strong>Vorqualifizierung:</strong> Finanzierungsbestätigung vor Besichtigung → weniger, aber relevantere Termine</li>
+            <li><strong>Omnichannel:</strong> Reibungsloser Übergang vom Portal zur Microsite zum Notartermin</li>
+          </ul>
+
+          <h2>4.5 SWOT-Analyse Life Your Dreams</h2>
+          
+          <h2>Stärken</h2>
+          <ul>
+            <li>Radikale Kosteneinsparung: deutlich günstiger als traditionelle Makler [KPI wird nach Pilot ermittelt]</li>
+            <li>Eigene Startobjekte lösen Henne-Ei-Problem</li>
+            <li>Rechtlich klare Positionierung als Vermarktungsservice</li>
+            <li>München als kaufkraftstarker, techaffiner Startmarkt</li>
+          </ul>
+
+          <h2>Schwächen</h2>
+          <ul>
+            <li>Neuer Brand ohne etabliertes Vertrauen</li>
+            <li>Keine Makler-Haftung kann manche Kunden abschrecken</li>
+            <li>Initial begrenzte Objektanzahl</li>
+          </ul>
+
+          <h2>Chancen</h2>
+          <ul>
+            <li>Provisionsschmerz steigt bei hohen Immobilienpreisen</li>
+            <li>Digitalisierungsbereitschaft nach Corona gestiegen</li>
+            <li>Käufer suchen verstärkt nach Kostentransparenz</li>
+          </ul>
+
+          <h2>Risiken</h2>
+          <ul>
+            <li>Große Portale könnten ähnliche Services integrieren</li>
+            <li>Rechtliche Regulierung des Festpreis-Modells</li>
+            <li>Qualitätsprobleme bei Skalierung</li>
+          </ul>
+        </section>
+
+        <section id="ch5" class="section">
+          <h1>5) Value Proposition</h1>
+          <h2>5.1 Verkäufer</h2>
+          <ul><li>Ersparnis vs. Courtage, klare Pauschalen.</li><li>Profi‑Aufbereitung + Microsite; Reichweite via Portale.</li><li>Strukturiert erfasste Anfragen (Selbstauskunft), schnellere Abschlüsse.</li></ul>
+          <h2>5.2 Käufer</h2>
+          <ul><li>Vollständige Infos, 360°‑Rundgänge, klare Kosten.</li><li>Gestaffelter Datenzugang; juristische Erläuterung optional.</li></ul>
+        </section>
+
+        <section id="ch6" class="section">
+          <h1>6) Business Model Canvas</h1>
+          
+          <div class="highlight">
+            Das Geschäftsmodell auf einen Blick: Neun Kernbausteine unseres Life Your Dreams‑Ansatzes für faire, transparente Immobilienvermarktung.
+          </div>
+
+          <h2>6.1 Visueller Canvas</h2>
+
+          <div class="bmc-grid">
+            <div class="bmc-box bmc-key-partners">
+              <h3>Schlüsselpartnerschaften</h3>
+              <ul>
+                <li>TÜV Süd/Nord</li>
+                <li>Anwaltskanzlei</li>
+                <li>360°‑Fotografen</li>
+                <li>ImmoScout/Immowelt</li>
+                <li>DOOH‑Anbieter</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-key-activities">
+              <h3>Schlüsselaktivitäten</h3>
+              <ul>
+                <li>SEO/SEA Marketing</li>
+                <li>360°‑Produktion</li>
+                <li>Lead‑Weiterleitung</li>
+                <li>Kundenbetreuung</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-key-resources">
+              <h3>Schlüsselressourcen</h3>
+              <ul>
+                <li>Tech‑Plattform</li>
+                <li>Content‑Engine</li>
+                <li>Partner‑Netzwerk</li>
+                <li>Marke & Submarken</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-value-prop">
+              <h3>Wertversprechen</h3>
+              <ul>
+                <li>Festpreis‑Transparenz</li>
+                <li>TÜV‑Qualität</li>
+                <li>360°‑Rundgänge</li>
+                <li>Kostentransparenz</li>
+                <li>Festpreis ohne Erfolgsdruck</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-customer-rel">
+              <h3>Kundenbeziehungen</h3>
+              <ul>
+                <li>Persönlicher Support</li>
+                <li>Self‑Service Portal</li>
+                <li>Live‑Chat</li>
+                <li>Newsletter</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-channels">
+              <h3>Kanäle</h3>
+              <ul>
+                <li>SEO/Google Ads</li>
+                <li>Microsite (100%)</li>
+                <li>Portale (70%)</li>
+                <li>Referral‑Marketing</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-customer-segments">
+              <h3>Kundensegmente</h3>
+              <ul>
+                <li>Privatverkäufer im Großraum München</li>
+                <li>typische Wertbandbreite im Großraum München</li>
+                <li>München Fokus</li>
+                <li>Qualifizierte Käufer</li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-cost-structure">
+              <h3>Kostenstruktur</h3>
+              <ul>
+                <li><strong>tbd</strong></li>
+                <li><em>nach Pilot‑Erfahrung</em></li>
+                <li><em>mit realen Betriebsdaten</em></li>
+              </ul>
+            </div>
+
+            <div class="bmc-box bmc-revenue-streams">
+              <h3>Einnahmequellen</h3>
+              <ul>
+                <li><strong>Basis‑Service: €1.000‑2.000</strong> <em>(Vollmarge)</em></li>
+                <li>+ Module: [Preise/Margen werden nach Pilot mit realen KPIs konkretisiert]</li>
+                <li><em>Durchschnittspreis: tbd nach Pilot</em></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight">
+            <strong>Kritischer Erfolgsfaktor (tbd nach Pilot):</strong> Akquisitionskosten und Deckungsbeiträge werden nach ersten realen Kundenerfahrungen und Modulnutzungs‑Mustern definiert.
+          </div>
+
+          <h2>6.2 Detaillierte Baustein‑Analyse</h2>
+
+          <h2>Kundensegmente</h2>
+          <p><strong>Primäre Zielgruppe:</strong> Privatverkäufer im Großraum München mit typischer Wertbandbreite des lokalen Marktes.</p>
+          <p><strong>Sekundäre Zielgruppe:</strong> Qualifizierte, finanzierungsbestätigte Käufer, die durch unsere Transparenz‑Strategie angelockt werden.</p>
+
+          <h2>Wertversprechen</h2>
+          <p><strong>Für Verkäufer:</strong> 96% Kostenersparnis gegenüber traditioneller Courtage bei gleichzeitiger TÜV‑Qualität und professioneller Microsite‑Präsentation.</p>
+          <p><strong>Für Käufer:</strong> Vollständige Kostentransparenz, 360°‑Rundgänge und optionale juristische Absicherung bei Vertragsabschluss.</p>
+
+          <h2>Vertriebskanäle</h2>
+          <p><strong>Akquise:</strong> SEO‑optimierte Domain muenchen‑wohnen.de, Google Ads und systematisches Referral‑Marketing über zufriedene Kunden.</p>
+          <p><strong>Präsentation:</strong> Portale mit vollständigem, eigenständig ausreichendem Exposé; Microsite liefert zusätzliche Medien/Interaktivität.</p>
+
+          <h2>Kundenbeziehungen</h2>
+          <p><strong>Verkäufer‑Support:</strong> Persönlicher Ansprechpartner mit wöchentlichen Status‑Updates bis zur Notartermin‑Anbahnung (ohne Vertragsabwicklung).</p>
+          <p><strong>Käufer‑Erlebnis:</strong> Self‑Service Portal für Objektdaten, Live‑Chat‑Support und Online‑Terminbuchung für Besichtigungen.</p>
+
+          <h2>Einnahmequellen</h2>
+          
+          <h3>Basis‑Service (€1.000‑2.000)</h3>
+          <div class="highlight">
+            <strong>Inkludierte Leistungen:</strong>
+            <ul>
+              <li>Erstellung der professionellen Microsite</li>
+              <li>Listing auf lifeyourdreams.de (Dachmarke)</li>
+              <li>Listing auf ImmoScout24.de</li>
+              <li>Listing auf <stadt>‑wohnen.de (Submarke)</li>
+              <li>Grundausstattung: Exposé‑PDF, Kontaktformular, Lead‑Weiterleitung</li>
+            </ul>
+          </div>
+
+          <h3>Modulare Zusatzleistungen (optional)</h3>
+          <div class="highlight">
+            <strong>Preise inkl. Servicemarge basierend auf Webrecherche 2024:</strong>
+          </div>
+          <ul>
+            <li><strong>Fotografie Basic:</strong> [Preis wird nach Pilot definiert]<br/>
+                <small>15‑25 bearbeitete Bilder, 2‑3h Shooting</small></li>
+            <li><strong>Fotografie Premium:</strong> [Preis wird nach Pilot definiert]<br/>
+                <small>Drohne, 360°‑Rundgang, Video</small></li>
+            <li><strong>TÜV‑Check:</strong> [Preis wird nach Pilot definiert]<br/>
+                <small>Technische Kurzprüfung, Protokoll</small></li>
+            <li><strong>Anwalts‑Review:</strong> [Preis wird nach Pilot definiert]<br/>
+                <small>Kaufvertragsentwurf, Q&A, 1‑2h Rechtsberatung</small></li>
+            <li><strong>Grundriss‑Service:</strong> [Preis wird nach Pilot definiert]<br/>
+                <small>2D/3D‑Aufbereitung/Neuerstellung</small></li>
+            <li><strong>Besichtigungsmanagement:</strong> [Preis wird nach Pilot definiert]<br/>
+                <small>Kalender‑Tool, Terminkoordination, Setup</small></li>
+          </ul>
+          <p class="muted"><strong>Marge-Transparenz:</strong> Servicemargen variieren je nach Komplexität (40‑300%) und Partnernetzwerk‑Verhandlungen. Höhere Margen bei digitalen Services kompensieren niedrigere bei Partner‑Dienstleistungen.</p>
+        </section>
+
+        <section id="ch7" class="section">
+          <h1>7) Markenstrategie</h1>
+          
+          <h2>7.1 Domain‑Architektur & Skalierungsstrategie</h2>
+          
+          <div class="highlight">
+            <strong>Entscheidung: <stadt>‑wohnen.de Struktur</strong>
+          </div>
+          
+          <h3>Geprüfte Varianten & Analyse</h3>
+          <ul>
+            <li><strong>wohnen‑in‑<stadt>.de:</strong> In Großstädten (Berlin, München, Hamburg) bereits vergeben → als stringente Struktur nicht geeignet</li>
+            <li><strong>life‑in‑<stadt>.de/.com:</strong> Teils vergeben, international aber uneinheitlich verfügbar → kein klarer Vorteil</li>
+            <li><strong><stadt>‑wohnen.de:</strong> ✅ Für alle Top‑10 Städte verfügbar, kurz, verständlich, SEO‑freundlich</li>
+          </ul>
+          
+          <h3>Gewählte Domain‑Struktur</h3>
+          <div class="highlight">
+            <strong>Top‑10 Städte Deutschland (Reservierungen geplant; Verfügbarkeit wird geprüft):</strong>
+            <ul>
+              <li>berlin‑wohnen.de</li>
+              <li>muenchen‑wohnen.de</li>
+              <li>hamburg‑wohnen.de</li>
+              <li>koeln‑wohnen.de</li>
+              <li>frankfurt‑am‑main‑wohnen.de</li>
+              <li>duesseldorf‑wohnen.de</li>
+              <li>stuttgart‑wohnen.de</li>
+              <li>leipzig‑wohnen.de</li>
+              <li>dortmund‑wohnen.de</li>
+              <li>bremen‑wohnen.de</li>
+            </ul>
+          </div>
+          
+          <h3>Strategische Vorteile</h3>
+          <ul>
+            <li><strong>Verfügbarkeit:</strong> Einheitliches Muster für alle Zielmärkte umsetzbar</li>
+            <li><strong>SEO‑Optimierung:</strong> Keyword "wohnen" + Stadtname für lokale Suchergebnisse</li>
+            <li><strong>Memorability:</strong> Kurz, prägnant, leicht zu merken und zu kommunizieren</li>
+            <li><strong>Skalierbarkeit:</strong> Klare Systematik für Expansion in weitere Städte</li>
+            <li><strong>Brand‑Konsistenz:</strong> Submarken folgen einheitlichem Schema unter Dachmarke</li>
+          </ul>
+
+          <div class="brand-logos">
+            <div class="logo-card"><img src="file:///Users/christianbernecker/life-your-dreams/CI/exports/Live_Your_Dreams_Perfect.svg" alt="Dachmarke Life Your Dreams – Blaues Icon & Wortmarke" /></div>
+            <div class="logo-card"><img src="file:///Users/christianbernecker/life-your-dreams/CI/exports/Muenchen_Wohnen_SubBrand.svg"  alt="Submarke München Wohnen – Wort-/Bildmarke mit Baseline LIVE YOUR DREAMS" /></div>
+          </div>
+          <div class="brand-caption">Links: <em>Dachmarke Life Your Dreams</em> (Vertrauen, Fairness, Transparenz). Rechts: <em>Submarke „München Wohnen"</em> (lokale Nähe &amp; SEO), sichtbar „powered by Life Your Dreams".</div>
+          <h2>7.1 Dachmarke</h2>
+          <ul><li>Emotionale Leitmarke, Qualitätsversprechen, Partnerkommunikation.</li></ul>
+          <h2>7.2 Submarken</h2>
+          <ul><li>Lokale Touchpoints (&lt;stadt&gt;‑wohnen.de), Portale mit vollständigem Exposé; Microsite als 100%-Mehrwert (zusätzliche Medien/Interaktivität).</li></ul>
+          <h2>7.3 Zusammenspiel</h2>
+          <ul><li>Visuelle Klammer (Blau‑Palette, Typo, Callouts), konsistente Badges, klare Attribution „powered by".</li></ul>
+        </section>
+
+        <section id="ch8" class="section">
+          <h1>8) Rolle von ImmoScout24 (gewerbliche Nutzung, AGB &amp; rechtlicher Rahmen)</h1>
+          <p>Dieses Kapitel beschreibt die <strong>gewerbliche Nutzung</strong> von ImmoScout24 (IS24) als Reichweitenkanal – mit Fokus auf <strong>AGB‑Vorgaben</strong>, <strong>gesetzliche Pflichtangaben</strong> und <strong>Abgrenzung zur Maklertätigkeit</strong>. <span class="muted">Hinweis: keine Rechtsberatung.</span></p>
+          
+          <h2>8.1 Grundsatz &amp; Relevanz</h2>
+          <ul>
+            <li>Für <em>gewerbliche Kund:innen</em> gelten die <strong>B2B‑AGB</strong> von ImmoScout24; Inserierende müssen Inhalte <em>sorgfältig und wahrheitsgemäß</em> zusammenstellen und Angebote <em>unverzüglich deaktivieren</em>, wenn sie nicht mehr verfügbar sind.</li>
+            <li>IS24 ist berechtigt, die Plattform weiterzuentwickeln; Verfügbarkeit kann technisch bedingt schwanken. (Planung: eigene Microsite als redundanter Informationshub beibehalten.)</li>
+          </ul>
+          
+          <h2>8.2 Pflichten gewerblicher Anbieter (B2B‑AGB, Auswahl)</h2>
+          <ul>
+            <li><strong>Seriöse Objektangebote:</strong> Es dürfen nur <em>seriöse Immobilienangebote</em> eingestellt werden; Verstöße gegen Gesetze/AGG, Rechte Dritter oder „gute Sitten" sind untersagt.</li>
+            <li><strong>Einzelanzeige = 1 Objekt:</strong> Austausch oder Mehrfachobjekte in einer Anzeige sind unzulässig; Verstöße führen zur <em>Deaktivierung ohne Abmahnung</em>.</li>
+            <li><strong>Bestand/Mandat:</strong> Inserate nur aus <em>eigenem Vermarktungsbestand</em> oder mit <em>unmittelbarem Vermarktungsauftrag</em> (Makler‑/Geschäftsbesorgungsvertrag); <em>Account‑Mitbenutzung</em> und <em>Weiterverkauf von Inseratsplätzen</em> sind untersagt; IS24 darf einen <em>Nachweis des Vermarktungsauftrags</em> verlangen.</li>
+            <li><strong>Exposé‑Format &amp; Weitergabe:</strong> Objektdaten in der <em>technisch aufbereiteten Exposé‑Form</em> nicht an Dritte (außer Interessent:innen) weitergeben.</li>
+          </ul>
+          
+          <h2>8.3 Unzulässige Angebotsgestaltungen („Missbrauch")</h2>
+          <p>IS24 qualifiziert bestimmte Muster als <em>Missbrauch</em>; sie sind untersagt und führen zu Maßnahmen (Deaktivierung/Löschung/Sperre):</p>
+          <ul>
+            <li><strong>Aufmerksamkeits‑/Werbe‑Inserate:</strong> Angebote, die primär Aufmerksamkeit generieren (Werbefläche für Anbieter/Dritte), inkl. <em>Kontaktdaten/Logo im Objektbild</em> oder Bilder ohne Objektbezug; es gelten die IS24‑<em>Image Guidelines</em>.</li>
+            <li><strong>Falsche Kategorie &amp; unvollständige Angaben:</strong> Gesuche bei „Anbieten", falsche Rubrik (z. B. Mietkauf), <em>unvollständige Angebote</em>, falsche Geozuordnung, Bilder, die nicht das Objekt zeigen; <em>E‑Mail im Freitext</em> (falsches Feld) ist unzulässig.</li>
+            <li><strong>Doppelte/„gepushte" Anzeigen:</strong> Mehrfach‑ oder Kurzzeit‑Wiederveröffentlichung desselben Objekts.</li>
+            <li><strong>Umlenkung auf entgeltliche Dienste:</strong> Weitervermittlung auf 0190/0900 etc.; Bekanntgabe von Adress‑/Kontaktdaten erst nach <em>kostenpflichtiger</em> Registrierung.</li>
+          </ul>
+          
+          <h2>8.4 Kommunikation, Inhalte &amp; Sanktionen</h2>
+          <ul>
+            <li><strong>Verantwortlichkeit &amp; Moderation:</strong> Anbieter sind für <em>Inhalte und Kommunikation</em> verantwortlich; IS24 kann Inhalte bei Verstößen <em>zurückweisen, entfernen oder deaktivieren</em> und bei wiederholter Nichtbeachtung <em>kündigen/sperren</em>.</li>
+            <li><strong>Datenbanknutzungsrechte:</strong> Mit dem Einstellen räumt der Anbieter IS24 Nutzungsrechte zur Plattformdarstellung, Analyse und (ggf.) Weiterverbreitung über Partner ein. <span class="muted">Implikation: Bild‑/Textholistik beachten.</span></li>
+          </ul>
+          
+          <h2>8.5 Gesetzliche Pflichtangaben (GEG § 87 &amp; Co.)</h2>
+          <ul>
+            <li><strong>Energiekennwerte in der Anzeige:</strong> Liegt ein Energieausweis vor, sind <em>Art des Ausweises</em>, <em>Endenergiebedarf/‑verbrauch</em>, <em>Baujahr</em>, <em>Hauptenergieträger</em> und <em>Effizienzklasse</em> bereits <em>in der Anzeige</em> zu nennen (GEG § 87).</li>
+            <li><strong>IS24‑Kontext &amp; Praxis:</strong> IS24 verweist in Ratgebern explizit auf die Pflichtangaben in Inseraten nach GEG. <span class="muted">Implikation: Wizard „blockt" Veröffentlichung ohne Pflichtfelder.</span></li>
+            <li><strong>Courtagehinweis (falls erhoben):</strong> Wird eine Maklerprovision verlangt, muss die Anzeige <em>Höhe (brutto)</em> und <em>Provisionsberechtigte:n</em> nennen (AGB‑Pflicht). <span class="muted">Unser Modell ist courtagefrei; Regel bleibt allgemein relevant.</span></li>
+          </ul>
+          
+          <h2>8.6 Abgrenzung zur Maklertätigkeit (heutiges Modell)</h2>
+          <ul>
+            <li><strong>Kein Makler, sondern Vermarktungs‑/Mediendienstleister:</strong> <em>Keine</em> Nachweis‑/Vermittlungsleistung, <em>keine</em> Preisverhandlung, <em>keine</em> Vertragsabwicklung; Vergütung als <em>Festpreis‑Service</em>, nicht erfolgsabhängig. <span class="muted">IHK‑Zertifikat zum Launch abgeschlossen; § 34c/MaBV nur bei späterem Pivot relevant.</span></li>
+            <li><strong>Konsequenz für IS24‑AGB:</strong> Einhaltung der <em>Bestand/Mandat</em>‑Pflicht (eigener Bestand oder unmittelbarer Auftrag) und der <em>Missbrauchsverbote</em>; vollständiges Exposé auf IS24 (kein „Teaser").</li>
+          </ul>
+          
+          <h2>8.7 Kurz‑Checkliste (Problemfelder, auf die wir achten)</h2>
+          <div class="highlight">
+            <strong>IS24‑Compliance‑Checkliste:</strong>
+            <ul>
+              <li>Jede IS24‑Anzeige = <strong>vollständiges Exposé</strong> (keine reinen Weiterleitungs‑/Werbe‑Inserate).</li>
+              <li><strong>Richtige Rubrik/Kategorie</strong>, keine Gesuche bei „Anbieten", keine falsche Geozuordnung/Bilder.</li>
+              <li><strong>Keine Kontaktdaten/Logos im Bild</strong>, keine E‑Mail im Freitext (falsches Feld).</li>
+              <li><strong>Keine Doppel‑/Push‑Inserate</strong>.</li>
+              <li><strong>Bestand/Mandat nachweisbar</strong> (eigener Bestand oder unmittelbarer Vermarktungsauftrag).</li>
+              <li><strong>GEG‑Pflichtangaben</strong> in der Anzeige (bei vorliegendem Ausweis).</li>
+            </ul>
+          </div>
+          
+          <p class="muted"><strong>Rechtsquellen:</strong> ImmoScout24 B2B‑AGB (insb. Ziff. 5–7), IS24‑Ratgeber zu Energieausweis/Inserat, GEG § 87 Pflichtangaben in Immobilienanzeigen. <em>Keine Rechtsberatung.</em></p>
+        </section>
+
+        <section id="ch9" class="section">
+          <h1>9) Transparenz‑ &amp; Datenstrategie</h1>
+          
+          <h2>9.1 Transparenz‑Prinzipien</h2>
+          <ul>
+            <li><strong>Transparenz‑Box:</strong> Preis + Nebenkosten.</li>
+            <li><strong>Preiskompass:</strong> Historie &amp; Vergleiche (sofern verfügbar).</li>
+            <li><strong>Datenraum:</strong> gestaffelte Freigabe; sensible Daten geschwärzt &amp; zweckgebunden.</li>
+          </ul>
+
+          <h2>9.2 KI‑Guardrails</h2>
+          <ul>
+            <li>Exposé‑Texte rein datengetrieben (JSON‑only), keine Annahmen</li>
+            <li>GEG‑Pflichtfelder als Publish‑Blocker</li>
+            <li>Bildpipeline: Zuschneiden/Komprimieren/Qualitätserkennung – keine Content‑Manipulation</li>
+            <li>Lead‑Dedupe/Spam‑Filter ohne Bonitäts‑Scoring</li>
+          </ul>
+        </section>
+
+        <section id="ch10" class="section">
+          <h1>10) Customer Journey</h1>
+          <ul><li>Online: 360°‑/Street‑View‑Rundgänge, ausführliche Medien, Q&amp;A → Vor‑Ort nur echte Interessenten.</li></ul>
+        </section>
+
+        <section id="ch11" class="section">
+          <h1>11) Pricing &amp; Geschäftsmodell</h1>
+          <ul><li>Pauschalpakete + Module (Foto/Video/3D, TÜV, Anwalt, DOOH).</li></ul>
+        </section>
+
+        <section id="ch12" class="section">
+          <h1>12) Go‑to‑Market‑Strategie</h1>
+          
+          <h2>12.1 Pilotphase München</h2>
+          <ul>
+            <li><strong>Launch‑Domain:</strong> muenchen‑wohnen.de (verfügbar, SEO‑optimiert)</li>
+            <li><strong>Proof‑of‑Concept:</strong> 2 eigene Objekte (Schwabing, Aubing)</li>
+            <li><strong>Beta‑Kunden:</strong> 5‑8 Objekte aus persönlichem Netzwerk</li>
+          </ul>
+          
+          <h2>12.2 Nationaler Rollout (Top‑10 Städte)</h2>
+          <div class="highlight">
+            <strong>Skalierungsreihenfolge nach Marktgröße & Immobilienaktivität:</strong>
+            <ol>
+              <li><strong>München:</strong> muenchen‑wohnen.de (Pilot)</li>
+              <li><strong>Berlin:</strong> berlin‑wohnen.de (größter Markt)</li>
+              <li><strong>Hamburg:</strong> hamburg‑wohnen.de (Kaufkraft)</li>
+              <li><strong>Frankfurt:</strong> frankfurt‑am‑main‑wohnen.de (Finanzmetropole)</li>
+              <li><strong>Düsseldorf:</strong> duesseldorf‑wohnen.de (NRW‑Zentrum)</li>
+              <li><strong>Stuttgart:</strong> stuttgart‑wohnen.de (Baden‑Württemberg)</li>
+              <li><strong>Köln:</strong> koeln‑wohnen.de (Rheinland)</li>
+              <li><strong>Leipzig:</strong> leipzig‑wohnen.de (Sachsen‑Hub)</li>
+              <li><strong>Dortmund:</strong> dortmund‑wohnen.de (Ruhrgebiet)</li>
+              <li><strong>Bremen:</strong> bremen‑wohnen.de (Norddeutschland)</li>
+            </ol>
+          </div>
+          
+          <h2>12.3 Domain‑Management</h2>
+          <ul>
+            <li><strong>Registrierung:</strong> Alle Top‑10 Domains präventiv sichern</li>
+            <li><strong>SEO‑Strategie:</strong> Lokale Keywords + Stadtname für Google My Business</li>
+            <li><strong>Redirects:</strong> Zentrale Weiterleitung von lifeyourdreams.de auf aktuelle Stadt</li>
+            <li><strong>Content‑Syndication:</strong> Übergreifende Inhalte, lokale Anpassungen</li>
+          </ul>
+        </section>
+
+        <section id="ch13" class="section">
+          <h1>13) Marketing &amp; Kommunikation</h1>
+          <ul><li>Ton: präzise, freundlich, lösungsorientiert; Case‑Stories, Referenzen.</li></ul>
+        </section>
+
+        <section id="ch14" class="section">
+          <h1>14) Vertrauensbausteine</h1>
+          <ul><li>TÜV‑Siegel, Anwaltspaket, Live‑Chat/Q&amp;A, verifizierte Inserate.</li></ul>
+        </section>
+
+        <section id="ch15" class="section">
+          <h1>15) Organisation &amp; Rollen</h1>
+          <ul><li>Gründer: Christian Bernecker – IHK‑Zertifikat (Immobilienmakler/-in IHK) zum Launch abgeschlossen</li>
+<li>Brand/Marketing • Partnerships • Operations • Legal Ops.</li></ul>
+        </section>
+
+        <section id="ch16" class="section">
+          <h1>16) Compliance &amp; Rechtsstrategie</h1>
+          
+          <h2>18.1 § 34c GewO (Pivot-Option, derzeit nicht einschlägig)</h2>
+          <p>Zum Launch agieren wir als Vermarktungsdienstleister; IHK-Zertifikat abgeschlossen. § 34c-Erlaubnis nur erforderlich, wenn später <strong>Maklertätigkeit</strong> (Nachweis/Vermittlung) bewusst angeboten wird.</p>
+          
+          <div class="callout">
+            <span class="icon">⚖️</span>
+            <div>
+              <strong>IHK‑Maklerprüfung:</strong> Die erfolgreiche Absolvierung bestätigt die fachliche Eignung und bildet die Grundlage für die § 34c‑Erlaubnis. Voraussetzungen: Kaufmännische Grundkenntnisse, Immobilienrecht, BWL, Steuerrecht.
+            </div>
+          </div>
+
+          <h2>18.2 Rechtliche Einordnung: Vermarktungsservice vs. Maklertätigkeit</h2>
+          <p>Da wir <strong>fixe Servicegebühren</strong> statt erfolgsabhängiger Provisionen erheben und explizit kein Makler sind, unterscheidet sich unser Modell fundamental:</p>
+          
+          <h2>Was wir als Vermarktungsservice anbieten (rechtlich unkritisch):</h2>
+          <ul>
+            <li><strong>Objektaufbereitung:</strong> Professionelle Fotos, 360°‑Rundgänge, Exposé‑Erstellung</li>
+            <li><strong>Website‑Erstellung:</strong> Individuelle Microsite mit allen Objektdaten</li>
+            <li><strong>Portal‑Inserate:</strong> Einstellen auf ImmoScout24, Immowelt etc.</li>
+            <li><strong>Marketing‑Services:</strong> SEO‑Optimierung, Social Media, DOOH‑Werbung</li>
+            <li><strong>Technische Koordination:</strong> Terminbuchungssystem, Lead‑Management</li>
+            <li><strong>Optionale TÜV‑Vermittlung:</strong> Organisation technischer Objektprüfung</li>
+            <li><strong>Dokumenten‑Service:</strong> Energieausweis, Grundrisse, Lagepläne</li>
+          </ul>
+
+          <h2>Was wir explizit NICHT anbieten (Maklertätigkeiten):</h2>
+          <ul>
+            <li><strong>Keine Verkaufsberatung:</strong> Kein Preisfindung, keine Verkaufsstrategie</li>
+            <li><strong>Keine Käufer‑Qualifizierung:</strong> Verkäufer führt alle Gespräche selbst</li>
+            <li><strong>Keine Verhandlungsführung:</strong> Kein Mittler zwischen Käufer/Verkäufer</li>
+            <li><strong>Keine Vertragsabwicklung:</strong> Direkter Kontakt zum Notar</li>
+            <li><strong>Keine Finanzierungsberatung:</strong> Verweis an Banken/Finanzberater</li>
+            <li><strong>Keine Haftung für Objektmängel:</strong> Verkäufer trägt volle Gewährleistung</li>
+          </ul>
+
+          <div class="highlight">
+            <strong>Klare Positionierung:</strong> "Wir sind ein Medien‑ und Vermarktungsdienstleister, kein Immobilienmakler. Sie verkaufen selbst – wir sorgen nur für optimale Präsentation."
+          </div>
+
+          <h2>18.3 Transparente AGB‑Kommunikation</h2>
+          <p><strong>Leistungsversprechen (öffentlich sichtbar):</strong></p>
+          <ul>
+            <li>Professionelle Objektaufbereitung nach definierten Standards</li>
+            <li>Microsite‑Erstellung mit 360°‑Integration und SEO‑Optimierung</li>
+            <li>Portal‑Inserate auf relevanten Plattformen (z. B. ImmoScout24) – Umfang je Option und vorbehaltlich Plattform‑AGB</li>
+                          <li>Lead‑Weiterleitung an Verkäufer in der Regel binnen 24h</li>
+            <li>Laufzeit: 3 Monate, Verlängerung optional</li>
+          </ul>
+
+          <p><strong>Haftungsausschlüsse (AGB):</strong></p>
+          <ul>
+            <li>Keine Gewähr für Verkaufserfolg oder Verkaufspreis</li>
+            <li>Objektangaben basieren auf Verkäufer‑Informationen</li>
+            <li>Keine rechtliche Beratung zu Immobilientransaktionen</li>
+            <li>Technische Verfügbarkeit: 95% (übliche Hosting‑Standards)</li>
+          </ul>
+
+          <h2>18.3 Makler‑ und Bauträgerverordnung (MaBV)</h2>
+          <p>Auch bei Festpreismodellen gelten die Schutzbestimmungen:</p>
+          <ul>
+            <li><strong>Buchführungspflichten:</strong> Dokumentation aller Geschäftsvorgänge und Kundenkontakte.</li>
+            <li><strong>Informationspflichten:</strong> Transparente Kommunikation über Leistungsumfang und Kosten.</li>
+            <li><strong>Sicherheitsleistungen:</strong> Bei Entgegennahme von Kundengeldern (z.B. für TÜV‑Prüfung) erforderlich.</li>
+          </ul>
+
+          <h2>18.4 Bestellerprinzip und Gebührentransparenz</h2>
+          <p>Das 2020 eingeführte geteilte Bestellerprinzip (§ 656a BGB) betrifft uns nur eingeschränkt, da wir keine erfolgsabhängigen Provisionen erheben. Jedoch:</p>
+          <ul>
+            <li><strong>Transparenzgebot:</strong> Alle Kosten müssen vor Vertragsschluss vollständig offengelegt werden.</li>
+            <li><strong>Widerrufsrecht:</strong> 14‑Tage‑Widerrufsrecht bei Verbraucherverträgen mit ordnungsgemäßer Widerrufsbelehrung.</li>
+            <li><strong>Keine Doppelbeauftragung:</strong> Klare Regelung, wer welche Servicepakete beauftragt und bezahlt.</li>
+          </ul>
+
+          <h2>18.5 Haftung und Versicherungsschutz</h2>
+          <div class="callout">
+            <span class="icon">🛡️</span>
+            <div>
+              <strong>Berufshaftpflicht:</strong> Mindestdeckung €500.000 pro Schadenfall. Abdeckung: Vermögensschäden aus Vermarktungsleistungen, fehlerhafte Objektdaten, DSGVO‑Verstöße.
+            </div>
+          </div>
+          <ul>
+            <li><strong>Haftungsausschluss:</strong> In AGB definierte Grenzen (nicht bei Vorsatz/grober Fahrlässigkeit).</li>
+            <li><strong>TÜV‑Haftung:</strong> Separate Haftungsregelung mit TÜV‑Partner für technische Prüfungen.</li>
+            <li><strong>Datenschutzhaftung:</strong> DSGVO‑konforme Datenverarbeitung, Auftragsverarbeitungsverträge mit Subdienstleistern.</li>
+          </ul>
+
+          <h2>18.6 Steuerliche Implikationen</h2>
+          <ul>
+            <li><strong>Umsatzsteuer:</strong> 19% auf alle Dienstleistungen (ausgenommen: reine Maklercourtage ist unter Umständen steuerbefreit).</li>
+            <li><strong>Gewerbesteuer:</strong> Freibetrag €24.500/Jahr, darüber je nach Hebesatz der Gemeinde.</li>
+            <li><strong>Rechnungsstellung:</strong> Ordnungsgemäße Rechnungen mit USt‑Ausweis und fortlaufender Nummerierung.</li>
+          </ul>
+
+          <h2>18.7 Weiterbildungspflicht</h2>
+          <p>Ab 2018 verpflichtende 20 Stunden Weiterbildung alle 3 Jahre. Nachweis bei IHK/Behörde. Bei Verstößen drohen Bußgelder bis €50.000.</p>
+
+          <h2>18.8 Datenschutz (DSGVO)</h2>
+          <ul>
+            <li><strong>Datenschutzerklärung:</strong> Transparente Information über Datenverarbeitung auf Microsite und in Verträgen.</li>
+            <li><strong>Einwilligungen:</strong> Aktive Zustimmung zu Marketing‑E‑Mails, Newsletter, Datenweiterleitung an Partner.</li>
+            <li><strong>Betroffenenrechte:</strong> Auskunft, Berichtigung, Löschung, Datenportabilität implementiert.</li>
+            <li><strong>Auftragsverarbeitung:</strong> AVV‑Verträge mit 360°‑Fotografen, TÜV, Hosting‑Anbietern.</li>
+          </ul>
+
+          <h2>18.9 Wettbewerbsrecht</h2>
+          <ul>
+            <li><strong>Preisgestaltung:</strong> Festpreise müssen marktüblich und nicht sittenwidrig niedrig sein (Dumpingverbot).</li>
+            <li><strong>Werbung:</strong> UWG‑konforme Kommunikation, keine irreführenden Angaben zu Kostenersparnis vs. Courtage.</li>
+            <li><strong>Vergleichswerbung:</strong> Erlaubt, wenn sachlich und überprüfbar (z.B. „50% günstiger als 6% Courtage").</li>
+          </ul>
+
+          <h2>18.10 Risikomanagement</h2>
+          <ul>
+            <li><strong>Portal‑Risiken:</strong> AGB‑Änderungen bei ImmoScout, Sperrung bei Policy‑Verstößen → Diversifikation der Reichweitenkanäle.</li>
+            <li><strong>TÜV‑Qualität:</strong> Stichprobenkontrollen, Kundenfeedback‑System, Nachbesserungsvereinbarungen.</li>
+            <li><strong>Skalierungsrisiken:</strong> Bei Expansion: lokale Maklerlizenzen, regionale Rechtsdifferenzen beachten.</li>
+          </ul>
+        </section>
+<section id="ch16a" class="section">
+  <h1>16a) Qualifizierung &amp; Launch-Voraussetzung (IHK)</h1>
+
+  <p><strong>Gründer:</strong> Christian Bernecker. Ich habe den IHK‑Zertifikatslehrgang <em>„Immobilienmakler/-in (IHK)”</em> (IHK Akademie Schwaben, Augsburg) <strong>zum Launch erfolgreich abgeschlossen</strong>. Das Produkt wird <u>nicht</u> vor Abschluss des Lehrgangs gelauncht.</p>
+
+  <h2>Implikationen zum Launch</h2>
+  <ul>
+    <li><strong>Trust &amp; Professionalität:</strong> Sichtbares Kompetenzsignal gegenüber Verkäufern/Käufern und Partnern (TÜV/Anwaltsnetz).</li>
+    <li><strong>Compliance-Fitness:</strong> Fundiertes Verständnis für Pflichtangaben, Dokumentationslogik, Prozessklarheit und saubere AGB-Formulierungen.</li>
+    <li><strong>Produkt-Reifegrad:</strong> Lehrgangs-Know-how ist in Wizard‑Pflichtfelder (inkl. GEG), Exposé‑Templates, Disclaimern und Checklisten umgesetzt.</li>
+  </ul>
+
+  <h2>Abgrenzung heute vs. möglicher Pivot</h2>
+  <ul>
+    <li><strong>Heute (zum Launch):</strong> Life Your Dreams agiert als <em>Medien-/Vermarktungsdienstleister</em> (Dienstvertrag). <u>Keine</u> Nachweis-/Vermittlungsleistungen, <u>keine</u> Preisverhandlungen, <u>keine</u> Vertragsabwicklung oder Rechts-/Finanzierungsberatung.</li>
+    <li><strong>Lehrgang ≠ Erlaubnis:</strong> Das IHK‑Zertifikat ersetzt <u>nicht</u> die behördliche Erlaubnis nach § 34c GewO. Für eine spätere Maklertätigkeit wären § 34c und die MaBV‑Pflichten (inkl. Fortbildung 20 Std./3 Jahre) erforderlich.</li>
+    <li><strong>Option „Pivot“ (später):</strong> Bei bewusstem Wechsel in die Maklerrolle: Antrag § 34c, MaBV‑Compliance, Anpassung AGB/Prozesse/Versicherung.</li>
+  </ul>
+  <p class="muted">Hinweis: Allgemeine Information, keine Rechtsberatung.</p>
+
+  <h2>Auswirkungen auf Kommunikation &amp; Marke</h2>
+  <ul>
+    <li><strong>About/Team:</strong> „Christian Bernecker – Gründer, IHK‑Zertifikat (Immobilienmakler/-in IHK) abgeschlossen“. Kein „Makler“-Claim in der jetzigen Rolle.</li>
+    <li><strong>FAQ/Compliance:</strong> Klarer Hinweis: Heute Vermarktungsservice; Maklerrolle nur bei späterem Pivot mit § 34c + MaBV.</li>
+  </ul>
+</section>
+
+
+        <section id="ch17" class="section">
+          <h1>17) Risiken &amp; Herausforderungen</h1>
+          <ul><li>Portal‑Policies; Qualität/Fehlinfo; Recht/Status; Kapazität.</li></ul>
+        </section>
+
+        <section id="ch18" class="section">
+          <h1>18) KPIs &amp; Erfolgsmessung</h1>
+          <p class="muted">In Ausarbeitung – Lead‑zu‑Besichtigung, Qualifikationsrate, Zeit bis Notar, NPS, Kosten je Abschluss.</p>
+        </section>
+
+        <section id="ch19" class="section">
+          <h1>19) Roadmap</h1>
+
+          <h2>Phase 1: Münchener Pilot mit eigenen Objekten (Monate 1-3)</h2>
+          <div class="highlight">
+            <strong>Startkapital:</strong> 3-Zimmer-Wohnung Schwabing + Reihenmittelhaus München-Aubing als Proof of Concept
+          </div>
+          <ul><li><strong>Go/No-Go:</strong> Launch erst nach erfolgreichem Abschluss des IHK‑Lehrgangs (Zertifikat vorliegend)</li>
+
+            <li><strong>Ziel:</strong> Perfekter Prozess ohne Kundenrisiko</li>
+            <li><strong>Aktivitäten:</strong> Objektaufbereitung, Microsite‑Entwicklung, Portal‑Integration testen</li>
+            <li><strong>Metriken:</strong> Anfrage‑Qualität Portal vs. Microsite, Conversion‑Raten, Zeitaufwand</li>
+            <li><strong>Output:</strong> 2 perfekte Referenz‑Cases für Kundengespräche</li>
+          </ul>
+
+          <h2>Phase 2: Beta-Kunden München (Monate 4-6)</h2>
+          <ul>
+            <li><strong>Zielgruppe:</strong> 5-8 Objekte aus persönlichem Netzwerk</li>
+            <li><strong>Pricing:</strong> Einführungsangebot (Basis‑Service 1.000€)</li>
+            <li><strong>Learnings:</strong> Kundenfeedback, Prozess‑Optimierung, erste Testimonials</li>
+            <li><strong>Marketing:</strong> Erste Case Studies, lokale PR (Münchner Merkur)</li>
+          </ul>
+
+          <h2>Phase 3: München Soft Launch (Monate 7-9)</h2>
+          <ul>
+            <li><strong>Go-to-Market:</strong> muenchen‑wohnen.de öffentlich</li>
+            <li><strong>Pricing:</strong> Basis‑Service [Preis wird nach Pilot definiert] + modulare Zusatzleistungen</li>
+            <li><strong>Marketing:</strong> SEO, Google Ads, Facebook‑Gruppen</li>
+            <li><strong>Ziel:</strong> 10-15 Objekte, positives Feedback, erste Mundpropaganda</li>
+          </ul>
+
+          <h2>Phase 4: München Skalierung (Monate 10-12)</h2>
+          <ul>
+            <li><strong>Automatisierung:</strong> Templates, KI‑Textgenerierung, feste Fotografen‑Partnerschaften</li>
+            <li><strong>Team‑Aufbau:</strong> Werkstudent für Objektaufbereitung</li>
+            <li><strong>Ziel:</strong> 20+ Objekte/Monat, Break‑Even erreichen</li>
+          </ul>
+
+          <h2>Phase 5: Zweite Stadt (Jahr 2)</h2>
+          <ul>
+            <li><strong>Expansion:</strong> Frankfurt oder Berlin als zweiter Markt</li>
+            <li><strong>Submarke:</strong> wohnen-in-frankfurt.de nach München‑Blueprint</li>
+            <li><strong>Learnings:</strong> Skalierungsherausforderungen, regionale Unterschiede</li>
+          </ul>
+
+          <h2>Phase 6: Dachmarken-Aufbau (Jahr 3)</h2>
+          <ul>
+            <li><strong>National:</strong> "Life Your Dreams" als bekannte Immobilien‑Vermarktungsmarke</li>
+            <li><strong>Partnerschaften:</strong> TÜV‑Kooperation, Anwaltsnetzwerk, Franchise‑Modell</li>
+            <li><strong>Internationalisierung:</strong> Österreich, Schweiz als erste Auslandsmärkte</li>
+          </ul>
+
+          <div class="highlight">
+            <strong>Kritische Meilensteine:</strong> Eigene Objekte erfolgreich verkauft (Monat 3), operative Skalierung (Monat 12), 100 Objekte vermarktet (Monat 18). Finanzielle KPIs werden nach Pilot definiert.
+          </div>
+        </section>
+
+        <section id="ch20" class="section">
+          <h1>20) Anhang / Checklisten</h1>
+          <ul><li>Verkäufer/Käufer‑Checklisten; Muster‑Inserat (Portal vs. Microsite).</li></ul>
+        </section>
+
+        <section id="ch21" class="section">
+          <h1>21) CI‑Guidelines &amp; Designrichtlinien</h1>
+          <div class="brand-logos">
+            <div class="logo-card"><img src="file:///Users/christianbernecker/life-your-dreams/CI/exports/Live_Your_Dreams_Perfect.svg" alt="Life Your Dreams – Logo (Dachmarke)" /></div>
+            <div class="logo-card"><img src="file:///Users/christianbernecker/life-your-dreams/CI/exports/Muenchen_Wohnen_SubBrand.svg"  alt="München Wohnen – Logo (Submarke) mit Baseline LIVE YOUR DREAMS" /></div>
+          </div>
+          <div class="brand-caption">Der <strong>Schutzraum</strong> um die Logos ist in dieser Darstellung sichtbar: großzügiger Weißraum innerhalb der Karten (mind. 1× Höhe der Sichel an allen Seiten) sichert Wirkung und Lesbarkeit.</div>
+          <h2>21.1 Farbpalette</h2>
+          <div class="palette">
+            <div class="swatch"><div class="chip" style="background:#000066"></div><div class="label">Deep Blue – #000066</div></div>
+            <div class="swatch"><div class="chip" style="background:#3366CC"></div><div class="label">Royal Blue – #3366CC</div></div>
+            <div class="swatch"><div class="chip" style="background:#E8F0FE"></div><div class="label">Hellblau (Callouts) – #E8F0FE</div></div>
+            <div class="swatch"><div class="chip" style="background:#999999"></div><div class="label">Grau – #999999</div></div>
+          </div>
+
+          <h2>21.2 Logo – Beschreibung &amp; Gestaltung</h2>
+          <p><strong>Symbol (Sichel):</strong> Die kurvige, nach oben strebende Sichel steht für Aufbruch, Energie und die **Bewegung zum Wohntraum**. Ihre organische Form wirkt freundlich und hochwertig zugleich.</p>
+          <p><strong>Farbverlauf:</strong> Der Verlauf von **Deep Blue (#000066)** zu **Royal Blue (#3366CC)** vermittelt Stabilität &amp; Vertrauen (dunkler Bereich) sowie Offenheit &amp; Moderne (hellerer Bereich). Der Verlauf ist dezent, ohne harte Übergänge – das Logo bleibt in kleinen Größen klar.</p>
+          <p><strong>Typografie &amp; Zusammenspiel:</strong> Die Wortmarke in klarer, humanistischer Sans‑Serif (Systemfamilie Inter/Helvetica/Arial in unseren Dokumenten) steht **in Balance** zur dynamischen Sichel: geometrische, aufrechte Buchstaben für Präzision &amp; Transparenz; die Sichel liefert die emotionale Note. Großschreibung sorgt für **ruhige, plakative Lesbarkeit**.</p>
+          <p><strong>Weißraum (Schutzraum):</strong> Rund um das Logo ist mindestens **eine Sichelhöhe** Abstand zu anderen Elementen einzuhalten. In Anwendungen mit Rahmen (z. B. Karten) sollte zusätzlich **innen 24–32 px Padding** berücksichtigt werden.</p>
+          <p><strong>Skalierung:</strong> Logos niemals verzerren. Für Screen empfehlen wir **mind. 64 px Höhe**, bevorzugt 96–140 px; für Print Skalierung proportional.</p>
+
+          <h2>21.3 Typografie</h2>
+          <ul>
+            <li>Headlines: Inter/Helvetica (Bold/SemiBold). Body: Inter/Helvetica/Arial Regular.</li>
+            <li>Größen: H1 26 px, H2 19 px, Body 16 px.</li>
+          </ul>
+
+          <h2>21.4 Tonalität &amp; Do's/Don'ts</h2>
+          <ul>
+            <li>Tonalität: präzise, freundlich, lösungsorientiert; <strong>fair &amp; transparent</strong> als Leitmotiv.</li>
+            <li><strong>Do:</strong> ehrliche Bilder, klare Begriffe, Checklisten, Callouts.</li>
+            <li><strong>Don’t:</strong> versteckte Kosten, unklare Versprechen, künstliche Verknappung.</li>
+          </ul>
+        </section>
+
+        <section id="ch22" class="section">
+          <h1>22) Detaillierter Changelog</h1>
+
+          <h2>Version 15.14 (aktuell) — Must-Fix Patches für rechtliche & kommunikative Konsistenz</h2>
+          <ul>
+            <li><strong>§34c-Widerspruch aufgelöst:</strong> Kapitel 18.1 zu „Pivot-Option, derzeit nicht einschlägig" umformuliert</li>
+            <li><strong>Preis-Claims entfernt:</strong> 96,5% Ersparnis durch „wird nach Pilot definiert" ersetzt (Markt-Courtage als Fakt beibehalten)</li>
+            <li><strong>Scout-Policy harmonisiert:</strong> „70% Teaser" → „vollständiges Exposé + Microsite als 100%-Mehrwert"</li>
+            <li><strong>AGB-Versprechen entschärft:</strong> „mindestens 3 Plattformen" → „relevante Plattformen vorbehaltlich AGB"</li>
+            <li><strong>After-Sales präzisiert:</strong> „bis Notartermin" → „bis Notartermin-Anbahnung (ohne Vertragsabwicklung)"</li>
+            <li><strong>Kundensegmente erweitert:</strong> „30-65 Jahre" → „Privatverkäufer Großraum München, typische Wertbandbreite"</li>
+            <li><strong>Domain-Verfügbarkeit vorsichtiger:</strong> „alle verfügbar" → „Reservierungen geplant; Verfügbarkeit wird geprüft"</li>
+            <li><strong>Kapitel-Nummerierung korrigiert:</strong> Kapitel 7 Unterpunkte 9.1/9.2/9.3 → 7.1/7.2/7.3</li>
+          </ul>
+
+          <h2>Version 15.13 — SubBrand-Logo Domain-Konsistenz</h2>
+          <ul>
+            <li>SubBrand-Logo für Domain-Strategie optimiert: "WOHNEN IN MÜNCHEN" → "MÜNCHEN WOHNEN"</li>
+            <li>Neue SVG-Datei: Muenchen_Wohnen_SubBrand.svg (domain-konsistent zu muenchen-wohnen.de)</li>
+            <li>PNG-Export analog: Muenchen_Wohnen_SubBrand_3000.png (3000x1050px, RGBA)</li>
+            <li>Strategiedokument aktualisiert: Logo-Referenzen und Submarken-Beschreibungen angepasst</li>
+            <li>Domain-Schema konsistent: &lt;stadt&gt;-wohnen.de statt wohnen-in-&lt;stadt&gt;.de</li>
+          </ul>
+
+          <h2>Version 15.12 — Dokumentstruktur-Optimierung</h2>
+          <ul>
+            <li>Kapitel 9 gestrafft: Redundante Changelog-Tabelle in Abschnitt 9.3 "Versions-Management & Dokumentation" entfernt</li>
+            <li>Fokus auf inhaltliche Kernasspekte: Transparenz-Prinzipien und KI-Guardrails ohne Duplikation</li>
+            <li>Verweis auf detaillierten Changelog in Kapitel 22 für vollständige Entwicklungshistorie</li>
+            <li>Klarere Dokumentstruktur ohne redundante Versionsübersichten</li>
+          </ul>
+
+          <h2>Version 15.11 — ImmoScout24-Fokus & B2B-AGB-Detailanalyse</h2>
+          <ul>
+            <li>Strategische Fokussierung: Kleinanzeigen entfernt, ausschließlicher Fokus auf ImmoScout24 als Reichweitenkanal</li>
+            <li>Detaillierte B2B-AGB-Analyse: Seriöse Objektangebote, Einzelanzeige=1 Objekt, Bestand/Mandat-Pflicht</li>
+            <li>Missbrauchsverbote spezifiziert: Aufmerksamkeits-/Werbe-Inserate, falsche Kategorien, doppelte Anzeigen</li>
+            <li>GEG § 87 Pflichtangaben präzisiert: Energiekennwerte bereits in der Anzeige, nicht nur im Exposé</li>
+            <li>IS24-Wizard Integration: Veröffentlichung ohne Pflichtfelder wird "geblockt"</li>
+            <li>Rechtliche Abgrenzung geschärft: IHK-Zertifikat zum Launch, § 34c/MaBV nur bei Pivot relevant</li>
+          </ul>
+
+          <h2>Version 15.10 — Portal-Compliance & Rechtliche Absicherung</h2>
+          <ul>
+            <li>Kapitel 8 "Rolle von ImmoScout24 & Kleinanzeigen" komplett überarbeitet mit detaillierter AGB-Analyse</li>
+            <li>Gewerbliche Nutzung: Impressumspflicht (DDG § 5), Energieangaben (GEG § 87), Bruttopreise dokumentiert</li>
+            <li>Grenzen & Verstöße: Werbe-/Teaser-Inserate, Kontaktdaten im Bild, externe Umlenkung untersagt</li>
+            <li>Account-Regeln: Ein Account pro Firma, nur eigener Bestand/mandatierte Objekte, kein Account-Sharing</li>
+            <li>Compliance-Checkliste implementiert: Vollständige Exposés, keine Teaser, korrekte Kategorisierung</li>
+            <li>Rechtliche Abgrenzung zur Maklertätigkeit: Vermarktungsdienstleister ohne Nachweis-/Vermittlungsleistung</li>
+          </ul>
+
+          <h2>Version 15.9 — Domain-Strategie & Skalierungs-Architektur</h2>
+          <ul>
+            <li>Domain-Analyse durchgeführt: wohnen-in-<stadt>.de bereits vergeben, life-in-<stadt>.de uneinheitlich</li>
+            <li>Entscheidung für <stadt>-wohnen.de: Alle Top-10 Städte verfügbar, SEO-optimiert, einheitlich</li>
+            <li>Nationale Rollout-Strategie definiert: München → Berlin → Hamburg → Frankfurt → Düsseldorf → Stuttgart → Köln → Leipzig → Dortmund → Bremen</li>
+            <li>Submarken-Architektur: Einheitliche Domain-Struktur für Skalierung und Brand-Konsistenz</li>
+            <li>SEO-Vorteile: Lokale Keywords + Stadtname für bessere Suchergebnisse</li>
+            <li>Basis-Service angepasst: <stadt>-wohnen.de statt wohnen-in-<stadt>.de im Leistungsumfang</li>
+          </ul>
+
+          <h2>Version 15.8 — Marge-Transparenz & Anwalts-Optimierung</h2>
+          <ul>
+            <li>Anwalts-Check verdoppelt: 240-560€ (statt 120-280€) für erweiterte Rechtsberatung (1-2h)</li>
+            <li>Vollständige Marge-Transparenz implementiert: Einkaufskosten + Verkaufspreise bei allen Services</li>
+            <li>Margen-Spanne dokumentiert: 40% (TÜV/Anwalt) bis 300% (digitale Services)</li>
+            <li>Marge-Rationale: Höhere Margen bei digitalen Services kompensieren niedrigere bei Partner-Dienstleistungen</li>
+          </ul>
+
+          <h2>Version 15.7 — Margen-optimierte Preisstruktur</h2>
+          <ul>
+            <li>Umfassende Webrecherche zu Marktpreisen durchgeführt (Grundrisse 8-48€, Fotografie, TÜV, Anwalt)</li>
+            <li>Grundrisse korrigiert auf realistische 50-100€ (User-Feedback: "deutlich teurer")</li>
+            <li>Servicemargen 30-100% einkalkuliert je nach Komplexität und Partnernetzwerk</li>
+            <li>Marge-Transparenz dokumentiert für Partnernetzwerk-Verhandlungen</li>
+          </ul>
+
+          <h2>Version 15.6 — Preisstruktur-Konsistenz & Realitäts-Check</h2>
+          <ul>
+            <li>Preisstruktur-Inkonsistenzen behoben: 2.990-7.990€ → 1.000-2.000€ Basis-Service</li>
+            <li>Basis-Service klar definiert: Microsite + lifeyourdreams.de + ImmoScout24 + wohnen-in-stadt.de</li>
+            <li>Unrealistische Finanzprojektionen entfernt: 20.000€ Betriebskosten → "tbd nach Pilot"</li>
+            <li>BMC Kostenstruktur auf "tbd" gesetzt für realistische Pilotphase</li>
+          </ul>
+
+          <h2>Version 15.5 — Operative Ausrichtung & Portal-Compliance</h2>
+          <ul>
+            <li>Portal-Compliance optimiert: "Details auf Objektseite" statt "prominente Verlinkung"</li>
+            <li>SLA-Zusagen abgefedert: "in der Regel binnen 24h" statt feste Zusage</li>
+            <li>Finanzielle Ziele als Planwerte gekennzeichnet: Break-Even, Deckungsbeitrag vorbehaltlich Pilot</li>
+            <li>Haftpflicht-Abdeckung korrigiert: "Vermögensschäden" statt "Falschberatung" bei Nicht-Makler-Position</li>
+          </ul>
+
+          <h2>Version 15.4 — IHK-Qualifizierung & Launch-Gate</h2>
+          <ul>
+            <li>Neues Kapitel 16a: IHK-Qualifizierung als Launch-Voraussetzung definiert (Christian Bernecker, IHK Akademie Schwaben)</li>
+            <li>Gründer-Profil konkretisiert: IHK-Zertifikat (Immobilienmakler/-in IHK) zum Launch abgeschlossen</li>
+            <li>Go/No-Go-Kriterien in Roadmap verankert: Launch erst nach erfolgreichem IHK-Lehrgang-Abschluss</li>
+            <li>Abgrenzung heute vs. Pivot: Medien-/Vermarktungsdienstleister heute, § 34c + MaBV nur bei späterem Pivot</li>
+            <li>KI-Guardrails explizit verankert: JSON-only Exposés, GEG-Pflichtfelder-Blocker</li>
+          </ul>
+
+          <h2>Version 15.3 — Finale Compliance-Optimierung</h2>
+          <ul>
+            <li>Wording-Präzision: "Immobilienvermittlung" → "Immobilienvermarktung", policy-neutrale Portal-Formulierungen</li>
+            <li>Canvas-Optimierung: Demografische Einschränkungen entfernt, "50% Kostenersparnis" → KPI-Platzhalter</li>
+            <li>Automatische Kapitelnummerierung implementiert, doppelte 18.3 behoben → 18.4 MaBV</li>
+            <li>CarNow-Ausbaustufen präzisiert: "Kalender-Buchung (Ausbaustufe)" konsistent markiert</li>
+          </ul>
+
+          <h2>Version 15.2 — Compliance & Wording-Korrekturen</h2>
+          <ul>
+            <li>Widersprüche zur Nicht-Makler-Positionierung behoben: "Vertragsabschluss" → "Lead-Weiterleitung"</li>
+            <li>Eigene Preisclaims entfernt: "96,5% günstiger" → Platzhalter "wird nach Pilot definiert"</li>
+            <li>Markt-Courtage als Faktenbasis beibehalten: 3,57% je Seite, 57.120€ bei 800k€ als Referenz</li>
+            <li>Rechtliche Formulierungen geschärft: § 34c "nicht einschlägig", Haftung begrenzt</li>
+          </ul>
+
+          <h2>Version 15.1 — CarNow-Inspiration & Faktenbasis</h2>
+          <ul>
+            <li>CarNow-Inspiration konkret ausgeführt: E-Commerce-Prinzipien detailliert auf Immobilien übertragen</li>
+            <li>Markt-Courtage als Faktenbasis behalten: 3,57% je Seite, 57.120€ bei 800k€ als Referenz-Einordnung</li>
+            <li>Paket-Module mit Platzhaltern präzisiert: Parameter-basiert statt fixer Preise</li>
+          </ul>
+
+          <h2>Version 15 — Service‑Modularisierung & Compliance</h2>
+          <ul>
+            <li>Modulare Paketstruktur implementiert: Basis‑Service + 6 optionale Service‑Module</li>
+            <li>Rechtliche Positionierung geschärft: Klare Abgrenzung als Vermarktungsservice (kein Makler)</li>
+            <li>Logo‑Pfade repariert für korrekte Anzeige</li>
+          </ul>
+
+          <h2>Version 14 — Strukturelle Optimierung</h2>
+          <ul>
+            <li>Kapitelstruktur optimiert: Management Summary als Kapitel 1, BMC nach Problemdefinition positioniert</li>
+            <li>Visueller Business Model Canvas mit CSS Grid implementiert</li>
+            <li>Sämtliche Sternchen‑Formatierung durch professionelle Highlight‑Boxen ersetzt</li>
+            <li>Emojis entfernt für seriöse Darstellung</li>
+            <li>Kompakter Changelog als Kapitel 0, detaillierter Changelog als letztes Kapitel</li>
+            <li>Management Summary kritisch überarbeitet mit aktuellen Erkenntnissen</li>
+          </ul>
+
+          <h2>Version 13 — Major Business Update</h2>
+          <ul>
+            <li>Business Model Canvas integriert: Vollständige 9‑Baustein‑Analyse mit Kostenstruktur, Break‑Even‑Berechnung und kritischen Erfolgsfaktoren</li>
+            <li>Rechtsstrategie massiv erweitert: 10 Unterkapitel zu IHK‑Maklerprüfung, Festpreismodell‑Einordnung, MaBV‑Compliance, Haftung, DSGVO, Wettbewerbsrecht</li>
+            <li>Finanzplanung konkretisiert: €20.000 Monatskosten, Break‑Even bei 8 Objekten, 87% Deckungsbeitrag bei €500 Akquisitionskosten</li>
+            <li>Paketstruktur definiert: Basis (€2.990), Premium (€4.990), Luxury (€7.990) mit klaren Leistungsabgrenzungen</li>
+            <li>Web‑Recherche durchgeführt: Juristische Implikationen von Festpreismodellen vs. erfolgsabhängige Provisionen analysiert</li>
+          </ul>
+
+          <h2>Version 12 — Grundlagen</h2>
+          <ul>
+            <li>Layout‑Finetuning: Zentriertes Cover, Schutzraum für Logos optimiert</li>
+            <li>Logo‑Beschreibung erweitert: Ausführliche Erläuterung der Sichel‑Symbolik, Farbverlauf und Typografie‑Philosophie</li>
+            <li>CI‑Guidelines präzisiert: Schutzraum‑Definitionen, Do's/Don'ts, Tonalitäts‑Richtlinien</li>
+            <li>Grundstruktur etabliert: 21‑Kapitel‑Gliederung von Executive Summary bis CI‑Guidelines</li>
+            <li>Markenarchitektur definiert: Dachmarke "Life Your Dreams" + Submarken‑System ("Wohnen in München")</li>
+          </ul>
+
+          <h2>Version 11 und früher — Konzeption</h2>
+          <ul>
+            <li>CarNow‑Benchmarking: Analyse der Transparenz‑ und Convenience‑Strategie für Immobilien‑Übertragung</li>
+            <li>Münchener Pilot‑Fokus: Lokale Submarken‑Strategie entwickelt</li>
+            <li>TÜV‑ und Anwalts‑Integration: Vertrauensbausteine als Kernstrategie definiert</li>
+            <li>Value Proposition geschärft: Faire Pauschalen, radikale Transparenz, Convenience</li>
+            <li>Portal‑Strategie: 70%‑Variante auf Portalen, 100%‑Microsite als Vollversion</li>
+          </ul>
+
+          <h2>Geplante Versionen</h2>
+          <div class="highlight">
+            <strong>Nächste Prioritäten:</strong> KPIs konkretisieren, MVP‑Definition, Pilot‑Planung, Tech‑Roadmap detaillieren
+          </div>
+          
+          <ul>
+            <li><strong>v15 (geplant):</strong> KPI‑Framework ausarbeiten, Erfolgsmessung konkretisieren</li>
+            <li><strong>v16 (geplant):</strong> MVP‑Definition und Pilot‑Strategie (erste 10 Objekte München)</li>
+            <li><strong>v17 (geplant):</strong> Tech‑Roadmap mit konkreten Development‑Phasen</li>
+            <li><strong>v18 (geplant):</strong> Partnership‑Strategien (TÜV, Anwaltskanzlei, Fotografen) ausdetaillieren</li>
+            <li><strong>v19 (geplant):</strong> Finanzierungs‑ und Investment‑Strategie</li>
+          </ul>
+
+          <h2>Dokumentations‑Workflow</h2>
+          <p class="muted"><strong>Prozess:</strong> Jede größere Überarbeitung erhöht die Hauptversionsnummer. Kleinere Ergänzungen/Korrekturen werden als Unterversionen (z.B. v14.1) geführt. Änderungen werden chronologisch dokumentiert mit Fokus auf strategische Auswirkungen und Geschäftsmodell‑Evolution.</p>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Smooth scroll & active highlight
+    const links = Array.from(document.querySelectorAll('.toc a'));
+    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+    function onScroll() {
+      const y = window.scrollY + 110;
+      let cur = null;
+      for (const s of sections) if (s && y >= s.offsetTop) cur = s.id;
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    }
+    document.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  
+// A11y: mark active TOC link
+document.querySelectorAll('#toc a').forEach(a=>{
+  a.setAttribute('aria-current', a.classList.contains('active') ? 'true' : 'false');
+});
+</script>
+</body>
+</html>

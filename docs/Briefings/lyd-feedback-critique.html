@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LYD – Kritische Prüfung & Optimierung • Design System & Backoffice (v1)</title>
+  <style>
+    :root{
+      --ink:#0F172A;
+      --muted:#64748B;
+      --line:#E5E7EB;
+      --bg:#FAFBFF;
+      --brand:#3366CC;
+      --brand-deep:#000066;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --err:#dc2626;
+      --sidebar:340px;
+      --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:#fff}
+    .layout{display:flex;min-height:100vh}
+    .sidebar{width:var(--sidebar);border-right:1px solid var(--line);padding:24px;position:sticky;top:0;height:100vh;overflow:auto;background:var(--bg)}
+    .content{flex:1;display:flex;justify-content:center}
+    .container{width:100%;max-width:var(--maxw);padding:28px 32px}
+    h1{font-size:26px;color:var(--brand);margin:32px 0 12px;border-bottom:2px solid var(--line);padding-bottom:6px}
+    h2{font-size:20px;color:var(--ink);margin:24px 0 8px}
+    h3{font-size:16px;margin:18px 0 6px}
+    p,li{max-width:95ch}
+    ul{padding-left:22px}
+    li{margin:4px 0}
+    code{background:#f1f5f9;padding:2px 6px;border-radius:4px}
+    pre{background:#0b1220;color:#e2e8f0;padding:16px;border-radius:10px;overflow:auto;font-size:14px}
+    .toc a{display:block;padding:8px 10px;border-radius:8px;color:#111;text-decoration:none;font-size:14px}
+    .toc a:hover{background:#e8f0fe}
+    .callout{border:1px solid var(--line);background:#f8fafc;border-left:4px solid var(--brand);padding:12px 14px;border-radius:8px;margin:14px 0}
+    .ok{border-left-color:var(--ok);background:#ecfdf5}
+    .warn{border-left-color:var(--warn);background:#fff7ed}
+    .err{border-left-color:var(--err);background:#fee2e2}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-6{grid-column:span 6}
+    .col-12{grid-column:span 12}
+    .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+    .b-ok{background:#d1fae5;color:#065f46}
+    .b-warn{background:#fef3c7;color:#92400e}
+    .b-info{background:#dbeafe;color:#1e40af}
+    table{width:100%;border-collapse:collapse;margin:16px 0}
+    th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:14px}
+    th{background:#f8fafc}
+    .small{font-size:13px;color:var(--muted)}
+    .kbd{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:#f1f5f9;border:1px solid #e2e8f0;border-bottom-width:3px;padding:1px 6px;border-radius:6px}
+    .checklist li{list-style:"☐ ";margin-left:0}
+    .section{padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:28px}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px}
+    @media (max-width:1000px){.sidebar{display:none}.container{padding:16px}}
+    @media print { .sidebar{display:none} .container{padding:0} .layout{display:block} }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2 style="margin-top:0">🧪 Kritische Prüfung & Optimierung</h2>
+      <p class="small">Design System & Backoffice – Stand heute</p>
+      <nav class="toc">
+        <a href="#summary">1. Executive Summary</a>
+        <a href="#decision">2. Grundsatz-Entscheidung</a>
+        <a href="#consistency">3. Konsistenz-Check (DS ↔ Backoffice)</a>
+        <a href="#designsystem">4. Design System – Optimierungen</a>
+        <a href="#security">5. Security & Nicht-Öffentlichkeit</a>
+        <a href="#tokens">6. Design Tokens – Lücken & Erweiterungen</a>
+        <a href="#tailwind">7. Tailwind/Next Integration</a>
+        <a href="#storybook">8. Storybook & Docs Branding</a>
+        <a href="#migration">9. Migration shadcn → LDS</a>
+        <a href="#pipeline">10. Versionierung & CI/CD</a>
+        <a href="#a11y">11. Accessibility & QA</a>
+        <a href="#risks">12. Risiken & To‑Dos</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="container">
+
+        <section id="summary" class="section">
+          <h1>1. Executive Summary</h1>
+          <div class="callout ok">
+            <strong>Ja – Designsystem zuerst.</strong> Das Vorgehen „Design System → Backoffice“ ist korrekt. Erst wenn Tokens, Komponenten und Provider stabil sind, lohnt die UI‑Implementierung im Backoffice (verhindert Doppelarbeit & inkonsistentes UI).
+          </div>
+          <p>Das neue Konzept für ein internes, rebrandetes Design System auf <code>designsystem.lifeyourdreams.de</code> trifft die Anforderungen. In der Backoffice-Doku sind jedoch noch <span class="pill">shadcn/ui</span>‑Verweise und ein Architekturdiagramm mit shadcn enthalten. Empfehlung: <strong>konsequent auf LDS (LYD Design System)</strong> umstellen und als harte Abhängigkeit verankern.</p>
+        </section>
+
+        <section id="decision" class="section">
+          <h1>2. Grundsatz-Entscheidung</h1>
+          <ul>
+            <li><span class="badge b-ok">Beschluss</span> <strong>Eigenes, internes LYD Design System</strong> als Fork/Rewrite auf Basis PDS v3. Hosting unter <code>designsystem.lifeyourdreams.de</code>, abgesichert (Basic Auth, No‑Index, optional IP‑Allowlist/VPN).</li>
+            <li><span class="badge b-ok">Reihenfolge</span> <strong>Phase A – Design System</strong> (Token, Provider, Kernkomponenten, Docs) → <strong>Phase B – Backoffice</strong> (Komponenten-Migration, Layouts, Formmuster).</li>
+            <li><span class="badge b-info">Scope</span> DS ist <em>Single Source of Truth</em> (Tokens + Komponenten). Backoffice importiert nur aus LDS (keine lokalen UI-Divergenzen).</li>
+          </ul>
+        </section>
+
+        <section id="consistency" class="section">
+          <h1>3. Konsistenz-Check (DS ↔ Backoffice)</h1>
+          <div class="grid">
+            <div class="col-6">
+              <h3>Was passt bereits</h3>
+              <ul>
+                <li>Interne Domain + Absicherung vorgesehen.</li>
+                <li>Komponenten-Namensschema <code>lds-*</code> + React-Wrapper geplant.</li>
+                <li>Farbwelt (Deep/Royal Blue + Gradient) konsistent zu CI.</li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <h3>Inkonsistenzen / Gaps</h3>
+              <ul>
+                <li>Backoffice-Tech-Stack & Diagramm nennen noch <code>shadcn/ui</code> – bitte entfernen und <code>LYD Design System (LDS)</code> einsetzen.</li>
+                <li>Token-Set deckt Fokus‑Styles, Border‑Breiten, Z‑Indizes, Opazität, Motion‑Kurven noch nicht ausreichend ab.</li>
+                <li>Fehlende CI‑Prüfungen im Backoffice-Build (verhindert versehentliche PDS‑Reste).</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="designsystem" class="section">
+          <h1>4. Design System – Konkrete Optimierungen</h1>
+
+          <h2>4.1 Rebranding‑Sicherheit (Build‑Guards)</h2>
+          <p>Ergänze einen CI‑Check, der Builds blockt, wenn irgendwo noch <code>porsche</code>, <code>pds-</code> oder <code>@porsche-design-system</code> vorkommt.</p>
+<pre><code># packages/scripts/check-lyd-brand.sh
+set -e; FOUND=0
+grep -RniE "porsche|@porsche-design-system|\\bpds-\\b" \
+  --exclude-dir=node_modules --exclude-dir=.git . &amp;&gt;/dev/null &amp;&amp; FOUND=1 || true
+if [ "$FOUND" -ne 0 ]; then
+  echo "❌ Fremd-Branding gefunden – Build abgebrochen"; exit 1
+else
+  echo "✅ Branding sauber";
+fi
+</code></pre>
+
+          <h2>4.2 Storybook Branding</h2>
+<pre><code>// .storybook/manager.ts
+import { addons } from '@storybook/manager-api';
+import { create } from '@storybook/theming/create';
+
+addons.setConfig({
+  theme: create({
+    base: 'light',
+    brandTitle: 'Life Your Dreams – Design System',
+    brandUrl: 'https://designsystem.lifeyourdreams.de',
+    brandImage: '/lyd-logo.svg',
+    colorPrimary: '#3366CC',
+    colorSecondary: '#000066'
+  }),
+});
+</code></pre>
+
+          <h2>4.3 Style-Dictionary Pipeline (Tokens → CSS/TS)</h2>
+<pre><code>// tokens/tokens.json
+{
+  "color": {
+    "brand": { "primary": { "value": "#000066" }, "secondary": { "value": "#3366CC" } }
+  },
+  "focus": {
+    "ring": { "width": { "value": "2px" }, "color": { "value": "{color.brand.secondary}" } }
+  },
+  "border": { "width": { "sm": { "value": "1px" }, "md": { "value": "2px" } } },
+  "z": { "modal": { "value": 1000 }, "popover": { "value": 900 }, "header": { "value": 800 } },
+  "easing": { "standard": { "value": "cubic-bezier(.2,.0,.2,1)" }, "emphasized": { "value": "cubic-bezier(.2,0,0,1)" } }
+}
+</code></pre>
+<pre><code>// style-dictionary.config.cjs
+module.exports = {
+  source: ['tokens/**/*.json'],
+  platforms: {
+    css: {
+      transformGroup: 'css',
+      buildPath: 'dist/css/',
+      files: [{ destination: 'tokens.css', format: 'css/variables' }]
+    },
+    ts: {
+      transformGroup: 'js',
+      buildPath: 'dist/ts/',
+      files: [{ destination: 'tokens.ts', format: 'javascript/es6' }]
+    }
+  }
+};</code></pre>
+
+          <h2>4.4 Accessibility Defaults</h2>
+          <ul>
+            <li>Minimaler Kontrast 4.5:1, Fokus‑Ring global per Token (<code>--lds-focus-ring</code>) erzwingen.</li>
+            <li>Tastaturfallen vermeiden, <code>role</code>/<code>aria-*</code> in Wrappers validieren.</li>
+          </ul>
+
+          <h2>4.5 Naming</h2>
+          <p>React‑Exports einheitlich <code>Lds*</code> (z.B. <code>LdsButton</code>, <code>LdsDialog</code>), Web Components <code>lds-*</code>.</p>
+        </section>
+
+        <section id="security" class="section">
+          <h1>5. Security & Nicht‑Öffentlichkeit</h1>
+          <div class="callout warn"><strong>Empfehlung:</strong> Basic Auth + <span class="kbd">X‑Robots‑Tag: noindex, nofollow</span> + optional IP‑Allowlist/SSO.</div>
+<pre><code># nginx.conf (Auszug)
+server {
+  listen 80;
+  server_name designsystem.lifeyourdreams.de;
+
+  auth_basic "LYD Design System – Internal";
+  auth_basic_user_file /etc/nginx/.htpasswd;
+
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+  add_header X-Robots-Tag "noindex, nofollow" always;
+
+  # optional: nur bestimmte IPs
+  # allow 10.0.0.0/8; deny all;
+
+  location / { proxy_pass http://design-system:6006; }
+}
+</code></pre>
+        </section>
+
+        <section id="tokens" class="section">
+          <h1>6. Design Tokens – Lücken & Erweiterungen</h1>
+          <p>Aktuell vorhanden: Farben (Brand/Semantik/Neutral), Spacing, Radius, Shadow, Transition, Breakpoints. Ergänzen:</p>
+          <table>
+            <tr><th>Kategorie</th><th>Begründung</th><th>Beispiel</th></tr>
+            <tr><td>Focus</td><td>Barrierefreiheit</td><td><code>--lds-focus-ring-width: 2px</code>, <code>--lds-focus-ring-color</code></td></tr>
+            <tr><td>Border</td><td>Konsistente Kanten</td><td><code>--lds-border-width-sm: 1px</code>, <code>md: 2px</code></td></tr>
+            <tr><td>Z‑Index</td><td>Überlagerungen</td><td><code>--lds-z-modal: 1000</code>, <code>--lds-z-popover: 900</code></td></tr>
+            <tr><td>Opacity</td><td>Disabled/Overlay</td><td><code>--lds-opacity-disabled: .5</code></td></tr>
+            <tr><td>Easing/Motion</td><td>Gefühl/Marke</td><td><code>--lds-ease-standard: cubic-bezier(.2,.0,.2,1)</code></td></tr>
+            <tr><td>DataViz</td><td>KPIs/Charts</td><td><code>--lds-chart-1..12</code> abgestimmt auf Brand</td></tr>
+          </table>
+        </section>
+
+        <section id="tailwind" class="section">
+          <h1>7. Tailwind/Next Integration</h1>
+          <h3>7.1 Tailwind‑Konfiguration (CSS‑Variablen)</h3>
+<pre><code>// tailwind.config.js (Backoffice)
+module.exports = {
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          DEFAULT: 'var(--lds-color-primary)',
+          deep: 'var(--lds-color-secondary)'
+        },
+        success: 'var(--lds-color-success)',
+        warning: 'var(--lds-color-warning)',
+        danger:  'var(--lds-color-error)',
+        info:    'var(--lds-color-info)'
+      },
+      borderRadius: {
+        sm: 'var(--lds-border-radius-sm)',
+        md: 'var(--lds-border-radius-md)',
+        lg: 'var(--lds-border-radius-lg)'
+      },
+      boxShadow: {
+        sm: 'var(--lds-shadow-sm)',
+        md: 'var(--lds-shadow-md)'
+      }
+    }
+  }
+};
+</code></pre>
+
+          <h3>7.2 Next.js Root‑Layout</h3>
+<pre><code>// app/layout.tsx
+import '@lifeyourdreams/design-system/dist/tokens.css';
+import { LdsProvider } from '@lifeyourdreams/design-system-react';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang="de"&gt;
+      &lt;body&gt;
+        &lt;LdsProvider theme="light" locale="de"&gt;{children}&lt;/LdsProvider&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</code></pre>
+        </section>
+
+        <section id="storybook" class="section">
+          <h1>8. Storybook & Docs Branding</h1>
+          <ul>
+            <li>LYD‑Logo/Favicon, Farben aus Tokens, Beispiele mit Backoffice‑Domänen (Property, Lead).</li>
+            <li>Beispiele als „Usage Recipes“ (Form, Table, Filterbar, Dialog, Toast).</li>
+            <li>Dokumentation „Do/Don’t“ und Barrierefreiheits‑Checklisten.</li>
+          </ul>
+        </section>
+
+        <section id="migration" class="section">
+          <h1>9. Migration shadcn → LDS</h1>
+          <p>Konsequente Entfernung von <code>shadcn/ui</code> im Backoffice. Mapping:</p>
+          <table>
+            <tr><th>shadcn</th><th>LDS (React)</th><th>Notizen</th></tr>
+            <tr><td>Button</td><td><code>LdsButton</code></td><td>nutzt Tokens (Focus/Easing)</td></tr>
+            <tr><td>Input</td><td><code>LdsInput</code></td><td>eingebaute Fehlermeldungen</td></tr>
+            <tr><td>Dialog</td><td><code>LdsDialog</code></td><td>ARIA vollständig</td></tr>
+            <tr><td>Tabs</td><td><code>LdsTabs</code></td><td>Rollen korrekt</td></tr>
+            <tr><td>Table</td><td><code>LdsTable</code></td><td>kompakt/komfort‑Dichte</td></tr>
+          </table>
+<pre><code>// Beispiel: Property-Liste
+import { LdsButton, LdsCard, LdsTable } from '@lifeyourdreams/design-system-react';
+
+export default function PropertiesPage() {
+  return (
+    &lt;LdsCard&gt;
+      &lt;div className="flex items-center justify-between"&gt;
+        &lt;h1&gt;Immobilien&lt;/h1&gt;
+        &lt;LdsButton variant="primary"&gt;Neue Immobilie&lt;/LdsButton&gt;
+      &lt;/div&gt;
+      &lt;LdsTable columns={columns} data={data} onRowClick={(r)=>open(`/properties/${r.id}`)} /&gt;
+    &lt;/LdsCard&gt;
+  );
+}
+</code></pre>
+        </section>
+
+        <section id="pipeline" class="section">
+          <h1>10. Versionierung & CI/CD</h1>
+          <ul>
+            <li><strong>SemVer</strong> für LDS (<code>major.minor.patch</code>), <strong>Changesets</strong> für Releases.</li>
+            <li>Publish in Private Registry (GitHub Packages/Nexus). Backoffice pinned auf <code>^1.x</code>.</li>
+            <li>CI: Lint, Test, Visual Regression, <em>check-lyd-brand</em>, Build, Publish.</li>
+          </ul>
+<pre><code># .github/workflows/release.yml (Auszug)
+on: { push: { branches: [ main ] } }
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, registry-url: 'https://npm.pkg.github.com' }
+      - run: npm ci
+      - run: npm run check:brand
+      - run: npm test
+      - run: npm run build
+      - run: npx changeset version &amp;&amp; npm publish --workspaces
+        env: { NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+</code></pre>
+        </section>
+
+        <section id="a11y" class="section">
+          <h1>11. Accessibility & QA</h1>
+          <h3>11.1 Automatische A11y‑Tests (Playwright + axe‑core)</h3>
+<pre><code>// tests/a11y.spec.ts
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+test('Backoffice pages are accessible', async ({ page }) =&gt; {
+  await page.goto('/properties');
+  const { violations } = await new AxeBuilder({ page }).analyze();
+  expect(violations).toEqual([]);
+});
+</code></pre>
+          <h3>11.2 Visual Regression</h3>
+          <p>Chromatic/Storybook oder Playwright‑Screenshots für Kernkomponenten und Muster-Seiten.</p>
+        </section>
+
+        <section id="risks" class="section">
+          <h1>12. Risiken & To‑Dos</h1>
+          <ul class="checklist">
+            <li>Storybook Branding + Auth finalisieren.</li>
+            <li>Tokens erweitern (Focus, Border, Z‑Index, Motion, Opacity, DataViz).</li>
+            <li>Backoffice: Entferne <code>shadcn/ui</code>, ersetze Diagramm/Stack‑Angaben, integriere LDS‑Provider.</li>
+            <li>CI‑Guards gegen PDS‑Reste.</li>
+            <li>SemVer/Release‑Prozess etablieren und kommunizieren.</li>
+          </ul>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

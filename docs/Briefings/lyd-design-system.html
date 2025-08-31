@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Life Your Dreams Design System • Setup & Implementation</title>
+  <style>
+    :root {
+      /* LYD Brand Colors */
+      --lyd-deep-blue: #000066;
+      --lyd-royal-blue: #3366CC;
+      --lyd-white: #FFFFFF;
+      --lyd-gray-900: #0B0B0D;
+      --lyd-gray-700: #2F3136;
+      --lyd-gray-500: #8B90A0;
+      --lyd-gray-100: #F8FAFC;
+      
+      /* Extended Palette für UI */
+      --lyd-success: #16a34a;
+      --lyd-warning: #f59e0b;
+      --lyd-error: #dc2626;
+      --lyd-info: #0ea5e9;
+      
+      /* Layout */
+      --sidebar: 380px;
+      --maxw: 1400px;
+    }
+    
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; color: #111; font: 16px/1.6 'Inter', system-ui, -apple-system, sans-serif; }
+    
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { 
+      width: var(--sidebar); 
+      border-right: 1px solid #E5E7EB; 
+      padding: 24px; 
+      position: sticky; 
+      top: 0; 
+      height: 100vh; 
+      overflow-y: auto; 
+      background: var(--lyd-gray-100);
+    }
+    .content { flex: 1; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: var(--maxw); padding: 28px 32px; }
+    
+    h1 { color: var(--lyd-royal-blue); font-size: 32px; margin: 44px 0 12px; border-bottom: 2px solid #E5E7EB; padding-bottom: 12px; }
+    h2 { color: var(--lyd-royal-blue); font-size: 24px; margin: 32px 0 12px; }
+    h3 { color: var(--lyd-deep-blue); font-size: 18px; margin: 24px 0 8px; font-weight: 600; }
+    
+    pre { 
+      background: #1e293b; 
+      color: #e2e8f0; 
+      padding: 16px; 
+      border-radius: 10px; 
+      overflow-x: auto; 
+      font-size: 14px; 
+      line-height: 1.5;
+      margin: 16px 0;
+    }
+    
+    code { 
+      background: #f1f5f9; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-size: 14px;
+      color: var(--lyd-deep-blue);
+    }
+    
+    .callout { 
+      background: #E8F0FE; 
+      border-left: 4px solid var(--lyd-royal-blue); 
+      border-radius: 8px; 
+      padding: 14px 16px; 
+      margin: 20px 0;
+    }
+    .callout.warn { background: #fff7ed; border-left-color: var(--lyd-warning); }
+    .callout.error { background: #fee2e2; border-left-color: var(--lyd-error); }
+    .callout.success { background: #ecfdf5; border-left-color: var(--lyd-success); }
+    
+    .toc { margin-top: 12px; }
+    .toc a { 
+      display: block; 
+      padding: 8px 12px; 
+      border-radius: 8px; 
+      color: #111; 
+      text-decoration: none;
+      font-size: 14px;
+      margin: 2px 0;
+    }
+    .toc a:hover { background: #E8F0FE; }
+    .toc a.active { background: var(--lyd-royal-blue); color: #fff; }
+    
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+    .color-card { border: 1px solid #E5E7EB; border-radius: 8px; overflow: hidden; }
+    .color-swatch { height: 80px; }
+    .color-info { padding: 12px; font-size: 14px; }
+    .color-name { font-weight: 600; }
+    .color-value { color: #64748B; font-family: monospace; }
+    
+    .component-preview {
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 20px 0;
+      background: #fff;
+    }
+    
+    .badge { 
+      display: inline-block; 
+      padding: 4px 12px; 
+      border-radius: 6px; 
+      font-size: 12px; 
+      font-weight: 600;
+      margin: 0 4px;
+    }
+    .badge.new { background: #d1fae5; color: #065f46; }
+    .badge.important { background: #dbeafe; color: #1e40af; }
+    
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin: 20px 0; 
+      font-size: 14px;
+    }
+    th, td { 
+      border: 1px solid #E5E7EB; 
+      padding: 10px 12px; 
+      text-align: left; 
+    }
+    th { 
+      background: var(--lyd-gray-100); 
+      font-weight: 600;
+      color: var(--lyd-deep-blue);
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div style="margin-bottom: 24px;">
+        <svg width="200" height="70" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lyd-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M20,10 Q10,35 20,60 Q35,35 25,10" fill="url(#lyd-gradient)" />
+          <text x="45" y="30" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#000066">LIVE YOUR</text>
+          <text x="45" y="50" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#000066">DREAMS</text>
+        </svg>
+      </div>
+      
+      <h3 style="margin-top: 0;">Design System v1.0</h3>
+      
+      <nav class="toc" id="toc">
+        <a href="#overview">Übersicht</a>
+        <a href="#setup">Setup & Installation</a>
+        <a href="#migration">Porsche → LYD Migration</a>
+        <a href="#colors">Farben</a>
+        <a href="#typography">Typografie</a>
+        <a href="#components">Komponenten</a>
+        <a href="#tokens">Design Tokens</a>
+        <a href="#implementation">Implementation</a>
+        <a href="#security">Security & Access</a>
+        <a href="#checklist">Checklist</a>
+      </nav>
+      
+      <div style="margin-top: 40px; padding: 12px; background: #ecfdf5; border-radius: 8px;">
+        <strong style="color: #065f46;">Status:</strong>
+        <div style="font-size: 13px; margin-top: 8px; color: #065f46;">
+          ✓ CI Guidelines definiert<br/>
+          ✓ Token-Mapping vorbereitet<br/>
+          ⚠ Repository klonen<br/>
+          ⚠ Tokens anpassen<br/>
+          ⚠ Build & Deploy
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="container">
+        
+        <!-- OVERVIEW -->
+        <section id="overview">
+          <h1>Life Your Dreams Design System</h1>
+          
+          <div class="callout">
+            <strong>Strategie:</strong> Wir adaptieren das Porsche Design System (v3) für Life Your Dreams. Alle Porsche-Referenzen werden entfernt und durch unsere CI Guidelines ersetzt. Das System läuft unter <code>designsystem.lifeyourdreams.de</code> (intern, nicht öffentlich).
+          </div>
+          
+          <h2>Warum Porsche Design System als Basis?</h2>
+          <ul>
+            <li><strong>Enterprise-Grade:</strong> Battle-tested, barrierefrei (WCAG 2.1 AA), performant</li>
+            <li><strong>Vollständig:</strong> 50+ Komponenten, Dark Mode, Responsive</li>
+            <li><strong>Tech-Stack kompatibel:</strong> React, Web Components, Design Tokens</li>
+            <li><strong>Dokumentation:</strong> Storybook, Guidelines, Best Practices</li>
+          </ul>
+          
+          <h2>Architektur</h2>
+          <pre>
+designsystem.lifeyourdreams.de/
+├── packages/
+│   ├── components/           # Web Components (angepasst)
+│   ├── components-react/      # React Wrapper
+│   ├── design-tokens/         # LYD Tokens (Farben, Spacing, etc.)
+│   ├── assets/               # Icons, Fonts, Logos
+│   └── utilities/            # Helper Functions
+├── apps/
+│   ├── storefront/           # Dokumentation (Storybook)
+│   └── playground/           # Live Editor
+├── docker/
+│   └── nginx.conf           # Access Control
+└── .github/
+    └── workflows/           # CI/CD</pre>
+        </section>
+
+        <!-- SETUP -->
+        <section id="setup">
+          <h1>Setup & Installation</h1>
+          
+          <div class="callout error">
+            <strong>⚠️ WICHTIG:</strong> Das Design System muss ZUERST aufgebaut werden, bevor das Backoffice implementiert wird. Es ist die Basis für alle UI-Komponenten.
+          </div>
+          
+          <h2>1. Repository Setup</h2>
+          <pre>
+# Fork/Clone Porsche Design System
+git clone https://github.com/porsche-design-system/porsche-design-system.git lyd-design-system
+cd lyd-design-system
+
+# Remove Porsche remote, add LYD remote
+git remote remove origin
+git remote add origin https://github.com/christianbernecker/lyd-design-system.git
+
+# Create fresh branch
+git checkout -b feature/lyd-adaptation
+
+# Install dependencies
+npm install</pre>
+
+          <h2>2. Environment Setup</h2>
+          <pre>
+# .env.local
+NEXT_PUBLIC_DESIGN_SYSTEM_URL=https://designsystem.lifeyourdreams.de
+NEXT_PUBLIC_CDN_URL=https://cdn.lifeyourdreams.de
+STORYBOOK_URL=https://designsystem.lifeyourdreams.de/storybook
+
+# Basic Auth for internal access
+BASIC_AUTH_USER=lyd_team
+BASIC_AUTH_PASS=secure_password_here
+
+# Build settings
+NODE_ENV=production
+ANALYZE=false</pre>
+
+          <h2>4. Docker Setup für lokale Entwicklung</h2>
+          <pre>
+# docker-compose.yml
+version: '3.9'
+
+services:
+  design-system:
+    build: .
+    container_name: lyd-design-system
+    ports:
+      - "6006:6006"  # Storybook
+      - "3001:3000"  # Playground
+    environment:
+      - NODE_ENV=development
+      - NO_INDEX=true
+    volumes:
+      - ./packages:/app/packages
+      - ./apps:/app/apps
+    networks:
+      - lyd-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: lyd-design-system-proxy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/.htpasswd:/etc/nginx/.htpasswd:ro
+    depends_on:
+      - design-system
+    networks:
+      - lyd-network
+
+networks:
+  lyd-network:
+    external: true</pre>
+
+          <h2>5. Nginx Config mit Security Headers</h2>
+          <pre>
+# docker/nginx.conf
+server {
+    listen 80;
+    server_name designsystem.lifeyourdreams.de;
+
+    # Basic Auth - PFLICHT!
+    auth_basic "LYD Design System - Internal Only";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+
+    # Security Headers - KRITISCH!
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" always;
+    add_header Referrer-Policy "no-referrer" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';" always;
+
+    # IP Allowlist (optional aber empfohlen)
+    # allow 10.0.0.0/8;  # VPN range
+    # allow 192.168.1.0/24;  # Office network
+    # deny all;
+
+    location / {
+        proxy_pass http://design-system:6006;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /playground {
+        proxy_pass http://design-system:3000;
+    }
+    
+    # Block search engine crawlers explicitly
+    location = /robots.txt {
+        return 200 "User-agent: *\nDisallow: /\n";
+    }
+}</pre>
+
+          <pre>
+# Generate .htpasswd with strong password
+htpasswd -c -B docker/.htpasswd lyd_team
+# Enter strong password when prompted</pre>
+
+          <h2>6. CI Gate - Porsche Remnants Check</h2>
+          <pre>
+#!/bin/bash
+# scripts/check-porsche-remnants.sh
+
+echo "🔍 Checking for Porsche remnants..."
+
+FOUND=0
+
+# Check for text references
+if grep -r "porsche\|Porsche\|PORSCHE" \
+  --exclude-dir=node_modules \
+  --exclude-dir=.git \
+  --exclude="*.map" \
+  packages/ apps/ 2>/dev/null; then
+  echo "❌ Found 'porsche' text references"
+  FOUND=1
+fi
+
+# Check for pds- prefixes
+if grep -r "pds-\|\.pds-\|'pds-\|\"pds-" \
+  --exclude-dir=node_modules \
+  --exclude-dir=.git \
+  packages/ apps/ 2>/dev/null; then
+  echo "❌ Found 'pds-' prefixes"
+  FOUND=1
+fi
+
+# Check for @porsche-design-system
+if grep -r "@porsche-design-system" \
+  --exclude-dir=node_modules \
+  --exclude-dir=.git \
+  . 2>/dev/null; then
+  echo "❌ Found '@porsche-design-system' imports"
+  FOUND=1
+fi
+
+# Check for Porsche assets
+if find packages/assets apps/assets -type f \
+  \( -name "*porsche*" -o -name "*pds*" \) 2>/dev/null | grep -q .; then
+  echo "❌ Found Porsche-named assets"
+  FOUND=1
+fi
+
+if [ $FOUND -eq 0 ]; then
+  echo "✅ No Porsche remnants found"
+  exit 0
+else
+  echo "❌ Porsche remnants detected - must be removed!"
+  exit 1
+fi</pre>
+
+          <pre>
+# Add to package.json scripts
+"scripts": {
+  "check:porsche": "./scripts/check-porsche-remnants.sh",
+  "prebuild": "npm run check:porsche",
+  "precommit": "npm run check:porsche"
+}</pre>
+        </section>
+
+        <!-- MIGRATION -->
+        <section id="migration">
+          <h1>Porsche → LYD Migration</h1>
+          
+          <h2>Search & Replace Matrix</h2>
+          <table>
+            <tr>
+              <th>Porsche Term</th>
+              <th>LYD Replacement</th>
+              <th>Files</th>
+            </tr>
+            <tr>
+              <td>porsche</td>
+              <td>lyd</td>
+              <td>*.ts, *.tsx, *.js, *.json</td>
+            </tr>
+            <tr>
+              <td>Porsche</td>
+              <td>Life Your Dreams</td>
+              <td>*.md, comments</td>
+            </tr>
+            <tr>
+              <td>pds</td>
+              <td>lds</td>
+              <td>CSS classes, prefixes</td>
+            </tr>
+            <tr>
+              <td>@porsche-design-system</td>
+              <td>@lifeyourdreams/design-system</td>
+              <td>package.json, imports</td>
+            </tr>
+            <tr>
+              <td>#E00000</td>
+              <td>#3366CC</td>
+              <td>Brand primary color</td>
+            </tr>
+          </table>
+
+          <h2>Migration Script</h2>
+          <pre>
+#!/bin/bash
+# scripts/migrate-to-lyd.sh
+
+echo "🔄 Starting LYD Migration..."
+
+# Backup first
+cp -r packages packages.backup
+
+# Global replacements
+find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) \
+  -not -path "./node_modules/*" \
+  -exec sed -i '' 's/porsche/lyd/g' {} \;
+
+find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) \
+  -not -path "./node_modules/*" \
+  -exec sed -i '' 's/Porsche/Life Your Dreams/g' {} \;
+
+# CSS prefix
+find . -type f -name "*.css" -o -name "*.scss" \
+  -not -path "./node_modules/*" \
+  -exec sed -i '' 's/\.pds-/\.lds-/g' {} \;
+
+# Package names
+find . -type f -name "package.json" \
+  -exec sed -i '' 's/@porsche-design-system/@lifeyourdreams\/design-system/g' {} \;
+
+echo "✅ Migration complete! Review changes and test."</pre>
+
+          <h2>Manual Cleanup Checklist</h2>
+          <ul>
+            <li>☐ Remove all Porsche logos from <code>/packages/assets/</code></li>
+            <li>☐ Replace with LYD logos (SVG, PNG formats)</li>
+            <li>☐ Update all README files</li>
+            <li>☐ Update LICENSE file</li>
+            <li>☐ Remove Porsche-specific components (if any)</li>
+            <li>☐ Update Storybook branding</li>
+            <li>☐ Update favicon and meta tags</li>
+          </ul>
+        </section>
+
+        <!-- COLORS -->
+        <section id="colors">
+          <h1>Farben</h1>
+          
+          <h2>Brand Colors</h2>
+          <div class="color-grid">
+            <div class="color-card">
+              <div class="color-swatch" style="background: #000066;"></div>
+              <div class="color-info">
+                <div class="color-name">Deep Blue (Primary)</div>
+                <div class="color-value">#000066</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #3366CC;"></div>
+              <div class="color-info">
+                <div class="color-name">Royal Blue</div>
+                <div class="color-value">#3366CC</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: linear-gradient(180deg, #3366CC 0%, #000066 100%);"></div>
+              <div class="color-info">
+                <div class="color-name">Brand Gradient</div>
+                <div class="color-value">180° #3366CC → #000066</div>
+              </div>
+            </div>
+          </div>
+
+          <h2>Semantic Colors</h2>
+          <div class="color-grid">
+            <div class="color-card">
+              <div class="color-swatch" style="background: #16a34a;"></div>
+              <div class="color-info">
+                <div class="color-name">Success</div>
+                <div class="color-value">#16a34a</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #f59e0b;"></div>
+              <div class="color-info">
+                <div class="color-name">Warning</div>
+                <div class="color-value">#f59e0b</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #dc2626;"></div>
+              <div class="color-info">
+                <div class="color-name">Error</div>
+                <div class="color-value">#dc2626</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #0ea5e9;"></div>
+              <div class="color-info">
+                <div class="color-name">Info</div>
+                <div class="color-value">#0ea5e9</div>
+              </div>
+            </div>
+          </div>
+
+          <h2>Neutral Colors</h2>
+          <div class="color-grid">
+            <div class="color-card">
+              <div class="color-swatch" style="background: #0B0B0D;"></div>
+              <div class="color-info">
+                <div class="color-name">Gray 900</div>
+                <div class="color-value">#0B0B0D</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #2F3136;"></div>
+              <div class="color-info">
+                <div class="color-name">Gray 700</div>
+                <div class="color-value">#2F3136</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #8B90A0;"></div>
+              <div class="color-info">
+                <div class="color-name">Gray 500</div>
+                <div class="color-value">#8B90A0</div>
+              </div>
+            </div>
+            <div class="color-card">
+              <div class="color-swatch" style="background: #F8FAFC;"></div>
+              <div class="color-info">
+                <div class="color-name">Gray 100</div>
+                <div class="color-value">#F8FAFC</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TYPOGRAPHY -->
+        <section id="typography">
+          <h1>Typografie</h1>
+          
+          <h2>Font Stack</h2>
+          <pre>
+/* Primary Font */
+--lds-font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+/* Monospace */
+--lds-font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;</pre>
+
+          <h2>Font Weights</h2>
+          <table>
+            <tr>
+              <th>Weight</th>
+              <th>Value</th>
+              <th>Usage</th>
+            </tr>
+            <tr>
+              <td>Light</td>
+              <td>300</td>
+              <td>Subtle text, large headings</td>
+            </tr>
+            <tr>
+              <td>Regular</td>
+              <td>400</td>
+              <td>Body text</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>500</td>
+              <td>UI labels, buttons</td>
+            </tr>
+            <tr>
+              <td>Semibold</td>
+              <td>600</td>
+              <td>Subheadings</td>
+            </tr>
+            <tr>
+              <td>Bold</td>
+              <td>700</td>
+              <td>Headings, emphasis</td>
+            </tr>
+          </table>
+
+          <h2>Type Scale</h2>
+          <div class="component-preview">
+            <h1 style="font-size: 48px; line-height: 1.2;">Heading 1 (48px)</h1>
+            <h2 style="font-size: 36px; line-height: 1.3;">Heading 2 (36px)</h2>
+            <h3 style="font-size: 28px; line-height: 1.4;">Heading 3 (28px)</h3>
+            <h4 style="font-size: 24px; line-height: 1.4;">Heading 4 (24px)</h4>
+            <p style="font-size: 16px; line-height: 1.6;">Body Text (16px) - The quick brown fox jumps over the lazy dog.</p>
+            <small style="font-size: 14px; line-height: 1.5;">Small Text (14px)</small>
+          </div>
+        </section>
+
+        <!-- TOKENS -->
+        <section id="tokens">
+          <h1>Design Tokens</h1>
+          
+          <h2>Token Structure</h2>
+          <pre>
+// packages/design-tokens/src/tokens.ts
+
+export const tokens = {
+  color: {
+    brand: {
+      primary: '#000066',
+      secondary: '#3366CC',
+      gradient: 'linear-gradient(180deg, #3366CC 0%, #000066 100%)',
+    },
+    semantic: {
+      success: '#16a34a',
+      warning: '#f59e0b',
+      error: '#dc2626',
+      info: '#0ea5e9',
+    },
+    neutral: {
+      900: '#0B0B0D',
+      800: '#1F2028',
+      700: '#2F3136',
+      600: '#4B5563',
+      500: '#8B90A0',
+      400: '#9CA3AF',
+      300: '#D1D5DB',
+      200: '#E5E7EB',
+      100: '#F8FAFC',
+      50: '#FAFBFC',
+      0: '#FFFFFF',
+    },
+  },
+  
+  spacing: {
+    0: '0',
+    1: '0.25rem',  // 4px
+    2: '0.5rem',   // 8px
+    3: '0.75rem',  // 12px
+    4: '1rem',     // 16px
+    5: '1.25rem',  // 20px
+    6: '1.5rem',   // 24px
+    8: '2rem',     // 32px
+    10: '2.5rem',  // 40px
+    12: '3rem',    // 48px
+    16: '4rem',    // 64px
+    20: '5rem',    // 80px
+  },
+  
+  borderRadius: {
+    none: '0',
+    sm: '0.25rem',  // 4px
+    md: '0.5rem',   // 8px
+    lg: '0.75rem',  // 12px
+    xl: '1rem',     // 16px
+    full: '9999px',
+  },
+  
+  shadow: {
+    sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+    xl: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+  },
+  
+  transition: {
+    fast: '150ms ease-in-out',
+    base: '250ms ease-in-out',
+    slow: '350ms ease-in-out',
+  },
+  
+  breakpoint: {
+    xs: '480px',
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+    xxl: '1536px',
+  },
+};</pre>
+
+          <h2>CSS Custom Properties</h2>
+          <pre>
+/* Generated from tokens */
+:root {
+  /* Colors */
+  --lds-color-primary: #000066;
+  --lds-color-secondary: #3366CC;
+  --lds-color-success: #16a34a;
+  --lds-color-warning: #f59e0b;
+  --lds-color-error: #dc2626;
+  --lds-color-info: #0ea5e9;
+  
+  /* Spacing */
+  --lds-spacing-xs: 0.25rem;
+  --lds-spacing-sm: 0.5rem;
+  --lds-spacing-md: 1rem;
+  --lds-spacing-lg: 1.5rem;
+  --lds-spacing-xl: 2rem;
+  
+  /* Typography */
+  --lds-font-family: 'Inter', sans-serif;
+  --lds-font-size-base: 16px;
+  --lds-line-height-base: 1.6;
+  
+  /* Borders */
+  --lds-border-radius-sm: 0.25rem;
+  --lds-border-radius-md: 0.5rem;
+  --lds-border-radius-lg: 0.75rem;
+  
+  /* Shadows */
+  --lds-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --lds-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}</pre>
+        </section>
+
+        <!-- COMPONENTS -->
+        <section id="components">
+          <h1>Komponenten</h1>
+          
+          <h2>Component Naming Convention</h2>
+          <table>
+            <tr>
+              <th>Porsche Component</th>
+              <th>LYD Component</th>
+              <th>Usage</th>
+            </tr>
+            <tr>
+              <td>p-button</td>
+              <td>lds-button</td>
+              <td>Buttons, CTAs</td>
+            </tr>
+            <tr>
+              <td>p-text-field</td>
+              <td>lds-input</td>
+              <td>Form inputs</td>
+            </tr>
+            <tr>
+              <td>p-select</td>
+              <td>lds-select</td>
+              <td>Dropdowns</td>
+            </tr>
+            <tr>
+              <td>p-modal</td>
+              <td>lds-dialog</td>
+              <td>Modals, Dialogs</td>
+            </tr>
+            <tr>
+              <td>p-tabs</td>
+              <td>lds-tabs</td>
+              <td>Tab navigation</td>
+            </tr>
+          </table>
+
+          <h2>Example Component Migration</h2>
+          <pre>
+// Before (Porsche)
+import { PButton } from '@porsche-design-system/components-react';
+
+&lt;PButton variant="primary" icon="arrow-right"&gt;
+  Weiter
+&lt;/PButton&gt;
+
+// After (LYD)
+import { LdsButton } from '@lifeyourdreams/design-system-react';
+
+&lt;LdsButton variant="primary" icon="arrow-right"&gt;
+  Weiter
+&lt;/LdsButton&gt;</pre>
+
+          <h2>Custom LYD Components</h2>
+          <ul>
+            <li><strong>LdsPropertyCard:</strong> Immobilien-Karte mit Vorschau</li>
+            <li><strong>LdsLeadForm:</strong> Optimiertes Kontaktformular</li>
+            <li><strong>LdsEnergyBadge:</strong> Energieeffizienz-Anzeige</li>
+            <li><strong>LdsImageGallery:</strong> Responsive Bildergalerie</li>
+            <li><strong>LdsRoomSelector:</strong> Zimmer-Auswahl</li>
+          </ul>
+        </section>
+
+        <!-- IMPLEMENTATION -->
+        <section id="implementation">
+          <h1>Implementation im Backoffice</h1>
+          
+          <h2>1. Package Installation</h2>
+          <pre>
+# Im Backoffice-Projekt
+npm install @lifeyourdreams/design-system-react @lifeyourdreams/design-tokens
+
+# Peer Dependencies
+npm install @webcomponents/webcomponentsjs</pre>
+
+          <h2>2. Setup in Next.js</h2>
+          <pre>
+// app/layout.tsx
+import '@lifeyourdreams/design-system/dist/styles/global.css';
+import { LdsProvider } from '@lifeyourdreams/design-system-react';
+
+export default function RootLayout({ children }) {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;LdsProvider theme="light" locale="de"&gt;
+          {children}
+        &lt;/LdsProvider&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</pre>
+
+          <h2>3. Component Usage</h2>
+          <pre>
+// app/(dashboard)/properties/page.tsx
+import { 
+  LdsButton, 
+  LdsCard, 
+  LdsTable,
+  LdsInput,
+  LdsSelect 
+} from '@lifeyourdreams/design-system-react';
+
+export default function PropertiesPage() {
+  return (
+    &lt;div&gt;
+      &lt;LdsCard&gt;
+        &lt;h1&gt;Immobilien&lt;/h1&gt;
+        
+        &lt;LdsButton 
+          variant="primary"
+          onClick={() =&gt; router.push('/properties/new')}&gt;
+          Neue Immobilie
+        &lt;/LdsButton&gt;
+        
+        &lt;LdsTable
+          columns={columns}
+          data={properties}
+          onRowClick={handleRowClick}
+        /&gt;
+      &lt;/LdsCard&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+
+          <h2>4. Form Example</h2>
+          <pre>
+// components/forms/property-form.tsx
+import { useForm } from 'react-hook-form';
+import { 
+  LdsForm,
+  LdsInput,
+  LdsSelect,
+  LdsTextarea,
+  LdsButton 
+} from '@lifeyourdreams/design-system-react';
+
+export function PropertyForm() {
+  const { register, handleSubmit } = useForm();
+  
+  return (
+    &lt;LdsForm onSubmit={handleSubmit(onSubmit)}&gt;
+      &lt;LdsInput
+        label="Titel"
+        {...register('title', { required: true })}
+      /&gt;
+      
+      &lt;LdsSelect
+        label="Typ"
+        options={propertyTypes}
+        {...register('type')}
+      /&gt;
+      
+      &lt;LdsTextarea
+        label="Beschreibung"
+        rows={5}
+        {...register('description')}
+      /&gt;
+      
+      &lt;LdsButton type="submit" variant="primary"&gt;
+        Speichern
+      &lt;/LdsButton&gt;
+    &lt;/LdsForm&gt;
+  );
+}</pre>
+        </section>
+
+        <!-- SECURITY -->
+        <section id="security">
+          <h1>Security & Access Control</h1>
+          
+          <div class="callout error">
+            <strong>WICHTIG:</strong> Das Design System ist NICHT öffentlich zugänglich. Nur autorisierte Team-Mitglieder haben Zugriff.
+          </div>
+          
+          <h2>Access Control Layers</h2>
+          <ol>
+            <li><strong>DNS:</strong> Subdomain nur intern auflösbar (oder Cloudflare Access)</li>
+            <li><strong>Basic Auth:</strong> Nginx-Level Authentication</li>
+            <li><strong>IP Whitelist:</strong> Optional für Production</li>
+            <li><strong>HTTPS:</strong> Let's Encrypt oder eigenes Zertifikat</li>
+          </ol>
+
+          <h2>Cloudflare Access Setup (Empfohlen)</h2>
+          <pre>
+# Cloudflare Zero Trust Dashboard
+1. Add Application: designsystem.lifeyourdreams.de
+2. Configure Policy:
+   - Include: Emails ending in @lifeyourdreams.de
+   - Require: GitHub Teams (christianbernecker/lyd-team)
+3. Enable 2FA requirement</pre>
+
+          <h2>Environment-specific URLs</h2>
+          <pre>
+# Development
+http://localhost:6006
+
+# Staging (Basic Auth)
+https://designsystem-staging.lifeyourdreams.de
+
+# Production (Cloudflare Access)
+https://designsystem.lifeyourdreams.de</pre>
+        </section>
+
+        <!-- CHECKLIST -->
+        <section id="checklist">
+          <h1>Implementation Checklist</h1>
+          
+          <h2>Phase 1: Setup Design System</h2>
+          <table>
+            <tr>
+              <th>Task</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>Fork/Clone Porsche Design System</td>
+              <td>⬜</td>
+              <td>Create private repo</td>
+            </tr>
+            <tr>
+              <td>Run migration script</td>
+              <td>⬜</td>
+              <td>Replace all references</td>
+            </tr>
+            <tr>
+              <td>Update design tokens</td>
+              <td>⬜</td>
+              <td>LYD colors, typography</td>
+            </tr>
+            <tr>
+              <td>Replace logos/assets</td>
+              <td>⬜</td>
+              <td>Remove Porsche branding</td>
+            </tr>
+            <tr>
+              <td>Update package names</td>
+              <td>⬜</td>
+              <td>@lifeyourdreams/design-system</td>
+            </tr>
+            <tr>
+              <td>Setup Storybook</td>
+              <td>⬜</td>
+              <td>With LYD branding</td>
+            </tr>
+            <tr>
+              <td>Configure Basic Auth</td>
+              <td>⬜</td>
+              <td>Nginx + htpasswd</td>
+            </tr>
+            <tr>
+              <td>Deploy to staging</td>
+              <td>⬜</td>
+              <td>designsystem.lifeyourdreams.de</td>
+            </tr>
+            <tr>
+              <td>Test all components</td>
+              <td>⬜</td>
+              <td>Visual regression tests</td>
+            </tr>
+            <tr>
+              <td>Documentation update</td>
+              <td>⬜</td>
+              <td>Usage guidelines</td>
+            </tr>
+          </table>
+
+          <h2>Phase 2: Integrate with Backoffice</h2>
+          <table>
+            <tr>
+              <th>Task</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>Install packages</td>
+              <td>⬜</td>
+              <td>In backoffice project</td>
+            </tr>
+            <tr>
+              <td>Setup LdsProvider</td>
+              <td>⬜</td>
+              <td>Root layout</td>
+            </tr>
+            <tr>
+              <td>Replace shadcn components</td>
+              <td>⬜</td>
+              <td>Use LDS components</td>
+            </tr>
+            <tr>
+              <td>Update forms</td>
+              <td>⬜</td>
+              <td>Property, Lead, etc.</td>
+            </tr>
+            <tr>
+              <td>Update tables</td>
+              <td>⬜</td>
+              <td>LdsTable component</td>
+            </tr>
+            <tr>
+              <td>Test theming</td>
+              <td>⬜</td>
+              <td>Light/Dark mode</td>
+            </tr>
+            <tr>
+              <td>Performance audit</td>
+              <td>⬜</td>
+              <td>Bundle size check</td>
+            </tr>
+          </table>
+
+          <div class="callout success">
+            <strong>Nach Abschluss:</strong> Das Design System ist die Single Source of Truth für alle UI-Komponenten. Jede Änderung wird zentral vorgenommen und automatisch in alle Projekte übernommen.
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Navigation highlighting
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Active state
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.toc a');
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= (sectionTop - 100)) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

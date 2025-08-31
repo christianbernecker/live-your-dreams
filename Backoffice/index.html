@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Life Your Dreams – Backoffice Konzept v1.0</title>
+<style>
+    :root{--blue:#3366CC;--green:#0d9488;--amber:#f59e0b;--red:#dc2626;--muted:#666;--border:#e5e7eb;--bg:#F7FAFF}
+    html,body{height:100%}
+    body{font:16px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;margin:0;color:#111;background:#fff}
+    .layout{display:flex;min-height:100vh}
+    .sidebar{width:320px;border-right:1px solid var(--border);padding:24px;position:sticky;top:0;height:100vh;overflow:auto;background:var(--bg)}
+    .content{flex:1;padding:32px;max-width:1200px;margin:0 auto}
+    h1{color:var(--blue);font-size:26px;margin:40px 0 8px}
+    h2{color:var(--blue);font-size:19px;margin:20px 0 8px}
+    h3{color:#222;font-size:17px;margin:16px 0 6px}
+    .section{padding-bottom:16px;border-bottom:1px solid var(--border)}
+    .callout{background:#E8F0FE;border:1px solid #dbeafe;padding:12px 14px;border-radius:12px;margin:12px 0}
+    .callout.warning{background:#fef3c7;border-color:#fde68a}
+    .callout.success{background:#d1fae5;border-color:#a7f3d0}
+    .callout.critical{background:#fee2e2;border-color:#fca5a5}
+    .grid{display:grid;gap:12px}
+    .two{grid-template-columns:1fr 1fr}
+    .three{grid-template-columns:repeat(3,1fr)}
+    .muted{color:var(--muted)}
+    ul{max-width:90ch}
+    code,kbd,pre{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;background:#f6f8fa;padding:1px 4px;border-radius:6px;font-size:14px}
+    pre{padding:12px;overflow-x:auto}
+    .toc a{display:block;padding:6px 8px;border-radius:8px;color:#222;text-decoration:none}
+    .toc a:hover{background:#E8F0FE}
+    .toc a.active{background:#3366CC;color:white}
+    .badge{display:inline-block;padding:2px 8px;border-radius:10px;border:1px solid var(--border);font-size:12px;color:#333;background:#fff}
+    .badge.new{background:#d1fae5;border-color:#a7f3d0;color:#065f46}
+    .badge.ai{background:#e0e7ff;border-color:#c7d2fe;color:#4338ca}
+    .badge.security{background:#fef3c7;border-color:#fde68a;color:#92400e}
+    .list-tight li{margin-bottom:4px}
+    table{width:100%;border-collapse:collapse;margin:12px 0}
+    th{background:var(--bg);padding:8px;text-align:left;border:1px solid var(--border);font-weight:600}
+    td{padding:8px;border:1px solid var(--border)}
+    .flow{display:flex;align-items:center;gap:8px;padding:8px;background:#f9fafb;border-radius:8px;margin:8px 0;flex-wrap:wrap}
+    .flow-step{padding:4px 12px;background:white;border:1px solid var(--border);border-radius:6px;font-size:14px}
+    .flow-arrow{color:#9ca3af}
+    .room-card{border:1px solid var(--border);border-radius:8px;padding:12px;background:#f9fafb}
+    .room-card h4{margin:0 0 8px;color:var(--blue)}
+    .security-grid{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:14px}
+    .security-level{padding:2px 6px;border-radius:4px;font-weight:600;text-align:center}
+    .level-high{background:#fee2e2;color:var(--red)}
+    .level-medium{background:#fef3c7;color:#92400e}
+    .level-low{background:#d1fae5;color:#065f46}
+  
+/* Hierarchical numbering: H1/H2/H3 (two sub-levels below H1) */
+body{counter-reset:h1}
+h1{counter-increment:h1;counter-reset:h2}
+h1::before{content:counter(h1) ") ";color:#3366CC}
+h2{counter-increment:h2;counter-reset:h3}
+h2::before{content:counter(h1) "." counter(h2) " ";color:#3366CC}
+h3{counter-increment:h3}
+h3::before{content:counter(h1) "." counter(h2) "." counter(h3) " ";color:#3366CC}
+/* Do not affect TOC links */
+.sidebar .toc a::before{content:none}
+
+/* Sidebar numbering for TOC items (1st level only) */
+.sidebar .toc{counter-reset: toc;}
+.sidebar .toc a::before{counter-increment: toc; content: counter(toc) ") "; color:#3366CC; font-variant-numeric: tabular-nums;}
+/* Prevent numbering on the sidebar's "Inhalt" heading itself */
+.sidebar h1::before, .sidebar h2::before, .sidebar h3::before { content: none !important; }
+
+/* Ensure TOC numbers are visible on active (highlighted) items */
+.sidebar .toc a.active::before,
+.sidebar .toc a[aria-current="true"]::before {
+  color: #ffffff !important;
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<h2>Inhalt</h2>
+<nav class="toc" id="toc"><a href="#s0">Backoffice – Scope &amp; Readiness (nur Backoffice)</a><a href="#s1">Executive Summary</a><a href="#s2">Objektverwaltung (Detail)</a><a href="#s3">Zimmerverwaltung</a><a href="#s4">Blog/News System</a><a href="#s5">DSGVO &amp; Datensicherheit</a><a href="#s6">Microsite-Generator</a><a href="#s7">Lead-Management</a><a href="#s8">KI-Integration</a><a href="#s9">Portal-Anbindungen</a><a href="#s10">Architektur &amp; Tech-Stack</a><a href="#s11">Roadmap</a></nav>
+</aside>
+<main class="content"><section class="section" id="s0"><h1>Backoffice – Scope &amp; Readiness (nur Backoffice)</h1><p>Dieses Kapitel definiert den verbindlichen Umfang für Backoffice v1.0 (intern-only) sowie die Abnahmekriterien. Es ersetzt keine Strategie- oder Produktpapiere; Seller-UI/Partnerzugänge bleiben R1+.</p><h2>v1.0 Scope (Backoffice)</h2><ul class="list-tight"><li>Rollen: Admin, Operator (intern-only).</li><li>Formulare: Property, Energy (GEG), Media, Rooms/RoomMedia, Listing, Lead, CMS Post.</li><li>GEG-Publish-Gate: Microsite/IS24 nur bei vollständigen Pflichtfeldern &amp; Energieausweis (sofern vorhanden).</li><li>Microsite: Exposé-Generator (JSON→Text), große Galerie, Zimmer-Sektionen.</li><li>Medien-Pipeline: Upload-Limits, Renditions (3840→400 px), EXIF-Rotation, Sortierung/Titelbild, CDN-Auslieferung.</li><li>IS24-API: OAuth 1.0a, Insert/Update, Publish (Channel 10000), Attachments (multipart oder Upload-Ticket→S3), Fehler-Rückkanal.</li><li>Leads: Microsite-Form; E-Mail an Verkäufer; Statuspflege durch Operator (manuelles Scoring).</li><li>CMS/News: Beiträge mit Kanälen (LYD / wohnen-in-&lt;stadt&gt;), SEO-Felder, Scheduling.</li><li>Compliance/Security: Field-/Envelope-Encryption + KMS, 2FA/SSO intern, Audit-Logs, Backups, AVV &amp; RoPA vorhanden.</li><li>Monitoring: Uptime Microsite, IS24-Fehler, Lead-Stau &gt; 24 h, GEG-Blocker.</li></ul><h2>Definition of Done (Abnahme)</h2><h3>Formulare &amp; Datenmodell</h3><ul class="list-tight"><li>JSON-Schema v1.0 eingefroren (Property/Energy/Media/Room/RoomMedia/Listing/Lead/Post).</li><li>Client- und Server-Validierungen deckungsgleich; Fehlertexte nutzerfreundlich.</li><li>Publish-Blocker für GEG/Energieausweis &amp; Titelbild greifen zuverlässig.</li></ul><h3>Microsite &amp; Medien</h3><ul class="list-tight"><li>Galerie performant (srcset/sizes), LCP ≤ 2.5 s; Zimmer-Sektionen aus Room/RoomMedia rendert korrekt.</li><li>Renditions vorhanden; Sortierung/Titelbild steuerbar; Video-HLS optional nutzbar.</li></ul><h3>IS24-Integration</h3><ul class="list-tight"><li>Sandbox-Ende-zu-Ende: Insert → Attachments → Publish (10000) → Verify Published Channels.</li><li>Fehler-Rückkanal sichtbar im Backoffice (Feld/Hinweis/Retry).</li><li>Mapping für GEG/Preis/Adresse korrekt; Re-Insert/Update getestet.</li></ul><h3>Leads &amp; Mails</h3><ul class="list-tight"><li>Microsite-Leads erzeugen E-Mail an Verkäufer (DKIM/SPF/DMARC gesetzt).</li><li>Operator kann Status pflegen (NEW, INTERESTED, VIEWING_REQUESTED, VIEWING_SCHEDULED, OFFERED, NOTAR_INITIATED, WON/LOST).</li><li>Spam/Duplikate-Erkennung aktiv; Audit-Log vorhanden.</li></ul><h3>CMS/News</h3><ul class="list-tight"><li>Beiträge anlegbar, SEO-Felder gepflegt, Publish-Plan funktioniert, Kanäle pro Beitrag wählbar.</li><li>Sitemaps/Feeds pro Kanal generiert.</li></ul><h3>Compliance &amp; Security</h3><ul class="list-tight"><li>Impressum &amp; Datenschutzseiten vorhanden; Einwilligungen/Opt-ins getrennt.</li><li>AVV/DPA und RoPA vorhanden; Backups verschlüsselt; Restore-Test erfolgreich.</li><li>SSO/2FA aktiv; Rollen/Least-Privilege durchgesetzt; Audit-Logs unveränderlich.</li></ul><h2>Nicht im Scope (R1+)</h2><ul class="list-tight"><li>Seller-UI (Magic-Link)</li><li>Partnerzugänge (TÜV/Fotograf/Anwalt)</li><li>Besichtigungskalender/Termin-Handling</li><li>Vertragsabwicklung/Preisverhandlung</li><li>Bonitäts-/Scoring-Automatik</li></ul></section>
+<section class="section" id="s1">
+<h1>Executive Summary</h1>
+<div class="callout success">
+<strong>Fokus-Shift:</strong> Eigene Plattformen (Microsites) als Kern, detaillierte Zimmerverwaltung, integriertes Blog-System, DSGVO-Compliance by Design. IS24 als einer von mehreren Vertriebskanälen.
+        </div>
+<h2>1 Kernprioritäten</h2>
+<ol>
+<li><strong>Detailtiefe:</strong> Zimmergenaue Beschreibungen mit individuellen Fotos</li>
+<li><strong>Content-Engine:</strong> Blog/News für SEO mit flexibler Domain-Ausspielung</li>
+<li><strong>Datensicherheit:</strong> DSGVO-konform, verschlüsselt, audit-fähig</li>
+<li><strong>Microsite First:</strong> Perfekte eigene Präsentation vor Portal-Syndikation</li>
+<li><strong>KI-Assistenz:</strong> Blog-Erstellung, Raumbeschreibungen, SEO-Optimierung</li>
+</ol>
+<h2>2 Unique Selling Points</h2>
+<ul>
+<li>Unbegrenzte Zimmer mit individuellen Narrativen</li>
+<li>Multi-Domain Content-Distribution</li>
+<li>Zero-Knowledge-Architektur für sensible Daten</li>
+<li>SEO-optimierte Microsites als primäre Leadquelle</li>
+</ul>
+</section>
+<section class="section" id="s2">
+<h1>Objektverwaltung (Detail)</h1>
+<h2>1 Hierarchisches Datenmodell</h2>
+<pre><code>Property
+├── BasicInfo (Adresse, Typ, Preis, Größe)
+├── Rooms[] 
+│   ├── RoomType (Wohnzimmer, Schlafzimmer, etc.)
+│   ├── Size (m²)
+│   ├── Description (Rich-Text)
+│   ├── Features[] (Parkett, Balkonzugang, etc.)
+│   └── MediaAssets[] (zugeordnete Bilder/Videos)
+├── Features[]
+│   ├── Category (Ausstattung, Lage, Energie)
+│   └── Items[] (strukturierte Merkmale)
+├── Documents[]
+│   ├── Type (Grundriss, Energieausweis, etc.)
+│   └── AccessLevel (public/qualified/owner)
+└── Descriptions
+    ├── Headline
+    ├── Teaser (150 Zeichen)
+    ├── Main (Objektbeschreibung)
+    ├── Location (Lagebeschreibung)
+    ├── Equipment (Ausstattung)
+    └── Other (Sonstiges)</code></pre>
+<h2>2 Flexible Feldverwaltung</h2>
+<div class="callout">
+<strong>Prinzip:</strong> Beliebig viele Custom Fields pro Objekt möglich, um spezielle Eigenschaften abzubilden (z.B. "Weinkeller", "Smart Home Level", "Concierge Service")
+        </div>
+<table>
+<thead>
+<tr><th>Feldtyp</th><th>Beispiele</th><th>Validierung</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard</td>
+<td>Größe, Zimmer, Baujahr</td>
+<td>Strict (Pflichtfelder)</td>
+</tr>
+<tr>
+<td>Extended</td>
+<td>Deckenhöhe, Ausrichtung</td>
+<td>Optional mit Empfehlung</td>
+</tr>
+<tr>
+<td>Custom</td>
+<td>Beliebige Zusatzfelder</td>
+<td>Flexibel definierbar</td>
+</tr>
+<tr>
+<td>Room-Level</td>
+<td>Pro Zimmer individuell</td>
+<td>Keine Einschränkung</td>
+</tr>
+</tbody>
+</table>
+<h2>3 Qualitäts-Scoring</h2>
+<ul>
+<li><strong>Vollständigkeit:</strong> 0-100% basierend auf ausgefüllten Feldern</li>
+<li><strong>Medien-Score:</strong> Anzahl und Qualität der Bilder/Videos</li>
+<li><strong>Text-Score:</strong> Länge und Keyword-Dichte der Beschreibungen</li>
+<li><strong>Room-Coverage:</strong> % der Zimmer mit Beschreibung und Fotos</li>
+</ul>
+<h2>Validierungen &amp; Publish-Gates (GEG/IS24)</h2>
+<div class="callout">
+<strong>Prinzip:</strong> GEG-Pflichtfelder sind im <em>Draft</em> sichtbar markiert und dürfen fehlen. <strong>Veröffentlichen</strong> (Microsite/IS24) ist erst möglich, wenn alle Pflichtfelder erfüllt sind; Dateien wie der Energieausweis-Scan dürfen nachgereicht werden.
+        </div>
+<h2>Pflichtfelder (Publish-Blocker)</h2>
+<ul class="list-tight">
+<li>Adresse vollständig (PLZ/Ort/Straße/Nr.)</li>
+<li>Objektdaten: Typ, Preis, Wohnfläche, Zimmer, Baujahr</li>
+<li>Energieausweis (wenn vorhanden): Art, Endenergie-Wert, Hauptenergieträger, Baujahr (Gebäude), Effizienzklasse + Upload</li>
+<li>Mind. 1 Titelbild (Querformat, ≥ 1500px Breite)</li>
+</ul>
+<h2>Statusmodell</h2>
+<div class="flow">
+<span class="flow-step">Draft</span><span class="flow-arrow">→</span>
+<span class="flow-step">Ready-for-Review</span><span class="flow-arrow">→</span>
+<span class="flow-step">Publishable</span><span class="flow-arrow">→</span>
+<span class="flow-step">Published</span>
+</div>
+<p class="muted">Microsite und IS24 erhalten identische Pflichtinhalte (kein „Teaser“). Microsite bietet zusätzliche Medien/Interaktivität.</p>
+</section>
+<section class="section" id="s3">
+<h1>Zimmerverwaltung</h1>
+<h2>1 Dynamische Zimmer-Erfassung</h2>
+<div class="flow">
+<span class="flow-step">+ Zimmer hinzufügen</span>
+<span class="flow-arrow">→</span>
+<span class="flow-step">Typ wählen/definieren</span>
+<span class="flow-arrow">→</span>
+<span class="flow-step">Details erfassen</span>
+<span class="flow-arrow">→</span>
+<span class="flow-step">Medien zuordnen</span>
+</div>
+<h2>2 Zimmer-Datenstruktur</h2>
+<div class="room-card">
+<h4>Beispiel: Wohnzimmer</h4>
+<div class="grid two">
+<div>
+<strong>Stammdaten:</strong>
+<ul class="list-tight">
+<li>Typ: Wohnzimmer</li>
+<li>Größe: 35m²</li>
+<li>Lage: EG, Südausrichtung</li>
+<li>Boden: Eichenparkett</li>
+</ul>
+</div>
+<div>
+<strong>Features:</strong>
+<ul class="list-tight">
+<li>Kamin (funktionsfähig)</li>
+<li>Französische Balkone (2x)</li>
+<li>Stuck-Decke (restauriert)</li>
+<li>Einbauschränke</li>
+</ul>
+</div>
+</div>
+<strong>Individuelle Beschreibung:</strong>
+<p class="muted">"Das lichtdurchflutete Wohnzimmer bildet den Mittelpunkt der Wohnung. Die bodentiefen Fenster zur Südseite..."</p>
+<strong>Zugeordnete Medien:</strong> 8 Fotos, 1 Video, 1 360°-Aufnahme
+        </div>
+<h2>3 Vordefinierte Zimmertypen</h2>
+<div class="grid three">
+<article>
+<h4>Wohnräume</h4>
+<ul class="list-tight">
+<li>Wohnzimmer</li>
+<li>Schlafzimmer</li>
+<li>Kinderzimmer</li>
+<li>Arbeitszimmer</li>
+<li>Gästezimmer</li>
+<li>Esszimmer</li>
+<li>Bibliothek</li>
+</ul>
+</article>
+<article>
+<h4>Funktionsräume</h4>
+<ul class="list-tight">
+<li>Küche</li>
+<li>Badezimmer</li>
+<li>Gäste-WC</li>
+<li>Hauswirtschaftsraum</li>
+<li>Abstellraum</li>
+<li>Ankleide</li>
+<li>Speisekammer</li>
+</ul>
+</article>
+<article>
+<h4>Sonderräume</h4>
+<ul class="list-tight">
+<li>Dachboden</li>
+<li>Keller</li>
+<li>Garage</li>
+<li>Werkstatt</li>
+<li>Sauna</li>
+<li>Wintergarten</li>
+<li>+ Custom definierbar</li>
+</ul>
+</article>
+</div>
+<h2>4 KI-Unterstützung für Raumbeschreibungen</h2>
+<div class="callout">
+<strong>Smart Description Generator:</strong> Basierend auf Raumtyp, Größe und Features generiert die KI individuelle Beschreibungstexte
+        </div>
+<pre><code>Input: {
+  type: "Schlafzimmer",
+  size: 18,
+  features: ["Einbauschrank", "Balkon", "Parkettboden"],
+  orientation: "Ost",
+  floor: 2
+}
+
+KI-Output: "Das 18m² große Hauptschlafzimmer im 2. OG empfängt Sie 
+mit warmem Morgenlicht durch die Ostausrichtung. Der praktische 
+Einbauschrank bietet großzügigen Stauraum, während der private 
+Balkon zum entspannten Start in den Tag einlädt."</code></pre>
+<h2>5 Medien-Zuordnung pro Zimmer</h2>
+<ul>
+<li><strong>Drag &amp; Drop:</strong> Bilder direkt auf Zimmer ziehen</li>
+<li><strong>Auto-Detection:</strong> KI erkennt Raumtyp und schlägt Zuordnung vor</li>
+<li><strong>Reihenfolge:</strong> Per Zimmer definierbar für optimale Präsentation</li>
+<li><strong>Hero-Image:</strong> Ein Hauptbild pro Zimmer für Übersichten</li>
+</ul>
+<h2>6 Datenmodell (technisch, Auszug)</h2>
+<pre><code>Room {
+  roomId: UUID,
+  propertyId: UUID,
+  type: enum('wohnzimmer','schlafzimmer','kinderzimmer','arbeitszimmer','küche','bad','gäste','flur','abstell','sonst'),
+  title?: string,
+  shortLabel?: string,
+  sizeM2?: number,
+  features?: string[],
+  description?: richtext,
+  order?: int,
+  visible: boolean,
+  seoAnchor?: string
+}
+
+RoomMedia {
+  roomId: UUID,
+  mediaAssetId: UUID,
+  kind: enum('photo','video','pano'),
+  role: enum('hero','gallery','detail'),
+  order: int
+}</code></pre>
+<h2>Feldtabellen &amp; JSON‑Schema (MVP)</h2>
+<p>Pflicht (Draft/Publish) kennzeichnet GEG/IS24‑Relevanz. <em>ausstehend</em> = im Draft erlaubt, blockiert Publish.</p>
+<h2>Property (Stammdaten)</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Feld</th><th>Typ</th><th>Pflicht Draft</th><th>Pflicht Publish</th><th>Validierung</th><th>Quelle/Mapping</th></tr>
+<tr><td>type</td><td>enum(apartmentBuy|houseBuy|...)</td><td>ja</td><td>ja</td><td>Wohnen‑Typ</td><td>IS24 realestate type</td></tr>
+<tr><td>address.street / houseNumber / postcode / city</td><td>string</td><td>teilw.</td><td>ja</td><td>vollständig für Geocoding</td><td>IS24 address</td></tr>
+<tr><td>price.value / currency</td><td>number/string</td><td>ausstehend</td><td>ja</td><td>&gt; 0 (Ausnahmen s. IS24)</td><td>price element</td></tr>
+<tr><td>livingSpace / numberOfRooms</td><td>number</td><td>ausstehend</td><td>ja</td><td>&gt; 0</td><td>livingSpace, numberOfRooms</td></tr>
+<tr><td>builtYear</td><td>number</td><td>ausstehend</td><td>ja</td><td>4‑stellig</td><td>constructionYear</td></tr>
+<tr><td>showAddress</td><td>bool</td><td>nein</td><td>empf.</td><td>—</td><td>showAddress</td></tr>
+<tr><td>contact.externalId</td><td>string</td><td>nein</td><td>nein</td><td>Fallback IS24 default</td><td>contact/@id|externalId</td></tr>
+<tr><td>externalId</td><td>string</td><td>nein</td><td>nein</td><td>unique</td><td>externalId</td></tr>
+</table>
+<h2>EnergyCertificate (GEG)</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Feld</th><th>Typ</th><th>Pflicht Draft</th><th>Pflicht Publish</th><th>Validierung</th><th>Mapping</th></tr>
+<tr><td>type</td><td>enum(consumption|demand)</td><td>ausstehend</td><td>ja</td><td>—</td><td>buildingEnergyRatingType</td></tr>
+<tr><td>thermalCharacteristic</td><td>number</td><td>ausstehend</td><td>ja</td><td>&gt; 0</td><td>thermalCharacteristic</td></tr>
+<tr><td>energySources</td><td>enum[]</td><td>ausstehend</td><td>ja</td><td>mind. 1</td><td>energySourcesEnev2014</td></tr>
+<tr><td>includesWarmWater</td><td>bool</td><td>ausstehend</td><td>nein</td><td>—</td><td>energyConsumptionContainsWarmWater</td></tr>
+<tr><td>efficiencyClass</td><td>enum(A+..H)</td><td>ausstehend</td><td>ja</td><td>—</td><td>energyEfficiencyClass</td></tr>
+<tr><td>buildingYear</td><td>number</td><td>ausstehend</td><td>ja</td><td>4‑stellig</td><td>constructionYear</td></tr>
+<tr><td>certificateScan</td><td>file</td><td>ausstehend</td><td>ja</td><td>PDF/JPG/PNG</td><td>Attachment (PDF)</td></tr>
+</table>
+<h2>MediaAsset</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Feld</th><th>Typ</th><th>Pflicht Draft</th><th>Pflicht Publish</th><th>Validierung</th><th>Mapping</th></tr>
+<tr><td>file</td><td>image/video</td><td>ausstehend</td><td>ja (1 Titelbild)</td><td>min 1500px Breite</td><td>IS24 Attachment</td></tr>
+<tr><td>tags</td><td>string[]</td><td>nein</td><td>nein</td><td>Room/Feature‑Tags</td><td>—</td></tr>
+<tr><td>order</td><td>int</td><td>nein</td><td>empf.</td><td>Titelbild/Sortierung</td><td>Attachment order</td></tr>
+</table>
+<h2>Room</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Feld</th><th>Typ</th><th>Pflicht Draft</th><th>Pflicht Publish</th><th>Validierung</th><th>Bemerkung</th></tr>
+<tr><td>type</td><td>enum</td><td>nein</td><td>nein</td><td>—</td><td>wohnzimmer|schlafzimmer|…</td></tr>
+<tr><td>title/shortLabel</td><td>string</td><td>nein</td><td>nein</td><td>—</td><td>z. B. „Schlafzimmer 2“</td></tr>
+<tr><td>description</td><td>richtext</td><td>nein</td><td>nein</td><td>—</td><td>individuelle Beschreibung</td></tr>
+</table>
+<h2>RoomMedia</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Feld</th><th>Typ</th><th>Pflicht Draft</th><th>Pflicht Publish</th><th>Validierung</th><th>Bemerkung</th></tr>
+<tr><td>roomId</td><td>UUID</td><td>nein</td><td>nein</td><td>—</td><td>optional</td></tr>
+<tr><td>mediaAssetId</td><td>UUID</td><td>nein</td><td>nein</td><td>—</td><td>Zuordnung per Drag&amp;Drop</td></tr>
+<tr><td>role</td><td>enum(hero|gallery|detail)</td><td>nein</td><td>empf.</td><td>—</td><td>Microsite‑Reihenfolge</td></tr>
+</table>
+<h2>Listing / Lead / CMS Post</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Entität</th><th>Zentrale Felder</th><th>Pflicht Draft</th><th>Pflicht Publish</th></tr>
+<tr><td>Listing</td><td>status(Microsite, IS24), version, notes</td><td>—</td><td>—</td></tr>
+<tr><td>Lead</td><td>source, email, phone, message, status</td><td>—</td><td>—</td></tr>
+<tr><td>Post</td><td>title, slug, body, channels[], publishAt</td><td>—</td><td>—</td></tr>
+</table>
+<h2>JSON‑Schema (Auszug)</h2>
+<pre><code>{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ListingPayload",
+  "type": "object",
+  "properties": {
+    "property": {
+      "type": "object",
+      "required": ["type","address","livingSpace","numberOfRooms"],
+      "properties": {
+        "type": {"type": "string"},
+        "address": {
+          "type": "object",
+          "required": ["postcode","city"],
+          "properties": {
+            "street":{"type":"string"},
+            "houseNumber":{"type":"string"},
+            "postcode":{"type":"string"},
+            "city":{"type":"string"}
+          }
+        },
+        "price":{"type":"object","properties":{"value":{"type":"number"},"currency":{"type":"string"}}},
+        "livingSpace":{"type":"number"},
+        "numberOfRooms":{"type":"number"},
+        "builtYear":{"type":"integer"},
+        "showAddress":{"type":"boolean"}
+      }
+    },
+    "energyCertificate": {
+      "type": "object",
+      "properties": {
+        "type":{"enum":["consumption","demand"]},
+        "thermalCharacteristic":{"type":"number"},
+        "energySources":{"type":"array","items":{"type":"string"}},
+        "efficiencyClass":{"type":"string"},
+        "buildingYear":{"type":"integer"},
+        "certificateScan":{"type":"string", "contentEncoding":"base64", "contentMediaType":"application/pdf"}
+      }
+    },
+    "rooms":{"type":"array","items":{"type":"object","properties":{
+      "type":{"type":"string"},
+      "title":{"type":"string"},
+      "description":{"type":"string"}
+    }}},
+    "media":{"type":"array","items":{"type":"object","properties":{
+      "file":{"type":"string"},
+      "tags":{"type":"array","items":{"type":"string"}},
+      "order":{"type":"integer"}
+    }}},
+    "listing":{"type":"object","properties":{"status":{"type":"string"}}},
+    "leads":{"type":"array"}
+  }
+}</code></pre>
+</section>
+<section class="section" id="s4">
+<h1>Blog/News System</h1>
+<h2>1 Content-Management</h2>
+<div class="callout success">
+<strong>SEO-Strategie:</strong> Regelmäßiger Content für organischen Traffic auf allen Domains
+        </div>
+<h2>2 Multi-Domain Publishing</h2>
+<table>
+<thead>
+<tr><th>Content-Typ</th><th>Mögliche Ausspielung</th><th>SEO-Ziel</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Marktberichte</td>
+<td>muenchen-wohnen.de</td>
+<td>Lokale Keywords</td>
+</tr>
+<tr>
+<td>Ratgeber Verkauf</td>
+<td>lifeyourdreams.de + alle Städte</td>
+<td>Informational Intent</td>
+</tr>
+<tr>
+<td>Stadtteil-Guides</td>
+<td>Nur lokale Domain</td>
+<td>Local SEO</td>
+</tr>
+<tr>
+<td>Success Stories</td>
+<td>Alle Domains</td>
+<td>Trust Building</td>
+</tr>
+<tr>
+<td>Rechtstipps</td>
+<td>lifeyourdreams.de</td>
+<td>Authority Building</td>
+</tr>
+</tbody>
+</table>
+<h2>3 Blog-Datenmodell</h2>
+<pre><code>BlogPost
+├── Meta
+│   ├── Title
+│   ├── Slug
+│   ├── Author
+│   ├── PublishDate
+│   └── UpdateDate
+├── Content
+│   ├── Excerpt (SEO)
+│   ├── Body (Rich-Text/Markdown)
+│   ├── FeaturedImage
+│   └── Gallery[]
+├── SEO
+│   ├── MetaTitle
+│   ├── MetaDescription
+│   ├── Keywords[]
+│   └── StructuredData
+├── Publishing
+│   ├── Domains[] (wo ausspielen)
+│   ├── Categories[]
+│   ├── Tags[]
+│   └── Status (draft/published/scheduled)
+└── Analytics
+    ├── Views
+    ├── Shares
+    └── Conversions</code></pre>
+<h2>4 KI-gestützte Content-Erstellung</h2>
+<div class="grid two">
+<article>
+<h3>Blog-Assistent Features</h3>
+<ul class="list-tight">
+<li><strong>Themen-Vorschläge:</strong> Basierend auf Trends</li>
+<li><strong>Outline-Generator:</strong> Struktur vorgeben</li>
+<li><strong>Content-Erweiterung:</strong> Absätze ausbauen</li>
+<li><strong>SEO-Optimierung:</strong> Keywords einbauen</li>
+<li><strong>Tone-Anpassung:</strong> Zielgruppen-gerecht</li>
+<li><strong>Fakten-Check:</strong> Links zu Quellen</li>
+</ul>
+</article>
+<article>
+<h3>Content-Templates</h3>
+<ul class="list-tight">
+<li>Marktbericht München Q1/2025</li>
+<li>10 Tipps für den Wohnungsverkauf</li>
+<li>Stadtteil-Portrait: Schwabing</li>
+<li>Energieausweis erklärt</li>
+<li>Käufer-Checkliste</li>
+<li>Erfolgsgeschichte: Familie M.</li>
+</ul>
+</article>
+</div>
+<h2>5 Content-Kalender &amp; Workflow</h2>
+<ul>
+<li><strong>Redaktionsplan:</strong> 2-4 Posts/Woche vorplanen</li>
+<li><strong>Auto-Scheduling:</strong> Zeitgesteuerte Veröffentlichung</li>
+<li><strong>Cross-Posting:</strong> Ein Post → mehrere Domains</li>
+<li><strong>A/B-Testing:</strong> Headlines und Bilder testen</li>
+</ul>
+</section>
+<section class="section" id="s5">
+<h1>DSGVO &amp; Datensicherheit</h1>
+<div class="callout critical">
+<strong>Kritikalität:</strong> Immobiliendaten sind hochsensibel (Adresse + Eigentümer + Finanzen). Höchste Sicherheitsstandards sind Pflicht.
+        </div>
+<h2>1 Datenschutz by Design</h2>
+<div class="security-grid">
+<div class="security-level level-high">Kritisch</div>
+<div>Eigentümerdaten, Kaufpreise, Finanzunterlagen</div>
+<div class="security-level level-high">Kritisch</div>
+<div>Lead-Kontaktdaten, Bonitätsinfos</div>
+<div class="security-level level-medium">Mittel</div>
+<div>Objektadressen, Grundrisse, Energieausweise</div>
+<div class="security-level level-low">Niedrig</div>
+<div>Öffentliche Beschreibungen, Außenfotos</div>
+</div>
+<h2>2 Technische Schutzmaßnahmen</h2>
+<h3>Verschlüsselung</h3>
+<ul>
+<li><strong>In Transit:</strong> TLS 1.3 für alle Verbindungen</li>
+<li><strong>At Rest:</strong> AES-256-GCM für Datenbank und S3</li>
+<li><strong>Field-Level:</strong> Zusätzliche Verschlüsselung für PII</li>
+<li><strong>Key Management:</strong> AWS KMS mit automatischer Rotation</li>
+</ul>
+<h3>Zugriffskontrolle</h3>
+<ul>
+<li><strong>RBAC:</strong> Role-Based Access Control</li>
+<li><strong>MFA:</strong> Pflicht für alle Admin-Accounts</li>
+<li><strong>Session-Management:</strong> 30 Min Timeout, Device Binding</li>
+<li><strong>API-Security:</strong> Rate Limiting, API Keys, OAuth</li>
+</ul>
+<div class="callout">
+<strong>Entscheidung MVP (Verschlüsselung):</strong> 
+          Wir setzen auf <em>Field-/Envelope-Encryption</em> für sensible PII + KMS‑Keyrotation. 
+          <u>Begründung:</u> Kompatibel mit Suche, KI‑Assist und Validierungen. 
+          Für besonders sensible Dokumente (z. B. Finanzunterlagen) wird eine <em>optionale E2EE‑Ablage</em> vorgesehen (ohne KI &amp; Indexierung). 
+          <span class="muted">Option „vollständige Zero‑Knowledge“ bleibt als spätere Erweiterung (trade‑off zu KI/UX).</span>
+</div>
+<h3>Datentrennung</h3>
+<ul>
+<li><strong>Tenant Isolation:</strong> Strikte Mandantentrennung</li>
+<li><strong>Data Segmentation:</strong> PII getrennt von Objektdaten</li>
+<li><strong>Backup Encryption:</strong> Separate Keys für Backups</li>
+</ul>
+<h2>3 DSGVO-Compliance</h2>
+<table>
+<thead>
+<tr><th>Anforderung</th><th>Umsetzung</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Rechtsgrundlage</td>
+<td>Vertrag (Art. 6 Abs. 1 lit. b)</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Datenminimierung</td>
+<td>Nur notwendige Felder pflicht</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Zweckbindung</td>
+<td>Klare Zwecke pro Datenfeld</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Auskunftsrecht</td>
+<td>Self-Service Portal geplant</td>
+<td>R2</td>
+</tr>
+<tr>
+<td>Löschkonzept</td>
+<td>Automatisch nach 3 Jahren</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Portabilität</td>
+<td>JSON/CSV Export</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Privacy by Default</td>
+<td>Opt-in für alle Features</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<h2>4 Audit &amp; Monitoring</h2>
+<ul>
+<li><strong>Audit-Log:</strong> Alle Zugriffe auf PII werden protokolliert</li>
+<li><strong>Anomalie-Detection:</strong> Ungewöhnliche Zugriffsmuster</li>
+<li><strong>Data Leakage Prevention:</strong> Monitoring für Massen-Downloads</li>
+<li><strong>Security Scans:</strong> Wöchentliche Vulnerability Scans</li>
+<li><strong>Penetration Tests:</strong> Jährlich durch externe Firma</li>
+</ul>
+<h2>5 Incident Response Plan</h2>
+<div class="callout warning">
+<strong>72h Meldepflicht:</strong> Bei Datenschutzverletzungen muss innerhalb von 72h die Aufsichtsbehörde informiert werden
+        </div>
+<ol>
+<li><strong>Detection:</strong> Automatische Alerts bei Anomalien</li>
+<li><strong>Containment:</strong> Betroffene Systeme isolieren</li>
+<li><strong>Investigation:</strong> Forensische Analyse</li>
+<li><strong>Notification:</strong> Behörden und Betroffene informieren</li>
+<li><strong>Recovery:</strong> Systeme wiederherstellen</li>
+<li><strong>Lessons Learned:</strong> Prozesse verbessern</li>
+</ol>
+<h2>6 Datenschutz-Folgenabschätzung</h2>
+<p>Durchgeführt für:</p>
+<ul>
+<li>Lead-Scoring mit KI</li>
+<li>Automatisierte E-Mail-Kampagnen</li>
+<li>Verhaltensanalyse auf Microsites</li>
+<li>Cross-Domain-Tracking</li>
+</ul>
+<div class="callout warning">
+<strong>Hinweis „Zero‑Knowledge“:</strong> Echte Ende‑zu‑Ende‑Verschlüsselung (Server kann Inhalte nicht lesen) kollidiert mit KI‑Assistenz, Suche und Validierungen. Empfehlung: <em>Feld‑/Spalten‑Verschlüsselung</em> (Envelope‑Encryption) für besonders sensible PII; optionale E2EE nur für ausgewählte Dokumente (z. B. Finanzunterlagen).
+        </div>
+</section>
+<section class="section" id="s6">
+<h1>Microsite-Generator</h1>
+<div class="callout success">
+<strong>Priorität 1:</strong> Die eigenen Microsites sind das Kernprodukt - hier muss die volle Detailtiefe und Qualität sichtbar werden
+        </div>
+<h2>1 Template-Engine</h2>
+<ul>
+<li><strong>Responsive Design:</strong> Mobile-first, optimiert für alle Devices</li>
+<li><strong>Performance:</strong> &lt; 2s Ladezeit, 95+ PageSpeed Score</li>
+<li><strong>SEO-optimiert:</strong> Schema.org, Meta-Tags, Sitemap</li>
+<li><strong>Accessibility:</strong> WCAG 2.1 AA konform</li>
+</ul>
+<h2>2 Dynamische Sections</h2>
+<ol>
+<li><strong>Hero:</strong> Vollbild-Foto mit Key Facts</li>
+<li><strong>Zimmer-Navigator:</strong> Interaktive Zimmer-Übersicht</li>
+<li><strong>Foto-Galerie:</strong> Nach Zimmern gruppiert</li>
+<li><strong>360°-Tour:</strong> Eingebettete Panoramen</li>
+<li><strong>Grundrisse:</strong> Interaktiv mit Zoom</li>
+<li><strong>Lage &amp; Umgebung:</strong> Maps-Integration</li>
+<li><strong>Energie &amp; Kosten:</strong> Transparenz-Box</li>
+<li><strong>Kontakt:</strong> Multi-Channel (Form, Tel, WhatsApp)</li>
+</ol>
+<h2>3 Zimmer-Showcase</h2>
+<p>Jedes erfasste Zimmer bekommt einen eigenen Bereich mit:</p>
+<ul>
+<li>Karussell mit zimmer-spezifischen Fotos</li>
+<li>Individuelle Beschreibung</li>
+<li>Feature-Liste</li>
+<li>360°-View (falls vorhanden)</li>
+</ul>
+<h2>4 Progressive Web App</h2>
+<ul>
+<li><strong>Offline-Fähig:</strong> Service Worker cacht Inhalte</li>
+<li><strong>Installierbar:</strong> Add to Homescreen</li>
+<li><strong>Push-Notifications:</strong> Bei neuen Objekten</li>
+<li><strong>Share-API:</strong> Native Sharing</li>
+</ul>
+<h2>Medien-Management (Tagging, Renditions, Performance)</h2>
+<h2>Tagging &amp; Zuordnung</h2>
+<ul class="list-tight">
+<li>Room‑Tags (Wohnzimmer/Bad/Küche …) + Feature‑Tags (Parkett, Balkon, Ausblick …)</li>
+<li>Drag &amp; Drop Zuordnung zu Zimmern (RoomMedia)</li>
+<li>Auto‑Tagging via KI (Vorschlag, manuelle Bestätigung)</li>
+</ul>
+<h2>Renditions</h2>
+<ul class="list-tight">
+<li>Responsive Varianten: 3840/2560/1920/1280/800/400 px (WebP/JPEG)</li>
+<li>EXIF‑Rotation, Auto‑Crop, leichtes Sharpening, Qualitätsziel 80–85</li>
+<li>CDN‑Auslieferung mit Cache‑Busting (Versionierung)</li>
+</ul>
+<h2>Video</h2>
+<ul class="list-tight">
+<li>Upload MP4 → Transcode zu HLS (adaptive), Posterframe</li>
+<li>Streaming via CDN, Bandbreitenlimits, Access‑Control</li>
+</ul>
+</section>
+<section class="section" id="s7">
+<h1>Lead-Management</h1>
+<h2>1 Multi-Channel Lead-Erfassung</h2>
+<ul>
+<li><strong>Microsite:</strong> Primäre Lead-Quelle mit voller Kontrolle</li>
+<li><strong>IS24:</strong> Import via API oder E-Mail-Parsing</li>
+<li><strong>Telefon:</strong> Manueller Eintrag mit Call-Notes</li>
+<li><strong>WhatsApp:</strong> Business API Integration (R2)</li>
+</ul>
+<h2>2 Lead-Qualifizierung</h2>
+<table>
+<thead>
+<tr><th>Score</th><th>Kriterien</th><th>Aktion</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>A (Hot)</td>
+<td>Finanzierung bestätigt, schneller Kauf geplant</td>
+<td>Sofort-Benachrichtigung</td>
+</tr>
+<tr>
+<td>B (Warm)</td>
+<td>Ernsthafte Anfrage, Details geklärt</td>
+<td>&lt; 2h Antwort</td>
+</tr>
+<tr>
+<td>C (Cold)</td>
+<td>Erste Orientierung, vage Anfrage</td>
+<td>&lt; 24h Antwort</td>
+</tr>
+<tr>
+<td>D (Spam)</td>
+<td>Automatisiert, Dublette, unseriös</td>
+<td>Auto-Reject</td>
+</tr>
+</tbody>
+</table>
+<h2>3 Automatisierungen</h2>
+<ul>
+<li><strong>Smart Reply:</strong> KI schlägt Antworten vor</li>
+<li><strong>Follow-up Sequenz:</strong> Nach 3, 7, 14 Tagen</li>
+<li><strong>Document Unlock:</strong> Bei Qualifizierung</li>
+<li><strong>Calendar Booking:</strong> Für Besichtigungen (R2)</li>
+</ul>
+<h2>4 Verkäufer-Benachrichtigung &amp; Status (MVP+)</h2>
+<ul class="list-tight">
+<li>Automatische E‑Mail an Verkäufer bei neuem Lead (Template, DSGVO‑konform)</li>
+<li>Späteres Verkäufer‑UI: Status pro Anfrage setzen (Interessant / Besichtigung gewünscht / Termin geplant / Absage)</li>
+<li>Audit: Statuswechsel mit Zeitstempel und User-ID</li>
+</ul>
+<h2>5 State Machine (einfach)</h2>
+<div class="flow">
+<span class="flow-step">NEW</span><span class="flow-arrow">→</span>
+<span class="flow-step">INTERESTED</span><span class="flow-arrow">→</span>
+<span class="flow-step">VIEWING_REQUESTED</span><span class="flow-arrow">→</span>
+<span class="flow-step">VIEWING_SCHEDULED</span><span class="flow-arrow">→</span>
+<span class="flow-step">OFFERED</span><span class="flow-arrow">→</span>
+<span class="flow-step">NOTAR_INITIATED</span><span class="flow-arrow">→</span>
+<span class="flow-step">WON/LOST</span>
+</div>
+<p class="muted">Scoring nur assistierend (keine automatisierten Entscheidungen). Für Profiling-Features ggf. Einwilligung &amp; DSFA erforderlich.</p>
+<h2>6 Policy: Manuelles Scoring (Option A)</h2>
+<ul class="list-tight">
+<li><strong>Kein automatisiertes Entscheiden:</strong> KI liefert nur Hinweise (Textextrakte, Duplikat‑Hinweise), die Entscheidung trifft immer ein Mensch.</li>
+<li><strong>Transparenz:</strong> Jede Änderung am Lead‑Status wird protokolliert (Wer/Was/Wann), Hinweise der KI werden als „Assist‑Notiz“ gespeichert.</li>
+<li><strong>DSFA:</strong> Nicht erforderlich im MVP (kein Profiling mit Rechtswirkung). Bei späterer Teilautomatisierung wird eine DSFA evaluiert.</li>
+</ul>
+<h2>Seller‑UI Wireframe (R1)</h2>
+<p>Minimaler, passwortloser Zugang per Magic‑Link. Nur objektbezogene Leads sichtbar.</p>
+<div style="border:1px solid #e5e7eb;border-radius:12px;padding:16px">
+<header style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<div><strong>Life Your Dreams</strong> · Seller‑UI</div>
+<div style="font-size:12px;color:#666">Token: ****‑**** (gültig bis 24 h)</div>
+</header>
+<section style="margin-bottom:16px">
+<h3 style="margin:6px 0">Objekt: Musterstraße 1, 80331 München</h3>
+<p class="muted">Lead‑Liste (nur dieses Objekt):</p>
+<div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+<div>
+<div><strong>Max Mustermann</strong> · max@example.com · 0176‑…</div>
+<div class="muted">„Ich interessiere mich für eine Besichtigung am Wochenende …“</div>
+</div>
+<div>
+<button>Interessant</button>
+<button>Besichtigung gewünscht</button>
+<button>Termin geplant</button>
+<button>Absage</button>
+</div>
+</div>
+</section>
+<footer class="muted" style="font-size:12px">Durch Klick wird der Status mit Zeitstempel gespeichert. Dieser Link ist personalisiert &amp; widerrufbar.</footer>
+</div>
+</section>
+<section class="section" id="s8">
+<h1>KI-Integration</h1>
+<h2>1 Sichere KI-Anwendungsfälle</h2>
+<h3>Content-Generation</h3>
+<ul>
+<li><strong>Raumbeschreibungen:</strong> Aus strukturierten Daten</li>
+<li><strong>Blog-Posts:</strong> Mit Fakten-Basis und Quellenangaben</li>
+<li><strong>SEO-Texte:</strong> Keyword-optimiert aber natürlich</li>
+<li><strong>E-Mail-Templates:</strong> Personalisiert aber regelbasiert</li>
+</ul>
+<h3>Analyse &amp; Optimierung</h3>
+<ul>
+<li><strong>Foto-Qualität:</strong> Schärfe, Belichtung, Komposition</li>
+<li><strong>Text-Qualität:</strong> Lesbarkeit, SEO-Score</li>
+<li><strong>Preis-Analyse:</strong> Marktkonformität prüfen</li>
+<li><strong>Lead-Scoring:</strong> Qualität der Anfrage bewerten</li>
+</ul>
+<h2>2 KI-Guardrails</h2>
+<div class="callout warning">
+<strong>Regel:</strong> KI generiert nur aus verifizierten Daten, keine freie Erfindung
+        </div>
+<pre><code>// Beispiel: Sichere Raumbeschreibung
+const generateRoomDescription = (room) =&gt; {
+  const prompt = `
+    Erstelle eine Beschreibung NUR aus diesen Fakten:
+    - Typ: ${room.type}
+    - Größe: ${room.size}m²
+    - Features: ${room.features.join(', ')}
+    
+    KEINE zusätzlichen Erfindungen!
+    KEINE Aussagen über Zustand ohne Daten!
+    KEINE Preisbewertungen!
+  `;
+  
+  return ai.generate(prompt, {
+    temperature: 0.3,  // Niedrig für Konsistenz
+    maxTokens: 200,
+    stopSequences: ['€', 'Preis', 'Wert']
+  });
+};</code></pre>
+<h2>3 Blog-Assistent Workflow</h2>
+<ol>
+<li><strong>Themen-Research:</strong> Trending Keywords analysieren</li>
+<li><strong>Outline erstellen:</strong> Struktur mit H2/H3</li>
+<li><strong>Content generieren:</strong> Absatz für Absatz</li>
+<li><strong>Fakten-Check:</strong> Alle Aussagen verifizieren</li>
+<li><strong>SEO-Optimierung:</strong> Keywords natürlich einbauen</li>
+<li><strong>Human Review:</strong> Finale Freigabe durch Mensch</li>
+</ol>
+</section>
+<section class="section" id="s9">
+<h1>Portal-Anbindungen</h1>
+<div class="callout">
+<strong>Kontext:</strong> Portale sind wichtige Reichweiten-Kanäle, aber die eigene Microsite bleibt die primäre Präsentation
+        </div>
+<h2>1 IS24 Integration</h2>
+<ul>
+<li><strong>OAuth 1.0:</strong> Sichere Authentifizierung</li>
+<li><strong>REST API:</strong> Create, Update, Delete, Publish</li>
+<li><strong>Feld-Mapping:</strong> Automatische Konvertierung</li>
+<li><strong>Media-Sync:</strong> Bilder-Upload mit Kompression</li>
+<li><strong>Lead-Import:</strong> Via API oder E-Mail-Parser</li>
+</ul>
+<h2>2 Priorisierung Microsite vs. Portal</h2>
+<table>
+<thead>
+<tr><th>Feature</th><th>Microsite</th><th>IS24</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Zimmerbeschreibungen</td>
+<td>✓ Vollständig</td>
+<td>Zusammengefasst</td>
+</tr>
+<tr>
+<td>Fotos</td>
+<td>✓ Unbegrenzt</td>
+<td>Max. 50</td>
+</tr>
+<tr>
+<td>360°-Tours</td>
+<td>✓ Integriert</td>
+<td>Link</td>
+</tr>
+<tr>
+<td>Dokumente</td>
+<td>✓ Gestaffelt</td>
+<td>Basis</td>
+</tr>
+<tr>
+<td>Branding</td>
+<td>✓ Voll</td>
+<td>Minimal</td>
+</tr>
+</tbody>
+</table>
+<h2>3 Zukünftige Portale (Roadmap)</h2>
+<ul>
+<li><strong>ImmoWelt:</strong> XML-Feed geplant (R3)</li>
+<li><strong>eBay Kleinanzeigen:</strong> API in Evaluation</li>
+<li><strong>Ohne-Makler.net:</strong> Manuell/Semi-Auto</li>
+</ul>
+<h3>1 Phasenplan IS24</h3>
+<ul class="list-tight">
+<li><strong>Phase 0:</strong> Manuelles Copy/Paste (Backoffice-Preview → IS24 UI)</li>
+<li><strong>Phase 1:</strong> API‑Integration (OAuth 1.0a), Insert/Update, Publish auf Kanal 10000, Attachments</li>
+<li><strong>Phase 2:</strong> Fehler‑Rückkanal, Delta‑Updates, Retry/Backoff, Monitoring</li>
+</ul>
+<p class="muted">Lead‑Import: abhängig von IS24‑Schnittstellen (API/Export/Forwarding). Im MVP werden Leads primär über Microsite erfasst.</p>
+<h3>2 Fehler‑Rückkanal &amp; Monitoring</h3>
+<ul class="list-tight">
+<li><strong>Top API Errors:</strong> Fehlercodes und Meldungen werden ins Backoffice gemappt; Operator‑Hinweise mit konkretem Feld/Endpunkt.</li>
+<li><strong>Publish‑Channels:</strong> Ermittlung via <code>GET /offer/v1.0/publishchannel</code> (typisch: <code>10000</code>=IS24, <code>10001</code>=Customer Homepage). Veröffentlichung per Publish‑Endpoint.</li>
+<li><strong>Attachments:</strong> Upload via <em>multipart/form-data</em> oder <em>Upload‑Ticket → S3</em>; Reihenfolge/Titelbild via Attachment‑Order.</li>
+<li><strong>Monitoring:</strong> Retry/Backoff, Dead‑Letter Queue für dauerhafte Fehler, Alerts (Slack/Email).</li>
+</ul>
+<p class="muted">Siehe IS24‑Doku zu OAuth 1.0a (Three‑Legged), Publish‑Channels und Attachments.</p>
+<h2>IS24 Payload‑Skizzen (JSON/XML, exemplarisch)</h2>
+<p class="muted">Feldnamen variieren je Immobilientyp. Bitte die offiziellen Beispiele je Typ nutzen.</p>
+<h2>Insert Real Estate (JSON, Beispiel „apartmentRent“)</h2>
+<pre><code>POST /offer/v1.0/user/{username}/realestate
+Content-Type: application/json
+
+{
+  "realestates.apartmentRent": {
+    "externalId": "LYD-EXT-123",
+    "title": "Helle 3‑ZKB in Toplage – Balkon &amp; Lift",
+    "address": {
+      "street": "Musterstr",
+      "houseNumber": "1",
+      "postcode": "80331",
+      "city": "München"
+    },
+    "realEstateState": "INACTIVE",
+    "showAddress": true,
+    "contact": {"@id": "12345678"},
+    "apartmentType": "APARTMENT",
+    "livingSpace": 86.0,
+    "numberOfRooms": 3.0,
+    "firingTypes": [{"firingType": "GAS"}],
+    "energySourcesEnev2014": {"energySourceEnev2014": "GAS"},
+    "courtage": {"hasCourtage": "NO"}
+  }
+}</code></pre>
+<p>Quelle &amp; vollständiges Beispiel: „Insert a Real Estate“. Nach dem Insert ist das Objekt <em>nicht</em> veröffentlicht; Veröffentlichung via Publish‑Endpoint.</p>
+<h2>Publish Real Estate</h2>
+<pre><code>POST /offer/v1.0/publish
+Content-Type: application/json
+
+{
+  "publishObject": {
+    "realestateid": 123456,
+    "publishchannelid": 10000
+  }
+}</code></pre>
+<p>Publish‑Channels via Endpoint ermitteln (typisch: <code>10000</code>=ImmoScout24.de, <code>10001</code>=Customer Homepage).</p>
+<h2>List Publication Channels (by object)</h2>
+<pre><code>GET /offer/v1.0/publish?realestate=123456</code></pre>
+<h2>Insert Attachment (Multipart)</h2>
+<pre><code>POST /offer/v1.0/user/{username}/realestate/{realEstateId}/attachment/
+Content-Type: multipart/form-data; boundary=---X
+
+---X
+Content-Disposition: form-data; name="attachment"; filename="wohnzimmer.jpg"
+Content-Type: image/jpeg
+
+&lt;binary&gt;
+---X
+Content-Disposition: form-data; name="metadata"
+Content-Type: application/json
+
+{"attachment":{"title":"Wohnzimmer","floorplan":false,"titlePicture":true}}
+---X--</code></pre>
+<h2>Upload‑Ticket → S3 (Alternative)</h2>
+<p>Upload‑Ticket anfragen → direkt nach S3 posten → Attachment‑ID zurück → Objekt/Projekt zuordnen.</p>
+<h2>ImmoScout24 – Fehler‑Rückkanal &amp; Monitoring</h2>
+<ul class="list-tight">
+<li><strong>409 CONFLICT:</strong> foreignobjectid/externalId nicht unique → neue ID vergeben/retry.</li>
+<li><strong>400 BAD REQUEST:</strong> Feldreihenfolge/Schema verletzt → Felder in der geforderten Reihenfolge senden.</li>
+<li><strong>Address ungeocodable:</strong> wgs84Coordinate mitsenden, sonst IS24‑Geocoder versucht’s automatisch.</li>
+<li><strong>Publish fehlgeschlagen:</strong> Kanal nicht erlaubt → vorher via „Get Publish channel“ prüfen.</li>
+</ul>
+<p class="muted">Siehe: Insert/Update/Publish/Attachments, Publish‑Channels, Three‑Legged OAuth.</p>
+</section>
+<section class="section" id="s10">
+<h1>Architektur &amp; Tech-Stack</h1>
+<h2>1 Cloud-Native Architecture (AWS)</h2>
+<pre><code>┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│   CloudFront│────▶│   ALB/WAF    │────▶│  ECS Fargate│
+│     CDN     │     │              │     │   (Next.js) │
+└─────────────┘     └──────────────┘     └─────────────┘
+                                                 │
+                    ┌──────────────┐            ▼
+                    │     RDS      │◀──────[API Gateway]
+                    │  PostgreSQL  │            ▲
+                    └──────────────┘            │
+                                          ┌─────────────┐
+┌─────────────┐     ┌──────────────┐     │   Lambda    │
+│      S3     │────▶│   Lambda     │     │  Functions  │
+│   Storage   │     │Image Process │     └─────────────┘
+└─────────────┘     └──────────────┘            ▲
+                                                 │
+                    ┌──────────────┐     ┌─────────────┐
+                    │   ElastiCache│◀────│     SQS     │
+                    │    Redis     │     │   Queues    │
+                    └──────────────┘     └─────────────┘</code></pre>
+<h2>2 Security Layers</h2>
+<ul>
+<li><strong>WAF:</strong> SQL Injection, XSS Protection</li>
+<li><strong>VPC:</strong> Private Subnets für DB/Cache</li>
+<li><strong>Secrets Manager:</strong> API Keys, DB Passwords</li>
+<li><strong>IAM:</strong> Least Privilege Principle</li>
+<li><strong>CloudTrail:</strong> Audit aller API Calls</li>
+</ul>
+<h2>3 Skalierung &amp; Performance</h2>
+<ul>
+<li><strong>Auto-Scaling:</strong> ECS Tasks nach CPU/Memory</li>
+<li><strong>Read Replicas:</strong> Für Analytics Queries</li>
+<li><strong>Edge Caching:</strong> Static Assets &lt; 50ms</li>
+<li><strong>Database Pooling:</strong> PgBouncer</li>
+<li><strong>Job Queue:</strong> Async Processing</li>
+</ul>
+</section>
+<section class="section" id="s11">
+<h1>Roadmap</h1>
+<h2>1 MVP Phase (Wochen 1-8)</h2>
+<table>
+<thead>
+<tr><th>Woche</th><th>Fokus</th><th>Deliverables</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1-2</td>
+<td>Foundation</td>
+<td>DB Schema, Auth, Basic CRUD</td>
+</tr>
+<tr>
+<td>3-4</td>
+<td>Zimmerverwaltung</td>
+<td>Dynamische Zimmer, Beschreibungen</td>
+</tr>
+<tr>
+<td>5-6</td>
+<td>Microsite-Generator</td>
+<td>Templates, Zimmer-Showcase</td>
+</tr>
+<tr>
+<td>7-8</td>
+<td>Blog &amp; Leads</td>
+<td>CMS, E-Mail-Automation</td>
+</tr>
+</tbody>
+</table>
+<h2>2 Release 1 (Monate 3-4)</h2>
+<ul>
+<li>IS24 API Integration</li>
+<li>KI-Features (Texte, Analyse)</li>
+<li>Verkäufer-Portal</li>
+<li>Analytics Dashboard</li>
+</ul>
+<h2>3 Release 2 (Monate 5-6)</h2>
+<ul>
+<li>Besichtigungskalender</li>
+<li>Mobile App</li>
+<li>360° Creator</li>
+<li>A/B Testing</li>
+</ul>
+<h2>4 Success Metrics</h2>
+<ul>
+<li><strong>Woche 8:</strong> 2 vollständige Objekte live</li>
+<li><strong>Monat 3:</strong> 10 Objekte, 50 Leads/Monat</li>
+<li><strong>Monat 6:</strong> 50 Objekte, 500 Leads/Monat</li>
+<li><strong>Jahr 1:</strong> 200 Objekte, Profitabilität</li>
+</ul>
+</section>
+</main>
+</div>
+<script>
+    // Enhanced TOC with smooth scroll
+    const links=[...document.querySelectorAll('#toc a')];
+    const sections=[...document.querySelectorAll('.section')];
+    
+    function onScroll(){
+      let y=window.scrollY;
+      let cur=sections.findLast(s=>s.offsetTop<=y+100) || sections[0];
+      links.forEach(a=>{
+        a.classList.toggle('active', a.getAttribute('href')==='#'+cur.id);
+        a.setAttribute('aria-current', a.classList.contains('active') ? 'true' : 'false');
+      });
+    }
+    
+    links.forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      });
+    });
+    
+    document.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  </script>
+</body>
+</html>
