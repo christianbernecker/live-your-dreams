@@ -7,7 +7,7 @@
   "files": ["dist"],
   "scripts": {
     "build": "npm run build:css && npm run build:types",
-    "build:css": "mkdir -p dist/styles && cp src/styles/*.css dist/styles/",
+    "build:css": "mkdir -p dist/styles && cp -r src/styles/* dist/styles/",
     "build:types": "tsc --emitDeclarationOnly --outDir dist",
     "dev": "npm run build:css -- --watch",
     "clean": "rm -rf dist"

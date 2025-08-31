@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:reset": "npx prisma migrate reset --force && pnpm db:seed"
   },
   "dependencies": {
     "@lifeyourdreams/design-system": "workspace:*",
@@ -23,7 +25,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "^3.22.0",
-    "nodemailer": "^6.9.0"
+    "nodemailer": "^6.9.0",
+    "next-auth": "^4.24.5",
+    "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
@@ -37,6 +41,8 @@
     "tailwindcss": "^3.3.0",
     "typescript": "^5.3.3",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32"
+    "postcss": "^8.4.32",
+    "@types/bcryptjs": "^2.4.6",
+    "tsx": "^4.7.0"
   }
 }

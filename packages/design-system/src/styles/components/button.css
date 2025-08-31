@@ -1,0 +1,79 @@
+/* Life Your Dreams Design System - Button Component */
+
+.lds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--typography-font-family-sans);
+  font-weight: var(--typography-font-weight-medium);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--easing-standard);
+  cursor: pointer;
+  border: var(--border-width-sm) solid transparent;
+  text-decoration: none;
+  user-select: none;
+}
+
+.lds-button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Variants */
+.lds-button--primary {
+  background-color: var(--color-brand-primary);
+  color: white;
+  border-color: var(--color-brand-primary);
+}
+
+.lds-button--primary:hover:not(:disabled) {
+  background-color: var(--color-brand-secondary);
+  border-color: var(--color-brand-secondary);
+}
+
+.lds-button--secondary {
+  background-color: var(--color-surface-elevated);
+  color: var(--color-brand-primary);
+  border-color: var(--color-surface-elevated);
+}
+
+.lds-button--secondary:hover:not(:disabled) {
+  background-color: var(--color-surface-default);
+}
+
+.lds-button--outline {
+  background-color: transparent;
+  color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+
+.lds-button--outline:hover:not(:disabled) {
+  background-color: var(--color-surface-elevated);
+}
+
+/* Sizes */
+.lds-button--sm {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--typography-font-size-sm);
+  line-height: var(--typography-line-height-tight);
+}
+
+.lds-button--md {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--typography-font-size-base);
+  line-height: var(--typography-line-height-normal);
+}
+
+.lds-button--lg {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--typography-font-size-lg);
+  line-height: var(--typography-line-height-normal);
+}
+
+/* States */
+.lds-button:disabled,
+.lds-button--disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}

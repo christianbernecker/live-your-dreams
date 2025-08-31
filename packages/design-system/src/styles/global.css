@@ -1,4 +1,5 @@
 @import '../../../design-tokens/dist/css/tokens.css';
+@import './components/index.css';
 
 :root {
   --lds-color-primary: var(--color-brand-primary);
