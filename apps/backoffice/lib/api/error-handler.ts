@@ -8,8 +8,8 @@ export class ApiError extends Error {
   }
 }
 
-export const handle = (fn: (req: Request) => Promise<Response>) => 
-  async (req: Request) => {
+export const handle = (fn: (req: any) => Promise<Response>) => 
+  async (req: any) => {
     try {
       return await fn(req);
     } catch (e: any) {
