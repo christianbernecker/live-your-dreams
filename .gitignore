@@ -47,3 +47,16 @@ test-results/
 .cache/
 .turbo/
 .eslintcache
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+reset --soft HEAD.tfvars.example
+
+# AWS Credentials (Security)
+docs/Credentials/
+
+# Terraform Providers (Large files)
+.terraform.lock.hcl

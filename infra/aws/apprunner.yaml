@@ -1,0 +1,45 @@
+# AWS App Runner Configuration for Live Your Dreams Backoffice
+version: 1.0
+runtime: docker
+build:
+  commands:
+    build:
+      - echo "Building Live Your Dreams Backoffice..."
+      - cd apps/backoffice
+      - npm install -g pnpm
+      - pnpm install --frozen-lockfile
+      - pnpm build
+  env:
+    - name: NODE_ENV
+      value: production
+    - name: NEXT_TELEMETRY_DISABLED
+      value: "1"
+
+run:
+  runtime-version: latest
+  command: pnpm start
+  network:
+    port: 3000
+    env: PORT
+  env:
+    - name: PORT
+      value: "3000"
+    - name: NODE_ENV
+      value: production
+    # Secrets werden über AWS Parameter Store injiziert
+    - name: DATABASE_URL
+      value: ${DATABASE_URL}
+    - name: REDIS_URL
+      value: ${REDIS_URL}
+    - name: NEXTAUTH_SECRET
+      value: ${NEXTAUTH_SECRET}
+    - name: NEXTAUTH_URL
+      value: ${NEXTAUTH_URL}
+    - name: AWS_ACCESS_KEY_ID
+      value: ${AWS_ACCESS_KEY_ID}
+    - name: AWS_SECRET_ACCESS_KEY
+      value: ${AWS_SECRET_ACCESS_KEY}
+    - name: AWS_S3_BUCKET
+      value: ${AWS_S3_BUCKET}
+    - name: AWS_REGION
+      value: eu-central-1
