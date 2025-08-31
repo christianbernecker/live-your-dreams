@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Life Your Dreams Design System • Setup & Implementation</title>
+  <title>Live Your Dreams Design System • Setup & Implementation</title>
   <style>
     :root {
       /* LYD Brand Colors */
@@ -183,10 +183,10 @@
         
         <!-- OVERVIEW -->
         <section id="overview">
-          <h1>Life Your Dreams Design System</h1>
+          <h1>Live Your Dreams Design System</h1>
           
           <div class="callout">
-            <strong>Strategie:</strong> Wir adaptieren das Porsche Design System (v3) für Life Your Dreams. Alle Porsche-Referenzen werden entfernt und durch unsere CI Guidelines ersetzt. Das System läuft unter <code>designsystem.lifeyourdreams.de</code> (intern, nicht öffentlich).
+            <strong>Strategie:</strong> Wir adaptieren das Porsche Design System (v3) für Live Your Dreams. Alle Porsche-Referenzen werden entfernt und durch unsere CI Guidelines ersetzt. Das System läuft unter <code>designsystem.liveyourdreams.de</code> (intern, nicht öffentlich).
           </div>
           
           <h2>Warum Porsche Design System als Basis?</h2>
@@ -199,7 +199,7 @@
           
           <h2>Architektur</h2>
           <pre>
-designsystem.lifeyourdreams.de/
+designsystem.liveyourdreams.de/
 ├── packages/
 │   ├── components/           # Web Components (angepasst)
 │   ├── components-react/      # React Wrapper
@@ -242,9 +242,9 @@ npm install</pre>
           <h2>2. Environment Setup</h2>
           <pre>
 # .env.local
-NEXT_PUBLIC_DESIGN_SYSTEM_URL=https://designsystem.lifeyourdreams.de
-NEXT_PUBLIC_CDN_URL=https://cdn.lifeyourdreams.de
-STORYBOOK_URL=https://designsystem.lifeyourdreams.de/storybook
+NEXT_PUBLIC_DESIGN_SYSTEM_URL=https://designsystem.liveyourdreams.de
+NEXT_PUBLIC_CDN_URL=https://cdn.liveyourdreams.de
+STORYBOOK_URL=https://designsystem.liveyourdreams.de/storybook
 
 # Basic Auth for internal access
 BASIC_AUTH_USER=lyd_team
@@ -297,7 +297,7 @@ networks:
 # docker/nginx.conf
 server {
     listen 80;
-    server_name designsystem.lifeyourdreams.de;
+    server_name designsystem.liveyourdreams.de;
 
     # Basic Auth - PFLICHT!
     auth_basic "LYD Design System - Internal Only";
@@ -416,7 +416,7 @@ fi</pre>
             </tr>
             <tr>
               <td>Porsche</td>
-              <td>Life Your Dreams</td>
+              <td>Live Your Dreams</td>
               <td>*.md, comments</td>
             </tr>
             <tr>
@@ -426,7 +426,7 @@ fi</pre>
             </tr>
             <tr>
               <td>@porsche-design-system</td>
-              <td>@lifeyourdreams/design-system</td>
+              <td>@liveyourdreams/design-system</td>
               <td>package.json, imports</td>
             </tr>
             <tr>
@@ -453,7 +453,7 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx"
 
 find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) \
   -not -path "./node_modules/*" \
-  -exec sed -i '' 's/Porsche/Life Your Dreams/g' {} \;
+  -exec sed -i '' 's/Porsche/Live Your Dreams/g' {} \;
 
 # CSS prefix
 find . -type f -name "*.css" -o -name "*.scss" \
@@ -462,7 +462,7 @@ find . -type f -name "*.css" -o -name "*.scss" \
 
 # Package names
 find . -type f -name "package.json" \
-  -exec sed -i '' 's/@porsche-design-system/@lifeyourdreams\/design-system/g' {} \;
+  -exec sed -i '' 's/@porsche-design-system/@liveyourdreams\/design-system/g' {} \;
 
 echo "✅ Migration complete! Review changes and test."</pre>
 
@@ -795,7 +795,7 @@ import { PButton } from '@porsche-design-system/components-react';
 &lt;/PButton&gt;
 
 // After (LYD)
-import { LdsButton } from '@lifeyourdreams/design-system-react';
+import { LdsButton } from '@liveyourdreams/design-system-react';
 
 &lt;LdsButton variant="primary" icon="arrow-right"&gt;
   Weiter
@@ -818,7 +818,7 @@ import { LdsButton } from '@lifeyourdreams/design-system-react';
           <h2>1. Package Installation</h2>
           <pre>
 # Im Backoffice-Projekt
-npm install @lifeyourdreams/design-system-react @lifeyourdreams/design-tokens
+npm install @liveyourdreams/design-system-react @liveyourdreams/design-tokens
 
 # Peer Dependencies
 npm install @webcomponents/webcomponentsjs</pre>
@@ -826,8 +826,8 @@ npm install @webcomponents/webcomponentsjs</pre>
           <h2>2. Setup in Next.js</h2>
           <pre>
 // app/layout.tsx
-import '@lifeyourdreams/design-system/dist/styles/global.css';
-import { LdsProvider } from '@lifeyourdreams/design-system-react';
+import '@liveyourdreams/design-system/dist/styles/global.css';
+import { LdsProvider } from '@liveyourdreams/design-system-react';
 
 export default function RootLayout({ children }) {
   return (
@@ -850,7 +850,7 @@ import {
   LdsTable,
   LdsInput,
   LdsSelect 
-} from '@lifeyourdreams/design-system-react';
+} from '@liveyourdreams/design-system-react';
 
 export default function PropertiesPage() {
   return (
@@ -884,7 +884,7 @@ import {
   LdsSelect,
   LdsTextarea,
   LdsButton 
-} from '@lifeyourdreams/design-system-react';
+} from '@liveyourdreams/design-system-react';
 
 export function PropertyForm() {
   const { register, handleSubmit } = useForm();
@@ -935,9 +935,9 @@ export function PropertyForm() {
           <h2>Cloudflare Access Setup (Empfohlen)</h2>
           <pre>
 # Cloudflare Zero Trust Dashboard
-1. Add Application: designsystem.lifeyourdreams.de
+1. Add Application: designsystem.liveyourdreams.de
 2. Configure Policy:
-   - Include: Emails ending in @lifeyourdreams.de
+   - Include: Emails ending in @liveyourdreams.de
    - Require: GitHub Teams (christianbernecker/lyd-team)
 3. Enable 2FA requirement</pre>
 
@@ -947,10 +947,10 @@ export function PropertyForm() {
 http://localhost:6006
 
 # Staging (Basic Auth)
-https://designsystem-staging.lifeyourdreams.de
+https://designsystem-staging.liveyourdreams.de
 
 # Production (Cloudflare Access)
-https://designsystem.lifeyourdreams.de</pre>
+https://designsystem.liveyourdreams.de</pre>
         </section>
 
         <!-- CHECKLIST -->
@@ -987,7 +987,7 @@ https://designsystem.lifeyourdreams.de</pre>
             <tr>
               <td>Update package names</td>
               <td>⬜</td>
-              <td>@lifeyourdreams/design-system</td>
+              <td>@liveyourdreams/design-system</td>
             </tr>
             <tr>
               <td>Setup Storybook</td>
@@ -1002,7 +1002,7 @@ https://designsystem.lifeyourdreams.de</pre>
             <tr>
               <td>Deploy to staging</td>
               <td>⬜</td>
-              <td>designsystem.lifeyourdreams.de</td>
+              <td>designsystem.liveyourdreams.de</td>
             </tr>
             <tr>
               <td>Test all components</td>

@@ -1,4 +1,4 @@
-// Life Your Dreams Design System React
+// Live Your Dreams Design System React
 export { LdsProvider } from './provider';
 export { LdsButton } from './components/button';
 export { LdsInput } from './components/input';

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LdsButton } from '@lifeyourdreams/design-system-react';
+import { LdsButton } from '@liveyourdreams/design-system-react';
 
 const meta: Meta<typeof LdsButton> = {
   title: 'Components/Button',

@@ -1,10 +1,10 @@
-# Life Your Dreams - Architektur-Entscheidungen
+# Live Your Dreams - Architektur-Entscheidungen
 
 ## Design System Philosophie
 
 ### ✅ **CSS-Module First (KEIN Tailwind in Components)**
 
-**Entscheidung:** Das Life Your Dreams Design System verwendet ausschließlich CSS-Module mit Design Token Integration.
+**Entscheidung:** Das Live Your Dreams Design System verwendet ausschließlich CSS-Module mit Design Token Integration.
 
 ```
 Design System Components (packages/design-system-react):
@@ -115,7 +115,7 @@ pnpm dev
 ## Deployment
 
 ### Interne Design System Docs
-- **URL:** `designsystem.lifeyourdreams.de`
+- **URL:** `designsystem.liveyourdreams.online`
 - **Auth:** Basic Auth (nicht öffentlich)
 - **Headers:** `X-Robots-Tag: noindex, nofollow`
 

@@ -1,5 +1,5 @@
 {
-  "name": "@lifeyourdreams/designsystem-docs",
+  "name": "@liveyourdreams/designsystem-docs",
   "version": "1.0.0",
   "private": true,
   "description": "Life Your Dreams Design System Dokumentation",
@@ -11,8 +11,8 @@
     "test": "test-storybook"
   },
   "dependencies": {
-    "@lifeyourdreams/design-system": "workspace:*",
-    "@lifeyourdreams/design-system-react": "workspace:*",
+    "@liveyourdreams/design-system": "workspace:*",
+    "@liveyourdreams/design-system-react": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

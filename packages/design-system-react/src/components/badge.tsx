@@ -1,5 +1,5 @@
 import React from 'react';
-import '@lifeyourdreams/design-system/dist/styles/components/badge.css';
+import '@liveyourdreams/design-system/dist/styles/components/badge.css';
 
 export interface LdsBadgeProps {
   children: React.ReactNode;

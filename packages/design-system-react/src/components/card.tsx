@@ -1,5 +1,5 @@
 import React from 'react';
-import '@lifeyourdreams/design-system/dist/styles/components/card.css';
+import '@liveyourdreams/design-system/dist/styles/components/card.css';
 
 export interface LdsCardProps {
   children: React.ReactNode;

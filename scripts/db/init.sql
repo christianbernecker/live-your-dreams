@@ -1,4 +1,4 @@
--- Life Your Dreams Database Initialization
+-- Live Your Dreams Database Initialization
 
 -- Create extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

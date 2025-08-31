@@ -1,5 +1,5 @@
 {
-  "name": "@lifeyourdreams/design-tokens",
+  "name": "@liveyourdreams/design-tokens",
   "version": "1.0.0",
   "description": "Design Tokens für Life Your Dreams",
   "main": "dist/ts/tokens.js",

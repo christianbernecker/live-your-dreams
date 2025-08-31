@@ -23,10 +23,10 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.450.0
         version: 3.879.0
-      '@lifeyourdreams/design-system':
+      '@liveyourdreams/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
-      '@lifeyourdreams/design-system-react':
+      '@liveyourdreams/design-system-react':
         specifier: workspace:*
         version: link:../../packages/design-system-react
       '@prisma/client':
@@ -105,10 +105,10 @@ importers:
 
   apps/designsystem-docs:
     dependencies:
-      '@lifeyourdreams/design-system':
+      '@liveyourdreams/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
-      '@lifeyourdreams/design-system-react':
+      '@liveyourdreams/design-system-react':
         specifier: workspace:*
         version: link:../../packages/design-system-react
       react:
@@ -154,7 +154,7 @@ importers:
 
   packages/design-system:
     dependencies:
-      '@lifeyourdreams/design-tokens':
+      '@liveyourdreams/design-tokens':
         specifier: workspace:*
         version: link:../design-tokens
     devDependencies:
@@ -164,10 +164,10 @@ importers:
 
   packages/design-system-react:
     dependencies:
-      '@lifeyourdreams/design-system':
+      '@liveyourdreams/design-system':
         specifier: workspace:*
         version: link:../design-system
-      '@lifeyourdreams/design-tokens':
+      '@liveyourdreams/design-tokens':
         specifier: workspace:*
         version: link:../design-tokens
       react:

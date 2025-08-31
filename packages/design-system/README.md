@@ -17,12 +17,12 @@ Das LDS (Life Your Dreams Design System) wurde von Grund auf entwickelt, basiere
 
 ```css
 /* CSS-Import in Komponenten */
-@import '@lifeyourdreams/design-system/dist/styles/components/button.css';
+@import '@liveyourdreams/design-system/dist/styles/components/button.css';
 ```
 
 ```tsx
 // React-Komponente
-import { LdsButton } from '@lifeyourdreams/design-system-react';
+import { LdsButton } from '@liveyourdreams/design-system-react';
 
 <LdsButton variant="primary" size="lg">
   Immobilie anlegen

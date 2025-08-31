@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react';
-import { LdsProvider } from '@lifeyourdreams/design-system-react';
+import { LdsProvider } from '@liveyourdreams/design-system-react';
 
 const preview: Preview = {
   parameters: {

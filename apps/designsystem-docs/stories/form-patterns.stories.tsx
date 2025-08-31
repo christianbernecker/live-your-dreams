@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LdsCard, LdsCardHeader, LdsCardTitle, LdsInput, LdsSelect, LdsButton } from '@lifeyourdreams/design-system-react';
+import { LdsCard, LdsCardHeader, LdsCardTitle, LdsInput, LdsSelect, LdsButton } from '@liveyourdreams/design-system-react';
 
 // Property Form Recipe
 function PropertyForm() {

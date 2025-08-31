@@ -1,5 +1,5 @@
 import React from 'react';
-import '@lifeyourdreams/design-system/dist/styles/components/input.css';
+import '@liveyourdreams/design-system/dist/styles/components/input.css';
 
 export interface LdsInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;

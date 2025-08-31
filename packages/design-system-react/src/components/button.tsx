@@ -1,5 +1,5 @@
 import React from 'react';
-import '@lifeyourdreams/design-system/dist/styles/components/button.css';
+import '@liveyourdreams/design-system/dist/styles/components/button.css';
 
 export interface LdsButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline';

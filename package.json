@@ -1,8 +1,8 @@
 {
-  "name": "@lifeyourdreams/monorepo",
+  "name": "@liveyourdreams/monorepo",
   "version": "1.0.0",
   "private": true,
-  "description": "Life Your Dreams - Immobilienvermarktung Monorepo",
+  "description": "Live Your Dreams - Immobilienvermarktung Monorepo",
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=8.0.0"
@@ -11,11 +11,11 @@
   "scripts": {
     "bootstrap": "pnpm install && pnpm build:libs && pnpm build:apps",
     "check:brand": "bash ./scripts/check-lyd-brand.sh",
-    "build:tokens": "pnpm --filter @lifeyourdreams/design-tokens build",
-    "build:ds": "pnpm --filter @lifeyourdreams/design-system build", 
-    "build:react": "pnpm --filter @lifeyourdreams/design-system-react build",
+    "build:tokens": "pnpm --filter @liveyourdreams/design-tokens build",
+    "build:ds": "pnpm --filter @liveyourdreams/design-system build", 
+    "build:react": "pnpm --filter @liveyourdreams/design-system-react build",
     "build:libs": "pnpm build:tokens && pnpm build:ds && pnpm build:react",
-    "build:apps": "pnpm --filter @lifeyourdreams/backoffice build && pnpm --filter @lifeyourdreams/designsystem-docs build",
+    "build:apps": "pnpm --filter @liveyourdreams/backoffice build && pnpm --filter @liveyourdreams/designsystem-docs build",
     "build": "pnpm build:libs && pnpm build:apps",
     "dev": "pnpm -r --parallel dev",
     "test": "pnpm -r test",

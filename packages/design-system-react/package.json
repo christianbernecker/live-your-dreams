@@ -1,5 +1,5 @@
 {
-  "name": "@lifeyourdreams/design-system-react",
+  "name": "@liveyourdreams/design-system-react",
   "version": "1.0.0",
   "description": "Life Your Dreams Design System - React Components",
   "main": "dist/index.js",
@@ -12,8 +12,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@lifeyourdreams/design-system": "workspace:*",
-    "@lifeyourdreams/design-tokens": "workspace:*",
+    "@liveyourdreams/design-system": "workspace:*",
+    "@liveyourdreams/design-tokens": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -85,13 +85,13 @@
           <div class="callout ok">
             <strong>Ja – Designsystem zuerst.</strong> Das Vorgehen „Design System → Backoffice“ ist korrekt. Erst wenn Tokens, Komponenten und Provider stabil sind, lohnt die UI‑Implementierung im Backoffice (verhindert Doppelarbeit & inkonsistentes UI).
           </div>
-          <p>Das neue Konzept für ein internes, rebrandetes Design System auf <code>designsystem.lifeyourdreams.de</code> trifft die Anforderungen. In der Backoffice-Doku sind jedoch noch <span class="pill">shadcn/ui</span>‑Verweise und ein Architekturdiagramm mit shadcn enthalten. Empfehlung: <strong>konsequent auf LDS (LYD Design System)</strong> umstellen und als harte Abhängigkeit verankern.</p>
+          <p>Das neue Konzept für ein internes, rebrandetes Design System auf <code>designsystem.liveyourdreams.de</code> trifft die Anforderungen. In der Backoffice-Doku sind jedoch noch <span class="pill">shadcn/ui</span>‑Verweise und ein Architekturdiagramm mit shadcn enthalten. Empfehlung: <strong>konsequent auf LDS (LYD Design System)</strong> umstellen und als harte Abhängigkeit verankern.</p>
         </section>
 
         <section id="decision" class="section">
           <h1>2. Grundsatz-Entscheidung</h1>
           <ul>
-            <li><span class="badge b-ok">Beschluss</span> <strong>Eigenes, internes LYD Design System</strong> als Fork/Rewrite auf Basis PDS v3. Hosting unter <code>designsystem.lifeyourdreams.de</code>, abgesichert (Basic Auth, No‑Index, optional IP‑Allowlist/VPN).</li>
+            <li><span class="badge b-ok">Beschluss</span> <strong>Eigenes, internes LYD Design System</strong> als Fork/Rewrite auf Basis PDS v3. Hosting unter <code>designsystem.liveyourdreams.de</code>, abgesichert (Basic Auth, No‑Index, optional IP‑Allowlist/VPN).</li>
             <li><span class="badge b-ok">Reihenfolge</span> <strong>Phase A – Design System</strong> (Token, Provider, Kernkomponenten, Docs) → <strong>Phase B – Backoffice</strong> (Komponenten-Migration, Layouts, Formmuster).</li>
             <li><span class="badge b-info">Scope</span> DS ist <em>Single Source of Truth</em> (Tokens + Komponenten). Backoffice importiert nur aus LDS (keine lokalen UI-Divergenzen).</li>
           </ul>
@@ -143,8 +143,8 @@ import { create } from '@storybook/theming/create';
 addons.setConfig({
   theme: create({
     base: 'light',
-    brandTitle: 'Life Your Dreams – Design System',
-    brandUrl: 'https://designsystem.lifeyourdreams.de',
+    brandTitle: 'Live Your Dreams – Design System',
+    brandUrl: 'https://designsystem.liveyourdreams.de',
     brandImage: '/lyd-logo.svg',
     colorPrimary: '#3366CC',
     colorSecondary: '#000066'
@@ -199,7 +199,7 @@ module.exports = {
 <pre><code># nginx.conf (Auszug)
 server {
   listen 80;
-  server_name designsystem.lifeyourdreams.de;
+  server_name designsystem.liveyourdreams.de;
 
   auth_basic "LYD Design System – Internal";
   auth_basic_user_file /etc/nginx/.htpasswd;
@@ -265,8 +265,8 @@ module.exports = {
 
           <h3>7.2 Next.js Root‑Layout</h3>
 <pre><code>// app/layout.tsx
-import '@lifeyourdreams/design-system/dist/tokens.css';
-import { LdsProvider } from '@lifeyourdreams/design-system-react';
+import '@liveyourdreams/design-system/dist/tokens.css';
+import { LdsProvider } from '@liveyourdreams/design-system-react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -301,7 +301,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <tr><td>Table</td><td><code>LdsTable</code></td><td>kompakt/komfort‑Dichte</td></tr>
           </table>
 <pre><code>// Beispiel: Property-Liste
-import { LdsButton, LdsCard, LdsTable } from '@lifeyourdreams/design-system-react';
+import { LdsButton, LdsCard, LdsTable } from '@liveyourdreams/design-system-react';
 
 export default function PropertiesPage() {
   return (

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Life Your Dreams – Backoffice v1.0 • Vollständige Implementierung</title>
+  <title>Live Your Dreams – Backoffice v1.0 • Vollständige Implementierung</title>
   <style>
     :root {
       --blue: #3366CC;
@@ -194,7 +194,7 @@
   <div class="layout">
     <aside class="sidebar">
       <h2 style="margin-top: 0;">🏗️ Implementierungsguide</h2>
-      <div class="muted" style="margin-bottom: 20px;">Life Your Dreams Backoffice v1.0</div>
+      <div class="muted" style="margin-bottom: 20px;">Live Your Dreams Backoffice v1.0</div>
       
       <nav class="toc" id="toc">
         <a href="#overview">Übersicht & Architektur</a>
@@ -236,7 +236,7 @@
           <h1>Übersicht & Architektur</h1>
           
           <div class="callout ok">
-            <strong>Ziel:</strong> Vollständig funktionsfähiges Backoffice für Life Your Dreams mit allen MVP-Features innerhalb von 2 Wochen.
+            <strong>Ziel:</strong> Vollständig funktionsfähiges Backoffice für Live Your Dreams mit allen MVP-Features innerhalb von 2 Wochen.
           </div>
           
           <h2>Tech Stack (Final)</h2>
@@ -487,7 +487,7 @@ cat > scripts/setup-environment.sh << 'EOF'
 #!/bin/bash
 set -e
 
-echo "🚀 Life Your Dreams - Automated Setup Starting..."
+echo "🚀 Live Your Dreams - Automated Setup Starting..."
 
 # Detect OS
 OS="$(uname -s)"
@@ -537,7 +537,7 @@ cat > scripts/init-project.sh << 'EOF'
 #!/bin/bash
 set -e
 
-echo "🏗️ Initializing Life Your Dreams Backoffice..."
+echo "🏗️ Initializing Live Your Dreams Backoffice..."
 
 # Create all necessary directories
 mkdir -p {app,components,lib,prisma,public,scripts,tests,docs}
@@ -614,7 +614,7 @@ chmod +x scripts/generate-docs.sh
 
 # Create documentation template
 cat > docs/README.md << 'EOF'
-# Life Your Dreams - Backoffice Documentation
+# Live Your Dreams - Backoffice Documentation
 
 ## 📁 Project Structure
 
@@ -917,7 +917,7 @@ NEXT_PUBLIC_CDN_URL="http://localhost:9000/lyd-assets"
 # Email (MailHog for development)
 SMTP_HOST="localhost"
 SMTP_PORT="1025"
-SMTP_FROM="system@lifeyourdreams.local"
+SMTP_FROM="system@liveyourdreams.local"
 SMTP_USER=""
 SMTP_PASS=""
 
@@ -957,7 +957,7 @@ DATABASE_URL="postgresql://user:pass@host:5432/db?pgbouncer=true"
 DATABASE_URL_NON_POOLING="postgresql://user:pass@host:5432/db"
 
 # NextAuth
-NEXTAUTH_URL="https://backoffice.lifeyourdreams.de"
+NEXTAUTH_URL="https://backoffice.liveyourdreams.de"
 NEXTAUTH_SECRET="GENERATE_WITH_OPENSSL_RAND_BASE64_32"
 
 # Storage (AWS S3 in production)
@@ -966,12 +966,12 @@ S3_REGION="eu-central-1"
 S3_ACCESS_KEY_ID="AWS_ACCESS_KEY"
 S3_SECRET_ACCESS_KEY="AWS_SECRET_KEY"
 S3_BUCKET="lyd-production-assets"
-NEXT_PUBLIC_CDN_URL="https://cdn.lifeyourdreams.de"
+NEXT_PUBLIC_CDN_URL="https://cdn.liveyourdreams.de"
 
 # Email (Production SMTP)
 SMTP_HOST="smtp.sendgrid.net"
 SMTP_PORT="587"
-SMTP_FROM="noreply@lifeyourdreams.de"
+SMTP_FROM="noreply@liveyourdreams.de"
 SMTP_USER="apikey"
 SMTP_PASS="SENDGRID_API_KEY"
 
@@ -997,8 +997,8 @@ ENABLE_DEBUG_MODE=false
 
 # Production
 NODE_ENV="production"
-NEXT_PUBLIC_API_URL="https://api.lifeyourdreams.de"
-NEXT_PUBLIC_APP_URL="https://backoffice.lifeyourdreams.de"
+NEXT_PUBLIC_API_URL="https://api.liveyourdreams.de"
+NEXT_PUBLIC_APP_URL="https://backoffice.liveyourdreams.de"
 
 # Monitoring
 SENTRY_DSN="https://xxx@xxx.ingest.sentry.io/xxx"
@@ -2117,10 +2117,10 @@ async function main() {
   // Create admin user
   const adminPassword = await bcrypt.hash('admin123', 10);
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@lifeyourdreams.de' },
+    where: { email: 'admin@liveyourdreams.de' },
     update: {},
     create: {
-      email: 'admin@lifeyourdreams.de',
+      email: 'admin@liveyourdreams.de',
       name: 'Admin User',
       password: adminPassword,
       role: 'ADMIN',
@@ -2131,10 +2131,10 @@ async function main() {
   // Create operator user
   const operatorPassword = await bcrypt.hash('operator123', 10);
   const operator = await prisma.user.upsert({
-    where: { email: 'operator@lifeyourdreams.de' },
+    where: { email: 'operator@liveyourdreams.de' },
     update: {},
     create: {
-      email: 'operator@lifeyourdreams.de',
+      email: 'operator@liveyourdreams.de',
       name: 'Operator User',
       password: operatorPassword,
       role: 'OPERATOR',
@@ -2466,8 +2466,8 @@ export async function GET() {
 
   // Generate secret
   const secret = speakeasy.generateSecret({
-    name: `Life Your Dreams (${session.user.email})`,
-    issuer: 'Life Your Dreams',
+    name: `Live Your Dreams (${session.user.email})`,
+    issuer: 'Live Your Dreams',
   });
 
   // Generate QR code

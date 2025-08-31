@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LdsInput } from '@lifeyourdreams/design-system-react';
+import { LdsInput } from '@liveyourdreams/design-system-react';
 
 const meta: Meta<typeof LdsInput> = {
   title: 'Components/Input',
