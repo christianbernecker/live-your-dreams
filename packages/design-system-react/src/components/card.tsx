@@ -1,4 +1,5 @@
 import React from 'react';
+import '@lifeyourdreams/design-system/dist/styles/components/card.css';
 
 export interface LdsCardProps {
   children: React.ReactNode;
@@ -13,22 +14,13 @@ export function LdsCard({
   padding = 'md',
   shadow = 'sm'
 }: LdsCardProps) {
-  const paddingClasses = {
-    none: '',
-    sm: 'p-3',
-    md: 'p-6',
-    lg: 'p-8'
-  };
-  
-  const shadowClasses = {
-    none: '',
-    sm: 'shadow-sm',
-    md: 'shadow-md',
-    lg: 'shadow-lg'
-  };
-  
-  const baseClasses = 'bg-white border border-gray-200 rounded-lg';
-  const classes = `${baseClasses} ${paddingClasses[padding]} ${shadowClasses[shadow]} ${className}`;
+  // NUR CSS-Module-Klassen verwenden - KEIN Tailwind!
+  const classes = [
+    'lds-card',
+    `lds-card--padding-${padding}`,
+    `lds-card--shadow-${shadow}`,
+    className
+  ].filter(Boolean).join(' ');
   
   return (
     <div className={classes}>
@@ -39,7 +31,7 @@ export function LdsCard({
 
 export function LdsCardHeader({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`border-b border-gray-200 pb-4 mb-4 ${className}`}>
+    <div className={`lds-card-header ${className}`}>
       {children}
     </div>
   );
@@ -47,7 +39,7 @@ export function LdsCardHeader({ children, className = '' }: { children: React.Re
 
 export function LdsCardTitle({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <h3 className={`text-lg font-semibold text-gray-900 ${className}`}>
+    <h3 className={`lds-card-title ${className}`}>
       {children}
     </h3>
   );

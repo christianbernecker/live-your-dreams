@@ -1,0 +1,71 @@
+/* Life Your Dreams Design System - Card Component */
+
+.lds-card {
+  background: var(--color-surface-default);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.lds-card--shadow-none {
+  box-shadow: none;
+}
+
+.lds-card--shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.lds-card--shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Padding variants */
+.lds-card--padding-none {
+  padding: 0;
+}
+
+.lds-card--padding-sm {
+  padding: var(--spacing-md);
+}
+
+.lds-card--padding-md {
+  padding: var(--spacing-xl);
+}
+
+.lds-card--padding-lg {
+  padding: var(--spacing-2xl);
+}
+
+/* Card Header */
+.lds-card-header {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: var(--border-width-sm) solid var(--color-border-muted);
+  background: var(--color-surface-elevated);
+}
+
+.lds-card-title {
+  margin: 0;
+  font-size: var(--typography-font-size-lg);
+  font-weight: var(--typography-font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: var(--typography-line-height-tight);
+}
+
+.lds-card-description {
+  margin: var(--spacing-xs) 0 0 0;
+  font-size: var(--typography-font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--typography-line-height-normal);
+}
+
+/* Card Content */
+.lds-card-content {
+  padding: var(--spacing-xl);
+}
+
+.lds-card-footer {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-top: var(--border-width-sm) solid var(--color-border-muted);
+  background: var(--color-surface-elevated);
+}

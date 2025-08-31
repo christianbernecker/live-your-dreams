@@ -1,4 +1,5 @@
 import React from 'react';
+import '@lifeyourdreams/design-system/dist/styles/components/badge.css';
 
 export interface LdsBadgeProps {
   children: React.ReactNode;
@@ -13,22 +14,13 @@ export function LdsBadge({
   size = 'md',
   className = ''
 }: LdsBadgeProps) {
-  const baseClasses = 'inline-flex items-center font-medium rounded-full';
-  
-  const variantClasses = {
-    default: 'bg-gray-100 text-gray-800',
-    success: 'bg-green-100 text-green-800',
-    warning: 'bg-yellow-100 text-yellow-800',
-    error: 'bg-red-100 text-red-800',
-    info: 'bg-blue-100 text-blue-800'
-  };
-  
-  const sizeClasses = {
-    sm: 'px-2 py-0.5 text-xs',
-    md: 'px-2.5 py-1 text-sm'
-  };
-  
-  const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  // NUR CSS-Module-Klassen verwenden - KEIN Tailwind!
+  const classes = [
+    'lds-badge',
+    `lds-badge--${variant}`,
+    `lds-badge--${size}`,
+    className
+  ].filter(Boolean).join(' ');
   
   return (
     <span className={classes}>

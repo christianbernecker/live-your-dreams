@@ -14,6 +14,17 @@
       "default": { "value": "#FFFFFF" }, 
       "elevated": { "value": "#F8FAFC" }, 
       "overlay": { "value": "rgba(11,18,32,.6)" } 
+    },
+    "text": {
+      "primary": { "value": "#111827" },
+      "secondary": { "value": "#6B7280" },
+      "muted": { "value": "#9CA3AF" },
+      "inverse": { "value": "#FFFFFF" }
+    },
+    "border": {
+      "default": { "value": "#D1D5DB" },
+      "muted": { "value": "#E5E7EB" },
+      "strong": { "value": "#9CA3AF" }
     }
   },
   "focus": { 
@@ -105,6 +116,14 @@
         "relaxed": { "value": "1.625" }
       }
     }
+  },
+  "breakpoints": {
+    "xs": { "value": "480px" },
+    "sm": { "value": "640px" },
+    "md": { "value": "768px" },
+    "lg": { "value": "1024px" },
+    "xl": { "value": "1280px" },
+    "2xl": { "value": "1536px" }
   },
   "chart": { 
     "palette": { 

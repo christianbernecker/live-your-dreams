@@ -1,4 +1,5 @@
 import React from 'react';
+import '@lifeyourdreams/design-system/dist/styles/components/input.css';
 
 export interface LdsInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -20,36 +21,40 @@ export function LdsInput({
   const errorId = `${inputId}-error`;
   const hintId = `${inputId}-hint`;
   
-  const baseClasses = 'block w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
-  const errorClasses = error 
-    ? 'border-error text-error focus:ring-error' 
-    : 'border-gray-300 focus:ring-brand';
+  // NUR CSS-Module-Klassen verwenden - KEIN Tailwind!
+  const inputClasses = [
+    'lds-input',
+    error && 'lds-input--error',
+    className
+  ].filter(Boolean).join(' ');
   
   return (
-    <div className="space-y-1">
+    <div className="lds-input-group">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700">
+        <label 
+          htmlFor={inputId} 
+          className={`lds-input-label ${required ? 'lds-input-label--required' : ''}`}
+        >
           {label}
-          {required && <span className="text-error ml-1">*</span>}
         </label>
       )}
       
       <input
         id={inputId}
-        className={`${baseClasses} ${errorClasses} ${className}`}
+        className={inputClasses}
         aria-invalid={error ? 'true' : 'false'}
         aria-describedby={error ? errorId : hint ? hintId : undefined}
         {...props}
       />
       
       {hint && !error && (
-        <p id={hintId} className="text-xs text-gray-500">
+        <p id={hintId} className="lds-input-hint">
           {hint}
         </p>
       )}
       
       {error && (
-        <p id={errorId} className="text-xs text-error" role="alert">
+        <p id={errorId} className="lds-input-error" role="alert">
           {error}
         </p>
       )}

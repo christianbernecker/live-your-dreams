@@ -1,2 +1,5 @@
 /* Life Your Dreams Design System - Component Styles */
 @import './button.css';
+@import './input.css';
+@import './card.css';
+@import './badge.css';
