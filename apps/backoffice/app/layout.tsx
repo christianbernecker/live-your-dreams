@@ -1,7 +1,7 @@
 import '@lifeyourdreams/design-tokens/dist/css/tokens.css';
 import '@lifeyourdreams/design-system/dist/styles/global.css';
-import { LdsProvider } from '@lifeyourdreams/design-system-react';
 import './globals.css';
+import { Providers } from './providers';
 
 export default function RootLayout({
   children,
@@ -11,9 +11,9 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body>
-        <LdsProvider theme="light" locale="de">
+        <Providers>
           {children}
-        </LdsProvider>
+        </Providers>
       </body>
     </html>
   );
