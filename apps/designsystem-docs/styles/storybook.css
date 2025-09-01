@@ -1,0 +1,235 @@
+/* Live Your Dreams Design System - Storybook Styles */
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Global Storybook wrapper */
+.lds-storybook-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  font-variation-settings: "opsz" 32;
+  line-height: 1.5;
+  color: #0F172A;
+  background: #FFFFFF;
+  min-height: 200px;
+  padding: 1rem;
+}
+
+/* Dark theme support */
+[data-theme="dark"] .lds-storybook-wrapper {
+  background: #0F172A;
+  color: #F8FAFC;
+}
+
+/* Story containers */
+.story-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.story-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Component showcase */
+.component-showcase {
+  border: 2px dashed #E2E8F0;
+  border-radius: 12px;
+  padding: 2rem;
+  background: #F8FAFC;
+  margin: 1rem 0;
+}
+
+.component-showcase--dark {
+  background: #1E293B;
+  border-color: #475569;
+}
+
+/* Code blocks in stories */
+.story-code {
+  background: #1E293B;
+  color: #E2E8F0;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+/* Props table styling */
+.sbdocs-table {
+  font-family: 'Inter', sans-serif;
+}
+
+.sbdocs-table th {
+  background: #F8FAFC;
+  color: #374151;
+  font-weight: 600;
+}
+
+.sbdocs-table td {
+  border-color: #E5E7EB;
+}
+
+/* Custom controls styling */
+.sb-bar {
+  background: #FFFFFF;
+  border-color: #E5E7EB;
+}
+
+/* Typography examples */
+.typography-example {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+}
+
+.typography-example h1,
+.typography-example h2,
+.typography-example h3,
+.typography-example h4,
+.typography-example h5,
+.typography-example h6 {
+  margin: 0 0 0.5rem 0;
+}
+
+/* Color palette display */
+.color-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.color-swatch {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  background: white;
+}
+
+.color-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.color-info {
+  flex: 1;
+}
+
+.color-name {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.color-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+/* Spacing examples */
+.spacing-example {
+  background: #EBF4FF;
+  border: 2px solid #3366CC;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.spacing-label {
+  position: absolute;
+  top: -1rem;
+  left: 0.5rem;
+  background: #3366CC;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Animation examples */
+.animation-demo {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #3366CC, #000066);
+  border-radius: 12px;
+  margin: 2rem auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.animation-demo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 20px 25px -5px rgba(51, 102, 204, 0.1), 0 10px 10px -5px rgba(51, 102, 204, 0.04);
+}
+
+/* Form examples */
+.form-example {
+  max-width: 400px;
+  margin: 2rem 0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .story-container {
+    padding: 1rem;
+  }
+  
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .color-palette {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Focus visible improvements */
+.lds-storybook-wrapper *:focus-visible {
+  outline: 2px solid #3366CC;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .component-showcase {
+    border-color: #000000;
+    border-width: 3px;
+  }
+  
+  .color-preview {
+    border-color: #000000;
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animation-demo {
+    transition: none;
+  }
+  
+  .animation-demo:hover {
+    transform: none;
+  }
+}

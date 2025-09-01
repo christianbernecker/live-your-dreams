@@ -1,0 +1,229 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Welcome" />
+
+# Live Your Dreams Design System
+
+<div style={{ 
+  background: 'linear-gradient(135deg, #3366CC 0%, #000066 100%)',
+  color: 'white',
+  padding: '2rem',
+  borderRadius: '12px',
+  margin: '2rem 0'
+}}>
+  <h2 style={{ margin: 0, fontSize: '2rem', fontWeight: '700' }}>
+    ✨ Willkommen beim LYD Design System
+  </h2>
+  <p style={{ margin: '1rem 0 0', fontSize: '1.1rem', opacity: 0.9 }}>
+    Das offizielle Design System für Live Your Dreams - moderne, zugängliche und konsistente UI-Komponenten.
+  </p>
+</div>
+
+## 🎯 Was ist das LYD Design System?
+
+Das **Live Your Dreams Design System** ist eine umfassende Sammlung von wiederverwendbaren Komponenten, Design-Tokens und Richtlinien, die entwickelt wurden, um konsistente und hochwertige Benutzererfahrungen in allen LYD-Produkten zu gewährleisten.
+
+### ⚡ Kernprinzipien
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', margin: '2rem 0' }}>
+  <div style={{ 
+    padding: '1.5rem', 
+    border: '2px solid #E8F0FE', 
+    borderRadius: '12px',
+    background: '#F8FAFF'
+  }}>
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎨</div>
+    <h3 style={{ margin: '0 0 0.5rem', color: '#000066' }}>Konsistenz</h3>
+    <p style={{ margin: 0, color: '#64748B', fontSize: '0.9rem' }}>
+      Einheitliche Designsprache und Interaktionsmuster für alle Touchpoints.
+    </p>
+  </div>
+  
+  <div style={{ 
+    padding: '1.5rem', 
+    border: '2px solid #E8F0FE', 
+    borderRadius: '12px',
+    background: '#F8FAFF'
+  }}>
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>♿</div>
+    <h3 style={{ margin: '0 0 0.5rem', color: '#000066' }}>Zugänglichkeit</h3>
+    <p style={{ margin: 0, color: '#64748B', fontSize: '0.9rem' }}>
+      WCAG 2.1 AA konforme Komponenten für alle Benutzer.
+    </p>
+  </div>
+  
+  <div style={{ 
+    padding: '1.5rem', 
+    border: '2px solid #E8F0FE', 
+    borderRadius: '12px',
+    background: '#F8FAFF'
+  }}>
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚀</div>
+    <h3 style={{ margin: '0 0 0.5rem', color: '#000066' }}>Performance</h3>
+    <p style={{ margin: 0, color: '#64748B', fontSize: '0.9rem' }}>
+      Optimierte Komponenten für schnelle Ladezeiten und beste UX.
+    </p>
+  </div>
+</div>
+
+## 📦 Pakete
+
+Das Design System besteht aus mehreren Paketen:
+
+### `@liveyourdreams/design-system`
+- **CSS-Module** und Design Tokens
+- **Moderne CSS Features** (Custom Properties, Grid, Flexbox)
+- **Responsive Breakpoints** und Utility-Klassen
+- **Dark Mode Support**
+
+### `@liveyourdreams/design-system-react`
+- **React-Komponenten** mit TypeScript
+- **Hook-basierte Architektur**
+- **Kompositional APIs** für maximale Flexibilität
+- **Form-Integration** mit React Hook Form
+
+## 🎨 Design Tokens
+
+Unsere Design Tokens definieren die Grundlage des visuellen Systems:
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '2rem 0' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+    <div style={{ 
+      width: '48px', 
+      height: '48px', 
+      background: '#3366CC', 
+      borderRadius: '8px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    }}></div>
+    <div>
+      <div style={{ fontWeight: '600', color: '#374151' }}>Primary Blue</div>
+      <code style={{ fontSize: '0.875rem', color: '#6B7280' }}>#3366CC</code>
+    </div>
+  </div>
+  
+  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+    <div style={{ 
+      width: '48px', 
+      height: '48px', 
+      background: '#000066', 
+      borderRadius: '8px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    }}></div>
+    <div>
+      <div style={{ fontWeight: '600', color: '#374151' }}>Deep Blue</div>
+      <code style={{ fontSize: '0.875rem', color: '#6B7280' }}>#000066</code>
+    </div>
+  </div>
+  
+  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+    <div style={{ 
+      width: '48px', 
+      height: '48px', 
+      background: '#E8F0FE', 
+      borderRadius: '8px',
+      border: '1px solid rgba(0,0,0,0.1)'
+    }}></div>
+    <div>
+      <div style={{ fontWeight: '600', color: '#374151' }}>Light Accent</div>
+      <code style={{ fontSize: '0.875rem', color: '#6B7280' }}>#E8F0FE</code>
+    </div>
+  </div>
+</div>
+
+## 🛠️ Installation
+
+```bash
+# Installiere das gesamte Design System
+npm install @liveyourdreams/design-system @liveyourdreams/design-system-react
+
+# Oder nur die CSS-Basis
+npm install @liveyourdreams/design-system
+```
+
+### CSS importieren
+
+```css
+/* In deiner Haupt-CSS-Datei */
+@import '@liveyourdreams/design-system/dist/index.css';
+```
+
+### React-Komponenten verwenden
+
+```tsx
+import { LdsButton, LdsCard, LdsInput } from '@liveyourdreams/design-system-react';
+
+function MyComponent() {
+  return (
+    <LdsCard>
+      <h2>Meine Karte</h2>
+      <LdsInput label="Name" placeholder="Gib deinen Namen ein" />
+      <LdsButton variant="primary">Absenden</LdsButton>
+    </LdsCard>
+  );
+}
+```
+
+## 📖 Dokumentation Navigation
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', margin: '2rem 0' }}>
+  <div style={{ 
+    padding: '1.5rem', 
+    border: '1px solid #E5E7EB', 
+    borderRadius: '8px',
+    background: '#FFFFFF'
+  }}>
+    <h3 style={{ margin: '0 0 1rem', color: '#000066' }}>🎨 Design Tokens</h3>
+    <p style={{ margin: '0 0 1rem', fontSize: '0.9rem', color: '#64748B' }}>
+      Farben, Typografie, Abstände und weitere Grundlagen des Systems.
+    </p>
+  </div>
+  
+  <div style={{ 
+    padding: '1.5rem', 
+    border: '1px solid #E5E7EB', 
+    borderRadius: '8px',
+    background: '#FFFFFF'
+  }}>
+    <h3 style={{ margin: '0 0 1rem', color: '#000066' }}>🧩 Components</h3>
+    <p style={{ margin: '0 0 1rem', fontSize: '0.9rem', color: '#64748B' }}>
+      Interaktive Komponenten-Bibliothek mit Live-Beispielen.
+    </p>
+  </div>
+  
+  <div style={{ 
+    padding: '1.5rem', 
+    border: '1px solid #E5E7EB', 
+    borderRadius: '8px',
+    background: '#FFFFFF'
+  }}>
+    <h3 style={{ margin: '0 0 1rem', color: '#000066' }}>📋 Examples</h3>
+    <p style={{ margin: '0 0 1rem', fontSize: '0.9rem', color: '#64748B' }}>
+      Vollständige Anwendungsbeispiele und Patterns.
+    </p>
+  </div>
+</div>
+
+## 🤝 Beitragen
+
+Das Design System wird aktiv weiterentwickelt. Feedback und Beiträge sind willkommen!
+
+- **Repository**: [github.com/christianbernecker/live-your-dreams](https://github.com/christianbernecker/live-your-dreams)
+- **Issues**: Melde Bugs oder Feature-Requests
+- **Pull Requests**: Trage zur Entwicklung bei
+
+---
+
+<div style={{ 
+  textAlign: 'center', 
+  padding: '2rem',
+  background: '#F8FAFF',
+  borderRadius: '8px',
+  marginTop: '3rem'
+}}>
+  <p style={{ margin: 0, color: '#64748B' }}>
+    Made with ❤️ by the <strong style={{ color: '#000066' }}>Live Your Dreams</strong> Team
+  </p>
+  <p style={{ margin: '0.5rem 0 0', fontSize: '0.875rem', color: '#9CA3AF' }}>
+    Version 1.0.0 • Last updated: {new Date().toLocaleDateString('de-DE')}
+  </p>
+</div>
