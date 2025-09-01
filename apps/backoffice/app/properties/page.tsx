@@ -66,7 +66,7 @@ export default function PropertiesPage() {
           <h1 className="text-3xl font-bold text-gray-900">Immobilien</h1>
           <p className="text-gray-600 mt-2">Verwalten Sie Ihre Immobilienangebote</p>
         </div>
-        <LdsButton variant="primary">
+        <LdsButton variant="primary" href="/properties/new">
           Neue Immobilie
         </LdsButton>
       </div>
@@ -120,10 +120,18 @@ export default function PropertiesPage() {
                 </LdsTableCell>
                 <LdsTableCell>
                   <div className="flex space-x-2">
-                    <LdsButton variant="outline" size="sm">
+                    <LdsButton 
+                      variant="outline" 
+                      size="sm"
+                      href={`/properties/${property.id}`}
+                    >
                       Bearbeiten
                     </LdsButton>
-                    <LdsButton variant="outline" size="sm">
+                    <LdsButton 
+                      variant="outline" 
+                      size="sm"
+                      href={`/properties/${property.id}?tab=preview`}
+                    >
                       Ansehen
                     </LdsButton>
                   </div>

@@ -1,0 +1,49 @@
+.lds-table-container {
+  overflow-x: auto;
+}
+
+.lds-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.lds-table-header {
+  background: var(--color-surface-elevated);
+}
+
+.lds-table-header-row {
+  border-bottom: var(--border-width-sm) solid var(--color-border-default);
+}
+
+.lds-table-row {
+  border-bottom: var(--border-width-sm) solid var(--color-border-muted);
+}
+
+.lds-table-row:hover {
+  background: var(--color-surface-elevated);
+}
+
+.lds-table-header-cell {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: var(--typography-font-weight-semibold);
+  font-size: var(--typography-font-size-sm);
+  color: var(--color-text-secondary);
+  vertical-align: middle;
+}
+
+.lds-table-cell {
+  padding: var(--spacing-md);
+  font-size: var(--typography-font-size-base);
+  color: var(--color-text-primary);
+  vertical-align: middle;
+}
+
+.lds-table-cell--center {
+  text-align: center;
+}
+
+.lds-table-cell--right {
+  text-align: right;
+}

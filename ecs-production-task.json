@@ -1,0 +1,63 @@
+{
+  "family": "lyd-backoffice-production",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc", 
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::835474150597:role/lyd-ecs-execution-role",
+  "taskRoleArn": "arn:aws:iam::835474150597:role/lyd-ecs-task-role",
+  "containerDefinitions": [
+    {
+      "name": "backoffice",
+      "image": "835474150597.dkr.ecr.eu-central-1.amazonaws.com/lyd-backoffice:production",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:835474150597:secret:lyd-app-secrets-F6YMxs:DATABASE_URL::"
+        },
+        {
+          "name": "NEXTAUTH_SECRET", 
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:835474150597:secret:lyd-app-secrets-F6YMxs:NEXTAUTH_SECRET::"
+        },
+        {
+          "name": "NEXTAUTH_URL",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:835474150597:secret:lyd-app-secrets-F6YMxs:NEXTAUTH_URL::"
+        }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -f http://localhost:3000/api/health || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/lyd-backoffice",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs-production"
+        }
+      }
+    }
+  ]
+}

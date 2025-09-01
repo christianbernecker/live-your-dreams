@@ -7,11 +7,10 @@ export interface LdsTableProps {
 }
 
 export function LdsTable({ children, className = '', striped = false }: LdsTableProps) {
-  const baseClasses = 'min-w-full divide-y divide-gray-200';
-  const classes = `${baseClasses} ${className}`;
+  const classes = `lds-table ${className}`;
   
   return (
-    <div className="overflow-x-auto">
+    <div className="lds-table-container">
       <table className={classes}>
         {children}
       </table>
@@ -21,7 +20,7 @@ export function LdsTable({ children, className = '', striped = false }: LdsTable
 
 export function LdsTableHeader({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <thead className={`bg-gray-50 ${className}`}>
+    <thead className={`lds-table-header ${className}`}>
       {children}
     </thead>
   );
@@ -29,7 +28,7 @@ export function LdsTableHeader({ children, className = '' }: { children: React.R
 
 export function LdsTableBody({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <tbody className={`bg-white divide-y divide-gray-200 ${className}`}>
+    <tbody className={className}>
       {children}
     </tbody>
   );
@@ -37,7 +36,7 @@ export function LdsTableBody({ children, className = '' }: { children: React.Rea
 
 export function LdsTableRow({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <tr className={`hover:bg-gray-50 ${className}`}>
+    <tr className={`lds-table-row ${className}`}>
       {children}
     </tr>
   );
@@ -45,7 +44,7 @@ export function LdsTableRow({ children, className = '' }: { children: React.Reac
 
 export function LdsTableHeaderCell({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <th className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${className}`}>
+    <th className={`lds-table-header-cell ${className}`}>
       {children}
     </th>
   );
@@ -53,7 +52,7 @@ export function LdsTableHeaderCell({ children, className = '' }: { children: Rea
 
 export function LdsTableCell({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <td className={`px-6 py-4 whitespace-nowrap text-sm text-gray-900 ${className}`}>
+    <td className={`lds-table-cell ${className}`}>
       {children}
     </td>
   );

@@ -16,12 +16,11 @@ export function LdsDialog({
   children,
   size = 'md'
 }: LdsDialogProps) {
-  const sizeClasses = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl'
-  };
+  // NUR CSS-Module-Klassen verwenden - KEIN Tailwind!
+  const dialogClasses = [
+    'lds-dialog',
+    `lds-dialog--${size}`
+  ].join(' ');
   
   // Escape key handler
   useEffect(() => {
@@ -45,33 +44,39 @@ export function LdsDialog({
   if (!open) return null;
   
   return (
-    <div 
-      className="fixed inset-0 z-modal flex items-center justify-center p-4"
-      style={{ zIndex: 'var(--z-modal)' }}
-    >
+    <div className="lds-dialog-overlay">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black bg-opacity-50"
+        className="lds-dialog-backdrop"
         onClick={onClose}
         aria-hidden="true"
       />
       
       {/* Dialog */}
       <div 
-        className={`relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]}`}
+        className={dialogClasses}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? 'dialog-title' : undefined}
+        tabIndex={-1}
       >
         {title && (
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 id="dialog-title" className="text-lg font-semibold text-gray-900">
+          <div className="lds-dialog-header">
+            <h2 id="dialog-title" className="lds-dialog-title">
               {title}
             </h2>
+            <button
+              type="button"
+              className="lds-dialog-close"
+              onClick={onClose}
+              aria-label="Dialog schließen"
+            >
+              ✕
+            </button>
           </div>
         )}
         
-        <div className="px-6 py-4">
+        <div className="lds-dialog-content">
           {children}
         </div>
       </div>

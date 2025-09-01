@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone', // WICHTIG für Docker!
+  experimental: {
+    outputFileTracingRoot: new URL('../../', import.meta.url).pathname,
+  },
   images: {
     remotePatterns: [
       {
@@ -7,7 +11,7 @@ const nextConfig = {
         hostname: '**.amazonaws.com'
       },
       {
-        protocol: 'https',
+        protocol: 'https', 
         hostname: '**.cloudfront.net'
       },
       {
@@ -16,7 +20,10 @@ const nextConfig = {
         port: '9000'
       }
     ]
-  }
+  },
+  // Für App Runner wichtig
+  compress: true,
+  poweredByHeader: false,
 };
 
 export default nextConfig;

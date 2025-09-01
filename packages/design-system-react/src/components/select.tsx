@@ -30,23 +30,27 @@ export function LdsSelect({
   const errorId = `${selectId}-error`;
   const hintId = `${selectId}-hint`;
   
-  const baseClasses = 'block w-full px-3 py-2 border rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed';
-  const errorClasses = error 
-    ? 'border-error focus:ring-error' 
-    : 'border-gray-300 focus:ring-brand';
+  // NUR CSS-Module-Klassen verwenden - KEIN Tailwind!
+  const selectClasses = [
+    'lds-select',
+    error && 'lds-select--error',
+    className
+  ].filter(Boolean).join(' ');
   
   return (
-    <div className="space-y-1">
+    <div className="lds-select-group">
       {label && (
-        <label htmlFor={selectId} className="block text-sm font-medium text-gray-700">
+        <label 
+          htmlFor={selectId} 
+          className={`lds-select-label ${required ? 'lds-select-label--required' : ''}`}
+        >
           {label}
-          {required && <span className="text-error ml-1">*</span>}
         </label>
       )}
       
       <select
         id={selectId}
-        className={`${baseClasses} ${errorClasses} ${className}`}
+        className={selectClasses}
         aria-invalid={error ? 'true' : 'false'}
         aria-describedby={error ? errorId : hint ? hintId : undefined}
         {...props}
@@ -68,13 +72,13 @@ export function LdsSelect({
       </select>
       
       {hint && !error && (
-        <p id={hintId} className="text-xs text-gray-500">
+        <p id={hintId} className="lds-select-hint">
           {hint}
         </p>
       )}
       
       {error && (
-        <p id={errorId} className="text-xs text-error" role="alert">
+        <p id={errorId} className="lds-select-error" role="alert">
           {error}
         </p>
       )}

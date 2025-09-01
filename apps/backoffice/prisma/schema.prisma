@@ -18,10 +18,11 @@ model User {
   role      UserRole @default(USER)
   
   // Authentication
-  password     String?
-  totpSecret   String?
-  totpEnabled  Boolean @default(false)
-  lastLoginAt  DateTime?
+  password         String?
+  totpSecret       String?
+  totpEnabled      Boolean @default(false)
+  totpBackupCodes  Json?   // Array of hashed backup codes
+  lastLoginAt      DateTime?
   
   // Audit
   createdAt DateTime @default(now())
@@ -61,11 +62,21 @@ model Property {
   bathrooms      Int?
   buildYear      Int?
   
-  // Energy Certificate
-  energyType     String? // "Verbrauch" | "Bedarf"
-  energyValue    Float?
-  energyClass    String?
-  energyCarrier  String?
+  // Energy Certificate (GEG § 87 Pflichtangaben)
+  energyType           String? // "Verbrauch" | "Bedarf"
+  energyValue          Float?  // Energiekennwert in kWh/(m²·a)
+  energyClass          String? // A+ bis H
+  energyCarrier        String? // Fernwärme, Gas, Öl, etc.
+  
+  // GEG § 87 Erweiterte Pflichtangaben
+  energyCertType       String? // "Wohnung" | "Nichtwohngebäude"
+  energyCertIssueYear  Int?    // Ausstellungsjahr des Energieausweises
+  energyCertValidUntil DateTime? // Gültigkeitsdatum
+  
+  // Verbrauchsausweis spezifisch (nur bei energyType="Verbrauch")
+  heatingConsumption   Float?  // Heizenergieverbrauch kWh/(m²·a)
+  hotWaterConsumption  Float?  // Warmwasserverbrauch kWh/(m²·a)
+  consumptionYears     String? // "2019-2021" - Referenzzeitraum
   
   // Microsite
   slug           String?  @unique
