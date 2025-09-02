@@ -1,0 +1,110 @@
+name: Deploy Design System to AWS ECS
+
+on:
+  push:
+    branches: [main, feature/pds-implementation]
+    paths:
+      - 'design-system/**'
+      - 'deployment/docker/Dockerfile.designsystem'
+      - 'deployment/ecs/ecs-designsystem-task.json'
+  workflow_dispatch:
+
+env:
+  AWS_REGION: eu-central-1
+  ECR_REPOSITORY: lyd-design-system
+  ECS_CLUSTER: lyd-cluster
+  ECS_SERVICE: lyd-design-system
+  AWS_ACCOUNT_ID: 835474150597
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      
+      - name: Build Docker Image
+        run: |
+          # Build with correct platform for ECS Fargate
+          docker build --platform linux/amd64 \
+            -f deployment/docker/Dockerfile.designsystem \
+            -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }} \
+            .
+          
+          # Tag for production
+          docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} \
+            ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          
+          docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} \
+            ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:production
+      
+      - name: Push to Amazon ECR
+        run: |
+          docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:production
+      
+      - name: Update ECS Task Definition
+        run: |
+          # Create new task definition with updated image
+          sed 's|"image": ".*"|"image": "'${{ env.AWS_ACCOUNT_ID }}'.dkr.ecr.'${{ env.AWS_REGION }}'.amazonaws.com/'${{ env.ECR_REPOSITORY }}':'${{ github.sha }}'"|g' \
+            deployment/ecs/ecs-designsystem-task.json > task-definition-updated.json
+          
+          # Register new task definition
+          aws ecs register-task-definition \
+            --cli-input-json file://task-definition-updated.json \
+            --region ${{ env.AWS_REGION }}
+      
+      - name: Deploy to Amazon ECS
+        run: |
+          # Get the latest task definition revision
+          TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
+            --task-definition ${{ env.ECR_REPOSITORY }} \
+            --query 'taskDefinition.taskDefinitionArn' \
+            --output text)
+          
+          # Update ECS service
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service ${{ env.ECS_SERVICE }} \
+            --task-definition $TASK_DEFINITION_ARN \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+      
+      - name: Wait for Deployment
+        run: |
+          echo "⏳ Waiting for deployment to complete..."
+          aws ecs wait services-stable \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --services ${{ env.ECS_SERVICE }} \
+            --region ${{ env.AWS_REGION }}
+          
+          echo "✅ Deployment completed successfully!"
+      
+      - name: Verify Deployment
+        run: |
+          # Check service status
+          RUNNING_COUNT=$(aws ecs describe-services \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --services ${{ env.ECS_SERVICE }} \
+            --query 'services[0].runningCount' \
+            --output text)
+          
+          if [ "$RUNNING_COUNT" -eq "1" ]; then
+            echo "✅ Service is running with $RUNNING_COUNT task(s)"
+            echo "🌐 Design System available at: http://designsystem.liveyourdreams.online"
+          else
+            echo "❌ Deployment failed - Running count: $RUNNING_COUNT"
+            exit 1
+          fi

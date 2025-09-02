@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Components Introduction - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .sidebar-logo {
+            width: 100%;
+            height: auto;
+            max-height: 60px;
+        }
+        
+        .nav-section-title {
+            padding: 16px 24px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px 24px;
+            color: #374151;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: #f9fafb;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+        
+        .nav-item.active {
+            background: #eff6ff;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+            padding: 48px;
+        }
+        
+        .page-header {
+            margin-bottom: 48px;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0066ff;
+            margin-bottom: 24px;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+        
+        .component-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .component-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .component-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .component-description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="/assets/lyd-designsystem-logo.svg" alt="LYD Design System" class="sidebar-logo">
+        </div>
+        
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/introduction/" class="nav-item active">Introduction</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Patterns</div>
+                <a href="/patterns/introduction/" class="nav-item">Introduction</a>
+                <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+                <a href="/patterns/header/" class="nav-item">Header</a>
+                <a href="/patterns/footer/" class="nav-item">Footer</a>
+                <a href="/patterns/forms/" class="nav-item">Forms</a>
+                <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Styles</div>
+                <a href="/styles/introduction/" class="nav-item">Introduction</a>
+                <a href="/styles/grid/" class="nav-item">Grid</a>
+                <a href="/styles/typography/" class="nav-item">Typography</a>
+                <a href="/styles/colors/" class="nav-item">Colors</a>
+                <a href="/styles/spacing/" class="nav-item">Spacing</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Components</h1>
+            <p class="page-subtitle">
+                Professional component library for real estate applications. 
+                Built with Next.js integration and accessibility in mind.
+            </p>
+        </div>
+        
+        <!-- Foundation Components -->
+        <section class="section">
+            <h2 class="section-title">Foundation Components</h2>
+            <div class="component-grid">
+                <a href="/components/buttons/" class="component-card">
+                    <h3 class="component-title">Button</h3>
+                    <p class="component-description">
+                        Interactive button component with multiple variants, loading states, and real estate specific actions.
+                    </p>
+                </a>
+                
+                <a href="/components/inputs/" class="component-card">
+                    <h3 class="component-title">Input</h3>
+                    <p class="component-description">
+                        Form input component with variants for search, currency, and area inputs optimized for real estate.
+                    </p>
+                </a>
+                
+                <a href="/components/cards/" class="component-card">
+                    <h3 class="component-title">Card</h3>
+                    <p class="component-description">
+                        Flexible card component with glassmorphism effects for property showcases and content organization.
+                    </p>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Form Components -->
+        <section class="section">
+            <h2 class="section-title">Form Components</h2>
+            <div class="component-grid">
+                <a href="/components/select/" class="component-card">
+                    <h3 class="component-title">Select</h3>
+                    <p class="component-description">
+                        Dropdown selection component with search functionality and property type options.
+                    </p>
+                </a>
+                
+                <a href="/components/checkbox/" class="component-card">
+                    <h3 class="component-title">Checkbox</h3>
+                    <p class="component-description">
+                        Checkbox component for feature selection and multi-choice forms.
+                    </p>
+                </a>
+                
+                <a href="/components/radio/" class="component-card">
+                    <h3 class="component-title">Radio</h3>
+                    <p class="component-description">
+                        Radio button component for single-choice selections in property forms.
+                    </p>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Feedback Components -->
+        <section class="section">
+            <h2 class="section-title">Feedback Components</h2>
+            <div class="component-grid">
+                <a href="/components/modal/" class="component-card">
+                    <h3 class="component-title">Modal</h3>
+                    <p class="component-description">
+                        Modal dialog component for property details, confirmations, and forms.
+                    </p>
+                </a>
+                
+                <a href="/components/toast/" class="component-card">
+                    <h3 class="component-title">Toast</h3>
+                    <p class="component-description">
+                        Toast notification component for success messages and error feedback.
+                    </p>
+                </a>
+                
+                <a href="/components/table/" class="component-card">
+                    <h3 class="component-title">Table</h3>
+                    <p class="component-description">
+                        Data table component for property listings and lead management.
+                    </p>
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
