@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Demo - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            padding: 48px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .demo-description {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .component-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .property-card-demo {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 32px auto;
+        }
+        
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .property-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .property-location {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .property-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .property-price {
+          font-size: 32px;
+          font-weight: 800;
+          background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+        }
+        
+        .property-price-info {
+          color: #6b7280;
+          font-size: 13px;
+          font-weight: 500;
+        }
+    </style>
+    <script type="module" src="/src/components/lyd-button-enhanced.js"></script>
+    <script type="module" src="/src/components/lyd-input-enhanced.js"></script>
+    <script type="module" src="/src/components/lyd-card.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Enhanced Components Demo</h1>
+        <p class="page-subtitle">
+            Professional components matching the original design quality with icons, animations, and real estate optimizations.
+        </p>
+        
+        <!-- Button Components Demo -->
+        <div class="demo-grid">
+            <div class="demo-card">
+                <h3 class="demo-title">Button Components</h3>
+                <p class="demo-description">
+                    Professional buttons with advanced hover states, loading animations, and accessibility features.
+                </p>
+                <div class="component-showcase">
+                    <lyd-button-enhanced variant="primary" size="large" icon="home">
+                        Schedule Viewing
+                    </lyd-button-enhanced>
+                    <lyd-button-enhanced variant="secondary" icon="heart">
+                        Add to Favorites
+                    </lyd-button-enhanced>
+                    <lyd-button-enhanced variant="outline" icon="download" icon-position="right">
+                        Download Exposé
+                    </lyd-button-enhanced>
+                </div>
+            </div>
+            
+            <div class="demo-card">
+                <h3 class="demo-title">Input Components</h3>
+                <p class="demo-description">
+                    Real estate optimized inputs with currency, area, and search variants.
+                </p>
+                <div class="component-showcase">
+                    <lyd-input-enhanced 
+                        variant="search" 
+                        label="Property Search" 
+                        placeholder="Munich, Schwabing...">
+                    </lyd-input-enhanced>
+                    <lyd-input-enhanced 
+                        variant="currency" 
+                        label="Max Price" 
+                        placeholder="750000">
+                    </lyd-input-enhanced>
+                    <lyd-input-enhanced 
+                        variant="area" 
+                        label="Min Size" 
+                        placeholder="120">
+                    </lyd-input-enhanced>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Property Card Component Demo -->
+        <div class="property-card-demo">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=200&fit=crop&auto=format" 
+                 alt="Luxury Property" 
+                 class="property-image" />
+            
+            <h3 class="property-title">Luxury Penthouse Munich</h3>
+            <p class="property-location">Schwabing • 4.5 Rooms • 180 m² • Premium Location</p>
+            
+            <p class="property-description">
+                Exceptional penthouse with panoramic city views, modern amenities, 
+                and exclusive rooftop terrace in Munich's most prestigious district.
+            </p>
+            
+            <div class="property-footer">
+                <div>
+                    <div class="property-price">€1,250,000</div>
+                    <div class="property-price-info">€6,944/m² • Premium Location</div>
+                </div>
+                <lyd-button-enhanced variant="primary" size="medium" icon="home">
+                    View Details
+                </lyd-button-enhanced>
+            </div>
+        </div>
+        
+        <!-- Additional Real Estate Buttons -->
+        <div style="text-align: center; margin-top: 48px;">
+            <h2 style="font-size: 32px; font-weight: 700; color: #0066ff; margin-bottom: 32px;">Real Estate Actions</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+                <lyd-button-enhanced variant="contact" icon="phone">Call Agent</lyd-button-enhanced>
+                <lyd-button-enhanced variant="secondary" icon="mail">Send Email</lyd-button-enhanced>
+                <lyd-button-enhanced variant="outline" icon="calendar">Schedule Meeting</lyd-button-enhanced>
+                <lyd-button-enhanced variant="warning" icon="download">Download Contract</lyd-button-enhanced>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

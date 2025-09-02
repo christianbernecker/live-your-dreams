@@ -9,7 +9,7 @@
   "containerDefinitions": [
     {
       "name": "design-system",
-      "image": "835474150597.dkr.ecr.eu-central-1.amazonaws.com/lyd-design-system:complete-structure",
+      "image": "835474150597.dkr.ecr.eu-central-1.amazonaws.com/lyd-design-system:complete-components",
       "portMappings": [
         {
           "containerPort": 80,
