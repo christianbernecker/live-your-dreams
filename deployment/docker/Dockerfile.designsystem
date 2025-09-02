@@ -66,6 +66,11 @@ server {
         try_files /styles/\$1/index.html =404;
     }
 
+    # Handle enhanced-demo specifically
+    location /enhanced-demo {
+        try_files /enhanced-demo.html =404;
+    }
+
     # Root and fallback
     location / {
         try_files \$uri \$uri/ /index.html;
