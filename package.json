@@ -1,32 +1,18 @@
 {
-  "name": "@liveyourdreams/monorepo",
+  "name": "lyd-design-system",
   "version": "1.0.0",
-  "private": true,
-  "description": "Live Your Dreams - Immobilienvermarktung Monorepo",
-  "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=8.0.0"
-  },
-  "packageManager": "pnpm@9.0.0",
+  "description": "Live Your Dreams Design System",
   "scripts": {
-    "bootstrap": "pnpm install && pnpm build:libs && pnpm build:apps",
-    "check:brand": "bash ./scripts/check-lyd-brand.sh",
-    "build:tokens": "pnpm --filter @liveyourdreams/design-tokens build",
-    "build:ds": "pnpm --filter @liveyourdreams/design-system build", 
-    "build:react": "pnpm --filter @liveyourdreams/design-system-react build",
-    "build:libs": "pnpm build:tokens && pnpm build:ds && pnpm build:react",
-    "build:apps": "pnpm --filter @liveyourdreams/backoffice build && pnpm --filter @liveyourdreams/designsystem-docs build",
-    "build": "pnpm build:libs && pnpm build:apps",
-    "dev": "pnpm -r --parallel dev",
-    "test": "pnpm -r test",
-    "lint": "pnpm -r lint",
-    "changeset": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish",
-    "clean": "pnpm -r clean && rm -rf node_modules"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "preview": "storybook build && npx http-server storybook-static"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
-    "typescript": "^5.3.3"
-  }
+    "@storybook/addon-essentials": "^7.6.20",
+    "@storybook/web-components-vite": "^7.6.20",
+    "lit": "^3.3.1",
+    "storybook": "^7.6.20",
+    "vite": "^5.4.19"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

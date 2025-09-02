@@ -1,0 +1,127 @@
+{
+  "transition": {
+    "duration": {
+      "instant": { "value": "0ms", "type": "duration" },
+      "fast": { "value": "150ms", "type": "duration", "description": "Fast transitions for micro-interactions" },
+      "normal": { "value": "250ms", "type": "duration", "description": "Normal transitions for hover states" },
+      "slow": { "value": "350ms", "type": "duration", "description": "Slow transitions for complex animations" },
+      "slower": { "value": "500ms", "type": "duration", "description": "Slower transitions for page changes" },
+      "slowest": { "value": "750ms", "type": "duration", "description": "Slowest transitions for dramatic effects" }
+    },
+    
+    "timing": {
+      "linear": { "value": "linear", "type": "cubicBezier" },
+      "ease": { "value": "ease", "type": "cubicBezier" },
+      "ease-in": { "value": "ease-in", "type": "cubicBezier" },
+      "ease-out": { "value": "ease-out", "type": "cubicBezier" },
+      "ease-in-out": { "value": "ease-in-out", "type": "cubicBezier" },
+      
+      "premium": {
+        "out": { 
+          "value": "cubic-bezier(0.16, 1, 0.3, 1)", 
+          "type": "cubicBezier",
+          "description": "Premium ease-out for smooth deceleration"
+        },
+        "in-out": { 
+          "value": "cubic-bezier(0.4, 0, 0.2, 1)", 
+          "type": "cubicBezier",
+          "description": "Premium ease-in-out for balanced motion"
+        },
+        "bounce": { 
+          "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)", 
+          "type": "cubicBezier",
+          "description": "Subtle bounce for playful interactions"
+        },
+        "spring": { 
+          "value": "cubic-bezier(0.175, 0.885, 0.32, 1.275)", 
+          "type": "cubicBezier",
+          "description": "Spring-like easing for premium feel"
+        }
+      }
+    }
+  },
+  
+  "animation": {
+    "scale": {
+      "hover": { "value": "1.02", "type": "scale", "description": "Subtle scale on hover" },
+      "active": { "value": "0.98", "type": "scale", "description": "Scale down on active state" },
+      "focus": { "value": "1.01", "type": "scale", "description": "Subtle scale on focus" }
+    },
+    
+    "translate": {
+      "hover": {
+        "y": { "value": "-2px", "type": "translate", "description": "Subtle lift on hover" },
+        "x": { "value": "1px", "type": "translate", "description": "Subtle slide on hover" }
+      }
+    },
+    
+    "rotate": {
+      "hover": { "value": "1deg", "type": "rotate", "description": "Subtle rotation on hover" }
+    }
+  },
+  
+  "keyframes": {
+    "fadeIn": {
+      "value": {
+        "0%": { "opacity": "0" },
+        "100%": { "opacity": "1" }
+      },
+      "type": "keyframes",
+      "description": "Smooth fade in animation"
+    },
+    
+    "slideUp": {
+      "value": {
+        "0%": { "transform": "translateY(20px)", "opacity": "0" },
+        "100%": { "transform": "translateY(0)", "opacity": "1" }
+      },
+      "type": "keyframes",
+      "description": "Slide up animation"
+    },
+    
+    "slideDown": {
+      "value": {
+        "0%": { "transform": "translateY(-20px)", "opacity": "0" },
+        "100%": { "transform": "translateY(0)", "opacity": "1" }
+      },
+      "type": "keyframes",
+      "description": "Slide down animation"
+    },
+    
+    "scaleIn": {
+      "value": {
+        "0%": { "transform": "scale(0.9)", "opacity": "0" },
+        "100%": { "transform": "scale(1)", "opacity": "1" }
+      },
+      "type": "keyframes",
+      "description": "Scale in animation"
+    },
+    
+    "spin": {
+      "value": {
+        "0%": { "transform": "rotate(0deg)" },
+        "100%": { "transform": "rotate(360deg)" }
+      },
+      "type": "keyframes",
+      "description": "Spinning animation for loading states"
+    },
+    
+    "pulse": {
+      "value": {
+        "0%, 100%": { "opacity": "1" },
+        "50%": { "opacity": "0.5" }
+      },
+      "type": "keyframes",
+      "description": "Pulsing animation"
+    },
+    
+    "shimmer": {
+      "value": {
+        "0%": { "transform": "translateX(-100%)" },
+        "100%": { "transform": "translateX(100%)" }
+      },
+      "type": "keyframes",
+      "description": "Shimmer loading effect"
+    }
+  }
+}
