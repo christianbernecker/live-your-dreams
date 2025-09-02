@@ -224,6 +224,55 @@ class LydButtonEnhanced extends HTMLElement {
         .lyd-button:hover::before {
           transform: translateX(100%);
         }
+        
+        /* Download Animation - Links nach Rechts */
+        .lyd-button--download {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .lyd-button--download::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(255, 255, 255, 0.2) 50%, 
+            transparent 100%);
+          transition: left 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .lyd-button--download:hover::after {
+          left: 100%;
+        }
+        
+        .lyd-button--download.downloading::after {
+          left: 100%;
+          transition: left 3s linear;
+          background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(34, 197, 94, 0.3) 50%, 
+            transparent 100%);
+        }
+        
+        /* Progress Bar für Download */
+        .download-progress {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 3px;
+          background: #22c55e;
+          width: 0%;
+          transition: width 3s linear;
+          border-radius: 0 0 12px 12px;
+        }
+        
+        .lyd-button--download.downloading .download-progress {
+          width: 100%;
+        }
       </style>
       
       <button 
@@ -235,6 +284,7 @@ class LydButtonEnhanced extends HTMLElement {
         ${icon && iconPosition === 'left' ? `<div class="button-icon">${iconSVG}</div>` : ''}
         <span class="button-text"><slot></slot></span>
         ${icon && iconPosition === 'right' ? `<div class="button-icon icon-right">${iconSVG}</div>` : ''}
+        ${variant === 'download' ? '<div class="download-progress"></div>' : ''}
       </button>
     `;
   }
@@ -275,6 +325,12 @@ class LydButtonEnhanced extends HTMLElement {
     const button = this.shadowRoot.querySelector('button');
     button.addEventListener('click', (e) => {
       if (!this.hasAttribute('loading') && !this.hasAttribute('disabled')) {
+        
+        // Special handling for download buttons
+        if (this.getAttribute('variant') === 'download') {
+          this.startDownload();
+        }
+        
         this.dispatchEvent(new CustomEvent('lyd-click', {
           detail: { 
             variant: this.getAttribute('variant'),
@@ -284,6 +340,28 @@ class LydButtonEnhanced extends HTMLElement {
         }));
       }
     });
+  }
+
+  startDownload() {
+    const button = this.shadowRoot.querySelector('button');
+    const originalText = this.textContent;
+    
+    // Add downloading class for animation
+    button.classList.add('downloading');
+    
+    // Change button text
+    this.innerHTML = 'Downloading...';
+    
+    // Simulate download progress
+    setTimeout(() => {
+      this.innerHTML = 'Download Complete!';
+      button.classList.remove('downloading');
+      
+      // Reset after 2 seconds
+      setTimeout(() => {
+        this.innerHTML = originalText;
+      }, 2000);
+    }, 3000);
   }
 }
 
