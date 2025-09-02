@@ -5,7 +5,13 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
-    "preview": "storybook build && npx http-server storybook-static -p 6007"
+    "preview": "storybook build && npx http-server storybook-static -p 6007",
+    "ds:create": "node scripts/design-system-tools.js create-component",
+    "ds:tokens": "node scripts/design-system-tools.js update-tokens",
+    "ds:commit": "node scripts/design-system-tools.js commit",
+    "ds:deploy": "node scripts/design-system-tools.js deploy",
+    "ds:workflow": "node scripts/design-system-tools.js full-workflow",
+    "ds:help": "node scripts/design-system-tools.js"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.20",
