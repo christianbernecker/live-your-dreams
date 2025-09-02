@@ -41,6 +41,18 @@ server {
     add_header X-Content-Type-Options "nosniff";
     add_header X-XSS-Protection "1; mode=block";
     
+    # Handle assets FIRST - before other routes
+    location /assets/ {
+        try_files \$uri =404;
+        add_header Content-Type image/svg+xml;
+        expires 30d;
+    }
+    
+    location /src/ {
+        try_files \$uri =404;
+        add_header Content-Type application/javascript;
+    }
+    
     # Handle designing routes
     location ~ ^/designing/([^/]+)/?$ {
         try_files /designing/\$1/index.html =404;
