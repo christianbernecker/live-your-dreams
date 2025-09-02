@@ -22,19 +22,29 @@ server {
     add_header X-Content-Type-Options "nosniff";
     add_header X-XSS-Protection "1; mode=block";
     
+    # Handle designing routes
+    location ~ ^/designing/([^/]+)/?$ {
+        try_files /designing/\$1/index.html =404;
+    }
+
+    # Handle developing routes
+    location ~ ^/developing/([^/]+)/?$ {
+        try_files /developing/\$1/index.html =404;
+    }
+
     # Handle component routes
     location ~ ^/components/([^/]+)/?$ {
-        try_files /components/\$1/index.html /components/\$1.html =404;
+        try_files /components/\$1/index.html =404;
     }
 
     # Handle pattern routes  
     location ~ ^/patterns/([^/]+)/?$ {
-        try_files /patterns/\$1/index.html /patterns/\$1.html =404;
+        try_files /patterns/\$1/index.html =404;
     }
 
     # Handle style routes
     location ~ ^/styles/([^/]+)/?$ {
-        try_files /styles/\$1/index.html /styles/\$1.html =404;
+        try_files /styles/\$1/index.html =404;
     }
 
     # Root and fallback
