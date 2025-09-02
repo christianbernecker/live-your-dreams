@@ -80,7 +80,7 @@ class LydButtonEnhanced extends HTMLElement {
           border-radius: 16px;
         }
         
-        /* Primary Variant - Like Screenshot */
+        /* Primary Variant */
         .lyd-button--primary {
           background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
           color: white;
@@ -102,7 +102,7 @@ class LydButtonEnhanced extends HTMLElement {
           box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
         }
         
-        /* Secondary Variant - Like Screenshot */
+        /* Secondary Variant */
         .lyd-button--secondary {
           background: rgba(248, 250, 252, 0.95);
           color: #0066ff;
@@ -117,7 +117,7 @@ class LydButtonEnhanced extends HTMLElement {
           box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
         }
         
-        /* Outline Variant - Like Screenshot */
+        /* Outline Variant */
         .lyd-button--outline {
           background: transparent;
           color: #0066ff;

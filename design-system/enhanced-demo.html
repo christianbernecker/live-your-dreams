@@ -135,15 +135,20 @@
           font-weight: 500;
         }
     </style>
-    <script type="module" src="/src/components/lyd-button-enhanced.js"></script>
-    <script type="module" src="/src/components/lyd-input-enhanced.js"></script>
-    <script type="module" src="/src/components/lyd-card.js"></script>
+    <script type="module">
+        // Import enhanced components directly
+        import '/src/components/lyd-button-enhanced.js';
+        import '/src/components/lyd-input-enhanced.js';
+        import '/src/components/lyd-card.js';
+        
+        console.log('Enhanced components loaded');
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1 class="page-title">Enhanced Components Demo</h1>
+        <h1 class="page-title">Enhanced Components</h1>
         <p class="page-subtitle">
-            Professional components matching the original design quality with icons, animations, and real estate optimizations.
+            Professional components with icons, animations, and real estate optimizations.
         </p>
         
         <!-- Button Components Demo -->
@@ -154,15 +159,25 @@
                     Professional buttons with advanced hover states, loading animations, and accessibility features.
                 </p>
                 <div class="component-showcase">
-                    <lyd-button-enhanced variant="primary" size="large" icon="home">
+                    <button style="display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white; border: none; border-radius: 12px; font-family: inherit; font-size: 18px; font-weight: 500; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); transition: all 0.3s ease;">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
                         Schedule Viewing
-                    </lyd-button-enhanced>
-                    <lyd-button-enhanced variant="secondary" icon="heart">
+                    </button>
+                    <button style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: rgba(248, 250, 252, 0.95); color: #0066ff; border: 1px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
                         Add to Favorites
-                    </lyd-button-enhanced>
-                    <lyd-button-enhanced variant="download" icon="download" icon-position="right">
-                        Download Exposé
-                    </lyd-button-enhanced>
+                    </button>
+                    <button id="download-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: transparent; color: #0066ff; border: 2px solid #0066ff; border-radius: 12px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                        <span id="download-text">Download Exposé</span>
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <div id="download-progress" style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(34, 197, 94, 0.3) 50%, transparent 100%); transition: left 3s linear;"></div>
+                    </button>
                 </div>
             </div>
             
@@ -227,5 +242,57 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        // Download Button Animation
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const btn = this;
+            const text = document.getElementById('download-text');
+            const progress = document.getElementById('download-progress');
+            
+            // Start animation
+            text.textContent = 'Downloading...';
+            progress.style.left = '100%';
+            btn.style.pointerEvents = 'none';
+            
+            // Complete after 3 seconds
+            setTimeout(() => {
+                text.textContent = 'Download Complete!';
+                btn.style.background = '#22c55e';
+                btn.style.borderColor = '#22c55e';
+                btn.style.color = 'white';
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    text.textContent = 'Download Exposé';
+                    progress.style.left = '-100%';
+                    progress.style.transition = 'none';
+                    btn.style.background = 'transparent';
+                    btn.style.borderColor = '#0066ff';
+                    btn.style.color = '#0066ff';
+                    btn.style.pointerEvents = 'auto';
+                    
+                    setTimeout(() => {
+                        progress.style.transition = 'left 3s linear';
+                    }, 100);
+                }, 2000);
+            }, 3000);
+        });
+        
+        // Hover effects for other buttons
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.id !== 'download-btn') {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 8px 20px rgba(0, 102, 255, 0.4)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 12px rgba(0, 102, 255, 0.3)';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
