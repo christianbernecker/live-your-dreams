@@ -184,7 +184,166 @@
             font-size: 13px;
         }
     </style>
-    <script type="module" src="/src/components/lyd-button.js"></script>
+    <script type="module">
+        // LYD Button Web Component - Inline Definition
+        class LydButton extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+            }
+
+            static get observedAttributes() {
+                return ['variant', 'size', 'loading', 'disabled'];
+            }
+
+            connectedCallback() {
+                this.render();
+                this.addEventListeners();
+            }
+
+            attributeChangedCallback() {
+                this.render();
+            }
+
+            render() {
+                const variant = this.getAttribute('variant') || 'primary';
+                const size = this.getAttribute('size') || 'medium';
+                const loading = this.hasAttribute('loading');
+                const disabled = this.hasAttribute('disabled');
+
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            display: inline-block;
+                        }
+                        
+                        .lyd-button {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
+                            border: none;
+                            border-radius: 8px;
+                            font-family: "Inter", system-ui, sans-serif;
+                            font-weight: 500;
+                            cursor: pointer;
+                            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                            text-decoration: none;
+                            position: relative;
+                            overflow: hidden;
+                        }
+                        
+                        .lyd-button:focus {
+                            outline: 2px solid #0066ff;
+                            outline-offset: 2px;
+                        }
+                        
+                        /* Sizes */
+                        .lyd-button--small {
+                            padding: 8px 16px;
+                            font-size: 14px;
+                            min-height: 32px;
+                        }
+                        
+                        .lyd-button--medium {
+                            padding: 12px 24px;
+                            font-size: 16px;
+                            min-height: 44px;
+                        }
+                        
+                        .lyd-button--large {
+                            padding: 16px 32px;
+                            font-size: 18px;
+                            min-height: 52px;
+                        }
+                        
+                        /* Primary Variant */
+                        .lyd-button--primary {
+                            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+                            color: white;
+                            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+                        }
+                        
+                        .lyd-button--primary:hover:not(:disabled) {
+                            transform: translateY(-2px);
+                            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.4);
+                        }
+                        
+                        /* Secondary Variant */
+                        .lyd-button--secondary {
+                            background: #f8fafc;
+                            color: #0066ff;
+                            border: 1px solid #e2e8f0;
+                        }
+                        
+                        .lyd-button--secondary:hover:not(:disabled) {
+                            background: #f1f5f9;
+                            border-color: #cbd5e1;
+                        }
+                        
+                        /* Outline Variant */
+                        .lyd-button--outline {
+                            background: transparent;
+                            color: #0066ff;
+                            border: 2px solid #0066ff;
+                        }
+                        
+                        .lyd-button--outline:hover:not(:disabled) {
+                            background: #0066ff;
+                            color: white;
+                        }
+                        
+                        /* Disabled State */
+                        .lyd-button:disabled {
+                            opacity: 0.5;
+                            cursor: not-allowed;
+                            transform: none !important;
+                        }
+                        
+                        /* Loading State */
+                        .lyd-button--loading {
+                            pointer-events: none;
+                        }
+                        
+                        .loading-spinner {
+                            width: 16px;
+                            height: 16px;
+                            border: 2px solid currentColor;
+                            border-top: 2px solid transparent;
+                            border-radius: 50%;
+                            animation: spin 1s linear infinite;
+                        }
+                        
+                        @keyframes spin {
+                            to { transform: rotate(360deg); }
+                        }
+                    </style>
+                    
+                    <button 
+                        class="lyd-button lyd-button--${variant} lyd-button--${size} ${loading ? 'lyd-button--loading' : ''}"
+                        ${disabled ? 'disabled' : ''}
+                    >
+                        ${loading ? '<div class="loading-spinner"></div>' : ''}
+                        <slot></slot>
+                    </button>
+                `;
+            }
+
+            addEventListeners() {
+                const button = this.shadowRoot.querySelector('button');
+                button.addEventListener('click', (e) => {
+                    if (!this.hasAttribute('loading') && !this.hasAttribute('disabled')) {
+                        this.dispatchEvent(new CustomEvent('lyd-click', {
+                            detail: { variant: this.getAttribute('variant') },
+                            bubbles: true
+                        }));
+                    }
+                });
+            }
+        }
+
+        customElements.define('lyd-button', LydButton);
+    </script>
 </head>
 <body>
     <!-- Left Sidebar -->
