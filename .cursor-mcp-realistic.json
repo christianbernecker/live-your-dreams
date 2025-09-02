@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "description": "Realistische MCP Server Konfiguration für LYD Design System",
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/christianbernecker/live-your-dreams/design-system"
+      ],
+      "description": "Design System file management - batch operations across all components",
+      "enabled": true,
+      "capabilities": [
+        "read_files",
+        "write_files", 
+        "create_directories",
+        "batch_updates",
+        "search_replace_across_files"
+      ]
+    },
+    "git-local": {
+      "command": "git",
+      "args": ["--git-dir=/Users/christianbernecker/live-your-dreams/.git"],
+      "description": "Local Git operations for version control",
+      "enabled": true,
+      "capabilities": [
+        "status",
+        "add",
+        "commit",
+        "log",
+        "diff"
+      ]
+    }
+  },
+  "workflows": {
+    "new_component": {
+      "description": "Create new component with full documentation",
+      "steps": [
+        "Create component directory structure",
+        "Generate index.html with navigation",
+        "Update all existing pages with new navigation link",
+        "Create placeholder content",
+        "Commit changes to git"
+      ]
+    },
+    "update_navigation": {
+      "description": "Update navigation across all pages",
+      "steps": [
+        "Find all HTML files with navigation",
+        "Replace navigation section consistently",
+        "Verify active states are correct",
+        "Test all links"
+      ]
+    },
+    "design_token_update": {
+      "description": "Update design tokens across all components",
+      "steps": [
+        "Find all color/typography references",
+        "Replace with new token values",
+        "Update CSS variables",
+        "Verify visual consistency"
+      ]
+    }
+  },
+  "aliases": {
+    "create-component": "Use filesystem MCP to create new component with navigation updates",
+    "update-colors": "Use filesystem MCP to update color tokens across all files",
+    "fix-navigation": "Use filesystem MCP to fix navigation links in all HTML files",
+    "commit-changes": "Use git MCP to commit Design System changes"
+  }
+}

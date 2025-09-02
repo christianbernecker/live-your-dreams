@@ -136,6 +136,7 @@
             margin: 0 auto;
         }
     </style>
+    <script type="module" src="/src/components/lyd-select.js"></script>
 </head>
 <body>
     <nav class="sidebar">
@@ -166,16 +167,120 @@
             Dropdown selection component with search functionality and property type options.
         </p>
         
+        <!-- Select Variants -->
         <section class="section">
-            <h2 class="section-title">Component In Development</h2>
-            <div class="placeholder-content">
-                <div class="placeholder-icon">🔽</div>
-                <h3 class="placeholder-title">Select Component</h3>
-                <p class="placeholder-description">
-                    This component is currently in development. It will include dropdown functionality, 
-                    search capabilities, multi-select options, and property-specific selections 
-                    like property types, locations, and features.
-                </p>
+            <h2 class="section-title">Select Variants</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin: 24px 0;">
+                <div style="padding: 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Property Type Selection</h3>
+                    <lyd-select label="Property Type" placeholder="Choose property type...">
+                        <lyd-option value="apartment">Apartment</lyd-option>
+                        <lyd-option value="house">House</lyd-option>
+                        <lyd-option value="penthouse">Penthouse</lyd-option>
+                        <lyd-option value="studio">Studio</lyd-option>
+                        <lyd-option value="villa">Villa</lyd-option>
+                    </lyd-select>
+                </div>
+                
+                <div style="padding: 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Location Search</h3>
+                    <lyd-select label="Location" placeholder="Search locations..." searchable>
+                        <lyd-option value="schwabing">Munich - Schwabing</lyd-option>
+                        <lyd-option value="maxvorstadt">Munich - Maxvorstadt</lyd-option>
+                        <lyd-option value="haidhausen">Munich - Haidhausen</lyd-option>
+                        <lyd-option value="bogenhausen">Munich - Bogenhausen</lyd-option>
+                        <lyd-option value="glockenbachviertel">Munich - Glockenbachviertel</lyd-option>
+                    </lyd-select>
+                </div>
+                
+                <div style="padding: 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Multi-Select Features</h3>
+                    <lyd-select label="Property Features" placeholder="Select features..." multiple>
+                        <lyd-option value="balcony">Balcony</lyd-option>
+                        <lyd-option value="garage">Garage</lyd-option>
+                        <lyd-option value="elevator">Elevator</lyd-option>
+                        <lyd-option value="garden">Private Garden</lyd-option>
+                        <lyd-option value="fireplace">Fireplace</lyd-option>
+                        <lyd-option value="pool">Swimming Pool</lyd-option>
+                    </lyd-select>
+                </div>
+                
+                <div style="padding: 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Price Range</h3>
+                    <lyd-select label="Price Range" placeholder="Select price range...">
+                        <lyd-option value="0-500k">Up to €500,000</lyd-option>
+                        <lyd-option value="500k-750k">€500,000 - €750,000</lyd-option>
+                        <lyd-option value="750k-1m">€750,000 - €1,000,000</lyd-option>
+                        <lyd-option value="1m-1.5m">€1,000,000 - €1,500,000</lyd-option>
+                        <lyd-option value="1.5m+">€1,500,000+</lyd-option>
+                    </lyd-select>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Usage Examples -->
+        <section class="section">
+            <h2 class="section-title">Next.js Usage</h2>
+            
+            <div style="background: #1e293b; border-radius: 12px; padding: 24px; color: #e2e8f0; font-family: monospace;">
+<pre style="margin: 0; line-height: 1.6;"><code>// app/properties/search/page.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+
+export default function PropertySearchPage() {
+  const [filters, setFilters] = useState({});
+  
+  useEffect(() => {
+    import('@liveyourdreams/design-system');
+  }, []);
+
+  const handleFilterChange = (e) => {
+    setFilters(prev => ({
+      ...prev,
+      [e.target.getAttribute('name')]: e.detail.value
+    }));
+  };
+
+  return (
+    &lt;div className="space-y-6"&gt;
+      &lt;lyd-select 
+        name="propertyType"
+        label="Property Type"
+        placeholder="Choose property type..."
+        onLydSelectChange={handleFilterChange}
+      &gt;
+        &lt;lyd-option value="apartment"&gt;Apartment&lt;/lyd-option&gt;
+        &lt;lyd-option value="house"&gt;House&lt;/lyd-option&gt;
+        &lt;lyd-option value="penthouse"&gt;Penthouse&lt;/lyd-option&gt;
+      &lt;/lyd-select&gt;
+      
+      &lt;lyd-select 
+        name="location"
+        label="Location"
+        placeholder="Search locations..."
+        searchable
+        onLydSelectChange={handleFilterChange}
+      &gt;
+        &lt;lyd-option value="schwabing"&gt;Munich - Schwabing&lt;/lyd-option&gt;
+        &lt;lyd-option value="maxvorstadt"&gt;Munich - Maxvorstadt&lt;/lyd-option&gt;
+      &lt;/lyd-select&gt;
+      
+      &lt;lyd-select 
+        name="features"
+        label="Features"
+        placeholder="Select features..."
+        multiple
+        onLydSelectChange={handleFilterChange}
+      &gt;
+        &lt;lyd-option value="balcony"&gt;Balcony&lt;/lyd-option&gt;
+        &lt;lyd-option value="garage"&gt;Garage&lt;/lyd-option&gt;
+        &lt;lyd-option value="elevator"&gt;Elevator&lt;/lyd-option&gt;
+      &lt;/lyd-select&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
             </div>
         </section>
     </main>

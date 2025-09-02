@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/christianbernecker/live-your-dreams/design-system"
+      ],
+      "description": "Direct file access for Design System files - enables batch updates across all components"
+    },
+    "git": {
+      "command": "npx", 
+      "args": ["@modelcontextprotocol/server-git"],
+      "env": {
+        "GIT_WORK_TREE": "/Users/christianbernecker/live-your-dreams"
+      },
+      "description": "Version control for Design System changes with automatic commit management"
+    },
+    "database": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-postgres"],
+      "env": {
+        "DATABASE_URL": "postgresql://postgres:${POSTGRES_PASSWORD}@lyd-postgres.c3m8am00w3dm.eu-central-1.rds.amazonaws.com:5432/lyd_prod"
+      },
+      "description": "Access to production PostgreSQL for real property data in component testing"
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-memory"],
+      "description": "Design token management and component state caching between sessions"
+    }
+  },
+  "tools": {
+    "filesystem": {
+      "enabled": true,
+      "scope": [
+        "/Users/christianbernecker/live-your-dreams/design-system",
+        "/Users/christianbernecker/live-your-dreams/apps/backoffice",
+        "/Users/christianbernecker/live-your-dreams/docs"
+      ]
+    },
+    "git": {
+      "enabled": true,
+      "auto_commit": false,
+      "branch_protection": ["main", "production"]
+    },
+    "database": {
+      "enabled": true,
+      "read_only": true,
+      "allowed_schemas": ["public"],
+      "allowed_tables": ["properties", "leads", "users"]
+    }
+  },
+  "development": {
+    "auto_deploy": false,
+    "test_before_deploy": true,
+    "backup_before_changes": true
+  }
+}
