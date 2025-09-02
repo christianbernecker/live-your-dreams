@@ -22,8 +22,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.2.1",
-    "@liveyourdreams/design-system": "workspace:*",
-    "@liveyourdreams/design-system-react": "workspace:*",
+
     "@prisma/client": "^5.7.0",
     "@upstash/ratelimit": "^0.4.4",
     "@upstash/redis": "^1.25.1",
