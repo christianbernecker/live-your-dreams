@@ -1,0 +1,39 @@
+{
+  "mcp": {
+    "enabled": true,
+    "servers": {
+      "lyd-design-system": {
+        "command": "node",
+        "args": [
+          "/Users/christianbernecker/live-your-dreams/scripts/design-system-tools.js"
+        ],
+        "description": "LYD Design System automation tools",
+        "capabilities": [
+          "create_components",
+          "update_navigation", 
+          "batch_file_operations",
+          "git_operations",
+          "aws_deployment"
+        ]
+      }
+    },
+    "shortcuts": {
+      "create-component": "node scripts/design-system-tools.js create-component",
+      "update-tokens": "node scripts/design-system-tools.js update-tokens",
+      "deploy": "node scripts/design-system-tools.js deploy",
+      "full-workflow": "node scripts/design-system-tools.js full-workflow"
+    }
+  },
+  "ai_prompts": {
+    "component_creation": "Use the MCP-style tools to create a new {component_name} component with full documentation, navigation updates, and consistent styling.",
+    "token_update": "Use the MCP-style tools to update {token_type} from {old_value} to {new_value} across all Design System files.",
+    "navigation_fix": "Use the MCP-style tools to fix navigation inconsistencies across all HTML files.",
+    "deployment": "Use the MCP-style tools to deploy the current Design System state to AWS ECS."
+  },
+  "development_guidelines": {
+    "always_use_tools": "Always use the automation tools for consistency",
+    "test_before_deploy": "Test components locally before deployment",
+    "commit_frequently": "Commit after each component or major change",
+    "maintain_structure": "Keep the established file structure intact"
+  }
+}
