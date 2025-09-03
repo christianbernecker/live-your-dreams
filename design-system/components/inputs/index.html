@@ -3,526 +3,1721 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Component - LYD Design System</title>
+    <title>Input System - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --lyd-primary: #3366CC;
+            --lyd-primary-hover: #2952A3;
+            --lyd-primary-active: #1F3D7A;
+            --lyd-secondary: #000066;
+            --lyd-secondary-hover: #000052;
+            --lyd-accent-light: #E8F0FE;
+            --lyd-success: #00B74A;
+            --lyd-success-light: #E8F5E8;
+            --lyd-warning: #FFA000;
+            --lyd-warning-light: #FFF3E0;
+            --lyd-error: #D32F2F;
+            --lyd-error-light: #FFEBEE;
+            --lyd-white: #FFFFFF;
+            --lyd-gray-50: #FAFAFA;
+            --lyd-gray-100: #F5F5F5;
+            --lyd-gray-200: #EEEEEE;
+            --lyd-gray-300: #E0E0E0;
+            --lyd-gray-400: #BDBDBD;
+            --lyd-gray-500: #9E9E9E;
+            --lyd-gray-600: #757575;
+            --lyd-gray-700: #616161;
+            --lyd-gray-800: #424242;
+            --lyd-gray-900: #212121;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: "Inter", system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1f2937;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #FAFBFF;
+            color: var(--lyd-gray-900);
+            line-height: 1.6;
             display: flex;
             min-height: 100vh;
         }
-        
-        /* Left Sidebar */
+
         .sidebar {
             width: 280px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
+            background: white;
+            border-right: 1px solid var(--lyd-gray-200);
+            padding: 32px 0;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
-            z-index: 1000;
         }
-        
-        .sidebar-header {
-            padding: 32px 24px;
-            border-bottom: 1px solid #e5e7eb;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 32px 32px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--lyd-gray-200);
         }
-        
-        .sidebar-logo {
-            width: 100%;
+
+        .logo svg {
+            width: 120px;
             height: auto;
-            max-height: 180px;
         }
-        
-        .nav-section-title {
-            padding: 16px 24px 8px;
-            font-size: 14px;
+
+        .nav-section {
+            margin-bottom: 32px;
+        }
+
+        .nav-title {
+            font-size: 12px;
             font-weight: 600;
-            color: #6b7280;
+            color: var(--lyd-gray-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            padding: 0 32px 16px;
         }
-        
-        .nav-item {
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-link {
             display: block;
-            padding: 12px 24px;
-            color: #374151;
+            padding: 12px 32px;
+            color: var(--lyd-gray-700);
             text-decoration: none;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: 400;
             transition: all 0.2s ease;
-            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
         }
-        
-        .nav-item:hover {
-            background: #f9fafb;
-            color: #0066ff;
-            border-left-color: #0066ff;
+
+        .nav-link:hover {
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
         }
-        
-        .nav-item.active {
-            background: #eff6ff;
-            color: #0066ff;
-            border-left-color: #0066ff;
+
+        .nav-link.active {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-right-color: var(--lyd-primary);
+            font-weight: 500;
         }
-        
-        /* Main Content */
+
         .main-content {
-            margin-left: 280px;
             flex: 1;
-            min-height: 100vh;
-            padding: 48px;
+            margin-left: 280px;
+            padding: 64px;
+            max-width: 1200px;
         }
-        
-        .page-header {
-            margin-bottom: 48px;
-        }
-        
+
         .page-title {
             font-size: 48px;
-            font-weight: 800;
-            color: #1f2937;
+            font-weight: 700;
+            color: var(--lyd-gray-900);
             margin-bottom: 16px;
         }
-        
+
         .page-subtitle {
             font-size: 20px;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-        
-        .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 40px;
+            color: var(--lyd-gray-600);
             margin-bottom: 32px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            line-height: 1.5;
+        }
+
+        /* Tab System */
+        .tabs {
+            display: flex;
+            gap: 2px;
+            background: var(--lyd-gray-100);
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 48px;
+            overflow-x: auto;
         }
         
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--lyd-gray-600);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        
+        .tab:hover {
+            color: var(--lyd-gray-800);
+        }
+        
+        .tab.active {
+            background: white;
+            color: var(--lyd-primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            margin-bottom: 64px;
+        }
+
         .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0066ff;
-            margin-bottom: 24px;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: 32px;
         }
-        
+
         .demo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 24px 0;
+            gap: 32px;
+            margin-bottom: 48px;
         }
-        
-        .demo-item {
-            padding: 32px 24px;
+
+        .demo-card {
             background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
-        
+
         .demo-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: #1f2937;
-            margin: 0 0 16px 0;
+            color: var(--lyd-gray-900);
+            margin-bottom: 8px;
         }
-        
+
+        .demo-description {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
         .component-showcase {
             display: flex;
             flex-direction: column;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        /* Input Base Styles */
+        .lyd-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .lyd-input-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--lyd-gray-700);
+            line-height: 1.5;
+        }
+
+        .lyd-input-label-required {
+            color: var(--lyd-error);
+            font-weight: 400;
+        }
+
+        .lyd-input-label-optional {
+            color: var(--lyd-gray-500);
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .lyd-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--lyd-white);
+            border: 2px solid var(--lyd-gray-300);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            overflow: hidden;
+            height: 44px;
+        }
+
+        .lyd-input-container:hover:not(.is-disabled):not(.is-readonly) {
+            border-color: var(--lyd-gray-400);
+        }
+
+        .lyd-input-container:focus-within:not(.is-disabled):not(.is-readonly) {
+            border-color: var(--lyd-primary);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
+        }
+
+        .lyd-input-container.has-error {
+            border-color: var(--lyd-error);
+        }
+
+        .lyd-input-container.has-error:focus-within {
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .lyd-input-container.has-success {
+            border-color: var(--lyd-success);
+        }
+
+        .lyd-input-container.is-disabled {
+            background: var(--lyd-gray-50);
+            cursor: not-allowed;
+        }
+
+        .lyd-input-field {
+            flex: 1;
+            padding: 0 16px;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 16px;
+            color: var(--lyd-gray-900);
+            height: 100%;
+            min-width: 0;
+            width: 100%;
+        }
+
+        .lyd-input-field::placeholder {
+            color: var(--lyd-gray-400);
+        }
+
+        .lyd-input-field:disabled {
+            color: var(--lyd-gray-500);
+            cursor: not-allowed;
+        }
+
+        .lyd-input-icon,
+        .lyd-input-addon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            color: var(--lyd-gray-500);
+            flex-shrink: 0;
+        }
+
+        .lyd-input-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .lyd-input-addon {
+            background: var(--lyd-gray-50);
+            border-right: 1px solid var(--lyd-gray-300);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .lyd-input-addon--suffix {
+            border-right: none;
+            border-left: 1px solid var(--lyd-gray-300);
+        }
+
+        .lyd-input-helper {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            min-height: 20px;
+        }
+
+        .lyd-input-message {
+            flex: 1;
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--lyd-gray-600);
+        }
+
+        .lyd-input-message--error {
+            color: var(--lyd-error);
+        }
+
+        .lyd-input-message--success {
+            color: var(--lyd-success);
+        }
+
+        .lyd-input-message--warning {
+            color: var(--lyd-warning);
+        }
+
+        /* Size Variants */
+        .lyd-input-container--small {
+            height: 36px;
+        }
+
+        .lyd-input-container--small .lyd-input-field {
+            font-size: 14px;
+        }
+
+        .lyd-input-container--large {
+            height: 52px;
+        }
+
+        .lyd-input-container--large .lyd-input-field {
+            font-size: 18px;
+        }
+
+        /* Variant Styles */
+        .lyd-input-container--filled {
+            background: var(--lyd-gray-50);
+            border-color: transparent;
+        }
+
+        .lyd-input-container--filled:hover:not(.is-disabled) {
+            background: var(--lyd-gray-100);
+        }
+
+        .lyd-input-container--underline {
+            border: none;
+            border-bottom: 2px solid var(--lyd-gray-300);
+            border-radius: 0;
+            background: transparent;
+        }
+
+        /* Search Input Specific */
+        .lyd-input-search {
+            position: relative;
+        }
+
+        .lyd-input-suggestions {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--lyd-white);
+            border: 1px solid var(--lyd-gray-300);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: none;
+        }
+
+        .lyd-input-suggestion {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--lyd-gray-100);
+            transition: background 0.2s ease;
+        }
+
+        .lyd-input-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .lyd-input-suggestion:hover,
+        .lyd-input-suggestion.highlighted {
+            background: var(--lyd-gray-50);
+        }
+
+        /* Password Input */
+        .lyd-input-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            margin-right: 8px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--lyd-gray-500);
+            transition: all 0.2s ease;
+        }
+
+        .lyd-input-toggle:hover {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-gray-700);
+        }
+
+        .lyd-input-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Number Input Controls */
+        .lyd-input-controls {
+            display: flex;
+            flex-direction: column;
+            margin-right: 4px;
+        }
+
+        .lyd-input-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 50%;
+            padding: 0;
+            background: transparent;
+            border: none;
+            color: var(--lyd-gray-500);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lyd-input-control:hover:not(:disabled) {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-gray-700);
+        }
+
+        .lyd-input-control:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .lyd-input-control svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .lyd-input-control--increment {
+            border-bottom: 1px solid var(--lyd-gray-200);
+        }
+
+        /* Real Estate Specific Styles */
+        .lyd-input-price {
+            position: relative;
+        }
+
+        .lyd-input-price-per-sqm {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            font-size: 12px;
+            color: var(--lyd-gray-500);
+            padding-top: 4px;
+        }
+
+        /* Address Input Composite */
+        .lyd-address-input {
+            display: flex;
+            flex-direction: column;
             gap: 16px;
-            margin: 16px 0;
         }
-        
-        .code-block {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 32px 24px;
-            color: #e2e8f0;
-            font-family: monospace;
-            margin: 24px 0;
+
+        .lyd-address-row {
+            display: grid;
+            gap: 12px;
         }
-        
-        .code-block pre {
-            margin: 0;
-            line-height: 1.6;
+
+        .lyd-address-row--street {
+            grid-template-columns: 2fr 1fr;
         }
-        
+
+        .lyd-address-row--location {
+            grid-template-columns: 120px 1fr 1fr;
+        }
+
+        .lyd-address-validation {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 16px;
+        }
+
+        .lyd-address-validation--success {
+            background: var(--lyd-success-light);
+            color: var(--lyd-success);
+        }
+
+        .lyd-address-validation--error {
+            background: var(--lyd-error-light);
+            color: var(--lyd-error);
+        }
+
         .properties-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 24px 0;
+            margin-top: 24px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--lyd-gray-200);
         }
-        
+
         .properties-table th,
         .properties-table td {
-            padding: 12px;
+            padding: 16px;
             text-align: left;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--lyd-gray-200);
         }
-        
+
         .properties-table th {
-            background: #f9fafb;
+            background: var(--lyd-gray-50);
             font-weight: 600;
-            color: #374151;
+            font-size: 14px;
+            color: var(--lyd-gray-700);
         }
-        
+
+        .properties-table td {
+            font-size: 14px;
+        }
+
         .properties-table code {
-            background: #f3f4f6;
+            background: var(--lyd-gray-100);
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        .code-block {
+            background: var(--lyd-gray-50);
+            border: 1px solid var(--lyd-gray-200);
+            border-radius: 8px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin-top: 24px;
+        }
+
+        .callout {
+            background: var(--lyd-accent-light);
+            border: 1px solid var(--lyd-primary);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .callout strong {
+            color: var(--lyd-primary);
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+                padding: 32px;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .page-title {
+                font-size: 36px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .lyd-address-row--street,
+            .lyd-address-row--location {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-    <script type="module" src="/src/components/lyd-input.js"></script>
 </head>
 <body>
     <!-- Left Sidebar -->
     <nav class="sidebar">
-        <div class="sidebar-header">
-            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#000066;stop-opacity:1" /><stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" /></linearGradient><linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" /><stop offset="100%" style="stop-color:#000066;stop-opacity:1" /></linearGradient></defs><g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)"><path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/></g><g fill="url(#textGradient)"><text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text><text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text><text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text></g></svg>
+        <div class="logo">
+            <svg viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradient)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
         </div>
         
-        <div class="sidebar-nav">
-            <div class="nav-section">
-                <div class="nav-section-title">Designing</div>
-                <a href="/designing/introduction/" class="nav-item">Introduction</a>
-            </div>
-            
-            <div class="nav-section">
-                <div class="nav-section-title">Developing</div>
-                <a href="/developing/introduction/" class="nav-item">Introduction</a>
-                <a href="/developing/nextjs-integration/" class="nav-item">Next.js Integration</a>
-            </div>
-            
-            <div class="nav-section">
-                <div class="nav-section-title">Components</div>
-                <a href="/components/introduction/" class="nav-item">Introduction</a>
-                <a href="/components/buttons/" class="nav-item">Button</a>
-                <a href="/components/buttons-enhanced/" class="nav-item">Enhanced Buttons</a>
-                <a href="/components/inputs/" class="nav-item active">Input</a>
-                <a href="/components/cards/" class="nav-item">Card</a>
-                <a href="/components/select/" class="nav-item">Select</a>
-                <a href="/components/accordion/" class="nav-item">Accordion</a>
-                <a href="/components/modal/" class="nav-item">Modal</a>
-                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
-                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-                <a href="/components/radio/" class="nav-item">Radio</a>
-                <a href="/components/toast/" class="nav-item">Toast</a>
-                <a href="/components/table/" class="nav-item">Table</a>
-            </div>
-            
-            <div class="nav-section">
-                <div class="nav-section-title">Styles</div>
-                <a href="/styles/introduction/" class="nav-item">Introduction</a>
-                <a href="/styles/grid/" class="nav-item">Grid</a>
-                <a href="/styles/typography/" class="nav-item">Typography</a>
-                <a href="/styles/colors/" class="nav-item">Colors</a>
-                <a href="/styles/spacing/" class="nav-item">Spacing</a>
-            </div>
-            
-            <div class="nav-section">
-                <div class="nav-section-title">Patterns</div>
-                <a href="/patterns/introduction/" class="nav-item">Introduction</a>
-                <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-                <a href="/patterns/header/" class="nav-item">Header</a>
-                <a href="/patterns/footer/" class="nav-item">Footer</a>
-                <a href="/patterns/forms/" class="nav-item">Forms</a>
-                <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
-            </div>
-                </div>
+        <div class="nav-section">
+            <div class="nav-title">Designing</div>
+            <ul class="nav-links">
+                <li><a href="/designing/introduction/" class="nav-link">Introduction</a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Developing</div>
+            <ul class="nav-links">
+                <li><a href="/developing/introduction/" class="nav-link">Introduction</a></li>
+                <li><a href="/developing/nextjs-integration/" class="nav-link">Next.js Integration</a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Components</div>
+            <ul class="nav-links">
+                <li><a href="/components/introduction/" class="nav-link">Introduction</a></li>
+                <li><a href="/components/buttons/" class="nav-link">Button</a></li>
+                <li><a href="/components/buttons-enhanced/" class="nav-link">Enhanced Buttons</a></li>
+                <li><a href="/components/inputs/" class="nav-link active">Input</a></li>
+                <li><a href="/components/cards/" class="nav-link">Card</a></li>
+                <li><a href="/components/select/" class="nav-link">Select</a></li>
+                <li><a href="/components/accordion/" class="nav-link">Accordion</a></li>
+                <li><a href="/components/modal/" class="nav-link">Modal</a></li>
+                <li><a href="/components/dropdown/" class="nav-link">Dropdown</a></li>
+                <li><a href="/components/checkbox/" class="nav-link">Checkbox</a></li>
+                <li><a href="/components/radio/" class="nav-link">Radio</a></li>
+                <li><a href="/components/toast/" class="nav-link">Toast</a></li>
+                <li><a href="/components/table/" class="nav-link">Table</a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Styles</div>
+            <ul class="nav-links">
+                <li><a href="/styles/introduction/" class="nav-link">Introduction</a></li>
+                <li><a href="/styles/grid/" class="nav-link">Grid</a></li>
+                <li><a href="/styles/typography/" class="nav-link">Typography</a></li>
+                <li><a href="/styles/colors/" class="nav-link">Colors</a></li>
+                <li><a href="/styles/spacing/" class="nav-link">Spacing</a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Patterns</div>
+            <ul class="nav-links">
+                <li><a href="/patterns/introduction/" class="nav-link">Introduction</a></li>
+                <li><a href="/patterns/property-cards/" class="nav-link">Property Cards</a></li>
+                <li><a href="/patterns/header/" class="nav-link">Header</a></li>
+                <li><a href="/patterns/footer/" class="nav-link">Footer</a></li>
+                <li><a href="/patterns/forms/" class="nav-link">Forms</a></li>
+                <li><a href="/patterns/lead-management/" class="nav-link">Lead Management</a></li>
+            </ul>
+        </div>
     </nav>
     
     <!-- Main Content -->
     <main class="main-content">
-        <div class="page-header">
-            <h1 class="page-title">Input</h1>
-            <p class="page-subtitle">
-                Advanced input component with real estate specific variants for search, currency, and area inputs.
-            </p>
+        <h1 class="page-title">Input System</h1>
+        <p class="page-subtitle">
+            Umfassendes Input-System mit Standard- und Immobilien-spezifischen Komponenten - basierend auf dem LYD Input Implementation Briefing mit WCAG 2.1 AA Konformität.
+        </p>
+        
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab active" data-tab="overview">Übersicht</button>
+            <button class="tab" data-tab="standard">Standard Inputs</button>
+            <button class="tab" data-tab="real-estate">Immobilien</button>
+            <button class="tab" data-tab="validation">Validierung</button>
+            <button class="tab" data-tab="api">API</button>
+            <button class="tab" data-tab="accessibility">Barrierefreiheit</button>
         </div>
         
-        <!-- Input Variants -->
-        <section class="section">
-            <h2 class="section-title">Input Variants</h2>
-            
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="demo-title">Default Input</h3>
-                    <div class="component-showcase">
-                        <lyd-input 
-                            label="Property Title" 
-                            placeholder="Enter property title...">
-                        </lyd-input>
-                        <lyd-input 
-                            label="Description" 
-                            placeholder="Property description..."
-                            multiline>
-                        </lyd-input>
-                    </div>
+        <!-- Tab Content: Overview -->
+        <div class="tab-content active" id="overview">
+            <section class="section">
+                <h2 class="section-title">Input System Übersicht</h2>
+                
+                <div class="callout">
+                    <strong>Framework-agnostische Web Components</strong>
+                    <p>Alle Input-Komponenten sind als Web Components implementiert und funktionieren mit jedem Framework. Vollständige Form Association API Unterstützung für nahtlose Integration in bestehende Formulare.</p>
                 </div>
                 
-                <div class="demo-item">
-                    <h3 class="demo-title">Search Input</h3>
-                    <div class="component-showcase">
-                        <lyd-input 
-                            variant="search" 
-                            label="Property Search"
-                            placeholder="Munich, Schwabing...">
-                        </lyd-input>
-                        <lyd-input 
-                            variant="search" 
-                            label="Address Search"
-                            placeholder="Street, City, ZIP...">
-                        </lyd-input>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">Currency Input</h3>
-                    <div class="component-showcase">
-                        <lyd-input 
-                            variant="currency" 
-                            label="Purchase Price"
-                            placeholder="750,000">
-                        </lyd-input>
-                        <lyd-input 
-                            variant="currency" 
-                            label="Monthly Rent"
-                            placeholder="2,500">
-                        </lyd-input>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">Area Input</h3>
-                    <div class="component-showcase">
-                        <lyd-input 
-                            variant="area" 
-                            label="Living Space"
-                            placeholder="120">
-                        </lyd-input>
-                        <lyd-input 
-                            variant="area" 
-                            label="Plot Size"
-                            placeholder="500">
-                        </lyd-input>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">Input States</h3>
-                    <div class="component-showcase">
-                        <lyd-input 
-                            label="Required Field" 
-                            placeholder="This field is required"
-                            required>
-                        </lyd-input>
-                        <lyd-input 
-                            label="Disabled Field" 
-                            placeholder="Cannot edit"
-                            disabled>
-                        </lyd-input>
-                        <lyd-input 
-                            label="Error State" 
-                            placeholder="Invalid input"
-                            error="Please enter a valid value">
-                        </lyd-input>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">With Helper Text</h3>
-                    <div class="component-showcase">
-                        <lyd-input 
-                            label="Property ID" 
-                            placeholder="LYD-2024-001"
-                            helper="Unique identifier for the property">
-                        </lyd-input>
-                        <lyd-input 
-                            variant="currency" 
-                            label="Commission"
-                            placeholder="15,000"
-                            helper="Agent commission in EUR">
-                        </lyd-input>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Real Estate Form Example -->
-        <section class="section">
-            <h2 class="section-title">Real Estate Form Example</h2>
-            
-            <div style="max-width: 600px;">
-                <div style="display: grid; gap: 24px;">
-                    <lyd-input 
-                        label="Property Title" 
-                        placeholder="Luxury Penthouse Munich"
-                        required>
-                    </lyd-input>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <lyd-input 
-                            variant="currency" 
-                            label="Purchase Price"
-                            placeholder="1,250,000"
-                            required>
-                        </lyd-input>
-                        <lyd-input 
-                            variant="area" 
-                            label="Living Space (m²)"
-                            placeholder="180"
-                            required>
-                        </lyd-input>
+                <div class="demo-grid">
+                    <div class="demo-card">
+                        <h3 class="demo-title">Standard Inputs</h3>
+                        <p class="demo-description">Alle HTML5 Input-Typen mit erweiterten Features</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>E-Mail Adresse</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                                    </div>
+                                    <input type="email" class="lyd-input-field" placeholder="ihre.email@beispiel.de" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <lyd-input 
-                        variant="search" 
-                        label="Location"
-                        placeholder="Schwabing, Munich"
-                        helper="Enter district or street name">
-                    </lyd-input>
+                    <div class="demo-card">
+                        <h3 class="demo-title">Immobilien-spezifisch</h3>
+                        <p class="demo-description">Spezialisierte Inputs für Preis, Fläche und Adressen</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Kaufpreis</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 18.5c-2.51 0-4.68-1.42-5.76-3.5H15v-2H8.58c-.05-.33-.08-.66-.08-1s.03-.67.08-1H15V9H9.24C10.32 6.92 12.5 5.5 15 5.5c1.61 0 3.09.59 4.23 1.57L21 5.3C19.41 3.87 17.3 3 15 3c-3.92 0-7.24 2.51-8.48 6H3v2h3.06c-.04.33-.06.66-.06 1 0 .34.02.67.06 1H3v2h3.52c1.24 3.49 4.56 6 8.48 6 2.31 0 4.41-.87 6-2.3l-1.78-1.77c-1.13.98-2.6 1.57-4.22 1.57z"/></svg>
+                                    </div>
+                                    <input type="text" class="lyd-input-field" placeholder="750.000" />
+                                    <div class="lyd-input-addon lyd-input-addon--suffix">EUR</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <lyd-input 
-                        label="Description" 
-                        placeholder="Exceptional penthouse with panoramic city views..."
-                        multiline>
-                    </lyd-input>
+                    <div class="demo-card">
+                        <h3 class="demo-title">Erweiterte Features</h3>
+                        <p class="demo-description">Suche mit Autocomplete, Validierung und mehr</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper lyd-input-search">
+                                <label class="lyd-input-label">
+                                    <span>Immobilie suchen</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                                    </div>
+                                    <input type="search" class="lyd-input-field" placeholder="München, Wohnung, 3 Zimmer..." />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Composite Komponenten</h3>
+                        <p class="demo-description">Zusammengesetzte Inputs wie Adress-Eingabe</p>
+                        <div class="component-showcase">
+                            <div class="lyd-address-input">
+                                <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Immobilien-Adresse</h4>
+                                <div class="lyd-address-row lyd-address-row--street">
+                                    <div class="lyd-input-wrapper">
+                                        <label class="lyd-input-label">Straße</label>
+                                        <div class="lyd-input-container">
+                                            <input type="text" class="lyd-input-field" placeholder="Maximilianstraße" />
+                                        </div>
+                                    </div>
+                                    <div class="lyd-input-wrapper">
+                                        <label class="lyd-input-label">Hausnr.</label>
+                                        <div class="lyd-input-container">
+                                            <input type="text" class="lyd-input-field" placeholder="42a" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lyd-address-row lyd-address-row--location">
+                                    <div class="lyd-input-wrapper">
+                                        <label class="lyd-input-label">PLZ</label>
+                                        <div class="lyd-input-container">
+                                            <input type="text" class="lyd-input-field" placeholder="80539" />
+                                        </div>
+                                    </div>
+                                    <div class="lyd-input-wrapper">
+                                        <label class="lyd-input-label">Stadt</label>
+                                        <div class="lyd-input-container">
+                                            <input type="text" class="lyd-input-field" placeholder="München" />
+                                        </div>
+                                    </div>
+                                    <div class="lyd-input-wrapper">
+                                        <label class="lyd-input-label">Bezirk</label>
+                                        <div class="lyd-input-container">
+                                            <input type="text" class="lyd-input-field" placeholder="Maxvorstadt" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
         
-        <!-- Properties -->
-        <section class="section">
-            <h2 class="section-title">Properties</h2>
-            
-            <table class="properties-table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>variant</code></td>
-                        <td><code>string</code></td>
-                        <td><code>default</code></td>
-                        <td>Input style variant: default, search, currency, area</td>
-                    </tr>
-                    <tr>
-                        <td><code>label</code></td>
-                        <td><code>string</code></td>
-                        <td><code>-</code></td>
-                        <td>Input label text</td>
-                    </tr>
-                    <tr>
-                        <td><code>placeholder</code></td>
-                        <td><code>string</code></td>
-                        <td><code>-</code></td>
-                        <td>Placeholder text</td>
-                    </tr>
-                    <tr>
-                        <td><code>helper</code></td>
-                        <td><code>string</code></td>
-                        <td><code>-</code></td>
-                        <td>Helper text below input</td>
-                    </tr>
-                    <tr>
-                        <td><code>error</code></td>
-                        <td><code>string</code></td>
-                        <td><code>-</code></td>
-                        <td>Error message (shows error state)</td>
-                    </tr>
-                    <tr>
-                        <td><code>required</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                        <td>Shows required indicator</td>
-                    </tr>
-                    <tr>
-                        <td><code>disabled</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                        <td>Disables the input</td>
-                    </tr>
-                    <tr>
-                        <td><code>multiline</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                        <td>Renders as textarea</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <!-- Tab Content: Standard Inputs -->
+        <div class="tab-content" id="standard">
+            <section class="section">
+                <h2 class="section-title">Standard Input Komponenten</h2>
+                <p style="color: var(--lyd-gray-600); margin-bottom: 32px;">Alle HTML5 Input-Typen erweitert mit LYD Design System Features - Form Association API, Accessibility und Real-time Validierung.</p>
+                
+                <div class="demo-grid">
+                    <div class="demo-card">
+                        <h3 class="demo-title">Text Input</h3>
+                        <p class="demo-description">Basis Text-Eingabe mit Validierung</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Immobilien-Titel</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <input type="text" class="lyd-input-field" placeholder="Moderne Wohnung in München" />
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message">Mindestens 10 Zeichen für aussagekräftige Titel</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Email Input</h3>
+                        <p class="demo-description">E-Mail mit Domain-Validierung</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Makler E-Mail</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                                    </div>
+                                    <input type="email" class="lyd-input-field" placeholder="makler@immobilienagentur.de" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Telephone Input</h3>
+                        <p class="demo-description">Telefon mit automatischer Formatierung</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Kontakt-Telefon</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                    </div>
+                                    <input type="tel" class="lyd-input-field" placeholder="+49 89 12345678" />
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message">Wird automatisch als +49 89 12345678 formatiert</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Password Input</h3>
+                        <p class="demo-description">Passwort mit Sichtbarkeits-Toggle</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Passwort</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <input type="password" class="lyd-input-field" placeholder="Sicheres Passwort eingeben" />
+                                    <button type="button" class="lyd-input-toggle" aria-label="Passwort anzeigen">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Number Input</h3>
+                        <p class="demo-description">Zahlen mit Stepper-Controls</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Anzahl Zimmer</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <input type="number" class="lyd-input-field" value="3" min="1" max="10" />
+                                    <div class="lyd-input-controls">
+                                        <button type="button" class="lyd-input-control lyd-input-control--increment" aria-label="Erhöhen">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+                                        </button>
+                                        <button type="button" class="lyd-input-control lyd-input-control--decrement" aria-label="Verringern">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Date Input</h3>
+                        <p class="demo-description">Datum mit Kalender und Validierung</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Besichtigungsdatum</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <input type="date" class="lyd-input-field" />
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                                    </div>
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message">Besichtigungen mindestens 24h im Voraus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
         
-        <!-- Usage Examples -->
-        <section class="section">
-            <h2 class="section-title">Next.js Usage</h2>
-            
-            <div class="code-block">
-<pre><code>// app/properties/new/page.tsx
+        <!-- Tab Content: Real Estate -->
+        <div class="tab-content" id="real-estate">
+            <section class="section">
+                <h2 class="section-title">Immobilien-spezifische Komponenten</h2>
+                <p style="color: var(--lyd-gray-600); margin-bottom: 32px;">Spezialisierte Input-Komponenten für Immobilien-Anwendungen mit automatischer Formatierung, Umrechnungen und Validierung.</p>
+                
+                <div class="demo-grid">
+                    <div class="demo-card">
+                        <h3 class="demo-title">Preis Input</h3>
+                        <p class="demo-description">Preiseingabe mit Währung und Preis pro m² Berechnung</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper lyd-input-price">
+                                <label class="lyd-input-label">
+                                    <span>Kaufpreis</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 18.5c-2.51 0-4.68-1.42-5.76-3.5H15v-2H8.58c-.05-.33-.08-.66-.08-1s.03-.67.08-1H15V9H9.24C10.32 6.92 12.5 5.5 15 5.5c1.61 0 3.09.59 4.23 1.57L21 5.3C19.41 3.87 17.3 3 15 3c-3.92 0-7.24 2.51-8.48 6H3v2h3.06c-.04.33-.06.66-.06 1 0 .34.02.67.06 1H3v2h3.52c1.24 3.49 4.56 6 8.48 6 2.31 0 4.41-.87 6-2.3l-1.78-1.77c-1.13.98-2.6 1.57-4.22 1.57z"/></svg>
+                                    </div>
+                                    <input type="text" class="lyd-input-field" value="750.000" />
+                                    <div class="lyd-input-addon lyd-input-addon--suffix">EUR</div>
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message">5.000 EUR pro m² (bei 150m² Wohnfläche)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Flächen Input</h3>
+                        <p class="demo-description">Flächeneingabe mit m² Einheit und Umrechnungsoptionen</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Wohnfläche</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 20H4v-4h4v4zm0-6H4v-4h4v4zm0-6H4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4z"/></svg>
+                                    </div>
+                                    <input type="number" class="lyd-input-field" value="120.5" step="0.5" />
+                                    <div class="lyd-input-addon lyd-input-addon--suffix">m²</div>
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message">Entspricht 1.297 ft² (US) oder 12,05 Ar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Zimmer Selector</h3>
+                        <p class="demo-description">Spezialisierte Eingabe für Raumaufteilung</p>
+                        <div class="component-showcase">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">Zimmer</label>
+                                    <div class="lyd-input-container lyd-input-container--small">
+                                        <div class="lyd-input-icon">
+                                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+                                        </div>
+                                        <input type="number" class="lyd-input-field" value="3" min="1" max="10" />
+                                    </div>
+                                </div>
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">Badezimmer</label>
+                                    <div class="lyd-input-container lyd-input-container--small">
+                                        <div class="lyd-input-icon">
+                                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm13 0h-8v14h2v-6h4v6h2V7z"/></svg>
+                                        </div>
+                                        <input type="number" class="lyd-input-field" value="2" min="1" max="5" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Energieeffizienz</h3>
+                        <p class="demo-description">Energierating mit visueller Darstellung</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Energieeffizienzklasse</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+                                    </div>
+                                    <select class="lyd-input-field">
+                                        <option value="">Bitte wählen</option>
+                                        <option value="A++">A++ (sehr effizient)</option>
+                                        <option value="A+">A+ (sehr effizient)</option>
+                                        <option value="A" selected>A (effizient)</option>
+                                        <option value="B">B (gut)</option>
+                                        <option value="C">C (befriedigend)</option>
+                                        <option value="D">D (ausreichend)</option>
+                                        <option value="E">E (mangelhaft)</option>
+                                        <option value="F">F (ungenügend)</option>
+                                        <option value="G">G (sehr ungenügend)</option>
+                                    </select>
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message lyd-input-message--success">Gute Energieeffizienz - niedrige Nebenkosten</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-card" style="grid-column: 1 / -1; margin-top: 32px;">
+                    <h3 class="demo-title">Vollständige Adress-Eingabe</h3>
+                    <p class="demo-description">Composite Komponente mit Validierung und optionaler Kartenintegration</p>
+                    <div class="component-showcase">
+                        <div class="lyd-address-input">
+                            <div class="lyd-address-row lyd-address-row--street">
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">
+                                        <span>Straße</span>
+                                        <span class="lyd-input-label-required">*</span>
+                                    </label>
+                                    <div class="lyd-input-container">
+                                        <div class="lyd-input-icon">
+                                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        </div>
+                                        <input type="text" class="lyd-input-field" placeholder="Maximilianstraße" value="Maximilianstraße" />
+                                    </div>
+                                </div>
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">Hausnummer</label>
+                                    <div class="lyd-input-container">
+                                        <input type="text" class="lyd-input-field" placeholder="42a" value="42" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="lyd-address-row lyd-address-row--location">
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">
+                                        <span>PLZ</span>
+                                        <span class="lyd-input-label-required">*</span>
+                                    </label>
+                                    <div class="lyd-input-container">
+                                        <input type="text" class="lyd-input-field" placeholder="80539" value="80539" pattern="[0-9]{5}" />
+                                    </div>
+                                </div>
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">
+                                        <span>Stadt</span>
+                                        <span class="lyd-input-label-required">*</span>
+                                    </label>
+                                    <div class="lyd-input-container">
+                                        <input type="text" class="lyd-input-field" placeholder="München" value="München" />
+                                    </div>
+                                </div>
+                                <div class="lyd-input-wrapper">
+                                    <label class="lyd-input-label">Stadtteil</label>
+                                    <div class="lyd-input-container">
+                                        <input type="text" class="lyd-input-field" placeholder="Maxvorstadt" value="Maxvorstadt" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="lyd-address-validation lyd-address-validation--success">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                                <span>Adresse erfolgreich validiert</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Tab Content: Validation -->
+        <div class="tab-content" id="validation">
+            <section class="section">
+                <h2 class="section-title">Validierung & Feedback</h2>
+                <p style="color: var(--lyd-gray-600); margin-bottom: 32px;">Umfassende Client- und Server-seitige Validierung mit Real-time Feedback und immobilien-spezifischen Geschäftsregeln.</p>
+                
+                <div class="demo-grid">
+                    <div class="demo-card">
+                        <h3 class="demo-title">Error States</h3>
+                        <p class="demo-description">Verschiedene Fehlerzustände mit klaren Nachrichten</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>E-Mail Adresse</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container has-error">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                                    </div>
+                                    <input type="email" class="lyd-input-field" value="ungueltige-email" />
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message lyd-input-message--error">Bitte geben Sie eine gültige E-Mail-Adresse ein</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Success States</h3>
+                        <p class="demo-description">Positive Bestätigung bei erfolgreicher Eingabe</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Telefonnummer</span>
+                                </label>
+                                <div class="lyd-input-container has-success">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                    </div>
+                                    <input type="tel" class="lyd-input-field" value="+49 89 12345678" />
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message lyd-input-message--success">Telefonnummer erfolgreich validiert</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Warning States</h3>
+                        <p class="demo-description">Warnungen bei ungewöhnlichen aber gültigen Werten</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Kaufpreis</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <div class="lyd-input-icon">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 18.5c-2.51 0-4.68-1.42-5.76-3.5H15v-2H8.58c-.05-.33-.08-.66-.08-1s.03-.67.08-1H15V9H9.24C10.32 6.92 12.5 5.5 15 5.5c1.61 0 3.09.59 4.23 1.57L21 5.3C19.41 3.87 17.3 3 15 3c-3.92 0-7.24 2.51-8.48 6H3v2h3.06c-.04.33-.06.66-.06 1 0 .34.02.67.06 1H3v2h3.52c1.24 3.49 4.56 6 8.48 6 2.31 0 4.41-.87 6-2.3l-1.78-1.77c-1.13.98-2.6 1.57-4.22 1.57z"/></svg>
+                                    </div>
+                                    <input type="text" class="lyd-input-field" value="50.000.000" />
+                                    <div class="lyd-input-addon lyd-input-addon--suffix">EUR</div>
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <span class="lyd-input-message lyd-input-message--warning">Sehr hoher Preis - bitte überprüfen Sie die Eingabe</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-card">
+                        <h3 class="demo-title">Real-time Validierung</h3>
+                        <p class="demo-description">Sofortige Rückmeldung während der Eingabe</p>
+                        <div class="component-showcase">
+                            <div class="lyd-input-wrapper">
+                                <label class="lyd-input-label">
+                                    <span>Passwort</span>
+                                    <span class="lyd-input-label-required">*</span>
+                                </label>
+                                <div class="lyd-input-container">
+                                    <input type="password" class="lyd-input-field" placeholder="Mindestens 8 Zeichen" />
+                                </div>
+                                <div class="lyd-input-helper">
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <div style="display: flex; align-items: center; gap: 4px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="color: var(--lyd-success);"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                            <span style="font-size: 12px; color: var(--lyd-success);">Mindestens 8 Zeichen</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 4px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="color: var(--lyd-gray-400);"><path d="M19 13H5v-2h14v2z"/></svg>
+                                            <span style="font-size: 12px; color: var(--lyd-gray-600);">Ein Großbuchstabe</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 4px;">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="color: var(--lyd-gray-400);"><path d="M19 13H5v-2h14v2z"/></svg>
+                                            <span style="font-size: 12px; color: var(--lyd-gray-600);">Eine Zahl</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Tab Content: API -->
+        <div class="tab-content" id="api">
+            <section class="section">
+                <h2 class="section-title">API Referenz</h2>
+                <p style="color: var(--lyd-gray-600); margin-bottom: 32px;">Vollständige API-Dokumentation für alle Input-Komponenten mit Form Association API und Custom Events.</p>
+                
+                <h3 style="font-size: 24px; font-weight: 600; margin: 32px 0 16px; color: var(--lyd-gray-900);">lyd-input-base</h3>
+                <table class="properties-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Typ</th>
+                            <th>Standard</th>
+                            <th>Beschreibung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>type</code></td>
+                            <td><code>string</code></td>
+                            <td><code>text</code></td>
+                            <td>HTML5 Input-Typ: text, email, tel, url, password, search, number, date, time</td>
+                        </tr>
+                        <tr>
+                            <td><code>name</code></td>
+                            <td><code>string</code></td>
+                            <td><code>-</code></td>
+                            <td>Name für Formular-Submission</td>
+                        </tr>
+                        <tr>
+                            <td><code>value</code></td>
+                            <td><code>string</code></td>
+                            <td><code>""</code></td>
+                            <td>Aktueller Wert des Inputs</td>
+                        </tr>
+                        <tr>
+                            <td><code>label</code></td>
+                            <td><code>string</code></td>
+                            <td><code>-</code></td>
+                            <td>Label-Text für den Input</td>
+                        </tr>
+                        <tr>
+                            <td><code>placeholder</code></td>
+                            <td><code>string</code></td>
+                            <td><code>-</code></td>
+                            <td>Placeholder-Text</td>
+                        </tr>
+                        <tr>
+                            <td><code>required</code></td>
+                            <td><code>boolean</code></td>
+                            <td><code>false</code></td>
+                            <td>Zeigt Pflichtfeld-Indikator</td>
+                        </tr>
+                        <tr>
+                            <td><code>disabled</code></td>
+                            <td><code>boolean</code></td>
+                            <td><code>false</code></td>
+                            <td>Deaktiviert den Input</td>
+                        </tr>
+                        <tr>
+                            <td><code>readonly</code></td>
+                            <td><code>boolean</code></td>
+                            <td><code>false</code></td>
+                            <td>Macht Input nur lesbar</td>
+                        </tr>
+                        <tr>
+                            <td><code>variant</code></td>
+                            <td><code>string</code></td>
+                            <td><code>default</code></td>
+                            <td>Visueller Stil: default, filled, underline</td>
+                        </tr>
+                        <tr>
+                            <td><code>size</code></td>
+                            <td><code>string</code></td>
+                            <td><code>medium</code></td>
+                            <td>Input-Größe: small (36px), medium (44px), large (52px)</td>
+                        </tr>
+                        <tr>
+                            <td><code>icon-left</code></td>
+                            <td><code>string</code></td>
+                            <td><code>-</code></td>
+                            <td>Icon links im Input (SVG als String)</td>
+                        </tr>
+                        <tr>
+                            <td><code>icon-right</code></td>
+                            <td><code>string</code></td>
+                            <td><code>-</code></td>
+                            <td>Icon rechts im Input</td>
+                        </tr>
+                        <tr>
+                            <td><code>helper-text</code></td>
+                            <td><code>string</code></td>
+                            <td><code>-</code></td>
+                            <td>Hilfstext unter dem Input</td>
+                        </tr>
+                        <tr>
+                            <td><code>state</code></td>
+                            <td><code>string</code></td>
+                            <td><code>default</code></td>
+                            <td>Validierungszustand: default, error, success, warning</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Events</h3>
+                <table class="properties-table">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Detail</th>
+                            <th>Beschreibung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>lyd-input</code></td>
+                            <td><code>{value: string}</code></td>
+                            <td>Wird bei jeder Änderung ausgelöst (input event)</td>
+                        </tr>
+                        <tr>
+                            <td><code>lyd-change</code></td>
+                            <td><code>{value: string}</code></td>
+                            <td>Wird bei Wertänderung ausgelöst (change event)</td>
+                        </tr>
+                        <tr>
+                            <td><code>lyd-focus</code></td>
+                            <td><code>{}</code></td>
+                            <td>Wird beim Fokussieren ausgelöst</td>
+                        </tr>
+                        <tr>
+                            <td><code>lyd-blur</code></td>
+                            <td><code>{}</code></td>
+                            <td>Wird beim Verlassen des Fokus ausgelöst</td>
+                        </tr>
+                        <tr>
+                            <td><code>lyd-validation</code></td>
+                            <td><code>{isValid: boolean, errors: string[]}</code></td>
+                            <td>Wird nach Validierung ausgelöst</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="code-block">
+<pre><code>// Next.js Integration
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function NewPropertyPage() {
+export default function PropertyForm() {
   const [formData, setFormData] = useState({});
-  
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
+    // LYD Design System Web Components laden
     import('@/lib/lyd-design-system');
   }, []);
 
   const handleInputChange = (e) => {
+    const { name } = e.target;
+    const { value } = e.detail;
+    
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.detail.value
+      [name]: value
     }));
   };
 
+  const handleValidation = (e) => {
+    const { name } = e.target;
+    const { isValid, errors } = e.detail;
+    
+    if (!isValid) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: errors[0]
+      }));
+    } else {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
   return (
-    &lt;div className="p-8"&gt;
-      &lt;lyd-input 
+    &lt;form className="space-y-6"&gt;
+      {/* Standard Text Input */}
+      &lt;lyd-input-text
         name="title"
-        label="Property Title"
-        placeholder="Enter property title..."
+        label="Immobilien-Titel"
+        placeholder="Moderne Wohnung in München"
         required
         onInput={handleInputChange}
+        onValidation={handleValidation}
       /&gt;
       
-      &lt;lyd-input 
+      {/* Email Input mit Domain-Validierung */}
+      &lt;lyd-input-email
+        name="contact-email"
+        label="Kontakt E-Mail"
+        placeholder="kontakt@immobilien.de"
+        icon-left="mail"
+        validate-domain="immobilien.de,remax.de"
+        onInput={handleInputChange}
+      /&gt;
+      
+      {/* Immobilien-spezifische Price Input */}
+      &lt;lyd-input-price
         name="price"
-        variant="currency"
-        label="Purchase Price"
-        placeholder="750,000"
+        label="Kaufpreis"
+        price-type="sale"
+        show-per-sqm
+        area-reference="living-area"
         onInput={handleInputChange}
       /&gt;
       
-      &lt;lyd-input 
-        name="area"
-        variant="area"
-        label="Living Space (m²)"
-        placeholder="120"
+      {/* Area Input mit Einheiten-Umrechnung */}
+      &lt;lyd-input-area
+        name="living-area"
+        label="Wohnfläche"
+        area-type="living"
+        unit="m²"
+        show-unit-converter
         onInput={handleInputChange}
       /&gt;
-    &lt;/div&gt;
+      
+      {/* Composite Address Input */}
+      &lt;lyd-input-address
+        name="property-address"
+        validate-address
+        show-map
+        onAddressChange={(e) => setFormData(prev => ({
+          ...prev,
+          address: e.detail
+        }))}
+      /&gt;
+      
+      {/* Search Input mit Autocomplete */}
+      &lt;lyd-input-search
+        name="property-search"
+        label="Immobilie suchen"
+        placeholder="München, Wohnung, 3 Zimmer..."
+        debounce={300}
+        min-chars={2}
+        show-suggestions
+        onSearch={(e) => performSearch(e.detail.query)}
+        onSelect={(e) => selectProperty(e.detail)}
+      /&gt;
+    &lt;/form&gt;
   );
-}</code></pre>
-            </div>
-        </section>
+}
+
+// Real Estate Validation Rules
+const validatePropertyPrice = (price, type) => {
+  const numPrice = parseFloat(price);
+  
+  if (type === 'sale' && numPrice < 10000) {
+    return 'Kaufpreis muss mindestens €10.000 betragen';
+  }
+  
+  if (type === 'rent' && numPrice < 100) {
+    return 'Miete muss mindestens €100 betragen';
+  }
+  
+  return null;
+};</code></pre>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Tab Content: Accessibility -->
+        <div class="tab-content" id="accessibility">
+            <section class="section">
+                <h2 class="section-title">Barrierefreiheit & Standards</h2>
+                
+                <div class="callout">
+                    <strong>WCAG 2.1 AA Konformität</strong>
+                    <p>Alle Input-Komponenten erfüllen die internationalen Web Content Accessibility Guidelines und unterstützen assistive Technologien vollständig.</p>
+                </div>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Tastaturnavigation</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><kbd style="background: var(--lyd-gray-100); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px;">Tab</kbd> - Navigation zwischen Input-Feldern</li>
+                    <li><kbd style="background: var(--lyd-gray-100); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px;">Shift + Tab</kbd> - Rückwärts-Navigation</li>
+                    <li><kbd style="background: var(--lyd-gray-100); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px;">Enter</kbd> - Formular absenden (bei Submit-Button Fokus)</li>
+                    <li><kbd style="background: var(--lyd-gray-100); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px;">Esc</kbd> - Autocomplete-Vorschläge schließen</li>
+                    <li><kbd style="background: var(--lyd-gray-100); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px;">Pfeil-Tasten</kbd> - Navigation in Dropdown-Listen und Datepicker</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Screen Reader Unterstützung</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Alle Labels sind semantisch mit ihren Input-Feldern verknüpft</li>
+                    <li>Error-Messages werden mit <code>role="alert"</code> sofort angekündigt</li>
+                    <li>Pflichtfelder werden mit <code>aria-required="true"</code> markiert</li>
+                    <li>Validierungszustände werden mit <code>aria-invalid</code> kommuniziert</li>
+                    <li>Helper-Text wird mit <code>aria-describedby</code> verknüpft</li>
+                    <li>Autocomplete-Listen haben <code>role="listbox"</code> und <code>aria-expanded</code></li>
+                    <li>Ladezustände werden mit <code>aria-busy</code> angezeigt</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Farbkontrast & Visuelle Zugänglichkeit</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Text zu Hintergrund:</strong> Mindestens 4.5:1 Kontrastverhältnis</li>
+                    <li><strong>Fokus-Indikatoren:</strong> 3:1 Kontrastverhältnis zu angrenzenden Farben</li>
+                    <li><strong>Error States:</strong> Nicht nur durch Farbe kommuniziert, sondern auch durch Icons und Text</li>
+                    <li><strong>Placeholder Text:</strong> Ausreichender Kontrast ohne Abhängigkeit für wichtige Informationen</li>
+                    <li>Support für Windows High Contrast Mode</li>
+                    <li>Skalierung bis 200% ohne Funktionalitätsverlust</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Form Association API</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Vollständige Integration in HTML5 Forms</li>
+                    <li>Native Browser-Validierung unterstützt</li>
+                    <li>Automatische Form-Submission mit korrekten Namen/Werten</li>
+                    <li>Reset-Funktionalität für alle Input-Zustände</li>
+                    <li>Custom Validity API für erweiterte Validierung</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Mobile & Touch Accessibility</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Minimale Touch-Target-Größe von 44px × 44px</li>
+                    <li>Optimierte Bildschirmtastatur für Input-Typen (email, tel, number)</li>
+                    <li>Zoom-freundlich ohne horizontales Scrollen</li>
+                    <li>Voice-Over und TalkBack Unterstützung</li>
+                    <li>Haptic Feedback bei Validierungsfehlern (unterstützte Geräte)</li>
+                </ul>
+                
+                <h3 style="font-size: 20px; font-weight: 600; margin: 24px 0 16px; color: var(--lyd-gray-900);">Internationalisierung</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>RTL (Right-to-Left) Layout-Support</li>
+                    <li>Lokalisierte Datums- und Zahlenformate</li>
+                    <li>Kulturspezifische Validierungsregeln (Telefonnummern, Postleitzahlen)</li>
+                    <li>Übersetzbare Error-Messages und Labels</li>
+                    <li>Currency- und Unit-Formatting basierend auf Locale</li>
+                </ul>
+            </section>
+        </div>
     </main>
+    
+    <!-- Tab Switching Script -->
+    <script>
+        // Tab Funktionalität
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                contents.forEach(c => c.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+                
+                // Update URL hash for deep linking
+                window.location.hash = targetId;
+            });
+        });
+        
+        // Handle initial hash on page load
+        if (window.location.hash) {
+            const tab = document.querySelector(`[data-tab="${window.location.hash.slice(1)}"]`);
+            if (tab) tab.click();
+        }
+        
+        // Demo Funktionalität für Number Input Controls
+        document.querySelectorAll('.lyd-input-control--increment').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const input = e.target.closest('.lyd-input-container').querySelector('input');
+                if (input && input.type === 'number') {
+                    const step = parseFloat(input.step || '1');
+                    const max = parseFloat(input.max);
+                    const current = parseFloat(input.value || '0');
+                    const newValue = current + step;
+                    
+                    if (!isNaN(max) && newValue <= max) {
+                        input.value = newValue;
+                    } else if (isNaN(max)) {
+                        input.value = newValue;
+                    }
+                }
+            });
+        });
+        
+        document.querySelectorAll('.lyd-input-control--decrement').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const input = e.target.closest('.lyd-input-container').querySelector('input');
+                if (input && input.type === 'number') {
+                    const step = parseFloat(input.step || '1');
+                    const min = parseFloat(input.min);
+                    const current = parseFloat(input.value || '0');
+                    const newValue = current - step;
+                    
+                    if (!isNaN(min) && newValue >= min) {
+                        input.value = newValue;
+                    } else if (isNaN(min)) {
+                        input.value = newValue;
+                    }
+                }
+            });
+        });
+        
+        // Demo Funktionalität für Password Toggle
+        document.querySelectorAll('.lyd-input-toggle').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const input = e.target.closest('.lyd-input-container').querySelector('input');
+                if (input && input.type === 'password') {
+                    input.type = 'text';
+                    e.target.querySelector('svg').innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"/>';
+                    e.target.setAttribute('aria-label', 'Passwort verbergen');
+                } else if (input && input.type === 'text') {
+                    input.type = 'password';
+                    e.target.querySelector('svg').innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+                    e.target.setAttribute('aria-label', 'Passwort anzeigen');
+                }
+            });
+        });
+        
+        // Analytics tracking für Input interactions
+        document.addEventListener('input', (event) => {
+            if (event.target.matches('.lyd-input-field')) {
+                console.log('LYD Input Interaction:', {
+                    type: event.target.type,
+                    name: event.target.name || 'unnamed',
+                    timestamp: new Date().toISOString(),
+                    context: 'design-system-demo'
+                });
+            }
+        });
+    </script>
 </body>
 </html>
+
+
+
