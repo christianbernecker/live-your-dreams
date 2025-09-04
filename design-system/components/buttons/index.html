@@ -67,7 +67,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: var(--font-family);
             background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
@@ -75,7 +75,7 @@
             display: flex;
             min-height: 100vh;
         }
-
+        
         /* Global Sidebar */
         .sidebar {
             width: 280px;
@@ -87,12 +87,12 @@
             z-index: 1000;
             box-shadow: var(--shadow-sm);
         }
-
+        
         .sidebar-header {
             padding: var(--spacing-xl) var(--spacing-lg);
             border-bottom: 1px solid var(--lyd-gray-200);
         }
-
+        
         .lyd-logo {
             width: 100%;
             height: auto;
@@ -102,7 +102,7 @@
         .nav-section {
             margin-bottom: var(--spacing-xl);
         }
-
+        
         .nav-section-title {
             padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
             font-size: var(--font-size-xs);
@@ -111,7 +111,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
+        
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
@@ -122,19 +122,19 @@
             transition: all 0.2s ease;
             border-left: 3px solid transparent;
         }
-
+        
         .nav-item:hover {
             background: var(--lyd-gray-50);
             color: var(--lyd-primary);
             border-left-color: var(--lyd-primary);
         }
-
+        
         .nav-item.active {
             background: var(--lyd-accent-light);
             color: var(--lyd-primary);
             border-left-color: var(--lyd-primary);
         }
-
+        
         /* Main Content */
         .main-content {
             margin-left: 280px;
@@ -142,11 +142,11 @@
             min-height: 100vh;
             padding: var(--spacing-2xl);
         }
-
+        
         .page-header {
             margin-bottom: var(--spacing-2xl);
         }
-
+        
         .page-title {
             font-size: var(--font-size-5xl);
             font-weight: 800;
@@ -154,19 +154,19 @@
             margin-bottom: var(--spacing-md);
             line-height: 1.1;
         }
-
+        
         .page-subtitle {
             font-size: var(--font-size-xl);
             color: var(--lyd-gray-600);
             line-height: 1.6;
             max-width: 600px;
         }
-
+        
         /* Content Sections */
         .section {
             margin-bottom: var(--spacing-2xl);
         }
-
+        
         .section-title {
             font-size: var(--font-size-3xl);
             font-weight: 700;
@@ -362,20 +362,20 @@
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-
+        
         .properties-table th,
         .properties-table td {
             padding: 12px 16px;
             text-align: left;
             border-bottom: 1px solid var(--lyd-gray-200);
         }
-
+        
         .properties-table th {
             background: var(--lyd-gray-50);
             font-weight: 600;
             color: var(--lyd-gray-900);
         }
-
+        
         .properties-table code {
             background: var(--lyd-gray-100);
             padding: 2px 6px;
@@ -394,6 +394,321 @@
 
         .callout strong {
             color: var(--lyd-primary);
+        }
+
+        /* Luxury Button Styles - Porsche-Level Quality */
+        .luxury-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            text-decoration: none;
+            min-height: 48px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+        }
+
+        .luxury-btn .btn-icon {
+            width: 18px;
+            height: 18px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .luxury-btn:hover .btn-icon {
+            transform: scale(1.1);
+        }
+
+        /* Button Group Styles */
+        .luxury-btn-group {
+            display: flex;
+            gap: 2px;
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .luxury-btn-group .group-btn {
+            border-radius: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: none;
+        }
+
+        .luxury-btn-group .group-btn:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .luxury-btn-group .group-btn:last-child {
+            border-radius: 0 12px 12px 0;
+            border-right: none;
+        }
+
+        /* Pure Button Styles */
+        .luxury-btn-pure {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .luxury-btn-pure:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        /* Tile Button Styles */
+        .luxury-btn-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 24px;
+            min-width: 140px;
+            min-height: 120px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .luxury-btn-tile:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .luxury-btn-tile .tile-icon {
+            font-size: 28px;
+            color: var(--lyd-primary);
+            transition: all 0.2s ease;
+        }
+
+        .luxury-btn-tile:hover .tile-icon {
+            transform: scale(1.1);
+        }
+
+        .luxury-btn-tile .tile-label {
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            font-size: 15px;
+        }
+
+        .luxury-btn-tile .tile-description {
+            font-size: 12px;
+            color: var(--lyd-gray-500);
+            text-align: center;
+        }
+
+        /* Loading State */
+        .luxury-btn.loading {
+            pointer-events: none;
+        }
+
+        .luxury-btn.loading .btn-icon {
+            animation: luxury-spin 1s linear infinite;
+        }
+
+        @keyframes luxury-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* States Showcase */
+        .luxury-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .luxury-btn.processing {
+            background: linear-gradient(135deg, #3366CC 0%, #0066ff 100%);
+            color: white;
+            position: relative;
+        }
+
+        .luxury-btn.processing::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: processing-shimmer 2s infinite;
+        }
+
+        @keyframes processing-shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .luxury-btn.primary {
+            background: linear-gradient(135deg, #3366CC 0%, #0066ff 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .luxury-btn.primary:hover {
+            background: linear-gradient(135deg, #2952A3 0%, #0052cc 100%);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(51, 102, 204, 0.4);
+        }
+
+        .luxury-btn.primary:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+
+        .luxury-btn.secondary {
+            background: rgba(99, 102, 241, 0.1);
+            color: #3366CC;
+            border: 1px solid rgba(51, 102, 204, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .luxury-btn.secondary:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(51, 102, 204, 0.3);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+        }
+
+        .luxury-btn.outline {
+            background: rgba(255, 255, 255, 0.8);
+            color: #3366CC;
+            border: 1.5px solid #3366CC;
+            backdrop-filter: blur(20px);
+        }
+
+        .luxury-btn.outline:hover {
+            background: rgba(51, 102, 204, 0.05);
+            border-color: #2952A3;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(51, 102, 204, 0.15);
+        }
+
+        .demo-button.ghost {
+            background: transparent;
+            color: var(--lyd-gray-700);
+            border: none;
+        }
+
+        .demo-button.ghost:hover {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-primary);
+        }
+
+        .demo-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .demo-button.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .demo-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            margin: -8px 0 0 -8px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .demo-button-group {
+            display: flex;
+            gap: 2px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .demo-button-group .demo-button {
+            border-radius: 0;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .demo-button-group .demo-button:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .demo-button-group .demo-button:last-child {
+            border-radius: 0 8px 8px 0;
+            border-right: none;
+        }
+
+        .demo-button-pure {
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .demo-button-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px;
+            min-width: 120px;
+            min-height: 100px;
+            border-radius: 12px;
+            background: white;
+            border: 2px solid var(--lyd-gray-200);
+            transition: all 0.2s ease;
+        }
+
+        .demo-button-tile:hover {
+            border-color: var(--lyd-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .demo-button-tile .tile-icon {
+            font-size: 24px;
+            color: var(--lyd-primary);
+        }
+
+        .demo-button-tile .tile-label {
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+        }
+
+        .demo-button-tile .tile-description {
+            font-size: 12px;
+            color: var(--lyd-gray-500);
         }
         
     </style>
@@ -505,7 +820,7 @@
         
         <!-- Tab Content: Overview -->
         <div class="tab-content active" id="overview">
-            <section class="section">
+        <section class="section">
                 <h2 class="section-title">Button System Overview</h2>
                 
                 <div class="component-grid">
@@ -516,6 +831,26 @@
                             <lyd-button variant="primary" icon="home">View Property</lyd-button>
                             <lyd-button variant="secondary" icon="key">Get Keys</lyd-button>
                             <lyd-button variant="outline" icon="calendar">Schedule</lyd-button>
+                            
+                            <!-- Luxury HTML Buttons -->
+                            <button class="luxury-btn primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                View Property
+                            </button>
+                            <button class="luxury-btn secondary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                </svg>
+                                Get Keys
+                            </button>
+                            <button class="luxury-btn outline">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                Schedule
+                            </button>
                         </div>
                     </div>
                     
@@ -528,6 +863,28 @@
                                 <lyd-button variant="outline" icon="share">Share</lyd-button>
                                 <lyd-button variant="outline" icon="delete">Delete</lyd-button>
                             </lyd-button-group>
+                            
+                            <!-- Luxury Button Group -->
+                            <div class="luxury-btn-group">
+                                <button class="luxury-btn outline group-btn">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-6.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 8.5-8.5z"/>
+                                    </svg>
+                                    Edit
+                                </button>
+                                <button class="luxury-btn outline group-btn">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                    </svg>
+                                    Share
+                                </button>
+                                <button class="luxury-btn outline group-btn">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                     
@@ -538,18 +895,46 @@
                             <lyd-button-pure icon="heart"></lyd-button-pure>
                             <lyd-button-pure icon="share" variant="primary"></lyd-button-pure>
                             <lyd-button-pure icon="more-vertical"></lyd-button-pure>
+                            
+                            <!-- Luxury Pure Buttons -->
+                            <button class="luxury-btn luxury-btn-pure outline">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+                            <button class="luxury-btn luxury-btn-pure primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                </svg>
+                            </button>
+                            <button class="luxury-btn luxury-btn-pure ghost">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="1"/>
+                                    <circle cx="12" cy="5" r="1"/>
+                                    <circle cx="12" cy="19" r="1"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     
                     <div class="component-card">
                         <h3>lyd-button-tile</h3>
                         <p>Large tiles for navigation</p>
-                        <div class="component-showcase">
+                    <div class="component-showcase">
                             <lyd-button-tile 
                                 icon="building" 
                                 label="Properties" 
                                 description="23 active">
                             </lyd-button-tile>
+                            
+                            <!-- Luxury Tile Button -->
+                            <button class="luxury-btn-tile">
+                                <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                                <div class="tile-label">Properties</div>
+                                <div class="tile-description">23 active</div>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -569,6 +954,26 @@
                             <lyd-button variant="primary" size="small" icon="home">Small</lyd-button>
                             <lyd-button variant="primary" size="medium" icon="home">Medium</lyd-button>
                             <lyd-button variant="primary" size="large" icon="home">Large</lyd-button>
+                            
+                            <!-- Luxury Primary Buttons -->
+                            <button class="luxury-btn primary" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                Small
+                            </button>
+                            <button class="luxury-btn primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                Medium
+                            </button>
+                            <button class="luxury-btn primary" style="padding: 16px 32px; font-size: 16px; min-height: 52px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                Large
+                            </button>
                         </div>
                     </div>
                     
@@ -585,7 +990,7 @@
                     <div class="component-card">
                         <h3>Outline</h3>
                         <p>Subtle actions</p>
-                        <div class="component-showcase">
+                    <div class="component-showcase">
                             <lyd-button variant="outline" size="small" icon="edit">Small</lyd-button>
                             <lyd-button variant="outline" size="medium" icon="edit">Medium</lyd-button>
                             <lyd-button variant="outline" size="large" icon="edit">Large</lyd-button>
@@ -599,16 +1004,36 @@
                             <lyd-button variant="ghost" size="small" icon="more-horizontal">Small</lyd-button>
                             <lyd-button variant="ghost" size="medium" icon="more-horizontal">Medium</lyd-button>
                             <lyd-button variant="ghost" size="large" icon="more-horizontal">Large</lyd-button>
-                        </div>
                     </div>
-                    
+                </div>
+                
                     <div class="component-card">
                         <h3>States</h3>
                         <p>Loading and disabled states</p>
-                        <div class="component-showcase">
+                                            <div class="component-showcase">
                             <lyd-button variant="primary" icon="download">Normal</lyd-button>
                             <lyd-button variant="primary" icon="download" loading>Loading</lyd-button>
                             <lyd-button variant="primary" icon="download" disabled>Disabled</lyd-button>
+                            
+                            <!-- Luxury State Buttons -->
+                            <button class="luxury-btn primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                Normal State
+                            </button>
+                            <button class="luxury-btn primary processing">
+                                <svg class="btn-icon loading" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="10"/>
+                                </svg>
+                                Processing...
+                            </button>
+                            <button class="luxury-btn primary disabled" disabled>
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                Unavailable
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -634,16 +1059,146 @@
                 </div>
                 
                 <div class="icon-grid" id="icon-grid">
-                    <!-- Icons will be populated by JavaScript -->
+                    <!-- Luxury SVG Icons - No Emojis -->
+                    <div class="icon-item" onclick="copyToClipboard('home')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span class="icon-name">home</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('building')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        <span class="icon-name">building</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('key')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                        </svg>
+                        <span class="icon-name">key</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('calendar')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="icon-name">calendar</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('edit')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-6.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 8.5-8.5z"/>
+                        </svg>
+                        <span class="icon-name">edit</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('share')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                        </svg>
+                        <span class="icon-name">share</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('delete')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        <span class="icon-name">delete</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('heart')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        <span class="icon-name">heart</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('star')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                        </svg>
+                        <span class="icon-name">star</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('location')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span class="icon-name">location</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('phone')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        <span class="icon-name">phone</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('mail')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="icon-name">mail</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('download')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        <span class="icon-name">download</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('upload')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                        </svg>
+                        <span class="icon-name">upload</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('search')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <span class="icon-name">search</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('settings')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span class="icon-name">settings</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('plus')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 4v16m8-8H4"/>
+                        </svg>
+                        <span class="icon-name">plus</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('check')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        <span class="icon-name">check</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('x')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                        <span class="icon-name">x</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('euro')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14.5 8a2.5 2.5 0 00-2.5-2.5h-1A2.5 2.5 0 008.5 8v8a2.5 2.5 0 002.5 2.5h1a2.5 2.5 0 002.5-2.5"/>
+                            <path d="M6 10h6M6 14h6"/>
+                        </svg>
+                        <span class="icon-name">euro</span>
+                    </div>
+                    <div class="icon-item" onclick="copyToClipboard('area')">
+                        <svg class="icon-preview" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 4h16v16H4V4z"/>
+                            <path d="M9 9h6v6H9V9z"/>
+                        </svg>
+                        <span class="icon-name">area</span>
+                    </div>
                 </div>
             </section>
-        </div>
+            </div>
         
         <!-- Tab Content: Examples -->
         <div class="tab-content" id="examples">
-            <section class="section">
-                <h2 class="section-title">Real Estate Use Cases</h2>
-                
+        <section class="section">
+            <h2 class="section-title">Real Estate Use Cases</h2>
+            
                 <div class="component-card" style="max-width: 400px;">
                     <h3>Property Card Actions</h3>
                     <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px;">
@@ -654,7 +1209,7 @@
                         <div style="display: flex; gap: 8px; margin-top: 16px;">
                             <lyd-button variant="primary" icon="calendar" full-width>
                                 Schedule Viewing
-                            </lyd-button>
+                        </lyd-button>
                             <lyd-button-pure icon="heart-outline"></lyd-button-pure>
                         </div>
                     </div>
@@ -669,56 +1224,56 @@
                     </div>
                 </div>
             </section>
-        </div>
+            </div>
         
         <!-- Tab Content: API -->
         <div class="tab-content" id="api">
-            <section class="section">
+        <section class="section">
                 <h2 class="section-title">API Reference</h2>
-                
+            
                 <h3>lyd-button</h3>
-                <table class="properties-table">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>variant</code></td>
-                            <td><code>string</code></td>
-                            <td><code>primary</code></td>
+            <table class="properties-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>variant</code></td>
+                        <td><code>string</code></td>
+                        <td><code>primary</code></td>
                             <td>Visual style: primary, secondary, outline, ghost, danger, success</td>
-                        </tr>
-                        <tr>
-                            <td><code>size</code></td>
-                            <td><code>string</code></td>
-                            <td><code>medium</code></td>
-                            <td>Button size: small, medium, large</td>
-                        </tr>
+                    </tr>
+                    <tr>
+                        <td><code>size</code></td>
+                        <td><code>string</code></td>
+                        <td><code>medium</code></td>
+                        <td>Button size: small, medium, large</td>
+                    </tr>
                         <tr>
                             <td><code>icon</code></td>
                             <td><code>string</code></td>
                             <td><code>-</code></td>
                             <td>Icon name from LYD icon library</td>
-                        </tr>
-                        <tr>
-                            <td><code>loading</code></td>
-                            <td><code>boolean</code></td>
-                            <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>loading</code></td>
+                        <td><code>boolean</code></td>
+                        <td><code>false</code></td>
                             <td>Shows loading spinner</td>
-                        </tr>
-                        <tr>
-                            <td><code>disabled</code></td>
-                            <td><code>boolean</code></td>
-                            <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>disabled</code></td>
+                        <td><code>boolean</code></td>
+                        <td><code>false</code></td>
                             <td>Disables button interaction</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </tr>
+                </tbody>
+            </table>
                 
                 <h3>Next.js Integration</h3>
                 <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto;"><code>
@@ -746,11 +1301,11 @@ export default function PropertiesPage() {
 }
                 </code></pre>
             </section>
-        </div>
+            </div>
         
         <!-- Tab Content: Accessibility -->
         <div class="tab-content" id="accessibility">
-            <section class="section">
+        <section class="section">
                 <h2 class="section-title">Accessibility Guidelines</h2>
                 
                 <div class="callout">
@@ -773,7 +1328,7 @@ export default function PropertiesPage() {
                     <li>Disabled states are properly communicated</li>
                 </ul>
             </section>
-        </div>
+            </div>
         
     </main>
     
@@ -854,6 +1409,34 @@ export default function PropertiesPage() {
                 console.error('Error loading icon library:', error);
             }
         });
+        
+        // Copy to clipboard function for fallback icons
+        function copyToClipboard(iconName) {
+            const text = `<lyd-button icon="${iconName}">Button Text</lyd-button>`;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show success message
+                const notification = document.createElement('div');
+                notification.textContent = 'Copied to clipboard!';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--lyd-success);
+                    color: white;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    z-index: 10000;
+                    font-weight: 500;
+                    box-shadow: var(--shadow-lg);
+                `;
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
     
     </script>
 </body>
