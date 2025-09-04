@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Demo - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            padding: 48px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .demo-description {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .component-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .property-card-demo {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 32px auto;
+        }
+        
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .property-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .property-location {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .property-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .property-price {
+          font-size: 32px;
+          font-weight: 800;
+          background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+        }
+        
+        .property-price-info {
+          color: #6b7280;
+          font-size: 13px;
+          font-weight: 500;
+        }
+    </style>
+    <script type="module">
+        // Import enhanced components directly
+        import '/src/components/lyd-button-enhanced.js';
+        import '/src/components/lyd-input-enhanced.js';
+        import '/src/components/lyd-card.js';
+        
+        console.log('Enhanced components loaded');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Enhanced Components</h1>
+        <p class="page-subtitle">
+            Professional components with icons, animations, and real estate optimizations.
+        </p>
+        
+        <!-- Button Components Demo -->
+        <div class="demo-grid">
+            <div class="demo-card">
+                <h3 class="demo-title">Button Components</h3>
+                <p class="demo-description">
+                    Professional buttons with advanced hover states, loading animations, and accessibility features.
+                </p>
+                <div class="component-showcase">
+                    <button style="display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%); color: white; border: none; border-radius: 12px; font-family: inherit; font-size: 18px; font-weight: 500; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); transition: all 0.3s ease;">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        Schedule Viewing
+                    </button>
+                    <button style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: rgba(248, 250, 252, 0.95); color: #0066ff; border: 1px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        Add to Favorites
+                    </button>
+                    <button id="download-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: transparent; color: #0066ff; border: 2px solid #0066ff; border-radius: 12px; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                        <span id="download-text">Download Exposé</span>
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <div id="download-progress" style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(34, 197, 94, 0.3) 50%, transparent 100%); transition: left 3s linear;"></div>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="demo-card">
+                <h3 class="demo-title">Input Components</h3>
+                <p class="demo-description">
+                    Real estate optimized inputs with currency, area, and search variants.
+                </p>
+                <div class="component-showcase">
+                    <lyd-input-enhanced 
+                        variant="search" 
+                        label="Property Search" 
+                        placeholder="Munich, Schwabing...">
+                    </lyd-input-enhanced>
+                    <lyd-input-enhanced 
+                        variant="currency" 
+                        label="Max Price" 
+                        placeholder="750000">
+                    </lyd-input-enhanced>
+                    <lyd-input-enhanced 
+                        variant="area" 
+                        label="Min Size" 
+                        placeholder="120">
+                    </lyd-input-enhanced>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Property Card Component Demo -->
+        <div class="property-card-demo">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=200&fit=crop&auto=format" 
+                 alt="Luxury Property" 
+                 class="property-image" />
+            
+            <h3 class="property-title">Luxury Penthouse Munich</h3>
+            <p class="property-location">Schwabing • 4.5 Rooms • 180 m² • Premium Location</p>
+            
+            <p class="property-description">
+                Exceptional penthouse with panoramic city views, modern amenities, 
+                and exclusive rooftop terrace in Munich's most prestigious district.
+            </p>
+            
+            <div class="property-footer">
+                <div>
+                    <div class="property-price">€1,250,000</div>
+                    <div class="property-price-info">€6,944/m² • Premium Location</div>
+                </div>
+                <lyd-button-enhanced variant="primary" size="medium" icon="home">
+                    View Details
+                </lyd-button-enhanced>
+            </div>
+        </div>
+        
+        <!-- Additional Real Estate Buttons -->
+        <div style="text-align: center; margin-top: 48px;">
+            <h2 style="font-size: 32px; font-weight: 700; color: #0066ff; margin-bottom: 32px;">Real Estate Actions</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+                <lyd-button-enhanced variant="contact" icon="phone">Call Agent</lyd-button-enhanced>
+                <lyd-button-enhanced variant="secondary" icon="mail">Send Email</lyd-button-enhanced>
+                <lyd-button-enhanced variant="outline" icon="calendar">Schedule Meeting</lyd-button-enhanced>
+                <lyd-button-enhanced variant="download" icon="download">Download Contract</lyd-button-enhanced>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Download Button Animation
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const btn = this;
+            const text = document.getElementById('download-text');
+            const progress = document.getElementById('download-progress');
+            
+            // Start animation
+            text.textContent = 'Downloading...';
+            progress.style.left = '100%';
+            btn.style.pointerEvents = 'none';
+            
+            // Complete after 3 seconds
+            setTimeout(() => {
+                text.textContent = 'Download Complete!';
+                btn.style.background = '#22c55e';
+                btn.style.borderColor = '#22c55e';
+                btn.style.color = 'white';
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    text.textContent = 'Download Exposé';
+                    progress.style.left = '-100%';
+                    progress.style.transition = 'none';
+                    btn.style.background = 'transparent';
+                    btn.style.borderColor = '#0066ff';
+                    btn.style.color = '#0066ff';
+                    btn.style.pointerEvents = 'auto';
+                    
+                    setTimeout(() => {
+                        progress.style.transition = 'left 3s linear';
+                    }, 100);
+                }, 2000);
+            }, 3000);
+        });
+        
+        // Hover effects for other buttons
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.id !== 'download-btn') {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 8px 20px rgba(0, 102, 255, 0.4)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 12px rgba(0, 102, 255, 0.3)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

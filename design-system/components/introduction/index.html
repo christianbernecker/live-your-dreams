@@ -3,158 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Components Introduction - LYD Design System</title>
+    <title>Components - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            /* LYD Design Tokens */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-primary-active: #003d99;
+            --lyd-secondary: #6366f1;
+            --lyd-secondary-hover: #4f46e5;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            
+            /* Border radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: "Inter", system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1f2937;
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
             display: flex;
             min-height: 100vh;
         }
-        
-        /* Left Sidebar */
+
+        /* Global Sidebar */
         .sidebar {
             width: 280px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
             z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .sidebar-header {
-            padding: 32px 24px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
         }
-        
-        .sidebar-logo {
+
+        .lyd-logo {
             width: 100%;
             height: auto;
             max-height: 180px;
         }
-        
+
+        .nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
         .nav-section-title {
-            padding: 16px 24px 8px;
-            font-size: 14px;
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: var(--font-size-xs);
             font-weight: 600;
-            color: #6b7280;
+            color: var(--lyd-gray-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .nav-item {
             display: block;
-            padding: 12px 24px;
-            color: #374151;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
             transition: all 0.2s ease;
             border-left: 3px solid transparent;
         }
-        
+
         .nav-item:hover {
-            background: #f9fafb;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
         .nav-item.active {
-            background: #eff6ff;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
         /* Main Content */
         .main-content {
             margin-left: 280px;
             flex: 1;
             min-height: 100vh;
-            padding: 48px;
+            padding: var(--spacing-2xl);
         }
-        
+
         .page-header {
-            margin-bottom: 48px;
+            margin-bottom: var(--spacing-2xl);
         }
-        
+
         .page-title {
-            font-size: 48px;
+            font-size: var(--font-size-5xl);
             font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 16px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
         }
-        
+
         .page-subtitle {
-            font-size: 20px;
-            color: #6b7280;
+            font-size: var(--font-size-xl);
+            color: var(--lyd-gray-600);
             line-height: 1.6;
+            max-width: 600px;
         }
-        
+
+        /* Content Sections */
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: var(--spacing-2xl);
         }
-        
+
         .section-title {
-            font-size: 28px;
+            font-size: var(--font-size-3xl);
             font-weight: 700;
-            color: #0066ff;
-            margin-bottom: 24px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
         }
-        
+
+        .section-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Component Grid */
         .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 24px 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
         }
-        
+
         .component-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 32px 24px;
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
             transition: all 0.2s ease;
-            text-decoration: none;
-            color: inherit;
         }
-        
+
         .component-card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-md);
             transform: translateY(-2px);
         }
-        
-        .component-title {
-            font-size: 20px;
+
+        .component-card h3 {
+            font-size: var(--font-size-xl);
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 12px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
         }
+
+        .component-card p {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        .component-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            align-items: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+
+        /* Component specific styles */
         
-        .component-description {
-            color: #6b7280;
-            line-height: 1.6;
-        }
     </style>
+    
+    <!-- Load Web Components -->
+    <script type="module">
+        import '../../src/index.js';
+    </script>
+    
+    
 </head>
 <body>
-    <!-- Left Sidebar -->
+    <!-- Global Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
+            <!-- LYD Logo SVG inline -->
             <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -177,8 +274,7 @@
             </svg>
         </div>
         
-        <div class="sidebar-nav">
-            <div class="nav-section">
+                                <div class="nav-section">
                 <div class="nav-section-title">Designing</div>
                 <a href="/designing/introduction/" class="nav-item">Introduction</a>
             </div>
@@ -191,7 +287,7 @@
             
             <div class="nav-section">
                 <div class="nav-section-title">Components</div>
-                <a href="/components/introduction/" class="nav-item active">Introduction</a>
+                <a href="/components/introduction/" class="nav-item">Introduction</a>
                 <a href="/components/buttons/" class="nav-item">Button</a>
                 <a href="/components/buttons-enhanced/" class="nav-item">Enhanced Buttons</a>
                 <a href="/components/inputs/" class="nav-item">Input</a>
@@ -224,99 +320,144 @@
                 <a href="/patterns/forms/" class="nav-item">Forms</a>
                 <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
             </div>
-                </div>
+        </div>
     </nav>
     
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main class="main-content">
         <div class="page-header">
             <h1 class="page-title">Components</h1>
-            <p class="page-subtitle">
-                Professional component library for real estate applications. 
-                Built with Next.js integration and accessibility in mind.
-            </p>
+            <p class="page-subtitle">Professional component library for real estate applications. Built with Next.js integration and accessibility in mind.</p>
         </div>
         
-        <!-- Foundation Components -->
+        
         <section class="section">
             <h2 class="section-title">Foundation Components</h2>
             <div class="component-grid">
-                <a href="/components/buttons/" class="component-card">
-                    <h3 class="component-title">Button</h3>
-                    <p class="component-description">
-                        Interactive button component with multiple variants, loading states, and real estate specific actions.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Button</h3>
+                    <p>Interactive button component with multiple variants, loading states, and real estate specific actions.</p>
+                    <div class="component-showcase">
+                        <lyd-button variant="primary" icon="home">View Property</lyd-button>
+                        <lyd-button variant="secondary" icon="key">Get Keys</lyd-button>
+                        <lyd-button variant="outline" icon="calendar">Schedule</lyd-button>
+                    </div>
+                </div>
                 
-                <a href="/components/inputs/" class="component-card">
-                    <h3 class="component-title">Input</h3>
-                    <p class="component-description">
-                        Form input component with variants for search, currency, and area inputs optimized for real estate.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Input</h3>
+                    <p>Form input component with variants for search, currency, and area inputs optimized for real estate.</p>
+                    <div class="component-showcase">
+                        <lyd-input-text placeholder="Search properties..."></lyd-input-text>
+                        <lyd-input-price value="450000"></lyd-input-price>
+                    </div>
+                </div>
                 
-                <a href="/components/cards/" class="component-card">
-                    <h3 class="component-title">Card</h3>
-                    <p class="component-description">
-                        Flexible card component with glassmorphism effects for property showcases and content organization.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Card</h3>
+                    <p>Flexible card component with glassmorphism effects for property showcases and content organization.</p>
+                    <div class="component-showcase">
+                        <lyd-card>
+                            <div style="padding: 16px;">
+                                <h4>Property Card</h4>
+                                <p>Modern luxury apartment</p>
+                            </div>
+                        </lyd-card>
+                    </div>
+                </div>
             </div>
         </section>
         
-        <!-- Form Components -->
         <section class="section">
             <h2 class="section-title">Form Components</h2>
             <div class="component-grid">
-                <a href="/components/select/" class="component-card">
-                    <h3 class="component-title">Select</h3>
-                    <p class="component-description">
-                        Dropdown selection component with search functionality and property type options.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Select</h3>
+                    <p>Dropdown selection component with search functionality and property type options.</p>
+                    <div class="component-showcase">
+                        <lyd-select>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="villa">Villa</option>
+                        </lyd-select>
+                    </div>
+                </div>
                 
-                <a href="/components/checkbox/" class="component-card">
-                    <h3 class="component-title">Checkbox</h3>
-                    <p class="component-description">
-                        Checkbox component for feature selection and multi-choice forms.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Checkbox</h3>
+                    <p>Checkbox component for feature selection and multi-choice forms.</p>
+                    <div class="component-showcase">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" checked> Balcony
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox"> Garden
+                        </label>
+                    </div>
+                </div>
                 
-                <a href="/components/radio/" class="component-card">
-                    <h3 class="component-title">Radio</h3>
-                    <p class="component-description">
-                        Radio button component for single-choice selections in property forms.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Radio</h3>
+                    <p>Radio button component for single-choice selections in property forms.</p>
+                    <div class="component-showcase">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" name="type" checked> Buy
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="radio" name="type"> Rent
+                        </label>
+                    </div>
+                </div>
             </div>
         </section>
         
-        <!-- Feedback Components -->
         <section class="section">
             <h2 class="section-title">Feedback Components</h2>
             <div class="component-grid">
-                <a href="/components/modal/" class="component-card">
-                    <h3 class="component-title">Modal</h3>
-                    <p class="component-description">
-                        Modal dialog component for property details, confirmations, and forms.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Modal</h3>
+                    <p>Modal dialog component for property details, confirmations, and forms.</p>
+                    <div class="component-showcase">
+                        <lyd-button variant="secondary" onclick="openModal()">Open Modal</lyd-button>
+                    </div>
+                </div>
                 
-                <a href="/components/toast/" class="component-card">
-                    <h3 class="component-title">Toast</h3>
-                    <p class="component-description">
-                        Toast notification component for success messages and error feedback.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Toast</h3>
+                    <p>Toast notification component for success messages and error feedback.</p>
+                    <div class="component-showcase">
+                        <lyd-button variant="outline" onclick="showToast()">Show Toast</lyd-button>
+                    </div>
+                </div>
                 
-                <a href="/components/table/" class="component-card">
-                    <h3 class="component-title">Table</h3>
-                    <p class="component-description">
-                        Data table component for property listings and lead management.
-                    </p>
-                </a>
+                <div class="component-card">
+                    <h3>Table</h3>
+                    <p>Data table component for property listings and lead management.</p>
+                    <div class="component-showcase">
+                        <div style="font-size: 12px; color: #6b7280;">Interactive table with sorting</div>
+                    </div>
+                </div>
             </div>
         </section>
+        
     </main>
+    
+    <!-- Global JavaScript -->
+    <script>
+        // Set active navigation item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && currentPath.includes(href.replace('../../', ''))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        
+    </script>
 </body>
 </html>

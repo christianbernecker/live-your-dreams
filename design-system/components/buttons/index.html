@@ -1,35 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buttons - LYD Design System</title>
-    
-    <!-- Import the Inter font -->
+    <title>Button Components - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --lyd-primary: #3366CC;
-            --lyd-primary-hover: #2952A3;
-            --lyd-primary-active: #1F3D7A;
-            --lyd-secondary: #000066;
-            --lyd-secondary-hover: #000052;
-            --lyd-accent-light: #E8F0FE;
-            --lyd-success: #00B74A;
-            --lyd-warning: #FFA000;
-            --lyd-error: #D32F2F;
-            --lyd-white: #FFFFFF;
-            --lyd-gray-50: #FAFAFA;
-            --lyd-gray-100: #F5F5F5;
-            --lyd-gray-200: #EEEEEE;
-            --lyd-gray-300: #E0E0E0;
-            --lyd-gray-400: #BDBDBD;
-            --lyd-gray-500: #9E9E9E;
-            --lyd-gray-600: #757575;
-            --lyd-gray-700: #616161;
-            --lyd-gray-800: #424242;
-            --lyd-gray-900: #212121;
+            /* LYD Design Tokens */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-primary-active: #003d99;
+            --lyd-secondary: #6366f1;
+            --lyd-secondary-hover: #4f46e5;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            
+            /* Border radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -39,95 +69,175 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #FAFBFF;
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
             color: var(--lyd-gray-900);
-            line-height: 1.6;
             display: flex;
             min-height: 100vh;
         }
 
+        /* Global Sidebar */
         .sidebar {
             width: 280px;
-            background: white;
+            background: var(--lyd-white);
             border-right: 1px solid var(--lyd-gray-200);
-            padding: 24px 0;
-            overflow-y: auto;
             position: fixed;
             height: 100vh;
-            z-index: 100;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            padding: 0 24px 32px 24px;
+        .sidebar-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
             border-bottom: 1px solid var(--lyd-gray-200);
-            margin-bottom: 32px;
         }
 
-        .logo svg {
-            height: 32px;
-            width: auto;
+        .lyd-logo {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
         }
 
         .nav-section {
-            margin-bottom: 32px;
+            margin-bottom: var(--spacing-xl);
         }
 
-        .nav-title {
-            font-size: 12px;
+        .nav-section-title {
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: var(--font-size-xs);
             font-weight: 600;
+            color: var(--lyd-gray-500);
             text-transform: uppercase;
-            color: var(--lyd-gray-600);
-            padding: 0 24px 12px 24px;
             letter-spacing: 0.5px;
         }
 
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 24px;
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
             color: var(--lyd-gray-700);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             transition: all 0.2s ease;
+            border-left: 3px solid transparent;
         }
 
-        .nav-link:hover {
+        .nav-item:hover {
             background: var(--lyd-gray-50);
             color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
 
-        .nav-link.active {
+        .nav-item.active {
             background: var(--lyd-accent-light);
             color: var(--lyd-primary);
-            border-right: 3px solid var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
 
+        /* Main Content */
         .main-content {
-            flex: 1;
             margin-left: 280px;
-            padding: 40px;
-            max-width: calc(100vw - 280px);
+            flex: 1;
+            min-height: 100vh;
+            padding: var(--spacing-2xl);
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
         }
 
         .page-title {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: var(--font-size-5xl);
+            font-weight: 800;
             color: var(--lyd-gray-900);
-            margin-bottom: 16px;
+            margin-bottom: var(--spacing-md);
             line-height: 1.1;
         }
 
         .page-subtitle {
-            font-size: 20px;
+            font-size: var(--font-size-xl);
             color: var(--lyd-gray-600);
-            margin-bottom: 48px;
+            line-height: 1.6;
             max-width: 600px;
         }
 
+        /* Content Sections */
+        .section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Component Grid */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .component-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .component-card h3 {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .component-card p {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        .component-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            align-items: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+
+        /* Component specific styles */
+        
         /* Tab navigation styles */
         .tabs {
             display: flex;
@@ -174,54 +284,7 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .section {
-            margin-bottom: 48px;
-        }
-
-        .section-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--lyd-gray-900);
-            margin-bottom: 24px;
-        }
-
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin: 32px 0;
-        }
-
-        .demo-card {
-            background: white;
-            padding: 32px;
-            border-radius: 16px;
-            border: 1px solid var(--lyd-gray-200);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        }
-
-        .demo-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: 8px;
-        }
-
-        .demo-description {
-            font-size: 14px;
-            color: var(--lyd-gray-600);
-            margin-bottom: 24px;
-        }
-
-        .component-showcase {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            align-items: center;
-        }
-
-        /* Icon grid for icon library tab */
+        
         .icon-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -257,10 +320,8 @@
             font-size: 12px;
             color: #6b7280;
             text-align: center;
-            word-break: break-all;
         }
         
-        /* Search bar for icon library */
         .search-bar {
             position: relative;
             margin-bottom: 24px;
@@ -291,7 +352,7 @@
             color: #6b7280;
             pointer-events: none;
         }
-
+        
         .properties-table {
             width: 100%;
             border-collapse: collapse;
@@ -334,72 +395,103 @@
         .callout strong {
             color: var(--lyd-primary);
         }
-
-        /* Responsive design */
-        @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .main-content {
-                margin-left: 0;
-                max-width: 100vw;
-                padding: 24px;
-            }
-        }
+        
     </style>
     
-    <!-- Load all components -->
+    <!-- Load Web Components -->
     <script type="module">
-        import '../../src/icons/icon-library.js';
         import '../../src/components/lyd-button.js';
         import '../../src/components/lyd-button-group.js';
         import '../../src/components/lyd-button-pure.js';
         import '../../src/components/lyd-button-tile.js';
+        import '../../src/icons/icon-library.js';
     </script>
+    
+    
 </head>
 <body>
+    <!-- Global Sidebar Navigation -->
     <nav class="sidebar">
-        <div class="logo">
-            <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <text x="10" y="35" font-family="Inter, sans-serif" font-size="24" font-weight="700" fill="#3366CC">LIVE YOUR DREAMS</text>
-                <text x="10" y="50" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#6b7280">DESIGNSYSTEM</text>
+        <div class="sidebar-header">
+            <!-- LYD Logo SVG inline -->
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradient)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
             </svg>
         </div>
         
-        <div class="nav-section">
-            <div class="nav-title">Getting Started</div>
-            <a href="../introduction/" class="nav-link">Introduction</a>
-            <a href="../../designing/introduction/" class="nav-link">Designing</a>
-            <a href="../../developing/introduction/" class="nav-link">Developing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-title">Components</div>
-            <a href="./" class="nav-link active">Buttons</a>
-            <a href="../inputs/" class="nav-link">Inputs</a>
-            <a href="../cards/" class="nav-link">Cards</a>
-            <a href="../select/" class="nav-link">Select</a>
-            <a href="../accordion/" class="nav-link">Accordion</a>
-            <a href="../modal/" class="nav-link">Modal</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-title">Patterns</div>
-            <a href="../../patterns/property-cards/" class="nav-link">Property Cards</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-title">Styles</div>
-            <a href="../../styles/grid/" class="nav-link">Grid System</a>
+                                <div class="nav-section">
+                <div class="nav-section-title">Designing</div>
+                <a href="/designing/introduction/" class="nav-item">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Developing</div>
+                <a href="/developing/introduction/" class="nav-item">Introduction</a>
+                <a href="/developing/nextjs-integration/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/introduction/" class="nav-item">Introduction</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/buttons-enhanced/" class="nav-item">Enhanced Buttons</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Styles</div>
+                <a href="/styles/introduction/" class="nav-item">Introduction</a>
+                <a href="/styles/grid/" class="nav-item">Grid</a>
+                <a href="/styles/typography/" class="nav-item">Typography</a>
+                <a href="/styles/colors/" class="nav-item">Colors</a>
+                <a href="/styles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Patterns</div>
+                <a href="/patterns/introduction/" class="nav-item">Introduction</a>
+                <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+                <a href="/patterns/header/" class="nav-item">Header</a>
+                <a href="/patterns/footer/" class="nav-item">Footer</a>
+                <a href="/patterns/forms/" class="nav-item">Forms</a>
+                <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+            </div>
         </div>
     </nav>
     
+    <!-- Main Content Area -->
     <main class="main-content">
-        <h1 class="page-title">Button Components</h1>
-        <p class="page-subtitle">
-            Complete button system with variants, icons, and specialized components for real estate applications.
-        </p>
+        <div class="page-header">
+            <h1 class="page-title">Button Components</h1>
+            <p class="page-subtitle">Complete button system with variants, icons, and specialized components for real estate applications.</p>
+        </div>
+        
         
         <!-- Tab Navigation -->
         <div class="tabs">
@@ -416,11 +508,10 @@
             <section class="section">
                 <h2 class="section-title">Button System Overview</h2>
                 
-                <!-- Visual grid showing all button types -->
-                <div class="demo-grid">
-                    <div class="demo-card">
-                        <h3 class="demo-title">lyd-button</h3>
-                        <p class="demo-description">Primary button component with variants and icons</p>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h3>lyd-button</h3>
+                        <p>Primary button component with variants and icons</p>
                         <div class="component-showcase">
                             <lyd-button variant="primary" icon="home">View Property</lyd-button>
                             <lyd-button variant="secondary" icon="key">Get Keys</lyd-button>
@@ -428,9 +519,9 @@
                         </div>
                     </div>
                     
-                    <div class="demo-card">
-                        <h3 class="demo-title">lyd-button-group</h3>
-                        <p class="demo-description">Group related actions together</p>
+                    <div class="component-card">
+                        <h3>lyd-button-group</h3>
+                        <p>Group related actions together</p>
                         <div class="component-showcase">
                             <lyd-button-group connected>
                                 <lyd-button variant="outline" icon="edit">Edit</lyd-button>
@@ -440,9 +531,9 @@
                         </div>
                     </div>
                     
-                    <div class="demo-card">
-                        <h3 class="demo-title">lyd-button-pure</h3>
-                        <p class="demo-description">Minimal icon-only buttons</p>
+                    <div class="component-card">
+                        <h3>lyd-button-pure</h3>
+                        <p>Minimal icon-only buttons</p>
                         <div class="component-showcase">
                             <lyd-button-pure icon="heart"></lyd-button-pure>
                             <lyd-button-pure icon="share" variant="primary"></lyd-button-pure>
@@ -450,9 +541,9 @@
                         </div>
                     </div>
                     
-                    <div class="demo-card">
-                        <h3 class="demo-title">lyd-button-tile</h3>
-                        <p class="demo-description">Large tiles for navigation</p>
+                    <div class="component-card">
+                        <h3>lyd-button-tile</h3>
+                        <p>Large tiles for navigation</p>
                         <div class="component-showcase">
                             <lyd-button-tile 
                                 icon="building" 
@@ -470,12 +561,10 @@
             <section class="section">
                 <h2 class="section-title">Button Variants</h2>
                 
-                <!-- Show each variant in different sizes -->
-                <div class="demo-grid">
-                    <!-- Primary -->
-                    <div class="demo-card">
-                        <h3 class="demo-title">Primary</h3>
-                        <p class="demo-description">Main call-to-action buttons</p>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <h3>Primary</h3>
+                        <p>Main call-to-action buttons</p>
                         <div class="component-showcase">
                             <lyd-button variant="primary" size="small" icon="home">Small</lyd-button>
                             <lyd-button variant="primary" size="medium" icon="home">Medium</lyd-button>
@@ -483,10 +572,9 @@
                         </div>
                     </div>
                     
-                    <!-- Secondary -->
-                    <div class="demo-card">
-                        <h3 class="demo-title">Secondary</h3>
-                        <p class="demo-description">Secondary actions</p>
+                    <div class="component-card">
+                        <h3>Secondary</h3>
+                        <p>Secondary actions</p>
                         <div class="component-showcase">
                             <lyd-button variant="secondary" size="small" icon="key">Small</lyd-button>
                             <lyd-button variant="secondary" size="medium" icon="key">Medium</lyd-button>
@@ -494,10 +582,9 @@
                         </div>
                     </div>
                     
-                    <!-- Outline -->
-                    <div class="demo-card">
-                        <h3 class="demo-title">Outline</h3>
-                        <p class="demo-description">Subtle actions</p>
+                    <div class="component-card">
+                        <h3>Outline</h3>
+                        <p>Subtle actions</p>
                         <div class="component-showcase">
                             <lyd-button variant="outline" size="small" icon="edit">Small</lyd-button>
                             <lyd-button variant="outline" size="medium" icon="edit">Medium</lyd-button>
@@ -505,10 +592,9 @@
                         </div>
                     </div>
                     
-                    <!-- Ghost -->
-                    <div class="demo-card">
-                        <h3 class="demo-title">Ghost</h3>
-                        <p class="demo-description">Minimal actions</p>
+                    <div class="component-card">
+                        <h3>Ghost</h3>
+                        <p>Minimal actions</p>
                         <div class="component-showcase">
                             <lyd-button variant="ghost" size="small" icon="more-horizontal">Small</lyd-button>
                             <lyd-button variant="ghost" size="medium" icon="more-horizontal">Medium</lyd-button>
@@ -516,10 +602,9 @@
                         </div>
                     </div>
                     
-                    <!-- States -->
-                    <div class="demo-card">
-                        <h3 class="demo-title">States</h3>
-                        <p class="demo-description">Loading and disabled states</p>
+                    <div class="component-card">
+                        <h3>States</h3>
+                        <p>Loading and disabled states</p>
                         <div class="component-showcase">
                             <lyd-button variant="primary" icon="download">Normal</lyd-button>
                             <lyd-button variant="primary" icon="download" loading>Loading</lyd-button>
@@ -535,7 +620,6 @@
             <section class="section">
                 <h2 class="section-title">Icon Library</h2>
                 
-                <!-- Search bar -->
                 <div class="search-bar">
                     <input 
                         type="text" 
@@ -543,10 +627,12 @@
                         placeholder="Search icons..."
                         id="icon-search"
                     >
-                    <lyd-icon name="search" class="search-icon"></lyd-icon>
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
                 </div>
                 
-                <!-- Icon grid -->
                 <div class="icon-grid" id="icon-grid">
                     <!-- Icons will be populated by JavaScript -->
                 </div>
@@ -558,9 +644,8 @@
             <section class="section">
                 <h2 class="section-title">Real Estate Use Cases</h2>
                 
-                <!-- Property Card Example -->
-                <div class="demo-card" style="max-width: 400px;">
-                    <h3 class="demo-title">Property Card Actions</h3>
+                <div class="component-card" style="max-width: 400px;">
+                    <h3>Property Card Actions</h3>
                     <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px;">
                         <div style="width: 100%; height: 200px; background: #f3f4f6; border-radius: 8px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; color: #6b7280;">Property Image</div>
                         <h4>Luxury Villa Munich</h4>
@@ -575,9 +660,8 @@
                     </div>
                 </div>
                 
-                <!-- Dashboard Navigation -->
-                <div class="demo-card">
-                    <h3 class="demo-title">Dashboard Navigation</h3>
+                <div class="component-card">
+                    <h3>Dashboard Navigation</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
                         <lyd-button-tile icon="building" label="Properties" description="23 active"></lyd-button-tile>
                         <lyd-button-tile icon="location" label="Locations" description="12 areas"></lyd-button-tile>
@@ -592,7 +676,6 @@
             <section class="section">
                 <h2 class="section-title">API Reference</h2>
                 
-                <!-- Properties table for each component -->
                 <h3>lyd-button</h3>
                 <table class="properties-table">
                     <thead>
@@ -623,12 +706,6 @@
                             <td>Icon name from LYD icon library</td>
                         </tr>
                         <tr>
-                            <td><code>icon-position</code></td>
-                            <td><code>string</code></td>
-                            <td><code>left</code></td>
-                            <td>Icon position: left, right</td>
-                        </tr>
-                        <tr>
                             <td><code>loading</code></td>
                             <td><code>boolean</code></td>
                             <td><code>false</code></td>
@@ -640,33 +717,34 @@
                             <td><code>false</code></td>
                             <td>Disables button interaction</td>
                         </tr>
-                        <tr>
-                            <td><code>full-width</code></td>
-                            <td><code>boolean</code></td>
-                            <td><code>false</code></td>
-                            <td>Makes button full width</td>
-                        </tr>
                     </tbody>
                 </table>
                 
-                <!-- Events -->
-                <h3>Events</h3>
-                <table class="properties-table">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Detail</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>lyd-click</code></td>
-                            <td><code>{variant, icon}</code></td>
-                            <td>Fired when button is clicked</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h3>Next.js Integration</h3>
+                <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto;"><code>
+// app/properties/page.tsx
+'use client';
+
+import { useEffect } from 'react';
+
+export default function PropertiesPage() {
+  useEffect(() => {
+    import('@/lib/lyd-design-system');
+  }, []);
+
+  return (
+    &lt;div className="p-8"&gt;
+      &lt;lyd-button 
+        variant="primary" 
+        size="large"
+        onClick={() => createProperty()}
+      &gt;
+        Add New Property
+      &lt;/lyd-button&gt;
+    &lt;/div&gt;
+  );
+}
+                </code></pre>
             </section>
         </div>
         
@@ -694,20 +772,27 @@
                     <li>Loading states announce to screen readers</li>
                     <li>Disabled states are properly communicated</li>
                 </ul>
-                
-                <h3>Color Contrast</h3>
-                <p>All button variants meet WCAG AA contrast requirements:</p>
-                <ul>
-                    <li>Primary: 7.5:1 contrast ratio</li>
-                    <li>Secondary: 5.2:1 contrast ratio</li>
-                    <li>All text is legible for users with visual impairments</li>
-                </ul>
             </section>
         </div>
+        
     </main>
     
-    <!-- Tab switching script -->
+    <!-- Global JavaScript -->
     <script>
+        // Set active navigation item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && currentPath.includes(href.replace('../../', ''))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        
         // Tab switching functionality
         const tabs = document.querySelectorAll('.tab');
         const contents = document.querySelectorAll('.tab-content');
@@ -716,15 +801,13 @@
             tab.addEventListener('click', () => {
                 const targetId = tab.dataset.tab;
                 
-                // Update active tab
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 
-                // Update active content
                 contents.forEach(c => c.classList.remove('active'));
-                document.getElementById(targetId).classList.add('active');
+                const target = document.getElementById(targetId);
+                if (target) target.classList.add('active');
                 
-                // Update URL hash
                 window.location.hash = targetId;
             });
         });
@@ -738,39 +821,40 @@
         // Icon library functionality
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Import icon library
                 const module = await import('../../src/icons/icon-library.js');
                 const icons = module.LYD_ICONS;
                 
                 const iconGrid = document.getElementById('icon-grid');
                 const iconSearch = document.getElementById('icon-search');
                 
-                function displayIcons(filter = '') {
-                    iconGrid.innerHTML = '';
-                    Object.keys(icons)
-                        .filter(name => name.includes(filter.toLowerCase()))
-                        .forEach(name => {
-                            const item = document.createElement('div');
-                            item.className = 'icon-item';
-                            item.innerHTML = `
-                                <lyd-icon name="${name}" class="icon-preview"></lyd-icon>
-                                <span class="icon-name">${name}</span>
-                            `;
-                            item.addEventListener('click', () => {
-                                navigator.clipboard.writeText(`<lyd-button icon="${name}">`);
-                                // Show toast: "Copied to clipboard"
-                                console.log(`Copied: <lyd-button icon="${name}">`);
+                if (iconGrid && iconSearch) {
+                    function displayIcons(filter = '') {
+                        iconGrid.innerHTML = '';
+                        Object.keys(icons)
+                            .filter(name => name.includes(filter.toLowerCase()))
+                            .forEach(name => {
+                                const item = document.createElement('div');
+                                item.className = 'icon-item';
+                                item.innerHTML = `
+                                    <div class="icon-preview">${icons[name]}</div>
+                                    <span class="icon-name">${name}</span>
+                                `;
+                                item.addEventListener('click', () => {
+                                    navigator.clipboard.writeText(`<lyd-button icon="${name}">`);
+                                    console.log(`Copied: <lyd-button icon="${name}">`);
+                                });
+                                iconGrid.appendChild(item);
                             });
-                            iconGrid.appendChild(item);
-                        });
+                    }
+                    
+                    displayIcons();
+                    iconSearch.addEventListener('input', (e) => displayIcons(e.target.value));
                 }
-                
-                displayIcons();
-                iconSearch.addEventListener('input', (e) => displayIcons(e.target.value));
             } catch (error) {
                 console.error('Error loading icon library:', error);
             }
         });
+    
     </script>
 </body>
 </html>

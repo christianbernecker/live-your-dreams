@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Buttons - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            padding: 32px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .sidebar-logo {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+        }
+        
+        .nav-section-title {
+            padding: 16px 24px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px 24px;
+            color: #374151;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: #f9fafb;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+        
+        .nav-item.active {
+            background: #eff6ff;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+            padding: 48px;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0066ff;
+            margin-bottom: 24px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+        
+        .demo-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 32px 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .demo-description {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .component-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+    </style>
+    <script type="module" src="/src/components/lyd-button-enhanced.js"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#000066;stop-opacity:1" /><stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" /></linearGradient><linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" /><stop offset="100%" style="stop-color:#000066;stop-opacity:1" /></linearGradient></defs><g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)"><path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/></g><g fill="url(#textGradient)"><text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text><text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text><text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text></g></svg>
+        </div>
+        
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Designing</div>
+                <a href="/designing/introduction/" class="nav-item">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Developing</div>
+                <a href="/developing/introduction/" class="nav-item">Introduction</a>
+                <a href="/developing/nextjs-integration/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/introduction/" class="nav-item">Introduction</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/buttons-enhanced/" class="nav-item active">Enhanced Buttons</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Styles</div>
+                <a href="/styles/introduction/" class="nav-item">Introduction</a>
+                <a href="/styles/grid/" class="nav-item">Grid</a>
+                <a href="/styles/typography/" class="nav-item">Typography</a>
+                <a href="/styles/colors/" class="nav-item">Colors</a>
+                <a href="/styles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Patterns</div>
+                <a href="/patterns/introduction/" class="nav-item">Introduction</a>
+                <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+                <a href="/patterns/header/" class="nav-item">Header</a>
+                <a href="/patterns/footer/" class="nav-item">Footer</a>
+                <a href="/patterns/forms/" class="nav-item">Forms</a>
+                <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+            </div>
+                </div>
+    </nav>
+    
+    <main class="main-content">
+        <h1 class="page-title">Enhanced Button Components</h1>
+        <p class="page-subtitle">
+            Professional buttons with icons, advanced hover states, and real estate optimizations.
+        </p>
+        
+        <!-- Screenshot-Style Buttons -->
+        <section class="section">
+            <h2 class="section-title">Enhanced Button Components</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3 class="demo-title">Button Components</h3>
+                    <p class="demo-description">
+                        Professional buttons with advanced hover states, loading animations, and accessibility features.
+                    </p>
+                    <div class="component-showcase">
+                        <lyd-button-enhanced variant="primary" size="large" icon="home">
+                            Schedule Viewing
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="secondary" icon="heart">
+                            Add to Favorites
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="outline" icon="download" icon-position="right">
+                            Download Exposé
+                        </lyd-button-enhanced>
+                    </div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3 class="demo-title">Input Components</h3>
+                    <p class="demo-description">
+                        Real estate optimized inputs with currency, area, and search variants.
+                    </p>
+                    <div class="component-showcase">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-weight: 500; margin-bottom: 8px;">Property Search</label>
+                            <div style="position: relative;">
+                                <input type="text" placeholder="Munich, Schwabing..." style="width: 100%; padding: 12px 16px 12px 44px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 16px;">
+                                <svg style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: #6b7280;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-weight: 500; margin-bottom: 8px;">Max Price</label>
+                            <div style="position: relative;">
+                                <input type="text" placeholder="750000" style="width: 100%; padding: 12px 16px 12px 44px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 16px;">
+                                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #6b7280; font-weight: 500;">€</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; font-weight: 500; margin-bottom: 8px;">Min Size</label>
+                            <div style="position: relative;">
+                                <input type="text" placeholder="120" style="width: 100%; padding: 12px 16px 12px 44px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 16px;">
+                                <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6b7280; font-weight: 500;">m²</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Real Estate Actions -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Action Buttons</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3 class="demo-title">Property Management</h3>
+                    <div class="component-showcase">
+                        <lyd-button-enhanced variant="property" size="large" icon="home">
+                            Add New Property
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="secondary" icon="eye">
+                            Edit Details
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="outline" icon="eye">
+                            Preview
+                        </lyd-button-enhanced>
+                    </div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3 class="demo-title">Lead Actions</h3>
+                    <div class="component-showcase">
+                        <lyd-button-enhanced variant="contact" icon="phone">
+                            Call Lead
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="secondary" icon="mail">
+                            Send Email
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="outline" icon="calendar">
+                            Schedule Meeting
+                        </lyd-button-enhanced>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- States -->
+        <section class="section">
+            <h2 class="section-title">Button States</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3 class="demo-title">Loading States</h3>
+                    <div class="component-showcase">
+                        <lyd-button-enhanced variant="primary" loading>
+                            Processing...
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="secondary" loading>
+                            Saving...
+                        </lyd-button-enhanced>
+                    </div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3 class="demo-title">Disabled States</h3>
+                    <div class="component-showcase">
+                        <lyd-button-enhanced variant="primary" disabled>
+                            Unavailable
+                        </lyd-button-enhanced>
+                        <lyd-button-enhanced variant="outline" disabled>
+                            Disabled
+                        </lyd-button-enhanced>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

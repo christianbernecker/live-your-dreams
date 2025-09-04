@@ -3,149 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Component - LYD Design System</title>
+    <title>Select Components - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: "Inter", system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1f2937;
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
             display: flex;
             min-height: 100vh;
         }
-        
+
         .sidebar {
             width: 280px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
             z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .sidebar-header {
-            padding: 32px 24px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
         }
-        
-        .sidebar-logo {
+
+        .lyd-logo {
             width: 100%;
             height: auto;
             max-height: 180px;
         }
-        
+
+        .nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
         .nav-section-title {
-            padding: 16px 24px 8px;
-            font-size: 14px;
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: 12px;
             font-weight: 600;
-            color: #6b7280;
+            color: var(--lyd-gray-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .nav-item {
             display: block;
-            padding: 12px 24px;
-            color: #374151;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
             transition: all 0.2s ease;
             border-left: 3px solid transparent;
         }
-        
+
         .nav-item:hover {
-            background: #f9fafb;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
         .nav-item.active {
-            background: #eff6ff;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
         .main-content {
             margin-left: 280px;
             flex: 1;
             min-height: 100vh;
-            padding: 48px;
+            padding: var(--spacing-2xl);
         }
-        
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
         .page-title {
             font-size: 48px;
             font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 16px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
         }
-        
+
         .page-subtitle {
             font-size: 20px;
-            color: #6b7280;
+            color: var(--lyd-gray-600);
             line-height: 1.6;
-            margin-bottom: 48px;
+            max-width: 600px;
         }
-        
+
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: var(--spacing-2xl);
         }
-        
+
         .section-title {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
-            color: #0066ff;
-            margin-bottom: 24px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
         }
-        
-        .placeholder-content {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6b7280;
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
         }
-        
-        .placeholder-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
+
+        .component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
         }
-        
-        .placeholder-title {
-            font-size: 24px;
+
+        .component-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .component-card h3 {
+            font-size: 20px;
             font-weight: 600;
-            color: #374151;
-            margin-bottom: 16px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
         }
-        
-        .placeholder-description {
+
+        .component-card p {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        /* Select Demo Styles */
+        .select-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .demo-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--lyd-gray-200);
+            border-radius: var(--radius-md);
             font-size: 16px;
-            line-height: 1.6;
-            max-width: 500px;
-            margin: 0 auto;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .demo-select:focus {
+            outline: none;
+            border-color: var(--lyd-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .select-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--lyd-gray-700);
+        }
+
+        .form-example {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-top: 24px;
+        }
+
+        .select-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .multi-select-demo {
+            position: relative;
+        }
+
+        .multi-select-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            padding: 12px 24px;
+            background: var(--lyd-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--lyd-primary-hover);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            color: var(--lyd-primary);
+            border: 2px solid var(--lyd-primary);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .select-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-    <script type="module" src="/src/components/lyd-select.js"></script>
 </head>
 <body>
+    <!-- Global Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#000066;stop-opacity:1" /><stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" /></linearGradient><linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" /><stop offset="100%" style="stop-color:#000066;stop-opacity:1" /></linearGradient></defs><g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)"><path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/></g><g fill="url(#textGradient)"><text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text><text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text><text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text></g></svg>
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradient)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
         </div>
         
-        <div class="sidebar-nav">
-            <div class="nav-section">
+                                <div class="nav-section">
                 <div class="nav-section-title">Designing</div>
                 <a href="/designing/introduction/" class="nav-item">Introduction</a>
             </div>
@@ -163,7 +341,7 @@
                 <a href="/components/buttons-enhanced/" class="nav-item">Enhanced Buttons</a>
                 <a href="/components/inputs/" class="nav-item">Input</a>
                 <a href="/components/cards/" class="nav-item">Card</a>
-                <a href="/components/select/" class="nav-item active">Select</a>
+                <a href="/components/select/" class="nav-item">Select</a>
                 <a href="/components/accordion/" class="nav-item">Accordion</a>
                 <a href="/components/modal/" class="nav-item">Modal</a>
                 <a href="/components/dropdown/" class="nav-item">Dropdown</a>
@@ -191,130 +369,297 @@
                 <a href="/patterns/forms/" class="nav-item">Forms</a>
                 <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
             </div>
-                </div>
+        </div>
     </nav>
     
+    <!-- Main Content Area -->
     <main class="main-content">
-        <h1 class="page-title">Select Component</h1>
-        <p class="page-subtitle">
-            Dropdown selection component with search functionality and property type options.
-        </p>
+        <div class="page-header">
+            <h1 class="page-title">Select Components</h1>
+            <p class="page-subtitle">Dropdown selection components with search, grouping, and real estate-specific options.</p>
+        </div>
         
-        <!-- Select Variants -->
         <section class="section">
             <h2 class="section-title">Select Variants</h2>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin: 24px 0;">
-                <div style="padding: 32px 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
-                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Property Type Selection</h3>
-                    <lyd-select label="Property Type" placeholder="Choose property type...">
-                        <lyd-option value="apartment">Apartment</lyd-option>
-                        <lyd-option value="house">House</lyd-option>
-                        <lyd-option value="penthouse">Penthouse</lyd-option>
-                        <lyd-option value="studio">Studio</lyd-option>
-                        <lyd-option value="villa">Villa</lyd-option>
-                    </lyd-select>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Basic Select</h3>
+                    <p>Standard dropdown with options</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Property Type</label>
+                            <select class="demo-select">
+                                <option value="">Select type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="house">House</option>
+                                <option value="villa">Villa</option>
+                                <option value="penthouse">Penthouse</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 
-                <div style="padding: 32px 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
-                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Location Search</h3>
-                    <lyd-select label="Location" placeholder="Search locations..." searchable>
-                        <lyd-option value="schwabing">Munich - Schwabing</lyd-option>
-                        <lyd-option value="maxvorstadt">Munich - Maxvorstadt</lyd-option>
-                        <lyd-option value="haidhausen">Munich - Haidhausen</lyd-option>
-                        <lyd-option value="bogenhausen">Munich - Bogenhausen</lyd-option>
-                        <lyd-option value="glockenbachviertel">Munich - Glockenbachviertel</lyd-option>
-                    </lyd-select>
+                <div class="component-card">
+                    <h3>Multi Select</h3>
+                    <p>Multiple selection dropdown</p>
+                    <div class="select-showcase">
+                        <div class="multi-select-demo">
+                            <label class="select-label">Property Features</label>
+                            <select class="demo-select" multiple size="1">
+                                <option value="balcony">Balcony</option>
+                                <option value="garden">Garden</option>
+                                <option value="parking">Parking</option>
+                                <option value="elevator">Elevator</option>
+                                <option value="furnished">Furnished</option>
+                            </select>
+                            <div class="multi-select-tags">
+                                <span class="tag">Balcony <span class="tag-remove">×</span></span>
+                                <span class="tag">Garden <span class="tag-remove">×</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div style="padding: 32px 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
-                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Multi-Select Features</h3>
-                    <lyd-select label="Property Features" placeholder="Select features..." multiple>
-                        <lyd-option value="balcony">Balcony</lyd-option>
-                        <lyd-option value="garage">Garage</lyd-option>
-                        <lyd-option value="elevator">Elevator</lyd-option>
-                        <lyd-option value="garden">Private Garden</lyd-option>
-                        <lyd-option value="fireplace">Fireplace</lyd-option>
-                        <lyd-option value="pool">Swimming Pool</lyd-option>
-                    </lyd-select>
+                <div class="component-card">
+                    <h3>Searchable Select</h3>
+                    <p>Select with search functionality</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">City</label>
+                            <input type="text" class="demo-select" placeholder="Search city..." list="cities">
+                            <datalist id="cities">
+                                <option value="Munich">
+                                <option value="Berlin">
+                                <option value="Hamburg">
+                                <option value="Cologne">
+                                <option value="Frankfurt">
+                            </datalist>
+                        </div>
+                    </div>
                 </div>
                 
-                <div style="padding: 32px 24px; background: white; border: 1px solid #f3f4f6; border-radius: 12px;">
-                    <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Price Range</h3>
-                    <lyd-select label="Price Range" placeholder="Select price range...">
-                        <lyd-option value="0-500k">Up to €500,000</lyd-option>
-                        <lyd-option value="500k-750k">€500,000 - €750,000</lyd-option>
-                        <lyd-option value="750k-1m">€750,000 - €1,000,000</lyd-option>
-                        <lyd-option value="1m-1.5m">€1,000,000 - €1,500,000</lyd-option>
-                        <lyd-option value="1.5m+">€1,500,000+</lyd-option>
-                    </lyd-select>
+                <div class="component-card">
+                    <h3>Grouped Options</h3>
+                    <p>Select with option groups</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Location</label>
+                            <select class="demo-select">
+                                <option value="">Select location</option>
+                                <optgroup label="Munich Districts">
+                                    <option value="maxvorstadt">Maxvorstadt</option>
+                                    <option value="schwabing">Schwabing</option>
+                                    <option value="haidhausen">Haidhausen</option>
+                                </optgroup>
+                                <optgroup label="Berlin Districts">
+                                    <option value="mitte">Mitte</option>
+                                    <option value="prenzlauer">Prenzlauer Berg</option>
+                                    <option value="kreuzberg">Kreuzberg</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         
-        <!-- Usage Examples -->
         <section class="section">
-            <h2 class="section-title">Next.js Usage</h2>
+            <h2 class="section-title">Real Estate Search Form</h2>
             
-            <div style="background: #1e293b; border-radius: 12px; padding: 32px 24px; color: #e2e8f0; font-family: monospace;">
-<pre style="margin: 0; line-height: 1.6;"><code>// app/properties/search/page.tsx
+            <div class="form-example">
+                <h3 style="margin-bottom: 24px;">Property Search Filters</h3>
+                
+                <div class="select-grid">
+                    <div>
+                        <label class="select-label">Property Type</label>
+                        <select class="demo-select">
+                            <option value="">All Types</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="villa">Villa</option>
+                            <option value="penthouse">Penthouse</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="select-label">Price Range</label>
+                        <select class="demo-select">
+                            <option value="">Any Price</option>
+                            <option value="0-500000">Up to €500,000</option>
+                            <option value="500000-1000000">€500,000 - €1,000,000</option>
+                            <option value="1000000-2000000">€1,000,000 - €2,000,000</option>
+                            <option value="2000000+">€2,000,000+</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="select-label">Bedrooms</label>
+                        <select class="demo-select">
+                            <option value="">Any</option>
+                            <option value="1">1 Bedroom</option>
+                            <option value="2">2 Bedrooms</option>
+                            <option value="3">3 Bedrooms</option>
+                            <option value="4">4+ Bedrooms</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="select-label">Location</label>
+                        <select class="demo-select">
+                            <option value="">Any Location</option>
+                            <optgroup label="Munich">
+                                <option value="munich-center">City Center</option>
+                                <option value="munich-maxvorstadt">Maxvorstadt</option>
+                                <option value="munich-schwabing">Schwabing</option>
+                            </optgroup>
+                            <optgroup label="Berlin">
+                                <option value="berlin-mitte">Mitte</option>
+                                <option value="berlin-prenzlauer">Prenzlauer Berg</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 24px;">
+                    <label class="select-label">Features</label>
+                    <select class="demo-select" multiple size="1">
+                        <option value="balcony">Balcony</option>
+                        <option value="garden">Garden</option>
+                        <option value="parking">Parking Space</option>
+                        <option value="elevator">Elevator</option>
+                        <option value="furnished">Furnished</option>
+                        <option value="pets">Pet-friendly</option>
+                    </select>
+                    <div class="multi-select-tags" style="margin-top: 8px;">
+                        <span class="tag">Balcony <span class="tag-remove">×</span></span>
+                        <span class="tag">Parking Space <span class="tag-remove">×</span></span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 16px; margin-top: 24px;">
+                    <button class="cta-button">🔍 Search Properties</button>
+                    <button class="cta-button outline">Reset Filters</button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Advanced Features</h2>
+            
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Async Loading</h3>
+                    <p>Select options loaded dynamically from API</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Property Agent</label>
+                            <select class="demo-select">
+                                <option value="">Loading agents...</option>
+                                <option value="agent1">Sarah Mueller</option>
+                                <option value="agent2">Michael Schmidt</option>
+                                <option value="agent3">Anna Weber</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Custom Styling</h3>
+                    <p>Select with custom appearance and branding</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Property Status</label>
+                            <select class="demo-select" style="border-color: var(--lyd-success);">
+                                <option value="available">✅ Available</option>
+                                <option value="reserved">⏳ Reserved</option>
+                                <option value="sold">✔️ Sold</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Validation States</h3>
+                    <p>Select with error and success states</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Required Field</label>
+                            <select class="demo-select" style="border-color: var(--lyd-error);">
+                                <option value="">Please select...</option>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                            </select>
+                            <div style="color: var(--lyd-error); font-size: 14px; margin-top: 4px;">This field is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Next.js Integration</h2>
+            
+            <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px;"><code>// components/PropertyFilters.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function PropertySearchPage() {
-  const [filters, setFilters] = useState({});
-  
+interface FilterState {
+  propertyType: string;
+  priceRange: string;
+  bedrooms: string;
+  location: string;
+  features: string[];
+}
+
+export default function PropertyFilters() {
+  const [filters, setFilters] = useState&lt;FilterState&gt;({
+    propertyType: '',
+    priceRange: '',
+    bedrooms: '',
+    location: '',
+    features: []
+  });
+
   useEffect(() => {
-    import('@liveyourdreams/design-system');
+    // Load LYD Design System components
+    import('@/lib/lyd-design-system');
   }, []);
 
-  const handleFilterChange = (e) => {
-    setFilters(prev => ({
-      ...prev,
-      [e.target.getAttribute('name')]: e.detail.value
-    }));
+  const handleFilterChange = (field: keyof FilterState, value: string) => {
+    setFilters(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleMultiSelectChange = (field: string, values: string[]) => {
+    setFilters(prev => ({ ...prev, [field]: values }));
   };
 
   return (
-    &lt;div className="space-y-6"&gt;
+    &lt;div className="property-filters"&gt;
       &lt;lyd-select 
-        name="propertyType"
         label="Property Type"
-        placeholder="Choose property type..."
-        onLydSelectChange={handleFilterChange}
+        value={filters.propertyType}
+        onChange={(e) => handleFilterChange('propertyType', e.target.value)}
       &gt;
-        &lt;lyd-option value="apartment"&gt;Apartment&lt;/lyd-option&gt;
-        &lt;lyd-option value="house"&gt;House&lt;/lyd-option&gt;
-        &lt;lyd-option value="penthouse"&gt;Penthouse&lt;/lyd-option&gt;
+        &lt;option value=""&gt;All Types&lt;/option&gt;
+        &lt;option value="apartment"&gt;Apartment&lt;/option&gt;
+        &lt;option value="house"&gt;House&lt;/option&gt;
+        &lt;option value="villa"&gt;Villa&lt;/option&gt;
       &lt;/lyd-select&gt;
-      
+
       &lt;lyd-select 
-        name="location"
-        label="Location"
-        placeholder="Search locations..."
-        searchable
-        onLydSelectChange={handleFilterChange}
-      &gt;
-        &lt;lyd-option value="schwabing"&gt;Munich - Schwabing&lt;/lyd-option&gt;
-        &lt;lyd-option value="maxvorstadt"&gt;Munich - Maxvorstadt&lt;/lyd-option&gt;
-      &lt;/lyd-select&gt;
-      
-      &lt;lyd-select 
-        name="features"
-        label="Features"
-        placeholder="Select features..."
+        label="Features" 
         multiple
-        onLydSelectChange={handleFilterChange}
+        onChange={(e) => handleMultiSelectChange('features', Array.from(e.target.selectedOptions).map(o => o.value))}
       &gt;
-        &lt;lyd-option value="balcony"&gt;Balcony&lt;/lyd-option&gt;
-        &lt;lyd-option value="garage"&gt;Garage&lt;/lyd-option&gt;
-        &lt;lyd-option value="elevator"&gt;Elevator&lt;/lyd-option&gt;
+        &lt;option value="balcony"&gt;Balcony&lt;/option&gt;
+        &lt;option value="garden"&gt;Garden&lt;/option&gt;
+        &lt;option value="parking"&gt;Parking&lt;/option&gt;
       &lt;/lyd-select&gt;
     &lt;/div&gt;
   );
 }</code></pre>
-            </div>
         </section>
     </main>
 </body>

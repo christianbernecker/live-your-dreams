@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Cards Pattern - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            padding: 32px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .sidebar-logo {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+        }
+        
+        .nav-section-title {
+            padding: 16px 24px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px 24px;
+            color: #374151;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: #f9fafb;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+        
+        .nav-item.active {
+            background: #eff6ff;
+            color: #0066ff;
+            border-left-color: #0066ff;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+            padding: 48px;
+        }
+        
+        .page-header {
+            margin-bottom: 48px;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0066ff;
+            margin-bottom: 24px;
+        }
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 32px 0;
+        }
+        
+        .property-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .code-block {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 32px 24px;
+            color: #e2e8f0;
+            font-family: monospace;
+            margin: 24px 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+    <script type="module" src="/src/components/lyd-card.js"></script>
+    <script type="module" src="/src/components/lyd-button.js"></script>
+</head>
+<body>
+    <!-- Left Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#000066;stop-opacity:1" /><stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" /></linearGradient><linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" /><stop offset="100%" style="stop-color:#000066;stop-opacity:1" /></linearGradient></defs><g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)"><path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/></g><g fill="url(#textGradient)"><text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text><text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text><text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text></g></svg>
+        </div>
+        
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Designing</div>
+                <a href="/designing/introduction/" class="nav-item">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Developing</div>
+                <a href="/developing/introduction/" class="nav-item">Introduction</a>
+                <a href="/developing/nextjs-integration/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/introduction/" class="nav-item">Introduction</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/buttons-enhanced/" class="nav-item">Enhanced Buttons</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Styles</div>
+                <a href="/styles/introduction/" class="nav-item">Introduction</a>
+                <a href="/styles/grid/" class="nav-item">Grid</a>
+                <a href="/styles/typography/" class="nav-item">Typography</a>
+                <a href="/styles/colors/" class="nav-item">Colors</a>
+                <a href="/styles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Patterns</div>
+                <a href="/patterns/introduction/" class="nav-item">Introduction</a>
+                <a href="/patterns/property-cards/" class="nav-item active">Property Cards</a>
+                <a href="/patterns/header/" class="nav-item">Header</a>
+                <a href="/patterns/footer/" class="nav-item">Footer</a>
+                <a href="/patterns/forms/" class="nav-item">Forms</a>
+                <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+            </div>
+                </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Property Cards</h1>
+            <p class="page-subtitle">
+                Professional property card patterns for real estate applications. 
+                Optimized for showcasing properties with all essential information and interactive elements.
+            </p>
+        </div>
+        
+        <!-- Premium Property Cards -->
+        <section class="section">
+            <h2 class="section-title">Premium Property Showcase</h2>
+            
+            <div class="property-grid">
+                <!-- Luxury Penthouse -->
+                <lyd-card variant="glass" hoverable clickable>
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop&auto=format" 
+                         alt="Luxury Penthouse Munich" 
+                         style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #1f2937;">
+                            Luxury Penthouse Munich
+                        </h3>
+                        <p style="margin: 0; color: #6b7280; font-size: 15px;">
+                            Schwabing • 4.5 Rooms • 180 m² • Premium Location
+                        </p>
+                    </div>
+                    
+                    <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
+                        Exceptional penthouse with panoramic city views, modern amenities, 
+                        and exclusive rooftop terrace in Munich's most prestigious district.
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <div style="font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
+                                €1,250,000
+                            </div>
+                            <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
+                                €6,944/m² • Premium Location
+                            </div>
+                        </div>
+                        <lyd-button variant="primary" size="medium">
+                            View Details
+                        </lyd-button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <lyd-button variant="outline" size="small">
+                            Schedule Viewing
+                        </lyd-button>
+                        <lyd-button variant="secondary" size="small">
+                            Add to Favorites
+                        </lyd-button>
+                    </div>
+                </lyd-card>
+                
+                <!-- Modern Apartment -->
+                <lyd-card variant="elevated" hoverable clickable>
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop&auto=format" 
+                         alt="Modern City Apartment" 
+                         style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #1f2937;">
+                            Modern City Apartment
+                        </h3>
+                        <p style="margin: 0; color: #6b7280; font-size: 15px;">
+                            Maxvorstadt • 3 Rooms • 85 m² • City Center
+                        </p>
+                    </div>
+                    
+                    <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
+                        Stylish apartment in the heart of Munich with modern furnishing, 
+                        high ceilings, and excellent public transport connections.
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <div style="font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
+                                €680,000
+                            </div>
+                            <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
+                                €8,000/m² • City Center
+                            </div>
+                        </div>
+                        <lyd-button variant="primary" size="medium">
+                            View Details
+                        </lyd-button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <lyd-button variant="outline" size="small">
+                            Schedule Viewing
+                        </lyd-button>
+                        <lyd-button variant="secondary" size="small">
+                            Contact Agent
+                        </lyd-button>
+                    </div>
+                </lyd-card>
+                
+                <!-- Family House -->
+                <lyd-card variant="default" hoverable clickable>
+                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=250&fit=crop&auto=format" 
+                         alt="Family House with Garden" 
+                         style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #1f2937;">
+                            Family House with Garden
+                        </h3>
+                        <p style="margin: 0; color: #6b7280; font-size: 15px;">
+                            Bogenhausen • 5 Rooms • 140 m² • Private Garden
+                        </p>
+                    </div>
+                    
+                    <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
+                        Perfect family home with spacious rooms, private garden, 
+                        and quiet residential location near excellent schools.
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <div style="font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
+                                €890,000
+                            </div>
+                            <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
+                                €6,357/m² • Family Friendly
+                            </div>
+                        </div>
+                        <lyd-button variant="primary" size="medium">
+                            View Details
+                        </lyd-button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <lyd-button variant="outline" size="small">
+                            Schedule Viewing
+                        </lyd-button>
+                        <lyd-button variant="secondary" size="small">
+                            Download Exposé
+                        </lyd-button>
+                    </div>
+                </lyd-card>
+            </div>
+        </section>
+        
+        <!-- Compact Property Cards -->
+        <section class="section">
+            <h2 class="section-title">Compact List View</h2>
+            
+            <div class="property-list">
+                <lyd-card variant="outlined" hoverable clickable style="padding: 20px;">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=120&h=80&fit=crop&auto=format" 
+                             alt="Compact Property" 
+                             style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0;" />
+                        
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0 0 4px 0; font-size: 18px; font-weight: 600; color: #1f2937;">
+                                Cozy Studio Apartment
+                            </h4>
+                            <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 14px;">
+                                Glockenbachviertel • 1 Room • 45 m²
+                            </p>
+                            <p style="margin: 0; color: #4b5563; font-size: 14px;">
+                                Perfect for young professionals, fully furnished with modern amenities.
+                            </p>
+                        </div>
+                        
+                        <div style="text-align: right; flex-shrink: 0;">
+                            <div style="font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
+                                €420,000
+                            </div>
+                            <div style="color: #6b7280; font-size: 12px; margin-bottom: 12px;">
+                                €9,333/m²
+                            </div>
+                            <lyd-button variant="primary" size="small">
+                                View Details
+                            </lyd-button>
+                        </div>
+                    </div>
+                </lyd-card>
+                
+                <lyd-card variant="outlined" hoverable clickable style="padding: 20px;">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=120&h=80&fit=crop&auto=format" 
+                             alt="Compact Property" 
+                             style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0;" />
+                        
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0 0 4px 0; font-size: 18px; font-weight: 600; color: #1f2937;">
+                                Bright 2-Bedroom Apartment
+                            </h4>
+                            <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 14px;">
+                                Haidhausen • 2 Rooms • 65 m² • Balcony
+                            </p>
+                            <p style="margin: 0; color: #4b5563; font-size: 14px;">
+                                Renovated apartment with balcony and modern kitchen in trendy district.
+                            </p>
+                        </div>
+                        
+                        <div style="text-align: right; flex-shrink: 0;">
+                            <div style="font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
+                                €520,000
+                            </div>
+                            <div style="color: #6b7280; font-size: 12px; margin-bottom: 12px;">
+                                €8,000/m²
+                            </div>
+                            <lyd-button variant="primary" size="small">
+                                View Details
+                            </lyd-button>
+                        </div>
+                    </div>
+                </lyd-card>
+            </div>
+        </section>
+        
+        <!-- Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="code-block">
+<pre><code>// app/properties/page.tsx
+'use client';
+
+import { useEffect } from 'react';
+
+export default function PropertiesPage() {
+  useEffect(() => {
+    import('@/lib/lyd-design-system');
+  }, []);
+
+  return (
+    &lt;div className="property-grid"&gt;
+      {properties.map(property =&gt; (
+        &lt;lyd-card 
+          key={property.id}
+          variant="glass" 
+          hoverable 
+          clickable
+          onClick={() =&gt; router.push(\`/properties/\${property.id}\`)}
+        &gt;
+          &lt;img 
+            src={property.image} 
+            alt={property.title}
+            style={{
+              width: '100%',
+              height: '250px',
+              objectFit: 'cover',
+              borderRadius: '12px',
+              marginBottom: '20px'
+            }}
+          /&gt;
+          
+          &lt;div style={{ marginBottom: '16px' }}&gt;
+            &lt;h3 style={{ 
+              margin: '0 0 8px 0', 
+              fontSize: '22px', 
+              fontWeight: '700', 
+              color: '#1f2937' 
+            }}&gt;
+              {property.title}
+            &lt;/h3&gt;
+            &lt;p style={{ 
+              margin: 0, 
+              color: '#6b7280', 
+              fontSize: '15px' 
+            }}&gt;
+              {property.location} • {property.rooms} Rooms • {property.area} m²
+            &lt;/p&gt;
+          &lt;/div&gt;
+          
+          &lt;p style={{ 
+            margin: '0 0 24px 0', 
+            color: '#4b5563', 
+            lineHeight: '1.6', 
+            fontSize: '15px' 
+          }}&gt;
+            {property.description}
+          &lt;/p&gt;
+          
+          &lt;div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            marginBottom: '20px'
+          }}&gt;
+            &lt;div&gt;
+              &lt;div style={{ 
+                fontSize: '32px', 
+                fontWeight: '800',
+                background: 'linear-gradient(135deg, #0066ff 0%, #004299 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent'
+              }}&gt;
+                €{property.price.toLocaleString()}
+              &lt;/div&gt;
+              &lt;div style={{ 
+                color: '#6b7280', 
+                fontSize: '13px', 
+                fontWeight: '500' 
+              }}&gt;
+                €{Math.round(property.price / property.area).toLocaleString()}/m²
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;lyd-button variant="primary" size="medium"&gt;
+              View Details
+            &lt;/lyd-button&gt;
+          &lt;/div&gt;
+          
+          &lt;div style={{ display: 'flex', gap: '8px' }}&gt;
+            &lt;lyd-button variant="outline" size="small"&gt;
+              Schedule Viewing
+            &lt;/lyd-button&gt;
+            &lt;lyd-button variant="secondary" size="small"&gt;
+              Add to Favorites
+            &lt;/lyd-button&gt;
+          &lt;/div&gt;
+        &lt;/lyd-card&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Components - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .lyd-sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .lyd-sidebar-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
+        }
+
+        .lyd-logo {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+        }
+
+        .lyd-nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .lyd-nav-section-title {
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--lyd-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .lyd-nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .lyd-nav-item:hover {
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+
+        .lyd-nav-item.active {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+
+        .lyd-main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+            padding: var(--spacing-2xl);
+        }
+
+        .lyd-page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .lyd-page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
+        }
+
+        .lyd-page-subtitle {
+            font-size: 20px;
+            color: var(--lyd-gray-600);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .lyd-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .lyd-section-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .lyd-component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .lyd-component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .lyd-component-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .lyd-component-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .lyd-component-card p {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        /* Select Demo Styles */
+        .select-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .demo-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--lyd-gray-200);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .demo-select:focus {
+            outline: none;
+            border-color: var(--lyd-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .select-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--lyd-gray-700);
+        }
+
+        .form-example {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-top: 24px;
+        }
+
+        .select-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .multi-select-demo {
+            position: relative;
+        }
+
+        .multi-select-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            padding: 12px 24px;
+            background: var(--lyd-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--lyd-primary-hover);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            color: var(--lyd-primary);
+            border: 2px solid var(--lyd-primary);
+        }
+
+        @media (max-width: 1024px) {
+            .lyd-sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .lyd-main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .select-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Sidebar Navigation -->
+    <nav class="lyd-sidebar">
+        <div class="lyd-sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0066ff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <path d="M15 45 C15 35, 25 25, 35 25 C45 25, 55 35, 55 45 C55 40, 50 35, 45 35 C40 35, 35 40, 35 45 Z" fill="url(#logoGradient)" opacity="0.8"/>
+                <circle cx="45" cy="30" r="3" fill="url(#logoGradient)"/>
+                <circle cx="40" cy="25" r="2" fill="url(#logoGradient)" opacity="0.6"/>
+                <circle cx="50" cy="27" r="1.5" fill="url(#logoGradient)" opacity="0.4"/>
+                
+                <text x="75" y="25" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#1f2937">LIVE YOUR DREAMS</text>
+                <text x="75" y="42" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#6b7280">DESIGNSYSTEM</text>
+            </svg>
+        </div>
+        
+        <div class="lyd-nav-section">
+            <div class="lyd-nav-section-title">Getting Started</div>
+            <a href="../introduction/" class="lyd-nav-item">Introduction</a>
+            <a href="../../designing/introduction/" class="lyd-nav-item">Designing</a>
+            <a href="../../developing/introduction/" class="lyd-nav-item">Developing</a>
+        </div>
+        
+        <div class="lyd-nav-section">
+            <div class="lyd-nav-section-title">Components</div>
+            <a href="../introduction/" class="lyd-nav-item">Introduction</a>
+            <a href="../buttons/" class="lyd-nav-item">Buttons</a>
+            <a href="../inputs/" class="lyd-nav-item">Inputs</a>
+            <a href="../cards/" class="lyd-nav-item">Cards</a>
+            <a href="../select/" class="lyd-nav-item active">Select</a>
+            <a href="../accordion/" class="lyd-nav-item">Accordion</a>
+            <a href="../modal/" class="lyd-nav-item">Modal</a>
+            <a href="../dropdown/" class="lyd-nav-item">Dropdown</a>
+            <a href="../checkbox/" class="lyd-nav-item">Checkbox</a>
+            <a href="../radio/" class="lyd-nav-item">Radio</a>
+            <a href="../toast/" class="lyd-nav-item">Toast</a>
+            <a href="../table/" class="lyd-nav-item">Table</a>
+        </div>
+        
+        <div class="lyd-nav-section">
+            <div class="lyd-nav-section-title">Patterns</div>
+            <a href="../../patterns/introduction/" class="lyd-nav-item">Introduction</a>
+            <a href="../../patterns/property-cards/" class="lyd-nav-item">Property Cards</a>
+            <a href="../../patterns/header/" class="lyd-nav-item">Header</a>
+            <a href="../../patterns/footer/" class="lyd-nav-item">Footer</a>
+            <a href="../../patterns/forms/" class="lyd-nav-item">Forms</a>
+            <a href="../../patterns/lead-management/" class="lyd-nav-item">Lead Management</a>
+        </div>
+        
+        <div class="lyd-nav-section">
+            <div class="lyd-nav-section-title">Styles</div>
+            <a href="../../styles/introduction/" class="lyd-nav-item">Introduction</a>
+            <a href="../../styles/grid/" class="lyd-nav-item">Grid System</a>
+            <a href="../../styles/typography/" class="lyd-nav-item">Typography</a>
+            <a href="../../styles/colors/" class="lyd-nav-item">Colors</a>
+            <a href="../../styles/spacing/" class="lyd-nav-item">Spacing</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content Area -->
+    <main class="lyd-main-content">
+        <div class="lyd-page-header">
+            <h1 class="lyd-page-title">Select Components</h1>
+            <p class="lyd-page-subtitle">Dropdown selection components with search, grouping, and real estate-specific options.</p>
+        </div>
+        
+        <section class="lyd-section">
+            <h2 class="lyd-section-title">Select Variants</h2>
+            
+            <div class="lyd-component-grid">
+                <div class="lyd-component-card">
+                    <h3>Basic Select</h3>
+                    <p>Standard dropdown with options</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Property Type</label>
+                            <select class="demo-select">
+                                <option value="">Select type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="house">House</option>
+                                <option value="villa">Villa</option>
+                                <option value="penthouse">Penthouse</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lyd-component-card">
+                    <h3>Multi Select</h3>
+                    <p>Multiple selection dropdown</p>
+                    <div class="select-showcase">
+                        <div class="multi-select-demo">
+                            <label class="select-label">Property Features</label>
+                            <select class="demo-select" multiple size="1">
+                                <option value="balcony">Balcony</option>
+                                <option value="garden">Garden</option>
+                                <option value="parking">Parking</option>
+                                <option value="elevator">Elevator</option>
+                                <option value="furnished">Furnished</option>
+                            </select>
+                            <div class="multi-select-tags">
+                                <span class="tag">Balcony <span class="tag-remove">×</span></span>
+                                <span class="tag">Garden <span class="tag-remove">×</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lyd-component-card">
+                    <h3>Searchable Select</h3>
+                    <p>Select with search functionality</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">City</label>
+                            <input type="text" class="demo-select" placeholder="Search city..." list="cities">
+                            <datalist id="cities">
+                                <option value="Munich">
+                                <option value="Berlin">
+                                <option value="Hamburg">
+                                <option value="Cologne">
+                                <option value="Frankfurt">
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lyd-component-card">
+                    <h3>Grouped Options</h3>
+                    <p>Select with option groups</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Location</label>
+                            <select class="demo-select">
+                                <option value="">Select location</option>
+                                <optgroup label="Munich Districts">
+                                    <option value="maxvorstadt">Maxvorstadt</option>
+                                    <option value="schwabing">Schwabing</option>
+                                    <option value="haidhausen">Haidhausen</option>
+                                </optgroup>
+                                <optgroup label="Berlin Districts">
+                                    <option value="mitte">Mitte</option>
+                                    <option value="prenzlauer">Prenzlauer Berg</option>
+                                    <option value="kreuzberg">Kreuzberg</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="lyd-section">
+            <h2 class="lyd-section-title">Real Estate Search Form</h2>
+            
+            <div class="form-example">
+                <h3 style="margin-bottom: 24px;">Property Search Filters</h3>
+                
+                <div class="select-grid">
+                    <div>
+                        <label class="select-label">Property Type</label>
+                        <select class="demo-select">
+                            <option value="">All Types</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="villa">Villa</option>
+                            <option value="penthouse">Penthouse</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="select-label">Price Range</label>
+                        <select class="demo-select">
+                            <option value="">Any Price</option>
+                            <option value="0-500000">Up to €500,000</option>
+                            <option value="500000-1000000">€500,000 - €1,000,000</option>
+                            <option value="1000000-2000000">€1,000,000 - €2,000,000</option>
+                            <option value="2000000+">€2,000,000+</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="select-label">Bedrooms</label>
+                        <select class="demo-select">
+                            <option value="">Any</option>
+                            <option value="1">1 Bedroom</option>
+                            <option value="2">2 Bedrooms</option>
+                            <option value="3">3 Bedrooms</option>
+                            <option value="4">4+ Bedrooms</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="select-label">Location</label>
+                        <select class="demo-select">
+                            <option value="">Any Location</option>
+                            <optgroup label="Munich">
+                                <option value="munich-center">City Center</option>
+                                <option value="munich-maxvorstadt">Maxvorstadt</option>
+                                <option value="munich-schwabing">Schwabing</option>
+                            </optgroup>
+                            <optgroup label="Berlin">
+                                <option value="berlin-mitte">Mitte</option>
+                                <option value="berlin-prenzlauer">Prenzlauer Berg</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 24px;">
+                    <label class="select-label">Features</label>
+                    <select class="demo-select" multiple size="1">
+                        <option value="balcony">Balcony</option>
+                        <option value="garden">Garden</option>
+                        <option value="parking">Parking Space</option>
+                        <option value="elevator">Elevator</option>
+                        <option value="furnished">Furnished</option>
+                        <option value="pets">Pet-friendly</option>
+                    </select>
+                    <div class="multi-select-tags" style="margin-top: 8px;">
+                        <span class="tag">Balcony <span class="tag-remove">×</span></span>
+                        <span class="tag">Parking Space <span class="tag-remove">×</span></span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 16px; margin-top: 24px;">
+                    <button class="cta-button">🔍 Search Properties</button>
+                    <button class="cta-button outline">Reset Filters</button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="lyd-section">
+            <h2 class="lyd-section-title">Advanced Features</h2>
+            
+            <div class="lyd-component-grid">
+                <div class="lyd-component-card">
+                    <h3>Async Loading</h3>
+                    <p>Select options loaded dynamically from API</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Property Agent</label>
+                            <select class="demo-select">
+                                <option value="">Loading agents...</option>
+                                <option value="agent1">Sarah Mueller</option>
+                                <option value="agent2">Michael Schmidt</option>
+                                <option value="agent3">Anna Weber</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lyd-component-card">
+                    <h3>Custom Styling</h3>
+                    <p>Select with custom appearance and branding</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Property Status</label>
+                            <select class="demo-select" style="border-color: var(--lyd-success);">
+                                <option value="available">✅ Available</option>
+                                <option value="reserved">⏳ Reserved</option>
+                                <option value="sold">✔️ Sold</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lyd-component-card">
+                    <h3>Validation States</h3>
+                    <p>Select with error and success states</p>
+                    <div class="select-showcase">
+                        <div>
+                            <label class="select-label">Required Field</label>
+                            <select class="demo-select" style="border-color: var(--lyd-error);">
+                                <option value="">Please select...</option>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                            </select>
+                            <div style="color: var(--lyd-error); font-size: 14px; margin-top: 4px;">This field is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="lyd-section">
+            <h2 class="lyd-section-title">Next.js Integration</h2>
+            
+            <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px;"><code>// components/PropertyFilters.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+
+interface FilterState {
+  propertyType: string;
+  priceRange: string;
+  bedrooms: string;
+  location: string;
+  features: string[];
+}
+
+export default function PropertyFilters() {
+  const [filters, setFilters] = useState&lt;FilterState&gt;({
+    propertyType: '',
+    priceRange: '',
+    bedrooms: '',
+    location: '',
+    features: []
+  });
+
+  useEffect(() => {
+    // Load LYD Design System components
+    import('@/lib/lyd-design-system');
+  }, []);
+
+  const handleFilterChange = (field: keyof FilterState, value: string) => {
+    setFilters(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleMultiSelectChange = (field: string, values: string[]) => {
+    setFilters(prev => ({ ...prev, [field]: values }));
+  };
+
+  return (
+    &lt;div className="property-filters"&gt;
+      &lt;lyd-select 
+        label="Property Type"
+        value={filters.propertyType}
+        onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+      &gt;
+        &lt;option value=""&gt;All Types&lt;/option&gt;
+        &lt;option value="apartment"&gt;Apartment&lt;/option&gt;
+        &lt;option value="house"&gt;House&lt;/option&gt;
+        &lt;option value="villa"&gt;Villa&lt;/option&gt;
+      &lt;/lyd-select&gt;
+
+      &lt;lyd-select 
+        label="Features" 
+        multiple
+        onChange={(e) => handleMultiSelectChange('features', Array.from(e.target.selectedOptions).map(o => o.value))}
+      &gt;
+        &lt;option value="balcony"&gt;Balcony&lt;/option&gt;
+        &lt;option value="garden"&gt;Garden&lt;/option&gt;
+        &lt;option value="parking"&gt;Parking&lt;/option&gt;
+      &lt;/lyd-select&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </section>
+    </main>
+</body>
+</html>

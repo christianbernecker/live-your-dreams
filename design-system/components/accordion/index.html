@@ -3,80 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accordion - LYD Design System</title>
+    <title>Accordion Components - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Standard LYD Design System Styles */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: "Inter", system-ui, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); color: #1f2937; display: flex; min-height: 100vh; }
-        .sidebar { width: 280px; background: #ffffff; border-right: 1px solid #e5e7eb; position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; }
-        .sidebar-header { padding: 32px 24px; border-bottom: 1px solid #e5e7eb; }
-        .sidebar-logo { width: 100%; height: auto; max-height: 180px; }
-        .nav-section-title { padding: 16px 24px 8px; font-size: 14px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item { display: block; padding: 12px 24px; color: #374151; text-decoration: none; font-size: 15px; font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
-        .nav-item:hover { background: #f9fafb; color: #0066ff; border-left-color: #0066ff; }
-        .nav-item.active { background: #eff6ff; color: #0066ff; border-left-color: #0066ff; }
-        .main-content { margin-left: 280px; flex: 1; min-height: 100vh; padding: 48px; }
-        .page-title { font-size: 48px; font-weight: 800; color: #1f2937; margin-bottom: 16px; }
-        .page-subtitle { font-size: 20px; color: #6b7280; line-height: 1.6; margin-bottom: 48px; }
-        .section { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 40px; margin-bottom: 32px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); }
-        .section-title { font-size: 28px; font-weight: 700; color: #0066ff; margin-bottom: 24px; }
-        .placeholder-content { text-align: center; padding: 60px 20px; color: #6b7280; }
-        .placeholder-icon { font-size: 64px; margin-bottom: 24px; }
-        .placeholder-title { font-size: 24px; font-weight: 600; color: #374151; margin-bottom: 16px; }
-        .placeholder-description { font-size: 16px; line-height: 1.6; max-width: 500px; margin: 0 auto; }
-        
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 24px;
-            margin: 24px 0;
+        :root {
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
         }
-        
-        .demo-item {
-            padding: 32px 24px;
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-        }
-        
-        .demo-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
-            margin: 0 0 16px 0;
-        }
-        
-        .component-showcase {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        
-        .code-block {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 32px 24px;
-            color: #e2e8f0;
-            font-family: monospace;
-            margin: 24px 0;
-        }
-        
-        .code-block pre {
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
+        }
+
+        .lyd-logo {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+        }
+
+        .nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .nav-section-title {
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--lyd-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+
+        .nav-item.active {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+            padding: var(--spacing-2xl);
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
+        }
+
+        .page-subtitle {
+            font-size: 20px;
+            color: var(--lyd-gray-600);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .component-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .component-card p {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        /* Accordion Demo Styles */
+        .demo-accordion {
+            border: 1px solid var(--lyd-gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: white;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--lyd-gray-200);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 20px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--lyd-gray-900);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--lyd-gray-50);
+        }
+
+        .accordion-header.active {
+            color: var(--lyd-primary);
+            background: var(--lyd-accent-light);
+        }
+
+        .accordion-icon {
+            transition: transform 0.2s ease;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+        }
+
+        .accordion-body {
+            padding: 0 20px 20px 20px;
+            color: var(--lyd-gray-600);
             line-height: 1.6;
         }
+
+        .property-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .property-feature:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--lyd-primary);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
     </style>
-    <script type="module" src="/src/components/lyd-accordion.js"></script>
 </head>
 <body>
+    <!-- Global Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#000066;stop-opacity:1" /><stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" /></linearGradient><linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" /><stop offset="100%" style="stop-color:#000066;stop-opacity:1" /></linearGradient></defs><g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)"><path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/></g><g fill="url(#textGradient)"><text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text><text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text><text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text></g></svg>
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradient)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
         </div>
         
-        <div class="sidebar-nav">
-            <div class="nav-section">
+                                <div class="nav-section">
                 <div class="nav-section-title">Designing</div>
                 <a href="/designing/introduction/" class="nav-item">Introduction</a>
             </div>
@@ -95,7 +317,7 @@
                 <a href="/components/inputs/" class="nav-item">Input</a>
                 <a href="/components/cards/" class="nav-item">Card</a>
                 <a href="/components/select/" class="nav-item">Select</a>
-                <a href="/components/accordion/" class="nav-item active">Accordion</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
                 <a href="/components/modal/" class="nav-item">Modal</a>
                 <a href="/components/dropdown/" class="nav-item">Dropdown</a>
                 <a href="/components/checkbox/" class="nav-item">Checkbox</a>
@@ -122,140 +344,336 @@
                 <a href="/patterns/forms/" class="nav-item">Forms</a>
                 <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
             </div>
-                </div>
+        </div>
     </nav>
     
+    <!-- Main Content Area -->
     <main class="main-content">
-        <h1 class="page-title">Accordion</h1>
-        <p class="page-subtitle">
-            Professional accordion component for real estate applications.
-        </p>
+        <div class="page-header">
+            <h1 class="page-title">Accordion Components</h1>
+            <p class="page-subtitle">Expandable content sections for property details, FAQs, and structured information display.</p>
+        </div>
         
-        <!-- Accordion Variants -->
         <section class="section">
-            <h2 class="section-title">Accordion Variants</h2>
+            <h2 class="section-title">Basic Accordion</h2>
             
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="demo-title">Default Accordion</h3>
-                    <div class="component-showcase">
-                        <lyd-accordion variant="default">
-                            <span slot="title">Property Details</span>
-                            <div slot="content">
-                                <p>This accordion contains detailed information about the property including specifications, features, and additional notes.</p>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Standard Accordion</h3>
+                    <p>Basic accordion with expand/collapse functionality</p>
+                    
+                    <div class="demo-accordion" style="margin-top: 16px;">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                General Information
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p>This section contains general information about the property including basic details and overview.</p>
+                                </div>
                             </div>
-                        </lyd-accordion>
+                        </div>
                         
-                        <lyd-accordion variant="default" open>
-                            <span slot="title">Location Information</span>
-                            <div slot="content">
-                                <p>Detailed location information including neighborhood details, public transport connections, and nearby amenities.</p>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Property Details
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p>Detailed information about rooms, area, features, and specifications.</p>
+                                </div>
                             </div>
-                        </lyd-accordion>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Location & Transport
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p>Information about the neighborhood, public transport, and nearby amenities.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="demo-item">
-                    <h3 class="demo-title">Elevated Style</h3>
-                    <div class="component-showcase">
-                        <lyd-accordion variant="elevated">
-                            <span slot="title">Financial Information</span>
-                            <div slot="content">
-                                <p>Purchase price, financing options, additional costs, and payment schedules.</p>
+                <div class="component-card">
+                    <h3>Property Features</h3>
+                    <p>Accordion showing property features with icons</p>
+                    
+                    <div class="demo-accordion" style="margin-top: 16px;">
+                        <div class="accordion-item">
+                            <button class="accordion-header active" onclick="toggleAccordion(this)">
+                                Interior Features
+                                <span class="accordion-icon">▲</span>
+                            </button>
+                            <div class="accordion-content active">
+                                <div class="accordion-body">
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🏠</span>
+                                        <span>Modern kitchen with premium appliances</span>
+                                    </div>
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🛏️</span>
+                                        <span>Master bedroom with walk-in closet</span>
+                                    </div>
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🚿</span>
+                                        <span>Luxurious bathrooms with marble finishes</span>
+                                    </div>
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🔥</span>
+                                        <span>Underfloor heating throughout</span>
+                                    </div>
+                                </div>
                             </div>
-                        </lyd-accordion>
+                        </div>
                         
-                        <lyd-accordion variant="elevated">
-                            <span slot="title">Legal Documents</span>
-                            <div slot="content">
-                                <p>Energy certificate, floor plans, ownership documents, and legal disclosures.</p>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Exterior Features
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🌳</span>
+                                        <span>Private garden with landscape design</span>
+                                    </div>
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🚗</span>
+                                        <span>2-car garage with electric charging</span>
+                                    </div>
+                                    <div class="property-feature">
+                                        <span class="feature-icon">🏊</span>
+                                        <span>Swimming pool and terrace area</span>
+                                    </div>
+                                </div>
                             </div>
-                        </lyd-accordion>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">Glass Effect</h3>
-                    <div class="component-showcase">
-                        <lyd-accordion variant="glass">
-                            <span slot="title">Premium Features</span>
-                            <div slot="content">
-                                <p>Luxury amenities, premium finishes, and exclusive building features.</p>
-                            </div>
-                        </lyd-accordion>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">Real Estate Specific</h3>
-                    <div class="component-showcase">
-                        <lyd-accordion variant="property">
-                            <span slot="title">Property Specifications</span>
-                            <div slot="content">
-                                <p>Room layout, square footage, ceiling height, and architectural details.</p>
-                            </div>
-                        </lyd-accordion>
-                        
-                        <lyd-accordion variant="lead">
-                            <span slot="title">Lead Information</span>
-                            <div slot="content">
-                                <p>Contact details, viewing preferences, and qualification status.</p>
-                            </div>
-                        </lyd-accordion>
-                        
-                        <lyd-accordion variant="warning">
-                            <span slot="title">Important Notice</span>
-                            <div slot="content">
-                                <p>Special conditions, restrictions, or important legal information.</p>
-                            </div>
-                        </lyd-accordion>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Usage Examples -->
         <section class="section">
-            <h2 class="section-title">Next.js Usage</h2>
+            <h2 class="section-title">FAQ Accordion</h2>
             
-            <div class="code-block">
-<pre><code>// app/properties/[id]/page.tsx
+            <div style="max-width: 800px;">
+                <div class="demo-accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            What documents do I need for a property viewing?
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>For property viewings, please bring a valid ID and proof of income. If you're interested in purchasing, we also recommend having pre-approval documentation from your bank.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            How long does the buying process typically take?
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>The buying process usually takes 6-8 weeks from offer acceptance to completion. This includes property inspections, financing arrangements, and legal procedures.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            Are pets allowed in rental properties?
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Pet policies vary by property. Many of our listings are pet-friendly, and we clearly mark properties that welcome pets. Additional deposits may apply.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            What are the additional costs when buying a property?
+                            <span class="accordion-icon">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p>Additional costs typically include notary fees (1-2%), real estate transfer tax (3.5-6.5%), and agent commission (3-7%). We provide detailed cost breakdowns for every property.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Property Details Accordion</h2>
+            
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Luxury Villa Munich</h3>
+                    <p>€2,500,000 • 350m² • 5 rooms</p>
+                    
+                    <div class="demo-accordion" style="margin-top: 16px;">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Property Overview
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p><strong>Type:</strong> Detached Villa<br/>
+                                    <strong>Built:</strong> 2019<br/>
+                                    <strong>Energy Rating:</strong> A+<br/>
+                                    <strong>Condition:</strong> Excellent</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Room Distribution
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p><strong>Bedrooms:</strong> 5 (including master suite)<br/>
+                                    <strong>Bathrooms:</strong> 3 (2 full, 1 guest)<br/>
+                                    <strong>Living Areas:</strong> Open plan living/dining<br/>
+                                    <strong>Kitchen:</strong> Modern fitted kitchen<br/>
+                                    <strong>Additional:</strong> Study, utility room, wine cellar</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">
+                                Outdoor Space
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <p><strong>Garden:</strong> 800m² landscaped garden<br/>
+                                    <strong>Terrace:</strong> 60m² covered terrace<br/>
+                                    <strong>Parking:</strong> Double garage + 2 outdoor spaces<br/>
+                                    <strong>Special:</strong> Swimming pool and BBQ area</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Next.js Integration</h2>
+            
+            <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px;"><code>// components/PropertyAccordion.tsx
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 
-export default function PropertyPage() {
-  useEffect(() => {
-    import('@liveyourdreams/design-system');
-  }, []);
+interface AccordionItem {
+  id: string;
+  title: string;
+  content: React.ReactNode;
+}
+
+export default function PropertyAccordion({ items }: { items: AccordionItem[] }) {
+  const [openItems, setOpenItems] = useState&lt;string[]&gt;([]);
+
+  const toggleItem = (id: string) => {
+    setOpenItems(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+  };
 
   return (
-    &lt;div className="space-y-4"&gt;
-      &lt;lyd-accordion variant="property"&gt;
-        &lt;span slot="title"&gt;Property Details&lt;/span&gt;
-        &lt;div slot="content"&gt;
-          &lt;PropertyDetailsForm /&gt;
+    &lt;div className="accordion-container"&gt;
+      {items.map(item => (
+        &lt;div key={item.id} className="accordion-item"&gt;
+          &lt;button 
+            className={`accordion-header ${openItems.includes(item.id) ? 'active' : ''}`}
+            onClick={() => toggleItem(item.id)}
+          &gt;
+            {item.title}
+            &lt;span className="accordion-icon"&gt;
+              {openItems.includes(item.id) ? '▲' : '▼'}
+            &lt;/span&gt;
+          &lt;/button&gt;
+          
+          &lt;div className={`accordion-content ${openItems.includes(item.id) ? 'active' : ''}`}&gt;
+            &lt;div className="accordion-body"&gt;
+              {item.content}
+            &lt;/div&gt;
+          &lt;/div&gt;
         &lt;/div&gt;
-      &lt;/lyd-accordion&gt;
-      
-      &lt;lyd-accordion variant="default"&gt;
-        &lt;span slot="title"&gt;Energy Certificate&lt;/span&gt;
-        &lt;div slot="content"&gt;
-          &lt;EnergyCertificateForm /&gt;
-        &lt;/div&gt;
-      &lt;/lyd-accordion&gt;
-      
-      &lt;lyd-accordion variant="glass"&gt;
-        &lt;span slot="title"&gt;Media Gallery&lt;/span&gt;
-        &lt;div slot="content"&gt;
-          &lt;MediaUploader /&gt;
-        &lt;/div&gt;
-      &lt;/lyd-accordion&gt;
+      ))}
     &lt;/div&gt;
   );
 }</code></pre>
-            </div>
         </section>
     </main>
+    
+    <!-- Accordion JavaScript -->
+    <script>
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            
+            // Close all other accordions in the same container
+            const container = button.closest('.demo-accordion');
+            const allHeaders = container.querySelectorAll('.accordion-header');
+            const allContents = container.querySelectorAll('.accordion-content');
+            
+            allHeaders.forEach(header => {
+                if (header !== button) {
+                    header.classList.remove('active');
+                    header.querySelector('.accordion-icon').textContent = '▼';
+                }
+            });
+            
+            allContents.forEach(content => {
+                if (content !== button.nextElementSibling) {
+                    content.classList.remove('active');
+                }
+            });
+            
+            // Toggle current accordion
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+            
+            if (button.classList.contains('active')) {
+                icon.textContent = '▲';
+            } else {
+                icon.textContent = '▼';
+            }
+        }
+        
+        // Set active navigation item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && currentPath.includes(href.replace('../', '').replace('../../', ''))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

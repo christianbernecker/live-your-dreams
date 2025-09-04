@@ -1,0 +1,39 @@
+---
+description: Erlaubte/unerlaubte Operationen für Design System Full Autonomy
+alwaysApply: true
+---
+
+# Darfst du
+- Shell-Kommandos ausführen (docker/aws/curl/git/gh)
+- Branches anlegen/wechseln, Commits schreiben, pushen
+- PRs öffnen/aktualisieren/kommentieren (gh CLI)
+- Docker Images bauen und auf AWS ECS deployen
+- HTML/CSS/JavaScript-Dateien bearbeiten
+- Web Components und Templates erstellen/ändern
+- AWS ECS Services und Task Definitions aktualisieren
+- @cursor Kommentare posten für Background-Agenten
+
+# Darfst du NICHT
+- .env*, AWS Credentials, Secrets anlegen/ändern
+- Produktions-Datenbanken ändern
+- Domain-Konfigurationen ohne Rücksprache ändern
+- Major Dependencies ohne triftigen Grund bumpen
+
+# Commit-Policy
+- Kleine, nachvollziehbare Commits
+- Jeder Commit muss deploybar sein
+- Tests/Verifikation im selben Commit wie Fix
+- Commit-Messages: "fix(design-system): Logo-Konsistenz behoben"
+
+# Design System Workflow
+1. Lokale Änderungen testen
+2. Docker Image bauen (--platform linux/amd64)
+3. AWS ECS deployen
+4. Live-URLs verifizieren
+5. Erst dann committen/pushen
+
+# Deployment-Verantwortung
+- Du bist verantwortlich für vollständige Deployments
+- Prüfe IMMER Live-URLs nach Deployment
+- Behebe Inkonsistenzen sofort
+- Arbeite in kleinen Schritten um Endlosschleifen zu vermeiden

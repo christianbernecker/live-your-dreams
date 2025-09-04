@@ -1,0 +1,28 @@
+name: Design System Review Autofix
+on:
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    permissions: 
+      pull-requests: write
+      contents: read
+    
+    steps:
+      - name: Auto-fix review comments
+        if: ${{ contains(github.event.review.body, 'design system') || contains(github.event.comment.body, 'logo') || contains(github.event.comment.body, 'navigation') }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "@cursor fix Design System Inkonsistenzen basierend auf Review-Feedback. Fokus auf Logo und Navigation."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger consistency check
+        if: ${{ contains(github.event.review.body, 'inconsistent') || contains(github.event.comment.body, 'inconsistent') }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "@cursor Führe vollständige Konsistenz-Prüfung durch: Logo, Navigation, Web Components. Deploye Fixes auf AWS ECS."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,206 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Component - LYD Design System</title>
+    <title>Card Components - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: "Inter", system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1f2937;
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
             display: flex;
             min-height: 100vh;
         }
-        
-        /* Left Sidebar */
+
         .sidebar {
             width: 280px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
             z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .sidebar-header {
-            padding: 32px 24px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
         }
-        
-        .sidebar-logo {
+
+        .lyd-logo {
             width: 100%;
             height: auto;
             max-height: 180px;
         }
-        
+
+        .nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
         .nav-section-title {
-            padding: 16px 24px 8px;
-            font-size: 14px;
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: 12px;
             font-weight: 600;
-            color: #6b7280;
+            color: var(--lyd-gray-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .nav-item {
             display: block;
-            padding: 12px 24px;
-            color: #374151;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
             transition: all 0.2s ease;
             border-left: 3px solid transparent;
         }
-        
+
         .nav-item:hover {
-            background: #f9fafb;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
         .nav-item.active {
-            background: #eff6ff;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
-        /* Main Content */
+
         .main-content {
             margin-left: 280px;
             flex: 1;
             min-height: 100vh;
-            padding: 48px;
+            padding: var(--spacing-2xl);
         }
-        
+
         .page-header {
-            margin-bottom: 48px;
+            margin-bottom: var(--spacing-2xl);
         }
-        
+
         .page-title {
             font-size: 48px;
             font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 16px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
         }
-        
+
         .page-subtitle {
             font-size: 20px;
-            color: #6b7280;
+            color: var(--lyd-gray-600);
             line-height: 1.6;
+            max-width: 600px;
         }
-        
+
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: var(--spacing-2xl);
         }
-        
+
         .section-title {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
-            color: #0066ff;
-            margin-bottom: 24px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
         }
-        
-        .demo-grid {
+
+        .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 24px 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
         }
-        
-        .demo-item {
-            padding: 32px 24px;
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
+
+        .component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
         }
-        
-        .demo-title {
+
+        .component-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .component-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .component-card p {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        /* Demo Cards */
+        .demo-card {
+            background: var(--lyd-white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-gray-200);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .demo-card.elevated {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .demo-card.glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-content {
+            padding: var(--spacing-lg);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--lyd-gray-500);
+            position: relative;
+        }
+
+        .property-image.luxury {
+            background: linear-gradient(45deg, #ddd6fe, #c4b5fd);
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .favorite-btn:hover {
+            background: var(--lyd-primary);
+            color: white;
+        }
+
+        .property-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .property-title {
             font-size: 18px;
             font-weight: 600;
-            color: #1f2937;
-            margin: 0 0 16px 0;
-        }
-        
-        .component-showcase {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin: 16px 0;
-        }
-        
-        .code-block {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 32px 24px;
-            color: #e2e8f0;
-            font-family: monospace;
-            margin: 24px 0;
-        }
-        
-        .code-block pre {
             margin: 0;
-            line-height: 1.6;
         }
-        
-        .properties-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-        }
-        
-        .properties-table th,
-        .properties-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .properties-table th {
-            background: #f9fafb;
+
+        .property-price {
+            font-size: 20px;
             font-weight: 600;
-            color: #374151;
+            color: var(--lyd-primary);
         }
-        
-        .properties-table code {
-            background: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 13px;
+
+        .property-description {
+            color: var(--lyd-gray-600);
+            margin-bottom: 16px;
+            font-size: 14px;
         }
-        
-        .property-card-showcase {
+
+        .property-features {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 12px 24px;
+            background: var(--lyd-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--lyd-primary-hover);
+        }
+
+        .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-            margin: 32px 0;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
         }
     </style>
-    <script type="module" src="/src/components/lyd-card.js"></script>
-    <script type="module" src="/src/components/lyd-button.js"></script>
 </head>
 <body>
-    <!-- Left Sidebar -->
+    <!-- Global Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#000066;stop-opacity:1" /><stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" /></linearGradient><linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse"><stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" /><stop offset="100%" style="stop-color:#000066;stop-opacity:1" /></linearGradient></defs><g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)"><path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/></g><g fill="url(#textGradient)"><text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text><text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text><text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text></g></svg>
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0,748) scale(0.1,-0.1)" fill="url(#crescentGradient)">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradient)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
         </div>
         
-        <div class="sidebar-nav">
-            <div class="nav-section">
+                                <div class="nav-section">
                 <div class="nav-section-title">Designing</div>
                 <a href="/designing/introduction/" class="nav-item">Introduction</a>
             </div>
@@ -219,7 +359,7 @@
                 <a href="/components/buttons/" class="nav-item">Button</a>
                 <a href="/components/buttons-enhanced/" class="nav-item">Enhanced Buttons</a>
                 <a href="/components/inputs/" class="nav-item">Input</a>
-                <a href="/components/cards/" class="nav-item active">Card</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
                 <a href="/components/select/" class="nav-item">Select</a>
                 <a href="/components/accordion/" class="nav-item">Accordion</a>
                 <a href="/components/modal/" class="nav-item">Modal</a>
@@ -248,292 +388,195 @@
                 <a href="/patterns/forms/" class="nav-item">Forms</a>
                 <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
             </div>
-                </div>
+        </div>
     </nav>
     
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main class="main-content">
         <div class="page-header">
-            <h1 class="page-title">Card</h1>
-            <p class="page-subtitle">
-                Sophisticated card component with glassmorphism effects for property showcases and content organization.
-            </p>
+            <h1 class="page-title">Card Components</h1>
+            <p class="page-subtitle">Flexible card components with glassmorphism effects for property showcases and content organization.</p>
         </div>
         
-        <!-- Card Variants -->
         <section class="section">
             <h2 class="section-title">Card Variants</h2>
             
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="demo-title">Default Card</h3>
-                    <div class="component-showcase">
-                        <lyd-card>
-                            <div slot="header">
-                                <h4>Basic Card</h4>
-                            </div>
-                            <div slot="content">
-                                <p>Simple card with clean design and subtle shadows.</p>
-                            </div>
-                        </lyd-card>
+            <div class="card-grid">
+                <div class="demo-card">
+                    <div class="card-content">
+                        <h3>Default Card</h3>
+                        <p>Basic card with clean design and subtle shadow</p>
+                        <button class="cta-button">Default Action</button>
                     </div>
                 </div>
                 
-                <div class="demo-item">
-                    <h3 class="demo-title">Elevated Card</h3>
-                    <div class="component-showcase">
-                        <lyd-card variant="elevated">
-                            <div slot="header">
-                                <h4>Elevated Card</h4>
-                            </div>
-                            <div slot="content">
-                                <p>Enhanced shadow depth for important content sections.</p>
-                            </div>
-                        </lyd-card>
+                <div class="demo-card elevated">
+                    <div class="card-content">
+                        <h3>Elevated Card</h3>
+                        <p>Card with enhanced shadow for better prominence</p>
+                        <button class="cta-button">Elevated Action</button>
                     </div>
                 </div>
                 
-                <div class="demo-item">
-                    <h3 class="demo-title">Glass Card</h3>
-                    <div class="component-showcase">
-                        <lyd-card variant="glass">
-                            <div slot="header">
-                                <h4>Glass Card</h4>
-                            </div>
-                            <div slot="content">
-                                <p>Modern glassmorphism effect with backdrop blur.</p>
-                            </div>
-                        </lyd-card>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <h3 class="demo-title">Outlined Card</h3>
-                    <div class="component-showcase">
-                        <lyd-card variant="outlined">
-                            <div slot="header">
-                                <h4>Outlined Card</h4>
-                            </div>
-                            <div slot="content">
-                                <p>Clean border design without shadows.</p>
-                            </div>
-                        </lyd-card>
+                <div class="demo-card glass">
+                    <div class="card-content">
+                        <h3>Glass Card</h3>
+                        <p>Glassmorphism effect with backdrop blur</p>
+                        <button class="cta-button">Glass Action</button>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Property Cards -->
         <section class="section">
-            <h2 class="section-title">Property Card Examples</h2>
+            <h2 class="section-title">Property Cards</h2>
             
-            <div class="property-card-showcase">
-                <!-- Luxury Penthouse -->
-                <lyd-card variant="glass" hoverable clickable>
-                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=200&fit=crop&auto=format" 
-                         alt="Luxury Penthouse" 
-                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
-                    
-                    <div style="margin-bottom: 16px;">
-                        <h4 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #1f2937;">
-                            Luxury Penthouse Munich
-                        </h4>
-                        <p style="margin: 0; color: #6b7280; font-size: 14px;">
-                            Schwabing • 4.5 Rooms • 180 m² • Premium Location
-                        </p>
+            <div class="card-grid">
+                <div class="demo-card">
+                    <div class="property-image">
+                        <span>Property Image</span>
+                        <button class="favorite-btn">♡</button>
                     </div>
-                    
-                    <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
-                        Exceptional penthouse with panoramic city views, modern amenities, 
-                        and exclusive rooftop terrace in Munich's most prestigious district.
-                    </p>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
-                                €1,250,000
-                            </div>
-                            <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
-                                €6,944/m² • Premium Location
-                            </div>
+                    <div class="card-content">
+                        <div class="property-details">
+                            <h3 class="property-title">Luxury Apartment</h3>
+                            <span class="property-price">€750,000</span>
                         </div>
-                        <lyd-button variant="primary" size="medium">
-                            View Details
-                        </lyd-button>
-                    </div>
-                </lyd-card>
-                
-                <!-- Modern Apartment -->
-                <lyd-card variant="elevated" hoverable>
-                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=200&fit=crop&auto=format" 
-                         alt="Modern Apartment" 
-                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
-                    
-                    <div style="margin-bottom: 16px;">
-                        <h4 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #1f2937;">
-                            Modern City Apartment
-                        </h4>
-                        <p style="margin: 0; color: #6b7280; font-size: 14px;">
-                            Maxvorstadt • 3 Rooms • 85 m² • City Center
-                        </p>
-                    </div>
-                    
-                    <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
-                        Stylish apartment in the heart of Munich with modern furnishing, 
-                        high ceilings, and excellent public transport connections.
-                    </p>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
-                                €680,000
-                            </div>
-                            <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
-                                €8,000/m² • City Center
-                            </div>
+                        <p class="property-description">Modern 3-bedroom apartment in Munich city center with premium finishes</p>
+                        <div class="property-features">
+                            <span>🛏️ 3 bed</span>
+                            <span>🚿 2 bath</span>
+                            <span>📐 120m²</span>
                         </div>
-                        <lyd-button variant="secondary" size="medium">
-                            Contact
-                        </lyd-button>
-                    </div>
-                </lyd-card>
-            </div>
-        </section>
-        
-        <!-- Interactive States -->
-        <section class="section">
-            <h2 class="section-title">Interactive States</h2>
-            
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <h3 class="demo-title">Hoverable Card</h3>
-                    <div class="component-showcase">
-                        <lyd-card variant="elevated" hoverable>
-                            <div slot="content">
-                                <p>Hover over this card to see the elevation effect.</p>
-                            </div>
-                        </lyd-card>
+                        <button class="cta-button">📅 Schedule Viewing</button>
                     </div>
                 </div>
                 
-                <div class="demo-item">
-                    <h3 class="demo-title">Clickable Card</h3>
-                    <div class="component-showcase">
-                        <lyd-card variant="outlined" clickable>
-                            <div slot="content">
-                                <p>This card is clickable and shows pointer cursor.</p>
-                            </div>
-                        </lyd-card>
+                <div class="demo-card">
+                    <div class="property-image luxury">
+                        <span>Property Image</span>
+                        <button class="favorite-btn">♥</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="property-details">
+                            <h3 class="property-title">Villa with Garden</h3>
+                            <span class="property-price">€1,250,000</span>
+                        </div>
+                        <p class="property-description">Spacious villa with private garden, garage, and stunning views</p>
+                        <div class="property-features">
+                            <span>🛏️ 5 bed</span>
+                            <span>🚿 3 bath</span>
+                            <span>📐 280m²</span>
+                        </div>
+                        <button class="cta-button">📅 Schedule Viewing</button>
                     </div>
                 </div>
                 
-                <div class="demo-item">
-                    <h3 class="demo-title">Hoverable + Clickable</h3>
-                    <div class="component-showcase">
-                        <lyd-card variant="glass" hoverable clickable>
-                            <div slot="content">
-                                <p>Combined hover and click effects for maximum interactivity.</p>
-                            </div>
-                        </lyd-card>
+                <div class="demo-card glass">
+                    <div class="property-image">
+                        <span>Property Image</span>
+                        <button class="favorite-btn">♡</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="property-details">
+                            <h3 class="property-title">Modern Penthouse</h3>
+                            <span class="property-price">€2,100,000</span>
+                        </div>
+                        <p class="property-description">Exclusive penthouse with panoramic city views and roof terrace</p>
+                        <div class="property-features">
+                            <span>🛏️ 4 bed</span>
+                            <span>🚿 3 bath</span>
+                            <span>📐 200m²</span>
+                        </div>
+                        <button class="cta-button">📅 Schedule Viewing</button>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Properties -->
         <section class="section">
-            <h2 class="section-title">Properties</h2>
+            <h2 class="section-title">Content Cards</h2>
             
-            <table class="properties-table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>variant</code></td>
-                        <td><code>string</code></td>
-                        <td><code>default</code></td>
-                        <td>Card style variant: default, elevated, glass, outlined</td>
-                    </tr>
-                    <tr>
-                        <td><code>hoverable</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                        <td>Enables hover elevation effect</td>
-                    </tr>
-                    <tr>
-                        <td><code>clickable</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                        <td>Shows pointer cursor and click states</td>
-                    </tr>
-                    <tr>
-                        <td><code>padding</code></td>
-                        <td><code>string</code></td>
-                        <td><code>medium</code></td>
-                        <td>Internal padding: small, medium, large, none</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Feature Card</h3>
+                    <p>Cards for showcasing features and benefits with icons and descriptions.</p>
+                    <div style="margin-top: 16px; padding: 20px; border: 1px solid var(--lyd-gray-200); border-radius: var(--radius-md);">
+                        <div style="font-size: 24px; margin-bottom: 12px;">🏠</div>
+                        <h4 style="margin-bottom: 8px;">Premium Properties</h4>
+                        <p style="color: var(--lyd-gray-600); font-size: 14px;">Curated selection of luxury real estate</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Stats Card</h3>
+                    <p>Display key metrics and statistics with visual emphasis.</p>
+                    <div style="margin-top: 16px; padding: 20px; border: 1px solid var(--lyd-gray-200); border-radius: var(--radius-md); text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--lyd-primary); margin-bottom: 8px;">1,247</div>
+                        <p style="color: var(--lyd-gray-600); font-size: 14px;">Properties Sold</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Agent Card</h3>
+                    <p>Professional agent profiles with contact information.</p>
+                    <div style="margin-top: 16px; padding: 20px; border: 1px solid var(--lyd-gray-200); border-radius: var(--radius-md); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: var(--lyd-gray-300); border-radius: 50%; margin: 0 auto 12px;"></div>
+                        <h4 style="margin-bottom: 4px;">Sarah Mueller</h4>
+                        <p style="color: var(--lyd-gray-600); font-size: 14px;">Senior Property Advisor</p>
+                    </div>
+                </div>
+            </div>
         </section>
         
-        <!-- Usage Examples -->
         <section class="section">
-            <h2 class="section-title">Next.js Usage</h2>
+            <h2 class="section-title">Next.js Integration</h2>
             
-            <div class="code-block">
-<pre><code>// app/properties/page.tsx
+            <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px;"><code>// components/PropertyCard.tsx
 'use client';
 
-import { useEffect } from 'react';
-
-export default function PropertiesPage() {
-  useEffect(() => {
-    import('@/lib/lyd-design-system');
-  }, []);
-
-  const handleCardClick = (propertyId) => {
-    router.push(\`/properties/\${propertyId}\`);
+interface PropertyCardProps {
+  property: {
+    id: string;
+    title: string;
+    price: number;
+    bedrooms: number;
+    bathrooms: number;
+    area: number;
+    image: string;
+    isFavorite: boolean;
   };
+}
 
+export default function PropertyCard({ property }: PropertyCardProps) {
   return (
-    &lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
-      {properties.map(property =&gt; (
-        &lt;lyd-card 
-          key={property.id}
-          variant="glass" 
-          hoverable 
-          clickable
-          onClick={() =&gt; handleCardClick(property.id)}
-        &gt;
-          &lt;img 
-            src={property.image} 
-            alt={property.title}
-            style={{
-              width: '100%',
-              height: '200px',
-              objectFit: 'cover',
-              borderRadius: '12px',
-              marginBottom: '16px'
-            }}
-          /&gt;
-          
-          &lt;div slot="content"&gt;
-            &lt;h3&gt;{property.title}&lt;/h3&gt;
-            &lt;p&gt;{property.location}&lt;/p&gt;
-            &lt;div className="price"&gt;€{property.price.toLocaleString()}&lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/lyd-card&gt;
-      ))}
+    &lt;div className="property-card"&gt;
+      &lt;div className="property-image"&gt;
+        &lt;img src={property.image} alt={property.title} /&gt;
+        &lt;button className="favorite-btn"&gt;
+          {property.isFavorite ? '♥' : '♡'}
+        &lt;/button&gt;
+      &lt;/div&gt;
+      
+      &lt;div className="property-content"&gt;
+        &lt;div className="property-details"&gt;
+          &lt;h3&gt;{property.title}&lt;/h3&gt;
+          &lt;span&gt;€{property.price.toLocaleString()}&lt;/span&gt;
+        &lt;/div&gt;
+        
+        &lt;div className="property-features"&gt;
+          &lt;span&gt;🛏️ {property.bedrooms} bed&lt;/span&gt;
+          &lt;span&gt;🚿 {property.bathrooms} bath&lt;/span&gt;
+          &lt;span&gt;📐 {property.area}m²&lt;/span&gt;
+        &lt;/div&gt;
+        
+        &lt;button className="cta-button"&gt;
+          Schedule Viewing
+        &lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }</code></pre>
-            </div>
         </section>
     </main>
 </body>

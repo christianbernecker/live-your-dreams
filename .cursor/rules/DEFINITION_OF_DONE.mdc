@@ -1,0 +1,33 @@
+---
+description: Verbindliche DoD & QA-Gates für Design System Vollautonomie
+alwaysApply: true
+---
+
+# Ziele
+- Fachliche Anforderung aus PR/Issue exakt umgesetzt
+- Konsistente Navigation und Logo auf allen Seiten
+- Alle Web Components funktional und sichtbar
+- Änderungen minimal-invasiv, Architektur eingehalten
+
+# QA-Gates (müssen ALLE grün sein)
+- **Design System Konsistenz**: Alle Seiten haben korrektes Logo und Navigation
+- **Web Components**: Alle lyd-* Komponenten laden und rendern korrekt
+- **Navigation**: Einheitliche Sidebar-Struktur auf allen Seiten
+- **Responsive**: Mobile-optimierte Darstellung funktioniert
+- **Links**: Alle Navigation-Links funktionieren (keine 404s)
+- **Performance**: Seiten laden < 3s, keine JavaScript-Fehler
+- **Accessibility**: Keyboard-Navigation funktioniert
+
+# Arbeitsweise der Agenten
+- Teste IMMER alle URLs nach Änderungen
+- Verwende das globale Template-System
+- Deploye Änderungen sofort auf AWS ECS
+- Schreibe konventionelle Commits (feat|fix|chore(scope): beschreibung)
+- Verifikiere Live-Deployment vor Abschluss
+
+# Design System Spezifika
+- Nutze korrektes LYD Logo (Swoosh-Design mit Gradient)
+- Verwende einheitliche Navigation (Designing/Developing/Components/Styles/Patterns)
+- Alle Web Components müssen sichtbar und interaktiv sein
+- CSS-Klassen einheitlich (sidebar, nav-item, component-card, etc.)
+- Absolute Pfade in Navigation (/components/, nicht ../components/)
