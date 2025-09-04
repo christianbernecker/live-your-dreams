@@ -426,29 +426,41 @@
             transform: scale(1.1);
         }
 
-        /* Button Group Styles */
+        /* Button Group Styles - Fixed */
         .luxury-btn-group {
-            display: flex;
-            gap: 2px;
+            display: inline-flex;
             border-radius: 12px;
             overflow: hidden;
             backdrop-filter: blur(20px);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .luxury-btn-group .group-btn {
-            border-radius: 0;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 !important;
+            border: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: none;
+            box-shadow: none !important;
+            margin: 0;
         }
 
         .luxury-btn-group .group-btn:first-child {
-            border-radius: 12px 0 0 12px;
+            border-radius: 12px 0 0 12px !important;
         }
 
         .luxury-btn-group .group-btn:last-child {
-            border-radius: 0 12px 12px 0;
+            border-radius: 0 12px 12px 0 !important;
             border-right: none;
+        }
+
+        .luxury-btn-group .group-btn:only-child {
+            border-radius: 12px !important;
+            border-right: none;
+        }
+
+        .luxury-btn-group:hover {
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
         }
 
         /* Pure Button Styles */
@@ -559,59 +571,162 @@
         }
 
         .luxury-btn.primary {
-            background: linear-gradient(135deg, #3366CC 0%, #0066ff 100%);
+            background: linear-gradient(135deg, #000066 0%, #1e3a8a 50%, #3366CC 100%);
             color: white;
-            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 102, 0.4),
+                0 2px 10px rgba(30, 58, 138, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luxury-btn.primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .luxury-btn.primary:hover::before {
+            left: 100%;
         }
 
         .luxury-btn.primary:hover {
-            background: linear-gradient(135deg, #2952A3 0%, #0052cc 100%);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(51, 102, 204, 0.4);
+            background: linear-gradient(135deg, #000052 0%, #1e40af 50%, #2952A3 100%);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 102, 0.6),
+                0 4px 16px rgba(30, 58, 138, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .luxury-btn.primary:active {
             transform: translateY(-1px) scale(1.01);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 102, 0.7),
+                inset 0 2px 4px rgba(0, 0, 0, 0.15);
         }
 
         .luxury-btn.secondary {
-            background: rgba(99, 102, 241, 0.1);
-            color: #3366CC;
-            border: 1px solid rgba(51, 102, 204, 0.2);
-            backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3366CC 25%, #0066ff 75%, #2563eb 100%);
+            color: white;
+            box-shadow: 
+                0 3px 12px rgba(51, 102, 204, 0.3),
+                0 1px 6px rgba(0, 102, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
 
         .luxury-btn.secondary:hover {
-            background: rgba(99, 102, 241, 0.15);
-            border-color: rgba(51, 102, 204, 0.3);
+            background: linear-gradient(135deg, #1e40af 0%, #2952A3 25%, #0052cc 75%, #1d4ed8 100%);
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+            box-shadow: 
+                0 6px 20px rgba(51, 102, 204, 0.4),
+                0 2px 10px rgba(0, 102, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .luxury-btn.outline {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             color: #3366CC;
-            border: 1.5px solid #3366CC;
-            backdrop-filter: blur(20px);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #3366CC, #0066ff, #6366f1) 1;
+            backdrop-filter: blur(30px);
+            box-shadow: 
+                0 2px 8px rgba(51, 102, 204, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        .luxury-btn.outline::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #3366CC, #0066ff, #6366f1);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .luxury-btn.outline:hover::after {
+            opacity: 1;
         }
 
         .luxury-btn.outline:hover {
-            background: rgba(51, 102, 204, 0.05);
-            border-color: #2952A3;
+            background: rgba(255, 255, 255, 0.98);
+            color: #2952A3;
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(51, 102, 204, 0.15);
+            box-shadow: 
+                0 6px 20px rgba(51, 102, 204, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
-        .demo-button.ghost {
-            background: transparent;
-            color: var(--lyd-gray-700);
-            border: none;
+        .luxury-btn.ghost {
+            background: rgba(255, 255, 255, 0.05);
+            color: #6b7280;
+            border: 1px solid rgba(107, 114, 128, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .demo-button.ghost:hover {
-            background: var(--lyd-gray-100);
-            color: var(--lyd-primary);
+        .luxury-btn.ghost:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #3366CC;
+            border-color: rgba(51, 102, 204, 0.2);
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 4px 12px rgba(51, 102, 204, 0.1);
+        }
+
+        /* Advanced Micro-Animations */
+        .luxury-btn {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .luxury-btn:hover .btn-icon {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 2px 4px rgba(51, 102, 204, 0.3));
+        }
+
+        .luxury-btn:active .btn-icon {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        /* Ripple Effect Enhancement */
+        .luxury-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .luxury-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Premium Focus States */
+        .luxury-btn:focus-visible {
+            outline: none;
+            box-shadow: 
+                0 0 0 3px rgba(51, 102, 204, 0.3),
+                0 0 0 6px rgba(51, 102, 204, 0.1);
         }
 
         .demo-button:disabled {
@@ -720,6 +835,8 @@
         import '../../src/components/lyd-button-pure.js';
         import '../../src/components/lyd-button-tile.js';
         import '../../src/icons/icon-library.js';
+        import '../../src/icons/porsche-inspired-icons.js';
+        import '../../src/components/lyd-luxury-button.js';
     </script>
     
     
@@ -984,16 +1101,56 @@
                             <lyd-button variant="secondary" size="small" icon="key">Small</lyd-button>
                             <lyd-button variant="secondary" size="medium" icon="key">Medium</lyd-button>
                             <lyd-button variant="secondary" size="large" icon="key">Large</lyd-button>
+                            
+                            <!-- Luxury Secondary Buttons -->
+                            <button class="luxury-btn secondary" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                </svg>
+                                Small
+                            </button>
+                            <button class="luxury-btn secondary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                </svg>
+                                Medium
+                            </button>
+                            <button class="luxury-btn secondary" style="padding: 16px 32px; font-size: 16px; min-height: 52px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z"/>
+                                </svg>
+                                Large
+                            </button>
                         </div>
                     </div>
                     
                     <div class="component-card">
                         <h3>Outline</h3>
                         <p>Subtle actions</p>
-                    <div class="component-showcase">
+                                            <div class="component-showcase">
                             <lyd-button variant="outline" size="small" icon="edit">Small</lyd-button>
                             <lyd-button variant="outline" size="medium" icon="edit">Medium</lyd-button>
                             <lyd-button variant="outline" size="large" icon="edit">Large</lyd-button>
+                            
+                            <!-- Luxury Outline Buttons -->
+                            <button class="luxury-btn outline" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-6.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 8.5-8.5z"/>
+                                </svg>
+                                Small
+                            </button>
+                            <button class="luxury-btn outline">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-6.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 8.5-8.5z"/>
+                                </svg>
+                                Medium
+                            </button>
+                            <button class="luxury-btn outline" style="padding: 16px 32px; font-size: 16px; min-height: 52px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-6.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 8.5-8.5z"/>
+                                </svg>
+                                Large
+                            </button>
                         </div>
                     </div>
                     
@@ -1004,7 +1161,33 @@
                             <lyd-button variant="ghost" size="small" icon="more-horizontal">Small</lyd-button>
                             <lyd-button variant="ghost" size="medium" icon="more-horizontal">Medium</lyd-button>
                             <lyd-button variant="ghost" size="large" icon="more-horizontal">Large</lyd-button>
-                    </div>
+                            
+                            <!-- Luxury Ghost Buttons -->
+                            <button class="luxury-btn ghost" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="1"/>
+                                    <circle cx="19" cy="12" r="1"/>
+                                    <circle cx="5" cy="12" r="1"/>
+                                </svg>
+                                Small
+                            </button>
+                            <button class="luxury-btn ghost">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="1"/>
+                                    <circle cx="19" cy="12" r="1"/>
+                                    <circle cx="5" cy="12" r="1"/>
+                                </svg>
+                                Medium
+                            </button>
+                            <button class="luxury-btn ghost" style="padding: 16px 32px; font-size: 16px; min-height: 52px;">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="1"/>
+                                    <circle cx="19" cy="12" r="1"/>
+                                    <circle cx="5" cy="12" r="1"/>
+                                </svg>
+                                Large
+                            </button>
+                        </div>
                 </div>
                 
                     <div class="component-card">
@@ -1033,6 +1216,26 @@
                                     <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                 </svg>
                                 Unavailable
+                            </button>
+                            
+                            <!-- Premium Download Button -->
+                            <lyd-download-button 
+                                variant="primary" 
+                                file-name="Property Exposé" 
+                                file-size="2.5 MB">
+                            </lyd-download-button>
+                            
+                            <!-- Fallback Download Button -->
+                            <button class="luxury-btn primary download-demo" onclick="simulateDownload(this)">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                    <polyline points="7,10 12,15 17,10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                <div>
+                                    <div>Download Exposé</div>
+                                    <div style="font-size: 11px; opacity: 0.8;">2.5 MB PDF</div>
+                                </div>
                             </button>
                         </div>
                     </div>
@@ -1275,31 +1478,236 @@
                 </tbody>
             </table>
                 
-                <h3>Next.js Integration</h3>
-                <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto;"><code>
-// app/properties/page.tsx
+                <h3>Next.js Backoffice Integration</h3>
+                <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px;"><code>// app/properties/page.tsx
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function PropertiesPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [properties, setProperties] = useState([]);
+
   useEffect(() => {
+    // Load LYD Design System
     import('@/lib/lyd-design-system');
   }, []);
 
+  const handleCreateProperty = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/properties', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'New Property' })
+      });
+      const newProperty = await response.json();
+      setProperties([...properties, newProperty]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDownloadExpose = async (propertyId: string) => {
+    const response = await fetch(`/api/properties/${propertyId}/expose`);
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `property-${propertyId}-expose.pdf`;
+    a.click();
+  };
+
   return (
-    &lt;div className="p-8"&gt;
-      &lt;lyd-button 
-        variant="primary" 
-        size="large"
-        onClick={() => createProperty()}
-      &gt;
-        Add New Property
-      &lt;/lyd-button&gt;
+    &lt;div className="min-h-screen bg-gray-50 py-8"&gt;
+      &lt;div className="max-w-7xl mx-auto px-4"&gt;
+        
+        {/* Header Actions */}
+        &lt;div className="flex justify-between items-center mb-8"&gt;
+          &lt;h1 className="text-3xl font-bold"&gt;Properties&lt;/h1&gt;
+          
+          &lt;div className="flex gap-4"&gt;
+            &lt;lyd-button 
+              variant="outline" 
+              icon="upload"
+              onClick={() => importProperties()}
+            &gt;
+              Import Properties
+            &lt;/lyd-button&gt;
+            
+            &lt;lyd-button 
+              variant="primary" 
+              size="large"
+              icon="plus"
+              loading={isLoading}
+              onClick={handleCreateProperty}
+            &gt;
+              Add New Property
+            &lt;/lyd-button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        {/* Property Cards */}
+        &lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
+          {properties.map((property) => (
+            &lt;div key={property.id} className="bg-white rounded-xl shadow-sm border"&gt;
+              &lt;div className="p-6"&gt;
+                &lt;h3 className="font-semibold mb-2"&gt;{property.title}&lt;/h3&gt;
+                &lt;p className="text-gray-600 mb-4"&gt;{property.description}&lt;/p&gt;
+                
+                {/* Property Actions */}
+                &lt;div className="flex gap-2"&gt;
+                  &lt;lyd-button 
+                    variant="primary" 
+                    icon="eye" 
+                    size="small"
+                    onClick={() => viewProperty(property.id)}
+                  &gt;
+                    View
+                  &lt;/lyd-button&gt;
+                  
+                  &lt;lyd-button 
+                    variant="secondary" 
+                    icon="edit" 
+                    size="small"
+                    onClick={() => editProperty(property.id)}
+                  &gt;
+                    Edit
+                  &lt;/lyd-button&gt;
+                  
+                  &lt;lyd-download-button
+                    variant="outline"
+                    size="small"
+                    file-name="Property Exposé"
+                    file-size="2.5 MB"
+                    onClick={() => handleDownloadExpose(property.id)}
+                  /&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          ))}
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }
-                </code></pre>
+
+// API Route Example: app/api/properties/route.ts
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const property = await prisma.property.create({
+      data: {
+        title: body.title,
+        description: body.description,
+        price: body.price,
+        area: body.area,
+        rooms: body.rooms
+      }
+    });
+    
+    return NextResponse.json(property);
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to create property' }, 
+      { status: 500 }
+    );
+  }
+}
+
+// Utility: lib/lyd-design-system.ts
+export const loadLydDesignSystem = () => {
+  if (typeof window !== 'undefined') {
+    import('@/public/lyd-design-system.js');
+  }
+};
+
+// Usage in _app.tsx or layout.tsx
+useEffect(() => {
+  loadLydDesignSystem();
+}, []);</code></pre>
+                
+                <h3>Button Component Props</h3>
+                <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin: 16px 0;">
+                    <h4>Alle verfügbaren Button-Varianten:</h4>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        <li><strong>primary</strong> - Hauptaktionen (dunkler Gradient)</li>
+                        <li><strong>secondary</strong> - Sekundäre Aktionen (heller Gradient)</li>
+                        <li><strong>outline</strong> - Subtile Aktionen (Glassmorphism)</li>
+                        <li><strong>ghost</strong> - Minimale Aktionen (Transparent)</li>
+                    </ul>
+                </div>
+
+                <h3>TypeScript Integration</h3>
+                <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px;"><code>// types/lyd-design-system.d.ts
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'lyd-button': {
+        variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+        size?: 'small' | 'medium' | 'large';
+        icon?: string;
+        loading?: boolean;
+        disabled?: boolean;
+        'full-width'?: boolean;
+        onClick?: (event: CustomEvent) => void;
+        children?: React.ReactNode;
+      };
+      
+      'lyd-download-button': {
+        variant?: 'primary' | 'secondary' | 'outline';
+        size?: 'small' | 'medium' | 'large';
+        'file-name'?: string;
+        'file-size'?: string;
+        disabled?: boolean;
+        onClick?: (event: CustomEvent) => void;
+      };
+      
+      'lyd-button-group': {
+        connected?: boolean;
+        children?: React.ReactNode;
+      };
+    }
+  }
+}
+
+export {};
+
+// Hook für Button Events
+import { useEffect, useRef } from 'react';
+
+export const useLydButton = (
+  onButtonClick?: (detail: any) => void,
+  onDownloadComplete?: (detail: any) => void
+) => {
+  const ref = useRef&lt;HTMLDivElement&gt;(null);
+  
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    
+    const handleButtonClick = (e: CustomEvent) => {
+      onButtonClick?.(e.detail);
+    };
+    
+    const handleDownloadComplete = (e: CustomEvent) => {
+      onDownloadComplete?.(e.detail);
+    };
+    
+    element.addEventListener('lyd-click', handleButtonClick as EventListener);
+    element.addEventListener('download-complete', handleDownloadComplete as EventListener);
+    
+    return () => {
+      element.removeEventListener('lyd-click', handleButtonClick as EventListener);
+      element.removeEventListener('download-complete', handleDownloadComplete as EventListener);
+    };
+  }, [onButtonClick, onDownloadComplete]);
+  
+  return ref;
+};</code></pre>
             </section>
             </div>
         
@@ -1414,29 +1822,100 @@ export default function PropertiesPage() {
         function copyToClipboard(iconName) {
             const text = `<lyd-button icon="${iconName}">Button Text</lyd-button>`;
             navigator.clipboard.writeText(text).then(() => {
-                // Show success message
-                const notification = document.createElement('div');
-                notification.textContent = 'Copied to clipboard!';
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: var(--lyd-success);
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 8px;
-                    z-index: 10000;
-                    font-weight: 500;
-                    box-shadow: var(--shadow-lg);
-                `;
-                document.body.appendChild(notification);
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 2000);
+                showToast('Copied to clipboard!', 'success');
             }).catch(err => {
                 console.error('Failed to copy: ', err);
+                showToast('Failed to copy', 'error');
             });
         }
+        
+        // Download simulation function
+        async function simulateDownload(button) {
+            if (button.disabled) return;
+            
+            button.disabled = true;
+            const originalContent = button.innerHTML;
+            let progress = 0;
+            
+            // Show loading state
+            button.innerHTML = `
+                <div class="spinner"></div>
+                <div>
+                    <div>Generating...</div>
+                    <div style="font-size: 11px; opacity: 0.8;">${progress}% complete</div>
+                </div>
+            `;
+            
+            // Simulate progress
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                button.querySelector('div:last-child div:last-child').textContent = `${progress}% complete`;
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // Show completion
+                    button.innerHTML = `
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20,6 9,17 4,12"/>
+                        </svg>
+                        <div>
+                            <div>Download Complete</div>
+                            <div style="font-size: 11px; opacity: 0.8;">2.5 MB PDF</div>
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalContent;
+                        button.disabled = false;
+                        showToast('Property Exposé downloaded successfully!', 'success');
+                    }, 2000);
+                }
+            }, 200);
+        }
+        
+        // Toast notification system
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--lyd-success)' : type === 'error' ? 'var(--lyd-error)' : 'var(--lyd-primary)'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 12px;
+                z-index: 10000;
+                font-weight: 500;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(20px);
+                animation: toastSlideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'toastSlideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Add toast animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes toastSlideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes toastSlideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     
     </script>
 </body>
