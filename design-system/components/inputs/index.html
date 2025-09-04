@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Components - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -236,12 +237,433 @@
             }
         }
 
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 32px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .tab:hover {
+            color: #374151;
+            background: #f9fafb;
+        }
+
+        .tab.active {
+            color: #0066ff;
+            border-bottom-color: #0066ff;
+            background: #f8fafc;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Luxury Input Styles */
+        .luxury-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .luxury-input:focus {
+            outline: none;
+            border-color: #0066ff;
+            box-shadow: 
+                0 0 0 4px rgba(0, 102, 255, 0.1),
+                0 4px 16px rgba(0, 102, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .luxury-input.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .luxury-input.success {
+            border-color: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .luxury-input:disabled {
+            background: #f9fafb;
+            color: #9ca3af;
+            cursor: not-allowed;
+            border-color: #e5e7eb;
+        }
+
+        .luxury-input::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        /* Input Label */
+        .luxury-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+            letter-spacing: 0.025em;
+        }
+
+        .luxury-label.required::after {
+            content: ' *';
+            color: #ef4444;
+        }
+
+        /* Input Error */
+        .luxury-error {
+            color: #ef4444;
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .luxury-error::before {
+            content: '⚠';
+            font-size: 12px;
+        }
+
+        /* Input Success */
+        .luxury-success {
+            color: #10b981;
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .luxury-success::before {
+            content: '✓';
+            font-size: 12px;
+        }
+
+        /* Input Help Text */
+        .luxury-help {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        /* Input Group */
+        .luxury-input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .luxury-input-group .luxury-input {
+            padding-right: 48px;
+        }
+
+        .luxury-input-icon {
+            position: absolute;
+            right: 16px;
+            color: #9ca3af;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .luxury-input-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Input Sizes */
+        .luxury-input.small {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        .luxury-input.large {
+            padding: 20px 24px;
+            font-size: 18px;
+        }
+
+        /* Input Variants */
+        .luxury-input.outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+        }
+
+        .luxury-input.filled {
+            background: #f8fafc;
+            border: 2px solid transparent;
+        }
+
+        .luxury-input.filled:focus {
+            background: #ffffff;
+            border-color: #0066ff;
+        }
+
+        /* Form Examples */
+        .form-demo {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row.three {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .form-row.three {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* API Section */
+        .api-section {
+            background: #f8fafc;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .api-section h2 {
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .api-section h3 {
+            color: #374151;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 32px 0 16px 0;
+        }
+
+        .api-section h4 {
+            color: #4b5563;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 24px 0 12px 0;
+        }
+
+        .api-section p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .api-section ul {
+            color: #6b7280;
+            margin-bottom: 16px;
+            padding-left: 20px;
+        }
+
+        .api-section li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .api-section strong {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .api-section code {
+            background: #374151;
+            color: #f9fafb;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 13px;
+        }
+
+        /* Accessibility Section */
+        .accessibility-compliance {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .accessibility-compliance svg {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+        .accessibility-compliance h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .accessibility-compliance p {
+            margin: 4px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .keyboard-shortcuts {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+
+        .keyboard-shortcuts h4 {
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .shortcut-key {
+            background: #374151;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .shortcut-description {
+            color: #6b7280;
+            font-size: 14px;
+            margin-left: 12px;
+        }
+
+        .screen-reader-features {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .screen-reader-features h4 {
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            color: #10b981;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-content h5 {
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 4px 0;
+        }
+
+        .feature-content p {
+            color: #6b7280;
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Demo Grid */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .example-card {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+        }
+
+        .example-card h3 {
+            color: #1f2937;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
         /* Input specific styles */
         .input-showcase {
             display: flex;
             flex-direction: column;
             gap: 16px;
             margin-top: 16px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .form-example {
@@ -396,203 +818,337 @@
         <div class="page-header">
             <h1 class="page-title">Input Components</h1>
             <p class="page-subtitle">Complete input system with standard HTML5 inputs and specialized real estate components for property data.</p>
+            
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab active" data-tab="overview">Overview</button>
+                <button class="tab" data-tab="variants">Variants</button>
+                <button class="tab" data-tab="icons">Icon Library</button>
+                <button class="tab" data-tab="examples">Examples</button>
+                <button class="tab" data-tab="api">API</button>
+                <button class="tab" data-tab="accessibility">Accessibility</button>
+            </div>
         </div>
         
-        <section class="section">
-            <h2 class="section-title">Standard Input Components</h2>
-            
-            <div class="component-grid">
+        <!-- Tab Content: Overview -->
+        <div id="overview" class="tab-content active">
+            <div class="demo-grid">
                 <div class="component-card">
-                    <h3>Text Input</h3>
+                    <h3>lyd-input-text</h3>
                     <p>Standard text input with validation and error states</p>
-                    <div class="input-showcase">
+                    <div class="component-showcase">
                         <div>
-                            <label class="input-label">Property Title</label>
-                            <input type="text" class="demo-input" placeholder="Enter property title">
-                        </div>
-                        <div>
-                            <label class="input-label">Description</label>
-                            <input type="text" class="demo-input error" placeholder="Enter description">
-                            <div class="input-error">This field is required</div>
+                            <label class="luxury-label">Property Title</label>
+                            <input type="text" class="luxury-input" placeholder="Enter property title">
                         </div>
                     </div>
                 </div>
                 
                 <div class="component-card">
-                    <h3>Email Input</h3>
+                    <h3>lyd-input-email</h3>
                     <p>Email input with built-in validation</p>
-                    <div class="input-showcase">
+                    <div class="component-showcase">
                         <div>
-                            <label class="input-label">Contact Email</label>
-                            <input type="email" class="demo-input" placeholder="agent@liveyourdreams.de">
+                            <label class="luxury-label">Contact Email</label>
+                            <input type="email" class="luxury-input" placeholder="agent@liveyourdreams.de">
                         </div>
                     </div>
                 </div>
                 
                 <div class="component-card">
-                    <h3>Number Input</h3>
-                    <p>Numeric input with increment/decrement controls</p>
-                    <div class="input-showcase">
-                        <div>
-                            <label class="input-label">Floor Number</label>
-                            <input type="number" class="demo-input" placeholder="0" min="0" max="50">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <h3>Search Input</h3>
-                    <p>Search input with search icon and clear functionality</p>
-                    <div class="input-showcase">
-                        <div>
-                            <label class="input-label">Property Search</label>
-                            <input type="search" class="demo-input" placeholder="Search properties...">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="section">
-            <h2 class="section-title">Real Estate Specialized Inputs</h2>
-            
-            <div class="component-grid">
-                <div class="component-card">
-                    <h3>Price Input</h3>
+                    <h3>lyd-input-price</h3>
                     <p>Currency input with automatic formatting</p>
-                    <div class="input-showcase">
+                    <div class="component-showcase">
                         <div>
-                            <label class="input-label">Purchase Price (EUR)</label>
-                            <input type="text" class="demo-input" placeholder="450,000" value="450,000">
-                        </div>
-                        <div>
-                            <label class="input-label">Monthly Rent (EUR)</label>
-                            <input type="text" class="demo-input" placeholder="2,500" value="2,500">
+                            <label class="luxury-label">Purchase Price (EUR)</label>
+                            <input type="text" class="luxury-input" placeholder="450,000" value="450,000">
                         </div>
                     </div>
                 </div>
                 
                 <div class="component-card">
-                    <h3>Area Input</h3>
-                    <p>Area input with unit selection (m², sqft)</p>
-                    <div class="input-showcase">
+                    <h3>lyd-input-area</h3>
+                    <p>Area input with unit selection</p>
+                    <div class="component-showcase">
                         <div>
-                            <label class="input-label">Living Area (m²)</label>
-                            <input type="text" class="demo-input" placeholder="120" value="120">
-                        </div>
-                        <div>
-                            <label class="input-label">Garden Area (m²)</label>
-                            <input type="text" class="demo-input" placeholder="450" value="450">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <h3>Address Input</h3>
-                    <p>Composite address input with autocomplete</p>
-                    <div class="input-showcase">
-                        <div>
-                            <label class="input-label">Street Address</label>
-                            <input type="text" class="demo-input" placeholder="Maximilianstraße 1">
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px;">
-                            <div>
-                                <label class="input-label">ZIP</label>
-                                <input type="text" class="demo-input" placeholder="80539">
-                            </div>
-                            <div>
-                                <label class="input-label">City</label>
-                                <input type="text" class="demo-input" placeholder="Munich">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <h3>Room Count</h3>
-                    <p>Specialized room count selector</p>
-                    <div class="input-showcase">
-                        <div>
-                            <label class="input-label">Bedrooms</label>
-                            <input type="number" class="demo-input" min="1" max="10" value="3">
-                        </div>
-                        <div>
-                            <label class="input-label">Bathrooms</label>
-                            <input type="number" class="demo-input" min="1" max="5" value="2">
+                            <label class="luxury-label">Living Area (m²)</label>
+                            <input type="text" class="luxury-input" placeholder="120" value="120">
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <section class="section">
-            <h2 class="section-title">Real Estate Form Example</h2>
+        </div>
+
+        <!-- Tab Content: Variants -->
+        <div id="variants" class="tab-content">
+            <h2 class="section-title">Input Variants & States</h2>
             
-            <div class="form-example">
-                <h3 style="margin-bottom: 24px;">Add New Property</h3>
+            <div class="form-demo">
+                <h3 style="margin-bottom: 24px;">All Input Variants</h3>
                 
                 <div class="form-row">
                     <div>
-                        <label class="input-label">Property Title *</label>
-                        <input type="text" class="demo-input" placeholder="Modern apartment in Munich" required>
+                        <label class="luxury-label">Default Input</label>
+                        <input type="text" class="luxury-input" placeholder="Default input">
                     </div>
                     <div>
-                        <label class="input-label">Property Type</label>
-                        <select class="demo-input">
-                            <option value="apartment">Apartment</option>
-                            <option value="house">House</option>
-                            <option value="villa">Villa</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-row full">
-                    <div>
-                        <label class="input-label">Property Address</label>
-                        <input type="text" class="demo-input" placeholder="Street address">
+                        <label class="luxury-label">Error State</label>
+                        <input type="text" class="luxury-input error" placeholder="Error input" value="Invalid data">
+                        <div class="luxury-error">This field is required</div>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div>
-                        <label class="input-label">Purchase Price (EUR)</label>
-                        <input type="text" class="demo-input" placeholder="750,000">
+                        <label class="luxury-label">Success State</label>
+                        <input type="text" class="luxury-input success" placeholder="Success input" value="Valid data">
+                        <div class="luxury-success">Input is valid</div>
                     </div>
                     <div>
-                        <label class="input-label">Living Area (m²)</label>
-                        <input type="text" class="demo-input" placeholder="120">
+                        <label class="luxury-label">Disabled State</label>
+                        <input type="text" class="luxury-input" placeholder="Disabled input" disabled value="Disabled">
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div>
-                        <label class="input-label">Bedrooms</label>
-                        <input type="number" class="demo-input" min="1" max="10" value="3">
+                        <label class="luxury-label">Small Size</label>
+                        <input type="text" class="luxury-input small" placeholder="Small input">
                     </div>
                     <div>
-                        <label class="input-label">Bathrooms</label>
-                        <input type="number" class="demo-input" min="1" max="5" value="2">
+                        <label class="luxury-label">Large Size</label>
+                        <input type="text" class="luxury-input large" placeholder="Large input">
                     </div>
                 </div>
                 
-                <div class="form-row full">
+                <div class="form-row">
                     <div>
-                        <label class="input-label">Description</label>
-                        <textarea class="demo-input" rows="4" placeholder="Describe the property..."></textarea>
+                        <label class="luxury-label">Outline Variant</label>
+                        <input type="text" class="luxury-input outline" placeholder="Outline input">
                     </div>
-                </div>
-                
-                <div style="display: flex; gap: 16px; margin-top: 24px;">
-                    <button class="demo-input" style="background: var(--lyd-primary); color: white; border: none; padding: 12px 24px; border-radius: var(--radius-md); cursor: pointer;">Save Property</button>
-                    <button class="demo-input" style="background: transparent; color: var(--lyd-primary); border: 2px solid var(--lyd-primary); padding: 12px 24px; border-radius: var(--radius-md); cursor: pointer;">Preview</button>
+                    <div>
+                        <label class="luxury-label">Filled Variant</label>
+                        <input type="text" class="luxury-input filled" placeholder="Filled input">
+                    </div>
                 </div>
             </div>
-        </section>
-        
-        <section class="section">
-            <h2 class="section-title">Next.js Integration</h2>
+        </div>
+
+        <!-- Tab Content: Icon Library -->
+        <div id="icons" class="tab-content">
+            <h2 class="section-title">Input Icons</h2>
             
-            <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px;"><code>// app/properties/create/page.tsx
+            <div class="form-demo">
+                <h3 style="margin-bottom: 24px;">Input with Icons</h3>
+                
+                <div class="form-row">
+                    <div>
+                        <label class="luxury-label">Search Input</label>
+                        <div class="luxury-input-group">
+                            <input type="text" class="luxury-input" placeholder="Search properties...">
+                            <div class="luxury-input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="luxury-label">Email Input</label>
+                        <div class="luxury-input-group">
+                            <input type="email" class="luxury-input" placeholder="Enter email">
+                            <div class="luxury-input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div>
+                        <label class="luxury-label">Phone Input</label>
+                        <div class="luxury-input-group">
+                            <input type="tel" class="luxury-input" placeholder="Enter phone number">
+                            <div class="luxury-input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="luxury-label">Location Input</label>
+                        <div class="luxury-input-group">
+                            <input type="text" class="luxury-input" placeholder="Enter address">
+                            <div class="luxury-input-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Examples -->
+        <div id="examples" class="tab-content">
+            <h2 class="section-title">Real Estate Examples</h2>
+            
+            <!-- Property Search Example -->
+            <div class="example-card">
+                <h3>Property Search</h3>
+                <div class="form-demo">
+                    <div class="form-row">
+                        <div>
+                            <label class="luxury-label">Search Properties</label>
+                            <div class="luxury-input-group">
+                                <input type="text" class="luxury-input" placeholder="Enter location, price range, or property type...">
+                                <div class="luxury-input-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="luxury-label">Price Range</label>
+                            <select class="luxury-input">
+                                <option value="">Select price range</option>
+                                <option value="0-500000">€0 - €500,000</option>
+                                <option value="500000-1000000">€500,000 - €1,000,000</option>
+                                <option value="1000000+">€1,000,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Property Form Example -->
+            <div class="example-card">
+                <h3>Add New Property</h3>
+                <div class="form-demo">
+                    <div class="form-row">
+                        <div>
+                            <label class="luxury-label required">Property Title</label>
+                            <input type="text" class="luxury-input" placeholder="Modern apartment in Munich">
+                        </div>
+                        <div>
+                            <label class="luxury-label">Property Type</label>
+                            <select class="luxury-input">
+                                <option value="">Select type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="house">House</option>
+                                <option value="villa">Villa</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row full">
+                        <div>
+                            <label class="luxury-label">Property Address</label>
+                            <input type="text" class="luxury-input" placeholder="Maximilianstraße 1, 80539 Munich">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row three">
+                        <div>
+                            <label class="luxury-label">Purchase Price (EUR)</label>
+                            <input type="text" class="luxury-input" placeholder="750,000">
+                        </div>
+                        <div>
+                            <label class="luxury-label">Living Area (m²)</label>
+                            <input type="text" class="luxury-input" placeholder="120">
+                        </div>
+                        <div>
+                            <label class="luxury-label">Rooms</label>
+                            <input type="number" class="luxury-input" placeholder="3" min="1" max="10">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row full">
+                        <div>
+                            <label class="luxury-label">Description</label>
+                            <textarea class="luxury-input" rows="4" placeholder="Describe the property features, location, and unique selling points..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: API -->
+        <div id="api" class="tab-content">
+            <div class="api-section">
+                <h2>API Reference</h2>
+                
+                <h3>lyd-input-text</h3>
+                <p>Standard text input component with validation and error states.</p>
+                
+                <h4>Properties</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Property</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Type</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Default</th>
+                            <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;"><code>label</code></td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">string</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">-</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">Input label text</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;"><code>placeholder</code></td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">string</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">-</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">Placeholder text</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;"><code>required</code></td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">boolean</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">false</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">Mark field as required</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;"><code>disabled</code></td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">boolean</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">false</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">Disable input</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;"><code>size</code></td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">'small' | 'medium' | 'large'</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">'medium'</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">Input size variant</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;"><code>variant</code></td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">'default' | 'outline' | 'filled'</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">'default'</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb;">Input visual variant</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>Events</h4>
+                <ul>
+                    <li><code>lyd-change</code> - Fired when input value changes</li>
+                    <li><code>lyd-focus</code> - Fired when input receives focus</li>
+                    <li><code>lyd-blur</code> - Fired when input loses focus</li>
+                </ul>
+                
+                <h3>Next.js Integration</h3>
+                <pre style="background: #1e1e2e; color: #cdd6f4; padding: 24px; border-radius: 12px; overflow-x: auto; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 14px; line-height: 1.6;"><code>// app/properties/create/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -635,7 +1191,85 @@ export default function CreatePropertyPage() {
     &lt;/form&gt;
   );
 }</code></pre>
-        </section>
+            </div>
+        </div>
+
+        <!-- Tab Content: Accessibility -->
+        <div id="accessibility" class="tab-content">
+            <div class="accessibility-compliance">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4"/>
+                    <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                    <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                    <path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3"/>
+                    <path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"/>
+                </svg>
+                <div>
+                    <h3>WCAG 2.1 AA Compliant</h3>
+                    <p>All input components meet accessibility standards for keyboard navigation, screen readers, and color contrast.</p>
+                </div>
+            </div>
+            
+            <div class="keyboard-shortcuts">
+                <h4>Keyboard Navigation</h4>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <span class="shortcut-key">Tab</span>
+                    <span class="shortcut-description">Move to next input field</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <span class="shortcut-key">Shift + Tab</span>
+                    <span class="shortcut-description">Move to previous input field</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <span class="shortcut-key">Enter</span>
+                    <span class="shortcut-description">Submit form or activate button</span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span class="shortcut-key">Escape</span>
+                    <span class="shortcut-description">Clear input or cancel action</span>
+                </div>
+            </div>
+            
+            <div class="screen-reader-features">
+                <h4>Screen Reader Support</h4>
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <div class="feature-content">
+                        <h5>Semantic Labels</h5>
+                        <p>All inputs have proper labels that are announced by screen readers</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <div class="feature-content">
+                        <h5>Error Announcements</h5>
+                        <p>Validation errors are announced immediately when they occur</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <div class="feature-content">
+                        <h5>Required Field Indicators</h5>
+                        <p>Required fields are clearly marked and announced</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <div class="feature-content">
+                        <h5>Focus Management</h5>
+                        <p>Focus is clearly visible and properly managed throughout the form</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     
     <!-- Global JavaScript -->
@@ -649,6 +1283,47 @@ export default function CreatePropertyPage() {
                 const href = item.getAttribute('href');
                 if (href && currentPath.includes(href.replace('../', '').replace('../../', ''))) {
                     item.classList.add('active');
+                }
+            });
+
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // Handle hash-based navigation
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showTab(hash);
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.tab;
+                    showTab(targetId);
+                    window.location.hash = targetId;
+                });
+            });
+
+            function showTab(targetId) {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                const activeTab = document.querySelector(`[data-tab="${targetId}"]`);
+                const activeContent = document.getElementById(targetId);
+
+                if (activeTab && activeContent) {
+                    activeTab.classList.add('active');
+                    activeContent.classList.add('active');
+                }
+            }
+
+            // Handle browser back/forward
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash.substring(1);
+                if (hash && document.getElementById(hash)) {
+                    showTab(hash);
                 }
             });
         });
