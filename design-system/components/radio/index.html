@@ -3,143 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio - LYD Design System</title>
+    <title>Radio Components - DESIGNSYSTEM</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        /* Radio Styles */
+        .luxury-radio {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        .luxury-radio input[type="radio"] {
+            display: none;
+        }
+
+        .radio-mark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .luxury-radio:hover .radio-mark {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .luxury-radio input:checked + .radio-mark {
+            border-color: #3b82f6;
+        }
+
+        .luxury-radio input:checked + .radio-mark::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            color: #6b7280;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            color: #374151;
+            background: #f9fafb;
+        }
+
+        .tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            background: none;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 32px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .component-card h3 {
+            margin: 0 0 8px 0;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .component-card p {
+            margin: 0 0 16px 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .component-showcase {
+            margin-top: 16px;
+        }
+
+        .accessibility-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            color: #166534;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .accessibility-badge svg {
+            width: 20px;
+            height: 20px;
+            color: #059669;
+        }
+
+        /* Luxury Button Styles */
+        .luxury-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luxury-btn.primary {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            box-shadow: 0 8px 32px rgba(26, 26, 46, 0.3);
+        }
+
+        .luxury-btn.outline {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #374151;
+        }
+        
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: "Inter", system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1f2937;
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
             display: flex;
             min-height: 100vh;
         }
-        
+
+        /* Global Sidebar - KORREKTE STRUKTUR */
         .sidebar {
             width: 280px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
             z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .sidebar-header {
-            padding: 32px 24px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
         }
-        
+
         .sidebar-logo {
             width: 100%;
             height: auto;
             max-height: 180px;
         }
-        
+
+        .sidebar-nav {
+            padding: var(--spacing-lg) 0;
+        }
+
+        .nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
         .nav-section-title {
-            padding: 16px 24px 8px;
-            font-size: 14px;
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: 12px;
             font-weight: 600;
-            color: #6b7280;
+            color: var(--lyd-gray-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .nav-item {
             display: block;
-            padding: 12px 24px;
-            color: #374151;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
             transition: all 0.2s ease;
             border-left: 3px solid transparent;
         }
-        
+
         .nav-item:hover {
-            background: #f9fafb;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
         .nav-item.active {
-            background: #eff6ff;
-            color: #0066ff;
-            border-left-color: #0066ff;
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
         }
-        
+
+        /* Main Content */
         .main-content {
             margin-left: 280px;
             flex: 1;
             min-height: 100vh;
-            padding: 48px;
+            padding: var(--spacing-2xl);
         }
-        
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
         .page-title {
             font-size: 48px;
             font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 16px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
         }
-        
+
         .page-subtitle {
             font-size: 20px;
-            color: #6b7280;
+            color: var(--lyd-gray-600);
             line-height: 1.6;
-            margin-bottom: 48px;
+            max-width: 600px;
         }
-        
+
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: var(--spacing-2xl);
         }
-        
+
         .section-title {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
-            color: #0066ff;
-            margin-bottom: 24px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
         }
-        
-        .placeholder-content {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6b7280;
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
         }
-        
-        .placeholder-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
+
+        .component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
         }
-        
-        .placeholder-title {
-            font-size: 24px;
+
+        .component-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .component-card h3 {
+            font-size: 20px;
             font-weight: 600;
-            color: #374151;
-            margin-bottom: 16px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
         }
-        
-        .placeholder-description {
-            font-size: 16px;
-            line-height: 1.6;
-            max-width: 500px;
-            margin: 0 auto;
+
+        .component-card p {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
         }
+
+        .component-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            align-items: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+
+        {{ADDITIONAL_STYLES}}
     </style>
+    
+    {{ADDITIONAL_HEAD}}
 </head>
 <body>
+    <!-- GLOBALE SIDEBAR - KORREKTE STRUKTUR -->
     <nav class="sidebar">
         <div class="sidebar-header">
+            <!-- KORREKTES LYD LOGO -->
             <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -186,7 +440,7 @@
                 <a href="/components/modal/" class="nav-item">Modal</a>
                 <a href="/components/dropdown/" class="nav-item">Dropdown</a>
                 <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/radio/" class="nav-item active">Radio</a>
                 <a href="/components/toast/" class="nav-item">Toast</a>
                 <a href="/components/table/" class="nav-item">Table</a>
             </div>
@@ -212,22 +466,70 @@
         </div>
     </nav>
     
+    <!-- Main Content Area -->
     <main class="main-content">
-        <h1 class="page-title">Radio</h1>
-        <p class="page-subtitle">
-            Radio button component for single-choice selections in property forms.
-        </p>
+        <div class="page-header">
+            <h1 class="page-title">Radio Components</h1>
+            <p class="page-subtitle">Custom radio buttons with luxury styling for single-choice selections.</p>
+        </div>
         
-        <section class="section">
-            <h2 class="section-title">Component In Development</h2>
-            <div class="placeholder-content">
-                <div class="placeholder-icon">🔘</div>
-                <h3 class="placeholder-title">Radio</h3>
-                <p class="placeholder-description">
-                    This component is currently in development. It will be implemented with professional design standards, accessibility features, and real estate specific optimizations.
-                </p>
-            </div>
-        </section>
+        {{PAGE_CONTENT}}
     </main>
+    
+    <!-- Global JavaScript -->
+    <script>
+        // Set active navigation item based on current path
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && currentPath.includes(href)) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+                
+                window.location.hash = targetId;
+            });
+        });
+
+        // Handle hash-based navigation
+        const hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) {
+            document.querySelector(`[data-tab="${hash}"]`).click();
+        }
+
+
+        // Radio functionality
+        document.querySelectorAll('.luxury-radio input').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const event = new CustomEvent('lyd-radio-change', {
+                    detail: { 
+                        value: e.target.value,
+                        name: e.target.name 
+                    }
+                });
+                e.target.closest('.luxury-radio').dispatchEvent(event);
+            });
+        });
+        
+    </script>
 </body>
 </html>

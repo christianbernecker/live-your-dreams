@@ -3,33 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dropdown - LYD Design System</title>
+    <title>{{PAGE_TITLE}} - LYD Design System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Standard LYD Design System Styles */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: "Inter", system-ui, sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); color: #1f2937; display: flex; min-height: 100vh; }
-        .sidebar { width: 280px; background: #ffffff; border-right: 1px solid #e5e7eb; position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; }
-        .sidebar-header { padding: 32px 24px; border-bottom: 1px solid #e5e7eb; }
-        .sidebar-logo { width: 100%; height: auto; max-height: 180px; }
-        .nav-section-title { padding: 16px 24px 8px; font-size: 14px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item { display: block; padding: 12px 24px; color: #374151; text-decoration: none; font-size: 15px; font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
-        .nav-item:hover { background: #f9fafb; color: #0066ff; border-left-color: #0066ff; }
-        .nav-item.active { background: #eff6ff; color: #0066ff; border-left-color: #0066ff; }
-        .main-content { margin-left: 280px; flex: 1; min-height: 100vh; padding: 48px; }
-        .page-title { font-size: 48px; font-weight: 800; color: #1f2937; margin-bottom: 16px; }
-        .page-subtitle { font-size: 20px; color: #6b7280; line-height: 1.6; margin-bottom: 48px; }
-        .section { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 40px; margin-bottom: 32px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); }
-        .section-title { font-size: 28px; font-weight: 700; color: #0066ff; margin-bottom: 24px; }
-        .placeholder-content { text-align: center; padding: 60px 20px; color: #6b7280; }
-        .placeholder-icon { font-size: 64px; margin-bottom: 24px; }
-        .placeholder-title { font-size: 24px; font-weight: 600; color: #374151; margin-bottom: 16px; }
-        .placeholder-description { font-size: 16px; line-height: 1.6; max-width: 500px; margin: 0 auto; }
+        :root {
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, var(--lyd-gray-50) 0%, var(--lyd-gray-100) 100%);
+            color: var(--lyd-gray-900);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Global Sidebar - KORREKTE STRUKTUR */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
+        }
+
+        .sidebar-logo {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+        }
+
+        .sidebar-nav {
+            padding: var(--spacing-lg) 0;
+        }
+
+        .nav-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .nav-section-title {
+            padding: var(--spacing-md) var(--spacing-lg) var(--spacing-sm);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--lyd-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+
+        .nav-item.active {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+            padding: var(--spacing-2xl);
+        }
+
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
+        }
+
+        .page-subtitle {
+            font-size: 20px;
+            color: var(--lyd-gray-600);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .component-card {
+            background: var(--lyd-white);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .component-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .component-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .component-card p {
+            font-size: 14px;
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
+        }
+
+        .component-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            align-items: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+
+        {{ADDITIONAL_STYLES}}
     </style>
+    
+    {{ADDITIONAL_HEAD}}
 </head>
 <body>
+    <!-- GLOBALE SIDEBAR - KORREKTE STRUKTUR -->
     <nav class="sidebar">
         <div class="sidebar-header">
+            <!-- KORREKTES LYD LOGO -->
             <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -102,23 +292,90 @@
         </div>
     </nav>
     
+    <!-- Main Content Area -->
     <main class="main-content">
-        <h1 class="page-title">Dropdown</h1>
-        <p class="page-subtitle">
-            Professional dropdown component for real estate applications.
-        </p>
-        
-        <section class="section">
-            <h2 class="section-title">Dropdown Component</h2>
-            <div class="placeholder-content">
-                <div class="placeholder-icon">🔧</div>
-                <h3 class="placeholder-title">Dropdown In Development</h3>
-                <p class="placeholder-description">
-                    This component is currently being developed with professional design standards, 
-                    accessibility features, and real estate specific optimizations.
-                </p>
+        <div class="page-header">
+            <h1 class="page-title">Dropdown Components</h1>
+            <p class="page-subtitle">Context menus and dropdown actions with luxury styling for enhanced user interactions.</p>
+            
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab active" data-tab="overview">Overview</button>
+                <button class="tab" data-tab="variants">Variants</button>
+                <button class="tab" data-tab="icons">Icon Library</button>
+                <button class="tab" data-tab="examples">Examples</button>
+                <button class="tab" data-tab="api">API</button>
+                <button class="tab" data-tab="accessibility">Accessibility</button>
             </div>
-        </section>
+        </div>
+        
+        <!-- Tab Content: Overview -->
+        <div id="overview" class="tab-content active">
+            <div class="demo-grid">
+                <div class="component-card">
+                    <h3>lyd-dropdown</h3>
+                    <p>Context menu with luxury styling and actions</p>
+                    <div class="component-showcase">
+                        <div class="luxury-dropdown">
+                            <button class="dropdown-trigger">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 16px; height: 16px; margin-right: 8px;">
+                                    <circle cx="12" cy="12" r="1"/>
+                                    <circle cx="19" cy="12" r="1"/>
+                                    <circle cx="5" cy="12" r="1"/>
+                                </svg>
+                                Actions
+                                <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6,9 12,15 18,9"></polyline>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                    </svg>
+                                    Edit Property
+                                </div>
+                                <div class="dropdown-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                        <polyline points="16,6 12,2 8,6"/>
+                                        <line x1="12" y1="2" x2="12" y2="15"/>
+                                    </svg>
+                                    Share
+                                </div>
+                                <div class="dropdown-separator"></div>
+                                <div class="dropdown-item danger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <polyline points="3,6 5,6 21,6"/>
+                                        <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"/>
+                                    </svg>
+                                    Delete
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+    
+    <!-- Global JavaScript -->
+    <script>
+        // Set active navigation item based on current path
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && currentPath.includes(href)) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        {{ADDITIONAL_SCRIPTS}}
+    </script>
 </body>
 </html>

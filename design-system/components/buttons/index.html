@@ -215,7 +215,7 @@
             margin-bottom: var(--spacing-lg);
             line-height: 1.5;
         }
-
+        
         .component-showcase {
             display: flex;
             flex-wrap: wrap;
@@ -1402,14 +1402,14 @@
         
         <!-- Tab Content: Variants -->
         <div class="tab-content" id="variants">
-            <section class="section">
-                <h2 class="section-title">Button Variants</h2>
-                
+        <section class="section">
+            <h2 class="section-title">Button Variants</h2>
+            
                 <div class="component-grid">
                     <div class="component-card">
                         <h3>Primary</h3>
                         <p>Main call-to-action buttons</p>
-                        <div class="component-showcase">
+                    <div class="component-showcase">
                             <!-- Alte lyd-button entfernt - NUR Luxury Primary Buttons -->
                             <button class="luxury-btn primary" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1429,13 +1429,13 @@
                                 </svg>
                                 Large
                             </button>
-                        </div>
                     </div>
-                    
+                </div>
+                
                     <div class="component-card">
                         <h3>Secondary</h3>
                         <p>Secondary actions</p>
-                        <div class="component-showcase">
+                    <div class="component-showcase">
                             <!-- Alte lyd-button entfernt - NUR Luxury Secondary Buttons -->
                             <button class="luxury-btn secondary" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1455,13 +1455,13 @@
                                 </svg>
                                 Large
                             </button>
-                        </div>
                     </div>
-                    
+                </div>
+                
                     <div class="component-card">
                         <h3>Outline</h3>
                         <p>Subtle actions</p>
-                                            <div class="component-showcase">
+                    <div class="component-showcase">
                             <!-- Alte lyd-button entfernt - NUR Luxury Outline Buttons -->
                             <button class="luxury-btn outline" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1481,13 +1481,13 @@
                                 </svg>
                                 Large
                             </button>
-                        </div>
                     </div>
-                    
+                </div>
+                
                     <div class="component-card">
                         <h3>Ghost</h3>
                         <p>Minimal actions</p>
-                        <div class="component-showcase">
+                    <div class="component-showcase">
                             <!-- Alte lyd-button entfernt - NUR Luxury Ghost Buttons -->
                             <button class="luxury-btn ghost" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1531,13 +1531,13 @@
                                 <svg class="btn-icon loading" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <circle cx="12" cy="12" r="10"/>
                                 </svg>
-                                Processing...
+                            Processing...
                             </button>
                             <button class="luxury-btn primary disabled" disabled>
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                 </svg>
-                                Unavailable
+                            Unavailable
                             </button>
                             
                             <!-- Premium Download Button -->
@@ -1559,10 +1559,10 @@
                                     <div style="font-size: 11px; opacity: 0.8;">2.5 MB PDF</div>
                                 </div>
                             </button>
-                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         </div>
         
         <!-- Tab Content: Icon Library -->
@@ -1734,8 +1734,8 @@
                                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
                                 <polyline points="9,22 9,12 15,12 15,22"/>
                             </svg>
-                        </div>
                     </div>
+                </div>
                     <div class="property-content">
                         <h4>Luxury Villa Munich</h4>
                         <p class="property-details">€2,500,000 • 350m² • 5 rooms</p>
@@ -1853,48 +1853,50 @@
                 <h2 class="section-title">API Reference</h2>
             
                 <h3>lyd-button</h3>
-            <table class="properties-table">
+            <div style="overflow-x: auto; margin-bottom: 24px;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 600px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
                 <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
+                        <tr style="background: linear-gradient(135deg, #f8fafc, #e2e8f0);">
+                            <th style="padding: 16px; text-align: left; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 14px;">Property</th>
+                            <th style="padding: 16px; text-align: left; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 14px;">Type</th>
+                            <th style="padding: 16px; text-align: left; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 14px;">Default</th>
+                            <th style="padding: 16px; text-align: left; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #374151; font-size: 14px;">Description</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>variant</code></td>
-                        <td><code>string</code></td>
-                        <td><code>primary</code></td>
-                            <td>Visual style: primary, secondary, outline, ghost, danger, success</td>
+                        <tr style="border-bottom: 1px solid #f3f4f6;">
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6;"><code style="background: #f1f5f9; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 13px;">variant</code></td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #6b7280; font-size: 14px;">string</td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #9ca3af; font-size: 14px;">primary</td>
+                            <td style="padding: 16px; color: #6b7280; font-size: 14px;">Visual style: primary, secondary, outline, ghost, danger, success</td>
+                    </tr>
+                        <tr style="border-bottom: 1px solid #f3f4f6; background: #fafbfc;">
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6;"><code style="background: #f1f5f9; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 13px;">size</code></td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #6b7280; font-size: 14px;">string</td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #9ca3af; font-size: 14px;">medium</td>
+                            <td style="padding: 16px; color: #6b7280; font-size: 14px;">Button size: small, medium, large</td>
+                    </tr>
+                        <tr style="border-bottom: 1px solid #f3f4f6;">
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6;"><code style="background: #f1f5f9; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 13px;">icon</code></td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #6b7280; font-size: 14px;">string</td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #9ca3af; font-size: 14px;">-</td>
+                            <td style="padding: 16px; color: #6b7280; font-size: 14px;">Icon name from LYD icon library</td>
+                    </tr>
+                        <tr style="border-bottom: 1px solid #f3f4f6; background: #fafbfc;">
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6;"><code style="background: #f1f5f9; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 13px;">loading</code></td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #6b7280; font-size: 14px;">boolean</td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #9ca3af; font-size: 14px;">false</td>
+                            <td style="padding: 16px; color: #6b7280; font-size: 14px;">Shows loading spinner</td>
                     </tr>
                     <tr>
-                        <td><code>size</code></td>
-                        <td><code>string</code></td>
-                        <td><code>medium</code></td>
-                        <td>Button size: small, medium, large</td>
-                    </tr>
-                        <tr>
-                            <td><code>icon</code></td>
-                            <td><code>string</code></td>
-                            <td><code>-</code></td>
-                            <td>Icon name from LYD icon library</td>
-                    </tr>
-                    <tr>
-                        <td><code>loading</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                            <td>Shows loading spinner</td>
-                    </tr>
-                    <tr>
-                        <td><code>disabled</code></td>
-                        <td><code>boolean</code></td>
-                        <td><code>false</code></td>
-                            <td>Disables button interaction</td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6;"><code style="background: #f1f5f9; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 13px;">disabled</code></td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #6b7280; font-size: 14px;">boolean</td>
+                            <td style="padding: 16px; border-right: 1px solid #f3f4f6; color: #9ca3af; font-size: 14px;">false</td>
+                            <td style="padding: 16px; color: #6b7280; font-size: 14px;">Disables button interaction</td>
                     </tr>
                 </tbody>
             </table>
+            </div>
                 
                 <h3>Next.js Backoffice Integration</h3>
                 <pre style="background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; border: 1px solid #313244;"><code>// app/properties/page.tsx
@@ -1953,15 +1955,15 @@ export default function PropertiesPage() {
               Import Properties
             &lt;/lyd-button&gt;
             
-            &lt;lyd-button 
-              variant="primary" 
-              size="large"
+      &lt;lyd-button 
+        variant="primary" 
+        size="large"
               icon="plus"
               loading={isLoading}
               onClick={handleCreateProperty}
-            &gt;
-              Add New Property
-            &lt;/lyd-button&gt;
+      &gt;
+        Add New Property
+      &lt;/lyd-button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
 
@@ -1983,15 +1985,15 @@ export default function PropertiesPage() {
                   &gt;
                     View
                   &lt;/lyd-button&gt;
-                  
-                  &lt;lyd-button 
-                    variant="secondary" 
+      
+      &lt;lyd-button 
+        variant="secondary"
                     icon="edit" 
                     size="small"
                     onClick={() => editProperty(property.id)}
-                  &gt;
+      &gt;
                     Edit
-                  &lt;/lyd-button&gt;
+      &lt;/lyd-button&gt;
                   
                   &lt;lyd-download-button
                     variant="outline"
@@ -2057,7 +2059,7 @@ useEffect(() => {
                         <li><strong>outline</strong> - Subtile Aktionen (Glassmorphism)</li>
                         <li><strong>ghost</strong> - Minimale Aktionen (Transparent)</li>
                     </ul>
-                </div>
+            </div>
 
                 <h3>TypeScript Integration</h3>
                 <pre style="background: #1e1e2e; color: #cdd6f4; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; border: 1px solid #313244;"><code>// types/lyd-design-system.d.ts
@@ -2126,7 +2128,7 @@ export const useLydButton = (
   
   return ref;
 };</code></pre>
-            </section>
+        </section>
             </div>
         
         <!-- Tab Content: Accessibility -->
@@ -2217,8 +2219,8 @@ export const useLydButton = (
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+            </div>
+        </section>
             </div>
         
     </main>
