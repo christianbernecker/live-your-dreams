@@ -614,23 +614,24 @@
         }
 
         .luxury-btn.secondary {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3366CC 25%, #0066ff 75%, #2563eb 100%);
+            background: linear-gradient(135deg, #3366CC 0%, #4F7CFF 50%, #5B8CFF 100%);
             color: white;
             box-shadow: 
-                0 3px 12px rgba(51, 102, 204, 0.3),
-                0 1px 6px rgba(0, 102, 255, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+                0 4px 16px rgba(51, 102, 204, 0.35),
+                0 2px 8px rgba(79, 124, 255, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
             position: relative;
         }
 
         .luxury-btn.secondary:hover {
-            background: linear-gradient(135deg, #1e40af 0%, #2952A3 25%, #0052cc 75%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #2952A3 0%, #4169E1 50%, #4F7CFF 100%);
             transform: translateY(-2px) scale(1.02);
             box-shadow: 
-                0 6px 20px rgba(51, 102, 204, 0.4),
-                0 2px 10px rgba(0, 102, 255, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                0 6px 24px rgba(51, 102, 204, 0.45),
+                0 3px 12px rgba(79, 124, 255, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .luxury-btn.outline {
@@ -945,11 +946,7 @@
                         <h3>lyd-button</h3>
                         <p>Primary button component with variants and icons</p>
                         <div class="component-showcase">
-                            <lyd-button variant="primary" icon="home">View Property</lyd-button>
-                            <lyd-button variant="secondary" icon="key">Get Keys</lyd-button>
-                            <lyd-button variant="outline" icon="calendar">Schedule</lyd-button>
-                            
-                            <!-- Luxury HTML Buttons -->
+                            <!-- Alte lyd-button entfernt - NUR Luxury Buttons -->
                             <button class="luxury-btn primary">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -975,13 +972,7 @@
                         <h3>lyd-button-group</h3>
                         <p>Group related actions together</p>
                         <div class="component-showcase">
-                            <lyd-button-group connected>
-                                <lyd-button variant="outline" icon="edit">Edit</lyd-button>
-                                <lyd-button variant="outline" icon="share">Share</lyd-button>
-                                <lyd-button variant="outline" icon="delete">Delete</lyd-button>
-                            </lyd-button-group>
-                            
-                            <!-- Luxury Button Group -->
+                            <!-- Alte lyd-button-group entfernt - NUR Luxury Button Group -->
                             <div class="luxury-btn-group">
                                 <button class="luxury-btn outline group-btn">
                                     <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1009,11 +1000,7 @@
                         <h3>lyd-button-pure</h3>
                         <p>Minimal icon-only buttons</p>
                         <div class="component-showcase">
-                            <lyd-button-pure icon="heart"></lyd-button-pure>
-                            <lyd-button-pure icon="share" variant="primary"></lyd-button-pure>
-                            <lyd-button-pure icon="more-vertical"></lyd-button-pure>
-                            
-                            <!-- Luxury Pure Buttons -->
+                            <!-- Alte lyd-button-pure entfernt - NUR Luxury Pure Buttons -->
                             <button class="luxury-btn luxury-btn-pure outline">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -1038,13 +1025,7 @@
                         <h3>lyd-button-tile</h3>
                         <p>Large tiles for navigation</p>
                     <div class="component-showcase">
-                            <lyd-button-tile 
-                                icon="building" 
-                                label="Properties" 
-                                description="23 active">
-                            </lyd-button-tile>
-                            
-                            <!-- Luxury Tile Button -->
+                            <!-- Alte lyd-button-tile entfernt - NUR Luxury Tile Button -->
                             <button class="luxury-btn-tile">
                                 <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -1068,11 +1049,7 @@
                         <h3>Primary</h3>
                         <p>Main call-to-action buttons</p>
                         <div class="component-showcase">
-                            <lyd-button variant="primary" size="small" icon="home">Small</lyd-button>
-                            <lyd-button variant="primary" size="medium" icon="home">Medium</lyd-button>
-                            <lyd-button variant="primary" size="large" icon="home">Large</lyd-button>
-                            
-                            <!-- Luxury Primary Buttons -->
+                            <!-- Alte lyd-button entfernt - NUR Luxury Primary Buttons -->
                             <button class="luxury-btn primary" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -1098,11 +1075,7 @@
                         <h3>Secondary</h3>
                         <p>Secondary actions</p>
                         <div class="component-showcase">
-                            <lyd-button variant="secondary" size="small" icon="key">Small</lyd-button>
-                            <lyd-button variant="secondary" size="medium" icon="key">Medium</lyd-button>
-                            <lyd-button variant="secondary" size="large" icon="key">Large</lyd-button>
-                            
-                            <!-- Luxury Secondary Buttons -->
+                            <!-- Alte lyd-button entfernt - NUR Luxury Secondary Buttons -->
                             <button class="luxury-btn secondary" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
@@ -1128,11 +1101,7 @@
                         <h3>Outline</h3>
                         <p>Subtle actions</p>
                                             <div class="component-showcase">
-                            <lyd-button variant="outline" size="small" icon="edit">Small</lyd-button>
-                            <lyd-button variant="outline" size="medium" icon="edit">Medium</lyd-button>
-                            <lyd-button variant="outline" size="large" icon="edit">Large</lyd-button>
-                            
-                            <!-- Luxury Outline Buttons -->
+                            <!-- Alte lyd-button entfernt - NUR Luxury Outline Buttons -->
                             <button class="luxury-btn outline" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.5-6.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 8.5-8.5z"/>
@@ -1158,11 +1127,7 @@
                         <h3>Ghost</h3>
                         <p>Minimal actions</p>
                         <div class="component-showcase">
-                            <lyd-button variant="ghost" size="small" icon="more-horizontal">Small</lyd-button>
-                            <lyd-button variant="ghost" size="medium" icon="more-horizontal">Medium</lyd-button>
-                            <lyd-button variant="ghost" size="large" icon="more-horizontal">Large</lyd-button>
-                            
-                            <!-- Luxury Ghost Buttons -->
+                            <!-- Alte lyd-button entfernt - NUR Luxury Ghost Buttons -->
                             <button class="luxury-btn ghost" style="padding: 8px 16px; font-size: 13px; min-height: 36px;">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <circle cx="12" cy="12" r="1"/>
@@ -1194,11 +1159,7 @@
                         <h3>States</h3>
                         <p>Loading and disabled states</p>
                                             <div class="component-showcase">
-                            <lyd-button variant="primary" icon="download">Normal</lyd-button>
-                            <lyd-button variant="primary" icon="download" loading>Loading</lyd-button>
-                            <lyd-button variant="primary" icon="download" disabled>Disabled</lyd-button>
-                            
-                            <!-- Luxury State Buttons -->
+                            <!-- Alte lyd-button entfernt - NUR Luxury State Buttons -->
                             <button class="luxury-btn primary">
                                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
