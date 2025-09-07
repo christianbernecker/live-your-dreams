@@ -126,11 +126,9 @@
     window.addEventListener('resize', applyResponsiveGrid);
     applyResponsiveGrid();
     
-    console.log('✅ LYD Design System: Consistent styling applied');
-  }
-  
-  // 5. CRITICAL: Force Button Styles
-  const buttons = document.querySelectorAll('.lyd-button');
+    // 5. CRITICAL: Force Button Styles
+    console.log('🔧 Applying button styles...');
+    const buttons = document.querySelectorAll('.lyd-button');
   buttons.forEach(button => {
     // Base Button Styles
     button.style.cssText = `
@@ -201,6 +199,10 @@
       `;
     }
   });
+  
+  console.log(`✅ Applied styles to ${buttons.length} buttons`);
+  console.log('✅ LYD Design System: Consistent styling applied');
+  }
 
   // CSS-Injection als Backup
   const style = document.createElement('style');
