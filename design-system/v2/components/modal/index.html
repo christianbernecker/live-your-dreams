@@ -279,13 +279,7 @@
         .lyd-modal-icon.error { background: rgba(239,68,68,0.12); color: var(--lyd-error); }
         .lyd-modal-icon.success { background: rgba(16,185,129,0.12); color: var(--lyd-success); }
         
-        /* Buttons (autark) */
-        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 6px; border: 0; cursor: pointer; font-size: 14px; font-weight: 500; }
-        .lyd-button.primary { background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: #fff; }
-        .lyd-button.secondary { background: transparent; color: var(--lyd-royal-blue); border: 1px solid var(--lyd-royal-blue); }
-        .lyd-button.ghost { background: transparent; color: var(--lyd-grey); }
-        .lyd-button.error { background: var(--lyd-error); color: #fff; }
-        .lyd-button:hover { filter: brightness(0.98); transform: translateY(-1px); transition: all .2s ease; }
+        /* Buttons werden zentral in shared/components.css definiert */
         
         /* Inputs (Gold Standard extrahiert) */
         .lyd-input { width: 100%; padding: 12px 16px; font-size: var(--font-size-base); font-family: var(--font-family-primary); background: var(--lyd-bg); border: 2px solid var(--lyd-line); border-radius: var(--radius-md); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -471,22 +465,22 @@
                 <div class="showcase-item">
                     <h3>Basic Information Modal</h3>
                     <p>Standard modal dialog with clean styling and smooth animations for general information display</p>
-                    <button class="lyd-button" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: white;" onclick="openModal('basicModal')">Open Information Modal</button>
+                    <button class="lyd-button primary" onclick="openModal('basicModal')">Open Information Modal</button>
                 </div>
                 <div class="showcase-item">
                     <h3>Confirmation Modal</h3>
                     <p>Critical action confirmation with clear visual hierarchy and prominent action buttons</p>
-                    <button class="lyd-button" style="background: var(--lyd-error); color: white;" onclick="openModal('confirmModal')">Delete Property</button>
+                    <button class="lyd-button error" onclick="openModal('confirmModal')">Delete Property</button>
                 </div>
                 <div class="showcase-item">
                     <h3>Form Modal</h3>
                     <p>Complex form interactions within modal context with validation and structured layout</p>
-                    <button class="lyd-button" style="background: transparent; color: var(--lyd-royal-blue); border: 1px solid var(--lyd-royal-blue);" onclick="openModal('formModal')">Add New Property</button>
+                    <button class="lyd-button secondary" onclick="openModal('formModal')">Add New Property</button>
                 </div>
                 <div class="showcase-item">
                     <h3>Premium Glassmorphism</h3>
                     <p>Luxury modal with advanced glassmorphism effects and premium gradient styling</p>
-                    <button class="lyd-button" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;" onclick="openModal('premiumModal')">Premium Experience</button>
+                    <button class="lyd-button secondary" onclick="openModal('premiumModal')">Premium Experience</button>
                 </div>
             </div>
         </section>
@@ -631,8 +625,8 @@ export const Modal = ({
                 <p>Basic info modal content.</p>
             </div>
             <div class="lyd-modal-footer">
-                <button class="lyd-button" style="background: transparent; color: var(--lyd-grey);" onclick="closeModal('basicModal')">Close</button>
-                <button class="lyd-button" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: white;">Learn More</button>
+                <button class="lyd-button ghost" onclick="closeModal('basicModal')">Close</button>
+                <button class="lyd-button primary">Learn More</button>
             </div>
         </div>
     </div>

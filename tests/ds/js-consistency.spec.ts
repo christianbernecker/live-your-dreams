@@ -9,7 +9,7 @@ const BASE_URL = 'http://designsystem.liveyourdreams.online';
 
 test.describe('JavaScript-basierte Konsistenz', () => {
   
-  const components = ['buttons', 'cards', 'table', 'accordion', 'typography', 'select', 'inputs'];
+  const components = ['buttons', 'cards', 'table', 'accordion', 'typography', 'select', 'inputs', 'modal'];
   
   for (const component of components) {
     test(`${component} - JavaScript-Konsistenz`, async ({ page }) => {
