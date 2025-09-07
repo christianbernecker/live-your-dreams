@@ -13,12 +13,12 @@ const PAGES = [
 
 const SELECTOR_GROUPS = {
   page: 'body',
-  heading: 'h1, .h1, [data-typography="h1"]',
-  subheading: 'h2, .h2, [data-typography="h2"]',
-  paragraph: 'p, .text-body, [data-typography="body"]',
-  button: 'button, a[role="button"], .btn, [data-component="button"]',
-  input: 'input, textarea, select, .input, [data-component="input"]',
-  card: '[class*="card"], .card, [data-component="card"]',
+  heading: '.page-title, h1, .h1',
+  subheading: '.section-title, h2, .h2',
+  paragraph: '.page-subtitle, .showcase-item p, p',
+  button: '.lyd-button, button',
+  input: '.lyd-input, input',
+  card: '.showcase-item, .property-preview, [class*="card"], .card',
 };
 
 const STYLE_KEYS = [

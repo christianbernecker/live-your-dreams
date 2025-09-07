@@ -280,12 +280,32 @@
         .lyd-modal-icon.success { background: rgba(16,185,129,0.12); color: var(--lyd-success); }
         
         /* Buttons (autark) */
-        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; border: 0; cursor: pointer; font-size: 14px; font-weight: 500; }
+        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 6px; border: 0; cursor: pointer; font-size: 14px; font-weight: 500; }
         .lyd-button.primary { background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: #fff; }
         .lyd-button.secondary { background: transparent; color: var(--lyd-royal-blue); border: 1px solid var(--lyd-royal-blue); }
         .lyd-button.ghost { background: transparent; color: var(--lyd-grey); }
         .lyd-button.error { background: var(--lyd-error); color: #fff; }
         .lyd-button:hover { filter: brightness(0.98); transform: translateY(-1px); transition: all .2s ease; }
+        
+        /* Inputs (Gold Standard extrahiert) */
+        .lyd-input { width: 100%; padding: 12px 16px; font-size: var(--font-size-base); font-family: var(--font-family-primary); background: var(--lyd-bg); border: 2px solid var(--lyd-line); border-radius: var(--radius-md); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .lyd-input::placeholder { color: var(--lyd-grey); opacity: 0.7; }
+        .lyd-input:focus { outline: none; border-color: var(--lyd-royal-blue); box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1); transform: translateY(-1px); }
+
+        /* Select (Gold Standard, reduziert) */
+        .lyd-select { position: relative; display: flex; flex-direction: column; gap: 6px; }
+        .lyd-select-label { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 600; }
+        .lyd-select-trigger { display:flex; align-items:center; justify-content: space-between; gap:12px; padding: 12px 16px; border:2px solid var(--lyd-line); border-radius: var(--radius-md); background: #fff; cursor: pointer; transition: all .2s ease; }
+        .lyd-select-trigger:hover { border-color: var(--lyd-royal-blue); }
+        .lyd-select-trigger:focus, .lyd-select-trigger.active { outline: none; border-color: var(--lyd-royal-blue); box-shadow: 0 0 0 3px rgba(51,102,204,.1); }
+        .lyd-select-value { color: var(--lyd-text); font-size: var(--font-size-base); }
+        .lyd-select-placeholder { color: var(--lyd-grey); opacity: .8; }
+        .lyd-select-icon { width: 18px; height: 18px; color: var(--lyd-grey); transition: transform .2s ease; }
+        .lyd-select-trigger.active .lyd-select-icon { transform: rotate(180deg); }
+        .lyd-select-dropdown { position:absolute; top: calc(100% + 6px); left: 0; right: 0; background:#fff; border:1px solid var(--lyd-line); border-radius: 10px; box-shadow: var(--shadow-lg); padding: 6px; display:none; max-height: 220px; overflow:auto; z-index: 50; }
+        .lyd-select-dropdown.active { display:block; }
+        .lyd-select-option { padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: var(--font-size-base); color: var(--lyd-text); }
+        .lyd-select-option:hover { background: rgba(51, 102, 204, 0.06); }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateY(-6px); opacity: .96; } to { transform: translateY(0); opacity: 1; } }
@@ -587,9 +607,18 @@
                         <span style="font-size:14px; color:var(--lyd-grey);">Title</span>
                         <input class="lyd-input" placeholder="Luxury Villa München" />
                     </label>
-                    <label style="display:flex; flex-direction:column; gap:6px;">
-                        <span style="font-size:14px; color:var(--lyd-grey);">Price (€)</span>
-                        <input class="lyd-input" placeholder="2,400,000" />
+                    <label class="lyd-select" style="grid-column: span 1;">
+                        <span class="lyd-select-label">Property Type</span>
+                        <div class="lyd-select-trigger" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+                            <span class="lyd-select-value lyd-select-placeholder">Choose property type...</span>
+                            <svg class="lyd-select-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                        <div class="lyd-select-dropdown">
+                            <div class="lyd-select-option" data-value="apartment">Apartment</div>
+                            <div class="lyd-select-option" data-value="house">House</div>
+                            <div class="lyd-select-option" data-value="villa">Villa</div>
+                            <div class="lyd-select-option" data-value="penthouse">Penthouse</div>
+                        </div>
                     </label>
                     <label style="display:flex; flex-direction:column; gap:6px;">
                         <span style="font-size:14px; color:var(--lyd-grey);">Rooms</span>
@@ -631,6 +660,34 @@
     <script>
         function openModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.add('active'); m.style.display='flex'; document.body.style.overflow='hidden'; }
         function closeModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.remove('active'); setTimeout(()=>{ m.style.display='none'; document.body.style.overflow=''; },200); }
+        // Minimal Select-Interaktionen
+        document.addEventListener('click', (e) => {
+            const trigger = e.target.closest('.lyd-select-trigger');
+            if (trigger) {
+                const container = trigger.closest('.lyd-select');
+                const dd = container.querySelector('.lyd-select-dropdown');
+                const expanded = trigger.getAttribute('aria-expanded') === 'true';
+                trigger.classList.toggle('active', !expanded);
+                trigger.setAttribute('aria-expanded', (!expanded).toString());
+                dd.classList.toggle('active', !expanded);
+                return;
+            }
+            const opt = e.target.closest('.lyd-select-option');
+            if (opt) {
+                const container = opt.closest('.lyd-select');
+                const valNode = container.querySelector('.lyd-select-value');
+                valNode.textContent = opt.textContent;
+                valNode.classList.remove('lyd-select-placeholder');
+                container.querySelector('.lyd-select-trigger').classList.remove('active');
+                container.querySelector('.lyd-select-trigger').setAttribute('aria-expanded','false');
+                container.querySelector('.lyd-select-dropdown').classList.remove('active');
+                return;
+            }
+            // Outside click
+            document.querySelectorAll('.lyd-select-dropdown.active').forEach(dd => dd.classList.remove('active'));
+            document.querySelectorAll('.lyd-select-trigger.active').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.lyd-select-trigger[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded','false'));
+        });
         document.querySelectorAll('.lyd-button.copy').forEach(b=>{ b.addEventListener('click',()=>{ const pre=b.parentElement.querySelector('pre'); navigator.clipboard.writeText(pre.textContent); b.textContent='Copied!'; setTimeout(()=>b.textContent='Copy',2000); }); });
     </script>
 </body>
