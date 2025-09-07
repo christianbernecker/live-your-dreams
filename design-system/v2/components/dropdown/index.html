@@ -279,11 +279,110 @@
         <div class="page-header">
             <h1 class="page-title">Dropdown</h1>
         </div>
+
+        <section class="section">
+            <h2 class="section-title">Dropdown Variants</h2>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap:24px;">
+                <div class="showcase-item" style="background:#fff; border:1px solid var(--lyd-gray-200); border-radius:12px; padding:24px;">
+                    <h3 style="font-size:18px; font-weight:600; color:var(--lyd-gray-900); margin-bottom:8px;">Simple Dropdown</h3>
+                    <p style="font-size:14px; color:var(--lyd-gray-600); margin-bottom:16px;">HeroUI-inspirierter Dropdown-Trigger mit Menü.</p>
+                    <div class="lyd-dropdown">
+                        <button class="lyd-button" id="dd-trigger" aria-haspopup="menu" aria-expanded="false" style="background: linear-gradient(135deg, #3366CC, #000066); color:#fff;">Open Menu</button>
+                        <div class="lyd-dropdown-menu" role="menu" aria-labelledby="dd-trigger">
+                            <button role="menuitem" class="lyd-dropdown-item">New</button>
+                            <button role="menuitem" class="lyd-dropdown-item">Duplicate</button>
+                            <button role="menuitem" class="lyd-dropdown-item">Archive</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="showcase-item" style="background:#fff; border:1px solid var(--lyd-gray-200); border-radius:12px; padding:24px;">
+                    <h3 style="font-size:18px; font-weight:600; color:var(--lyd-gray-900); margin-bottom:8px;">Dropdown mit Select-Bezug</h3>
+                    <p style="font-size:14px; color:var(--lyd-gray-600); margin-bottom:16px;">Nutzt identische Tokens wie `.lyd-select`.</p>
+                    <div class="lyd-dropdown">
+                        <button class="lyd-select-trigger" id="dd-trigger-2" aria-haspopup="menu" aria-expanded="false" style="width:100%; justify-content:space-between;">
+                            <span class="lyd-select-value">Choose action...</span>
+                            <svg class="lyd-select-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="lyd-dropdown-menu" role="menu" aria-labelledby="dd-trigger-2">
+                            <button role="menuitem" class="lyd-dropdown-item">Publish</button>
+                            <button role="menuitem" class="lyd-dropdown-item">Unpublish</button>
+                            <button role="menuitem" class="lyd-dropdown-item">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            <div class="implementation-section" style="background:#fff; border:1px solid var(--lyd-gray-200); border-radius:12px; padding:24px;">
+                <h3>React/Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// components/Dropdown.tsx
+import { useEffect, useRef, useState } from 'react';
+
+interface DropdownProps {
+  label: string;
+  items: { label: string; onSelect: () => void }[];
+}
+
+export const Dropdown = ({ label, items }: DropdownProps) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onDoc = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener('click', onDoc);
+    return () => document.removeEventListener('click', onDoc);
+  }, []);
+
+  return (
+    &lt;div className="lyd-dropdown" ref={ref}&gt;
+      &lt;button className="lyd-button" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen(v => !v)}&gt;
+        {label}
+      &lt;/button&gt;
+      {open && (
+        &lt;div className="lyd-dropdown-menu" role="menu"&gt;
+          {items.map((it, i) => (
+            &lt;button role="menuitem" className="lyd-dropdown-item" key={i} onClick={() => { setOpen(false); it.onSelect(); }}&gt;
+              {it.label}
+            &lt;/button&gt;
+          ))}
+        &lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  );
+};
+</pre>
+                </div>
+            </div>
+        </section>
     </main>
     
     <!-- JavaScript -->
     <script src="../shared/force-consistency.js"></script>
     <script>
+        // Dropdown Interactions (HeroUI-inspiriert)
+        function bindDropdown(triggerId) {
+            const trigger = document.getElementById(triggerId);
+            if (!trigger) return;
+            const menu = trigger.parentElement.querySelector('.lyd-dropdown-menu');
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const expanded = trigger.getAttribute('aria-expanded') === 'true';
+                trigger.setAttribute('aria-expanded', (!expanded).toString());
+                menu.style.display = expanded ? 'none' : 'block';
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            bindDropdown('dd-trigger');
+            bindDropdown('dd-trigger-2');
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
+                document.querySelectorAll('[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded','false'));
+            });
+        });
         // Set active navigation
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;

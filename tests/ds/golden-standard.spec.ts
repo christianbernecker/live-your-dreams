@@ -38,6 +38,13 @@ test.describe('Golden Standard Definition', () => {
     });
     expect(checkmarkColor).toBe('rgb(51, 102, 204)'); // var(--lyd-royal-blue)
   });
+  test('Modal hat React/Next.js Implementationsabschnitt', async ({ page }) => {
+    await page.goto(`${BASE_URL}/v2/components/modal/`);
+    const section = page.getByRole('heading', { name: /React\/Next\.js Integration/i });
+    await expect(section).toBeVisible();
+    const code = page.locator('.implementation-section .code-block pre').filter({ hasText: /export const Modal/ });
+    await expect(code).toBeVisible();
+  });
 });
 
 test.describe('Consistency Verification Against Golden Standard', () => {

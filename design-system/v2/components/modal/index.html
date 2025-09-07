@@ -517,6 +517,69 @@
 &lt;/div&gt;</pre>
                 </div>
             </div>
+
+            <div class="implementation-section">
+                <h3>React/Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// components/Modal.tsx
+import { ReactNode, useEffect } from 'react';
+
+type ModalSize = 'small' | 'medium' | 'large';
+type ModalVariant = 'default' | 'glassmorphism';
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  size?: ModalSize;
+  variant?: ModalVariant;
+  children: ReactNode;
+}
+
+export const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  size = 'medium',
+  variant = 'default',
+  children
+}: ModalProps) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    &lt;div className="lyd-modal active" role="dialog" aria-modal="true"&gt;
+      &lt;div className="lyd-modal-backdrop" onClick={onClose} /&gt;
+      &lt;div className={`lyd-modal-content ${size} ${variant}`}&gt;
+        &lt;div className="lyd-modal-header"&gt;
+          &lt;h3 className="lyd-modal-title"&gt;{title}&lt;/h3&gt;
+          &lt;button className="lyd-modal-close" onClick={onClose} aria-label="Close"&gt;×&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div className="lyd-modal-body"&gt;{children}&lt;/div&gt;
+        &lt;div className="lyd-modal-footer"&gt;
+          &lt;button className="lyd-button ghost" onClick={onClose}&gt;Close&lt;/button&gt;
+          &lt;button className="lyd-button primary"&gt;Confirm&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+// usage (Next.js)
+// const [open, setOpen] = useState(false);
+// &lt;button className="lyd-button" onClick={() => setOpen(true)}&gt;Open&lt;/button&gt;
+// &lt;Modal isOpen={open} onClose={() => setOpen(false)} title="Add New Property"&gt;...&lt;/Modal&gt;
+</pre>
+                </div>
+            </div>
         </section>
         
         <!-- Section 3: Accessibility & Best Practices -->
