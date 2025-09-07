@@ -29,7 +29,8 @@ test.describe('JavaScript-basierte Konsistenz', () => {
       // Test 1: Accessibility-Grid
       const accessibilityGrid = page.locator('.accessibility-grid').first();
       await expect(accessibilityGrid).toHaveCSS('display', 'grid');
-      await expect(accessibilityGrid).toHaveCSS('grid-template-columns', /repeat\(4,\s*1fr\)/);
+      const gridCols = await accessibilityGrid.evaluate(el => getComputedStyle(el).getPropertyValue('grid-template-columns'));
+      expect(gridCols.trim()).toMatch(/repeat\(4,\s*1fr\)|(\d+(?:\.\d+)?px\s+){3}\d+(?:\.\d+)?px/);
       await expect(accessibilityGrid).toHaveCSS('background-color', 'rgb(232, 240, 254)');
       
       // Test 2: Accessibility-Items
