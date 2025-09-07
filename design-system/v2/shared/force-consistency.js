@@ -30,6 +30,11 @@
         border-radius: 8px !important;
         border: none !important;
       `;
+      // Entferne evtl. inline width der Items, die Grid auf fixe Pixel spreizen
+      grid.querySelectorAll('*').forEach(el => {
+        el.style.maxWidth = 'none';
+        el.style.width = 'auto';
+      });
     });
     
     // 2. Force Accessibility Items
