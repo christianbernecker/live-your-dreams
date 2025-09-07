@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+        :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-line);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-grey);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-grey);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-royal-blue);
+            border-left-color: var(--lyd-royal-blue);
+            background: rgba(51, 102, 204, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-royal-blue);
+            border-left-color: var(--lyd-royal-blue);
+            background: rgba(51, 102, 204, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-grey);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Card Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .showcase-item {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+            transition: all 0.3s ease;
+        }
+        
+        .showcase-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--lyd-royal-blue);
+        }
+        
+        .showcase-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--lyd-text);
+            margin-bottom: 8px;
+        }
+        
+        .showcase-item p {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin-bottom: 16px;
+        }
+        
+        .showcase-demo {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+        }
+        
+        /* Premium Card Styles */
+        .lyd-card {
+            background: var(--lyd-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .lyd-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--lyd-royal-blue);
+        }
+        
+        .lyd-card:hover::before {
+            opacity: 1;
+        }
+        
+        .lyd-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--lyd-royal-blue), var(--lyd-deep-blue));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lyd-card-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-line);
+        }
+        
+        .lyd-card-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .lyd-card-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin: 0;
+        }
+        
+        .lyd-card-body {
+            padding: var(--spacing-lg);
+        }
+        
+        .lyd-card-text {
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .lyd-card-footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--lyd-line);
+            background: rgba(248, 250, 252, 0.5);
+        }
+        
+        /* Card with Image */
+        .lyd-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .lyd-card:hover .lyd-card-image {
+            transform: scale(1.05);
+        }
+        
+        .lyd-card-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .lyd-card-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lyd-card:hover .lyd-card-image-overlay {
+            opacity: 1;
+        }
+        
+        /* Property Card Specific */
+        .lyd-property-card {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .lyd-property-price {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--lyd-deep-blue);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .lyd-property-details {
+            display: flex;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .lyd-property-detail {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+        }
+        
+        .lyd-property-detail-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--lyd-royal-blue);
+        }
+        
+        .lyd-property-location {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Feature Card */
+        .lyd-feature-card {
+            text-align: center;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+        
+        .lyd-feature-icon {
+            width: 48px;
+            height: 48px;
+            color: var(--lyd-royal-blue);
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        /* Glassmorphism Card */
+        .lyd-card.glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .lyd-card.glassmorphism:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Card Sizes */
+        .lyd-card.small {
+            max-width: 300px;
+        }
+        
+        .lyd-card.small .lyd-card-header,
+        .lyd-card.small .lyd-card-body,
+        .lyd-card.small .lyd-card-footer {
+            padding: var(--spacing-md);
+        }
+        
+        .lyd-card.large {
+            max-width: 600px;
+        }
+        
+        .lyd-card.large .lyd-card-header,
+        .lyd-card.large .lyd-card-body,
+        .lyd-card.large .lyd-card-footer {
+            padding: var(--spacing-xl);
+        }
+        
+        /* Interactive Card */
+        .lyd-card.interactive {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .lyd-card.interactive:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+        
+        /* Card States */
+        .lyd-card.featured {
+            border-color: var(--lyd-royal-blue);
+            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
+        }
+        
+        .lyd-card.featured::before {
+            opacity: 1;
+        }
+        
+        .lyd-card.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .lyd-card.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            border: 2px solid var(--lyd-line);
+            border-top-color: var(--lyd-royal-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Badge */
+        .lyd-card-badge {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: var(--lyd-royal-blue);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .lyd-card-badge.success {
+            background: var(--lyd-success);
+        }
+        
+        .lyd-card-badge.warning {
+            background: var(--lyd-warning);
+        }
+        
+        .lyd-card-badge.error {
+            background: var(--lyd-error);
+        }
+        
+        /* Button in Card - Konsistent mit Button-Komponente */
+        .lyd-card .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-base); /* 16px - CI Standard from Typography */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+        }
+        
+        .lyd-card .lyd-button.primary {
+            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
+        }
+        
+        .lyd-card .lyd-button.primary:hover {
+            background: linear-gradient(135deg, #0052cc 0%, #003875 100%);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .lyd-card .lyd-button.secondary {
+            background: linear-gradient(135deg, 
+                rgba(51, 102, 204, 0.08) 0%, 
+                rgba(0, 0, 102, 0.12) 100%);
+            border: 1px solid rgba(51, 102, 204, 0.25);
+            color: #1a365d;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 4px 16px rgba(51, 102, 204, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lyd-card .lyd-button.secondary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .lyd-card .lyd-button.secondary:hover::before {
+            animation: shimmer 0.6s ease;
+        }
+        
+        .lyd-card .lyd-button.secondary:hover {
+            background: linear-gradient(135deg, 
+                rgba(51, 102, 204, 0.15) 0%, 
+                rgba(0, 0, 102, 0.2) 100%);
+            border-color: rgba(51, 102, 204, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 20px rgba(51, 102, 204, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Button Small Size */
+        .lyd-card .lyd-button.small {
+            padding: 8px 16px;
+            font-size: var(--font-size-sm); /* 14px - Typography Scale */
+        }
+        
+        /* Button Large Size */
+        .lyd-card .lyd-button.large {
+            padding: 16px 32px;
+            font-size: var(--font-size-lg); /* 18px - Typography Scale */
+        }
+        
+        /* Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) rotate(45deg); opacity: 0; }
+        }
+        
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .example-item {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+        }
+        
+        .example-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--lyd-text);
+            margin-bottom: 16px;
+        }
+        
+        .example-description {
+            font-size: 15px;
+            color: var(--lyd-grey);
+            margin-bottom: 24px;
+        }
+        
+        .example-demo {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--lyd-text);
+            color: var(--lyd-bg);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            margin: 24px 0;
+            position: relative;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .lyd-button.copy {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--lyd-bg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-button.copy:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Implementation Section */
+        .implementation-section {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+            margin-bottom: 32px;
+        }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        
+        .api-table th {
+            background: #f9fafb;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid var(--lyd-line);
+        }
+        
+        .api-table td {
+            padding: 12px;
+            border: 1px solid var(--lyd-line);
+        }
+        
+        .api-table code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+        
+        /* Accessibility Section */
+        /* Accessibility Grid - Screenshot-konform */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+            padding: 32px;
+            background: #E8F0FE;
+            border-radius: 8px;
+        }
+        
+        .accessibility-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accessibility-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 12px;
+        }
+        
+        .accessibility-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .accessibility-item li {
+            padding: 4px 0;
+            color: #666666;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .accessibility-item li:before {
+            content: "✓";
+            color: #3366CC;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 1200px) {
+            .accessibility-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .accessibility-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 16px;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient für die Sichel -->
+                    <linearGradient id="crescentGradientV2Card" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient für den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Card)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item active">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Radio</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item">Toast</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Card</h1>
+            <p class="page-subtitle">Professional card components with advanced interactions, hover effects, and real estate optimizations for premium content presentation.</p>
+        </div>
+        
+        <!-- Section 1: Card Variants -->
+        <section class="section">
+            <h2 class="section-title premium">Card Variants</h2>
+            
+            <div class="showcase-grid">
+                <!-- Basic Card -->
+                <div class="showcase-item">
+                    <h3>Basic Card</h3>
+                    <p>Clean, professional card with header, body, and footer sections</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-card" style="max-width: 300px;">
+                            <div class="lyd-card-header">
+                                <h3 class="lyd-card-title">Property Overview</h3>
+                                <p class="lyd-card-subtitle">Market Analysis Report</p>
+                            </div>
+                            <div class="lyd-card-body">
+                                <p class="lyd-card-text">Comprehensive analysis of current market trends and property valuations in Munich.</p>
+                            </div>
+                            <div class="lyd-card-footer">
+                                <button class="lyd-button primary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card with Image -->
+                <div class="showcase-item">
+                    <h3>Image Card</h3>
+                    <p>Card with hero image and smooth hover animations</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-card" style="max-width: 300px;">
+                            <div class="lyd-card-image-container">
+                                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80" alt="Luxury Villa with panoramic views" class="lyd-card-image">
+                                <div class="lyd-card-image-overlay"></div>
+                            </div>
+                            <div class="lyd-card-body">
+                                <h3 class="lyd-card-title">Luxury Villa</h3>
+                                <p class="lyd-card-text">Stunning 5-bedroom villa with panoramic city views.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature Card -->
+                <div class="showcase-item">
+                    <h3>Feature Card</h3>
+                    <p>Centered layout for showcasing features and benefits</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-card lyd-feature-card" style="max-width: 280px;">
+                            <svg class="lyd-feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <h3 class="lyd-card-title">Verified Properties</h3>
+                            <p class="lyd-card-text">All properties undergo thorough verification and quality checks.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interactive Card -->
+                <div class="showcase-item">
+                    <h3>Interactive Card</h3>
+                    <p>Clickable card with enhanced hover and active states</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-card interactive" style="max-width: 300px;">
+                            <div class="lyd-card-badge">NEW</div>
+                            <div class="lyd-card-body">
+                                <h3 class="lyd-card-title">Market Update</h3>
+                                <p class="lyd-card-text">Latest market insights and property trends for Q4 2024.</p>
+                                <button class="lyd-button secondary">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Featured Card -->
+                <div class="showcase-item">
+                    <h3>Featured Card</h3>
+                    <p>Highlighted card with premium border styling</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-card featured" style="max-width: 300px;">
+                            <div class="lyd-card-header">
+                                <h3 class="lyd-card-title">Premium Service</h3>
+                                <p class="lyd-card-subtitle">Recommended</p>
+                            </div>
+                            <div class="lyd-card-body">
+                                <p class="lyd-card-text">Comprehensive property management with 24/7 support.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Glassmorphism Card -->
+                <div class="showcase-item">
+                    <h3>Glassmorphism Card</h3>
+                    <p>Modern glassmorphism effect with LYD CI styling</p>
+                    <div class="showcase-demo" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); padding: 32px;">
+                        <div class="lyd-card glassmorphism" style="max-width: 280px; color: white;">
+                            <div class="lyd-card-body">
+                                <h3 class="lyd-card-title" style="color: white;">Exclusive Offer</h3>
+                                <p class="lyd-card-text" style="color: rgba(255,255,255,0.9);">Premium properties with exceptional value and location.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real Estate Card Types -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Card Types</h2>
+            
+            <div class="examples-grid">
+                <!-- Property Listing Card -->
+                <div class="example-item">
+                    <h3 class="example-title">Property Listing Card</h3>
+                    <p class="example-description">Complete property card with image, price, details, and location</p>
+                    <div class="example-demo">
+                        <div class="lyd-card lyd-property-card">
+                            <div class="lyd-card-image-container">
+                                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=240&q=80" alt="Modern Villa in Munich Schwabing" class="lyd-card-image">
+                                <div class="lyd-card-badge success">Available</div>
+                            </div>
+                            <div class="lyd-card-body">
+                                <div class="lyd-property-price">€850.000</div>
+                                <h3 class="lyd-card-title">Modern Villa in Schwabing</h3>
+                                <div class="lyd-property-location">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--lyd-royal-blue); margin-right: 6px;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    Munich, Bavaria
+                                </div>
+                                <div class="lyd-property-details">
+                                    <div class="lyd-property-detail">
+                                        <svg class="lyd-property-detail-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707L13 15v4a1 1 0 01-.553.894l-2 1A1 1 0 019 20v-5L1.293 7.293A1 1 0 011 6.586V4z"/>
+                                        </svg>
+                                        <span>4 Rooms</span>
+                                    </div>
+                                    <div class="lyd-property-detail">
+                                        <svg class="lyd-property-detail-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4a1 1 0 011-1h4M4 16v4a1 1 0 001 1h4m8-16h4a1 1 0 011 1v4m-4 12h4a1 1 0 001-1v-4M9 12h6m-6 4h6m-6-8h6"/>
+                                        </svg>
+                                        <span>120 m²</span>
+                                    </div>
+                                    <div class="lyd-property-detail">
+                                        <svg class="lyd-property-detail-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3z"/>
+                                        </svg>
+                                        <span>2020</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lyd-card-footer">
+                                <button class="lyd-button primary">Schedule Viewing</button>
+                                <button class="lyd-button secondary">Save Property</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agent Card -->
+                <div class="example-item">
+                    <h3 class="example-title">Agent Profile Card</h3>
+                    <p class="example-description">Professional agent card with contact information and credentials</p>
+                    <div class="example-demo">
+                        <div class="lyd-card" style="max-width: 320px;">
+                            <div class="lyd-card-header" style="text-align: center;">
+                                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--lyd-royal-blue), var(--lyd-deep-blue)); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: 600;">MB</div>
+                                <h3 class="lyd-card-title">Max Bernecker</h3>
+                                <p class="lyd-card-subtitle">Senior Property Advisor</p>
+                            </div>
+                            <div class="lyd-card-body">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; color: var(--lyd-grey);">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span>max@liveyourdreams.de</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 14px; color: var(--lyd-grey);">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                    <span>+49 89 123 456 789</span>
+                                </div>
+                                <p style="font-size: 14px; color: var(--lyd-grey);">Spezialist für Luxusimmobilien in München mit über 10 Jahren Erfahrung.</p>
+                            </div>
+                            <div class="lyd-card-footer">
+                                <button class="lyd-button primary">Contact Agent</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Statistics Card -->
+                <div class="example-item">
+                    <h3 class="example-title">Statistics Card</h3>
+                    <p class="example-description">Data visualization card for market metrics and KPIs</p>
+                    <div class="example-demo">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                            <div class="lyd-card" style="text-align: center;">
+                                <div class="lyd-card-body">
+                                    <div style="font-size: 32px; font-weight: 700; color: var(--lyd-deep-blue); margin-bottom: 8px;">1,247</div>
+                                    <h4 style="font-size: 16px; font-weight: 600; color: var(--lyd-text); margin-bottom: 4px;">Active Properties</h4>
+                                    <p style="font-size: 12px; color: var(--lyd-success);">↗ +12% vs last month</p>
+                                </div>
+                            </div>
+                            <div class="lyd-card" style="text-align: center;">
+                                <div class="lyd-card-body">
+                                    <div style="font-size: 32px; font-weight: 700; color: var(--lyd-deep-blue); margin-bottom: 8px;">€847K</div>
+                                    <h4 style="font-size: 16px; font-weight: 600; color: var(--lyd-text); margin-bottom: 4px;">Avg. Price</h4>
+                                    <p style="font-size: 12px; color: var(--lyd-error);">↘ -3% vs last month</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card Sizes -->
+                <div class="example-item">
+                    <h3 class="example-title">Card Sizes</h3>
+                    <p class="example-description">Different card sizes for various layout requirements</p>
+                    <div class="example-demo">
+                        <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
+                            <div class="lyd-card small">
+                                <div class="lyd-card-body">
+                                    <h4 class="lyd-card-title">Small Card</h4>
+                                    <p class="lyd-card-text">Compact card for sidebars and tight spaces.</p>
+                                </div>
+                            </div>
+                            <div class="lyd-card">
+                                <div class="lyd-card-body">
+                                    <h4 class="lyd-card-title">Regular Card</h4>
+                                    <p class="lyd-card-text">Standard card size for most use cases and layouts.</p>
+                                </div>
+                            </div>
+                            <div class="lyd-card large">
+                                <div class="lyd-card-body">
+                                    <h4 class="lyd-card-title">Large Card</h4>
+                                    <p class="lyd-card-text">Large card for detailed content and featured sections with more space.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre><!-- Basic Card -->
+&lt;div class="lyd-card"&gt;
+    &lt;div class="lyd-card-header"&gt;
+        &lt;h3 class="lyd-card-title"&gt;Card Title&lt;/h3&gt;
+        &lt;p class="lyd-card-subtitle"&gt;Card Subtitle&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-card-body"&gt;
+        &lt;p class="lyd-card-text"&gt;Card content goes here.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-card-footer"&gt;
+        &lt;button class="lyd-button primary"&gt;Action&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+<!-- Card with Image -->
+&lt;div class="lyd-card"&gt;
+    &lt;div class="lyd-card-image-container"&gt;
+        &lt;img src="image.jpg" alt="Description" class="lyd-card-image"&gt;
+        &lt;div class="lyd-card-badge"&gt;NEW&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-card-body"&gt;
+        &lt;h3 class="lyd-card-title"&gt;Image Card&lt;/h3&gt;
+        &lt;p class="lyd-card-text"&gt;Content with image.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+<!-- Interactive Card -->
+&lt;div class="lyd-card interactive featured"&gt;
+    &lt;div class="lyd-card-body"&gt;
+        &lt;h3 class="lyd-card-title"&gt;Interactive Card&lt;/h3&gt;
+        &lt;p class="lyd-card-text"&gt;Clickable card with states.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+                
+                <h3>React/Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// components/Card.tsx
+import { ReactNode, HTMLAttributes } from 'react';
+
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'featured' | 'glassmorphism';
+  size?: 'small' | 'medium' | 'large';
+  interactive?: boolean;
+  loading?: boolean;
+  children: ReactNode;
+}
+
+export const Card = ({
+  variant = 'default',
+  size = 'medium',
+  interactive = false,
+  loading = false,
+  className = '',
+  children,
+  ...props
+}: CardProps) => {
+  const cardClasses = `
+    lyd-card 
+    ${variant !== 'default' ? variant : ''} 
+    ${size !== 'medium' ? size : ''}
+    ${interactive ? 'interactive' : ''}
+    ${loading ? 'loading' : ''}
+    ${className}
+  `.trim();
+
+  return (
+    &lt;div className={cardClasses} {...props}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+};
+
+// Card sub-components
+export const CardHeader = ({ children, className = '', ...props }) => (
+  &lt;div className={`lyd-card-header ${className}`} {...props}&gt;
+    {children}
+  &lt;/div&gt;
+);
+
+export const CardBody = ({ children, className = '', ...props }) => (
+  &lt;div className={`lyd-card-body ${className}`} {...props}&gt;
+    {children}
+  &lt;/div&gt;
+);
+
+export const CardFooter = ({ children, className = '', ...props }) => (
+  &lt;div className={`lyd-card-footer ${className}`} {...props}&gt;
+    {children}
+  &lt;/div&gt;
+);
+
+export const CardTitle = ({ children, className = '', ...props }) => (
+  &lt;h3 className={`lyd-card-title ${className}`} {...props}&gt;
+    {children}
+  &lt;/h3&gt;
+);</pre>
+                </div>
+                
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-card</code></td>
+                            <td>Base card class with premium styling and animations</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-card-header</code></td>
+                            <td>Card header section with title and subtitle</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-card-body</code></td>
+                            <td>Main content area of the card</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-card-footer</code></td>
+                            <td>Footer section for actions and buttons</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-card-title</code></td>
+                            <td>Card title with consistent typography</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-card-subtitle</code></td>
+                            <td>Secondary title or description</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small card size (max-width: 300px)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large card size (max-width: 600px)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.interactive</code></td>
+                            <td>Makes card clickable with enhanced states</td>
+                        </tr>
+                        <tr>
+                            <td><code>.featured</code></td>
+                            <td>Featured styling with royal blue border</td>
+                        </tr>
+                        <tr>
+                            <td><code>.glassmorphism</code></td>
+                            <td>Premium glassmorphism effect</td>
+                        </tr>
+                        <tr>
+                            <td><code>.loading</code></td>
+                            <td>Loading state with spinner animation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-card-badge</code></td>
+                            <td>Notification badge positioned on card</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Section 4: Accessibility & Best Practices -->
+        <section class="section">
+            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h4>Keyboard Navigation</h4>
+                    <ul>
+                        <li>Tab to navigate between interactive cards</li>
+                        <li>Enter/Space to activate card actions</li>
+                        <li>Arrow keys for card grids</li>
+                        <li>Focus indicators on all interactive elements</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Screen Reader Support</h4>
+                    <ul>
+                        <li>Semantic HTML structure</li>
+                        <li>ARIA labels for complex cards</li>
+                        <li>Meaningful heading hierarchy</li>
+                        <li>Alt text for card images</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Visual Accessibility</h4>
+                    <ul>
+                        <li>WCAG AA contrast ratios</li>
+                        <li>Clear focus indicators</li>
+                        <li>Sufficient color differentiation</li>
+                        <li>Readable typography scales</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Interactive States</h4>
+                    <ul>
+                        <li>Hover feedback for all interactions</li>
+                        <li>Loading states for async actions</li>
+                        <li>Error state handling</li>
+                        <li>Success confirmation feedback</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>Typography Scale Integration</h3>
+                <p>Diese Card-Implementation nutzt die <strong>Typography Scale</strong> für 100%ige Konsistenz:</p>
+                <ul style="margin: 16px 0; padding-left: 20px;">
+                    <li><strong>Card Title:</strong> <code>var(--font-size-lg)</code> (18px) - Prominente Überschriften</li>
+                    <li><strong>Card Subtitle:</strong> <code>var(--font-size-sm)</code> (14px) - Sekundäre Informationen</li>
+                    <li><strong>Card Text:</strong> <code>var(--font-size-base)</code> (16px) - CI-Standard</li>
+                    <li><strong>Property Price:</strong> <code>var(--font-size-2xl)</code> (24px) - Wichtige Zahlen</li>
+                    <li><strong>Badge Text:</strong> <code>var(--font-size-xs)</code> (12px) - Kompakte Labels</li>
+                </ul>
+                
+                <h3>Real Estate Optimization</h3>
+                <p>Speziell optimiert für Immobilien-Anwendungen:</p>
+                <ul style="margin: 16px 0; padding-left: 20px;">
+                    <li><strong>Property Cards:</strong> Preis, Zimmer, Fläche, Baujahr strukturiert dargestellt</li>
+                    <li><strong>Agent Cards:</strong> Professionelle Kontaktinformationen und Credentials</li>
+                    <li><strong>Statistics Cards:</strong> KPIs und Marktdaten übersichtlich präsentiert</li>
+                    <li><strong>Image Handling:</strong> Optimierte Hover-Effekte für Property-Bilder</li>
+                    <li><strong>Status Badges:</strong> Verfügbarkeit und Immobilien-Status</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Copy to clipboard functionality
+        document.querySelectorAll('.lyd-button.copy').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.parentElement.querySelector('pre');
+                navigator.clipboard.writeText(codeBlock.textContent);
+                
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        });
+
+        // Card interactions and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Interactive card click handling
+            document.querySelectorAll('.lyd-card.interactive').forEach(card => {
+                card.addEventListener('click', function() {
+                    // Add click animation
+                    this.style.transform = 'translateY(-2px) scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    console.log('Card clicked:', this);
+                });
+                
+                // Keyboard support
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+                
+                // Make focusable
+                if (!card.hasAttribute('tabindex')) {
+                    card.setAttribute('tabindex', '0');
+                }
+            });
+
+            // Enhanced hover effects for image cards
+            document.querySelectorAll('.lyd-card-image').forEach(image => {
+                const card = image.closest('.lyd-card');
+                
+                card.addEventListener('mouseenter', function() {
+                    image.style.transform = 'scale(1.05)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    image.style.transform = 'scale(1)';
+                });
+            });
+
+            // Loading state simulation for demo
+            document.querySelectorAll('.lyd-card.loading').forEach(card => {
+                setTimeout(() => {
+                    card.classList.remove('loading');
+                }, 3000);
+            });
+
+            // Property price formatting
+            document.querySelectorAll('.lyd-property-price').forEach(price => {
+                const text = price.textContent;
+                if (text.includes('€')) {
+                    const number = text.replace(/[^\d]/g, '');
+                    if (number) {
+                        const formatted = parseInt(number).toLocaleString('de-DE');
+                        price.textContent = `€${formatted}`;
+                    }
+                }
+            });
+
+            // Card animation on scroll (intersection observer)
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.lyd-card').forEach(card => {
+                card.style.opacity = '0';
+                cardObserver.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

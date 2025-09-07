@@ -9,7 +9,7 @@
   "containerDefinitions": [
     {
       "name": "design-system",
-                      "image": "835474150597.dkr.ecr.eu-central-1.amazonaws.com/lyd-design-system:v8.3-accordion-complete",
+                      "image": "835474150597.dkr.ecr.eu-central-1.amazonaws.com/lyd-design-system:v30.8-advanced-table",
       "portMappings": [
         {
           "containerPort": 80,

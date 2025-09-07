@@ -1,0 +1,286 @@
+/**
+ * Live Your Dreams - Design System Tokens
+ * Central source of truth for all design tokens
+ * Version: 2.0.0
+ * 
+ * This file contains all design tokens used across the LYD ecosystem.
+ * Import this file in all components to ensure consistency.
+ */
+
+:root {
+    /* ========================================
+       LIVE YOUR DREAMS CI COLORS
+       ======================================== */
+    
+    /* Primary Brand Colors - CI konform */
+    --lyd-deep-blue: #000066;
+    --lyd-royal-blue: #3366CC;
+    --lyd-accent: #E8F0FE;
+    --lyd-grey: #666666;
+    --lyd-line: #E5E7EB;
+    --lyd-text: #111111;
+    --lyd-bg: #ffffff;
+    
+    /* Extended Color Palette */
+    --lyd-primary: #0066ff;
+    --lyd-primary-hover: #0052cc;
+    --lyd-secondary: #6366f1;
+    --lyd-success: #10b981;
+    --lyd-warning: #f59e0b;
+    --lyd-error: #ef4444;
+    
+    /* Neutral Colors - Professional Scale */
+    --lyd-white: #ffffff;
+    --lyd-gray-50: #f9fafb;
+    --lyd-gray-100: #f3f4f6;
+    --lyd-gray-200: #e5e7eb;
+    --lyd-gray-300: #d1d5db;
+    --lyd-gray-400: #9ca3af;
+    --lyd-gray-500: #6b7280;
+    --lyd-gray-600: #4b5563;
+    --lyd-gray-700: #374151;
+    --lyd-gray-800: #1f2937;
+    --lyd-gray-900: #111827;
+    
+    /* Semantic Colors */
+    --lyd-background: var(--lyd-white);
+    --lyd-surface: var(--lyd-gray-50);
+    --lyd-text-primary: var(--lyd-gray-900);
+    --lyd-text-secondary: var(--lyd-gray-600);
+    
+    /* ========================================
+       TYPOGRAPHY SYSTEM
+       ======================================== */
+    
+    /* Font Families */
+    --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+    --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-family-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    
+    /* Font Sizes - Professional Scale */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+    --font-size-4xl: 36px;
+    --font-size-5xl: 48px;
+    --font-size-6xl: 64px;
+    
+    /* CI Headlines from Strategy */
+    --font-size-h1: 26px;
+    --font-size-h2: 19px;
+    --font-size-body: 16px;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-snug: 1.375;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --line-height-loose: 2;
+    
+    /* Letter Spacing */
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.025em;
+    --letter-spacing-wider: 0.05em;
+    --letter-spacing-widest: 0.1em;
+    
+    /* ========================================
+       SPACING SYSTEM
+       ======================================== */
+    
+    /* Spacing Scale - 8px base */
+    --spacing-px: 1px;
+    --spacing-0: 0;
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 20px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+    --spacing-10: 40px;
+    --spacing-12: 48px;
+    --spacing-16: 64px;
+    --spacing-20: 80px;
+    --spacing-24: 96px;
+    --spacing-32: 128px;
+    
+    /* Semantic Spacing */
+    --spacing-xs: var(--spacing-1);
+    --spacing-sm: var(--spacing-2);
+    --spacing-md: var(--spacing-4);
+    --spacing-lg: var(--spacing-6);
+    --spacing-xl: var(--spacing-8);
+    --spacing-2xl: var(--spacing-12);
+    --spacing-3xl: var(--spacing-16);
+    
+    /* ========================================
+       BORDER RADIUS SYSTEM
+       ======================================== */
+    
+    --radius-none: 0;
+    --radius-sm: 2px;
+    --radius-base: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-3xl: 24px;
+    --radius-full: 9999px;
+    
+    /* ========================================
+       SHADOW SYSTEM
+       ======================================== */
+    
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    
+    /* Premium Shadows */
+    --shadow-premium: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --shadow-luxury: 0 12px 48px rgba(0, 0, 0, 0.15);
+    
+    /* ========================================
+       TRANSITION SYSTEM
+       ======================================== */
+    
+    /* Timing Functions */
+    --ease-linear: linear;
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Premium Easings */
+    --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bouncy: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Duration Scale */
+    --duration-75: 75ms;
+    --duration-100: 100ms;
+    --duration-150: 150ms;
+    --duration-200: 200ms;
+    --duration-300: 300ms;
+    --duration-500: 500ms;
+    --duration-700: 700ms;
+    --duration-1000: 1000ms;
+    
+    /* Standardized Transitions */
+    --transition-fast: all var(--duration-150) var(--ease-out);
+    --transition-base: all var(--duration-200) var(--ease-out);
+    --transition-smooth: all var(--duration-300) var(--ease-out);
+    --transition-premium: all var(--duration-300) var(--ease-premium);
+    --transition-bouncy: all 400ms var(--ease-bouncy);
+    --transition-slow: all var(--duration-500) var(--ease-out);
+    
+    /* ========================================
+       Z-INDEX SYSTEM
+       ======================================== */
+    
+    --z-auto: auto;
+    --z-0: 0;
+    --z-10: 10;
+    --z-20: 20;
+    --z-30: 30;
+    --z-40: 40;
+    --z-50: 50;
+    
+    /* Semantic Z-Index */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 9999;
+    
+    /* ========================================
+       BREAKPOINTS
+       ======================================== */
+    
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    
+    /* ========================================
+       COMPONENT-SPECIFIC TOKENS
+       ======================================== */
+    
+    /* Button Tokens */
+    --button-height-sm: 32px;
+    --button-height-base: 40px;
+    --button-height-lg: 48px;
+    --button-padding-x-sm: 12px;
+    --button-padding-x-base: 16px;
+    --button-padding-x-lg: 24px;
+    
+    /* Input Tokens */
+    --input-height-sm: 32px;
+    --input-height-base: 40px;
+    --input-height-lg: 48px;
+    --input-padding-x: 12px;
+    --input-border-width: 1px;
+    --input-border-radius: var(--radius-md);
+    
+    /* Card Tokens */
+    --card-padding: var(--spacing-6);
+    --card-border-radius: var(--radius-xl);
+    --card-border-width: 1px;
+    
+    /* Modal Tokens */
+    --modal-backdrop-blur: 4px;
+    --modal-max-width-sm: 384px;
+    --modal-max-width-base: 512px;
+    --modal-max-width-lg: 640px;
+    --modal-max-width-xl: 768px;
+}
+
+/* ========================================
+   DARK MODE SUPPORT (Future)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --lyd-bg: #0f172a;
+        --lyd-text: #f8fafc;
+        --lyd-surface: #1e293b;
+        --lyd-text-primary: #f8fafc;
+        --lyd-text-secondary: #cbd5e1;
+        --lyd-line: #334155;
+    }
+}
+
+/* ========================================
+   REDUCED MOTION SUPPORT
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-fast: none;
+        --transition-base: none;
+        --transition-smooth: none;
+        --transition-premium: none;
+        --transition-bouncy: none;
+        --transition-slow: none;
+    }
+}

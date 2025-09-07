@@ -1,0 +1,19 @@
+{
+  "baseUrl": "http://designsystem.liveyourdreams.online",
+  "root": "/v2/components",
+  "routes": [
+    "/v2/components/",
+    "/v2/components/accordion/",
+    "/v2/components/buttons/",
+    "/v2/components/cards/",
+    "/v2/components/checkbox/",
+    "/v2/components/dropdown/",
+    "/v2/components/inputs/",
+    "/v2/components/modal/",
+    "/v2/components/radio/",
+    "/v2/components/select/",
+    "/v2/components/table/",
+    "/v2/components/toast/",
+    "/v2/components/typography/"
+  ]
+}

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breadcrumb - LYD Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* LYD Design Tokens - Konsistent über alle Komponenten */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-primary-active: #003d99;
+            --lyd-secondary: #6366f1;
+            --lyd-secondary-hover: #4f46e5;
+            --lyd-accent: #ff6b35;
+            --lyd-accent-light: #eff6ff;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-2xl: 16px;
+            --radius-full: 9999px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-gray-900);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Global Sidebar - Konsistent über alle Seiten */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-gray-200);
+        }
+        
+        .sidebar-logo {
+            width: 48px;
+            height: 38px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .sidebar-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .sidebar-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-600);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-section {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--lyd-gray-500);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-700);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: var(--lyd-gray-50);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+        }
+        
+        .nav-item.active {
+            background: var(--lyd-accent-light);
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: calc(100% - 280px);
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+            padding: var(--spacing-2xl);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-2xl);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--lyd-primary), var(--lyd-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* 4-Tab-System - Konsistent über alle Komponenten */
+        .tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            background: var(--lyd-white);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--lyd-gray-600);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-family);
+        }
+        
+        .tab:hover {
+            background: var(--lyd-gray-50);
+            color: var(--lyd-gray-900);
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, var(--lyd-primary), var(--lyd-secondary));
+            color: var(--lyd-white);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Content Sections */
+        .content-section {
+            background: var(--lyd-white);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--lyd-gray-100);
+        }
+        
+        .section-subtitle {
+            font-size: var(--font-size-base);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        /* Component Showcase Grid */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .component-card {
+            background: var(--lyd-gray-50);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--lyd-gray-200);
+            transition: all 0.3s ease;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--lyd-primary);
+        }
+        
+        .component-card h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .component-card p {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        /* Code Blocks */
+        .code-block {
+            background: var(--lyd-gray-900);
+            color: var(--lyd-gray-100);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .code-block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--lyd-gray-700);
+        }
+        
+        .code-language {
+            color: var(--lyd-secondary);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .copy-button {
+            background: var(--lyd-gray-800);
+            color: var(--lyd-gray-300);
+            border: 1px solid var(--lyd-gray-700);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .copy-button:hover {
+            background: var(--lyd-gray-700);
+            color: var(--lyd-white);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                max-width: 100%;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Component-Specific Styles */
+        
+    </style>
+</head>
+<body>
+    <!-- Global Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <!-- LYD Logo SVG -->
+            <svg class="sidebar-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#0099cc;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M495 50 C300 50, 150 200, 150 395 C150 590, 300 740, 495 740 C550 740, 600 720, 640 690 C580 720, 520 735, 460 735 C280 735, 135 590, 135 410 C135 230, 280 85, 460 85 C520 85, 580 100, 640 130 C600 100, 550 50, 495 50 Z" fill="url(#crescentGradient)"/>
+                <circle cx="700" cy="200" r="80" fill="#ff6b35"/>
+                <circle cx="750" cy="300" r="60" fill="#00d4aa" opacity="0.8"/>
+            </svg>
+            
+            <div class="sidebar-title">LYD Design</div>
+            <div class="sidebar-subtitle">Live Your Dreams</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/designing/introduction/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/developing/introduction/" class="nav-item">Introduction</a>
+            <a href="/developing/nextjs-integration/" class="nav-item">Next.js Integration</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/components/introduction/" class="nav-item">Introduction</a>
+            <a href="/components/button/" class="nav-item ">Button</a>
+            <a href="/components/input/" class="nav-item ">Input</a>
+            <a href="/components/select/" class="nav-item ">Select</a>
+            <a href="/components/textarea/" class="nav-item ">Textarea</a>
+            <a href="/components/checkbox/" class="nav-item ">Checkbox</a>
+            <a href="/components/radio/" class="nav-item ">Radio</a>
+            <a href="/components/switch/" class="nav-item ">Switch</a>
+            <a href="/components/card/" class="nav-item ">Card</a>
+            <a href="/components/modal/" class="nav-item ">Modal</a>
+            <a href="/components/accordion/" class="nav-item ">Accordion</a>
+            <a href="/components/tabs/" class="nav-item ">Tabs</a>
+            <a href="/components/table/" class="nav-item ">Table</a>
+            <a href="/components/toast/" class="nav-item ">Toast</a>
+            <a href="/components/spinner/" class="nav-item ">Spinner</a>
+            <a href="/components/progress/" class="nav-item ">Progress</a>
+            <a href="/components/pagination/" class="nav-item ">Pagination</a>
+            <a href="/components/breadcrumb/" class="nav-item active">Breadcrumb</a>
+            <a href="/components/stepper/" class="nav-item ">Stepper</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/styles/introduction/" class="nav-item">Introduction</a>
+            <a href="/styles/grid/" class="nav-item">Grid</a>
+            <a href="/styles/typography/" class="nav-item">Typography</a>
+            <a href="/styles/colors/" class="nav-item">Colors</a>
+            <a href="/styles/spacing/" class="nav-item">Spacing</a>
+            <a href="/styles/shadows/" class="nav-item">Shadows</a>
+            <a href="/styles/motion/" class="nav-item">Motion</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/patterns/introduction/" class="nav-item">Introduction</a>
+            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/patterns/header/" class="nav-item">Header</a>
+            <a href="/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Breadcrumb</h1>
+            <p class="page-subtitle">Navigation trail for property hierarchy and site structure.</p>
+        </div>
+        
+        <!-- 4-Tab-System -->
+        <div class="tabs">
+            <button class="tab active" data-tab="variants">Variants</button>
+            <button class="tab" data-tab="examples">Examples</button>
+            <button class="tab" data-tab="implementation">Implementation</button>
+            <button class="tab" data-tab="accessibility">Accessibility</button>
+        </div>
+        
+        <!-- Tab: Variants -->
+        <div class="tab-content active" id="variants">
+            
+            <section class="content-section">
+                <h2 class="section-title">Breadcrumb Variants & States</h2>
+                <p class="section-subtitle">All available variants, sizes, and states for the breadcrumb component.</p>
+                
+                <div class="component-grid">
+        
+                    <div class="component-card">
+                        <h3>lyd-breadcrumb</h3>
+                        <p>Base breadcrumb component with default styling</p>
+                        <div class="component-showcase">
+                            <lyd-breadcrumb>
+                                Default Breadcrumb
+                            </lyd-breadcrumb>
+                        </div>
+                    </div>
+        
+                    <div class="component-card">
+                        <h3>Default Variant</h3>
+                        <p>Default style for breadcrumb</p>
+                        <div class="component-showcase">
+                            <lyd-breadcrumb variant="default">
+                                Default Breadcrumb
+                            </lyd-breadcrumb>
+                        </div>
+                    </div>
+                
+                    <div class="component-card">
+                        <h3>Solid Variant</h3>
+                        <p>Solid style for breadcrumb</p>
+                        <div class="component-showcase">
+                            <lyd-breadcrumb variant="solid">
+                                Solid Breadcrumb
+                            </lyd-breadcrumb>
+                        </div>
+                    </div>
+                
+                </div>
+            </section>
+        
+        </div>
+        
+        <!-- Tab: Examples -->
+        <div class="tab-content" id="examples">
+            
+            <section class="content-section">
+                <h2 class="section-title">Real Estate Use Cases</h2>
+                <p class="section-subtitle">Practical examples of breadcrumb components in real estate applications.</p>
+                
+                <div class="example-section">
+                    <h3>Property Search Interface</h3>
+                    <div class="example-demo">
+                        <!-- Real Estate spezifisches Beispiel -->
+                        <lyd-breadcrumb 
+                            variant="primary"
+                            placeholder="Search properties..."
+                            icon="search">
+                        </lyd-breadcrumb>
+                    </div>
+                    
+                    <div class="code-block">
+                        <div class="code-block-header">
+                            <span class="code-language">HTML</span>
+                            <button class="copy-button">Copy</button>
+                        </div>
+                        <code>&lt;lyd-breadcrumb 
+    variant="primary"
+    placeholder="Search properties..."
+    icon="search"&gt;
+&lt;/lyd-breadcrumb&gt;</code>
+                    </div>
+                </div>
+                
+                <div class="example-section">
+                    <h3>Property Management Dashboard</h3>
+                    <div class="example-demo">
+                        <!-- Dashboard-Beispiel -->
+                        <div class="dashboard-example">
+                            <lyd-breadcrumb variant="secondary">
+                                Add Property
+                            </lyd-breadcrumb>
+                            <lyd-breadcrumb variant="outline">
+                                Edit Details
+                            </lyd-breadcrumb>
+                            <lyd-breadcrumb variant="ghost">
+                                Delete
+                            </lyd-breadcrumb>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+        </div>
+        
+        <!-- Tab: Implementation -->
+        <div class="tab-content" id="implementation">
+            
+            <section class="content-section">
+                <h2 class="section-title">API Reference</h2>
+                <p class="section-subtitle">Complete implementation guide for lyd-breadcrumb component.</p>
+                
+                <h3>Properties</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>variant</code></td>
+                            <td>string</td>
+                            <td>default</td>
+                            <td>Visual style variant</td>
+                        </tr>
+                        <tr>
+                            <td><code>size</code></td>
+                            <td>string</td>
+                            <td>medium</td>
+                            <td>Component size</td>
+                        </tr>
+                        <tr>
+                            <td><code>disabled</code></td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Disable interaction</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Next.js Integration</h3>
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-language">TypeScript</span>
+                        <button class="copy-button">Copy</button>
+                    </div>
+                    <code>// app/components/PropertyForm.tsx
+import { useEffect } from 'react';
+
+export default function PropertyForm() {
+    useEffect(() => {
+        import('@/lib/lyd-design-system');
+    }, []);
+    
+    return (
+        &lt;lyd-breadcrumb
+            variant="primary"
+            onClick={handleSubmit}&gt;
+            Submit Property
+        &lt;/lyd-breadcrumb&gt;
+    );
+}</code>
+                </div>
+                
+                <h3>TypeScript Definitions</h3>
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-language">TypeScript</span>
+                        <button class="copy-button">Copy</button>
+                    </div>
+                    <code>declare namespace JSX {
+    interface IntrinsicElements {
+        'lyd-breadcrumb': {
+            variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+            size?: 'small' | 'medium' | 'large';
+            disabled?: boolean;
+            onClick?: (event: CustomEvent) => void;
+            children?: React.ReactNode;
+        };
+    }
+}</code>
+                </div>
+            </section>
+        
+        </div>
+        
+        <!-- Tab: Accessibility -->
+        <div class="tab-content" id="accessibility">
+            
+            <section class="content-section">
+                <h2 class="section-title">Accessibility Guidelines</h2>
+                <p class="section-subtitle">WCAG 2.1 AA compliant implementation for breadcrumb components.</p>
+                
+                <div class="accessibility-grid">
+                    <div class="accessibility-card">
+                        <h3>✅ Keyboard Navigation</h3>
+                        <ul>
+                            <li><kbd>Tab</kbd> - Navigate to component</li>
+                            <li><kbd>Space</kbd> / <kbd>Enter</kbd> - Activate component</li>
+                            <li><kbd>Esc</kbd> - Cancel action (if applicable)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="accessibility-card">
+                        <h3>✅ Screen Reader Support</h3>
+                        <ul>
+                            <li>Proper ARIA labels and descriptions</li>
+                            <li>Role attributes for semantic meaning</li>
+                            <li>Live region announcements for state changes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="accessibility-card">
+                        <h3>✅ Visual Accessibility</h3>
+                        <ul>
+                            <li>WCAG AA color contrast ratios (4.5:1 minimum)</li>
+                            <li>Focus indicators clearly visible</li>
+                            <li>No reliance on color alone</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="accessibility-card">
+                        <h3>✅ Responsive & Adaptive</h3>
+                        <ul>
+                            <li>Touch targets minimum 44x44px</li>
+                            <li>Text scalable up to 200%</li>
+                            <li>Works with all input methods</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>ARIA Attributes</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>role</code></td>
+                            <td>button</td>
+                            <td>Semantic role for screen readers</td>
+                        </tr>
+                        <tr>
+                            <td><code>aria-label</code></td>
+                            <td>Dynamic</td>
+                            <td>Accessible name for the component</td>
+                        </tr>
+                        <tr>
+                            <td><code>aria-disabled</code></td>
+                            <td>true/false</td>
+                            <td>Indicates disabled state</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+        
+        // Copy Code Functionality
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.closest('.code-block');
+                const code = codeBlock.querySelector('code').textContent;
+                
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.background = 'var(--lyd-success)';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                    }, 2000);
+                });
+            });
+        });
+        
+        // Set Active Navigation
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-item').forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+        
+        // Component-Specific JavaScript
+        
+    </script>
+</body>
+</html>

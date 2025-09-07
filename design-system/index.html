@@ -10,7 +10,7 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+          box-sizing: border-box;
         }
         
         body {
@@ -94,7 +94,7 @@
             padding: 8px 24px;
             color: #6b7280;
             text-decoration: none;
-            font-size: 14px;
+          font-size: 14px;
             transition: all 0.2s ease;
         }
         
@@ -129,31 +129,31 @@
         }
         
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
-            padding: 40px;
+          padding: 40px;
             margin-bottom: 32px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
         
         .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0066ff;
+          font-size: 28px;
+          font-weight: 700;
+          color: #0066ff;
             margin-bottom: 24px;
         }
         
         .component-grid {
-            display: grid;
+          display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+          gap: 24px;
         }
         
         .demo-card {
-            background: white;
-            border: 1px solid #f3f4f6;
+          background: white;
+          border: 1px solid #f3f4f6;
             border-radius: 12px;
             padding: 32px 24px;
             transition: all 0.2s ease;
@@ -161,22 +161,22 @@
         
         .demo-card:hover {
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
+          transform: translateY(-2px);
         }
         
         .demo-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
+          font-size: 18px;
+          font-weight: 600;
+          color: #1f2937;
             margin-bottom: 16px;
         }
         
         .component-showcase {
-            display: flex;
-            flex-direction: column;
+          display: flex;
+          flex-direction: column;
             gap: 16px;
         }
-    </style>
+      </style>
     <script type="module" src="/src/components/lyd-button.js"></script>
     <script type="module" src="/src/components/lyd-button-enhanced.js"></script>
     <script type="module" src="/src/components/lyd-input.js"></script>
@@ -257,8 +257,8 @@
             </div>
         </div>
     </nav>
-    
-    <!-- Main Content -->
+        
+        <!-- Main Content -->
     <main class="main-content">
         <div class="page-header">
             <h1 class="page-title">Components</h1>
@@ -267,30 +267,30 @@
                 Built with Next.js integration and accessibility in mind.
             </p>
         </div>
-        
-        <!-- Component Gallery -->
+            
+            <!-- Component Gallery -->
         <section class="section">
             <h2 class="section-title">Foundation Components</h2>
-            <div class="component-grid">
-                <!-- Button Showcase -->
-                <div class="demo-card">
-                    <h3 class="demo-title">Button Components</h3>
+                <div class="component-grid">
+                    <!-- Button Showcase -->
+                    <div class="demo-card">
+                        <h3 class="demo-title">Button Components</h3>
                     <div class="component-showcase">
                         <lyd-button variant="primary" size="large">
                             Schedule Property Viewing
                         </lyd-button>
                         <lyd-button variant="secondary">
-                            Add to Favorites
+                                Add to Favorites
                         </lyd-button>
                         <lyd-button variant="outline">
-                            Download Exposé
+                                Download Exposé
                         </lyd-button>
                     </div>
-                </div>
-                
-                <!-- Input Showcase -->
-                <div class="demo-card">
-                    <h3 class="demo-title">Input Components</h3>
+                    </div>
+                    
+                    <!-- Input Showcase -->
+                    <div class="demo-card">
+                        <h3 class="demo-title">Input Components</h3>
                     <div class="component-showcase">
                         <lyd-input 
                             variant="search" 
@@ -324,50 +324,50 @@
                                 <p><strong>€750,000</strong></p>
                             </div>
                         </lyd-card>
+                        </div>
                     </div>
-                                 </div>
-                 
-                 <!-- Property Card Showcase -->
-                 <div class="demo-card" style="grid-column: 1 / -1;">
-                     <h3 class="demo-title">Property Card Component</h3>
-                     <div style="max-width: 400px; margin-top: 20px;">
-                         <lyd-card variant="glass" hoverable clickable>
-                             <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=200&fit=crop&auto=format" 
-                                  alt="Luxury Property" 
-                                  style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
-                             
-                             <div style="margin-bottom: 16px;">
-                                 <h4 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #1f2937;">
-                                     Luxury Penthouse Munich
-                                 </h4>
-                                 <p style="margin: 0; color: #6b7280; font-size: 14px;">
-                                     Schwabing • 4.5 Rooms • 180 m² • Premium Location
-                                 </p>
-                             </div>
-                             
-                             <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
-                                 Exceptional penthouse with panoramic city views, modern amenities, 
-                                 and exclusive rooftop terrace in Munich's most prestigious district.
-                             </p>
-                             
-                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                 <div>
-                                     <div style="font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
-                                         €1,250,000
-                                     </div>
-                                     <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
-                                         €6,944/m² • Premium Location
-                                     </div>
-                                 </div>
+                    
+                    <!-- Property Card Showcase -->
+                    <div class="demo-card" style="grid-column: 1 / -1;">
+                        <h3 class="demo-title">Property Card Component</h3>
+                        <div style="max-width: 400px; margin-top: 20px;">
+                            <lyd-card variant="glass" hoverable clickable>
+                                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=200&fit=crop&auto=format" 
+                                     alt="Luxury Property" 
+                                     style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
+                                
+                                <div style="margin-bottom: 16px;">
+                                    <h4 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #1f2937;">
+                                        Luxury Penthouse Munich
+                                    </h4>
+                                    <p style="margin: 0; color: #6b7280; font-size: 14px;">
+                                        Schwabing • 4.5 Rooms • 180 m² • Premium Location
+                                    </p>
+                                </div>
+                                
+                                <p style="margin: 0 0 24px 0; color: #4b5563; line-height: 1.6; font-size: 15px;">
+                                    Exceptional penthouse with panoramic city views, modern amenities, 
+                                    and exclusive rooftop terrace in Munich's most prestigious district.
+                                </p>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #0066ff 0%, #004299 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">
+                                            €1,250,000
+                                        </div>
+                                        <div style="color: #6b7280; font-size: 13px; font-weight: 500;">
+                                            €6,944/m² • Premium Location
+                                        </div>
+                                    </div>
                                  <lyd-button-enhanced variant="primary" size="medium" icon="home">
-                                     View Details
+                                        View Details
                                  </lyd-button-enhanced>
-                             </div>
-                         </lyd-card>
-                     </div>
-                 </div>
-             </div>
-         </section>
+                                </div>
+                            </lyd-card>
+                        </div>
+                    </div>
+                </div>
+            </section>
         
         <!-- Usage Examples -->
         <section class="section">

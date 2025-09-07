@@ -1,0 +1,342 @@
+/**
+ * Live Your Dreams - Modal Component Styles
+ * Professional modal system with premium effects
+ * Version: 2.0.0
+ * 
+ * Requires: tokens.css to be imported first.
+ */
+
+/* ========================================
+   MODAL SYSTEM
+   ======================================== */
+
+.lyd-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4);
+}
+
+.lyd-modal.entering {
+    animation: modalFadeIn var(--duration-300) var(--ease-out) forwards;
+}
+
+.lyd-modal.leaving {
+    animation: modalFadeOut var(--duration-200) var(--ease-in) forwards;
+}
+
+/* Modal Backdrop */
+.lyd-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    transition: var(--transition-smooth);
+}
+
+.lyd-modal-backdrop.premium {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+/* Modal Content */
+.lyd-modal-content {
+    position: relative;
+    background: var(--lyd-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-2xl);
+    max-width: var(--modal-max-width-base);
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: var(--transition-premium);
+}
+
+.lyd-modal.entering .lyd-modal-content {
+    transform: scale(1);
+}
+
+.lyd-modal.leaving .lyd-modal-content {
+    transform: scale(0.95);
+}
+
+/* Modal Sizes */
+.lyd-modal-content.lyd-modal-sm {
+    max-width: var(--modal-max-width-sm);
+}
+
+.lyd-modal-content.lyd-modal-lg {
+    max-width: var(--modal-max-width-lg);
+}
+
+.lyd-modal-content.lyd-modal-xl {
+    max-width: var(--modal-max-width-xl);
+}
+
+/* Glassmorphism Modal */
+.lyd-modal-content.glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--lyd-text-primary);
+}
+
+/* Modal Header */
+.lyd-modal-header {
+    padding: var(--spacing-6);
+    border-bottom: 1px solid var(--lyd-gray-200);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    flex-shrink: 0;
+}
+
+.lyd-modal-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--lyd-text-primary);
+    margin: 0;
+    flex: 1;
+}
+
+.lyd-modal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lyd-modal-icon.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--lyd-error);
+}
+
+.lyd-modal-icon.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--lyd-success);
+}
+
+.lyd-modal-icon.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--lyd-warning);
+}
+
+.lyd-modal-icon.info {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--lyd-primary);
+}
+
+.lyd-modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lyd-gray-500);
+    cursor: pointer;
+    transition: var(--transition-base);
+    flex-shrink: 0;
+}
+
+.lyd-modal-close:hover {
+    background: var(--lyd-gray-100);
+    color: var(--lyd-text-primary);
+}
+
+/* Modal Body */
+.lyd-modal-body {
+    padding: var(--spacing-6);
+    flex: 1;
+    overflow-y: auto;
+}
+
+.lyd-modal-body p {
+    color: var(--lyd-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+}
+
+.lyd-modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Modal Footer */
+.lyd-modal-footer {
+    padding: var(--spacing-6);
+    border-top: 1px solid var(--lyd-gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+    flex-shrink: 0;
+}
+
+/* Form Styles in Modal */
+.lyd-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+}
+
+.lyd-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.lyd-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+.lyd-form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--lyd-text-primary);
+}
+
+.lyd-input {
+    padding: var(--input-padding-x);
+    height: var(--input-height-base);
+    border: var(--input-border-width) solid var(--lyd-gray-300);
+    border-radius: var(--input-border-radius);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-family-primary);
+    color: var(--lyd-text-primary);
+    background: var(--lyd-white);
+    transition: var(--transition-base);
+}
+
+.lyd-input:focus {
+    outline: none;
+    border-color: var(--lyd-primary);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+.lyd-input::placeholder {
+    color: var(--lyd-gray-400);
+}
+
+textarea.lyd-input {
+    height: auto;
+    resize: vertical;
+    min-height: 80px;
+    padding: var(--spacing-3) var(--input-padding-x);
+}
+
+/* Animations */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalFadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .lyd-modal {
+        padding: var(--spacing-2);
+    }
+    
+    .lyd-modal-content {
+        max-width: 100%;
+        max-height: 95vh;
+    }
+    
+    .lyd-modal-header,
+    .lyd-modal-body,
+    .lyd-modal-footer {
+        padding: var(--spacing-4);
+    }
+    
+    .lyd-form-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3);
+    }
+    
+    .lyd-modal-footer {
+        flex-direction: column-reverse;
+        gap: var(--spacing-2);
+    }
+    
+    .lyd-modal-footer .lyd-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Accessibility */
+.lyd-modal[aria-hidden="true"] {
+    display: none;
+}
+
+.lyd-modal:focus {
+    outline: none;
+}
+
+.lyd-modal-content:focus {
+    outline: 2px solid var(--lyd-primary);
+    outline-offset: -2px;
+}
+
+/* Premium Modal Variants */
+.lyd-modal-premium .lyd-modal-backdrop {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+    backdrop-filter: blur(12px);
+}
+
+.lyd-modal-premium .lyd-modal-content {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .lyd-modal-content {
+        background: var(--lyd-gray-800);
+        border: 1px solid var(--lyd-gray-700);
+    }
+    
+    .lyd-modal-header {
+        border-bottom-color: var(--lyd-gray-700);
+    }
+    
+    .lyd-modal-footer {
+        border-top-color: var(--lyd-gray-700);
+    }
+    
+    .lyd-input {
+        background: var(--lyd-gray-700);
+        border-color: var(--lyd-gray-600);
+        color: var(--lyd-white);
+    }
+}

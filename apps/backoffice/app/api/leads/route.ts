@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       },
       include: {
         user: {
-          select: {
+          select: { 
             id: true,
             name: true,
             email: true
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     // Lead in Database speichern
     const lead = await db.lead.create({
-      data: {
+    data: {
         propertyId: validatedData.propertyId,
         name: validatedData.name,
         email: validatedData.email.toLowerCase(),
@@ -121,13 +121,13 @@ export async function POST(request: NextRequest) {
           utm: validatedData.metadata?.utm,
           timestamp: validatedData.metadata?.timestamp,
           url: validatedData.metadata?.url
-        }
       }
-    });
-
+    }
+  });
+  
     // E-Mail Transporter konfigurieren
     let transporter;
-    try {
+  try {
       transporter = nodemailer.createTransporter({
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT || '587'),

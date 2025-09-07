@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+        :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-line);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-grey);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-grey);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-royal-blue);
+            border-left-color: var(--lyd-royal-blue);
+            background: rgba(51, 102, 204, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-royal-blue);
+            border-left-color: var(--lyd-royal-blue);
+            background: rgba(51, 102, 204, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-grey);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .showcase-item {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+            transition: all 0.3s ease;
+        }
+        
+        .showcase-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--lyd-royal-blue);
+        }
+        
+        .showcase-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--lyd-text);
+            margin-bottom: 8px;
+        }
+        
+        .showcase-item p {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin-bottom: 16px;
+        }
+        
+        .showcase-demo {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+        }
+        
+        /* Modal System (autark) */
+        .lyd-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-lg);
+            z-index: 9999;
+        }
+        .lyd-modal.active { display: flex; animation: fadeIn 0.2s ease-out; }
+        .lyd-modal-backdrop {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+        }
+        .lyd-modal-backdrop.premium { background: linear-gradient(135deg, rgba(102,126,234,0.35), rgba(118,75,162,0.35)); }
+        .lyd-modal-content {
+            position: relative;
+            background: #fff;
+            width: 100%;
+            max-width: 640px;
+            max-height: 90vh;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-line);
+            box-shadow: var(--shadow-lg);
+            display: flex; flex-direction: column; overflow: hidden;
+            animation: slideIn 0.25s ease-out;
+        }
+        .lyd-modal-content.large { max-width: 760px; }
+        .lyd-modal-content.small { max-width: 420px; }
+        .lyd-modal-content.glassmorphism { background: rgba(255,255,255,0.12); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.3); }
+        .lyd-modal-header { padding: var(--spacing-lg); border-bottom: 1px solid var(--lyd-line); display: flex; align-items: center; gap: var(--spacing-md); }
+        .lyd-modal-title { margin: 0; font-size: var(--font-size-xl); font-weight: 600; color: var(--lyd-text); }
+        .lyd-modal-body { padding: var(--spacing-lg); overflow: auto; }
+        .lyd-modal-footer { padding: var(--spacing-lg); border-top: 1px solid var(--lyd-line); display: flex; gap: var(--spacing-sm); justify-content: flex-end; }
+        .lyd-modal-close { background: transparent; border: 0; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; color: var(--lyd-grey); }
+        .lyd-modal-close:hover { background: #f3f4f6; color: var(--lyd-text); }
+        .lyd-modal-icon { width: 40px; height: 40px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; }
+        .lyd-modal-icon.error { background: rgba(239,68,68,0.12); color: var(--lyd-error); }
+        .lyd-modal-icon.success { background: rgba(16,185,129,0.12); color: var(--lyd-success); }
+        
+        /* Buttons (autark) */
+        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; border: 0; cursor: pointer; font-size: 14px; font-weight: 500; }
+        .lyd-button.primary { background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: #fff; }
+        .lyd-button.secondary { background: transparent; color: var(--lyd-royal-blue); border: 1px solid var(--lyd-royal-blue); }
+        .lyd-button.ghost { background: transparent; color: var(--lyd-grey); }
+        .lyd-button.error { background: var(--lyd-error); color: #fff; }
+        .lyd-button:hover { filter: brightness(0.98); transform: translateY(-1px); transition: all .2s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(-6px); opacity: .96; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--lyd-text);
+            color: var(--lyd-bg);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            margin: 24px 0;
+            position: relative;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .lyd-button.copy {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--lyd-bg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-button.copy:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Implementation Section */
+        .implementation-section {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+            margin-bottom: 32px;
+        }
+        
+        /* Accessibility Grid */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+            padding: 32px;
+            background: #E8F0FE;
+            border-radius: 8px;
+        }
+        
+        .accessibility-item { background: white; padding: 20px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .accessibility-item h4 { font-size: 16px; font-weight: 600; color: #111111; margin-bottom: 12px; }
+        .accessibility-item ul { list-style: none; padding: 0; margin: 0; }
+        .accessibility-item li { padding: 4px 0; color: #666666; font-size: 14px; display: flex; align-items: flex-start; gap: 8px; }
+        .accessibility-item li:before { content: "✓"; color: #3366CC; font-weight: bold; flex-shrink: 0; }
+        
+        @media (max-width: 1200px) { .accessibility-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .accessibility-grid { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-left: 0; padding: var(--spacing-lg); }
+            .showcase-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradientV2Input" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Input)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradientLYD)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item active">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item">Toast</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Modal</h1>
+            <p class="page-subtitle">Professional modal dialog system with premium animations, accessibility features, and glassmorphism effects for sophisticated user interactions and real estate applications.</p>
+        </div>
+        
+        <!-- Section 1: Modal Variants -->
+        <section class="section">
+            <h2 class="section-title">Modal Variants</h2>
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Basic Information Modal</h3>
+                    <p>Standard modal dialog with clean styling and smooth animations for general information display</p>
+                    <button class="lyd-button" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: white;" onclick="openModal('basicModal')">Open Information Modal</button>
+                </div>
+                <div class="showcase-item">
+                    <h3>Confirmation Modal</h3>
+                    <p>Critical action confirmation with clear visual hierarchy and prominent action buttons</p>
+                    <button class="lyd-button" style="background: var(--lyd-error); color: white;" onclick="openModal('confirmModal')">Delete Property</button>
+                </div>
+                <div class="showcase-item">
+                    <h3>Form Modal</h3>
+                    <p>Complex form interactions within modal context with validation and structured layout</p>
+                    <button class="lyd-button" style="background: transparent; color: var(--lyd-royal-blue); border: 1px solid var(--lyd-royal-blue);" onclick="openModal('formModal')">Add New Property</button>
+                </div>
+                <div class="showcase-item">
+                    <h3>Premium Glassmorphism</h3>
+                    <p>Luxury modal with advanced glassmorphism effects and premium gradient styling</p>
+                    <button class="lyd-button" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;" onclick="openModal('premiumModal')">Premium Experience</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            <div class="implementation-section">
+                <h3>Basic Modal Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>&lt;!-- Basic Modal --&gt;
+&lt;div id="myModal" class="lyd-modal"&gt;
+    &lt;div class="lyd-modal-backdrop" onclick="closeModal('myModal')"&gt;&lt;/div&gt;
+    &lt;div class="lyd-modal-content"&gt;
+        &lt;div class="lyd-modal-header"&gt;
+            &lt;h3 class="lyd-modal-title"&gt;Modal Title&lt;/h3&gt;
+            &lt;button class="lyd-modal-close" onclick="closeModal('myModal')"&gt;×&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="lyd-modal-body"&gt;
+            &lt;p&gt;Modal content goes here.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="lyd-modal-footer"&gt;
+            &lt;button class="lyd-button" style="background: transparent; color: var(--lyd-grey);"&gt;Cancel&lt;/button&gt;
+            &lt;button class="lyd-button" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: white;"&gt;Confirm&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Accessibility & Best Practices -->
+        <section class="section">
+            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h4>Keyboard Navigation</h4>
+                    <ul>
+                        <li>Tab to navigate between modal elements</li>
+                        <li>Escape to close modal</li>
+                        <li>Enter/Space to activate buttons</li>
+                        <li>Focus trap within modal content</li>
+                        <li>Return focus to trigger element on close</li>
+                    </ul>
+                </div>
+                <div class="accessibility-item">
+                    <h4>Screen Reader Support</h4>
+                    <ul>
+                        <li>ARIA role="dialog" for modal containers</li>
+                        <li>ARIA labelledby for modal titles</li>
+                        <li>ARIA describedby for modal descriptions</li>
+                        <li>ARIA hidden for background content</li>
+                        <li>Live region announcements for state changes</li>
+                    </ul>
+                </div>
+                <div class="accessibility-item">
+                    <h4>Visual Accessibility</h4>
+                    <ul>
+                        <li>WCAG AA contrast ratios</li>
+                        <li>Clear focus indicators</li>
+                        <li>Readable typography</li>
+                        <li>Reduced motion support</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Minimal funktionsfähige Modals (unverändert) -->
+    <div id="basicModal" class="lyd-modal" style="display:none">
+        <div class="lyd-modal-backdrop" onclick="closeModal('basicModal')"></div>
+        <div class="lyd-modal-content">
+            <div class="lyd-modal-header">
+                <h3 class="lyd-modal-title">Property Information</h3>
+                <button class="lyd-modal-close" onclick="closeModal('basicModal')">×</button>
+            </div>
+            <div class="lyd-modal-body">
+                <p>Basic info modal content.</p>
+            </div>
+            <div class="lyd-modal-footer">
+                <button class="lyd-button" style="background: transparent; color: var(--lyd-grey);" onclick="closeModal('basicModal')">Close</button>
+                <button class="lyd-button" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); color: white;">Learn More</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="lyd-modal" style="display:none">
+        <div class="lyd-modal-backdrop" onclick="closeModal('confirmModal')"></div>
+        <div class="lyd-modal-content small">
+            <div class="lyd-modal-header">
+                <div class="lyd-modal-icon error">!</nobr></div>
+                <h3 class="lyd-modal-title">Delete Property</h3>
+                <button class="lyd-modal-close" onclick="closeModal('confirmModal')">×</button>
+            </div>
+            <div class="lyd-modal-body">
+                <p>Are you sure you want to delete “Villa München”? This action cannot be undone.</p>
+            </div>
+            <div class="lyd-modal-footer">
+                <button class="lyd-button ghost" onclick="closeModal('confirmModal')">Cancel</button>
+                <button class="lyd-button error">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Modal -->
+    <div id="formModal" class="lyd-modal" style="display:none">
+        <div class="lyd-modal-backdrop" onclick="closeModal('formModal')"></div>
+        <div class="lyd-modal-content large">
+            <div class="lyd-modal-header">
+                <h3 class="lyd-modal-title">Add New Property</h3>
+                <button class="lyd-modal-close" onclick="closeModal('formModal')">×</button>
+            </div>
+            <div class="lyd-modal-body">
+                <form style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <label style="display:flex; flex-direction:column; gap:6px; grid-column: span 2;">
+                        <span style="font-size:14px; color:var(--lyd-grey);">Title</span>
+                        <input class="lyd-input" placeholder="Luxury Villa München" />
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:6px;">
+                        <span style="font-size:14px; color:var(--lyd-grey);">Price (€)</span>
+                        <input class="lyd-input" placeholder="2,400,000" />
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:6px;">
+                        <span style="font-size:14px; color:var(--lyd-grey);">Rooms</span>
+                        <input class="lyd-input" type="number" placeholder="5" />
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:6px; grid-column: span 2;">
+                        <span style="font-size:14px; color:var(--lyd-grey);">Description</span>
+                        <textarea class="lyd-input" rows="3" placeholder="Describe the property..."></textarea>
+                    </label>
+                </form>
+            </div>
+            <div class="lyd-modal-footer">
+                <button class="lyd-button ghost" onclick="closeModal('formModal')">Cancel</button>
+                <button class="lyd-button secondary">Save Draft</button>
+                <button class="lyd-button primary">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Glassmorphism Modal -->
+    <div id="premiumModal" class="lyd-modal" style="display:none">
+        <div class="lyd-modal-backdrop premium" onclick="closeModal('premiumModal')"></div>
+        <div class="lyd-modal-content glassmorphism">
+            <div class="lyd-modal-header">
+                <h3 class="lyd-modal-title" style="background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Premium Experience</h3>
+                <button class="lyd-modal-close" onclick="closeModal('premiumModal')">×</button>
+            </div>
+            <div class="lyd-modal-body">
+                <p>Premium modal with glassmorphism, gradients and micro animations.</p>
+            </div>
+            <div class="lyd-modal-footer">
+                <button class="lyd-button ghost" onclick="closeModal('premiumModal')">Close</button>
+                <button class="lyd-button primary">Upgrade Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        function openModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.add('active'); m.style.display='flex'; document.body.style.overflow='hidden'; }
+        function closeModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.remove('active'); setTimeout(()=>{ m.style.display='none'; document.body.style.overflow=''; },200); }
+        document.querySelectorAll('.lyd-button.copy').forEach(b=>{ b.addEventListener('click',()=>{ const pre=b.parentElement.querySelector('pre'); navigator.clipboard.writeText(pre.textContent); b.textContent='Copied!'; setTimeout(()=>b.textContent='Copy',2000); }); });
+    </script>
+</body>
+</html>
+

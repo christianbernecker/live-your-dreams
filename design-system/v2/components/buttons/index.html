@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+        :root {
+            /* Design Tokens */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent: #ff6b35;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            
+            /* Colors */
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Standardized Transitions */
+            --transition-fast: all 0.15s ease;
+            --transition-base: all 0.2s ease;
+            --transition-smooth: all 0.3s ease;
+            --transition-premium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bouncy: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-slow: all 0.6s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-gray-900);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-500);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-600);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: var(--transition-base);
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: system-ui, -apple-system, sans-serif;
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: system-ui, -apple-system, sans-serif;
+            letter-spacing: 6px;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Component Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .showcase-item {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            transition: var(--transition-smooth);
+        }
+        
+        .showcase-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: #0066ff;
+        }
+        
+        .showcase-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .showcase-item p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+        
+        .showcase-demo {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--lyd-royal-blue);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+        
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .example-item {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .example-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .example-description {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+        
+        .example-demo {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--lyd-royal-blue);
+            margin-bottom: 16px;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 24px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 24px 0;
+            position: relative;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .lyd-button.copy {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #374151;
+            color: #f9fafb;
+            border: 1px solid #4b5563;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        
+        .lyd-button.copy:hover {
+            background: #4b5563;
+        }
+        
+        /* Implementation Guide */
+        .implementation-section {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 32px;
+        }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        
+        .api-table th {
+            background: #f9fafb;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .api-table td {
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .api-table code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+        
+        
+        /* Accessibility Grid - Screenshot-konform */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+            padding: 32px;
+            background: #E8F0FE;
+            border-radius: 8px;
+        }
+        
+        .accessibility-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accessibility-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 12px;
+        }
+        
+        .accessibility-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .accessibility-item li {
+            padding: 4px 0;
+            color: #666666;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .accessibility-item li:before {
+            content: "✓";
+            color: #3366CC;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 1200px) {
+            .accessibility-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .accessibility-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 16px;
+            }
+        }
+        
+        /* Premium Button Styles - Original hochwertige Styles */
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-base);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lyd-button .btn-icon {
+            width: 18px;
+            height: 18px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .lyd-button:hover .btn-icon {
+            transform: scale(1.1);
+        }
+        
+        /* Primary Button - Gradient */
+        .lyd-button.primary {
+            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
+        }
+        
+        .lyd-button.primary:hover {
+            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+        }
+        
+        /* Premium Secondary Button - Enhanced Glassmorphism */
+        .lyd-button.secondary {
+            background: linear-gradient(135deg, 
+                rgba(51, 102, 204, 0.08) 0%, 
+                rgba(0, 0, 102, 0.12) 100%);
+            border: 1px solid rgba(51, 102, 204, 0.25);
+            color: #1a365d;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 4px 16px rgba(51, 102, 204, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lyd-button.secondary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(51, 102, 204, 0.15), 
+                transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .lyd-button.secondary:hover::before {
+            left: 100%;
+        }
+        
+        .lyd-button.secondary:hover {
+            background: linear-gradient(135deg, 
+                rgba(51, 102, 204, 0.15) 0%, 
+                rgba(0, 0, 102, 0.2) 100%);
+            border-color: rgba(51, 102, 204, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 24px rgba(51, 102, 204, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 0 1px rgba(51, 102, 204, 0.1);
+            color: #0f2a44;
+        }
+        
+        /* Premium Outline Button */
+        .lyd-button.outline {
+            background: linear-gradient(#fff, #fff) padding-box,
+                        linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) border-box;
+            border: 2px solid transparent;
+            color: #4c1d95;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+        
+        .lyd-button.outline:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            color: #5b21b6;
+        }
+        
+        .lyd-button.outline .btn-icon {
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .lyd-button.outline:hover .btn-icon {
+            transform: rotate(360deg) scale(1.15);
+            filter: drop-shadow(0 0 6px rgba(102, 126, 234, 0.6));
+        }
+        
+        /* Ghost Button */
+        .lyd-button.ghost {
+            background: transparent;
+            color: #6b7280;
+            padding: 8px 16px;
+        }
+        
+        .lyd-button.ghost:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #374151;
+        }
+        
+        /* Size Variations */
+        .lyd-button.small {
+            padding: 8px 16px;
+            font-size: var(--font-size-sm);
+        }
+        
+        .lyd-button.small .btn-icon {
+            width: 14px;
+            height: 14px;
+        }
+        
+        .lyd-button.large {
+            padding: 16px 32px;
+            font-size: var(--font-size-lg);
+        }
+        
+        .lyd-button.large .btn-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Loading State */
+        .lyd-button.loading {
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .lyd-button.loading .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Success State */
+        .lyd-button.success {
+            background: linear-gradient(135deg, #3366CC 0%, #000066 100%) !important;
+            color: white !important;
+            animation: success-pulse 0.5s ease;
+            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.4);
+        }
+        
+        @keyframes success-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Button Tiles */
+        .lyd-button-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 24px;
+            min-width: 140px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lyd-button-tile:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: #0066ff;
+        }
+        
+        .lyd-button-tile .tile-icon {
+            width: 32px;
+            height: 32px;
+            color: #000066;
+            transition: all 0.3s ease;
+        }
+        
+        .lyd-button-tile:hover .tile-icon {
+            color: #3366CC;
+            transform: scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 102, 0.3));
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient für die Sichel -->
+                    <linearGradient id="crescentGradientV2Buttons" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient für den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Buttons)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item active">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item">Toast</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Button</h1>
+            <p class="page-subtitle">Professional button components with advanced interactions, loading states, and real estate optimizations.</p>
+        </div>
+        
+        <!-- Section 1: Component Variants -->
+        <section class="section">
+            <h2 class="section-title">Button Variants</h2>
+            
+            <div class="showcase-grid">
+                <!-- Primary Buttons -->
+                <div class="showcase-item">
+                    <h3>Primary Actions</h3>
+                    <p>Main call-to-action buttons with gradient background</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button primary">
+                            Schedule Property Viewing
+                        </button>
+                        <button class="lyd-button primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                            Save Property
+                        </button>
+                        <button class="lyd-button primary small">Confirm</button>
+                    </div>
+                </div>
+                
+                <!-- Secondary Buttons -->
+                <div class="showcase-item">
+                    <h3>Secondary Actions</h3>
+                    <p>Supporting actions with glassmorphism effect</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button secondary">
+                            Add to Favorites
+                        </button>
+                        <button class="lyd-button secondary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            View Analytics
+                        </button>
+                        <button class="lyd-button secondary small">Settings</button>
+                    </div>
+                </div>
+                
+                <!-- Outline Buttons -->
+                <div class="showcase-item">
+                    <h3>Outline Style</h3>
+                    <p>Subtle actions with border styling</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button outline">
+                            Download Exposé
+                        </button>
+                        <button class="lyd-button outline">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Contact Agent
+                        </button>
+                        <button class="lyd-button outline small">Share</button>
+                    </div>
+                </div>
+                
+                <!-- States -->
+                <div class="showcase-item">
+                    <h3>Button States</h3>
+                    <p>Loading, disabled, and hover states</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button primary loading">
+                            Processing...
+                        </button>
+                        <button class="lyd-button secondary" disabled>
+                            Unavailable
+                        </button>
+                        <button class="lyd-button outline">
+                            Normal State
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Icon-only Buttons -->
+                <div class="showcase-item">
+                    <h3>Icon Buttons</h3>
+                    <p>Compact icon-only actions</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button lyd-button-pure primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </button>
+                        <button class="lyd-button lyd-button-pure secondary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                            </svg>
+                        </button>
+                        <button class="lyd-button lyd-button-pure outline">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Button Tiles -->
+                <div class="showcase-item">
+                    <h3>Button Tiles</h3>
+                    <p>Large navigation tiles for dashboards</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button-tile">
+                            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                            <div class="tile-label">Properties</div>
+                            <div class="tile-description">23 active</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Premium Interactive States -->
+        <section class="section" style="background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%); padding: 48px; border-radius: 16px; margin: 48px 0;">
+            <h2 class="section-title premium">Premium Interactive States & Micro-Animations</h2>
+            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Hochwertige Animationen und States für optimale User Experience</p>
+            
+            <div class="showcase-grid">
+                <!-- Download with Progress -->
+                <div class="showcase-item">
+                    <h3>Download mit Progress-Animation</h3>
+                    <p>Premium Download-Erlebnis mit sanfter Progress-Bar</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button primary" onclick="simulateDownload(this)">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                <polyline points="7,10 12,15 17,10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download Exposé
+                        </button>
+                        <button class="lyd-button outline" onclick="simulateDownload(this)">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                            Export PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Processing States -->
+                <div class="showcase-item">
+                    <h3>Processing & Loading States</h3>
+                    <p>Shimmer-Effekte und animierte Spinner</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button primary processing">
+                            Analyzing Property...
+                        </button>
+                        <button class="lyd-button secondary loading">
+                            <div class="spinner"></div>
+                            Loading Data
+                        </button>
+                        <button class="lyd-button outline" onclick="setProcessing(this, true); setTimeout(() => setProcessing(this, false), 3000)">
+                            Click to Process
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Hover Animations -->
+                <div class="showcase-item">
+                    <h3>Hover & Click Animations</h3>
+                    <p>Ripple-Effekte und Icon-Rotationen</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button primary">
+                            Hover for Shimmer
+                        </button>
+                        <button class="lyd-button outline">
+                            Gradient Border Animation
+                        </button>
+                        <button class="lyd-button secondary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                            Icon Rotation
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Success States -->
+                <div class="showcase-item">
+                    <h3>Success & Completion States</h3>
+                    <p>Animierte Checkmarks und Success-Feedback</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button success">
+                            <svg class="btn-icon success-checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                            Successfully Saved
+                        </button>
+                        <button class="lyd-button primary" onclick="this.classList.add('success'); setTimeout(() => this.classList.remove('success'), 2000)">
+                            Click for Success
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Real Estate Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Use Cases</h2>
+            
+            <div class="examples-grid">
+                <!-- Property Management Example -->
+                <div class="example-item">
+                    <h3 class="example-title">Property Management</h3>
+                    <p class="example-description">Common button patterns for property listings and management</p>
+                    <div class="example-demo">
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <button class="lyd-button primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Add New Property
+                            </button>
+                            <button class="lyd-button secondary">Edit Details</button>
+                            <button class="lyd-button outline small">Preview</button>
+                            <button class="lyd-button ghost small">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lead Actions Example -->
+                <div class="example-item">
+                    <h3 class="example-title">Lead Actions</h3>
+                    <p class="example-description">Quick actions for lead management</p>
+                    <div class="example-demo">
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <button class="lyd-button primary">Call Lead</button>
+                            <button class="lyd-button secondary">Send Email</button>
+                            <button class="lyd-button outline">Schedule Meeting</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div class="code-block">
+                    <button class="copy-button">Copy</button>
+                    <pre>&lt;!-- Primary Button --&gt;
+&lt;button class="lyd-button primary"&gt;
+    Schedule Viewing
+&lt;/button&gt;
+
+&lt;!-- Button with Icon --&gt;
+&lt;button class="lyd-button secondary"&gt;
+    &lt;svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"&gt;
+        &lt;path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682..."&gt;
+    &lt;/svg&gt;
+    Add to Favorites
+&lt;/button&gt;
+
+&lt;!-- Button States --&gt;
+&lt;button class="lyd-button primary loading"&gt;Processing...&lt;/button&gt;
+&lt;button class="lyd-button secondary" disabled&gt;Unavailable&lt;/button&gt;</pre>
+                </div>
+                
+                <h3>Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="copy-button">Copy</button>
+                    <pre>// components/Button.tsx
+import { ButtonHTMLAttributes, FC } from 'react';
+
+interface ButtonProps extends ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'small' | 'medium' | 'large';
+  loading?: boolean;
+  icon?: React.ReactNode;
+}
+
+export const Button: FC&lt;ButtonProps&gt; = ({
+  variant = 'primary',
+  size = 'medium',
+  loading = false,
+  icon,
+  children,
+  className = '',
+  disabled,
+  ...props
+}) =&gt; {
+  const classes = `lyd-button ${variant} ${size} ${loading ? 'loading' : ''} ${className}`;
+  
+  return (
+    &lt;button 
+      className={classes} 
+      disabled={disabled || loading}
+      {...props}
+    &gt;
+      {icon && &lt;span className="btn-icon"&gt;{icon}&lt;/span&gt;}
+      {children}
+    &lt;/button&gt;
+  );
+};</pre>
+                </div>
+                
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-button</code></td>
+                            <td>Base button class</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary button with gradient background</td>
+                        </tr>
+                        <tr>
+                            <td><code>.secondary</code></td>
+                            <td>Secondary button with glassmorphism</td>
+                        </tr>
+                        <tr>
+                            <td><code>.outline</code></td>
+                            <td>Button with border only</td>
+                        </tr>
+                        <tr>
+                            <td><code>.ghost</code></td>
+                            <td>Minimal button style</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small size variant (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large size variant (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.loading</code></td>
+                            <td>Shows loading spinner</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-button-pure</code></td>
+                            <td>Icon-only button</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-button-tile</code></td>
+                            <td>Large tile button</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Section 5: Accessibility -->
+        <section class="section">
+            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h4>Keyboard Navigation</h4>
+                    <ul>
+                        <li>Tab to navigate between buttons</li>
+                        <li>Space or Enter to activate</li>
+                        <li>Esc to cancel (in dialogs)</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Screen Reader Support</h4>
+                    <ul>
+                        <li>Semantic button elements</li>
+                        <li>Descriptive aria-labels</li>
+                        <li>State announcements</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Visual Accessibility</h4>
+                    <ul>
+                        <li>WCAG AA contrast ratios</li>
+                        <li>Clear focus indicators</li>
+                        <li>Sufficient touch targets (44x44px)</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Best Practices</h4>
+                    <ul>
+                        <li>Use semantic HTML buttons</li>
+                        <li>Provide text for icon-only buttons</li>
+                        <li>Indicate loading/disabled states</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JavaScript for Animations -->
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Download Simulation
+        async function simulateDownload(button) {
+            const originalText = button.innerHTML;
+            
+            button.classList.add('download-progress');
+            button.innerHTML = 'Downloading...';
+            
+            for (let i = 0; i <= 100; i += 10) {
+                button.style.setProperty('--progress', i + '%');
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            button.classList.remove('download-progress');
+            button.classList.add('success');
+            button.innerHTML = '✓ Downloaded';
+            
+            setTimeout(() => {
+                button.classList.remove('success');
+                button.innerHTML = originalText;
+                button.style.removeProperty('--progress');
+            }, 2000);
+        }
+        
+        // Processing State
+        function setProcessing(button, isProcessing) {
+            if (isProcessing) {
+                button.classList.add('processing');
+                button.innerHTML = 'Processing...';
+            } else {
+                button.classList.remove('processing');
+                button.innerHTML = 'Click to Process';
+            }
+        }
+        
+        // Ripple Effect
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.lyd-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

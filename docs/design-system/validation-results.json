@@ -1,0 +1,484 @@
+{
+  "timestamp": "2025-09-05T15:21:06.387222",
+  "components": {
+    "accordion": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "breadcrumb": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "button-new": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "buttons": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": true,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": true,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 100.0,
+      "passed": 11,
+      "total": 11
+    },
+    "card": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "cards": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "checkbox": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "complete-component-set": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": false,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "dropdown": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 81.81818181818183,
+      "passed": 9,
+      "total": 11
+    },
+    "input": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "inputs": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": true,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 90.9090909090909,
+      "passed": 10,
+      "total": 11
+    },
+    "introduction": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 81.81818181818183,
+      "passed": 9,
+      "total": 11
+    },
+    "modal": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "pagination": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "perfect-logo-inline": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": false,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "progress": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "radio": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "select": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": true,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": true,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 90.9090909090909,
+      "passed": 10,
+      "total": 11
+    },
+    "spinner": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "stepper": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "switch": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "table": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "tabs": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "textarea": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    },
+    "toast": {
+      "exists": true,
+      "checks": {
+        "file_exists": true,
+        "correct_logo": false,
+        "navigation_present": true,
+        "navigation_consistent": false,
+        "structure_correct": true,
+        "premium_styles": true,
+        "micro_animations": true,
+        "accessibility": false,
+        "javascript_present": true,
+        "responsive_design": true,
+        "live_url": true
+      },
+      "score": 72.72727272727273,
+      "passed": 8,
+      "total": 11
+    }
+  },
+  "summary": {
+    "total_components": 25,
+    "average_score": 76.00000000000001
+  }
+}

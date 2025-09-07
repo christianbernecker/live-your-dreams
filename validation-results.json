@@ -1,0 +1,296 @@
+{
+  "timestamp": "2025-09-05T14:19:46.162594",
+  "summary": {
+    "total": 25,
+    "passed": 22,
+    "failed": 3,
+    "average_score": 89.56
+  },
+  "components": [
+    {
+      "component": "accordion",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.150510"
+    },
+    {
+      "component": "breadcrumb",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.151031"
+    },
+    {
+      "component": "button-new",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.151521"
+    },
+    {
+      "component": "buttons",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.152068"
+    },
+    {
+      "component": "card",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.152435"
+    },
+    {
+      "component": "cards",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.152894"
+    },
+    {
+      "component": "checkbox",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.153353"
+    },
+    {
+      "component": "complete-component-set",
+      "status": "fail",
+      "score": 35,
+      "errors": [
+        "\u274c Wrong number of tabs: 0 (expected 4)",
+        "\u274c Missing required tab: variants",
+        "\u274c Missing required tab: examples",
+        "\u274c Missing required tab: implementation",
+        "\u274c Missing required tab: accessibility"
+      ],
+      "warnings": [
+        "\u26a0\ufe0f No Web Components found (lyd-* elements)",
+        "\u26a0\ufe0f No active navigation item",
+        "\u26a0\ufe0f No ARIA attributes found",
+        "\u26a0\ufe0f No role attributes found",
+        "\u26a0\ufe0f No TypeScript examples found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.153832"
+    },
+    {
+      "component": "dropdown",
+      "status": "pass",
+      "score": 94,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No ARIA attributes found",
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.155117"
+    },
+    {
+      "component": "input",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.155653"
+    },
+    {
+      "component": "inputs",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.156168"
+    },
+    {
+      "component": "introduction",
+      "status": "fail",
+      "score": 38,
+      "errors": [
+        "\u274c Wrong number of tabs: 0 (expected 4)",
+        "\u274c Missing required tab: variants",
+        "\u274c Missing required tab: examples",
+        "\u274c Missing required tab: implementation",
+        "\u274c Missing required tab: accessibility"
+      ],
+      "warnings": [
+        "\u26a0\ufe0f No active navigation item",
+        "\u26a0\ufe0f No ARIA attributes found",
+        "\u26a0\ufe0f No role attributes found",
+        "\u26a0\ufe0f No TypeScript examples found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.156598"
+    },
+    {
+      "component": "modal",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.156985"
+    },
+    {
+      "component": "pagination",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.157346"
+    },
+    {
+      "component": "perfect-logo-inline",
+      "status": "fail",
+      "score": 35,
+      "errors": [
+        "\u274c Wrong number of tabs: 0 (expected 4)",
+        "\u274c Missing required tab: variants",
+        "\u274c Missing required tab: examples",
+        "\u274c Missing required tab: implementation",
+        "\u274c Missing required tab: accessibility"
+      ],
+      "warnings": [
+        "\u26a0\ufe0f No Web Components found (lyd-* elements)",
+        "\u26a0\ufe0f No active navigation item",
+        "\u26a0\ufe0f No ARIA attributes found",
+        "\u26a0\ufe0f No role attributes found",
+        "\u26a0\ufe0f No TypeScript examples found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.157741"
+    },
+    {
+      "component": "progress",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.158128"
+    },
+    {
+      "component": "radio",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.158512"
+    },
+    {
+      "component": "select",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No Web Components found (lyd-* elements)"
+      ],
+      "timestamp": "2025-09-05T14:19:46.159649"
+    },
+    {
+      "component": "spinner",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.160047"
+    },
+    {
+      "component": "stepper",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.160435"
+    },
+    {
+      "component": "switch",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.160806"
+    },
+    {
+      "component": "table",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.161165"
+    },
+    {
+      "component": "tabs",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.161565"
+    },
+    {
+      "component": "textarea",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.162077"
+    },
+    {
+      "component": "toast",
+      "status": "pass",
+      "score": 97,
+      "errors": [],
+      "warnings": [
+        "\u26a0\ufe0f No role attributes found"
+      ],
+      "timestamp": "2025-09-05T14:19:46.162503"
+    }
+  ],
+  "auto_fixes": [
+    "\u2705 Fixed tab structure for complete-component-set",
+    "\u2705 Fixed tab structure for introduction",
+    "\u2705 Fixed tab structure for perfect-logo-inline"
+  ]
+}

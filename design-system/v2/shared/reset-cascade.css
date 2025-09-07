@@ -1,0 +1,118 @@
+/**
+ * Live Your Dreams - CSS Reset & Cascade Fix
+ * Ensures central styles override any local definitions
+ * Version: 2.2.0
+ * 
+ * This file MUST be loaded AFTER all other stylesheets
+ * to ensure proper cascade order.
+ */
+
+/* ========================================
+   FORCE ACCESSIBILITY GRID LAYOUT
+   ======================================== */
+
+/* Nuclear option - Override everything */
+div[class*="accessibility-grid"],
+.accessibility-grid,
+section .accessibility-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 24px !important;
+    margin: 32px 0 !important;
+    padding: 32px !important;
+    background: #E8F0FE !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Force Accessibility Items */
+div[class*="accessibility-item"],
+.accessibility-item,
+.accessibility-grid .accessibility-item {
+    background: white !important;
+    padding: 20px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+    margin: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.accessibility-item:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Force Accessibility Item Headers */
+.accessibility-item h4 {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+    margin-bottom: 12px !important;
+    margin-top: 0 !important;
+}
+
+/* Force Accessibility Lists */
+.accessibility-item ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.accessibility-item li {
+    padding: 4px 0 !important;
+    color: #666666 !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin: 0 !important;
+}
+
+/* Force Blue Checkmarks */
+.accessibility-item li:before {
+    content: "✓" !important;
+    color: #3366CC !important;
+    font-weight: bold !important;
+    flex-shrink: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+    div[class*="accessibility-grid"],
+    .accessibility-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    div[class*="accessibility-grid"],
+    .accessibility-grid {
+        grid-template-columns: 1fr !important;
+        padding: 16px !important;
+        gap: 16px !important;
+    }
+}
+
+/* ========================================
+   FORCE PAGE TITLE STYLING
+   ======================================== */
+
+/* Blue Uppercase Page Titles */
+.page-title,
+main h1,
+h1.page-title {
+    font-size: 48px !important;
+    font-weight: 400 !important;
+    font-family: system-ui, -apple-system, sans-serif !important;
+    letter-spacing: 6px !important;
+    margin-bottom: 16px !important;
+    background: linear-gradient(180deg, #3366CC 0%, #000066 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-transform: uppercase !important;
+    color: transparent !important;
+}
