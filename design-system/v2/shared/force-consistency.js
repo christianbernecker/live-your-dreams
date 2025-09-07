@@ -129,6 +129,79 @@
     console.log('✅ LYD Design System: Consistent styling applied');
   }
   
+  // 5. CRITICAL: Force Button Styles
+  const buttons = document.querySelectorAll('.lyd-button');
+  buttons.forEach(button => {
+    // Base Button Styles
+    button.style.cssText = `
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0 16px !important;
+      height: 40px !important;
+      border: none !important;
+      border-radius: 6px !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      overflow: hidden !important;
+      background: #f3f4f6 !important;
+      color: #374151 !important;
+    `;
+    
+    // Primary Variant
+    if (button.classList.contains('primary')) {
+      button.style.cssText += `
+        background: linear-gradient(135deg, #3366CC 0%, #0052CC 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 16px rgba(51, 102, 204, 0.3) !important;
+      `;
+    }
+    
+    // Secondary Variant
+    if (button.classList.contains('secondary')) {
+      button.style.cssText += `
+        background: transparent !important;
+        color: #3366CC !important;
+        border: 1px solid #3366CC !important;
+      `;
+    }
+    
+    // Error Variant
+    if (button.classList.contains('error')) {
+      button.style.cssText += `
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3) !important;
+      `;
+    }
+    
+    // Ghost Variant
+    if (button.classList.contains('ghost')) {
+      button.style.cssText += `
+        background: transparent !important;
+        color: #6b7280 !important;
+      `;
+    }
+    
+    // Copy Variant
+    if (button.classList.contains('copy')) {
+      button.style.cssText += `
+        position: absolute !important;
+        top: 16px !important;
+        right: 16px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #374151 !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(4px) !important;
+      `;
+    }
+  });
+
   // CSS-Injection als Backup
   const style = document.createElement('style');
   style.textContent = `
@@ -138,6 +211,60 @@
       color: #3366CC !important;
       font-weight: bold !important;
       margin-right: 8px !important;
+    }
+    
+    /* Button Styles - CSS Backup */
+    .lyd-button {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0 16px !important;
+      height: 40px !important;
+      border: none !important;
+      border-radius: 6px !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      overflow: hidden !important;
+      background: #f3f4f6 !important;
+      color: #374151 !important;
+    }
+    
+    .lyd-button.primary {
+      background: linear-gradient(135deg, #3366CC 0%, #0052CC 100%) !important;
+      color: white !important;
+      box-shadow: 0 4px 16px rgba(51, 102, 204, 0.3) !important;
+    }
+    
+    .lyd-button.secondary {
+      background: transparent !important;
+      color: #3366CC !important;
+      border: 1px solid #3366CC !important;
+    }
+    
+    .lyd-button.error {
+      background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+      color: white !important;
+      box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3) !important;
+    }
+    
+    .lyd-button.ghost {
+      background: transparent !important;
+      color: #6b7280 !important;
+    }
+    
+    .lyd-button.copy {
+      position: absolute !important;
+      top: 16px !important;
+      right: 16px !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #374151 !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      backdrop-filter: blur(4px) !important;
     }
   `;
   document.head.appendChild(style);
