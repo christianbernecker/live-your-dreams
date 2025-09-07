@@ -293,6 +293,17 @@ body {
     color: var(--lyd-text-primary);
 }
 
+.lyd-button.error {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: var(--lyd-white);
+    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3);
+}
+
+.lyd-button.error:hover {
+    background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
 /* Button Sizes */
 .lyd-button.small {
     height: var(--button-height-sm);
