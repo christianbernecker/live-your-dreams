@@ -1,0 +1,364 @@
+{
+  "passed": true,
+  "accuracy": 1,
+  "componentName": "checkbox",
+  "goldStandard": "inputs",
+  "screenshots": {
+    "checkbox_implementation": "/Users/christianbernecker/live-your-dreams/design-system/v2/screenshots/checkbox-impl-guide.png",
+    "checkbox_full": "/Users/christianbernecker/live-your-dreams/design-system/v2/screenshots/checkbox-full.png",
+    "inputs_implementation": "/Users/christianbernecker/live-your-dreams/design-system/v2/screenshots/inputs-impl-guide.png",
+    "inputs_full": "/Users/christianbernecker/live-your-dreams/design-system/v2/screenshots/inputs-full.png"
+  },
+  "cssComparison": {
+    "matches": [
+      {
+        "selector": ".section-title",
+        "property": "font-family",
+        "value": "Inter, system-ui, -apple-system, sans-serif"
+      },
+      {
+        "selector": ".section-title",
+        "property": "font-size",
+        "value": "30px"
+      },
+      {
+        "selector": ".section-title",
+        "property": "font-weight",
+        "value": "400"
+      },
+      {
+        "selector": ".section-title",
+        "property": "color",
+        "value": "rgb(17, 17, 17)"
+      },
+      {
+        "selector": ".section-title",
+        "property": "background",
+        "value": "rgba(0, 0, 0, 0) linear-gradient(rgb(51, 102, 204) 0%, rgb(0, 0, 102) 100%) repeat scroll 0% 0% / auto padding-box text"
+      },
+      {
+        "selector": ".section-title",
+        "property": "margin",
+        "value": "0px 0px 32px"
+      },
+      {
+        "selector": ".section-title",
+        "property": "padding",
+        "value": "0px"
+      },
+      {
+        "selector": ".section-title",
+        "property": "border-radius",
+        "value": "0px"
+      },
+      {
+        "selector": ".section-title",
+        "property": "letter-spacing",
+        "value": "6px"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "font-family",
+        "value": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "font-size",
+        "value": "16px"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "font-weight",
+        "value": "400"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "color",
+        "value": "rgb(17, 17, 17)"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "background",
+        "value": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "margin",
+        "value": "0px 0px 32px"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "padding",
+        "value": "32px"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "border-radius",
+        "value": "12px"
+      },
+      {
+        "selector": ".implementation-section",
+        "property": "letter-spacing",
+        "value": "normal"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "font-family",
+        "value": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "font-size",
+        "value": "16px"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "font-weight",
+        "value": "400"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "color",
+        "value": "rgb(17, 17, 17)"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "background",
+        "value": "rgb(232, 240, 254) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "margin",
+        "value": "32px 0px"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "padding",
+        "value": "32px"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "border-radius",
+        "value": "8px"
+      },
+      {
+        "selector": ".accessibility-grid",
+        "property": "letter-spacing",
+        "value": "normal"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "font-family",
+        "value": "Arial"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "font-size",
+        "value": "13px"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "font-weight",
+        "value": "500"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "color",
+        "value": "rgb(255, 255, 255)"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "background",
+        "value": "rgba(255, 255, 255, 0.1) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "margin",
+        "value": "0px"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "padding",
+        "value": "8px 16px"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "border-radius",
+        "value": "6px"
+      },
+      {
+        "selector": ".lyd-button",
+        "property": "letter-spacing",
+        "value": "normal"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "font-family",
+        "value": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "font-size",
+        "value": "14px"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "font-weight",
+        "value": "600"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "color",
+        "value": "rgb(51, 102, 204)"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "background",
+        "value": "rgba(51, 102, 204, 0.1) none repeat scroll 0% 0% / auto padding-box border-box"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "margin",
+        "value": "0px"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "padding",
+        "value": "12px 24px"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "border-radius",
+        "value": "0px"
+      },
+      {
+        "selector": ".nav-item.active",
+        "property": "letter-spacing",
+        "value": "normal"
+      }
+    ],
+    "deviations": [],
+    "critical": [],
+    "component": {
+      ".section-title": {
+        "font-family": "Inter, system-ui, -apple-system, sans-serif",
+        "font-size": "30px",
+        "font-weight": "400",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(rgb(51, 102, 204) 0%, rgb(0, 0, 102) 100%) repeat scroll 0% 0% / auto padding-box text",
+        "margin": "0px 0px 32px",
+        "padding": "0px",
+        "border-radius": "0px",
+        "letter-spacing": "6px"
+      },
+      ".implementation-section": {
+        "font-family": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif",
+        "font-size": "16px",
+        "font-weight": "400",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "0px 0px 32px",
+        "padding": "32px",
+        "border-radius": "12px",
+        "letter-spacing": "normal"
+      },
+      ".accessibility-grid": {
+        "font-family": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif",
+        "font-size": "16px",
+        "font-weight": "400",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(232, 240, 254) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "32px 0px",
+        "padding": "32px",
+        "border-radius": "8px",
+        "letter-spacing": "normal"
+      },
+      ".lyd-button": {
+        "font-family": "Arial",
+        "font-size": "13px",
+        "font-weight": "500",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(255, 255, 255, 0.1) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "0px",
+        "padding": "8px 16px",
+        "border-radius": "6px",
+        "letter-spacing": "normal"
+      },
+      ".nav-item.active": {
+        "font-family": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif",
+        "font-size": "14px",
+        "font-weight": "600",
+        "color": "rgb(51, 102, 204)",
+        "background": "rgba(51, 102, 204, 0.1) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "0px",
+        "padding": "12px 24px",
+        "border-radius": "0px",
+        "letter-spacing": "normal"
+      }
+    },
+    "gold": {
+      ".section-title": {
+        "font-family": "Inter, system-ui, -apple-system, sans-serif",
+        "font-size": "30px",
+        "font-weight": "400",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgba(0, 0, 0, 0) linear-gradient(rgb(51, 102, 204) 0%, rgb(0, 0, 102) 100%) repeat scroll 0% 0% / auto padding-box text",
+        "margin": "0px 0px 32px",
+        "padding": "0px",
+        "border-radius": "0px",
+        "letter-spacing": "6px"
+      },
+      ".implementation-section": {
+        "font-family": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif",
+        "font-size": "16px",
+        "font-weight": "400",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "0px 0px 32px",
+        "padding": "32px",
+        "border-radius": "12px",
+        "letter-spacing": "normal"
+      },
+      ".accessibility-grid": {
+        "font-family": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif",
+        "font-size": "16px",
+        "font-weight": "400",
+        "color": "rgb(17, 17, 17)",
+        "background": "rgb(232, 240, 254) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "32px 0px",
+        "padding": "32px",
+        "border-radius": "8px",
+        "letter-spacing": "normal"
+      },
+      ".lyd-button": {
+        "font-family": "Arial",
+        "font-size": "13px",
+        "font-weight": "500",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(255, 255, 255, 0.1) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "0px",
+        "padding": "8px 16px",
+        "border-radius": "6px",
+        "letter-spacing": "normal"
+      },
+      ".nav-item.active": {
+        "font-family": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Noto Sans\", sans-serif",
+        "font-size": "14px",
+        "font-weight": "600",
+        "color": "rgb(51, 102, 204)",
+        "background": "rgba(51, 102, 204, 0.1) none repeat scroll 0% 0% / auto padding-box border-box",
+        "margin": "0px",
+        "padding": "12px 24px",
+        "border-radius": "0px",
+        "letter-spacing": "normal"
+      }
+    }
+  },
+  "visualDiff": {
+    "pixelDifferences": 0,
+    "percentageDiff": 0.01,
+    "significantChanges": []
+  },
+  "fixes": [],
+  "timestamp": "2025-09-08T08:02:41.141Z"
+}

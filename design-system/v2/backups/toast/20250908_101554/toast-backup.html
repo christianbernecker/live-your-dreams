@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+        :root {
+            /* Design Tokens */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent: #ff6b35;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Colors */
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-gray-900);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-500);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-600);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: system-ui, -apple-system, sans-serif;
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.6;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+        }
+        
+        .showcase-item {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-gray-200);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .showcase-item h3 {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .showcase-item p {
+            color: var(--lyd-gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        /* Toast Notification System */
+        .lyd-toast {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 16px 0;
+            max-width: 400px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lyd-toast::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .lyd-toast-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #065f46;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        .lyd-toast-success::before {
+            background: #10b981;
+        }
+        
+        .lyd-toast-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #7f1d1d;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .lyd-toast-error::before {
+            background: #ef4444;
+        }
+        
+        .lyd-toast-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: #92400e;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        
+        .lyd-toast-warning::before {
+            background: #f59e0b;
+        }
+        
+        .lyd-toast-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1e3a8a;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .lyd-toast-info::before {
+            background: #3b82f6;
+        }
+        
+        .lyd-toast-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+        
+        .lyd-toast-content {
+            flex: 1;
+        }
+        
+        .lyd-toast-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .lyd-toast-message {
+            font-size: 13px;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+        
+        .lyd-toast-close {
+            flex-shrink: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        
+        .lyd-toast-close:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Button Styles for Toast */
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .lyd-button:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+        
+        .lyd-button.primary {
+            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+            color: white;
+        }
+        
+        .lyd-button.primary:hover {
+            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
+        }
+        
+        /* Toast Container */
+        .lyd-toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+        
+        /* Toast Animations */
+        .lyd-toast.entering {
+            animation: toastSlideIn 0.3s ease-out forwards;
+        }
+        
+        .lyd-toast.leaving {
+            animation: toastSlideOut 0.2s ease-in forwards;
+        }
+        
+        @keyframes toastSlideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes toastSlideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient für die Sichel -->
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient für den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item ">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item ">Input</a>
+            <a href="/v2/components/cards/" class="nav-item ">Card</a>
+            <a href="/v2/components/select/" class="nav-item ">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item ">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item ">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item ">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item ">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item ">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item active">Toast</a>
+            <a href="/v2/components/table/" class="nav-item ">Table</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item ">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Toast</h1>
+            <p class="page-subtitle">Professional toast notification system with premium animations, auto-dismiss functionality, and accessibility features for modern web applications.</p>
+        </div>
+        
+        <!-- Section 1: Toast Variants -->
+        <section class="section">
+            <h2 class="section-title premium">Premium Toast Notifications</h2>
+            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Advanced notification system with glassmorphism effects and micro-animations</p>
+            
+            <div class="showcase-grid">
+                <!-- Success Toast -->
+                <div class="showcase-item">
+                    <h3>Success Toast</h3>
+                    <p>Professional success notifications with premium styling</p>
+                    
+                    <div class="lyd-toast lyd-toast-success" style="position: relative; transform: none; opacity: 1;">
+                        <div class="lyd-toast-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div class="lyd-toast-content">
+                            <div class="lyd-toast-title">Property Listed Successfully</div>
+                            <div class="lyd-toast-message">Your property has been published and is now visible to potential buyers.</div>
+                        </div>
+                        <button class="lyd-toast-close" onclick="dismissToast(this)">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <button class="lyd-button primary" onclick="showToast('success', 'Success!', 'Operation completed successfully.')">Show Success Toast</button>
+                </div>
+                
+                <!-- Error Toast -->
+                <div class="showcase-item">
+                    <h3>Error Toast</h3>
+                    <p>Critical error notifications with attention-grabbing styling</p>
+                    
+                    <div class="lyd-toast lyd-toast-error" style="position: relative; transform: none; opacity: 1;">
+                        <div class="lyd-toast-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="lyd-toast-content">
+                            <div class="lyd-toast-title">Upload Failed</div>
+                            <div class="lyd-toast-message">Unable to upload property images. Please check your connection and try again.</div>
+                        </div>
+                        <button class="lyd-toast-close" onclick="dismissToast(this)">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <button class="lyd-button" style="background: #dc3545; color: white;" onclick="showToast('error', 'Error!', 'Something went wrong.')">Show Error Toast</button>
+                </div>
+                
+                <!-- Warning Toast -->
+                <div class="showcase-item">
+                    <h3>Warning Toast</h3>
+                    <p>Important warnings with distinctive amber styling</p>
+                    
+                    <div class="lyd-toast lyd-toast-warning" style="position: relative; transform: none; opacity: 1;">
+                        <div class="lyd-toast-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="lyd-toast-content">
+                            <div class="lyd-toast-title">Subscription Expiring</div>
+                            <div class="lyd-toast-message">Your premium subscription expires in 3 days. Renew now to avoid service interruption.</div>
+                        </div>
+                        <button class="lyd-toast-close" onclick="dismissToast(this)">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <button class="lyd-button" style="background: #f59e0b; color: white;" onclick="showToast('warning', 'Warning!', 'Please review this important information.')">Show Warning Toast</button>
+                </div>
+                
+                <!-- Info Toast -->
+                <div class="showcase-item">
+                    <h3>Info Toast</h3>
+                    <p>Informational messages with clean blue styling</p>
+                    
+                    <div class="lyd-toast lyd-toast-info" style="position: relative; transform: none; opacity: 1;">
+                        <div class="lyd-toast-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="lyd-toast-content">
+                            <div class="lyd-toast-title">New Features Available</div>
+                            <div class="lyd-toast-message">Check out our latest property analytics dashboard with enhanced reporting capabilities.</div>
+                        </div>
+                        <button class="lyd-toast-close" onclick="dismissToast(this)">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <button class="lyd-button" style="background: #3b82f6; color: white;" onclick="showToast('info', 'Info', 'Here is some useful information.')">Show Info Toast</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Toast Container -->
+    <div class="lyd-toast-container" id="toastContainer"></div>
+    
+    <!-- JavaScript -->
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Toast Notification System
+        let toastCounter = 0;
+        
+        function showToast(type, title, message, duration = 5000) {
+            const container = document.getElementById('toastContainer');
+            const toastId = `toast-${++toastCounter}`;
+            
+            const toast = document.createElement('div');
+            toast.className = `lyd-toast lyd-toast-${type} entering`;
+            toast.id = toastId;
+            
+            const iconMap = {
+                success: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>',
+                error: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+                warning: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"></path>',
+                info: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
+            };
+            
+            toast.innerHTML = `
+                <div class="lyd-toast-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        ${iconMap[type]}
+                    </svg>
+                </div>
+                <div class="lyd-toast-content">
+                    <div class="lyd-toast-title">${title}</div>
+                    <div class="lyd-toast-message">${message}</div>
+                </div>
+                <button class="lyd-toast-close" onclick="dismissToast(this)">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-dismiss after duration
+            if (duration > 0) {
+                setTimeout(() => {
+                    dismissToast(toast.querySelector('.lyd-toast-close'));
+                }, duration);
+            }
+            
+            return toastId;
+        }
+        
+        function dismissToast(closeButton) {
+            const toast = closeButton.closest('.lyd-toast');
+            toast.classList.remove('entering');
+            toast.classList.add('leaving');
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 200);
+        }
+        
+        // Set active navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
