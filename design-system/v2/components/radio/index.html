@@ -13,6 +13,11 @@
     
     <style>
         :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-text: #111111;
+            
             /* Design Tokens */
             --lyd-primary: #0066ff;
             --lyd-primary-hover: #0052cc;
@@ -37,6 +42,7 @@
             
             /* Typography */
             --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -165,16 +171,16 @@
         .page-title {
             font-size: var(--font-size-5xl);
             font-weight: 400;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: var(--font-family-display);
             letter-spacing: 6px;
             margin-bottom: var(--spacing-md);
-            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
         
-        .page-description {
+        .page-subtitle {
             font-size: var(--font-size-lg);
             color: var(--lyd-gray-600);
             max-width: 800px;
@@ -187,10 +193,16 @@
         }
         
         .section-title {
-            font-size: var(--font-size-2xl);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
         }
         
         /* Showcase Grid */
@@ -356,45 +368,30 @@
         }
         
         /* Implementation Guide */
-        .implementation-guide {
+        
+        .implementation-section {
             background: var(--lyd-white);
             border-radius: 12px;
             border: 1px solid var(--lyd-gray-200);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
-            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-lg);
         }
         
-        .implementation-guide h2 {
+        .implementation-section h3 {
             padding: var(--spacing-lg);
-            font-size: var(--font-size-xl);
+            font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
             border-bottom: 1px solid var(--lyd-gray-200);
             background: var(--lyd-gray-50);
-        }
-        
-        .implementation-section {
-            padding: var(--spacing-lg);
-            border-bottom: 1px solid var(--lyd-gray-100);
-        }
-        
-        .implementation-section:last-child {
-            border-bottom: none;
-        }
-        
-        .implementation-section h3 {
-            font-size: var(--font-size-lg);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-md);
+            margin: 0;
         }
         
         .code-block {
             background: var(--lyd-gray-900);
             border-radius: 8px;
             padding: var(--spacing-lg);
-            margin: var(--spacing-md) 0;
             position: relative;
             overflow-x: auto;
         }
@@ -592,7 +589,7 @@
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-title">Radio</h1>
-            <p class="page-description">
+            <p class="page-subtitle">
                 Radio buttons allow users to select one option from a set of mutually exclusive options. They work in groups where only one option can be selected at a time.
             </p>
         </div>
@@ -894,13 +891,14 @@
             </div>
         </section>
         
-        <!-- Implementation Guide -->
-        <div class="implementation-guide">
-            <h2>Implementation Guide</h2>
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
             
             <div class="implementation-section">
                 <h3>HTML Usage</h3>
-                <div class="code-block">
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
                     <pre>&lt;!-- Basic Radio Group --&gt;
 &lt;div class="lyd-radio-group" data-group="example"&gt;
@@ -928,12 +926,14 @@
 &lt;!-- States --&gt;
 &lt;div class="lyd-radio-input disabled"&gt;...&lt;/div&gt;
 &lt;div class="lyd-radio-group lyd-radio-error"&gt;...&lt;/div&gt;</pre>
+                    </div>
                 </div>
             </div>
             
             <div class="implementation-section">
                 <h3>JavaScript Integration</h3>
-                <div class="code-block">
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
                     <pre>// Initialize radio groups
 function initRadioGroups() {
@@ -979,12 +979,14 @@ function setSelectedValue(groupName, value) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', initRadioGroups);</pre>
+                    </div>
                 </div>
             </div>
             
             <div class="implementation-section">
                 <h3>CSS Classes</h3>
-                <div class="code-block">
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
                     <pre>/* Core Classes */
 .lyd-radio-group          /* Radio button group container */
@@ -1004,9 +1006,10 @@ document.addEventListener('DOMContentLoaded', initRadioGroups);</pre>
 
 /* Error State */
 .lyd-radio-error          /* Apply to group for error styling */</pre>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
     
     <!-- JavaScript -->
