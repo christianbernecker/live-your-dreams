@@ -429,21 +429,7 @@
             background: var(--lyd-primary-hover);
         }
         
-        /* Accessibility Section */
-        .accessibility-section {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-radius: 12px;
-            padding: var(--spacing-2xl);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        .accessibility-section h2 {
-            font-size: var(--font-size-2xl);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-lg);
-            text-align: center;
-        }
+        /* Accessibility Grid */
         
         .accessibility-grid {
             display: grid;
@@ -865,32 +851,6 @@
             </div>
         </section>
         
-        <!-- Accessibility Section -->
-        <section class="accessibility-section">
-            <h2>Accessibility Features</h2>
-            <div class="accessibility-grid">
-                <div class="accessibility-item">
-                    <h3>Keyboard Navigation</h3>
-                    <p>Navigate through radio options using Tab, Space, and arrow keys for easy keyboard access.</p>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>Screen Reader Support</h3>
-                    <p>Radio buttons include proper ARIA labels and group associations for screen reader compatibility.</p>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>Focus Indicators</h3>
-                    <p>Clear visual focus indicators help users understand which radio button is currently selected.</p>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>High Contrast</h3>
-                    <p>Radio buttons maintain visibility and usability in high contrast modes and for users with visual impairments.</p>
-                </div>
-            </div>
-        </section>
-        
         <!-- Section 3: Implementation Guide -->
         <section class="section">
             <h2 class="section-title">Implementation Guide</h2>
@@ -931,82 +891,135 @@
             </div>
             
             <div class="implementation-section">
-                <h3>JavaScript Integration</h3>
+                <h3>Next.js Integration</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
-                    <pre>// Initialize radio groups
-function initRadioGroups() {
-    document.querySelectorAll('.lyd-radio-group').forEach(group => {
-        const groupName = group.dataset.group;
-        const radioInputs = group.querySelectorAll('.lyd-radio-input:not(.disabled)');
-        
-        radioInputs.forEach(input => {
-            input.addEventListener('click', function() {
-                // Deselect all in group
-                radioInputs.forEach(r => r.classList.remove('checked'));
-                // Select clicked
-                this.classList.add('checked');
-                
-                // Emit change event
-                const event = new CustomEvent('radioChange', {
-                    detail: {
-                        group: groupName,
-                        value: this.dataset.value
-                    }
-                });
-                group.dispatchEvent(event);
-            });
-        });
-    });
+                    <pre>// components/RadioGroup.tsx
+import { ReactNode, useState, useEffect } from 'react';
+
+interface RadioOption {
+  value: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
 }
 
-// Get selected value from group
-function getSelectedValue(groupName) {
-    const group = document.querySelector(\`[data-group="\${groupName}"]\`);
-    const selected = group.querySelector('.lyd-radio-input.checked');
-    return selected ? selected.dataset.value : null;
+interface RadioGroupProps {
+  name: string;
+  options: RadioOption[];
+  value?: string;
+  defaultValue?: string;
+  size?: 'small' | 'medium' | 'large';
+  error?: boolean;
+  onChange?: (value: string) => void;
+  className?: string;
 }
 
-// Set selected value in group
-function setSelectedValue(groupName, value) {
-    const group = document.querySelector(\`[data-group="\${groupName}"]\`);
-    const inputs = group.querySelectorAll('.lyd-radio-input');
-    inputs.forEach(input => {
-        input.classList.toggle('checked', input.dataset.value === value);
-    });
-}
+export const RadioGroup = ({
+  name,
+  options,
+  value,
+  defaultValue,
+  size = 'medium',
+  error = false,
+  onChange,
+  className = ''
+}: RadioGroupProps) => {
+  const [selectedValue, setSelectedValue] = useState(value || defaultValue || '');
+  
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedValue(value);
+    }
+  }, [value]);
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', initRadioGroups);</pre>
+  const handleChange = (optionValue: string) => {
+    if (value === undefined) {
+      setSelectedValue(optionValue);
+    }
+    onChange?.(optionValue);
+  };
+
+  const groupClasses = \`
+    lyd-radio-group 
+    \${size !== 'medium' ? \`lyd-radio-\${size}\` : ''} 
+    \${error ? 'lyd-radio-error' : ''}
+    \${className}
+  \`.trim();
+
+  return (
+    &lt;div className={groupClasses} data-group={name}&gt;
+      {options.map((option) => (
+        &lt;div key={option.value} className="lyd-radio-item"&gt;
+          &lt;div 
+            className={\`lyd-radio-input \${selectedValue === option.value ? 'checked' : ''} \${option.disabled ? 'disabled' : ''}\`}
+            data-value={option.value}
+            onClick={() => !option.disabled && handleChange(option.value)}
+          /&gt;
+          &lt;label className="lyd-radio-label" onClick={() => !option.disabled && handleChange(option.value)}&gt;
+            &lt;div className="lyd-radio-label-text"&gt;{option.label}&lt;/div&gt;
+            {option.description && (
+              &lt;div className="lyd-radio-label-description"&gt;{option.description}&lt;/div&gt;
+            )}
+          &lt;/label&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+
+// Usage Example:
+export default function PropertyForm() {
+  const [propertyType, setPropertyType] = useState('apartment');
+  
+  const propertyOptions = [
+    { value: 'apartment', label: 'Apartment', description: 'Modern city apartment with amenities' },
+    { value: 'house', label: 'House', description: 'Single-family house with garden' },
+    { value: 'penthouse', label: 'Penthouse', description: 'Luxury penthouse with panoramic views' },
+    { value: 'commercial', label: 'Commercial', description: 'Office or retail space' }
+  ];
+
+  return (
+    &lt;form&gt;
+      &lt;RadioGroup
+        name="property-type"
+        options={propertyOptions}
+        value={propertyType}
+        onChange={setPropertyType}
+      /&gt;
+    &lt;/form&gt;
+  );
+}</pre>
                     </div>
                 </div>
             </div>
             
-            <div class="implementation-section">
-                <h3>CSS Classes</h3>
-                <div style="padding: var(--spacing-lg);">
-                    <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
-                    <pre>/* Core Classes */
-.lyd-radio-group          /* Radio button group container */
-.lyd-radio-item           /* Individual radio button item */
-.lyd-radio-input          /* The radio button input element */
-.lyd-radio-label          /* Label container */
-.lyd-radio-label-text     /* Main label text */
-.lyd-radio-label-description /* Helper description text */
-
-/* Size Modifiers */
-.lyd-radio-small          /* Small size variant */
-.lyd-radio-large          /* Large size variant */
-
-/* State Classes */
-.checked                  /* Selected state */
-.disabled                 /* Disabled state */
-
-/* Error State */
-.lyd-radio-error          /* Apply to group for error styling */</pre>
-                    </div>
+        </section>
+        
+        <!-- Section 4: Accessibility & Best Practices -->
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Navigate through radio options using Tab, Space, and arrow keys for easy keyboard access.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>Radio buttons include proper ARIA labels and group associations for screen reader compatibility.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Focus Indicators</h3>
+                    <p>Clear visual focus indicators help users understand which radio button is currently selected.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>High Contrast</h3>
+                    <p>Radio buttons maintain visibility and usability in high contrast modes and for users with visual impairments.</p>
                 </div>
             </div>
         </section>
