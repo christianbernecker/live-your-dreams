@@ -13,30 +13,25 @@
     
     <style>
         :root {
-            /* Design Tokens */
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
+            --lyd-info: #3b82f6;
             
-            /* Colors */
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
             
-            /* Typography */
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -56,14 +51,25 @@
             --spacing-2xl: 48px;
             --spacing-3xl: 64px;
             
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            
             /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease-in-out;
+            --transition-normal: 300ms ease-in-out;
+            --transition-slow: 500ms ease-in-out;
         }
         
+        /* Layout & Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -71,344 +77,510 @@
         }
         
         body {
-            font-family: var(--font-family);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            font-family: var(--font-family-primary);
+            font-size: var(--font-size-base);
             line-height: 1.6;
-            display: flex;
+            color: var(--lyd-text);
+            background: var(--lyd-bg);
             min-height: 100vh;
+            display: flex;
         }
         
         /* Sidebar Navigation */
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
-            position: fixed;
             height: 100vh;
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            border-right: 1px solid var(--lyd-line);
+            padding: var(--spacing-lg);
+            position: fixed;
+            left: 0;
+            top: 0;
             overflow-y: auto;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            z-index: 100;
         }
         
         .sidebar-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
-            text-align: center;
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-2xl);
         }
         
-        .lyd-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: var(--spacing-md);
-            transform: scale(2);
-            transform-origin: center;
-            margin-top: 40px;
-            margin-bottom: 60px;
+        .logo {
+            width: 48px;
+            height: 48px;
+            margin-right: var(--spacing-md);
+        }
+        
+        .logo-text {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--lyd-deep-blue);
+            line-height: 1.2;
         }
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
         .nav-section {
-            padding: var(--spacing-md) 0;
+            margin-bottom: var(--spacing-xl);
         }
         
         .nav-section-title {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            font-size: var(--font-size-xs);
+            font-size: var(--font-size-sm);
             font-weight: 600;
-            color: var(--lyd-gray-400);
+            color: var(--lyd-grey);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-md);
         }
         
         .nav-item {
             display: block;
-            padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            padding: var(--spacing-sm) var(--spacing-md);
+            color: var(--lyd-text);
             text-decoration: none;
-            font-size: var(--font-size-sm);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-xs);
             font-weight: 500;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
+            transition: var(--transition-fast);
         }
         
         .nav-item:hover {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.05);
+            background: rgba(51, 102, 204, 0.08);
+            color: var(--lyd-royal-blue);
         }
         
         .nav-item.active {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.1);
+            background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            color: white;
             font-weight: 600;
         }
         
         /* Main Content */
         .main-content {
-            flex: 1;
             margin-left: 280px;
             padding: var(--spacing-2xl);
-            max-width: 1400px;
+            width: calc(100% - 280px);
+            min-height: 100vh;
         }
         
         .page-header {
-            margin-bottom: var(--spacing-2xl);
+            margin-bottom: var(--spacing-3xl);
         }
         
         .page-title {
             font-size: var(--font-size-5xl);
-            font-weight: 400;
-            font-family: system-ui, -apple-system, sans-serif;
-            letter-spacing: 6px;
+            font-weight: 300;
+            color: var(--lyd-text);
             margin-bottom: var(--spacing-md);
             background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
-            margin-bottom: var(--spacing-xl);
-            line-height: 1.6;
+            color: var(--lyd-grey);
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 800px;
         }
         
-        /* Section Styles */
+        /* Sections */
         .section {
             margin-bottom: var(--spacing-3xl);
         }
         
         .section-title {
             font-size: var(--font-size-3xl);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-lg);
+            font-weight: 400;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            font-family: var(--font-family-display);
         }
         
+        .section-title.premium {
+            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+        
+        .section-subtitle {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .section-description {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-grey);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-xl);
+            max-width: 800px;
+        }
+        
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            max-width: 400px;
+        }
+        
+        /* Toast Styles */
+        .lyd-toast {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            border-left: 4px solid var(--lyd-info);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            animation: slideInRight 0.3s ease-out;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+        }
+        
+        .lyd-toast:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+        
+        .lyd-toast.success {
+            border-left-color: var(--lyd-success);
+        }
+        
+        .lyd-toast.error {
+            border-left-color: var(--lyd-error);
+        }
+        
+        .lyd-toast.warning {
+            border-left-color: var(--lyd-warning);
+        }
+        
+        .lyd-toast.info {
+            border-left-color: var(--lyd-info);
+        }
+        
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .toast-icon.success {
+            color: var(--lyd-success);
+        }
+        
+        .toast-icon.error {
+            color: var(--lyd-error);
+        }
+        
+        .toast-icon.warning {
+            color: var(--lyd-warning);
+        }
+        
+        .toast-icon.info {
+            color: var(--lyd-info);
+        }
+        
+        .toast-content {
+            flex: 1;
+        }
+        
+        .toast-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .toast-message {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            line-height: 1.4;
+        }
+        
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--lyd-grey);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .toast-close:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--lyd-text);
+        }
+        
+        /* Toast Animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        .lyd-toast.removing {
+            animation: slideOutRight 0.3s ease-in forwards;
+        }
+        
+        /* Demo Showcase */
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: var(--spacing-xl);
-            margin: var(--spacing-xl) 0;
+            margin-bottom: var(--spacing-3xl);
         }
         
         .showcase-item {
             background: white;
             padding: var(--spacing-xl);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--lyd-gray-200);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-line);
             box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+        
+        .showcase-item:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
         }
         
         .showcase-item h3 {
             font-size: var(--font-size-xl);
             font-weight: 600;
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             margin-bottom: var(--spacing-sm);
         }
         
         .showcase-item p {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             margin-bottom: var(--spacing-lg);
-            line-height: 1.6;
+            line-height: 1.5;
         }
         
-        /* Toast Notification System */
-        .lyd-toast {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin: 16px 0;
-            max-width: 400px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        .showcase-demo {
+            margin-bottom: var(--spacing-lg);
         }
         
-        .lyd-toast::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            border-radius: 4px 0 0 4px;
-        }
-        
-        .lyd-toast-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: #065f46;
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-        
-        .lyd-toast-success::before {
-            background: #10b981;
-        }
-        
-        .lyd-toast-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #7f1d1d;
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-        
-        .lyd-toast-error::before {
-            background: #ef4444;
-        }
-        
-        .lyd-toast-warning {
-            background: rgba(245, 158, 11, 0.1);
-            color: #92400e;
-            border-color: rgba(245, 158, 11, 0.3);
-        }
-        
-        .lyd-toast-warning::before {
-            background: #f59e0b;
-        }
-        
-        .lyd-toast-info {
-            background: rgba(59, 130, 246, 0.1);
-            color: #1e3a8a;
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-        
-        .lyd-toast-info::before {
-            background: #3b82f6;
-        }
-        
-        .lyd-toast-icon {
-            flex-shrink: 0;
-            width: 20px;
-            height: 20px;
-            margin-top: 2px;
-        }
-        
-        .lyd-toast-content {
-            flex: 1;
-        }
-        
-        .lyd-toast-title {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-        
-        .lyd-toast-message {
-            font-size: 13px;
-            line-height: 1.4;
-            opacity: 0.9;
-        }
-        
-        .lyd-toast-close {
-            flex-shrink: 0;
-            background: none;
-            border: none;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s ease;
-            padding: 4px;
-            border-radius: 4px;
-        }
-        
-        .lyd-toast-close:hover {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Button Styles for Toast */
+        /* Button Styles */
         .lyd-button {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: var(--font-size-base);
             border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-fast);
             text-decoration: none;
-            background: #f3f4f6;
-            color: #374151;
-        }
-        
-        .lyd-button:hover {
-            background: #e5e7eb;
-            transform: translateY(-1px);
+            font-family: var(--font-family-primary);
         }
         
         .lyd-button.primary {
-            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+            background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
             color: white;
+            box-shadow: var(--shadow-md);
         }
         
         .lyd-button.primary:hover {
-            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
         }
         
-        /* Toast Container */
-        .lyd-toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            max-width: 400px;
+        .lyd-button.secondary {
+            background: white;
+            color: var(--lyd-royal-blue);
+            border: 2px solid var(--lyd-royal-blue);
         }
         
-        /* Toast Animations */
-        .lyd-toast.entering {
-            animation: toastSlideIn 0.3s ease-out forwards;
+        .lyd-button.secondary:hover {
+            background: var(--lyd-royal-blue);
+            color: white;
         }
         
-        .lyd-toast.leaving {
-            animation: toastSlideOut 0.2s ease-in forwards;
+        /* Implementation Guide */
+        .implementation-section {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--lyd-line);
+            margin-bottom: var(--spacing-xl);
         }
         
-        @keyframes toastSlideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .code-block {
+            position: relative;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
         }
         
-        @keyframes toastSlideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
+        .code-block pre {
+            margin: 0;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
         }
         
-        /* Responsive */
+        .copy-button {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .copy-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* API Table */
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .api-table th,
+        .api-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--lyd-line);
+        }
+        
+        .api-table th {
+            background: var(--lyd-accent);
+            font-weight: 600;
+            color: var(--lyd-deep-blue);
+        }
+        
+        .api-table code {
+            background: rgba(51, 102, 204, 0.1);
+            color: var(--lyd-royal-blue);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Accessibility Grid */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .accessibility-item {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--lyd-line);
+        }
+        
+        .accessibility-item h4 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .accessibility-item ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .accessibility-item li {
+            color: var(--lyd-grey);
+            margin-bottom: var(--spacing-sm);
+            padding-left: var(--spacing-md);
+            position: relative;
+        }
+        
+        .accessibility-item li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--lyd-success);
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
+                transform: translateX(-100%);
             }
             
             .main-content {
                 margin-left: 0;
+                width: 100%;
                 padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .accessibility-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .toast-container {
+                left: var(--spacing-md);
+                right: var(--spacing-md);
+                max-width: none;
             }
         }
     </style>
@@ -417,37 +589,21 @@
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+            <svg class="logo" viewBox="0 0 100 100" fill="none">
                 <defs>
-                    <!-- Gradient für die Sichel -->
-                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    
-                    <!-- Gradient für den gesamten Text -->
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#3366CC"/>
+                        <stop offset="100%" style="stop-color:#000066"/>
                     </linearGradient>
                 </defs>
-                
-                <!-- Sichel-Form mit eigenem Gradient -->
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                
-                <!-- Text-Elemente -->
-                <g fill="url(#textGradientLYD)">
-                    <!-- LIVE -->
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <!-- YOUR -->
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <!-- DREAMS -->
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
+                <path d="M20 80 Q50 20 80 80" stroke="url(#logoGradient)" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <circle cx="35" cy="65" r="8" fill="url(#logoGradient)"/>
+                <circle cx="65" cy="65" r="8" fill="url(#logoGradient)"/>
             </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <div>
+                <div class="logo-text">LIVE YOUR DREAMS</div>
+                <div class="logo-subtitle">Design System V2</div>
+            </div>
         </div>
         
         <div class="nav-section">
@@ -464,23 +620,23 @@
         <div class="nav-section">
             <div class="nav-section-title">Components</div>
             <a href="/v2/components/" class="nav-item">Introduction</a>
-            <a href="/v2/components/buttons/" class="nav-item ">Button</a>
-            <a href="/v2/components/inputs/" class="nav-item ">Input</a>
-            <a href="/v2/components/cards/" class="nav-item ">Card</a>
-            <a href="/v2/components/select/" class="nav-item ">Select</a>
-            <a href="/v2/components/accordion/" class="nav-item ">Accordion</a>
-            <a href="/v2/components/modal/" class="nav-item ">Modal</a>
-            <a href="/v2/components/dropdown/" class="nav-item ">Dropdown</a>
-            <a href="/v2/components/checkbox/" class="nav-item ">Checkbox</a>
-            <a href="/v2/components/radio/" class="nav-item ">Radio</a>
+            <a href="/v2/components/buttons/" class="nav-item">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
             <a href="/v2/components/toast/" class="nav-item active">Toast</a>
-            <a href="/v2/components/table/" class="nav-item ">Table</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
         </div>
         
         <div class="nav-section">
             <div class="nav-section-title">Styles</div>
             <a href="/v2/styles/" class="nav-item">Introduction</a>
-            <a href="/v2/components/typography/" class="nav-item ">Typography</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
             <a href="/v2/styles/grid/" class="nav-item">Grid</a>
             <a href="/v2/styles/colors/" class="nav-item">Colors</a>
             <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
@@ -502,184 +658,833 @@
         <!-- Page Header -->
         <div class="page-header">
             <h1 class="page-title">Toast</h1>
-            <p class="page-subtitle">Professional toast notification system with premium animations, auto-dismiss functionality, and accessibility features for modern web applications.</p>
+            <p class="page-subtitle">Professional toast notification system with premium animations, auto-dismiss functionality, and accessibility features optimized for real estate applications.</p>
         </div>
         
-        <!-- Section 1: Toast Variants -->
+        <!-- Toast Container for Live Demos -->
+        <div class="toast-container" id="toastContainer"></div>
+        
+        <!-- Section 1: Real Estate Toast Variants -->
         <section class="section">
-            <h2 class="section-title premium">Premium Toast Notifications</h2>
-            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Advanced notification system with glassmorphism effects and micro-animations</p>
+            <h2 class="section-title premium">Real Estate Toast Notifications</h2>
+            <p class="section-description">Advanced notification system with glassmorphism effects and micro-animations, specifically designed for property management workflows.</p>
             
             <div class="showcase-grid">
                 <!-- Success Toast -->
                 <div class="showcase-item">
-                    <h3>Success Toast</h3>
-                    <p>Professional success notifications with premium styling</p>
-                    
-                    <div class="lyd-toast lyd-toast-success" style="position: relative; transform: none; opacity: 1;">
-                        <div class="lyd-toast-icon">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    <h3>Property Success Notifications</h3>
+                    <p>Professional success notifications for property operations with premium styling</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-toast success">
+                            <svg class="toast-icon success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
+                            <div class="toast-content">
+                                <div class="toast-title">Property Listed Successfully</div>
+                                <div class="toast-message">Your luxury apartment has been published and is now visible to potential buyers.</div>
+                            </div>
+                            <button class="toast-close">×</button>
                         </div>
-                        <div class="lyd-toast-content">
-                            <div class="lyd-toast-title">Property Listed Successfully</div>
-                            <div class="lyd-toast-message">Your property has been published and is now visible to potential buyers.</div>
-                        </div>
-                        <button class="lyd-toast-close" onclick="dismissToast(this)">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
                     </div>
-                    
-                    <button class="lyd-button primary" onclick="showToast('success', 'Success!', 'Operation completed successfully.')">Show Success Toast</button>
+                    <button class="lyd-button primary" onclick="showToast('success', 'Property Listed Successfully', 'Your luxury apartment has been published and is now visible to potential buyers.')">Show Success Toast</button>
                 </div>
                 
                 <!-- Error Toast -->
                 <div class="showcase-item">
-                    <h3>Error Toast</h3>
-                    <p>Critical error notifications with attention-grabbing styling</p>
-                    
-                    <div class="lyd-toast lyd-toast-error" style="position: relative; transform: none; opacity: 1;">
-                        <div class="lyd-toast-icon">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <h3>Error & Validation Notifications</h3>
+                    <p>Critical error notifications with attention-grabbing styling for important issues</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-toast error">
+                            <svg class="toast-icon error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
+                            <div class="toast-content">
+                                <div class="toast-title">Property Images Upload Failed</div>
+                                <div class="toast-message">Unable to upload high-resolution property images. Please check your connection and try again.</div>
+                            </div>
+                            <button class="toast-close">×</button>
                         </div>
-                        <div class="lyd-toast-content">
-                            <div class="lyd-toast-title">Upload Failed</div>
-                            <div class="lyd-toast-message">Unable to upload property images. Please check your connection and try again.</div>
-                        </div>
-                        <button class="lyd-toast-close" onclick="dismissToast(this)">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
                     </div>
-                    
-                    <button class="lyd-button" style="background: #dc3545; color: white;" onclick="showToast('error', 'Error!', 'Something went wrong.')">Show Error Toast</button>
+                    <button class="lyd-button primary" onclick="showToast('error', 'Property Images Upload Failed', 'Unable to upload high-resolution property images. Please check your connection and try again.')">Show Error Toast</button>
                 </div>
                 
                 <!-- Warning Toast -->
                 <div class="showcase-item">
-                    <h3>Warning Toast</h3>
-                    <p>Important warnings with distinctive amber styling</p>
-                    
-                    <div class="lyd-toast lyd-toast-warning" style="position: relative; transform: none; opacity: 1;">
-                        <div class="lyd-toast-icon">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    <h3>Business Warnings</h3>
+                    <p>Important warnings with distinctive amber styling for business-critical alerts</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-toast warning">
+                            <svg class="toast-icon warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
                             </svg>
+                            <div class="toast-content">
+                                <div class="toast-title">Premium Subscription Expiring</div>
+                                <div class="toast-message">Your premium real estate subscription expires in 3 days. Renew now to avoid service interruption.</div>
+                            </div>
+                            <button class="toast-close">×</button>
                         </div>
-                        <div class="lyd-toast-content">
-                            <div class="lyd-toast-title">Subscription Expiring</div>
-                            <div class="lyd-toast-message">Your premium subscription expires in 3 days. Renew now to avoid service interruption.</div>
-                        </div>
-                        <button class="lyd-toast-close" onclick="dismissToast(this)">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
                     </div>
-                    
-                    <button class="lyd-button" style="background: #f59e0b; color: white;" onclick="showToast('warning', 'Warning!', 'Please review this important information.')">Show Warning Toast</button>
+                    <button class="lyd-button primary" onclick="showToast('warning', 'Premium Subscription Expiring', 'Your premium real estate subscription expires in 3 days. Renew now to avoid service interruption.')">Show Warning Toast</button>
                 </div>
                 
                 <!-- Info Toast -->
                 <div class="showcase-item">
-                    <h3>Info Toast</h3>
-                    <p>Informational messages with clean blue styling</p>
-                    
-                    <div class="lyd-toast lyd-toast-info" style="position: relative; transform: none; opacity: 1;">
-                        <div class="lyd-toast-icon">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <h3>Feature & Update Notifications</h3>
+                    <p>Informational messages with clean blue styling for feature announcements</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-toast info">
+                            <svg class="toast-icon info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
+                            <div class="toast-content">
+                                <div class="toast-title">New Property Analytics Available</div>
+                                <div class="toast-message">Check out our latest property analytics dashboard with enhanced market reporting capabilities.</div>
+                            </div>
+                            <button class="toast-close">×</button>
                         </div>
-                        <div class="lyd-toast-content">
-                            <div class="lyd-toast-title">New Features Available</div>
-                            <div class="lyd-toast-message">Check out our latest property analytics dashboard with enhanced reporting capabilities.</div>
-                        </div>
-                        <button class="lyd-toast-close" onclick="dismissToast(this)">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
                     </div>
-                    
-                    <button class="lyd-button" style="background: #3b82f6; color: white;" onclick="showToast('info', 'Info', 'Here is some useful information.')">Show Info Toast</button>
+                    <button class="lyd-button primary" onclick="showToast('info', 'New Property Analytics Available', 'Check out our latest property analytics dashboard with enhanced market reporting capabilities.')">Show Info Toast</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Advanced Toast Features -->
+        <section class="section">
+            <h2 class="section-title premium">Advanced Real Estate Features</h2>
+            
+            <div class="showcase-grid">
+                <!-- Property Action Toasts -->
+                <div class="showcase-item">
+                    <h3>Property Action Confirmations</h3>
+                    <p>Specialized notifications for property management actions</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button secondary" onclick="showPropertyActionToast()">Property Saved to Favorites</button>
+                        <button class="lyd-button secondary" onclick="showViewingScheduledToast()">Viewing Scheduled</button>
+                        <button class="lyd-button secondary" onclick="showOfferSubmittedToast()">Offer Submitted</button>
+                    </div>
+                </div>
+                
+                <!-- Market Updates -->
+                <div class="showcase-item">
+                    <h3>Market Intelligence Alerts</h3>
+                    <p>Real-time market updates and price change notifications</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button secondary" onclick="showPriceDropToast()">Price Drop Alert</button>
+                        <button class="lyd-button secondary" onclick="showMarketTrendToast()">Market Trend Update</button>
+                        <button class="lyd-button secondary" onclick="showNewListingToast()">New Listing Match</button>
+                    </div>
+                </div>
+                
+                <!-- System Notifications -->
+                <div class="showcase-item">
+                    <h3>System & Integration Alerts</h3>
+                    <p>Technical notifications for system status and integrations</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button secondary" onclick="showSyncCompleteToast()">CRM Sync Complete</button>
+                        <button class="lyd-button secondary" onclick="showBackupToast()">Data Backup Complete</button>
+                        <button class="lyd-button secondary" onclick="showMaintenanceToast()">Scheduled Maintenance</button>
+                    </div>
+                </div>
+                
+                <!-- Auto-dismiss Demo -->
+                <div class="showcase-item">
+                    <h3>Auto-Dismiss Functionality</h3>
+                    <p>Toasts with customizable auto-dismiss timers for different priorities</p>
+                    <div class="showcase-demo">
+                        <button class="lyd-button secondary" onclick="showAutoToast(3000)">3 Second Toast</button>
+                        <button class="lyd-button secondary" onclick="showAutoToast(5000)">5 Second Toast</button>
+                        <button class="lyd-button secondary" onclick="showAutoToast(8000)">8 Second Toast</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3 class="section-subtitle">HTML Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>&lt;!-- Toast Container --&gt;
+&lt;div class="toast-container" id="toastContainer"&gt;&lt;/div&gt;
+
+&lt;!-- Success Toast --&gt;
+&lt;div class="lyd-toast success"&gt;
+    &lt;svg class="toast-icon success" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+        &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;
+    &lt;/svg&gt;
+    &lt;div class="toast-content"&gt;
+        &lt;div class="toast-title"&gt;Property Listed Successfully&lt;/div&gt;
+        &lt;div class="toast-message"&gt;Your property has been published.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="toast-close"&gt;×&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Error Toast --&gt;
+&lt;div class="lyd-toast error"&gt;
+    &lt;svg class="toast-icon error" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+        &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/&gt;
+    &lt;/svg&gt;
+    &lt;div class="toast-content"&gt;
+        &lt;div class="toast-title"&gt;Upload Failed&lt;/div&gt;
+        &lt;div class="toast-message"&gt;Unable to upload property images.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="toast-close"&gt;×&lt;/button&gt;
+&lt;/div&gt;</pre>
+                </div>
+                
+                <h3 class="section-subtitle">JavaScript Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// Toast Management System
+class LYDToast {
+    constructor(container = '#toastContainer') {
+        this.container = document.querySelector(container);
+        this.toasts = new Map();
+        this.autoId = 0;
+    }
+
+    show(type, title, message, options = {}) {
+        const id = options.id || `toast-${++this.autoId}`;
+        const duration = options.duration || 5000;
+        const closable = options.closable !== false;
+
+        const toast = this.createToast(type, title, message, id, closable);
+        this.container.appendChild(toast);
+        this.toasts.set(id, toast);
+
+        // Auto-dismiss
+        if (duration > 0) {
+            setTimeout(() => this.hide(id), duration);
+        }
+
+        return id;
+    }
+
+    createToast(type, title, message, id, closable) {
+        const toast = document.createElement('div');
+        toast.className = `lyd-toast ${type}`;
+        toast.dataset.id = id;
+
+        const icons = {
+            success: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+            error: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+            warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z',
+            info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+        };
+
+        toast.innerHTML = `
+            &lt;svg class="toast-icon ${type}" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;
+                &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${icons[type]}"/&gt;
+            &lt;/svg&gt;
+            &lt;div class="toast-content"&gt;
+                &lt;div class="toast-title"&gt;${title}&lt;/div&gt;
+                &lt;div class="toast-message"&gt;${message}&lt;/div&gt;
+            &lt;/div&gt;
+            ${closable ? '&lt;button class="toast-close"&gt;×&lt;/button&gt;' : ''}
+        `;
+
+        if (closable) {
+            toast.querySelector('.toast-close').onclick = () => this.hide(id);
+        }
+
+        return toast;
+    }
+
+    hide(id) {
+        const toast = this.toasts.get(id);
+        if (toast) {
+            toast.classList.add('removing');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+                this.toasts.delete(id);
+            }, 300);
+        }
+    }
+
+    // Real Estate specific methods
+    propertyListed(propertyTitle) {
+        return this.show('success', 'Property Listed Successfully', 
+            `${propertyTitle} has been published and is now visible to potential buyers.`);
+    }
+
+    viewingScheduled(propertyTitle, date) {
+        return this.show('info', 'Viewing Scheduled', 
+            `Property viewing for ${propertyTitle} scheduled for ${date}.`);
+    }
+
+    offerSubmitted(amount, propertyTitle) {
+        return this.show('success', 'Offer Submitted', 
+            `Your offer of €${amount.toLocaleString()} for ${propertyTitle} has been submitted.`);
+    }
+
+    priceDropAlert(propertyTitle, oldPrice, newPrice) {
+        const savings = oldPrice - newPrice;
+        return this.show('info', 'Price Drop Alert', 
+            `${propertyTitle} price reduced by €${savings.toLocaleString()}. New price: €${newPrice.toLocaleString()}.`);
+    }
+}
+
+// Initialize Toast System
+const toast = new LYDToast();
+
+// Usage Examples
+toast.show('success', 'Property Listed', 'Your property is now live!');
+toast.propertyListed('Luxury Penthouse in Munich');
+toast.viewingScheduled('Modern Apartment', 'Tomorrow at 2 PM');</pre>
+                </div>
+                
+                <h3 class="section-subtitle">React/Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// components/Toast.tsx
+import React, { createContext, useContext, useState, useCallback } from 'react';
+
+interface Toast {
+  id: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  title: string;
+  message: string;
+  duration?: number;
+}
+
+interface ToastContextType {
+  toasts: Toast[];
+  showToast: (type: Toast['type'], title: string, message: string, duration?: number) => void;
+  hideToast: (id: string) => void;
+  // Real Estate specific methods
+  propertyListed: (propertyTitle: string) => void;
+  viewingScheduled: (propertyTitle: string, date: string) => void;
+  offerSubmitted: (amount: number, propertyTitle: string) => void;
+}
+
+const ToastContext = createContext&lt;ToastContextType | undefined&gt;(undefined);
+
+export const ToastProvider: React.FC&lt;{ children: React.ReactNode }&gt; = ({ children }) =&gt; {
+  const [toasts, setToasts] = useState&lt;Toast[]&gt;([]);
+
+  const showToast = useCallback((type: Toast['type'], title: string, message: string, duration = 5000) =&gt; {
+    const id = `toast-${Date.now()}-${Math.random()}`;
+    const newToast: Toast = { id, type, title, message, duration };
+    
+    setToasts(prev =&gt; [...prev, newToast]);
+    
+    if (duration &gt; 0) {
+      setTimeout(() =&gt; hideToast(id), duration);
+    }
+  }, []);
+
+  const hideToast = useCallback((id: string) =&gt; {
+    setToasts(prev =&gt; prev.filter(toast =&gt; toast.id !== id));
+  }, []);
+
+  // Real Estate specific methods
+  const propertyListed = useCallback((propertyTitle: string) =&gt; {
+    showToast('success', 'Property Listed Successfully', 
+      `${propertyTitle} has been published and is now visible to potential buyers.`);
+  }, [showToast]);
+
+  const viewingScheduled = useCallback((propertyTitle: string, date: string) =&gt; {
+    showToast('info', 'Viewing Scheduled', 
+      `Property viewing for ${propertyTitle} scheduled for ${date}.`);
+  }, [showToast]);
+
+  const offerSubmitted = useCallback((amount: number, propertyTitle: string) =&gt; {
+    showToast('success', 'Offer Submitted', 
+      `Your offer of €${amount.toLocaleString()} for ${propertyTitle} has been submitted.`);
+  }, [showToast]);
+
+  return (
+    &lt;ToastContext.Provider value={{ 
+      toasts, 
+      showToast, 
+      hideToast, 
+      propertyListed, 
+      viewingScheduled, 
+      offerSubmitted 
+    }}&gt;
+      {children}
+      &lt;ToastContainer /&gt;
+    &lt;/ToastContext.Provider&gt;
+  );
+};
+
+export const useToast = () =&gt; {
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error('useToast must be used within a ToastProvider');
+  }
+  return context;
+};
+
+// Usage in components
+const PropertyForm = () =&gt; {
+  const { propertyListed, showToast } = useToast();
+  
+  const handleSubmit = async (formData) =&gt; {
+    try {
+      await submitProperty(formData);
+      propertyListed(formData.title);
+    } catch (error) {
+      showToast('error', 'Submission Failed', error.message);
+    }
+  };
+};</pre>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            
+            <div class="implementation-section">
+                <h3 class="section-subtitle">CSS Classes</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                            <th>Real Estate Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-toast</code></td>
+                            <td>Base toast notification with premium styling</td>
+                            <td>All property management notifications</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-toast.success</code></td>
+                            <td>Success state with green accent and checkmark icon</td>
+                            <td>Property listed, offer accepted, viewing confirmed</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-toast.error</code></td>
+                            <td>Error state with red accent and warning icon</td>
+                            <td>Upload failures, validation errors, system issues</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-toast.warning</code></td>
+                            <td>Warning state with amber accent and alert icon</td>
+                            <td>Subscription expiry, incomplete profiles, market alerts</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-toast.info</code></td>
+                            <td>Info state with blue accent and info icon</td>
+                            <td>Feature updates, market insights, system notifications</td>
+                        </tr>
+                        <tr>
+                            <td><code>.toast-container</code></td>
+                            <td>Fixed positioned container for toast notifications</td>
+                            <td>Global notification area for all property actions</td>
+                        </tr>
+                        <tr>
+                            <td><code>.toast-icon</code></td>
+                            <td>Icon container with contextual coloring</td>
+                            <td>Visual indicators for different property events</td>
+                        </tr>
+                        <tr>
+                            <td><code>.toast-content</code></td>
+                            <td>Content wrapper for title and message</td>
+                            <td>Property details, action descriptions, status updates</td>
+                        </tr>
+                        <tr>
+                            <td><code>.toast-title</code></td>
+                            <td>Bold title text for the notification</td>
+                            <td>Action names: "Property Listed", "Offer Submitted"</td>
+                        </tr>
+                        <tr>
+                            <td><code>.toast-message</code></td>
+                            <td>Descriptive message text with context</td>
+                            <td>Detailed property information and next steps</td>
+                        </tr>
+                        <tr>
+                            <td><code>.toast-close</code></td>
+                            <td>Close button with hover states</td>
+                            <td>Manual dismissal of non-critical notifications</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 class="section-subtitle">JavaScript API</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Parameters</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>show(type, title, message, options)</code></td>
+                            <td>type: string, title: string, message: string, options: object</td>
+                            <td>Display a new toast notification</td>
+                        </tr>
+                        <tr>
+                            <td><code>hide(id)</code></td>
+                            <td>id: string</td>
+                            <td>Hide a specific toast by ID</td>
+                        </tr>
+                        <tr>
+                            <td><code>propertyListed(title)</code></td>
+                            <td>title: string</td>
+                            <td>Show success notification for property listing</td>
+                        </tr>
+                        <tr>
+                            <td><code>viewingScheduled(title, date)</code></td>
+                            <td>title: string, date: string</td>
+                            <td>Show info notification for scheduled viewing</td>
+                        </tr>
+                        <tr>
+                            <td><code>offerSubmitted(amount, title)</code></td>
+                            <td>amount: number, title: string</td>
+                            <td>Show success notification for submitted offer</td>
+                        </tr>
+                        <tr>
+                            <td><code>priceDropAlert(title, oldPrice, newPrice)</code></td>
+                            <td>title: string, oldPrice: number, newPrice: number</td>
+                            <td>Show info notification for price changes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Section 5: Accessibility & Best Practices -->
+        <section class="section">
+            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h4>Screen Reader Support</h4>
+                    <ul>
+                        <li>ARIA live regions for announcements</li>
+                        <li>Semantic role attributes</li>
+                        <li>Descriptive text for icons</li>
+                        <li>Status and alert announcements</li>
+                        <li>Contextual property information</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Keyboard Navigation</h4>
+                    <ul>
+                        <li>Tab to focus close button</li>
+                        <li>Enter/Space to dismiss</li>
+                        <li>Escape to close all toasts</li>
+                        <li>Focus management on dismiss</li>
+                        <li>Logical tab order maintenance</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Visual Accessibility</h4>
+                    <ul>
+                        <li>WCAG AA contrast ratios</li>
+                        <li>Color-blind friendly icons</li>
+                        <li>High contrast mode support</li>
+                        <li>Sufficient text sizing</li>
+                        <li>Clear visual hierarchy</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h4>Real Estate UX</h4>
+                    <ul>
+                        <li>Critical actions require confirmation</li>
+                        <li>Financial amounts clearly formatted</li>
+                        <li>Property details easily scannable</li>
+                        <li>Contextual help and guidance</li>
+                        <li>Progressive disclosure of information</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Real Estate Integration -->
+        <section class="section">
+            <h2 class="section-title premium">Real Estate Integration Guide</h2>
+            
+            <div class="implementation-section">
+                <h3 class="section-subtitle">Property Management Workflows</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// Property Management Toast Integration
+class PropertyToastManager {
+    constructor(toastSystem) {
+        this.toast = toastSystem;
+    }
+
+    // Listing Management
+    onPropertyListed(property) {
+        this.toast.show('success', 'Property Listed Successfully', 
+            `${property.title} in ${property.location} is now live with ${property.images.length} photos.`);
+    }
+
+    onPropertyUpdated(property, changes) {
+        const changeText = Object.keys(changes).join(', ');
+        this.toast.show('info', 'Property Updated', 
+            `${property.title} has been updated. Changes: ${changeText}.`);
+    }
+
+    // Financial Notifications
+    onOfferReceived(offer) {
+        this.toast.show('success', 'New Offer Received', 
+            `€${offer.amount.toLocaleString()} offer received for ${offer.property.title}.`, 
+            { duration: 8000 });
+    }
+
+    onPriceReduction(property, oldPrice, newPrice) {
+        const reduction = oldPrice - newPrice;
+        const percentage = Math.round((reduction / oldPrice) * 100);
+        this.toast.show('warning', 'Price Reduced', 
+            `${property.title} price reduced by ${percentage}% (€${reduction.toLocaleString()}).`);
+    }
+
+    // Market Intelligence
+    onMarketUpdate(area, trend) {
+        this.toast.show('info', 'Market Update', 
+            `${area} market ${trend.direction}: Average price ${trend.change}.`);
+    }
+
+    // System & Integration
+    onCRMSync(recordsUpdated) {
+        this.toast.show('success', 'CRM Sync Complete', 
+            `${recordsUpdated} property records synchronized successfully.`);
+    }
+
+    onMaintenanceAlert(startTime, duration) {
+        this.toast.show('warning', 'Scheduled Maintenance', 
+            `System maintenance from ${startTime} for ${duration}. Limited functionality expected.`, 
+            { duration: 10000 });
+    }
+}</pre>
+                </div>
+                
+                <h3 class="section-subtitle">Customer Journey Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// Customer Journey Toast Notifications
+class CustomerJourneyToasts {
+    // Buyer Journey
+    onPropertySaved(property) {
+        this.toast.show('success', 'Property Saved', 
+            `${property.title} added to your favorites. View all saved properties in your dashboard.`);
+    }
+
+    onViewingBooked(property, slot) {
+        this.toast.show('success', 'Viewing Scheduled', 
+            `Property viewing confirmed for ${property.title} on ${slot.date} at ${slot.time}.`);
+    }
+
+    onMortgageCalculated(amount, rate, monthly) {
+        this.toast.show('info', 'Mortgage Calculated', 
+            `€${amount.toLocaleString()} at ${rate}% = €${monthly.toLocaleString()}/month. Speak to our advisors.`);
+    }
+
+    // Seller Journey  
+    onValuationRequested(address) {
+        this.toast.show('info', 'Valuation Requested', 
+            `Property valuation requested for ${address}. Our expert will contact you within 24 hours.`);
+    }
+
+    onPhotoshootScheduled(date, photographer) {
+        this.toast.show('success', 'Photoshoot Scheduled', 
+            `Professional photography booked for ${date} with ${photographer}.`);
+    }
+
+    // Agent Journey
+    onLeadAssigned(lead, agent) {
+        this.toast.show('info', 'Lead Assigned', 
+            `${lead.name} interested in ${lead.property} assigned to ${agent.name}.`);
+    }
+
+    onCommissionCalculated(sale, commission) {
+        this.toast.show('success', 'Commission Calculated', 
+            `Sale completed: €${sale.amount.toLocaleString()}. Your commission: €${commission.toLocaleString()}.`);
+    }
+}</pre>
                 </div>
             </div>
         </section>
     </main>
     
-    <!-- Toast Container -->
-    <div class="lyd-toast-container" id="toastContainer"></div>
-    
     <!-- JavaScript -->
     <script src="../shared/force-consistency.js"></script>
     <script>
-        // Toast Notification System
-        let toastCounter = 0;
-        
-        function showToast(type, title, message, duration = 5000) {
-            const container = document.getElementById('toastContainer');
-            const toastId = `toast-${++toastCounter}`;
-            
-            const toast = document.createElement('div');
-            toast.className = `lyd-toast lyd-toast-${type} entering`;
-            toast.id = toastId;
-            
-            const iconMap = {
-                success: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>',
-                error: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
-                warning: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"></path>',
-                info: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
-            };
-            
-            toast.innerHTML = `
-                <div class="lyd-toast-icon">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        ${iconMap[type]}
-                    </svg>
-                </div>
-                <div class="lyd-toast-content">
-                    <div class="lyd-toast-title">${title}</div>
-                    <div class="lyd-toast-message">${message}</div>
-                </div>
-                <button class="lyd-toast-close" onclick="dismissToast(this)">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            `;
-            
-            container.appendChild(toast);
-            
-            // Auto-dismiss after duration
-            if (duration > 0) {
-                setTimeout(() => {
-                    dismissToast(toast.querySelector('.lyd-toast-close'));
-                }, duration);
+        // Toast Management System
+        class LYDToast {
+            constructor(container = '#toastContainer') {
+                this.container = document.querySelector(container);
+                this.toasts = new Map();
+                this.autoId = 0;
             }
-            
-            return toastId;
-        }
-        
-        function dismissToast(closeButton) {
-            const toast = closeButton.closest('.lyd-toast');
-            toast.classList.remove('entering');
-            toast.classList.add('leaving');
-            
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
+
+            show(type, title, message, options = {}) {
+                const id = options.id || `toast-${++this.autoId}`;
+                const duration = options.duration || 5000;
+                const closable = options.closable !== false;
+
+                const toast = this.createToast(type, title, message, id, closable);
+                this.container.appendChild(toast);
+                this.toasts.set(id, toast);
+
+                // Auto-dismiss
+                if (duration > 0) {
+                    setTimeout(() => this.hide(id), duration);
                 }
-            }, 200);
+
+                return id;
+            }
+
+            createToast(type, title, message, id, closable) {
+                const toast = document.createElement('div');
+                toast.className = `lyd-toast ${type}`;
+                toast.dataset.id = id;
+
+                const icons = {
+                    success: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+                    error: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+                    warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z',
+                    info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                };
+
+                toast.innerHTML = `
+                    <svg class="toast-icon ${type}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${icons[type]}"/>
+                    </svg>
+                    <div class="toast-content">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    ${closable ? '<button class="toast-close">×</button>' : ''}
+                `;
+
+                if (closable) {
+                    toast.querySelector('.toast-close').onclick = () => this.hide(id);
+                }
+
+                return toast;
+            }
+
+            hide(id) {
+                const toast = this.toasts.get(id);
+                if (toast) {
+                    toast.classList.add('removing');
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.parentNode.removeChild(toast);
+                        }
+                        this.toasts.delete(id);
+                    }, 300);
+                }
+            }
+
+            // Real Estate specific methods
+            propertyListed(propertyTitle) {
+                return this.show('success', 'Property Listed Successfully', 
+                    `${propertyTitle} has been published and is now visible to potential buyers.`);
+            }
+
+            viewingScheduled(propertyTitle, date) {
+                return this.show('info', 'Viewing Scheduled', 
+                    `Property viewing for ${propertyTitle} scheduled for ${date}.`);
+            }
+
+            offerSubmitted(amount, propertyTitle) {
+                return this.show('success', 'Offer Submitted', 
+                    `Your offer of €${amount.toLocaleString()} for ${propertyTitle} has been submitted.`);
+            }
+
+            priceDropAlert(propertyTitle, oldPrice, newPrice) {
+                const savings = oldPrice - newPrice;
+                return this.show('info', 'Price Drop Alert', 
+                    `${propertyTitle} price reduced by €${savings.toLocaleString()}. New price: €${newPrice.toLocaleString()}.`);
+            }
         }
-        
-        // Set active navigation
+
+        // Initialize Toast System
+        const toast = new LYDToast();
+
+        // Demo Functions
+        function showToast(type, title, message) {
+            toast.show(type, title, message);
+        }
+
+        function showPropertyActionToast() {
+            toast.show('success', 'Property Saved to Favorites', 
+                'Luxury penthouse in Munich added to your saved properties. View all favorites in your dashboard.');
+        }
+
+        function showViewingScheduledToast() {
+            toast.show('info', 'Viewing Scheduled Successfully', 
+                'Property viewing confirmed for tomorrow at 2:00 PM. Calendar invite sent to your email.');
+        }
+
+        function showOfferSubmittedToast() {
+            toast.show('success', 'Offer Submitted Successfully', 
+                'Your offer of €850,000 has been submitted to the seller. You will receive a response within 48 hours.');
+        }
+
+        function showPriceDropToast() {
+            toast.priceDropAlert('Modern Apartment in Berlin', 750000, 695000);
+        }
+
+        function showMarketTrendToast() {
+            toast.show('info', 'Market Trend Update', 
+                'Munich property prices increased 3.2% this quarter. View detailed market analysis in your dashboard.');
+        }
+
+        function showNewListingToast() {
+            toast.show('success', 'New Listing Match Found', 
+                'A new 3-bedroom apartment matching your criteria has been listed in your preferred area.');
+        }
+
+        function showSyncCompleteToast() {
+            toast.show('success', 'CRM Synchronization Complete', 
+                '247 property records and 89 client contacts have been synchronized successfully.');
+        }
+
+        function showBackupToast() {
+            toast.show('info', 'Data Backup Complete', 
+                'Your property data and client information have been backed up successfully to secure cloud storage.');
+        }
+
+        function showMaintenanceToast() {
+            toast.show('warning', 'Scheduled System Maintenance', 
+                'System maintenance window from 2:00 AM to 4:00 AM tonight. Limited functionality expected.', 
+                { duration: 8000 });
+        }
+
+        function showAutoToast(duration) {
+            toast.show('info', `${duration/1000} Second Auto-Dismiss`, 
+                `This toast will automatically dismiss after ${duration/1000} seconds.`, 
+                { duration });
+        }
+
+        // Copy button functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('copy-button')) {
+                const codeBlock = e.target.nextElementSibling;
+                const text = codeBlock.textContent;
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    e.target.textContent = 'Copied!';
+                    setTimeout(() => {
+                        e.target.textContent = 'Copy';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Navigation active state
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
