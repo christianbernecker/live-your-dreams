@@ -801,11 +801,16 @@ export const Modal = ({
         
         /* Section Subtitle Styling */
         .section-subtitle {
-            font-size: var(--font-size-xl);
-            font-weight: var(--font-weight-semibold);
-            color: var(--lyd-text-primary);
-            margin-bottom: var(--spacing-lg);
-            margin-top: var(--spacing-xl);
+            font-size: var(--font-size-xl) !important;
+            font-weight: 700 !important;
+            color: var(--lyd-text-primary) !important;
+            margin-bottom: var(--spacing-lg) !important;
+            margin-top: 0 !important;
+        }
+        
+        /* Erste Sub-Headline ohne oberen Abstand */
+        .implementation-section .section-subtitle:first-of-type {
+            margin-top: 0 !important;
         }
         
         /* Implementation Section Styling - wie Button-Komponente */
