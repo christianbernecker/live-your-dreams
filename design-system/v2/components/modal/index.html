@@ -487,9 +487,9 @@
         
         <!-- Section 2: Implementation Guide -->
         <section class="section">
-            <h2 class="section-title">Implementation Guide</h2>
+            <h2 class="section-title premium">Implementation Guide</h2>
             <div class="implementation-section">
-                <h3>Basic Modal Usage</h3>
+                <h3 class="section-subtitle">HTML Usage</h3>
                 <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
                     <pre>&lt;!-- Basic Modal --&gt;
@@ -511,9 +511,8 @@
 &lt;/div&gt;</pre>
                 </div>
             </div>
-
-            <div class="implementation-section">
-                <h2 class="section-title">React/Next.js Integration</h2>
+            
+                <h3 class="section-subtitle">Next.js Integration</h3>
                 <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
                     <pre>// components/Modal.tsx
@@ -717,48 +716,50 @@ export const Modal = ({
     
     <!-- CRITICAL: Inline Button Styles as Backup -->
     <style>
-        /* Force Button Styles - Inline Backup */
+        /* Force Button Styles - Exakt wie Button-Komponente */
         .lyd-button {
             display: inline-flex !important;
             align-items: center !important;
-            justify-content: center !important;
-            gap: 8px !important;
-            padding: 0 16px !important;
-            height: 40px !important;
-            border: none !important;
+            gap: 10px !important;
+            padding: 12px 24px !important;
             border-radius: 6px !important;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-            font-size: 14px !important;
-            font-weight: 500 !important;
+            font-weight: 600 !important;
+            font-size: var(--font-size-base) !important;
+            border: none !important;
             cursor: pointer !important;
+            transition: all 0.3s ease !important;
             text-decoration: none !important;
-            transition: all 0.2s ease !important;
-            overflow: hidden !important;
-            background: #f3f4f6 !important;
-            color: #374151 !important;
+            font-family: var(--font-family-primary) !important;
         }
         
         .lyd-button.primary {
-            background: linear-gradient(135deg, #3366CC 0%, #0052CC 100%) !important;
+            background: linear-gradient(135deg, #0066ff 0%, #004299 100%) !important;
             color: white !important;
-            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.3) !important;
+            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3) !important;
         }
         
         .lyd-button.primary:hover {
-            background: linear-gradient(135deg, #0052CC 0%, #003366 100%) !important;
-            box-shadow: 0 6px 20px rgba(51, 102, 204, 0.4) !important;
-            transform: translateY(-1px) !important;
+            background: linear-gradient(135deg, #0052cc 0%, #003366 100%) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4) !important;
         }
         
         .lyd-button.secondary {
-            background: transparent !important;
-            color: #3366CC !important;
-            border: 1px solid #3366CC !important;
+            background: linear-gradient(135deg, rgba(51, 102, 204, 0.08) 0%, rgba(0, 0, 102, 0.12) 100%) !important;
+            border: 1px solid rgba(51, 102, 204, 0.25) !important;
+            color: #1a365d !important;
+            backdrop-filter: blur(20px) !important;
+            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            position: relative !important;
+            overflow: hidden !important;
         }
         
         .lyd-button.secondary:hover {
-            background: #3366CC !important;
-            color: white !important;
+            background: linear-gradient(135deg, rgba(51, 102, 204, 0.15) 0%, rgba(0, 0, 102, 0.2) 100%) !important;
+            border-color: rgba(51, 102, 204, 0.4) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 24px rgba(51, 102, 204, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(51, 102, 204, 0.1) !important;
+            color: #0f2a44 !important;
         }
         
         .lyd-button.error {
@@ -769,17 +770,18 @@ export const Modal = ({
         
         .lyd-button.error:hover {
             background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%) !important;
-            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4) !important;
-            transform: translateY(-1px) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(220, 53, 69, 0.4) !important;
         }
         
         .lyd-button.ghost {
             background: transparent !important;
             color: #6b7280 !important;
+            padding: 8px 16px !important;
         }
         
         .lyd-button.ghost:hover {
-            background: #f3f4f6 !important;
+            background: rgba(0, 0, 0, 0.05) !important;
             color: #374151 !important;
         }
         
@@ -796,6 +798,15 @@ export const Modal = ({
         .lyd-button.copy:hover {
             background: rgba(255, 255, 255, 0.2) !important;
             transform: translateY(-1px) !important;
+        }
+        
+        /* Section Subtitle Styling */
+        .section-subtitle {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--lyd-text-primary);
+            margin-bottom: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
         }
     </style>
     
