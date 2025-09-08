@@ -85,10 +85,15 @@ server {
         try_files /v2/index.html =404;
     }
     
-    # Handle V2 shared CSS files
-    location ~ ^/v2/shared/(.+)$ {
+    # Handle V2 shared files (CSS + JavaScript)
+    location ~ ^/v2/shared/(.+\.css)$ {
         try_files /v2/shared/\$1 =404;
         add_header Content-Type text/css;
+    }
+    
+    location ~ ^/v2/shared/(.+\.js)$ {
+        try_files /v2/shared/\$1 =404;
+        add_header Content-Type application/javascript;
     }
     
     location ~ ^/v2/components/?$ {
