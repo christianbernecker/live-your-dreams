@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lyd-deep-blue: #000066; --lyd-royal-blue: #3366CC; --lyd-text: #111111;
+            --lyd-primary: #0066ff; --lyd-white: #ffffff; --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6; --lyd-gray-200: #e5e7eb; --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563; --lyd-gray-700: #374151; --lyd-gray-900: #111827;
+            --lyd-success: #10b981; --lyd-warning: #f59e0b; --lyd-error: #ef4444;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px; --spacing-lg: 24px;
+            --spacing-xl: 32px; --spacing-2xl: 48px; --spacing-3xl: 64px;
+            --font-size-xs: 12px; --font-size-sm: 14px; --font-size-base: 16px;
+            --font-size-lg: 18px; --font-size-2xl: 24px; --font-size-3xl: 30px; --font-size-5xl: 48px;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-family); background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); color: var(--lyd-gray-900); line-height: 1.6; display: flex; min-height: 100vh; }
+        
+        /* Navigation structure - same as other components */
+        .sidebar { width: 280px; background: var(--lyd-white); border-right: 1px solid var(--lyd-gray-200); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-gray-200); text-align: center; }
+        .lyd-logo { width: 120px; height: auto; margin-bottom: var(--spacing-md); transform: scale(2); transform-origin: center; margin-top: 40px; margin-bottom: 60px; }
+        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-gray-500); font-weight: 500; }
+        .nav-section { padding: var(--spacing-md) 0; }
+        .nav-section-title { padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-gray-600); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
+        .nav-item:hover { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
+        .nav-item.active { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.1); font-weight: 600; }
+        
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-2xl); max-width: 1400px; }
+        .page-header { margin-bottom: var(--spacing-2xl); }
+        .page-title { font-size: var(--font-size-5xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; margin-bottom: var(--spacing-md); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-gray-600); max-width: 800px; margin-bottom: var(--spacing-2xl); }
+        .section { margin-bottom: var(--spacing-3xl); }
+        .section-title { font-size: var(--font-size-3xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; color: var(--lyd-text); margin-bottom: var(--spacing-xl); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
+        .showcase-item { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); }
+        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-gray-600); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
+        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-white); }
+        
+        /* Component-specific styles */
+        
+        .lyd-calendar { background: var(--lyd-white); border-radius: 12px; padding: var(--spacing-md); border: 1px solid var(--lyd-gray-200); max-width: 320px; box-shadow: var(--shadow-sm); }
+        .lyd-calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); }
+        .lyd-calendar-nav { background: none; border: none; color: var(--lyd-primary); cursor: pointer; font-size: var(--font-size-base); padding: var(--spacing-xs); border-radius: 4px; transition: background 0.2s ease; }
+        .lyd-calendar-nav:hover { background: var(--lyd-gray-100); }
+        .lyd-calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+        .lyd-calendar-day-header { padding: var(--spacing-xs); text-align: center; font-weight: 600; color: var(--lyd-gray-500); font-size: var(--font-size-xs); }
+        .lyd-calendar-day { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); cursor: pointer; transition: all 0.2s ease; border-radius: 6px; }
+        .lyd-calendar-day:hover { background: var(--lyd-gray-100); }
+        .lyd-calendar-day.event { background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); color: var(--lyd-white); box-shadow: 0 2px 4px rgba(0, 102, 255, 0.2); }
+        
+        
+        /* Implementation and accessibility styling */
+        .implementation-section { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
+        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); margin: 0; }
+        .code-block { background: var(--lyd-gray-900); border-radius: 8px; padding: var(--spacing-lg); position: relative; overflow-x: auto; }
+        .code-block pre { color: var(--lyd-gray-100); font-family: 'Monaco', 'Menlo', monospace; font-size: var(--font-size-sm); line-height: 1.6; margin: 0; }
+        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: var(--font-size-sm); border: none; cursor: pointer; transition: all 0.3s ease; position: absolute; top: 12px; right: 12px; }
+        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-white); }
+        .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
+        .accessibility-item { background: var(--lyd-white); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
+        .accessibility-item h3 { font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); }
+        .accessibility-item h3::before { content: "✓"; color: var(--lyd-primary); font-weight: bold; flex-shrink: 0; }
+        .accessibility-item p { color: var(--lyd-gray-600); font-size: var(--font-size-sm); line-height: 1.6; }
+        
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-left: 0; padding: var(--spacing-lg); }
+            .showcase-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradientLYD)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item">Toast</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
+            <a href="/v2/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/v2/components/switch/" class="nav-item">Switch</a>
+            <a href="/v2/components/slider/" class="nav-item">Slider</a>
+            <a href="/v2/components/alert/" class="nav-item">Alert</a>
+            <a href="/v2/components/badge/" class="nav-item">Badge</a>
+            <a href="/v2/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/v2/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/v2/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/v2/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/v2/components/progress/" class="nav-item">Progress</a>
+            <a href="/v2/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/v2/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/v2/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/v2/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Calendar</h1>
+            <p class="page-subtitle">Full calendar components for appointment scheduling and availability management. Perfect for property viewing coordination.</p>
+        </div>
+        
+        
+        <section class="section">
+            <h2 class="section-title">Calendar Views</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Property Viewing Calendar</h3>
+                    <p>Schedule and manage property viewings</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-calendar">
+                            <div class="lyd-calendar-header">
+                                <button class="lyd-calendar-nav">‹</button>
+                                <h3 style="font-size: var(--font-size-lg); font-weight: 600;">December 2024</h3>
+                                <button class="lyd-calendar-nav">›</button>
+                            </div>
+                            <div class="lyd-calendar-grid">
+                                <div class="lyd-calendar-day-header">Mo</div>
+                                <div class="lyd-calendar-day-header">Tu</div>
+                                <div class="lyd-calendar-day-header">We</div>
+                                <div class="lyd-calendar-day-header">Th</div>
+                                <div class="lyd-calendar-day-header">Fr</div>
+                                <div class="lyd-calendar-day-header">Sa</div>
+                                <div class="lyd-calendar-day-header">Su</div>
+                                
+                                <div class="lyd-calendar-day">1</div>
+                                <div class="lyd-calendar-day">2</div>
+                                <div class="lyd-calendar-day">3</div>
+                                <div class="lyd-calendar-day">4</div>
+                                <div class="lyd-calendar-day">5</div>
+                                <div class="lyd-calendar-day">6</div>
+                                <div class="lyd-calendar-day">7</div>
+                                <div class="lyd-calendar-day">8</div>
+                                <div class="lyd-calendar-day">9</div>
+                                <div class="lyd-calendar-day">10</div>
+                                <div class="lyd-calendar-day">11</div>
+                                <div class="lyd-calendar-day">12</div>
+                                <div class="lyd-calendar-day">13</div>
+                                <div class="lyd-calendar-day">14</div>
+                                <div class="lyd-calendar-day event">15</div>
+                                <div class="lyd-calendar-day">16</div>
+                                <div class="lyd-calendar-day">17</div>
+                                <div class="lyd-calendar-day event">18</div>
+                                <div class="lyd-calendar-day">19</div>
+                                <div class="lyd-calendar-day">20</div>
+                                <div class="lyd-calendar-day">21</div>
+                                <div class="lyd-calendar-day event">22</div>
+                                <div class="lyd-calendar-day">23</div>
+                                <div class="lyd-calendar-day">24</div>
+                                <div class="lyd-calendar-day">25</div>
+                                <div class="lyd-calendar-day">26</div>
+                                <div class="lyd-calendar-day">27</div>
+                                <div class="lyd-calendar-day">28</div>
+                                <div class="lyd-calendar-day">29</div>
+                                <div class="lyd-calendar-day">30</div>
+                                <div class="lyd-calendar-day">31</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>&lt;!-- Property Viewing Calendar --&gt;
+&lt;div class="lyd-calendar"&gt;
+    &lt;div class="lyd-calendar-header"&gt;
+        &lt;button class="lyd-calendar-nav"&gt;‹&lt;/button&gt;
+        &lt;h3&gt;December 2024&lt;/h3&gt;
+        &lt;button class="lyd-calendar-nav"&gt;›&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-calendar-grid"&gt;
+        &lt;div class="lyd-calendar-day-header"&gt;Mo&lt;/div&gt;
+        &lt;!-- ... other days --&gt;
+        &lt;div class="lyd-calendar-day"&gt;15&lt;/div&gt;
+        &lt;div class="lyd-calendar-day event"&gt;16&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support with proper focus management and navigation patterns.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Visual Design</h3>
+                    <p>High contrast ratios and clear visual hierarchy for optimal user experience.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Performance</h3>
+                    <p>Optimized rendering and efficient state management for smooth interactions.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => { this.textContent = originalText; }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

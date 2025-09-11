@@ -60,3 +60,8 @@ docs/Credentials/
 
 # Terraform Providers (Large files)
 .terraform.lock.hcl
+
+# New structure
+/temp/
+/archive/
+/tooling/testing/reports/

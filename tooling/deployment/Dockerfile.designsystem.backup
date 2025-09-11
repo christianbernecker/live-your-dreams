@@ -18,6 +18,11 @@ COPY --from=builder /app/dist/ /usr/share/nginx/html/dist/
 COPY --from=builder /app/*.html /usr/share/nginx/html/
 COPY --from=builder /app/assets/ /usr/share/nginx/html/assets/
 COPY --from=builder /app/src/ /usr/share/nginx/html/src/
+COPY design-system/components/ /usr/share/nginx/html/components/
+COPY design-system/patterns/ /usr/share/nginx/html/patterns/
+COPY design-system/styles/ /usr/share/nginx/html/styles/
+COPY design-system/designing/ /usr/share/nginx/html/designing/
+COPY design-system/developing/ /usr/share/nginx/html/developing/
 COPY design-system/v2/ /usr/share/nginx/html/v2/
 
 # Nginx configuration

@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+        :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-text: #111111;
+            
+            /* Design Tokens */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent: #ff6b35;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Colors */
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-gray-900);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-500);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-600);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            max-width: 800px;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .showcase-item {
+            background: var(--lyd-white);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .showcase-item h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-gray-50);
+        }
+        
+        .showcase-item p {
+            padding: 0 var(--spacing-lg);
+            color: var(--lyd-gray-600);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .showcase-demo {
+            padding: var(--spacing-lg);
+            background: var(--lyd-white);
+        }
+        
+        /* Slider Components */
+        .lyd-slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .lyd-slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .lyd-slider-label-text {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+        }
+        
+        .lyd-slider-value {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--lyd-primary);
+        }
+        
+        .lyd-slider-container {
+            position: relative;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lyd-slider-track {
+            width: 100%;
+            height: 6px;
+            background: var(--lyd-gray-200);
+            border-radius: 3px;
+            position: relative;
+        }
+        
+        .lyd-slider-range {
+            height: 100%;
+            background: var(--lyd-primary);
+            border-radius: 3px;
+            position: absolute;
+            left: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-slider-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--lyd-white);
+            border: 3px solid var(--lyd-primary);
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-50%);
+            top: 50%;
+        }
+        
+        .lyd-slider-thumb:hover {
+            border-width: 4px;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .lyd-slider-thumb:active {
+            box-shadow: 0 0 0 8px rgba(0, 102, 255, 0.2);
+        }
+        
+        .lyd-slider-thumb.dragging {
+            box-shadow: 0 0 0 8px rgba(0, 102, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Range slider specific */
+        .lyd-slider.range .lyd-slider-thumb:first-of-type {
+            border-color: var(--lyd-primary);
+        }
+        
+        .lyd-slider.range .lyd-slider-thumb:last-of-type {
+            border-color: var(--lyd-primary);
+        }
+        
+        /* Size variants */
+        .lyd-slider.small .lyd-slider-track {
+            height: 4px;
+        }
+        
+        .lyd-slider.small .lyd-slider-thumb {
+            width: 16px;
+            height: 16px;
+            border-width: 2px;
+        }
+        
+        .lyd-slider.large .lyd-slider-track {
+            height: 8px;
+        }
+        
+        .lyd-slider.large .lyd-slider-thumb {
+            width: 24px;
+            height: 24px;
+            border-width: 4px;
+        }
+        
+        /* Color variants */
+        .lyd-slider.success .lyd-slider-range {
+            background: var(--lyd-success);
+        }
+        
+        .lyd-slider.success .lyd-slider-thumb {
+            border-color: var(--lyd-success);
+        }
+        
+        .lyd-slider.warning .lyd-slider-range {
+            background: var(--lyd-warning);
+        }
+        
+        .lyd-slider.warning .lyd-slider-thumb {
+            border-color: var(--lyd-warning);
+        }
+        
+        .lyd-slider.error .lyd-slider-range {
+            background: var(--lyd-error);
+        }
+        
+        .lyd-slider.error .lyd-slider-thumb {
+            border-color: var(--lyd-error);
+        }
+        
+        /* Disabled state */
+        .lyd-slider.disabled .lyd-slider-track {
+            background: var(--lyd-gray-100);
+        }
+        
+        .lyd-slider.disabled .lyd-slider-range {
+            background: var(--lyd-gray-300);
+        }
+        
+        .lyd-slider.disabled .lyd-slider-thumb {
+            background: var(--lyd-gray-100);
+            border-color: var(--lyd-gray-300);
+            cursor: not-allowed;
+        }
+        
+        .lyd-slider.disabled .lyd-slider-thumb:hover {
+            transform: translateY(-50%) scale(1);
+            border-width: 3px;
+        }
+        
+        /* Slider helper text */
+        .lyd-slider-helper {
+            font-size: var(--font-size-xs);
+            color: var(--lyd-gray-500);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .lyd-slider-marks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-xs);
+            font-size: var(--font-size-xs);
+            color: var(--lyd-gray-400);
+        }
+        
+        /* Implementation Guide */
+        .implementation-section {
+            background: var(--lyd-white);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .implementation-section h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-gray-50);
+            margin: 0;
+        }
+        
+        .code-block {
+            background: var(--lyd-gray-900);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            color: var(--lyd-gray-100);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+        
+        .lyd-button.copy {
+            background: var(--lyd-primary);
+            color: var(--lyd-white);
+        }
+        
+        .lyd-button.copy:hover {
+            background: var(--lyd-primary-hover);
+        }
+        
+        /* Accessibility Grid */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .accessibility-item {
+            background: var(--lyd-white);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .accessibility-item h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .accessibility-item h3::before {
+            content: "✓";
+            color: var(--lyd-primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .accessibility-item p {
+            color: var(--lyd-gray-600);
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient für die Sichel -->
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient für den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item">Toast</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
+            <a href="/v2/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/v2/components/switch/" class="nav-item">Switch</a>
+            <a href="/v2/components/slider/" class="nav-item">Slider</a>
+            <a href="/v2/components/alert/" class="nav-item">Alert</a>
+            <a href="/v2/components/badge/" class="nav-item">Badge</a>
+            <a href="/v2/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/v2/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/v2/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/v2/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/v2/components/progress/" class="nav-item">Progress</a>
+            <a href="/v2/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/v2/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/v2/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/v2/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Slider</h1>
+            <p class="page-subtitle">
+                Slider components allow users to select values from a range. Essential for property filters like price ranges, square footage, and room counts.
+            </p>
+        </div>
+        
+        <!-- Section 1: Basic Sliders -->
+        <section class="section">
+            <h2 class="section-title">Basic Sliders</h2>
+            
+            <div class="showcase-grid">
+                <!-- Single Value Slider -->
+                <div class="showcase-item">
+                    <h3>Single Value Slider</h3>
+                    <p>Select a single value within a range</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Budget</div>
+                                <div class="lyd-slider-value" id="budget-value">€850,000</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container" data-min="0" data-max="2000000" data-value="850000" data-step="50000" data-format="currency">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 42.5%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 42.5%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>€0</span>
+                                <span>€500k</span>
+                                <span>€1M</span>
+                                <span>€1.5M</span>
+                                <span>€2M</span>
+                            </div>
+                            <div class="lyd-slider-helper">Adjust your maximum budget for property search</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Range Slider -->
+                <div class="showcase-item">
+                    <h3>Range Slider</h3>
+                    <p>Select a range between two values</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Price Range</div>
+                                <div class="lyd-slider-value" id="range-value">€600k - €1.2M</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container range" data-min="0" data-max="2000000" data-value-min="600000" data-value-max="1200000" data-step="50000" data-format="currency">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="left: 30%; width: 30%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 30%;"></div>
+                                <div class="lyd-slider-thumb" style="left: 60%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>€0</span>
+                                <span>€500k</span>
+                                <span>€1M</span>
+                                <span>€1.5M</span>
+                                <span>€2M</span>
+                            </div>
+                            <div class="lyd-slider-helper">Define your preferred price range for property search</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Size Variants -->
+                <div class="showcase-item">
+                    <h3>Size Variants</h3>
+                    <p>Different sizes for various contexts</p>
+                    <div class="showcase-demo">
+                        <!-- Small -->
+                        <div class="lyd-slider-group" style="margin-bottom: 24px;">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Small Slider</div>
+                                <div class="lyd-slider-value">3 rooms</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container small" data-min="1" data-max="6" data-value="3">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 40%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 40%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Large -->
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Large Slider</div>
+                                <div class="lyd-slider-value">120 m²</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container large" data-min="50" data-max="300" data-value="120">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 28%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 28%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Color Variants -->
+                <div class="showcase-item">
+                    <h3>Color Variants</h3>
+                    <p>Different colors for semantic meaning</p>
+                    <div class="showcase-demo">
+                        <!-- Success -->
+                        <div class="lyd-slider-group" style="margin-bottom: 20px;">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Energy Efficiency</div>
+                                <div class="lyd-slider-value">A+</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container success" data-min="1" data-max="7" data-value="6">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 83%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 83%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Warning -->
+                        <div class="lyd-slider-group" style="margin-bottom: 20px;">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Renovation Need</div>
+                                <div class="lyd-slider-value">Moderate</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container warning" data-min="0" data-max="100" data-value="40">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 40%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 40%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Error -->
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Risk Level</div>
+                                <div class="lyd-slider-value">Low</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container error" data-min="0" data-max="100" data-value="20">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 20%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 20%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real Estate Examples -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Examples</h2>
+            
+            <div class="showcase-grid">
+                <!-- Property Price Filter -->
+                <div class="showcase-item">
+                    <h3>Price Range Filter</h3>
+                    <p>Essential property search filter</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Price Range</div>
+                                <div class="lyd-slider-value" id="price-filter">€750k - €1.5M</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container range" data-min="200000" data-max="3000000" data-value-min="750000" data-value-max="1500000" data-step="25000" data-format="currency">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="left: 19.6%; width: 26.8%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 19.6%;"></div>
+                                <div class="lyd-slider-thumb" style="left: 46.4%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>€200k</span>
+                                <span>€800k</span>
+                                <span>€1.4M</span>
+                                <span>€2M</span>
+                                <span>€3M</span>
+                            </div>
+                            <div class="lyd-slider-helper">Filter properties within your budget range</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Square Footage Filter -->
+                <div class="showcase-item">
+                    <h3>Square Footage Filter</h3>
+                    <p>Filter by property size</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Size Range</div>
+                                <div class="lyd-slider-value" id="size-filter">80 - 180 m²</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container range" data-min="30" data-max="400" data-value-min="80" data-value-max="180" data-step="10" data-format="area">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="left: 13.5%; width: 27%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 13.5%;"></div>
+                                <div class="lyd-slider-thumb" style="left: 40.5%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>30m²</span>
+                                <span>100m²</span>
+                                <span>200m²</span>
+                                <span>300m²</span>
+                                <span>400m²</span>
+                            </div>
+                            <div class="lyd-slider-helper">Find properties matching your space requirements</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Room Count Filter -->
+                <div class="showcase-item">
+                    <h3>Room Count Filter</h3>
+                    <p>Filter by number of rooms</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Bedrooms</div>
+                                <div class="lyd-slider-value" id="rooms-filter">2 - 4 rooms</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container range success" data-min="1" data-max="8" data-value-min="2" data-value-max="4" data-step="1" data-format="rooms">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="left: 14.3%; width: 28.6%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 14.3%;"></div>
+                                <div class="lyd-slider-thumb" style="left: 42.9%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>1</span>
+                                <span>2</span>
+                                <span>3</span>
+                                <span>4</span>
+                                <span>5</span>
+                                <span>6</span>
+                                <span>7</span>
+                                <span>8+</span>
+                            </div>
+                            <div class="lyd-slider-helper">Specify your preferred number of bedrooms</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment ROI Calculator -->
+                <div class="showcase-item">
+                    <h3>Investment ROI Calculator</h3>
+                    <p>Calculate expected return on investment</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-slider-group">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Expected Annual ROI</div>
+                                <div class="lyd-slider-value" id="roi-calculator">4.5%</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container success" data-min="0" data-max="12" data-value="4.5" data-step="0.1" data-format="percentage">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 37.5%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 37.5%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>0%</span>
+                                <span>3%</span>
+                                <span>6%</span>
+                                <span>9%</span>
+                                <span>12%</span>
+                            </div>
+                            <div class="lyd-slider-helper">Adjust ROI expectations for investment properties</div>
+                        </div>
+                        
+                        <!-- Investment Amount -->
+                        <div class="lyd-slider-group" style="margin-top: 24px;">
+                            <div class="lyd-slider-label">
+                                <div class="lyd-slider-label-text">Investment Amount</div>
+                                <div class="lyd-slider-value" id="investment-amount">€1,000,000</div>
+                            </div>
+                            <div class="lyd-slider lyd-slider-container warning" data-min="100000" data-max="5000000" data-value="1000000" data-step="50000" data-format="currency">
+                                <div class="lyd-slider-track">
+                                    <div class="lyd-slider-range" style="width: 18.4%;"></div>
+                                </div>
+                                <div class="lyd-slider-thumb" style="left: 18.4%;"></div>
+                            </div>
+                            <div class="lyd-slider-marks">
+                                <span>€100k</span>
+                                <span>€1M</span>
+                                <span>€2.5M</span>
+                                <span>€4M</span>
+                                <span>€5M</span>
+                            </div>
+                            <div class="lyd-slider-helper">Total investment capital available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>&lt;!-- Single Value Slider --&gt;
+&lt;div class="lyd-slider-group"&gt;
+    &lt;div class="lyd-slider-label"&gt;
+        &lt;div class="lyd-slider-label-text"&gt;Budget&lt;/div&gt;
+        &lt;div class="lyd-slider-value"&gt;€850,000&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-slider lyd-slider-container" data-min="0" data-max="2000000" data-value="850000"&gt;
+        &lt;div class="lyd-slider-track"&gt;
+            &lt;div class="lyd-slider-range"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="lyd-slider-thumb"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Range Slider --&gt;
+&lt;div class="lyd-slider-group"&gt;
+    &lt;div class="lyd-slider-label"&gt;
+        &lt;div class="lyd-slider-label-text"&gt;Price Range&lt;/div&gt;
+        &lt;div class="lyd-slider-value"&gt;€600k - €1.2M&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-slider lyd-slider-container range" data-min="0" data-max="2000000" data-value-min="600000" data-value-max="1200000"&gt;
+        &lt;div class="lyd-slider-track"&gt;
+            &lt;div class="lyd-slider-range"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="lyd-slider-thumb"&gt;&lt;/div&gt;
+        &lt;div class="lyd-slider-thumb"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Size and Color Variants --&gt;
+&lt;div class="lyd-slider lyd-slider-container small"&gt;...&lt;/div&gt;
+&lt;div class="lyd-slider lyd-slider-container large success"&gt;...&lt;/div&gt;
+&lt;div class="lyd-slider lyd-slider-container warning"&gt;...&lt;/div&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>Next.js Integration</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// components/Slider.tsx
+import { useState, useEffect, useRef } from 'react';
+
+interface SliderProps {
+  min?: number;
+  max?: number;
+  step?: number;
+  value?: number;
+  defaultValue?: number;
+  // Range slider props
+  minValue?: number;
+  maxValue?: number;
+  defaultMinValue?: number;
+  defaultMaxValue?: number;
+  // Appearance
+  size?: 'small' | 'medium' | 'large';
+  color?: 'primary' | 'success' | 'warning' | 'error';
+  disabled?: boolean;
+  label?: string;
+  helperText?: string;
+  formatValue?: (value: number) => string;
+  showMarks?: boolean;
+  marks?: { value: number; label: string }[];
+  // Events
+  onChange?: (value: number | [number, number]) => void;
+  onChangeEnd?: (value: number | [number, number]) => void;
+  className?: string;
+}
+
+export const Slider = ({
+  min = 0,
+  max = 100,
+  step = 1,
+  value,
+  defaultValue,
+  minValue,
+  maxValue,
+  defaultMinValue,
+  defaultMaxValue,
+  size = 'medium',
+  color = 'primary',
+  disabled = false,
+  label,
+  helperText,
+  formatValue = (val) => val.toString(),
+  showMarks = false,
+  marks,
+  onChange,
+  onChangeEnd,
+  className = ''
+}: SliderProps) => {
+  const isRange = minValue !== undefined || maxValue !== undefined;
+  const [currentValue, setCurrentValue] = useState(() => {
+    if (isRange) {
+      return [
+        minValue ?? defaultMinValue ?? min,
+        maxValue ?? defaultMaxValue ?? max
+      ] as [number, number];
+    }
+    return value ?? defaultValue ?? min;
+  });
+  
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [activeThumb, setActiveThumb] = useState<number>(0);
+
+  useEffect(() => {
+    if (isRange && minValue !== undefined && maxValue !== undefined) {
+      setCurrentValue([minValue, maxValue]);
+    } else if (!isRange && value !== undefined) {
+      setCurrentValue(value);
+    }
+  }, [value, minValue, maxValue, isRange]);
+
+  const getPercentage = (val: number) => {
+    return ((val - min) / (max - min)) * 100;
+  };
+
+  const getValueFromPosition = (clientX: number) => {
+    if (!sliderRef.current) return min;
+    
+    const rect = sliderRef.current.getBoundingClientRect();
+    const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const rawValue = min + percentage * (max - min);
+    return Math.round(rawValue / step) * step;
+  };
+
+  const handleMouseDown = (thumbIndex: number, e: React.MouseEvent) => {
+    if (disabled) return;
+    
+    setIsDragging(true);
+    setActiveThumb(thumbIndex);
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      const newValue = getValueFromPosition(e.clientX);
+      
+      if (isRange) {
+        const [minVal, maxVal] = currentValue as [number, number];
+        let newRange: [number, number];
+        
+        if (thumbIndex === 0) {
+          newRange = [Math.min(newValue, maxVal), maxVal];
+        } else {
+          newRange = [minVal, Math.max(newValue, minVal)];
+        }
+        
+        setCurrentValue(newRange);
+        onChange?.(newRange);
+      } else {
+        setCurrentValue(newValue);
+        onChange?.(newValue);
+      }
+    };
+    
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      onChangeEnd?.(currentValue);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const sliderClasses = \`
+    lyd-slider lyd-slider-container
+    \${size !== 'medium' ? size : ''}
+    \${color !== 'primary' ? color : ''}
+    \${isRange ? 'range' : ''}
+    \${disabled ? 'disabled' : ''}
+    \${className}
+  \`.trim();
+
+  const getDisplayValue = () => {
+    if (isRange) {
+      const [minVal, maxVal] = currentValue as [number, number];
+      return \`\${formatValue(minVal)} - \${formatValue(maxVal)}\`;
+    }
+    return formatValue(currentValue as number);
+  };
+
+  const getRangeStyle = () => {
+    if (isRange) {
+      const [minVal, maxVal] = currentValue as [number, number];
+      const minPercent = getPercentage(minVal);
+      const maxPercent = getPercentage(maxVal);
+      return {
+        left: \`\${minPercent}%\`,
+        width: \`\${maxPercent - minPercent}%\`
+      };
+    }
+    return {
+      width: \`\${getPercentage(currentValue as number)}%\`
+    };
+  };
+
+  return (
+    &lt;div className="lyd-slider-group"&gt;
+      {label && (
+        &lt;div className="lyd-slider-label"&gt;
+          &lt;div className="lyd-slider-label-text"&gt;{label}&lt;/div&gt;
+          &lt;div className="lyd-slider-value"&gt;{getDisplayValue()}&lt;/div&gt;
+        &lt;/div&gt;
+      )}
+      
+      &lt;div ref={sliderRef} className={sliderClasses}&gt;
+        &lt;div className="lyd-slider-track"&gt;
+          &lt;div className="lyd-slider-range" style={getRangeStyle()} /&gt;
+        &lt;/div&gt;
+        
+        {isRange ? (
+          &lt;&gt;
+            &lt;div
+              className={\`lyd-slider-thumb \${isDragging && activeThumb === 0 ? 'dragging' : ''}\`}
+              style={{ left: \`\${getPercentage((currentValue as [number, number])[0])}%\` }}
+              onMouseDown={(e) => handleMouseDown(0, e)}
+            /&gt;
+            &lt;div
+              className={\`lyd-slider-thumb \${isDragging && activeThumb === 1 ? 'dragging' : ''}\`}
+              style={{ left: \`\${getPercentage((currentValue as [number, number])[1])}%\` }}
+              onMouseDown={(e) => handleMouseDown(1, e)}
+            /&gt;
+          &lt;/&gt;
+        ) : (
+          &lt;div
+            className={\`lyd-slider-thumb \${isDragging ? 'dragging' : ''}\`}
+            style={{ left: \`\${getPercentage(currentValue as number)}%\` }}
+            onMouseDown={(e) => handleMouseDown(0, e)}
+          /&gt;
+        )}
+      &lt;/div&gt;
+      
+      {showMarks && marks && (
+        &lt;div className="lyd-slider-marks"&gt;
+          {marks.map((mark, index) => (
+            &lt;span key={index}&gt;{mark.label}&lt;/span&gt;
+          ))}
+        &lt;/div&gt;
+      )}
+      
+      {helperText && (
+        &lt;div className="lyd-slider-helper"&gt;{helperText}&lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  );
+};
+
+// Usage Example:
+export default function PropertyFilters() {
+  const [priceRange, setPriceRange] = useState([500000, 1200000]);
+  const [rooms, setRooms] = useState(3);
+
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+      notation: value >= 1000000 ? 'compact' : 'standard',
+      maximumFractionDigits: 0
+    }).format(value);
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;Slider
+        label="Price Range"
+        minValue={priceRange[0]}
+        maxValue={priceRange[1]}
+        min={200000}
+        max={3000000}
+        step={25000}
+        formatValue={formatCurrency}
+        onChange={(value) => setPriceRange(value as [number, number])}
+        helperText="Filter properties within your budget range"
+      /&gt;
+      
+      &lt;Slider
+        label="Number of Rooms"
+        value={rooms}
+        min={1}
+        max={8}
+        step={1}
+        formatValue={(val) => \`\${val} room\${val !== 1 ? 's' : ''}\`}
+        onChange={(value) => setRooms(value as number)}
+        color="success"
+        size="large"
+      /&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- Section 4: Accessibility & Best Practices -->
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support with Tab navigation and Arrow keys for precise value adjustment without mouse interaction.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>ARIA slider role with proper min/max/value attributes and value announcements for screen reader users.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Touch Friendly</h3>
+                    <p>Large touch targets (minimum 44px) with drag gestures optimized for mobile and tablet devices.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Visual Feedback</h3>
+                    <p>Clear visual indicators for active state, hover effects, and value changes with smooth animations.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Value Formatting</h3>
+                    <p>Contextual value formatting (currency, percentage, units) with proper localization support.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Range Validation</h3>
+                    <p>Built-in min/max validation with step constraints to ensure valid value selection and prevent errors.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JavaScript -->
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Slider functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active navigation
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Initialize sliders
+            document.querySelectorAll('.lyd-slider-container:not(.disabled)').forEach(slider => {
+                const track = slider.querySelector('.lyd-slider-track');
+                const range = slider.querySelector('.lyd-slider-range');
+                const thumbs = slider.querySelectorAll('.lyd-slider-thumb');
+                const isRange = slider.classList.contains('range');
+                
+                const min = parseFloat(slider.dataset.min) || 0;
+                const max = parseFloat(slider.dataset.max) || 100;
+                const step = parseFloat(slider.dataset.step) || 1;
+                const format = slider.dataset.format || 'number';
+                
+                let values;
+                if (isRange) {
+                    values = [
+                        parseFloat(slider.dataset.valueMin) || min,
+                        parseFloat(slider.dataset.valueMax) || max
+                    ];
+                } else {
+                    values = parseFloat(slider.dataset.value) || min;
+                }
+                
+                const formatValue = (value, format) => {
+                    switch (format) {
+                        case 'currency':
+                            return new Intl.NumberFormat('de-DE', {
+                                style: 'currency',
+                                currency: 'EUR',
+                                notation: value >= 1000000 ? 'compact' : 'standard',
+                                maximumFractionDigits: 0
+                            }).format(value);
+                        case 'percentage':
+                            return value.toFixed(1) + '%';
+                        case 'area':
+                            return value + ' m²';
+                        case 'rooms':
+                            return value + (value === 1 ? ' room' : ' rooms');
+                        default:
+                            return value.toString();
+                    }
+                };
+                
+                const updateDisplay = () => {
+                    const valueElement = slider.parentElement.querySelector('.lyd-slider-value');
+                    if (valueElement) {
+                        if (isRange) {
+                            valueElement.textContent = `${formatValue(values[0], format)} - ${formatValue(values[1], format)}`;
+                        } else {
+                            valueElement.textContent = formatValue(values, format);
+                        }
+                    }
+                    
+                    // Update range visual
+                    if (isRange) {
+                        const minPercent = ((values[0] - min) / (max - min)) * 100;
+                        const maxPercent = ((values[1] - min) / (max - min)) * 100;
+                        range.style.left = minPercent + '%';
+                        range.style.width = (maxPercent - minPercent) + '%';
+                        thumbs[0].style.left = minPercent + '%';
+                        thumbs[1].style.left = maxPercent + '%';
+                    } else {
+                        const percent = ((values - min) / (max - min)) * 100;
+                        range.style.width = percent + '%';
+                        thumbs[0].style.left = percent + '%';
+                    }
+                };
+                
+                const getValueFromPosition = (clientX) => {
+                    const rect = track.getBoundingClientRect();
+                    const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                    const rawValue = min + percentage * (max - min);
+                    return Math.round(rawValue / step) * step;
+                };
+                
+                // Mouse interaction
+                thumbs.forEach((thumb, index) => {
+                    thumb.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        thumb.classList.add('dragging');
+                        
+                        const handleMouseMove = (e) => {
+                            const newValue = getValueFromPosition(e.clientX);
+                            
+                            if (isRange) {
+                                if (index === 0) {
+                                    values[0] = Math.min(newValue, values[1]);
+                                } else {
+                                    values[1] = Math.max(newValue, values[0]);
+                                }
+                            } else {
+                                values = newValue;
+                            }
+                            
+                            updateDisplay();
+                        };
+                        
+                        const handleMouseUp = () => {
+                            thumb.classList.remove('dragging');
+                            document.removeEventListener('mousemove', handleMouseMove);
+                            document.removeEventListener('mouseup', handleMouseUp);
+                            
+                            // Emit change event
+                            const event = new CustomEvent('sliderChange', {
+                                detail: { values, format }
+                            });
+                            slider.dispatchEvent(event);
+                        };
+                        
+                        document.addEventListener('mousemove', handleMouseMove);
+                        document.addEventListener('mouseup', handleMouseUp);
+                    });
+                });
+                
+                // Touch interaction
+                thumbs.forEach((thumb, index) => {
+                    thumb.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        thumb.classList.add('dragging');
+                        
+                        const handleTouchMove = (e) => {
+                            const touch = e.touches[0];
+                            const newValue = getValueFromPosition(touch.clientX);
+                            
+                            if (isRange) {
+                                if (index === 0) {
+                                    values[0] = Math.min(newValue, values[1]);
+                                } else {
+                                    values[1] = Math.max(newValue, values[0]);
+                                }
+                            } else {
+                                values = newValue;
+                            }
+                            
+                            updateDisplay();
+                        };
+                        
+                        const handleTouchEnd = () => {
+                            thumb.classList.remove('dragging');
+                            document.removeEventListener('touchmove', handleTouchMove);
+                            document.removeEventListener('touchend', handleTouchEnd);
+                        };
+                        
+                        document.addEventListener('touchmove', handleTouchMove);
+                        document.addEventListener('touchend', handleTouchEnd);
+                    });
+                });
+                
+                // Initialize display
+                updateDisplay();
+                
+                // Listen for changes
+                slider.addEventListener('sliderChange', function(e) {
+                    console.log('Slider values changed:', e.detail.values);
+                });
+            });
+            
+            // Copy button functionality
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

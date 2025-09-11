@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio - LYD Design System V2</title>
+    <title>Switch - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
@@ -242,16 +242,16 @@
             background: var(--lyd-white);
         }
         
-        /* Radio Button Components */
-        .lyd-radio-group {
+        /* Switch Components */
+        .lyd-switch-group {
             display: flex;
             flex-direction: column;
             gap: var(--spacing-md);
         }
         
-        .lyd-radio-item {
+        .lyd-switch-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: var(--spacing-sm);
             cursor: pointer;
             padding: var(--spacing-sm);
@@ -259,116 +259,128 @@
             transition: all 0.2s ease;
         }
         
-        .lyd-radio-item:hover {
+        .lyd-switch-item:hover {
             background: var(--lyd-gray-50);
         }
         
-        .lyd-radio-input {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--lyd-gray-300);
-            border-radius: 50%;
-            background: var(--lyd-white);
+        .lyd-switch {
+            width: 48px;
+            height: 24px;
+            background: var(--lyd-gray-300);
+            border-radius: 12px;
             position: relative;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             flex-shrink: 0;
-            margin-top: 2px;
         }
         
-        .lyd-radio-input::after {
+        .lyd-switch::after {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 8px;
-            height: 8px;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--lyd-white);
             border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .lyd-switch.checked {
             background: var(--lyd-primary);
-            transition: transform 0.2s ease;
         }
         
-        .lyd-radio-input.checked {
-            border-color: var(--lyd-primary);
+        .lyd-switch.checked::after {
+            transform: translateX(24px);
         }
         
-        .lyd-radio-input.checked::after {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        
-        .lyd-radio-input.disabled {
-            border-color: var(--lyd-gray-200);
-            background: var(--lyd-gray-100);
+        .lyd-switch.disabled {
+            background: var(--lyd-gray-200);
             cursor: not-allowed;
+            opacity: 0.6;
         }
         
-        .lyd-radio-input.disabled.checked::after {
+        .lyd-switch.disabled.checked {
             background: var(--lyd-gray-400);
         }
         
-        .lyd-radio-label {
+        /* Size variants */
+        .lyd-switch.small {
+            width: 36px;
+            height: 18px;
+            border-radius: 9px;
+        }
+        
+        .lyd-switch.small::after {
+            width: 14px;
+            height: 14px;
+            border-radius: 7px;
+        }
+        
+        .lyd-switch.small.checked::after {
+            transform: translateX(18px);
+        }
+        
+        .lyd-switch.large {
+            width: 64px;
+            height: 32px;
+            border-radius: 16px;
+        }
+        
+        .lyd-switch.large::after {
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+        }
+        
+        .lyd-switch.large.checked::after {
+            transform: translateX(32px);
+        }
+        
+        .lyd-switch-label {
             flex: 1;
             cursor: pointer;
         }
         
-        .lyd-radio-label-text {
+        .lyd-switch-label-text {
             font-size: var(--font-size-base);
             font-weight: 500;
             color: var(--lyd-gray-900);
             margin-bottom: 2px;
         }
         
-        .lyd-radio-label-description {
+        .lyd-switch-label-description {
             font-size: var(--font-size-sm);
             color: var(--lyd-gray-600);
         }
         
-        /* Size variants */
-        .lyd-radio-small .lyd-radio-input {
-            width: 16px;
-            height: 16px;
+        /* Color variants */
+        .lyd-switch.success {
+            background: var(--lyd-gray-300);
         }
         
-        .lyd-radio-small .lyd-radio-input::after {
-            width: 6px;
-            height: 6px;
+        .lyd-switch.success.checked {
+            background: var(--lyd-success);
         }
         
-        .lyd-radio-small .lyd-radio-label-text {
-            font-size: var(--font-size-sm);
+        .lyd-switch.warning {
+            background: var(--lyd-gray-300);
         }
         
-        .lyd-radio-large .lyd-radio-input {
-            width: 24px;
-            height: 24px;
-            margin-top: 0;
+        .lyd-switch.warning.checked {
+            background: var(--lyd-warning);
         }
         
-        .lyd-radio-large .lyd-radio-input::after {
-            width: 10px;
-            height: 10px;
+        .lyd-switch.error {
+            background: var(--lyd-gray-300);
         }
         
-        .lyd-radio-large .lyd-radio-label-text {
-            font-size: var(--font-size-lg);
-        }
-        
-        /* Error state */
-        .lyd-radio-error .lyd-radio-input {
-            border-color: var(--lyd-error);
-        }
-        
-        .lyd-radio-error .lyd-radio-input.checked::after {
+        .lyd-switch.error.checked {
             background: var(--lyd-error);
         }
         
-        .lyd-radio-error .lyd-radio-label-text {
-            color: var(--lyd-error);
-        }
-        
         /* Implementation Guide */
-        
         .implementation-section {
             background: var(--lyd-white);
             border-radius: 12px;
@@ -430,7 +442,6 @@
         }
         
         /* Accessibility Grid */
-        
         .accessibility-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -586,42 +597,42 @@
     <main class="main-content">
         <!-- Page Header -->
         <div class="page-header">
-            <h1 class="page-title">Radio</h1>
+            <h1 class="page-title">Switch</h1>
             <p class="page-subtitle">
-                Radio buttons allow users to select one option from a set of mutually exclusive options. They work in groups where only one option can be selected at a time.
+                Switch components provide a toggle interface for boolean settings. Perfect for feature toggles, notifications preferences, and property filters.
             </p>
         </div>
         
-        <!-- Section 1: Basic Radio Buttons -->
+        <!-- Section 1: Basic Switches -->
         <section class="section">
-            <h2 class="section-title">Basic Radio Buttons</h2>
+            <h2 class="section-title">Basic Switches</h2>
             
             <div class="showcase-grid">
-                <!-- Default Radio Group -->
+                <!-- Default Switches -->
                 <div class="showcase-item">
-                    <h3>Default Radio Group</h3>
-                    <p>Standard radio buttons for selecting one option</p>
+                    <h3>Default Switches</h3>
+                    <p>Standard toggle switches for boolean options</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="basic">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="option1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Option 1</div>
-                                    <div class="lyd-radio-label-description">First available choice</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="notifications"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Email Notifications</div>
+                                    <div class="lyd-switch-label-description">Receive updates via email</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="option2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Option 2</div>
-                                    <div class="lyd-radio-label-description">Second available choice (selected)</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="newsletter"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Newsletter Subscription</div>
+                                    <div class="lyd-switch-label-description">Weekly property insights (active)</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="option3"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Option 3</div>
-                                    <div class="lyd-radio-label-description">Third available choice</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="marketing"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Marketing Communications</div>
+                                    <div class="lyd-switch-label-description">Promotional offers and events</div>
                                 </label>
                             </div>
                         </div>
@@ -631,85 +642,92 @@
                 <!-- Size Variants -->
                 <div class="showcase-item">
                     <h3>Size Variants</h3>
-                    <p>Different sizes for various use cases</p>
+                    <p>Different sizes for various contexts</p>
                     <div class="showcase-demo">
                         <!-- Small -->
-                        <div class="lyd-radio-group lyd-radio-small" data-group="small" style="margin-bottom: 24px;">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="small1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Small Radio</div>
-                                    <div class="lyd-radio-label-description">Compact size for dense layouts</div>
+                        <div class="lyd-switch-group" style="margin-bottom: 24px;">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch small checked" data-value="small"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Small Switch</div>
+                                    <div class="lyd-switch-label-description">Compact size for dense layouts</div>
                                 </label>
                             </div>
                         </div>
                         
-                        <!-- Default (already shown above) -->
-                        <div class="lyd-radio-group" data-group="default" style="margin-bottom: 24px;">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="default1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Default Radio</div>
-                                    <div class="lyd-radio-label-description">Standard size for most use cases</div>
+                        <!-- Default -->
+                        <div class="lyd-switch-group" style="margin-bottom: 24px;">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="default"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Default Switch</div>
+                                    <div class="lyd-switch-label-description">Standard size for most use cases</div>
                                 </label>
                             </div>
                         </div>
                         
                         <!-- Large -->
-                        <div class="lyd-radio-group lyd-radio-large" data-group="large">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="large1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Large Radio</div>
-                                    <div class="lyd-radio-label-description">Larger size for better accessibility</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch large checked" data-value="large"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Large Switch</div>
+                                    <div class="lyd-switch-label-description">Prominent size for important settings</div>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Disabled State -->
+                <!-- Color Variants -->
                 <div class="showcase-item">
-                    <h3>Disabled State</h3>
-                    <p>Radio buttons that cannot be interacted with</p>
+                    <h3>Color Variants</h3>
+                    <p>Different colors for semantic meaning</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="disabled">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input disabled" data-value="disabled1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Disabled Option</div>
-                                    <div class="lyd-radio-label-description">This option cannot be selected</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch success checked" data-value="success"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Success State</div>
+                                    <div class="lyd-switch-label-description">Positive action or confirmation</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input disabled checked" data-value="disabled2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Disabled Selected</div>
-                                    <div class="lyd-radio-label-description">Pre-selected but disabled</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch warning checked" data-value="warning"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Warning State</div>
+                                    <div class="lyd-switch-label-description">Attention required or caution</div>
+                                </label>
+                            </div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch error checked" data-value="error"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Error State</div>
+                                    <div class="lyd-switch-label-description">Critical setting or dangerous action</div>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Error State -->
+                <!-- Disabled States -->
                 <div class="showcase-item">
-                    <h3>Error State</h3>
-                    <p>Radio buttons with error styling</p>
+                    <h3>Disabled States</h3>
+                    <p>Non-interactive switches for readonly contexts</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group lyd-radio-error" data-group="error">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="error1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Error Option 1</div>
-                                    <div class="lyd-radio-label-description">This selection has an error</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch disabled" data-value="disabled1"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Disabled Off</div>
+                                    <div class="lyd-switch-label-description">Cannot be activated</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="error2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Error Option 2</div>
-                                    <div class="lyd-radio-label-description">Another option with error state</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch disabled checked" data-value="disabled2"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Disabled On</div>
+                                    <div class="lyd-switch-label-description">Cannot be deactivated</div>
                                 </label>
                             </div>
                         </div>
@@ -718,143 +736,157 @@
             </div>
         </section>
         
-        <!-- Section 2: Real Estate Radio Examples -->
+        <!-- Section 2: Real Estate Examples -->
         <section class="section">
             <h2 class="section-title">Real Estate Examples</h2>
             
             <div class="showcase-grid">
-                <!-- Property Type Selection -->
+                <!-- Property Features Toggle -->
                 <div class="showcase-item">
-                    <h3>Property Type Selection</h3>
-                    <p>Choose property type for listing</p>
+                    <h3>Property Features</h3>
+                    <p>Toggle property features and amenities</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="property-type">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="apartment"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Apartment</div>
-                                    <div class="lyd-radio-label-description">Modern city apartment with amenities</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="virtual-tour"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Virtual Tour Available</div>
+                                    <div class="lyd-switch-label-description">360° virtual property walkthrough</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="house"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">House</div>
-                                    <div class="lyd-radio-label-description">Single-family house with garden</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="furnished"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Furnished</div>
+                                    <div class="lyd-switch-label-description">Property comes fully furnished</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="penthouse"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Penthouse</div>
-                                    <div class="lyd-radio-label-description">Luxury penthouse with panoramic views</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="parking"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Parking Included</div>
+                                    <div class="lyd-switch-label-description">Dedicated parking space available</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="commercial"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Commercial</div>
-                                    <div class="lyd-radio-label-description">Office or retail space</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="pets-allowed"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Pets Allowed</div>
+                                    <div class="lyd-switch-label-description">Pet-friendly property</div>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Price Range Selection -->
+                <!-- Notification Preferences -->
                 <div class="showcase-item">
-                    <h3>Price Range Selection</h3>
-                    <p>Select your budget range</p>
+                    <h3>Notification Preferences</h3>
+                    <p>Customer communication settings</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="price-range">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="range1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€500k - €750k</div>
-                                    <div class="lyd-radio-label-description">Entry-level luxury segment</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="price-alerts"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Price Change Alerts</div>
+                                    <div class="lyd-switch-label-description">Notify when property prices change</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="range2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€750k - €1.2M</div>
-                                    <div class="lyd-radio-label-description">Premium properties</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="new-listings"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">New Listings</div>
+                                    <div class="lyd-switch-label-description">Alert for new properties matching criteria</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="range3"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€1.2M - €2M</div>
-                                    <div class="lyd-radio-label-description">High-end luxury properties</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="viewing-reminders"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Viewing Reminders</div>
+                                    <div class="lyd-switch-label-description">SMS reminders before scheduled viewings</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="range4"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€2M+</div>
-                                    <div class="lyd-radio-label-description">Ultra-luxury segment</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="market-reports"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Market Reports</div>
+                                    <div class="lyd-switch-label-description">Monthly market analysis and trends</div>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Viewing Preferences -->
+                <!-- Search Filters -->
                 <div class="showcase-item">
-                    <h3>Viewing Preferences</h3>
-                    <p>Choose your preferred viewing time</p>
+                    <h3>Advanced Search Filters</h3>
+                    <p>Property search refinement options</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="viewing-time">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="morning"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Morning (9:00 - 12:00)</div>
-                                    <div class="lyd-radio-label-description">Early viewing slots available</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="new-construction"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">New Construction Only</div>
+                                    <div class="lyd-switch-label-description">Show only newly built properties</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="afternoon"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Afternoon (13:00 - 17:00)</div>
-                                    <div class="lyd-radio-label-description">Most popular viewing time</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="luxury-features"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Luxury Features</div>
+                                    <div class="lyd-switch-label-description">Properties with premium amenities</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="evening"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Evening (17:00 - 20:00)</div>
-                                    <div class="lyd-radio-label-description">After-work viewing slots</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="investment-potential"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Investment Potential</div>
+                                    <div class="lyd-switch-label-description">High ROI properties for investors</div>
+                                </label>
+                            </div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="immediate-move-in"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Immediate Move-in</div>
+                                    <div class="lyd-switch-label-description">Ready for immediate occupancy</div>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Contact Method -->
+                <!-- Agent Dashboard Settings -->
                 <div class="showcase-item">
-                    <h3>Preferred Contact Method</h3>
-                    <p>How would you like us to contact you?</p>
+                    <h3>Agent Dashboard Settings</h3>
+                    <p>Professional dashboard configuration</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="contact-method">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="phone"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Phone Call</div>
-                                    <div class="lyd-radio-label-description">Direct conversation with our agent</div>
+                        <div class="lyd-switch-group">
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch success checked" data-value="auto-respond"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Auto-Responder</div>
+                                    <div class="lyd-switch-label-description">Automatic replies to customer inquiries</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="email"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Email</div>
-                                    <div class="lyd-radio-label-description">Detailed information via email</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch warning checked" data-value="lead-scoring"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Lead Scoring</div>
+                                    <div class="lyd-switch-label-description">Automatic lead quality assessment</div>
                                 </label>
                             </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="whatsapp"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">WhatsApp</div>
-                                    <div class="lyd-radio-label-description">Quick messaging via WhatsApp</div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch" data-value="calendar-sync"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Calendar Sync</div>
+                                    <div class="lyd-switch-label-description">Sync viewings with external calendar</div>
+                                </label>
+                            </div>
+                            <div class="lyd-switch-item">
+                                <div class="lyd-switch checked" data-value="performance-tracking"></div>
+                                <label class="lyd-switch-label">
+                                    <div class="lyd-switch-label-text">Performance Tracking</div>
+                                    <div class="lyd-switch-label-description">Monitor sales and viewing metrics</div>
                                 </label>
                             </div>
                         </div>
@@ -872,32 +904,37 @@
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
-                    <pre>&lt;!-- Basic Radio Group --&gt;
-&lt;div class="lyd-radio-group" data-group="example"&gt;
-    &lt;div class="lyd-radio-item"&gt;
-        &lt;div class="lyd-radio-input" data-value="option1"&gt;&lt;/div&gt;
-        &lt;label class="lyd-radio-label"&gt;
-            &lt;div class="lyd-radio-label-text"&gt;Option 1&lt;/div&gt;
-            &lt;div class="lyd-radio-label-description"&gt;Description&lt;/div&gt;
-        &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="lyd-radio-item"&gt;
-        &lt;div class="lyd-radio-input checked" data-value="option2"&gt;&lt;/div&gt;
-        &lt;label class="lyd-radio-label"&gt;
-            &lt;div class="lyd-radio-label-text"&gt;Option 2&lt;/div&gt;
-            &lt;div class="lyd-radio-label-description"&gt;Description&lt;/div&gt;
+                    <pre>&lt;!-- Basic Switch --&gt;
+&lt;div class="lyd-switch-item"&gt;
+    &lt;div class="lyd-switch" data-value="notifications"&gt;&lt;/div&gt;
+    &lt;label class="lyd-switch-label"&gt;
+        &lt;div class="lyd-switch-label-text"&gt;Email Notifications&lt;/div&gt;
+        &lt;div class="lyd-switch-label-description"&gt;Receive updates via email&lt;/div&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;!-- Switch Group --&gt;
+&lt;div class="lyd-switch-group"&gt;
+    &lt;div class="lyd-switch-item"&gt;
+        &lt;div class="lyd-switch checked" data-value="option1"&gt;&lt;/div&gt;
+        &lt;label class="lyd-switch-label"&gt;
+            &lt;div class="lyd-switch-label-text"&gt;Option 1&lt;/div&gt;
         &lt;/label&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- Size Variants --&gt;
-&lt;div class="lyd-radio-group lyd-radio-small"&gt;...&lt;/div&gt;
-&lt;div class="lyd-radio-group"&gt;...&lt;/div&gt;  &lt;!-- Default --&gt;
-&lt;div class="lyd-radio-group lyd-radio-large"&gt;...&lt;/div&gt;
+&lt;div class="lyd-switch small"&gt;...&lt;/div&gt;
+&lt;div class="lyd-switch"&gt;...&lt;/div&gt;  &lt;!-- Default --&gt;
+&lt;div class="lyd-switch large"&gt;...&lt;/div&gt;
 
-&lt;!-- States --&gt;
-&lt;div class="lyd-radio-input disabled"&gt;...&lt;/div&gt;
-&lt;div class="lyd-radio-group lyd-radio-error"&gt;...&lt;/div&gt;</pre>
+&lt;!-- Color Variants --&gt;
+&lt;div class="lyd-switch success checked"&gt;...&lt;/div&gt;
+&lt;div class="lyd-switch warning checked"&gt;...&lt;/div&gt;
+&lt;div class="lyd-switch error checked"&gt;...&lt;/div&gt;
+
+&lt;!-- Disabled --&gt;
+&lt;div class="lyd-switch disabled"&gt;...&lt;/div&gt;</pre>
                     </div>
                 </div>
             </div>
@@ -907,100 +944,123 @@
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
-                    <pre>// components/RadioGroup.tsx
-import { ReactNode, useState, useEffect } from 'react';
+                    <pre>// components/Switch.tsx
+import { useState } from 'react';
 
-interface RadioOption {
-  value: string;
-  label: string;
-  description?: string;
-  disabled?: boolean;
-}
-
-interface RadioGroupProps {
-  name: string;
-  options: RadioOption[];
-  value?: string;
-  defaultValue?: string;
+interface SwitchProps {
+  id?: string;
+  checked?: boolean;
+  defaultChecked?: boolean;
   size?: 'small' | 'medium' | 'large';
-  error?: boolean;
-  onChange?: (value: string) => void;
+  color?: 'primary' | 'success' | 'warning' | 'error';
+  disabled?: boolean;
+  label?: string;
+  description?: string;
+  onChange?: (checked: boolean) => void;
   className?: string;
 }
 
-export const RadioGroup = ({
-  name,
-  options,
-  value,
-  defaultValue,
+export const Switch = ({
+  id,
+  checked,
+  defaultChecked = false,
   size = 'medium',
-  error = false,
+  color = 'primary',
+  disabled = false,
+  label,
+  description,
   onChange,
   className = ''
-}: RadioGroupProps) => {
-  const [selectedValue, setSelectedValue] = useState(value || defaultValue || '');
-  
-  useEffect(() => {
-    if (value !== undefined) {
-      setSelectedValue(value);
-    }
-  }, [value]);
+}: SwitchProps) => {
+  const [isChecked, setIsChecked] = useState(checked ?? defaultChecked);
 
-  const handleChange = (optionValue: string) => {
-    if (value === undefined) {
-      setSelectedValue(optionValue);
+  const handleToggle = () => {
+    if (disabled) return;
+    
+    const newChecked = !isChecked;
+    if (checked === undefined) {
+      setIsChecked(newChecked);
     }
-    onChange?.(optionValue);
+    onChange?.(newChecked);
   };
 
-  const groupClasses = \`
-    lyd-radio-group 
-    \${size !== 'medium' ? \`lyd-radio-\${size}\` : ''} 
-    \${error ? 'lyd-radio-error' : ''}
+  const switchClasses = \`
+    lyd-switch 
+    \${size !== 'medium' ? size : ''}
+    \${color !== 'primary' ? color : ''}
+    \${(checked ?? isChecked) ? 'checked' : ''}
+    \${disabled ? 'disabled' : ''}
     \${className}
   \`.trim();
 
   return (
-    &lt;div className={groupClasses} data-group={name}&gt;
-      {options.map((option) => (
-        &lt;div key={option.value} className="lyd-radio-item"&gt;
-          &lt;div 
-            className={\`lyd-radio-input \${selectedValue === option.value ? 'checked' : ''} \${option.disabled ? 'disabled' : ''}\`}
-            data-value={option.value}
-            onClick={() => !option.disabled && handleChange(option.value)}
-          /&gt;
-          &lt;label className="lyd-radio-label" onClick={() => !option.disabled && handleChange(option.value)}&gt;
-            &lt;div className="lyd-radio-label-text"&gt;{option.label}&lt;/div&gt;
-            {option.description && (
-              &lt;div className="lyd-radio-label-description"&gt;{option.description}&lt;/div&gt;
-            )}
-          &lt;/label&gt;
-        &lt;/div&gt;
-      ))}
+    &lt;div className="lyd-switch-item"&gt;
+      &lt;div 
+        className={switchClasses}
+        onClick={handleToggle}
+        role="switch"
+        aria-checked={checked ?? isChecked}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : 0}
+        onKeyDown={(e) => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            handleToggle();
+          }
+        }}
+      /&gt;
+      {(label || description) && (
+        &lt;label className="lyd-switch-label" onClick={handleToggle}&gt;
+          {label && (
+            &lt;div className="lyd-switch-label-text"&gt;{label}&lt;/div&gt;
+          )}
+          {description && (
+            &lt;div className="lyd-switch-label-description"&gt;{description}&lt;/div&gt;
+          )}
+        &lt;/label&gt;
+      )}
     &lt;/div&gt;
   );
 };
 
 // Usage Example:
-export default function PropertyForm() {
-  const [propertyType, setPropertyType] = useState('apartment');
-  
-  const propertyOptions = [
-    { value: 'apartment', label: 'Apartment', description: 'Modern city apartment with amenities' },
-    { value: 'house', label: 'House', description: 'Single-family house with garden' },
-    { value: 'penthouse', label: 'Penthouse', description: 'Luxury penthouse with panoramic views' },
-    { value: 'commercial', label: 'Commercial', description: 'Office or retail space' }
-  ];
+export default function PropertySettings() {
+  const [settings, setSettings] = useState({
+    virtualTour: true,
+    furnished: false,
+    parkingIncluded: true,
+    petsAllowed: false
+  });
+
+  const updateSetting = (key: keyof typeof settings, value: boolean) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
+  };
 
   return (
-    &lt;form&gt;
-      &lt;RadioGroup
-        name="property-type"
-        options={propertyOptions}
-        value={propertyType}
-        onChange={setPropertyType}
+    &lt;div className="lyd-switch-group"&gt;
+      &lt;Switch
+        label="Virtual Tour Available"
+        description="360° virtual property walkthrough"
+        checked={settings.virtualTour}
+        onChange={(checked) => updateSetting('virtualTour', checked)}
       /&gt;
-    &lt;/form&gt;
+      
+      &lt;Switch
+        label="Furnished Property"
+        description="Property comes fully furnished"
+        checked={settings.furnished}
+        onChange={(checked) => updateSetting('furnished', checked)}
+        color="success"
+      /&gt;
+      
+      &lt;Switch
+        label="Parking Included"
+        description="Dedicated parking space available"
+        checked={settings.parkingIncluded}
+        onChange={(checked) => updateSetting('parkingIncluded', checked)}
+        size="large"
+      /&gt;
+    &lt;/div&gt;
   );
 }</pre>
                     </div>
@@ -1016,22 +1076,32 @@ export default function PropertyForm() {
             <div class="accessibility-grid">
                 <div class="accessibility-item">
                     <h3>Keyboard Navigation</h3>
-                    <p>Navigate through radio options using Tab, Space, and arrow keys for easy keyboard access.</p>
+                    <p>Full keyboard support with Tab navigation and Space/Enter keys for toggling switch states.</p>
                 </div>
                 
                 <div class="accessibility-item">
                     <h3>Screen Reader Support</h3>
-                    <p>Radio buttons include proper ARIA labels and group associations for screen reader compatibility.</p>
+                    <p>Proper ARIA roles with switch role and aria-checked attributes for comprehensive accessibility.</p>
                 </div>
                 
                 <div class="accessibility-item">
-                    <h3>Focus Indicators</h3>
-                    <p>Clear visual focus indicators help users understand which radio button is currently selected.</p>
+                    <h3>Visual Feedback</h3>
+                    <p>Clear visual distinction between on/off states with smooth transitions and focus indicators.</p>
                 </div>
                 
                 <div class="accessibility-item">
-                    <h3>High Contrast</h3>
-                    <p>Radio buttons maintain visibility and usability in high contrast modes and for users with visual impairments.</p>
+                    <h3>Touch Friendly</h3>
+                    <p>Adequate touch target size (minimum 44px) for mobile devices and touch screen interactions.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Color Independence</h3>
+                    <p>Position-based state indication ensures functionality without relying solely on color differentiation.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Disabled States</h3>
+                    <p>Clear visual and programmatic disabled states with appropriate cursor and interaction handling.</p>
                 </div>
             </div>
         </section>
@@ -1040,7 +1110,7 @@ export default function PropertyForm() {
     <!-- JavaScript -->
     <script src="../shared/force-consistency.js"></script>
     <script>
-        // Radio functionality
+        // Switch functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Set active navigation
             const currentPath = window.location.pathname;
@@ -1050,42 +1120,53 @@ export default function PropertyForm() {
                 }
             });
             
-            // Initialize radio groups
-            document.querySelectorAll('.lyd-radio-group').forEach(group => {
-                const groupName = group.dataset.group;
-                const radioInputs = group.querySelectorAll('.lyd-radio-input:not(.disabled)');
-                
-                radioInputs.forEach(input => {
-                    // Handle click on radio input
-                    input.addEventListener('click', function() {
-                        // Deselect all in group
-                        radioInputs.forEach(r => r.classList.remove('checked'));
-                        // Select clicked
-                        this.classList.add('checked');
-                        
-                        // Emit change event
-                        const event = new CustomEvent('radioChange', {
-                            detail: {
-                                group: groupName,
-                                value: this.dataset.value
-                            }
-                        });
-                        group.dispatchEvent(event);
-                    });
+            // Initialize switches
+            document.querySelectorAll('.lyd-switch:not(.disabled)').forEach(switchElement => {
+                switchElement.addEventListener('click', function() {
+                    // Toggle checked state
+                    this.classList.toggle('checked');
                     
-                    // Handle click on label
-                    const radioItem = input.closest('.lyd-radio-item');
-                    const label = radioItem.querySelector('.lyd-radio-label');
-                    if (label) {
-                        label.addEventListener('click', function() {
-                            input.click();
-                        });
+                    // Emit change event
+                    const event = new CustomEvent('switchChange', {
+                        detail: {
+                            value: this.dataset.value,
+                            checked: this.classList.contains('checked')
+                        }
+                    });
+                    this.dispatchEvent(event);
+                });
+                
+                // Handle keyboard events
+                switchElement.setAttribute('tabindex', '0');
+                switchElement.setAttribute('role', 'switch');
+                switchElement.addEventListener('keydown', function(e) {
+                    if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        this.click();
                     }
                 });
                 
+                // Update aria-checked
+                const updateAria = () => {
+                    this.setAttribute('aria-checked', this.classList.contains('checked'));
+                };
+                updateAria();
+                
+                // Handle label clicks
+                const switchItem = this.closest('.lyd-switch-item');
+                const label = switchItem?.querySelector('.lyd-switch-label');
+                if (label) {
+                    label.addEventListener('click', () => {
+                        if (!this.classList.contains('disabled')) {
+                            this.click();
+                        }
+                    });
+                }
+                
                 // Listen for changes
-                group.addEventListener('radioChange', function(e) {
-                    console.log(`Radio group "${e.detail.group}" changed to: ${e.detail.value}`);
+                this.addEventListener('switchChange', function(e) {
+                    console.log(`Switch "${e.detail.value}" changed to: ${e.detail.checked}`);
+                    updateAria();
                 });
             });
             
@@ -1108,3 +1189,4 @@ export default function PropertyForm() {
     </script>
 </body>
 </html>
+

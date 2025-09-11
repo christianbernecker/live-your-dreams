@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio - LYD Design System V2</title>
+    <title>Textarea - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
@@ -242,133 +242,120 @@
             background: var(--lyd-white);
         }
         
-        /* Radio Button Components */
-        .lyd-radio-group {
+        /* Textarea Components */
+        .lyd-textarea-group {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-md);
-        }
-        
-        .lyd-radio-item {
-            display: flex;
-            align-items: flex-start;
             gap: var(--spacing-sm);
-            cursor: pointer;
-            padding: var(--spacing-sm);
-            border-radius: 8px;
-            transition: all 0.2s ease;
         }
         
-        .lyd-radio-item:hover {
-            background: var(--lyd-gray-50);
-        }
-        
-        .lyd-radio-input {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--lyd-gray-300);
-            border-radius: 50%;
-            background: var(--lyd-white);
-            position: relative;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        
-        .lyd-radio-input::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--lyd-primary);
-            transition: transform 0.2s ease;
-        }
-        
-        .lyd-radio-input.checked {
-            border-color: var(--lyd-primary);
-        }
-        
-        .lyd-radio-input.checked::after {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        
-        .lyd-radio-input.disabled {
-            border-color: var(--lyd-gray-200);
-            background: var(--lyd-gray-100);
-            cursor: not-allowed;
-        }
-        
-        .lyd-radio-input.disabled.checked::after {
-            background: var(--lyd-gray-400);
-        }
-        
-        .lyd-radio-label {
-            flex: 1;
-            cursor: pointer;
-        }
-        
-        .lyd-radio-label-text {
-            font-size: var(--font-size-base);
-            font-weight: 500;
-            color: var(--lyd-gray-900);
-            margin-bottom: 2px;
-        }
-        
-        .lyd-radio-label-description {
+        .lyd-textarea-label {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-600);
+            font-weight: 600;
+            color: var(--lyd-gray-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .lyd-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--lyd-gray-200);
+            border-radius: 8px;
+            background: var(--lyd-white);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            color: var(--lyd-gray-900);
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-textarea::placeholder {
+            color: var(--lyd-gray-400);
+            opacity: 0.7;
+        }
+        
+        .lyd-textarea:focus {
+            outline: none;
+            border-color: var(--lyd-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .lyd-textarea:focus + .lyd-textarea-label {
+            color: var(--lyd-primary);
         }
         
         /* Size variants */
-        .lyd-radio-small .lyd-radio-input {
-            width: 16px;
-            height: 16px;
-        }
-        
-        .lyd-radio-small .lyd-radio-input::after {
-            width: 6px;
-            height: 6px;
-        }
-        
-        .lyd-radio-small .lyd-radio-label-text {
+        .lyd-textarea.small {
+            min-height: 80px;
+            padding: var(--spacing-sm);
             font-size: var(--font-size-sm);
         }
         
-        .lyd-radio-large .lyd-radio-input {
-            width: 24px;
-            height: 24px;
-            margin-top: 0;
-        }
-        
-        .lyd-radio-large .lyd-radio-input::after {
-            width: 10px;
-            height: 10px;
-        }
-        
-        .lyd-radio-large .lyd-radio-label-text {
+        .lyd-textarea.large {
+            min-height: 160px;
+            padding: var(--spacing-lg);
             font-size: var(--font-size-lg);
         }
         
-        /* Error state */
-        .lyd-radio-error .lyd-radio-input {
+        /* States */
+        .lyd-textarea.success {
+            border-color: var(--lyd-success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .lyd-textarea.success:focus {
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .lyd-textarea.error {
             border-color: var(--lyd-error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
         }
         
-        .lyd-radio-error .lyd-radio-input.checked::after {
-            background: var(--lyd-error);
+        .lyd-textarea.error:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
         }
         
-        .lyd-radio-error .lyd-radio-label-text {
+        .lyd-textarea:disabled {
+            background: var(--lyd-gray-100);
+            border-color: var(--lyd-gray-200);
+            color: var(--lyd-gray-400);
+            cursor: not-allowed;
+        }
+        
+        .lyd-textarea-helper {
+            font-size: var(--font-size-xs);
+            color: var(--lyd-gray-500);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .lyd-textarea-helper.success {
+            color: var(--lyd-success);
+        }
+        
+        .lyd-textarea-helper.error {
+            color: var(--lyd-error);
+        }
+        
+        /* Character counter */
+        .lyd-textarea-counter {
+            font-size: var(--font-size-xs);
+            color: var(--lyd-gray-400);
+            text-align: right;
+            margin-top: var(--spacing-xs);
+        }
+        
+        .lyd-textarea-counter.warning {
+            color: var(--lyd-warning);
+        }
+        
+        .lyd-textarea-counter.error {
             color: var(--lyd-error);
         }
         
         /* Implementation Guide */
-        
         .implementation-section {
             background: var(--lyd-white);
             border-radius: 12px;
@@ -430,7 +417,6 @@
         }
         
         /* Accessibility Grid */
-        
         .accessibility-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -586,44 +572,26 @@
     <main class="main-content">
         <!-- Page Header -->
         <div class="page-header">
-            <h1 class="page-title">Radio</h1>
+            <h1 class="page-title">Textarea</h1>
             <p class="page-subtitle">
-                Radio buttons allow users to select one option from a set of mutually exclusive options. They work in groups where only one option can be selected at a time.
+                Textarea components allow users to input multi-line text content. Perfect for property descriptions, customer inquiries, and detailed feedback forms.
             </p>
         </div>
         
-        <!-- Section 1: Basic Radio Buttons -->
+        <!-- Section 1: Basic Textareas -->
         <section class="section">
-            <h2 class="section-title">Basic Radio Buttons</h2>
+            <h2 class="section-title">Basic Textareas</h2>
             
             <div class="showcase-grid">
-                <!-- Default Radio Group -->
+                <!-- Default Textarea -->
                 <div class="showcase-item">
-                    <h3>Default Radio Group</h3>
-                    <p>Standard radio buttons for selecting one option</p>
+                    <h3>Default Textarea</h3>
+                    <p>Standard textarea for multi-line text input</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="basic">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="option1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Option 1</div>
-                                    <div class="lyd-radio-label-description">First available choice</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="option2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Option 2</div>
-                                    <div class="lyd-radio-label-description">Second available choice (selected)</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="option3"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Option 3</div>
-                                    <div class="lyd-radio-label-description">Third available choice</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Property Description</label>
+                            <textarea class="lyd-textarea" placeholder="Enter detailed property description...">This luxurious penthouse offers stunning panoramic views of the city skyline. With floor-to-ceiling windows and a private terrace, it's the perfect blend of modern elegance and comfort.</textarea>
+                            <div class="lyd-textarea-helper">Provide a detailed description to attract potential buyers</div>
                         </div>
                     </div>
                 </div>
@@ -634,60 +602,28 @@
                     <p>Different sizes for various use cases</p>
                     <div class="showcase-demo">
                         <!-- Small -->
-                        <div class="lyd-radio-group lyd-radio-small" data-group="small" style="margin-bottom: 24px;">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="small1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Small Radio</div>
-                                    <div class="lyd-radio-label-description">Compact size for dense layouts</div>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <!-- Default (already shown above) -->
-                        <div class="lyd-radio-group" data-group="default" style="margin-bottom: 24px;">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="default1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Default Radio</div>
-                                    <div class="lyd-radio-label-description">Standard size for most use cases</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group" style="margin-bottom: 24px;">
+                            <label class="lyd-textarea-label">Small Note</label>
+                            <textarea class="lyd-textarea small" placeholder="Quick note...">Small textarea for brief comments</textarea>
                         </div>
                         
                         <!-- Large -->
-                        <div class="lyd-radio-group lyd-radio-large" data-group="large">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="large1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Large Radio</div>
-                                    <div class="lyd-radio-label-description">Larger size for better accessibility</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Detailed Review</label>
+                            <textarea class="lyd-textarea large" placeholder="Write your detailed review...">Large textarea for comprehensive property reviews, detailed feedback, or extensive property descriptions that require more space and better readability.</textarea>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Disabled State -->
+                <!-- Success State -->
                 <div class="showcase-item">
-                    <h3>Disabled State</h3>
-                    <p>Radio buttons that cannot be interacted with</p>
+                    <h3>Success State</h3>
+                    <p>Textarea with successful validation</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="disabled">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input disabled" data-value="disabled1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Disabled Option</div>
-                                    <div class="lyd-radio-label-description">This option cannot be selected</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input disabled checked" data-value="disabled2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Disabled Selected</div>
-                                    <div class="lyd-radio-label-description">Pre-selected but disabled</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Customer Inquiry</label>
+                            <textarea class="lyd-textarea success" placeholder="Your message...">Hello, I'm interested in scheduling a viewing for this beautiful property. Could we arrange a meeting next week?</textarea>
+                            <div class="lyd-textarea-helper success">Message looks great! Ready to send.</div>
                         </div>
                     </div>
                 </div>
@@ -695,168 +631,122 @@
                 <!-- Error State -->
                 <div class="showcase-item">
                     <h3>Error State</h3>
-                    <p>Radio buttons with error styling</p>
+                    <p>Textarea with error validation</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group lyd-radio-error" data-group="error">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="error1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Error Option 1</div>
-                                    <div class="lyd-radio-label-description">This selection has an error</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="error2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Error Option 2</div>
-                                    <div class="lyd-radio-label-description">Another option with error state</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Feedback</label>
+                            <textarea class="lyd-textarea error" placeholder="Your feedback...">Too short</textarea>
+                            <div class="lyd-textarea-helper error">Please provide at least 20 characters for meaningful feedback</div>
+                            <div class="lyd-textarea-counter error">9 / 20 characters</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Section 2: Real Estate Radio Examples -->
+        <!-- Section 2: Real Estate Examples -->
         <section class="section">
             <h2 class="section-title">Real Estate Examples</h2>
             
             <div class="showcase-grid">
-                <!-- Property Type Selection -->
+                <!-- Property Description -->
                 <div class="showcase-item">
-                    <h3>Property Type Selection</h3>
-                    <p>Choose property type for listing</p>
+                    <h3>Property Description</h3>
+                    <p>Detailed property listing description</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="property-type">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="apartment"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Apartment</div>
-                                    <div class="lyd-radio-label-description">Modern city apartment with amenities</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="house"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">House</div>
-                                    <div class="lyd-radio-label-description">Single-family house with garden</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="penthouse"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Penthouse</div>
-                                    <div class="lyd-radio-label-description">Luxury penthouse with panoramic views</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="commercial"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Commercial</div>
-                                    <div class="lyd-radio-label-description">Office or retail space</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Property Description</label>
+                            <textarea class="lyd-textarea large" placeholder="Describe the property features, location, and unique selling points...">Discover luxury living in this exceptional 3-bedroom penthouse located in the heart of Munich's prestigious Maxvorstadt district. 
+
+Features:
+- 180m² of elegant living space
+- Floor-to-ceiling windows with panoramic city views  
+- Private 50m² rooftop terrace
+- High-end kitchen with premium appliances
+- Master suite with walk-in closet
+- 2 underground parking spaces
+- Building concierge service
+
+The property combines modern architecture with timeless elegance, offering the perfect sanctuary in one of Munich's most desirable neighborhoods. Walking distance to English Garden, fine dining, and cultural attractions.</textarea>
+                            <div class="lyd-textarea-counter">847 / 2000 characters</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Price Range Selection -->
+                <!-- Customer Inquiry -->
                 <div class="showcase-item">
-                    <h3>Price Range Selection</h3>
-                    <p>Select your budget range</p>
+                    <h3>Customer Inquiry Form</h3>
+                    <p>Potential buyer inquiry message</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="price-range">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="range1"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€500k - €750k</div>
-                                    <div class="lyd-radio-label-description">Entry-level luxury segment</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="range2"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€750k - €1.2M</div>
-                                    <div class="lyd-radio-label-description">Premium properties</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="range3"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€1.2M - €2M</div>
-                                    <div class="lyd-radio-label-description">High-end luxury properties</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="range4"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">€2M+</div>
-                                    <div class="lyd-radio-label-description">Ultra-luxury segment</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Your Message</label>
+                            <textarea class="lyd-textarea" placeholder="Tell us about your requirements, preferred viewing times, or any specific questions...">Hello,
+
+I am very interested in this penthouse and would love to schedule a viewing. I'm particularly interested in:
+
+- The rooftop terrace and city views
+- Parking arrangements for 2 vehicles  
+- Pet policy for the building
+- Expected move-in timeline
+
+I'm available for viewings on weekdays after 4 PM or weekends. Looking forward to hearing from you.
+
+Best regards,
+Michael Schmidt</textarea>
+                            <div class="lyd-textarea-helper">We'll respond to your inquiry within 24 hours</div>
+                            <div class="lyd-textarea-counter">489 / 1000 characters</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Viewing Preferences -->
+                <!-- Agent Notes -->
                 <div class="showcase-item">
-                    <h3>Viewing Preferences</h3>
-                    <p>Choose your preferred viewing time</p>
+                    <h3>Agent Private Notes</h3>
+                    <p>Internal notes for property agents</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="viewing-time">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="morning"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Morning (9:00 - 12:00)</div>
-                                    <div class="lyd-radio-label-description">Early viewing slots available</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="afternoon"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Afternoon (13:00 - 17:00)</div>
-                                    <div class="lyd-radio-label-description">Most popular viewing time</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="evening"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Evening (17:00 - 20:00)</div>
-                                    <div class="lyd-radio-label-description">After-work viewing slots</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Private Agent Notes</label>
+                            <textarea class="lyd-textarea" placeholder="Internal notes about the property, client preferences, or special considerations...">Client Notes:
+- High-net-worth individual, cash buyer
+- Prefers modern architecture  
+- Must have parking for luxury vehicles
+- Timeline: flexible, looking for Q2 2024 move-in
+- Budget: up to €2.5M
+- Previously viewed similar properties in Schwabing
+
+Property Status:
+- Minor cosmetic touch-ups needed
+- New kitchen appliances installed last month  
+- Building management very cooperative
+- Similar unit sold for €2.2M in December
+
+Next Steps:
+- Schedule viewing for Saturday 2 PM
+- Prepare comparable market analysis
+- Contact building management for any recent updates</textarea>
+                            <div class="lyd-textarea-counter">695 / 2000 characters</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Contact Method -->
+                <!-- Property Review -->
                 <div class="showcase-item">
-                    <h3>Preferred Contact Method</h3>
-                    <p>How would you like us to contact you?</p>
+                    <h3>Property Review</h3>
+                    <p>Customer review and testimonial</p>
                     <div class="showcase-demo">
-                        <div class="lyd-radio-group" data-group="contact-method">
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input checked" data-value="phone"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Phone Call</div>
-                                    <div class="lyd-radio-label-description">Direct conversation with our agent</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="email"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">Email</div>
-                                    <div class="lyd-radio-label-description">Detailed information via email</div>
-                                </label>
-                            </div>
-                            <div class="lyd-radio-item">
-                                <div class="lyd-radio-input" data-value="whatsapp"></div>
-                                <label class="lyd-radio-label">
-                                    <div class="lyd-radio-label-text">WhatsApp</div>
-                                    <div class="lyd-radio-label-description">Quick messaging via WhatsApp</div>
-                                </label>
-                            </div>
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Your Review</label>
+                            <textarea class="lyd-textarea success" placeholder="Share your experience with this property...">Absolutely stunning property! The views from the rooftop terrace are breathtaking, especially during sunset. The interior design is impeccable - every detail has been carefully considered.
+
+The location is perfect - quiet enough for relaxation but close to everything you need. The English Garden is just a 5-minute walk, and there are excellent restaurants nearby.
+
+The building's concierge service is outstanding, very professional and accommodating. Parking in the underground garage is convenient and secure.
+
+I highly recommend this property to anyone looking for luxury living in Munich. The investment potential is also excellent given the prime location.
+
+Rating: 5/5 stars</textarea>
+                            <div class="lyd-textarea-helper success">Thank you for your detailed review!</div>
+                            <div class="lyd-textarea-counter">821 / 1500 characters</div>
                         </div>
                     </div>
                 </div>
@@ -872,32 +762,29 @@
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
-                    <pre>&lt;!-- Basic Radio Group --&gt;
-&lt;div class="lyd-radio-group" data-group="example"&gt;
-    &lt;div class="lyd-radio-item"&gt;
-        &lt;div class="lyd-radio-input" data-value="option1"&gt;&lt;/div&gt;
-        &lt;label class="lyd-radio-label"&gt;
-            &lt;div class="lyd-radio-label-text"&gt;Option 1&lt;/div&gt;
-            &lt;div class="lyd-radio-label-description"&gt;Description&lt;/div&gt;
-        &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="lyd-radio-item"&gt;
-        &lt;div class="lyd-radio-input checked" data-value="option2"&gt;&lt;/div&gt;
-        &lt;label class="lyd-radio-label"&gt;
-            &lt;div class="lyd-radio-label-text"&gt;Option 2&lt;/div&gt;
-            &lt;div class="lyd-radio-label-description"&gt;Description&lt;/div&gt;
-        &lt;/label&gt;
-    &lt;/div&gt;
+                    <pre>&lt;!-- Basic Textarea --&gt;
+&lt;div class="lyd-textarea-group"&gt;
+    &lt;label class="lyd-textarea-label"&gt;Property Description&lt;/label&gt;
+    &lt;textarea class="lyd-textarea" placeholder="Describe the property..."&gt;&lt;/textarea&gt;
+    &lt;div class="lyd-textarea-helper"&gt;Provide detailed information&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- With Character Counter --&gt;
+&lt;div class="lyd-textarea-group"&gt;
+    &lt;label class="lyd-textarea-label"&gt;Customer Message&lt;/label&gt;
+    &lt;textarea class="lyd-textarea" maxlength="500" placeholder="Your message..."&gt;&lt;/textarea&gt;
+    &lt;div class="lyd-textarea-counter"&gt;0 / 500 characters&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- Size Variants --&gt;
-&lt;div class="lyd-radio-group lyd-radio-small"&gt;...&lt;/div&gt;
-&lt;div class="lyd-radio-group"&gt;...&lt;/div&gt;  &lt;!-- Default --&gt;
-&lt;div class="lyd-radio-group lyd-radio-large"&gt;...&lt;/div&gt;
+&lt;textarea class="lyd-textarea small"&gt;...&lt;/textarea&gt;
+&lt;textarea class="lyd-textarea"&gt;...&lt;/textarea&gt;  &lt;!-- Default --&gt;
+&lt;textarea class="lyd-textarea large"&gt;...&lt;/textarea&gt;
 
 &lt;!-- States --&gt;
-&lt;div class="lyd-radio-input disabled"&gt;...&lt;/div&gt;
-&lt;div class="lyd-radio-group lyd-radio-error"&gt;...&lt;/div&gt;</pre>
+&lt;textarea class="lyd-textarea success"&gt;...&lt;/textarea&gt;
+&lt;textarea class="lyd-textarea error"&gt;...&lt;/textarea&gt;
+&lt;textarea class="lyd-textarea" disabled&gt;...&lt;/textarea&gt;</pre>
                     </div>
                 </div>
             </div>
@@ -907,98 +794,107 @@
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
-                    <pre>// components/RadioGroup.tsx
-import { ReactNode, useState, useEffect } from 'react';
+                    <pre>// components/Textarea.tsx
+import { TextareaHTMLAttributes, forwardRef, useState } from 'react';
 
-interface RadioOption {
-  value: string;
-  label: string;
-  description?: string;
-  disabled?: boolean;
-}
-
-interface RadioGroupProps {
-  name: string;
-  options: RadioOption[];
-  value?: string;
-  defaultValue?: string;
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  helperText?: string;
+  state?: 'default' | 'success' | 'error';
   size?: 'small' | 'medium' | 'large';
-  error?: boolean;
-  onChange?: (value: string) => void;
+  showCounter?: boolean;
+  maxLength?: number;
   className?: string;
 }
 
-export const RadioGroup = ({
-  name,
-  options,
-  value,
-  defaultValue,
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
+  label,
+  helperText,
+  state = 'default',
   size = 'medium',
-  error = false,
+  showCounter = false,
+  maxLength,
+  className = '',
+  value,
   onChange,
-  className = ''
-}: RadioGroupProps) => {
-  const [selectedValue, setSelectedValue] = useState(value || defaultValue || '');
-  
-  useEffect(() => {
-    if (value !== undefined) {
-      setSelectedValue(value);
-    }
-  }, [value]);
+  ...props
+}, ref) => {
+  const [currentLength, setCurrentLength] = useState(
+    typeof value === 'string' ? value.length : 0
+  );
 
-  const handleChange = (optionValue: string) => {
-    if (value === undefined) {
-      setSelectedValue(optionValue);
-    }
-    onChange?.(optionValue);
-  };
-
-  const groupClasses = \`
-    lyd-radio-group 
-    \${size !== 'medium' ? \`lyd-radio-\${size}\` : ''} 
-    \${error ? 'lyd-radio-error' : ''}
+  const textareaClasses = \`
+    lyd-textarea 
+    \${size !== 'medium' ? size : ''} 
+    \${state !== 'default' ? state : ''}
     \${className}
   \`.trim();
 
+  const counterClasses = \`
+    lyd-textarea-counter
+    \${maxLength && currentLength > maxLength * 0.8 ? 'warning' : ''}
+    \${maxLength && currentLength > maxLength ? 'error' : ''}
+  \`.trim();
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCurrentLength(e.target.value.length);
+    onChange?.(e);
+  };
+
   return (
-    &lt;div className={groupClasses} data-group={name}&gt;
-      {options.map((option) => (
-        &lt;div key={option.value} className="lyd-radio-item"&gt;
-          &lt;div 
-            className={\`lyd-radio-input \${selectedValue === option.value ? 'checked' : ''} \${option.disabled ? 'disabled' : ''}\`}
-            data-value={option.value}
-            onClick={() => !option.disabled && handleChange(option.value)}
-          /&gt;
-          &lt;label className="lyd-radio-label" onClick={() => !option.disabled && handleChange(option.value)}&gt;
-            &lt;div className="lyd-radio-label-text"&gt;{option.label}&lt;/div&gt;
-            {option.description && (
-              &lt;div className="lyd-radio-label-description"&gt;{option.description}&lt;/div&gt;
-            )}
-          &lt;/label&gt;
+    &lt;div className="lyd-textarea-group"&gt;
+      {label && (
+        &lt;label className="lyd-textarea-label"&gt;{label}&lt;/label&gt;
+      )}
+      &lt;textarea
+        ref={ref}
+        className={textareaClasses}
+        maxLength={maxLength}
+        value={value}
+        onChange={handleChange}
+        {...props}
+      /&gt;
+      {helperText && (
+        &lt;div className={\`lyd-textarea-helper \${state !== 'default' ? state : ''}\`}&gt;
+          {helperText}
         &lt;/div&gt;
-      ))}
+      )}
+      {showCounter && (
+        &lt;div className={counterClasses}&gt;
+          {currentLength}{maxLength ? \` / \${maxLength}\` : ''} characters
+        &lt;/div&gt;
+      )}
     &lt;/div&gt;
   );
-};
+});
 
 // Usage Example:
 export default function PropertyForm() {
-  const [propertyType, setPropertyType] = useState('apartment');
-  
-  const propertyOptions = [
-    { value: 'apartment', label: 'Apartment', description: 'Modern city apartment with amenities' },
-    { value: 'house', label: 'House', description: 'Single-family house with garden' },
-    { value: 'penthouse', label: 'Penthouse', description: 'Luxury penthouse with panoramic views' },
-    { value: 'commercial', label: 'Commercial', description: 'Office or retail space' }
-  ];
+  const [description, setDescription] = useState('');
+  const [inquiry, setInquiry] = useState('');
 
   return (
     &lt;form&gt;
-      &lt;RadioGroup
-        name="property-type"
-        options={propertyOptions}
-        value={propertyType}
-        onChange={setPropertyType}
+      &lt;Textarea
+        label="Property Description"
+        placeholder="Describe the property features..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        size="large"
+        maxLength={2000}
+        showCounter
+        helperText="Provide detailed information to attract buyers"
+      /&gt;
+      
+      &lt;Textarea
+        label="Customer Inquiry"
+        placeholder="Tell us about your requirements..."
+        value={inquiry}
+        onChange={(e) => setInquiry(e.target.value)}
+        maxLength={1000}
+        showCounter
+        state={inquiry.length < 20 ? 'error' : 'success'}
+        helperText={inquiry.length < 20 ? 'Please provide at least 20 characters' : 'Message looks great!'}
       /&gt;
     &lt;/form&gt;
   );
@@ -1016,22 +912,32 @@ export default function PropertyForm() {
             <div class="accessibility-grid">
                 <div class="accessibility-item">
                     <h3>Keyboard Navigation</h3>
-                    <p>Navigate through radio options using Tab, Space, and arrow keys for easy keyboard access.</p>
+                    <p>Full keyboard support with Tab navigation, Arrow keys for cursor movement, and standard text editing shortcuts.</p>
                 </div>
                 
                 <div class="accessibility-item">
                     <h3>Screen Reader Support</h3>
-                    <p>Radio buttons include proper ARIA labels and group associations for screen reader compatibility.</p>
+                    <p>Proper labeling with aria-describedby for helper text and character counters, ensuring full screen reader compatibility.</p>
                 </div>
                 
                 <div class="accessibility-item">
                     <h3>Focus Indicators</h3>
-                    <p>Clear visual focus indicators help users understand which radio button is currently selected.</p>
+                    <p>Clear visual focus indicators with enhanced border and shadow styling to help users identify the active textarea.</p>
                 </div>
                 
                 <div class="accessibility-item">
-                    <h3>High Contrast</h3>
-                    <p>Radio buttons maintain visibility and usability in high contrast modes and for users with visual impairments.</p>
+                    <h3>Character Limits</h3>
+                    <p>Visual and programmatic character counting with warning states at 80% capacity and error states when exceeded.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Resize Capability</h3>
+                    <p>Vertical resize enabled by default, allowing users to adjust textarea height based on their content needs.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Error Handling</h3>
+                    <p>Clear error states with color, text, and border changes to communicate validation issues effectively.</p>
                 </div>
             </div>
         </section>
@@ -1040,7 +946,7 @@ export default function PropertyForm() {
     <!-- JavaScript -->
     <script src="../shared/force-consistency.js"></script>
     <script>
-        // Radio functionality
+        // Textarea functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Set active navigation
             const currentPath = window.location.pathname;
@@ -1050,43 +956,58 @@ export default function PropertyForm() {
                 }
             });
             
-            // Initialize radio groups
-            document.querySelectorAll('.lyd-radio-group').forEach(group => {
-                const groupName = group.dataset.group;
-                const radioInputs = group.querySelectorAll('.lyd-radio-input:not(.disabled)');
+            // Character counter functionality
+            document.querySelectorAll('.lyd-textarea').forEach(textarea => {
+                const maxLength = textarea.getAttribute('maxlength');
+                const group = textarea.closest('.lyd-textarea-group');
+                let counter = group?.querySelector('.lyd-textarea-counter');
                 
-                radioInputs.forEach(input => {
-                    // Handle click on radio input
-                    input.addEventListener('click', function() {
-                        // Deselect all in group
-                        radioInputs.forEach(r => r.classList.remove('checked'));
-                        // Select clicked
-                        this.classList.add('checked');
-                        
-                        // Emit change event
-                        const event = new CustomEvent('radioChange', {
-                            detail: {
-                                group: groupName,
-                                value: this.dataset.value
-                            }
-                        });
-                        group.dispatchEvent(event);
-                    });
-                    
-                    // Handle click on label
-                    const radioItem = input.closest('.lyd-radio-item');
-                    const label = radioItem.querySelector('.lyd-radio-label');
-                    if (label) {
-                        label.addEventListener('click', function() {
-                            input.click();
-                        });
+                if (counter || maxLength) {
+                    // Create counter if it doesn't exist but maxlength is set
+                    if (!counter && maxLength) {
+                        counter = document.createElement('div');
+                        counter.className = 'lyd-textarea-counter';
+                        group?.appendChild(counter);
                     }
+                    
+                    const updateCounter = () => {
+                        const length = textarea.value.length;
+                        const maxLen = parseInt(maxLength) || 0;
+                        
+                        if (counter) {
+                            counter.textContent = maxLen ? `${length} / ${maxLen} characters` : `${length} characters`;
+                            
+                            // Update counter styling based on usage
+                            counter.classList.remove('warning', 'error');
+                            if (maxLen && length > maxLen * 0.8) {
+                                counter.classList.add('warning');
+                            }
+                            if (maxLen && length > maxLen) {
+                                counter.classList.add('error');
+                            }
+                        }
+                    };
+                    
+                    // Initial update
+                    updateCounter();
+                    
+                    // Update on input
+                    textarea.addEventListener('input', updateCounter);
+                }
+            });
+            
+            // Auto-resize functionality (optional enhancement)
+            document.querySelectorAll('.lyd-textarea').forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.max(this.scrollHeight, 120) + 'px';
                 });
                 
-                // Listen for changes
-                group.addEventListener('radioChange', function(e) {
-                    console.log(`Radio group "${e.detail.group}" changed to: ${e.detail.value}`);
-                });
+                // Initial resize
+                if (textarea.value) {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = Math.max(textarea.scrollHeight, 120) + 'px';
+                }
             });
             
             // Copy button functionality
@@ -1108,3 +1029,4 @@ export default function PropertyForm() {
     </script>
 </body>
 </html>
+

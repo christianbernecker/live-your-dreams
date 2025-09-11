@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+        :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-text: #111111;
+            
+            /* Design Tokens */
+            --lyd-primary: #0066ff;
+            --lyd-primary-hover: #0052cc;
+            --lyd-secondary: #6366f1;
+            --lyd-accent: #ff6b35;
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Colors */
+            --lyd-white: #ffffff;
+            --lyd-gray-50: #f9fafb;
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-300: #d1d5db;
+            --lyd-gray-400: #9ca3af;
+            --lyd-gray-500: #6b7280;
+            --lyd-gray-600: #4b5563;
+            --lyd-gray-700: #374151;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
+            /* Typography */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-gray-900);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-white);
+            border-right: 1px solid var(--lyd-gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-gray-500);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-gray-600);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-gray-600);
+            max-width: 800px;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .showcase-item {
+            background: var(--lyd-white);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .showcase-item h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-gray-50);
+        }
+        
+        .showcase-item p {
+            padding: 0 var(--spacing-lg);
+            color: var(--lyd-gray-600);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .showcase-demo {
+            padding: var(--spacing-lg);
+            background: var(--lyd-white);
+        }
+        
+        /* Badge Components */
+        .lyd-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        
+        .lyd-badge-icon {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Badge variants */
+        .lyd-badge.primary {
+            background: var(--lyd-primary);
+            color: var(--lyd-white);
+        }
+        
+        .lyd-badge.success {
+            background: var(--lyd-success);
+            color: var(--lyd-white);
+        }
+        
+        .lyd-badge.error {
+            background: var(--lyd-error);
+            color: var(--lyd-white);
+        }
+        
+        .lyd-badge.warning {
+            background: var(--lyd-warning);
+            color: var(--lyd-white);
+        }
+        
+        .lyd-badge.secondary {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-gray-700);
+        }
+        
+        .lyd-badge.accent {
+            background: var(--lyd-accent);
+            color: var(--lyd-white);
+        }
+        
+        /* Badge styles */
+        .lyd-badge.outlined {
+            background: transparent;
+            border-width: 1px;
+        }
+        
+        .lyd-badge.outlined.primary {
+            border-color: var(--lyd-primary);
+            color: var(--lyd-primary);
+        }
+        
+        .lyd-badge.outlined.success {
+            border-color: var(--lyd-success);
+            color: var(--lyd-success);
+        }
+        
+        .lyd-badge.outlined.error {
+            border-color: var(--lyd-error);
+            color: var(--lyd-error);
+        }
+        
+        .lyd-badge.outlined.warning {
+            border-color: var(--lyd-warning);
+            color: var(--lyd-warning);
+        }
+        
+        .lyd-badge.outlined.secondary {
+            border-color: var(--lyd-gray-300);
+            color: var(--lyd-gray-700);
+        }
+        
+        .lyd-badge.outlined.accent {
+            border-color: var(--lyd-accent);
+            color: var(--lyd-accent);
+        }
+        
+        .lyd-badge.soft {
+            border: none;
+        }
+        
+        .lyd-badge.soft.primary {
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--lyd-primary);
+        }
+        
+        .lyd-badge.soft.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--lyd-success);
+        }
+        
+        .lyd-badge.soft.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--lyd-error);
+        }
+        
+        .lyd-badge.soft.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--lyd-warning);
+        }
+        
+        .lyd-badge.soft.secondary {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-gray-600);
+        }
+        
+        .lyd-badge.soft.accent {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--lyd-accent);
+        }
+        
+        /* Size variants */
+        .lyd-badge.small {
+            padding: 2px 6px;
+            font-size: 10px;
+        }
+        
+        .lyd-badge.small .lyd-badge-icon {
+            width: 10px;
+            height: 10px;
+        }
+        
+        .lyd-badge.large {
+            padding: 6px 12px;
+            font-size: var(--font-size-sm);
+            border-radius: 16px;
+        }
+        
+        .lyd-badge.large .lyd-badge-icon {
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* Interactive badges */
+        .lyd-badge.clickable {
+            cursor: pointer;
+        }
+        
+        .lyd-badge.clickable:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .lyd-badge.clickable:active {
+            transform: translateY(0);
+        }
+        
+        /* Close button for dismissible badges */
+        .lyd-badge-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            margin-left: var(--spacing-xs);
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .lyd-badge-close:hover {
+            opacity: 1;
+        }
+        
+        /* Badge groups */
+        .lyd-badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            align-items: center;
+        }
+        
+        /* Property card example styling */
+        .property-card {
+            background: var(--lyd-white);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .property-card-header {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+        }
+        
+        .property-card-badges {
+            position: absolute;
+            top: var(--spacing-sm);
+            left: var(--spacing-sm);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+            align-items: flex-start;
+        }
+        
+        .property-card-price-badge {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+        }
+        
+        .property-card-content {
+            padding: var(--spacing-md);
+        }
+        
+        .property-card-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .property-card-location {
+            color: var(--lyd-gray-600);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .property-card-features {
+            margin-top: var(--spacing-md);
+        }
+        
+        /* Implementation Guide */
+        .implementation-section {
+            background: var(--lyd-white);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .implementation-section h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-gray-50);
+            margin: 0;
+        }
+        
+        .code-block {
+            background: var(--lyd-gray-900);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            color: var(--lyd-gray-100);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+        
+        .lyd-button.copy {
+            background: var(--lyd-primary);
+            color: var(--lyd-white);
+        }
+        
+        .lyd-button.copy:hover {
+            background: var(--lyd-primary-hover);
+        }
+        
+        /* Accessibility Grid */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .accessibility-item {
+            background: var(--lyd-white);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .accessibility-item h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .accessibility-item h3::before {
+            content: "✓";
+            color: var(--lyd-primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .accessibility-item p {
+            color: var(--lyd-gray-600);
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient für die Sichel -->
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient für den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/v2/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/v2/developing/" class="nav-item">Introduction</a>
+            <a href="/v2/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/v2/components/" class="nav-item">Introduction</a>
+            <a href="/v2/components/buttons/" class="nav-item">Button</a>
+            <a href="/v2/components/inputs/" class="nav-item">Input</a>
+            <a href="/v2/components/cards/" class="nav-item">Card</a>
+            <a href="/v2/components/select/" class="nav-item">Select</a>
+            <a href="/v2/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/v2/components/modal/" class="nav-item">Modal</a>
+            <a href="/v2/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/v2/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/v2/components/radio/" class="nav-item">Radio</a>
+            <a href="/v2/components/toast/" class="nav-item">Toast</a>
+            <a href="/v2/components/table/" class="nav-item">Table</a>
+            <a href="/v2/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/v2/components/switch/" class="nav-item">Switch</a>
+            <a href="/v2/components/slider/" class="nav-item">Slider</a>
+            <a href="/v2/components/alert/" class="nav-item">Alert</a>
+            <a href="/v2/components/badge/" class="nav-item">Badge</a>
+            <a href="/v2/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/v2/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/v2/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/v2/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/v2/components/progress/" class="nav-item">Progress</a>
+            <a href="/v2/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/v2/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/v2/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/v2/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/v2/styles/" class="nav-item">Introduction</a>
+            <a href="/v2/components/typography/" class="nav-item">Typography</a>
+            <a href="/v2/styles/grid/" class="nav-item">Grid</a>
+            <a href="/v2/styles/colors/" class="nav-item">Colors</a>
+            <a href="/v2/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/v2/patterns/" class="nav-item">Introduction</a>
+            <a href="/v2/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/v2/patterns/header/" class="nav-item">Header</a>
+            <a href="/v2/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/v2/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/v2/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Badge</h1>
+            <p class="page-subtitle">
+                Badge components display status, categories, and metadata. Essential for property status indicators, feature tags, and notification counts in real estate applications.
+            </p>
+        </div>
+        
+        <!-- Section 1: Basic Badges -->
+        <section class="section">
+            <h2 class="section-title">Basic Badges</h2>
+            
+            <div class="showcase-grid">
+                <!-- Color Variants -->
+                <div class="showcase-item">
+                    <h3>Color Variants</h3>
+                    <p>Different colors for various semantic meanings</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge primary">Primary</span>
+                            <span class="lyd-badge success">Success</span>
+                            <span class="lyd-badge error">Error</span>
+                            <span class="lyd-badge warning">Warning</span>
+                            <span class="lyd-badge secondary">Secondary</span>
+                            <span class="lyd-badge accent">Accent</span>
+                        </div>
+                        
+                        <div class="lyd-badge-group" style="margin-top: var(--spacing-md);">
+                            <span class="lyd-badge success">
+                                <span class="lyd-badge-icon">✓</span>
+                                Available
+                            </span>
+                            <span class="lyd-badge warning">
+                                <span class="lyd-badge-icon">⏳</span>
+                                Pending
+                            </span>
+                            <span class="lyd-badge error">
+                                <span class="lyd-badge-icon">✕</span>
+                                Sold
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Badge Styles -->
+                <div class="showcase-item">
+                    <h3>Badge Styles</h3>
+                    <p>Filled, outlined, and soft styles</p>
+                    <div class="showcase-demo">
+                        <!-- Filled (default) -->
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-sm);">
+                            <span class="lyd-badge primary">Filled</span>
+                            <span class="lyd-badge success">Filled</span>
+                            <span class="lyd-badge warning">Filled</span>
+                        </div>
+                        
+                        <!-- Outlined -->
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-sm);">
+                            <span class="lyd-badge primary outlined">Outlined</span>
+                            <span class="lyd-badge success outlined">Outlined</span>
+                            <span class="lyd-badge warning outlined">Outlined</span>
+                        </div>
+                        
+                        <!-- Soft -->
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge primary soft">Soft</span>
+                            <span class="lyd-badge success soft">Soft</span>
+                            <span class="lyd-badge warning soft">Soft</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Size Variants -->
+                <div class="showcase-item">
+                    <h3>Size Variants</h3>
+                    <p>Small, medium, and large sizes</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge primary small">Small</span>
+                            <span class="lyd-badge primary">Medium</span>
+                            <span class="lyd-badge primary large">Large</span>
+                        </div>
+                        
+                        <div class="lyd-badge-group" style="margin-top: var(--spacing-md);">
+                            <span class="lyd-badge success small outlined">
+                                <span class="lyd-badge-icon">✓</span>
+                                Small
+                            </span>
+                            <span class="lyd-badge success outlined">
+                                <span class="lyd-badge-icon">✓</span>
+                                Medium
+                            </span>
+                            <span class="lyd-badge success large outlined">
+                                <span class="lyd-badge-icon">✓</span>
+                                Large
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interactive Badges -->
+                <div class="showcase-item">
+                    <h3>Interactive Badges</h3>
+                    <p>Clickable and dismissible badges</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-md);">
+                            <span class="lyd-badge primary clickable">Clickable</span>
+                            <span class="lyd-badge success clickable">
+                                <span class="lyd-badge-icon">✓</span>
+                                With Icon
+                            </span>
+                            <span class="lyd-badge warning clickable">
+                                Action Required
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                        </div>
+                        
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge secondary soft">
+                                Filter: 3+ Bedrooms
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge accent soft">
+                                Price: €500k-1M
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real Estate Examples -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Examples</h2>
+            
+            <div class="showcase-grid">
+                <!-- Property Status Badges -->
+                <div class="showcase-item">
+                    <h3>Property Status</h3>
+                    <p>Property availability and status indicators</p>
+                    <div class="showcase-demo">
+                        <div class="property-card">
+                            <div class="property-card-header">
+                                Luxury Penthouse
+                                <div class="property-card-badges">
+                                    <span class="lyd-badge success">
+                                        <span class="lyd-badge-icon">✓</span>
+                                        Available
+                                    </span>
+                                    <span class="lyd-badge accent small">New Listing</span>
+                                </div>
+                                <div class="property-card-price-badge">
+                                    <span class="lyd-badge primary large">€1.2M</span>
+                                </div>
+                            </div>
+                            <div class="property-card-content">
+                                <div class="property-card-title">Modern 3BR Penthouse</div>
+                                <div class="property-card-location">Maxvorstadt, Munich</div>
+                                <div class="property-card-features">
+                                    <div class="lyd-badge-group">
+                                        <span class="lyd-badge secondary soft small">3 Bedrooms</span>
+                                        <span class="lyd-badge secondary soft small">2 Bathrooms</span>
+                                        <span class="lyd-badge secondary soft small">120 m²</span>
+                                        <span class="lyd-badge secondary soft small">Balcony</span>
+                                        <span class="lyd-badge secondary soft small">Parking</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge error">
+                                <span class="lyd-badge-icon">⚠</span>
+                                Sold
+                            </span>
+                            <span class="lyd-badge warning">
+                                <span class="lyd-badge-icon">⏳</span>
+                                Reserved
+                            </span>
+                            <span class="lyd-badge secondary">
+                                <span class="lyd-badge-icon">👁</span>
+                                Under Review
+                            </span>
+                            <span class="lyd-badge accent">
+                                <span class="lyd-badge-icon">🔥</span>
+                                Hot Property
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Features -->
+                <div class="showcase-item">
+                    <h3>Property Features</h3>
+                    <p>Amenities and feature highlighting</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-md);">
+                            <span class="lyd-badge primary soft">Swimming Pool</span>
+                            <span class="lyd-badge primary soft">Gym</span>
+                            <span class="lyd-badge primary soft">Concierge</span>
+                            <span class="lyd-badge primary soft">Pet Friendly</span>
+                        </div>
+                        
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-md);">
+                            <span class="lyd-badge success outlined small">Energy A+</span>
+                            <span class="lyd-badge warning outlined small">Renovation Needed</span>
+                            <span class="lyd-badge accent outlined small">Historic Building</span>
+                        </div>
+                        
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge secondary">
+                                <span class="lyd-badge-icon">🚗</span>
+                                2 Parking Spots
+                            </span>
+                            <span class="lyd-badge secondary">
+                                <span class="lyd-badge-icon">🌿</span>
+                                Garden Access
+                            </span>
+                            <span class="lyd-badge secondary">
+                                <span class="lyd-badge-icon">🔒</span>
+                                Security System
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment Tags -->
+                <div class="showcase-item">
+                    <h3>Investment Categories</h3>
+                    <p>Investment potential and market insights</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-md);">
+                            <span class="lyd-badge success large">
+                                <span class="lyd-badge-icon">📈</span>
+                                High ROI 4.8%
+                            </span>
+                            <span class="lyd-badge accent">Prime Location</span>
+                            <span class="lyd-badge warning">Market Hot</span>
+                        </div>
+                        
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-md);">
+                            <span class="lyd-badge primary soft">Rental Property</span>
+                            <span class="lyd-badge success soft">Buy-to-Let</span>
+                            <span class="lyd-badge accent soft">Commercial</span>
+                            <span class="lyd-badge secondary soft">Residential</span>
+                        </div>
+                        
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge primary outlined small">€2.1k/month</span>
+                            <span class="lyd-badge success outlined small">12% below market</span>
+                            <span class="lyd-badge warning outlined small">Price increased</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Search Filters -->
+                <div class="showcase-item">
+                    <h3>Active Search Filters</h3>
+                    <p>Current search criteria and filter tags</p>
+                    <div class="showcase-demo">
+                        <div style="margin-bottom: var(--spacing-sm); color: var(--lyd-gray-600); font-size: var(--font-size-sm);">
+                            Current Filters:
+                        </div>
+                        <div class="lyd-badge-group" style="margin-bottom: var(--spacing-md);">
+                            <span class="lyd-badge primary soft">
+                                Munich
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge success soft">
+                                €500k - €1.2M
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge accent soft">
+                                3+ Bedrooms
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge warning soft">
+                                Balcony Required
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                        </div>
+                        
+                        <div class="lyd-badge-group">
+                            <span class="lyd-badge secondary small soft">
+                                Pet Friendly
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge secondary small soft">
+                                Parking
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge secondary small soft">
+                                Near Public Transport
+                                <button class="lyd-badge-close">×</button>
+                            </span>
+                            <span class="lyd-badge error small outlined clickable">
+                                Clear All Filters
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>&lt;!-- Basic Badge --&gt;
+&lt;span class="lyd-badge primary"&gt;Badge Text&lt;/span&gt;
+
+&lt;!-- Badge with Icon --&gt;
+&lt;span class="lyd-badge success"&gt;
+    &lt;span class="lyd-badge-icon"&gt;✓&lt;/span&gt;
+    Available
+&lt;/span&gt;
+
+&lt;!-- Dismissible Badge --&gt;
+&lt;span class="lyd-badge warning soft"&gt;
+    Filter Applied
+    &lt;button class="lyd-badge-close"&gt;×&lt;/button&gt;
+&lt;/span&gt;
+
+&lt;!-- Badge Group --&gt;
+&lt;div class="lyd-badge-group"&gt;
+    &lt;span class="lyd-badge primary"&gt;Primary&lt;/span&gt;
+    &lt;span class="lyd-badge success"&gt;Success&lt;/span&gt;
+    &lt;span class="lyd-badge warning"&gt;Warning&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Variants --&gt;
+&lt;span class="lyd-badge primary small"&gt;Small&lt;/span&gt;
+&lt;span class="lyd-badge success large outlined"&gt;Large Outlined&lt;/span&gt;
+&lt;span class="lyd-badge warning soft clickable"&gt;Clickable&lt;/span&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>Next.js Integration</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>// components/Badge.tsx
+import { ReactNode } from 'react';
+
+interface BadgeProps {
+  variant?: 'primary' | 'success' | 'error' | 'warning' | 'secondary' | 'accent';
+  style?: 'filled' | 'outlined' | 'soft';
+  size?: 'small' | 'medium' | 'large';
+  icon?: ReactNode;
+  dismissible?: boolean;
+  clickable?: boolean;
+  children: ReactNode;
+  onClick?: () => void;
+  onDismiss?: () => void;
+  className?: string;
+}
+
+export const Badge = ({
+  variant = 'primary',
+  style = 'filled',
+  size = 'medium',
+  icon,
+  dismissible = false,
+  clickable = false,
+  children,
+  onClick,
+  onDismiss,
+  className = ''
+}: BadgeProps) => {
+  const badgeClasses = \`
+    lyd-badge 
+    \${variant}
+    \${style !== 'filled' ? style : ''}
+    \${size !== 'medium' ? size : ''}
+    \${clickable ? 'clickable' : ''}
+    \${className}
+  \`.trim();
+
+  const handleClick = () => {
+    if (clickable && onClick) {
+      onClick();
+    }
+  };
+
+  const handleDismiss = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onDismiss?.();
+  };
+
+  return (
+    &lt;span 
+      className={badgeClasses}
+      onClick={handleClick}
+      role={clickable ? 'button' : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      onKeyDown={(e) => {
+        if (clickable && (e.key === ' ' || e.key === 'Enter')) {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
+    &gt;
+      {icon && &lt;span className="lyd-badge-icon"&gt;{icon}&lt;/span&gt;}
+      {children}
+      {dismissible && (
+        &lt;button 
+          className="lyd-badge-close" 
+          onClick={handleDismiss}
+          aria-label="Remove badge"
+        &gt;
+          ×
+        &lt;/button&gt;
+      )}
+    &lt;/span&gt;
+  );
+};
+
+// Badge Group Component
+interface BadgeGroupProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export const BadgeGroup = ({ children, className = '' }: BadgeGroupProps) => {
+  return (
+    &lt;div className={\`lyd-badge-group \${className}\`}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+};
+
+// Property Status Badge Component
+interface PropertyStatusBadgeProps {
+  status: 'available' | 'reserved' | 'sold' | 'under-review';
+  className?: string;
+}
+
+export const PropertyStatusBadge = ({ 
+  status, 
+  className = '' 
+}: PropertyStatusBadgeProps) => {
+  const statusConfig = {
+    available: { variant: 'success' as const, icon: '✓', text: 'Available' },
+    reserved: { variant: 'warning' as const, icon: '⏳', text: 'Reserved' },
+    sold: { variant: 'error' as const, icon: '✕', text: 'Sold' },
+    'under-review': { variant: 'secondary' as const, icon: '👁', text: 'Under Review' }
+  };
+
+  const config = statusConfig[status];
+
+  return (
+    &lt;Badge
+      variant={config.variant}
+      icon={config.icon}
+      className={className}
+    &gt;
+      {config.text}
+    &lt;/Badge&gt;
+  );
+};
+
+// Usage Example:
+export default function PropertyCard() {
+  const [filters, setFilters] = useState([
+    { id: 1, label: 'Munich', variant: 'primary' as const },
+    { id: 2, label: '€500k - €1.2M', variant: 'success' as const },
+    { id: 3, label: '3+ Bedrooms', variant: 'accent' as const }
+  ]);
+
+  const removeFilter = (filterId: number) => {
+    setFilters(filters.filter(f => f.id !== filterId));
+  };
+
+  return (
+    &lt;div&gt;
+      {/* Property Status */}
+      &lt;PropertyStatusBadge status="available" /&gt;
+      
+      {/* Property Features */}
+      &lt;BadgeGroup&gt;
+        &lt;Badge variant="primary" style="soft" size="small"&gt;Swimming Pool&lt;/Badge&gt;
+        &lt;Badge variant="success" icon="🔒"&gt;Security System&lt;/Badge&gt;
+        &lt;Badge variant="accent" style="outlined"&gt;Historic Building&lt;/Badge&gt;
+      &lt;/BadgeGroup&gt;
+      
+      {/* Active Filters */}
+      &lt;BadgeGroup&gt;
+        {filters.map(filter => (
+          &lt;Badge
+            key={filter.id}
+            variant={filter.variant}
+            style="soft"
+            dismissible
+            onDismiss={() => removeFilter(filter.id)}
+          &gt;
+            {filter.label}
+          &lt;/Badge&gt;
+        ))}
+      &lt;/BadgeGroup&gt;
+      
+      {/* Interactive Badges */}
+      &lt;Badge 
+        variant="primary" 
+        clickable 
+        onClick={() => console.log('Badge clicked')}
+      &gt;
+        View Details
+      &lt;/Badge&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- Section 4: Accessibility & Best Practices -->
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h3>Semantic Markup</h3>
+                    <p>Proper role attributes for clickable badges and clear labeling for screen readers to understand badge purpose.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support for interactive badges with Tab navigation and Space/Enter activation.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Color Independence</h3>
+                    <p>Icons and text content provide meaning beyond color, ensuring accessibility for all users regardless of color vision.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Focus Indicators</h3>
+                    <p>Clear visual focus indicators for interactive badges, ensuring keyboard navigation is visible and intuitive.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Dismissible Actions</h3>
+                    <p>Proper labeling for close buttons and clear indication of dismissible functionality for screen readers.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Content Clarity</h3>
+                    <p>Concise, descriptive text that clearly communicates the badge's purpose and status to all users.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JavaScript -->
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Badge functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active navigation
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Dismissible badge functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('lyd-badge-close')) {
+                    const badge = e.target.closest('.lyd-badge');
+                    if (badge) {
+                        badge.style.opacity = '0';
+                        badge.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            badge.remove();
+                        }, 200);
+                    }
+                }
+            });
+            
+            // Clickable badge functionality
+            document.querySelectorAll('.lyd-badge.clickable').forEach(badge => {
+                badge.addEventListener('click', function(e) {
+                    // Don't trigger if clicking the close button
+                    if (e.target.classList.contains('lyd-badge-close')) {
+                        return;
+                    }
+                    
+                    // Add click animation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    // Emit custom event
+                    const event = new CustomEvent('badgeClick', {
+                        detail: {
+                            badge: this,
+                            text: this.textContent.trim()
+                        }
+                    });
+                    this.dispatchEvent(event);
+                });
+                
+                // Keyboard support
+                badge.setAttribute('tabindex', '0');
+                badge.setAttribute('role', 'button');
+                badge.addEventListener('keydown', function(e) {
+                    if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+            
+            // Listen for badge events
+            document.addEventListener('badgeClick', function(e) {
+                console.log('Badge clicked:', e.detail.text);
+            });
+            
+            // Copy button functionality
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
