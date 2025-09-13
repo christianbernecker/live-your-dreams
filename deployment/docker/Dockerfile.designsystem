@@ -1,7 +1,7 @@
-# Live Your Dreams Design System - Production Docker Image
+# Live Your Dreams Design System - V2 as Main Production Docker Image
 FROM node:18-alpine AS builder
 
-# Build Design System
+# Build Design System (Legacy V1 components for compatibility)
 WORKDIR /app
 COPY design-system/package.json design-system/vite.config.js ./
 COPY design-system/src/ ./src/
@@ -13,14 +13,15 @@ RUN npm install && npm run build
 # Production stage with Nginx
 FROM nginx:alpine
 
-# Copy built Design System
+# Copy V2 as ROOT (main version)
+COPY design-system/v2/ /usr/share/nginx/html/
+
+# Copy legacy build assets for compatibility
 COPY --from=builder /app/dist/ /usr/share/nginx/html/dist/
-COPY --from=builder /app/*.html /usr/share/nginx/html/
 COPY --from=builder /app/assets/ /usr/share/nginx/html/assets/
 COPY --from=builder /app/src/ /usr/share/nginx/html/src/
-COPY design-system/v2/ /usr/share/nginx/html/v2/
 
-# Nginx configuration
+# Nginx configuration - V2 as Main
 COPY <<EOF /etc/nginx/conf.d/default.conf
 server {
     listen 80;
@@ -38,7 +39,7 @@ server {
     add_header X-Content-Type-Options "nosniff";
     add_header X-XSS-Protection "1; mode=block";
     
-    # Handle assets FIRST - before other routes
+    # Handle V2 assets and shared files
     location /assets/ {
         try_files \$uri =404;
         add_header Content-Type image/svg+xml;
@@ -50,86 +51,68 @@ server {
         add_header Content-Type application/javascript;
     }
     
+    location /dist/ {
+        try_files \$uri =404;
+        expires 30d;
+    }
+    
+    # Handle V2 shared files (CSS + JavaScript) 
+    location ~ ^/shared/(.+\.css)$ {
+        try_files /shared/\$1 =404;
+        add_header Content-Type text/css;
+    }
+    
+    location ~ ^/shared/(.+\.js)$ {
+        try_files /shared/\$1 =404;
+        add_header Content-Type application/javascript;
+    }
+
+    # Main V2 routes (now without /v2/ prefix)
+    
     # Handle designing routes
-    location ~ ^/designing/([^/]+)/?$ {
-        try_files /designing/\$1/index.html =404;
+    location ~ ^/designing/?$ {
+        try_files /designing/index.html =404;
     }
 
     # Handle developing routes
+    location ~ ^/developing/?$ {
+        try_files /developing/index.html =404;
+    }
+    
     location ~ ^/developing/([^/]+)/?$ {
         try_files /developing/\$1/index.html =404;
     }
 
-    # Handle component routes
+    # Handle component routes (MAIN COMPONENTS)
+    location ~ ^/components/?$ {
+        try_files /components/index.html =404;
+    }
+    
     location ~ ^/components/([^/]+)/?$ {
         try_files /components/\$1/index.html =404;
     }
 
     # Handle pattern routes  
+    location ~ ^/patterns/?$ {
+        try_files /patterns/index.html =404;
+    }
+    
     location ~ ^/patterns/([^/]+)/?$ {
         try_files /patterns/\$1/index.html =404;
     }
 
     # Handle style routes
+    location ~ ^/styles/?$ {
+        try_files /styles/index.html =404;
+    }
+    
     location ~ ^/styles/([^/]+)/?$ {
         try_files /styles/\$1/index.html =404;
     }
 
-    # Handle V2 routes
-    location ~ ^/v2/?$ {
-        try_files /v2/index.html =404;
-    }
-    
-    # Handle V2 shared files (CSS + JavaScript)
-    location ~ ^/v2/shared/(.+\.css)$ {
-        try_files /v2/shared/\$1 =404;
-        add_header Content-Type text/css;
-    }
-    
-    location ~ ^/v2/shared/(.+\.js)$ {
-        try_files /v2/shared/\$1 =404;
-        add_header Content-Type application/javascript;
-    }
-    
-    location ~ ^/v2/components/?$ {
-        try_files /v2/components/index.html =404;
-    }
-    
-    location ~ ^/v2/components/([^/]+)/?$ {
-        try_files /v2/components/\$1/index.html =404;
-    }
-    
-    location ~ ^/v2/designing/?$ {
-        try_files /v2/designing/index.html =404;
-    }
-    
-    location ~ ^/v2/developing/?$ {
-        try_files /v2/developing/index.html =404;
-    }
-    
-    location ~ ^/v2/developing/([^/]+)/?$ {
-        try_files /v2/developing/\$1/index.html =404;
-    }
-    
-    location ~ ^/v2/styles/?$ {
-        try_files /v2/styles/index.html =404;
-    }
-    
-    location ~ ^/v2/styles/([^/]+)/?$ {
-        try_files /v2/styles/\$1/index.html =404;
-    }
-    
-    location ~ ^/v2/patterns/?$ {
-        try_files /v2/patterns/index.html =404;
-    }
-    
-    location ~ ^/v2/patterns/([^/]+)/?$ {
-        try_files /v2/patterns/\$1/index.html =404;
-    }
-
-    # Handle enhanced-demo specifically
-    location /enhanced-demo {
-        try_files /enhanced-demo.html =404;
+    # REDIRECTS: V2 paths to main paths (backward compatibility)
+    location ~ ^/v2/(.*)$ {
+        return 301 /\$1;
     }
 
     # Root and fallback
@@ -138,7 +121,7 @@ server {
     }
     
     location /health {
-        return 200 "healthy\n";
+        return 200 "healthy - v2 as main\n";
         add_header Content-Type text/plain;
     }
 }
