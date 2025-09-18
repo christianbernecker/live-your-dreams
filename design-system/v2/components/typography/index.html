@@ -8,11 +8,11 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     
     <style>
-        :root {
+                :root {
             /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
@@ -22,11 +22,15 @@
             --lyd-text: #111111;
             --lyd-bg: #ffffff;
             
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
             /* Typography Scale - CI konform */
             --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
             
-            /* CI Typography Scale */
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -36,12 +40,6 @@
             --font-size-3xl: 30px;
             --font-size-4xl: 36px;
             --font-size-5xl: 48px;
-            --font-size-6xl: 64px;
-            
-            /* CI Headlines from Strategy */
-            --font-size-h1: 26px;
-            --font-size-h2: 19px;
-            --font-size-body: 16px;
             
             /* Spacing */
             --spacing-xs: 4px;
@@ -52,26 +50,17 @@
             --spacing-2xl: 48px;
             --spacing-3xl: 64px;
             
-            /* Line Heights */
-            --line-height-tight: 1.2;
-            --line-height-normal: 1.5;
-            --line-height-relaxed: 1.6;
-            --line-height-loose: 1.8;
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             
-            /* Letter Spacing */
-            --letter-spacing-tight: -0.025em;
-            --letter-spacing-normal: 0;
-            --letter-spacing-wide: 0.025em;
-            --letter-spacing-wider: 0.05em;
-            --letter-spacing-widest: 0.1em;
-            
-            /* Standardized Transitions */
-            --transition-fast: all 0.15s ease;
-            --transition-base: all 0.2s ease;
-            --transition-smooth: all 0.3s ease;
-            --transition-premium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bouncy: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            --transition-slow: all 0.6s ease;
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -80,11 +69,11 @@
             box-sizing: border-box;
         }
         
-        body {
+                body {
             font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             color: var(--lyd-text);
-            line-height: var(--line-height-normal);
+            line-height: 1.6;
             display: flex;
             min-height: 100vh;
         }
@@ -693,13 +682,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2Typography" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -802,7 +791,7 @@
                     <p>Large, impactful headlines for hero sections and main headings</p>
                     <div class="typography-demo">
                         <div class="display-1">Live Your Dreams</div>
-                        <div class="display-2">Wohnträume erfüllen</div>
+                        <div class="display-2">Wohntraeume erfuellen</div>
                         <div class="display-3">Fair • Transparent • Sicher</div>
                     </div>
                 </div>
@@ -810,11 +799,11 @@
                 <!-- CI Headlines -->
                 <div class="typography-item">
                     <h3>CI Headlines</h3>
-                    <p>Brand-konforme Überschriften basierend auf der Strategie-Dokumentation</p>
+                    <p>Brand-konforme Aboutschriften basierend auf der Strategie-Documentation</p>
                     <div class="typography-demo">
                         <h1 class="headline-h1">Management Summary</h1>
-                        <h2 class="headline-h2">Geschäftsmodell & Value Proposition</h2>
-                        <p class="body-text">Wir durchbrechen das traditionelle erfolgsabhängige Provisionsmodell mit einem Festpreis‑Service für Immobilienverkäufer.</p>
+                        <h2 class="headline-h2">Geschaeftsmodell & Value Proposition</h2>
+                        <p class="body-text">Wir durchbrechen das traditionelle erfolgsabhaengige Provisionsmodell mit einem Festpreis‑Service fuer Real Estateverkaeufer.</p>
                     </div>
                 </div>
                 
@@ -824,7 +813,7 @@
                     <p>Headlines im Stil des LYD-Logos mit Gradient und Letter-Spacing</p>
                     <div class="typography-demo">
                         <h1 class="headline-logo-large">Live Your Dreams</h1>
-                        <h2 class="headline-logo-medium">Wohnträume Erfüllen</h2>
+                        <h2 class="headline-logo-medium">Wohntraeume Erfuellen</h2>
                         <h3 class="headline-logo-small">Fair Transparent Sicher</h3>
                     </div>
                 </div>
@@ -832,11 +821,11 @@
                 <!-- Body Text Hierarchy -->
                 <div class="typography-item">
                     <h3>Body Text Hierarchy</h3>
-                    <p>Verschiedene Textgrößen für optimale Lesbarkeit und Hierarchie</p>
+                    <p>Verschiedene Textgroessen fuer optimale Lesbarkeit und Hierarchie</p>
                     <div class="typography-demo">
-                        <p class="body-large">Large Body Text - Für wichtige Einleitungen und Zusammenfassungen</p>
-                        <p class="body-text">Regular Body Text - Standard-Fließtext für die meisten Inhalte mit optimaler Lesbarkeit</p>
-                        <p class="body-small">Small Body Text - Für zusätzliche Informationen und Metadaten</p>
+                        <p class="body-large">Large Body Text - Fuer wichtige Einleitungen und Zusammenfassungen</p>
+                        <p class="body-text">Regular Body Text - Standard-Fliesstext fuer die meisten Inhalte mit optimaler Lesbarkeit</p>
+                        <p class="body-small">Small Body Text - Fuer zusaetzliche Informationen und Metadaten</p>
                         <p class="caption">Caption Text - Bildunterschriften und Labels</p>
                     </div>
                 </div>
@@ -844,12 +833,12 @@
                 <!-- Color Variations -->
                 <div class="typography-item">
                     <h3>Color Variations</h3>
-                    <p>CI-konforme Farbvarianten für verschiedene Anwendungsfälle</p>
+                    <p>CI-konforme Farbvarianten fuer verschiedene Anwendungsfaelle</p>
                     <div class="typography-demo">
                         <p class="gradient-text" style="font-size: 24px; font-weight: 600;">Gradient Text - Premium Styling</p>
                         <p class="accent-text" style="font-size: 18px;">Accent Text - Royal Blue</p>
-                        <p class="muted-text">Muted Text - Sekundäre Informationen</p>
-                        <p style="color: var(--lyd-deep-blue); font-weight: 600;">Deep Blue - Vertrauen & Stabilität</p>
+                        <p class="muted-text">Muted Text - Sekundaere Informationen</p>
+                        <p style="color: var(--lyd-deep-blue); font-weight: 600;">Deep Blue - Vertrauen & Stabilitaet</p>
                     </div>
                 </div>
                 
@@ -874,7 +863,7 @@
                 <!-- Letter Spacing -->
                 <div class="typography-item">
                     <h3>Letter Spacing</h3>
-                    <p>Verschiedene Zeichenabstände für optimale Lesbarkeit</p>
+                    <p>Verschiedene Zeichenabstaende fuer optimale Lesbarkeit</p>
                     <div class="typography-demo">
                         <p style="letter-spacing: var(--letter-spacing-tight); font-weight: 600;">Tight Spacing - Kompakte Headlines</p>
                         <p style="letter-spacing: var(--letter-spacing-normal);">Normal Spacing - Standard Text</p>
@@ -886,12 +875,12 @@
                 <!-- Line Heights -->
                 <div class="typography-item">
                     <h3>Line Heights</h3>
-                    <p>Optimierte Zeilenhöhen für verschiedene Textarten</p>
+                    <p>Optimierte Zeilenhoehen fuer verschiedene Textarten</p>
                     <div class="typography-demo">
-                        <h3 style="line-height: var(--line-height-tight); margin-bottom: 8px;">Tight Line Height für Headlines</h3>
-                        <p style="line-height: var(--line-height-normal); margin-bottom: 12px;">Normal line height für kompakte Texte und UI-Elemente mit guter Lesbarkeit.</p>
-                        <p style="line-height: var(--line-height-relaxed); margin-bottom: 12px;">Relaxed line height für längere Fließtexte bietet mehr Komfort beim Lesen und verbessert die Verständlichkeit.</p>
-                        <p style="line-height: var(--line-height-loose);">Loose line height für besonders entspanntes Lesen bei längeren Dokumenten und wichtigen Inhalten.</p>
+                        <h3 style="line-height: var(--line-height-tight); margin-bottom: 8px;">Tight Line Height fuer Headlines</h3>
+                        <p style="line-height: var(--line-height-normal); margin-bottom: 12px;">Normal line height fuer kompakte Texte und UI-Elemente mit guter Lesbarkeit.</p>
+                        <p style="line-height: var(--line-height-relaxed); margin-bottom: 12px;">Relaxed line height fuer laengere Fliesstexte bietet mehr Komfort beim Lesen und verbessert die Verstaendlichkeit.</p>
+                        <p style="line-height: var(--line-height-loose);">Loose line height fuer besonders entspanntes Lesen bei laengeren Dokumenten und wichtigen Inhalten.</p>
                     </div>
                 </div>
             </div>
@@ -905,7 +894,7 @@
                 <!-- Property Pricing -->
                 <div class="example-item">
                     <h3 class="example-title">Property Pricing Display</h3>
-                    <p class="example-description">Optimierte Darstellung von Immobilienpreisen mit klarer Hierarchie</p>
+                    <p class="example-description">Optimierte Darstellung von Real Estatepreisen mit klarer Hierarchie</p>
                     <div class="example-demo">
                         <div class="price-display">
                             850.000 <span class="price-currency">€</span>
@@ -917,25 +906,25 @@
                 <!-- Property Titles -->
                 <div class="example-item">
                     <h3 class="example-title">Property Titles & Descriptions</h3>
-                    <p class="example-description">Strukturierte Darstellung von Immobilientiteln und -beschreibungen</p>
+                    <p class="example-description">Strukturierte Darstellung von Real Estatetiteln und -beschreibungen</p>
                     <div class="example-demo">
-                        <h2 class="property-title">Exklusive 4-Zimmer-Wohnung in München-Schwabing</h2>
+                        <h2 class="property-title">Exklusive 4-Zimmer-Apartment in Muenchen-Schwabing</h2>
                         <p class="property-subtitle">Neubau • 120 m² • Balkon • Tiefgarage</p>
-                        <p class="body-text" style="margin-top: 16px;">Hochwertige Ausstattung mit Parkett, Fußbodenheizung und modernem Badezimmer. Ruhige Lage mit optimaler Verkehrsanbindung.</p>
+                        <p class="body-text" style="margin-top: 16px;">Hochwertige Ausstattung mit Parkett, Fussbodenheizung und modernem Badezimmer. Ruhige Lage mit optimaler Verkehrsanbindung.</p>
                     </div>
                 </div>
                 
                 <!-- Feature Lists -->
                 <div class="example-item">
                     <h3 class="example-title">Feature Lists</h3>
-                    <p class="example-description">Strukturierte Auflistung von Immobilienmerkmalen</p>
+                    <p class="example-description">Strukturierte Auflistung von Real Estatemerkmalen</p>
                     <div class="example-demo">
                         <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--lyd-deep-blue);">Ausstattung & Merkmale</h4>
                         <ul class="feature-list">
-                            <li>Parkett in allen Wohnräumen</li>
-                            <li>Fußbodenheizung</li>
-                            <li>Balkon mit Südausrichtung</li>
-                            <li>Einbauküche (optional)</li>
+                            <li>Parkett in allen Wohnraeumen</li>
+                            <li>Fussbodenheizung</li>
+                            <li>Balkon mit Suedausrichtung</li>
+                            <li>Einbaukueche (optional)</li>
                             <li>Tiefgaragenstellplatz inklusive</li>
                         </ul>
                     </div>
@@ -944,10 +933,10 @@
                 <!-- Status Labels -->
                 <div class="example-item">
                     <h3 class="example-title">Status Labels & Tags</h3>
-                    <p class="example-description">Verschiedene Label-Styles für Status und Kategorien</p>
+                    <p class="example-description">Verschiedene Label-Styles fuer Status und Kategorien</p>
                     <div class="example-demo">
                         <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                            <span style="background: var(--lyd-royal-blue); color: white; padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Verfügbar</span>
+                            <span style="background: var(--lyd-royal-blue); color: white; padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Verfuegbar</span>
                             <span style="background: var(--lyd-accent); color: var(--lyd-deep-blue); padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Neubau</span>
                             <span style="background: #f0f9ff; color: #0369a1; padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Premium</span>
                             <span style="background: #fef3c7; color: #d97706; padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Reserviert</span>
@@ -960,11 +949,32 @@
         <!-- Section 3: Implementation Guide -->
         <section class="section">
             <h2 class="section-title">Implementation Guide</h2>
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                        <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                        <pre>&lt;!-- Basic typography Usage --&gt;
+&lt;div class="lyd-typography"&gt;
+    &lt;span&gt;typography Content&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- typography with States --&gt;
+&lt;div class="lyd-typography primary"&gt;
+    &lt;span&gt;Primary typography&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div class="lyd-typography success"&gt;
+    &lt;span&gt;Success typography&lt;/span&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                </div>
+            </div>
             
             <div class="implementation-section">
                 <h3>CSS Custom Properties</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>/* Live Your Dreams CI Colors */
 --lyd-deep-blue: #000066;
 --lyd-royal-blue: #3366CC;
@@ -985,7 +995,7 @@
                 
                 <h3>React/Next.js Components</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Typography.tsx
 import { ReactNode } from 'react';
 
@@ -1028,7 +1038,7 @@ export const Typography = ({
                 
                 <h3>Tailwind Configuration</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// tailwind.config.js
 module.exports = {
   theme: {
@@ -1059,7 +1069,7 @@ module.exports = {
 };</pre>
                 </div>
                 
-                <h3>Typography Classes Reference</h3>
+                <h3>API Reference</h3>
                 <table class="api-table">
                     <thead>
                         <tr>
@@ -1144,6 +1154,17 @@ module.exports = {
             <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
             
             <div class="accessibility-grid">
+                                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support with intuitive navigation patterns.</p>
+                    <ul>
+                        <li><kbd>Tab</kbd> - Navigate to next element</li>
+                        <li><kbd>Shift + Tab</kbd> - Navigate to previous element</li>
+                        <li><kbd>Enter</kbd> - Activate element</li>
+                        <li><kbd>Space</kbd> - Toggle/select element</li>
+                        <li><kbd>Escape</kbd> - Close/cancel action</li>
+                    </ul>
+                </div>
                 <div class="accessibility-item">
                     <h4>Contrast Ratios</h4>
                     <ul>
@@ -1183,20 +1204,71 @@ module.exports = {
                         <li>Optimized font loading strategy</li>
                     </ul>
                 </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
+                    <ul>
+                        <li>Proper heading structure for navigation</li>
+                        <li>Meaningful alt text for typography-based graphics</li>
+                        <li>ARIA labels for decorative text elements</li>
+                        <li>Screen reader friendly font size and contrast</li>
+                        <li>Semantic markup for text emphasis and importance</li>
+                    </ul>
+                </div>
             </div>
             
             <div class="implementation-section">
                 <h3>CI Guidelines Compliance</h3>
-                <p>Diese Typography-Implementation folgt den <strong>Live Your Dreams CI Guidelines</strong> aus der Strategie-Dokumentation:</p>
+                <p>Diese Typography-Implementation folgt den <strong>Live Your Dreams CI Guidelines</strong> aus der Strategie-Documentation:</p>
                 <ul style="margin: 16px 0; padding-left: 20px;">
                     <li><strong>Farbpalette:</strong> Deep Blue (#000066), Royal Blue (#3366CC), Accent (#E8F0FE), Grey (#666666)</li>
-                    <li><strong>Schriftarten:</strong> Inter/Helvetica für Headlines (Bold/SemiBold), Regular für Body Text</li>
-                    <li><strong>Größen:</strong> H1 26px, H2 19px, Body 16px (direkt aus CI-Strategie übernommen)</li>
-                    <li><strong>Tonalität:</strong> Präzise, freundlich, lösungsorientiert - "fair & transparent" als Leitmotiv</li>
-                    <li><strong>Immobilien-Fokus:</strong> Optimiert für Exposés, Preisdarstellung und Property-Listings</li>
+                    <li><strong>Schriftarten:</strong> Inter/Helvetica fuer Headlines (Bold/SemiBold), Regular fuer Body Text</li>
+                    <li><strong>Groessen:</strong> H1 26px, H2 19px, Body 16px (direkt aus CI-Strategie uebernommen)</li>
+                    <li><strong>Tonalitaet:</strong> Praezise, freundlich, loesungsorientiert - "fair & transparent" als Leitmotiv</li>
+                    <li><strong>Real Estate-Fokus:</strong> Optimiert fuer Exposés, Preisdarstellung und Property-Listings</li>
                 </ul>
             </div>
         </section>
     </main>
-</body>
+
+        <script>
+            // Enhanced typography interactive functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const typographyElements = document.querySelectorAll('.lyd-typography');
+                
+                typographyElements.forEach(element => {
+                    // Click interactions
+                    element.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        
+                        // Visual feedback
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 150);
+                    });
+                    
+                    // Keyboard interactions
+                    element.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.click();
+                        }
+                    });
+                    
+                    // Hover effects
+                    element.addEventListener('mouseenter', function() {
+                        this.style.boxShadow = 'var(--shadow-lg)';
+                    });
+                    
+                    element.addEventListener('mouseleave', function() {
+                        this.style.boxShadow = 'var(--shadow-sm)';
+                    });
+                });
+                
+                console.log('Typography interactive functionality initialized');
+            });
+        </script>
+    </body>
 </html>

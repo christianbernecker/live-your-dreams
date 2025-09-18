@@ -8,11 +8,11 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     
     <style>
-        :root {
+                :root {
             /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
@@ -69,7 +69,7 @@
             box-sizing: border-box;
         }
         
-        body {
+                body {
             font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             color: var(--lyd-text);
@@ -627,7 +627,7 @@
             flex-shrink: 0;
         }
         
-        /* Premium Button Styles - Von Button-Komponente übernommen */
+        /* Premium Button Styles - Von Button-Component uebernommen */
         .lyd-button {
             display: inline-flex;
             align-items: center;
@@ -793,13 +793,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2Input" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -901,15 +901,15 @@
                     <h3>Success Toast</h3>
                     <p>Positive feedback for successful actions</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-success" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #10b981; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-success" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #10b981; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <polyline points="20,6 9,17 4,12"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">Property Listed Successfully</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Your luxury property is now live and visible to potential buyers.</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Property Listed Successfully</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Your luxury property is now live and visible to potential buyers.</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -919,7 +919,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('success', 'Property Listed Successfully', 'Your luxury property is now live and visible to potential buyers.')">Show Success Toast</button>
+                            <button class="lyd-button primary small" onclick="showToast('success', 'Property Listed Successfully', 'Your luxury property is now live and visible to potential buyers.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Success Toast</button>
                         </div>
                     </div>
                 </div>
@@ -929,17 +929,17 @@
                     <h3>Error Toast</h3>
                     <p>Critical error notifications</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-error" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #ef4444; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-error" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #ef4444; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <circle cx="12" cy="12" r="10"/>
                                     <line x1="15" y1="9" x2="9" y2="15"/>
                                     <line x1="9" y1="9" x2="15" y2="15"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">Upload Failed</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Property images could not be uploaded. Please check your connection and try again.</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Upload Failed</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Property images could not be uploaded. Please check your connection and try again.</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -949,7 +949,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('error', 'Upload Failed', 'Property images could not be uploaded. Please check your connection and try again.')">Show Error Toast</button>
+                            <button class="lyd-button primary small" onclick="showToast('error', 'Upload Failed', 'Property images could not be uploaded. Please check your connection and try again.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Error Toast</button>
                         </div>
                     </div>
                 </div>
@@ -959,17 +959,17 @@
                     <h3>Warning Toast</h3>
                     <p>Important warnings and alerts</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #f59e0b; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #f59e0b; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
                                     <path d="M12 9v4"/>
                                     <path d="m12 17 .01 0"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">Price Alert</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Property price is 15% below market average. Consider revision.</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Price Alert</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Property price is 15% below market average. Consider revision.</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -979,7 +979,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('warning', 'Price Alert', 'Property price is 15% below market average. Consider revision.')">Show Warning Toast</button>
+                            <button class="lyd-button primary small" onclick="showToast('warning', 'Price Alert', 'Property price is 15% below market average. Consider revision.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Warning Toast</button>
                         </div>
                     </div>
                 </div>
@@ -989,17 +989,17 @@
                     <h3>Info Toast</h3>
                     <p>General information and updates</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-info" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(51, 102, 204, 0.15); border-left: 4px solid #3366CC; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #3366CC; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-info" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(51, 102, 204, 0.15); border-left: 4px solid #3366CC; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #3366CC; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <circle cx="12" cy="12" r="10"/>
                                     <path d="m9,12 3,3 3,-3"/>
                                     <path d="m12,8 0,7"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">Market Update</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">New luxury properties in your area. View recommendations.</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Market Update</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">New luxury properties in your area. View recommendations.</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -1009,7 +1009,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('info', 'Market Update', 'New luxury properties in your area. View recommendations.')">Show Info Toast</button>
+                            <button class="lyd-button primary small" onclick="showToast('info', 'Market Update', 'New luxury properties in your area. View recommendations.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Info Toast</button>
                         </div>
                     </div>
                 </div>
@@ -1020,17 +1020,17 @@
                     <p>Different positioning options for toast notifications</p>
                     <div class="showcase-demo">
                         <div style="position: relative; height: 120px; border: 1px dashed #e5e7eb; border-radius: 8px; overflow: visible;">
-                            <div class="lyd-toast lyd-toast-info" style="position: absolute; top: 10px; right: 10px; max-width: 280px; padding: 12px 16px; background: white; border-radius: 8px; box-shadow: 0 6px 24px rgba(51, 102, 204, 0.15); border-left: 3px solid #3366CC; display: flex; align-items: center; gap: 10px;">
-                                <div class="lyd-toast-icon" style="width: 18px; height: 18px; color: #3366CC; flex-shrink: 0;">
+                            <div class="lyd-toast lyd-toast-info" style="position: absolute; top: 10px; right: 10px; max-width: 280px; padding: 12px 16px; background: white; border-radius: 8px; box-shadow: 0 6px 24px rgba(51, 102, 204, 0.15); border-left: 3px solid #3366CC; display: flex; align-items: center; gap: 10px;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-icon" style="width: 18px; height: 18px; color: #3366CC; flex-shrink: 0;" aria-label="Toast notification" role="alert">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                         <circle cx="12" cy="12" r="10"/>
                                         <path d="m9,12 3,3 3,-3"/>
                                         <path d="m12,8 0,7"/>
                                     </svg>
                                 </div>
-                                <div class="lyd-toast-content" style="flex: 1;">
-                                    <div class="lyd-toast-title" style="font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px;">Top Right</div>
-                                    <div class="lyd-toast-message" style="font-size: 11px; color: #6b7280;">Default position</div>
+                                <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                    <div class="lyd-toast-title" style="font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px;" aria-label="Toast notification" role="alert">Top Right</div>
+                                    <div class="lyd-toast-message" style="font-size: 11px; color: #6b7280;" aria-label="Toast notification" role="alert">Default position</div>
                                 </div>
                                 <button class="lyd-toast-close" style="width: 16px; height: 16px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px;">
@@ -1042,7 +1042,7 @@
                             <div style="position: absolute; bottom: 10px; left: 10px; font-size: 12px; color: #666666;">Position: top-right (default)</div>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('info', 'Top Right', 'Default position')">Show Position Demo</button>
+                            <button class="lyd-button primary small" onclick="showToast('info', 'Top Right', 'Default position')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Position Demo</button>
                         </div>
                     </div>
                 </div>
@@ -1052,16 +1052,16 @@
                     <h3>Toast Duration</h3>
                     <p>Auto-dismiss timing and persistent options</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 350px; padding: 16px 18px; background: white; border-radius: 10px; box-shadow: 0 6px 24px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: center; gap: 12px;">
-                            <div class="lyd-toast-icon" style="width: 20px; height: 20px; color: #f59e0b; flex-shrink: 0;">
+                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 350px; padding: 16px 18px; background: white; border-radius: 10px; box-shadow: 0 6px 24px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: center; gap: 12px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 20px; height: 20px; color: #f59e0b; flex-shrink: 0;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <circle cx="12" cy="12" r="10"/>
                                     <polyline points="12,6 12,12 16,14"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 3px;">Auto-dismiss in 5s</div>
-                                <div class="lyd-toast-message" style="font-size: 13px; color: #6b7280;">Hover to pause auto-dismiss</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 3px;" aria-label="Toast notification" role="alert">Auto-dismiss in 5s</div>
+                                <div class="lyd-toast-message" style="font-size: 13px; color: #6b7280;" aria-label="Toast notification" role="alert">Hover to pause auto-dismiss</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 20px; height: 20px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0;">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
@@ -1071,7 +1071,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('warning', 'Auto-dismiss in 5s', 'Hover to pause auto-dismiss')">Show Duration Demo</button>
+                            <button class="lyd-button primary small" onclick="showToast('warning', 'Auto-dismiss in 5s', 'Hover to pause auto-dismiss')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Duration Demo</button>
                         </div>
                     </div>
                 </div>
@@ -1088,15 +1088,15 @@
                     <h3>Property Status Updates</h3>
                     <p>Real-time property status notifications</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-success" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #10b981; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-success" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #10b981; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">Property Status Changed</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Villa Bellagio is now marked as "Under Contract"</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Property Status Changed</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Villa Bellagio is now marked as "Under Contract"</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -1106,7 +1106,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('success', 'Property Status Changed', 'Villa Bellagio is now marked as \"Under Contract\"')">Show Status Update</button>
+                            <button class="lyd-button primary small" onclick="showToast('success', 'Property Status Changed', 'Villa Bellagio is now marked as \"Under Contract\"')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Status Update</button>
                         </div>
                     </div>
                 </div>
@@ -1116,15 +1116,15 @@
                     <h3>Client Inquiry Notifications</h3>
                     <p>New client interest alerts</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-info" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(51, 102, 204, 0.15); border-left: 4px solid #3366CC; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #3366CC; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-info" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(51, 102, 204, 0.15); border-left: 4px solid #3366CC; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #3366CC; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">New Inquiry Received</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Client interested in Penthouse Monaco - €2.8M</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">New Inquiry Received</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Client interested in Penthouse Monaco - €2.8M</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -1134,7 +1134,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('info', 'New Inquiry Received', 'Client interested in Penthouse Monaco - €2.8M')">Show Client Inquiry</button>
+                            <button class="lyd-button primary small" onclick="showToast('info', 'New Inquiry Received', 'Client interested in Penthouse Monaco - €2.8M')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Client Inquiry</button>
                         </div>
                     </div>
                 </div>
@@ -1144,15 +1144,15 @@
                     <h3>Market Intelligence Alerts</h3>
                     <p>Market trends and price alerts</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #f59e0b; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #f59e0b; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">Market Trend Alert</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Luxury market up 8% in your region this quarter</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Market Trend Alert</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Luxury market up 8% in your region this quarter</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -1162,7 +1162,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('warning', 'Market Trend Alert', 'Luxury market up 8% in your region this quarter')">Show Market Alert</button>
+                            <button class="lyd-button primary small" onclick="showToast('warning', 'Market Trend Alert', 'Luxury market up 8% in your region this quarter')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Market Alert</button>
                         </div>
                     </div>
                 </div>
@@ -1172,15 +1172,15 @@
                     <h3>System Notifications</h3>
                     <p>Important system updates and maintenance alerts</p>
                     <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-error" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; display: flex; align-items: flex-start; gap: 16px;">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #ef4444; flex-shrink: 0; margin-top: 2px;">
+                        <div class="lyd-toast lyd-toast-error" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
+                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #ef4444; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                                     <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
                                 </svg>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">System Maintenance</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">Scheduled maintenance tonight 2:00-4:00 AM</div>
+                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">System Maintenance</div>
+                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Scheduled maintenance tonight 2:00-4:00 AM</div>
                             </div>
                             <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
@@ -1190,7 +1190,7 @@
                             </button>
                         </div>
                         <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('error', 'System Maintenance', 'Scheduled maintenance tonight 2:00-4:00 AM')">Show System Alert</button>
+                            <button class="lyd-button primary small" onclick="showToast('error', 'System Maintenance', 'Scheduled maintenance tonight 2:00-4:00 AM')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show System Alert</button>
                         </div>
                     </div>
                 </div>
@@ -1204,7 +1204,7 @@
             <div class="implementation-section">
                 <h3>HTML Usage</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>&lt;!-- Basic Toast Structure --&gt;
 &lt;div class="lyd-toast-container"&gt;
     &lt;div class="lyd-toast lyd-toast-success"&gt;
@@ -1237,7 +1237,7 @@
                 
                 <h3>JavaScript Toast System</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// Show Toast Function - Automatically handles container creation and animations
 function showToast(type, title, message, duration = 5000) {
     // Creates dynamic toast container and shows animated toast
@@ -1255,7 +1255,7 @@ showToast('info', 'Market Update', 'New properties available');</pre>
                 
                 <h3>React/Next.js Integration</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Toast.tsx
 import { useState, useEffect } from 'react';
 
@@ -1431,23 +1431,23 @@ export const Toast: React.FC&lt;ToastProps&gt; = ({
             
             <div class="implementation-section">
                 <h3>Toast Best Practices</h3>
-                <p>Diese Toast-Implementation nutzt bewährte UX-Patterns für optimale Nutzererfahrung:</p>
+                <p>Diese Toast-Implementation nutzt bewaehrte UX-Patterns fuer optimale Nutzererfahrung:</p>
                 <ul style="margin: 16px 0; padding-left: 20px;">
                     <li><strong>Auto-Dismiss:</strong> Success/Info Toasts verschwinden nach 5 Sekunden automatisch</li>
-                    <li><strong>Persistent Errors:</strong> Error Toasts bleiben bis zur manuellen Bestätigung</li>
+                    <li><strong>Persistent Errors:</strong> Error Toasts bleiben bis zur manuellen Bestaetigung</li>
                     <li><strong>Hover-Pause:</strong> Auto-Dismiss pausiert bei Hover/Focus</li>
                     <li><strong>Stacking:</strong> Mehrere Toasts stapeln sich vertikal</li>
-                    <li><strong>Position:</strong> Top-right als Standard für minimale Störung</li>
+                    <li><strong>Position:</strong> Top-right als Standard fuer minimale Stoerung</li>
                 </ul>
                 
                 <h3>Real Estate Optimization</h3>
-                <p>Speziell optimiert für Immobilien-Anwendungen:</p>
+                <p>Speziell optimiert fuer Real Estate-Anwendungen:</p>
                 <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Property Updates:</strong> Status-Änderungen mit Property-Icons</li>
+                    <li><strong>Property Updates:</strong> Status-Aenderungen mit Property-Icons</li>
                     <li><strong>Client Notifications:</strong> Inquiry-Alerts mit Preis-Information</li>
                     <li><strong>Market Intelligence:</strong> Trend-Alerts mit Markt-Daten</li>
                     <li><strong>System Messages:</strong> Wartungs-Hinweise und Updates</li>
-                    <li><strong>Error Handling:</strong> Upload-Fehler und Validierung</li>
+                    <li><strong>Error Handling:</strong> Upload-Error und Validierung</li>
                 </ul>
             </div>
         </section>
@@ -1541,14 +1541,14 @@ export const Toast: React.FC&lt;ToastProps&gt; = ({
             toast.style.boxShadow = `0 8px 32px ${color}15`;
 
             toast.innerHTML = `
-                <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: ${color}; flex-shrink: 0; margin-top: 2px;">
+                <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: ${color}; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
                         ${iconSvg}
                     </svg>
                 </div>
-                <div class="lyd-toast-content" style="flex: 1;">
-                    <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;">${title}</div>
-                    <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;">${message}</div>
+                <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
+                    <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">${title}</div>
+                    <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">${message}</div>
                 </div>
                 <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">

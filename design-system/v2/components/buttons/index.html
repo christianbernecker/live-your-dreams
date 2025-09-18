@@ -8,37 +8,29 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     
     <style>
-        :root {
-            /* Design Tokens */
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
             
-            /* Colors */
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
             
-            /* Typography */
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -63,15 +55,12 @@
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             
-            /* Standardized Transitions */
-            --transition-fast: all 0.15s ease;
-            --transition-base: all 0.2s ease;
-            --transition-smooth: all 0.3s ease;
-            --transition-premium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bouncy: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            --transition-slow: all 0.6s ease;
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -80,10 +69,10 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: var(--font-family);
+                body {
+            font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
@@ -92,8 +81,8 @@
         /* Sidebar Navigation */
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -103,7 +92,7 @@
         
         .sidebar-header {
             padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
         }
         
@@ -119,7 +108,7 @@
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
@@ -139,7 +128,7 @@
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-decoration: none;
             font-size: var(--font-size-sm);
             font-weight: 500;
@@ -186,7 +175,7 @@
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             line-height: 1.6;
             max-width: 600px;
         }
@@ -663,13 +652,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2Buttons" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -878,9 +867,8 @@
         </section>
         
         <!-- Section 2: Premium Interactive States -->
-        <section class="section" style="background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%); padding: 48px; border-radius: 16px; margin: 48px 0;">
-            <h2 class="section-title premium">Premium Interactive States & Micro-Animations</h2>
-            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Hochwertige Animationen und States für optimale User Experience</p>
+        
+            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Hochwertige Animationen und States fuer optimale User Experience</p>
             
             <div class="showcase-grid">
                 <!-- Download with Progress -->
@@ -1031,9 +1019,9 @@
                 <div class="code-block">
                     <button class="copy-button">Copy</button>
                     <pre>// components/Button.tsx
-import { ButtonHTMLAttributes, FC } from 'react';
+import { ButtonHTMLAttributess, FC } from 'react';
 
-interface ButtonProps extends ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+interface ButtonProps extends ButtonHTMLAttributess&lt;HTMLButtonElement&gt; {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'small' | 'medium' | 'large';
   loading?: boolean;

@@ -6,72 +6,116 @@
     <title>Tabs - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --lyd-deep-blue: #000066; --lyd-royal-blue: #3366CC; --lyd-text: #111111;
-            --lyd-primary: #0066ff; --lyd-white: #ffffff; --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6; --lyd-gray-200: #e5e7eb; --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563; --lyd-gray-900: #111827;
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px; --spacing-lg: 24px;
-            --spacing-xl: 32px; --spacing-2xl: 48px; --spacing-3xl: 64px;
-            --font-size-xs: 12px; --font-size-sm: 14px; --font-size-base: 16px;
-            --font-size-lg: 18px; --font-size-2xl: 24px; --font-size-3xl: 30px; --font-size-5xl: 48px;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); color: var(--lyd-gray-900); line-height: 1.6; display: flex; min-height: 100vh; }
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
         
         /* Navigation structure */
-        .sidebar { width: 280px; background: var(--lyd-white); border-right: 1px solid var(--lyd-gray-200); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
-        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-gray-200); text-align: center; }
+        .sidebar { width: 280px; background: var(--lyd-bg); border-right: 1px solid var(--lyd-line); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-line); text-align: center; }
         .lyd-logo { width: 120px; height: auto; margin-bottom: var(--spacing-md); transform: scale(2); transform-origin: center; margin-top: 40px; margin-bottom: 60px; }
-        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-gray-500); font-weight: 500; }
+        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 500; }
         .nav-section { padding: var(--spacing-md) 0; }
         .nav-section-title { padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-gray-600); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
+        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
         .nav-item:hover { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
         .nav-item.active { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.1); font-weight: 600; }
         
         .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-2xl); max-width: 1400px; }
         .page-header { margin-bottom: var(--spacing-2xl); }
         .page-title { font-size: var(--font-size-5xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; margin-bottom: var(--spacing-md); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-gray-600); max-width: 800px; margin-bottom: var(--spacing-2xl); }
+        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-grey); max-width: 800px; margin-bottom: var(--spacing-2xl); }
         .section { margin-bottom: var(--spacing-3xl); }
         .section-title { font-size: var(--font-size-3xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; color: var(--lyd-text); margin-bottom: var(--spacing-xl); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
-        .showcase-item { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); }
-        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); }
-        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-gray-600); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
-        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-white); }
+        .showcase-item { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); }
+        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-grey); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
+        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-bg); }
         
         /* Tabs Components */
-        .lyd-tabs { border-bottom: 1px solid var(--lyd-gray-200); }
+        .lyd-tabs { border-bottom: 1px solid var(--lyd-line); }
         .lyd-tabs-list { display: flex; align-items: center; gap: 0; }
-        .lyd-tabs-trigger { background: none; border: none; padding: var(--spacing-md) var(--spacing-lg); font-size: var(--font-size-sm); font-weight: 500; color: var(--lyd-gray-600); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; position: relative; }
+        .lyd-tabs-trigger { background: none; border: none; padding: var(--spacing-md) var(--spacing-lg); font-size: var(--font-size-sm); font-weight: 500; color: var(--lyd-grey); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; position: relative; }
         .lyd-tabs-trigger:hover { color: var(--lyd-primary); }
         .lyd-tabs-trigger.active { color: var(--lyd-primary); border-bottom-color: var(--lyd-primary); font-weight: 600; }
         .lyd-tabs-content { padding: var(--spacing-lg); display: none; }
         .lyd-tabs-content.active { display: block; }
         
-        .property-detail { background: var(--lyd-white); border-radius: 12px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
+        .property-detail { background: var(--lyd-bg); border-radius: 12px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
         .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); }
-        .property-item { padding: var(--spacing-md); border: 1px solid var(--lyd-gray-200); border-radius: 8px; }
-        .property-label { font-size: var(--font-size-xs); color: var(--lyd-gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--spacing-xs); }
+        .property-item { padding: var(--spacing-md); border: 1px solid var(--lyd-line); border-radius: 8px; }
+        .property-label { font-size: var(--font-size-xs); color: var(--lyd-grey); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--spacing-xs); }
         .property-value { font-size: var(--font-size-base); font-weight: 600; color: var(--lyd-gray-900); }
         
         /* Implementation and accessibility styling */
-        .implementation-section { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
-        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); margin: 0; }
+        .implementation-section { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
+        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); margin: 0; }
         .code-block { background: var(--lyd-gray-900); border-radius: 8px; padding: var(--spacing-lg); position: relative; overflow-x: auto; }
         .code-block pre { color: var(--lyd-gray-100); font-family: 'Monaco', 'Menlo', monospace; font-size: var(--font-size-sm); line-height: 1.6; margin: 0; }
         .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: var(--font-size-sm); border: none; cursor: pointer; transition: all 0.3s ease; position: absolute; top: 12px; right: 12px; }
-        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-white); }
+        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-bg); }
         .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
-        .accessibility-item { background: var(--lyd-white); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
+        .accessibility-item { background: var(--lyd-bg); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
         .accessibility-item h3 { font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); }
         .accessibility-item h3::before { content: "✓"; color: var(--lyd-primary); font-weight: bold; flex-shrink: 0; }
-        .accessibility-item p { color: var(--lyd-gray-600); font-size: var(--font-size-sm); line-height: 1.6; }
+        .accessibility-item p { color: var(--lyd-grey); font-size: var(--font-size-sm); line-height: 1.6; }
         
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -173,7 +217,66 @@
         </div>
         
         <section class="section">
-            <h2 class="section-title">Property Detail Tabs</h2>
+            <h2 class="section-title">Tab Variants</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Basic Tabs</h3>
+                    <p>Standard tab navigation with clean design</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-tabs" data-tabs="basic">
+                            <div class="lyd-tabs-nav">
+                                <button class="lyd-tab active" data-tab="overview">Overview</button>
+                                <button class="lyd-tab" data-tab="details">Details</button>
+                                <button class="lyd-tab" data-tab="settings">Settings</button>
+                            </div>
+                            <div class="lyd-tab-content">
+                                <div class="lyd-tab-panel active" id="overview">
+                                    <p>Overview content with general information and key metrics.</p>
+                                </div>
+                                <div class="lyd-tab-panel" id="details">
+                                    <p>Detailed information and specifications.</p>
+                                </div>
+                                <div class="lyd-tab-panel" id="settings">
+                                    <p>Configuration options and preferences.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <h3>Vertical Tabs</h3>
+                    <p>Side navigation tabs for complex layouts</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-tabs vertical" data-tabs="vertical">
+                            <div class="lyd-tabs-nav">
+                                <button class="lyd-tab active" data-tab="profile">Profilee</button>
+                                <button class="lyd-tab" data-tab="account">Account</button>
+                                <button class="lyd-tab" data-tab="security">Security</button>
+                            </div>
+                            <div class="lyd-tab-content">
+                                <div class="lyd-tab-panel active" id="profile">
+                                    <h4>Profilee Information</h4>
+                                    <p>Manage your personal information and preferences.</p>
+                                </div>
+                                <div class="lyd-tab-panel" id="account">
+                                    <h4>Account Settings</h4>
+                                    <p>Configure account preferences and billing.</p>
+                                </div>
+                                <div class="lyd-tab-panel" id="security">
+                                    <h4>Security Options</h4>
+                                    <p>Manage passwords and security settings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Real Estate Tab Types</h2>
             
             <div class="showcase-grid">
                 <div class="showcase-item">
@@ -216,7 +319,7 @@
                         <div class="lyd-tabs-content" id="details">
                             <div class="property-detail">
                                 <h4 style="margin-bottom: var(--spacing-md); font-size: var(--font-size-lg);">Detailed Specifications</h4>
-                                <p style="color: var(--lyd-gray-600); margin-bottom: var(--spacing-md);">Premium fixtures, smart home technology, panoramic views</p>
+                                <p style="color: var(--lyd-grey); margin-bottom: var(--spacing-md);">Premium fixtures, smart home technology, panoramic views</p>
                                 <div class="property-grid">
                                     <div class="property-item">
                                         <div class="property-label">Energy Class</div>
@@ -241,7 +344,7 @@
                         <div class="lyd-tabs-content" id="location">
                             <div class="property-detail">
                                 <h4 style="margin-bottom: var(--spacing-md); font-size: var(--font-size-lg);">Prime Location</h4>
-                                <p style="color: var(--lyd-gray-600); margin-bottom: var(--spacing-md);">Munich-Schwabing, walking distance to English Garden</p>
+                                <p style="color: var(--lyd-grey); margin-bottom: var(--spacing-md);">Munich-Schwabing, walking distance to English Garden</p>
                             </div>
                         </div>
                         
@@ -293,7 +396,258 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="implementation-section">
+                <h3>React/Next.js Integration</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                        <button class="lyd-button copy">Copy</button>
+                        <pre>import React, { useState, useEffect } from 'react';
+
+interface Tab {
+  id: string;
+  label: string;
+  content: React.ReactNode;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+}
+
+interface TabsProps {
+  tabs: Tab[];
+  defaultTab?: string;
+  orientation?: 'horizontal' | 'vertical';
+  variant?: 'default' | 'pills' | 'underline';
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
+  onChange?: (tabId: string) => void;
+}
+
+export const LydTabs: React.FC<TabsProps> = ({
+  tabs,
+  defaultTab,
+  orientation = 'horizontal',
+  variant = 'default',
+  size = 'medium',
+  className = '',
+  onChange,
+  ...props
+}) => {
+  const [activeTab, setActiveTab] = useState(
+    defaultTab || tabs[0]?.id || ''
+  );
+
+  useEffect(() => {
+    if (defaultTab && defaultTab !== activeTab) {
+      setActiveTab(defaultTab);
+    }
+  }, [defaultTab]);
+
+  const handleTabClick = (tabId: string) => {
+    if (tabs.find(tab => tab.id === tabId)?.disabled) return;
+    
+    setActiveTab(tabId);
+    onChange?.(tabId);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent, tabId: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleTabClick(tabId);
+    }
+    
+    // Arrow key navigation
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      const currentIndex = tabs.findIndex(tab => tab.id === tabId);
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      handleTabClick(tabs[nextIndex].id);
+    }
+    
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      const currentIndex = tabs.findIndex(tab => tab.id === tabId);
+      const prevIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+      handleTabClick(tabs[prevIndex].id);
+    }
+  };
+
+  return (
+    &lt;div 
+      className={`lyd-tabs ${orientation} ${variant} ${size} ${className}`}
+      {...props}
+    &gt;
+      {/* Tab List */}
+      &lt;div className="lyd-tabs-list" role="tablist"&gt;
+        {tabs.map((tab) => (
+          &lt;button
+            key={tab.id}
+            className={`lyd-tabs-trigger ${
+              activeTab === tab.id ? 'active' : ''
+            } ${tab.disabled ? 'disabled' : ''}`}
+            onClick={() => handleTabClick(tab.id)}
+            onKeyDown={(e) => handleKeyDown(e, tab.id)}
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            aria-controls={`panel-${tab.id}`}
+            tabIndex={activeTab === tab.id ? 0 : -1}
+            disabled={tab.disabled}
+          &gt;
+            {tab.icon && &lt;span className="tab-icon"&gt;{tab.icon}&lt;/span&gt;}
+            {tab.label}
+          &lt;/button&gt;
+        ))}
+      &lt;/div&gt;
+
+      {/* Tab Content */}
+      &lt;div className="lyd-tabs-content-container"&gt;
+        {tabs.map((tab) => (
+          &lt;div
+            key={tab.id}
+            id={`panel-${tab.id}`}
+            className={`lyd-tabs-content ${
+              activeTab === tab.id ? 'active' : ''
+            }`}
+            role="tabpanel"
+            aria-labelledby={tab.id}
+            hidden={activeTab !== tab.id}
+          &gt;
+            {tab.content}
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+// Usage Example for Real Estate Application
+const PropertyDetailsTabs = () => {
+  const propertyTabs: Tab[] = [
+    {
+      id: 'overview',
+      label: 'Overview',
+      icon: '🏠',
+      content: (
+        &lt;div&gt;
+          &lt;h3&gt;Property Overview&lt;/h3&gt;
+          &lt;p&gt;Modern 3-bedroom apartment in Munich city center&lt;/p&gt;
+          &lt;ul&gt;
+            &lt;li&gt;Size: 120m²&lt;/li&gt;
+            &lt;li&gt;Bedrooms: 3&lt;/li&gt;
+            &lt;li&gt;Bathrooms: 2&lt;/li&gt;
+            &lt;li&gt;Price: €850,000&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      )
+    },
+    {
+      id: 'photos',
+      label: 'Photos',
+      icon: '📷',
+      content: (
+        &lt;div&gt;
+          &lt;h3&gt;Property Photos&lt;/h3&gt;
+          &lt;div className="photo-gallery"&gt;
+            {/* Photo gallery component would go here */}
+            &lt;p&gt;Photo gallery with 24 high-quality images&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )
+    },
+    {
+      id: 'location',
+      label: 'Location',
+      icon: '📍',
+      content: (
+        &lt;div&gt;
+          &lt;h3&gt;Location Details&lt;/h3&gt;
+          &lt;p&gt;Maximilianstrasse 15, 80539 Munich&lt;/p&gt;
+          {/* Map component would go here */}
+          &lt;div className="location-highlights"&gt;
+            &lt;h4&gt;Nearby Amenities:&lt;/h4&gt;
+            &lt;ul&gt;
+              &lt;li&gt;Marienplatz - 5 min walk&lt;/li&gt;
+              &lt;li&gt;English Garden - 10 min walk&lt;/li&gt;
+              &lt;li&gt;Public Transport - 2 min walk&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )
+    },
+    {
+      id: 'contact',
+      label: 'Contact',
+      icon: '📞',
+      content: (
+        &lt;div&gt;
+          &lt;h3&gt;Contact Agent&lt;/h3&gt;
+          &lt;div className="agent-info"&gt;
+            &lt;p&gt;&lt;strong&gt;Sarah Mueller&lt;/strong&gt;&lt;/p&gt;
+            &lt;p&gt;Senior Property Consultant&lt;/p&gt;
+            &lt;p&gt;Phone: +49 89 123456789&lt;/p&gt;
+            &lt;p&gt;Email: sarah.mueller@lyd.com&lt;/p&gt;
+            &lt;button className="lyd-button primary"&gt;Schedule Viewing&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )
+    }
+  ];
+
+  return (
+    &lt;LydTabs
+      tabs={propertyTabs}
+      defaultTab="overview"
+      variant="underline"
+      onChange={(tabId) => console.log('Active tab:', tabId)}
+    /&gt;
+  );
+};</pre>
+                    </div>
+                </div>
+            </div>
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-tabs</code></td>
+                            <td>Base tabs class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-tabs-wrapper</code></td>
+                            <td>tabs container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small tabs size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large tabs size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary tabs variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
         <section class="section">
             <h2 class="section-title">Accessibility & Best Practices</h2>
@@ -302,6 +656,11 @@
                 <div class="accessibility-item">
                     <h3>Keyboard Navigation</h3>
                     <p>Arrow keys navigate between tabs, Enter and Space activate tabs with proper focus management.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
                 </div>
                 
                 <div class="accessibility-item">
@@ -326,7 +685,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });
@@ -346,7 +705,7 @@
             // Tabs functionality
             document.querySelectorAll('.lyd-tabs-trigger').forEach(trigger => {
                 trigger.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
+                    const tabId = this.getAttributes('data-tab');
                     
                     // Remove active from all triggers
                     document.querySelectorAll('.lyd-tabs-trigger').forEach(t => t.classList.remove('active'));

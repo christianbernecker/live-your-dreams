@@ -8,41 +8,29 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     
     <style>
-        :root {
+                :root {
             /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
             --lyd-text: #111111;
+            --lyd-bg: #ffffff;
             
-            /* Design Tokens */
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
             
-            /* Colors */
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
-            
-            /* Typography */
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -67,7 +55,12 @@
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -76,10 +69,10 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: var(--font-family);
+                body {
+            font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
@@ -88,8 +81,8 @@
         /* Sidebar Navigation */
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -99,7 +92,7 @@
         
         .sidebar-header {
             padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
         }
         
@@ -115,7 +108,7 @@
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
@@ -135,7 +128,7 @@
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-decoration: none;
             font-size: var(--font-size-sm);
             font-weight: 500;
@@ -182,7 +175,7 @@
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             max-width: 800px;
             margin-bottom: var(--spacing-2xl);
         }
@@ -214,9 +207,9 @@
         }
         
         .showcase-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
@@ -226,20 +219,20 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
         }
         
         .showcase-item p {
             padding: 0 var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             margin-bottom: var(--spacing-md);
         }
         
         .showcase-demo {
             padding: var(--spacing-lg);
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
         }
         
         /* Textarea Components */
@@ -260,10 +253,10 @@
             width: 100%;
             min-height: 120px;
             padding: var(--spacing-md);
-            border: 2px solid var(--lyd-gray-200);
+            border: 2px solid var(--lyd-line);
             border-radius: 8px;
-            background: var(--lyd-white);
-            font-family: var(--font-family);
+            background: var(--lyd-bg);
+            font-family: var(--font-family-primary);
             font-size: var(--font-size-base);
             color: var(--lyd-gray-900);
             resize: vertical;
@@ -320,14 +313,14 @@
         
         .lyd-textarea:disabled {
             background: var(--lyd-gray-100);
-            border-color: var(--lyd-gray-200);
+            border-color: var(--lyd-line);
             color: var(--lyd-gray-400);
             cursor: not-allowed;
         }
         
         .lyd-textarea-helper {
             font-size: var(--font-size-xs);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             margin-top: var(--spacing-xs);
         }
         
@@ -357,9 +350,9 @@
         
         /* Implementation Guide */
         .implementation-section {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
@@ -370,7 +363,7 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
             margin: 0;
         }
@@ -409,7 +402,7 @@
         
         .lyd-button.copy {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         .lyd-button.copy:hover {
@@ -424,7 +417,7 @@
         }
         
         .accessibility-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 8px;
             padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
@@ -448,7 +441,7 @@
         }
         
         .accessibility-item p {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             line-height: 1.6;
         }
@@ -478,13 +471,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -590,7 +583,7 @@
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Property Description</label>
-                            <textarea class="lyd-textarea" placeholder="Enter detailed property description...">This luxurious penthouse offers stunning panoramic views of the city skyline. With floor-to-ceiling windows and a private terrace, it's the perfect blend of modern elegance and comfort.</textarea>
+                            <textarea class="lyd-textarea" placeholder="Enter detailed property description..." aria-label="Text area" role="textbox">This luxurious penthouse offers stunning panoramic views of the city skyline. With floor-to-ceiling windows and a private terrace, it's the perfect blend of modern elegance and comfort.</textarea>
                             <div class="lyd-textarea-helper">Provide a detailed description to attract potential buyers</div>
                         </div>
                     </div>
@@ -604,13 +597,13 @@
                         <!-- Small -->
                         <div class="lyd-textarea-group" style="margin-bottom: 24px;">
                             <label class="lyd-textarea-label">Small Note</label>
-                            <textarea class="lyd-textarea small" placeholder="Quick note...">Small textarea for brief comments</textarea>
+                            <textarea class="lyd-textarea small" placeholder="Quick note..." aria-label="Text area" role="textbox">Small textarea for brief comments</textarea>
                         </div>
                         
                         <!-- Large -->
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Detailed Review</label>
-                            <textarea class="lyd-textarea large" placeholder="Write your detailed review...">Large textarea for comprehensive property reviews, detailed feedback, or extensive property descriptions that require more space and better readability.</textarea>
+                            <textarea class="lyd-textarea large" placeholder="Write your detailed review..." aria-label="Text area" role="textbox">Large textarea for comprehensive property reviews, detailed feedback, or extensive property descriptions that require more space and better readability.</textarea>
                         </div>
                     </div>
                 </div>
@@ -622,7 +615,7 @@
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Customer Inquiry</label>
-                            <textarea class="lyd-textarea success" placeholder="Your message...">Hello, I'm interested in scheduling a viewing for this beautiful property. Could we arrange a meeting next week?</textarea>
+                            <textarea class="lyd-textarea success" placeholder="Your message..." aria-label="Text area" role="textbox">Hello, I'm interested in scheduling a viewing for this beautiful property. Could we arrange a meeting next week?</textarea>
                             <div class="lyd-textarea-helper success">Message looks great! Ready to send.</div>
                         </div>
                     </div>
@@ -635,7 +628,7 @@
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Feedback</label>
-                            <textarea class="lyd-textarea error" placeholder="Your feedback...">Too short</textarea>
+                            <textarea class="lyd-textarea error" placeholder="Your feedback..." aria-label="Text area" role="textbox">Too short</textarea>
                             <div class="lyd-textarea-helper error">Please provide at least 20 characters for meaningful feedback</div>
                             <div class="lyd-textarea-counter error">9 / 20 characters</div>
                         </div>
@@ -656,7 +649,7 @@
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Property Description</label>
-                            <textarea class="lyd-textarea large" placeholder="Describe the property features, location, and unique selling points...">Discover luxury living in this exceptional 3-bedroom penthouse located in the heart of Munich's prestigious Maxvorstadt district. 
+                            <textarea class="lyd-textarea large" placeholder="Describe the property features, location, and unique selling points..." aria-label="Text area" role="textbox">Discover luxury living in this exceptional 3-bedroom penthouse located in the heart of Munich's prestigious Maxvorstadt district. 
 
 Features:
 - 180m² of elegant living space
@@ -680,7 +673,7 @@ The property combines modern architecture with timeless elegance, offering the p
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Your Message</label>
-                            <textarea class="lyd-textarea" placeholder="Tell us about your requirements, preferred viewing times, or any specific questions...">Hello,
+                            <textarea class="lyd-textarea" placeholder="Tell us about your requirements, preferred viewing times, or any specific questions..." aria-label="Text area" role="textbox">Hello,
 
 I am very interested in this penthouse and would love to schedule a viewing. I'm particularly interested in:
 
@@ -706,7 +699,7 @@ Michael Schmidt</textarea>
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Private Agent Notes</label>
-                            <textarea class="lyd-textarea" placeholder="Internal notes about the property, client preferences, or special considerations...">Client Notes:
+                            <textarea class="lyd-textarea" placeholder="Internal notes about the property, client preferences, or special considerations..." aria-label="Text area" role="textbox">Client Notes:
 - High-net-worth individual, cash buyer
 - Prefers modern architecture  
 - Must have parking for luxury vehicles
@@ -736,7 +729,7 @@ Next Steps:
                     <div class="showcase-demo">
                         <div class="lyd-textarea-group">
                             <label class="lyd-textarea-label">Your Review</label>
-                            <textarea class="lyd-textarea success" placeholder="Share your experience with this property...">Absolutely stunning property! The views from the rooftop terrace are breathtaking, especially during sunset. The interior design is impeccable - every detail has been carefully considered.
+                            <textarea class="lyd-textarea success" placeholder="Share your experience with this property..." aria-label="Text area" role="textbox">Absolutely stunning property! The views from the rooftop terrace are breathtaking, especially during sunset. The interior design is impeccable - every detail has been carefully considered.
 
 The location is perfect - quiet enough for relaxation but close to everything you need. The English Garden is just a 5-minute walk, and there are excellent restaurants nearby.
 
@@ -761,7 +754,7 @@ Rating: 5/5 stars</textarea>
                 <h3>HTML Usage</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>&lt;!-- Basic Textarea --&gt;
 &lt;div class="lyd-textarea-group"&gt;
     &lt;label class="lyd-textarea-label"&gt;Property Description&lt;/label&gt;
@@ -793,11 +786,11 @@ Rating: 5/5 stars</textarea>
                 <h3>Next.js Integration</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Textarea.tsx
-import { TextareaHTMLAttributes, forwardRef, useState } from 'react';
+import { TextareaHTMLAttributess, forwardRef, useState } from 'react';
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends TextareaHTMLAttributess<HTMLTextAreaElement> {
   label?: string;
   helperText?: string;
   state?: 'default' | 'success' | 'error';
@@ -904,6 +897,49 @@ export default function PropertyForm() {
             </div>
             
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-textarea</code></td>
+                            <td>Base textarea class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-textarea-wrapper</code></td>
+                            <td>textarea container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small textarea size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large textarea size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary textarea variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
         <!-- Section 4: Accessibility & Best Practices -->
         <section class="section">
@@ -951,14 +987,14 @@ export default function PropertyForm() {
             // Set active navigation
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });
             
             // Character counter functionality
             document.querySelectorAll('.lyd-textarea').forEach(textarea => {
-                const maxLength = textarea.getAttribute('maxlength');
+                const maxLength = textarea.getAttributes('maxlength');
                 const group = textarea.closest('.lyd-textarea-group');
                 let counter = group?.querySelector('.lyd-textarea-counter');
                 

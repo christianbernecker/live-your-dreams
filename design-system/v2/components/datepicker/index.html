@@ -6,30 +6,25 @@
     <title>Date Picker - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
+                :root {
+            /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
             --lyd-text: #111111;
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -39,6 +34,8 @@
             --font-size-3xl: 30px;
             --font-size-4xl: 36px;
             --font-size-5xl: 48px;
+            
+            /* Spacing */
             --spacing-xs: 4px;
             --spacing-sm: 8px;
             --spacing-md: 16px;
@@ -46,11 +43,18 @@
             --spacing-xl: 32px;
             --spacing-2xl: 48px;
             --spacing-3xl: 64px;
+            
+            /* Shadows */
             --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -59,10 +63,10 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: var(--font-family);
+                body {
+            font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
@@ -70,8 +74,8 @@
         
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -81,7 +85,7 @@
         
         .sidebar-header {
             padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
         }
         
@@ -97,7 +101,7 @@
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
@@ -117,7 +121,7 @@
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-decoration: none;
             font-size: var(--font-size-sm);
             font-weight: 500;
@@ -163,7 +167,7 @@
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             max-width: 800px;
             margin-bottom: var(--spacing-2xl);
         }
@@ -193,9 +197,9 @@
         }
         
         .showcase-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
@@ -205,20 +209,20 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
         }
         
         .showcase-item p {
             padding: 0 var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             margin-bottom: var(--spacing-md);
         }
         
         .showcase-demo {
             padding: var(--spacing-lg);
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
         }
         
         /* Date Picker Components */
@@ -230,10 +234,10 @@
         .lyd-datepicker-input {
             width: 100%;
             padding: var(--spacing-md);
-            border: 2px solid var(--lyd-gray-200);
+            border: 2px solid var(--lyd-line);
             border-radius: 8px;
-            background: var(--lyd-white);
-            font-family: var(--font-family);
+            background: var(--lyd-bg);
+            font-family: var(--font-family-primary);
             font-size: var(--font-size-base);
             color: var(--lyd-gray-900);
             transition: all 0.2s ease;
@@ -252,7 +256,7 @@
         .lyd-datepicker-icon {
             width: 20px;
             height: 20px;
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             flex-shrink: 0;
         }
         
@@ -261,8 +265,8 @@
             top: 100%;
             left: 0;
             z-index: 1000;
-            background: var(--lyd-white);
-            border: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border: 1px solid var(--lyd-line);
             border-radius: 12px;
             box-shadow: var(--shadow-lg);
             padding: var(--spacing-lg);
@@ -285,7 +289,7 @@
         .lyd-datepicker-nav {
             background: none;
             border: none;
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             cursor: pointer;
             padding: var(--spacing-xs);
             border-radius: 6px;
@@ -331,7 +335,7 @@
         
         .lyd-datepicker-day.selected {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         .lyd-datepicker-day.disabled {
@@ -357,7 +361,7 @@
             justify-content: center;
             font-size: var(--font-size-xs);
             font-weight: 600;
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             text-transform: uppercase;
         }
         
@@ -377,7 +381,7 @@
         
         .lyd-datepicker-time-slot.selected {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         .lyd-datepicker-time-slot.disabled {
@@ -388,9 +392,9 @@
         
         /* Implementation sections and accessibility styling same as other components */
         .implementation-section {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
@@ -401,7 +405,7 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
             margin: 0;
         }
@@ -440,7 +444,7 @@
         
         .lyd-button.copy {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         .lyd-button.copy:hover {
@@ -454,7 +458,7 @@
         }
         
         .accessibility-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 8px;
             padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
@@ -478,7 +482,7 @@
         }
         
         .accessibility-item p {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             line-height: 1.6;
         }
@@ -730,7 +734,7 @@
                 <h3>HTML Usage</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>&lt;div class="lyd-datepicker"&gt;
     &lt;div class="lyd-datepicker-input" tabindex="0"&gt;
         &lt;svg class="lyd-datepicker-icon" viewBox="0 0 24 24"&gt;...&lt;/svg&gt;
@@ -753,7 +757,7 @@
                 <h3>Next.js Integration</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/DatePicker.tsx
 import { useState } from 'react';
 
@@ -788,6 +792,49 @@ export const DatePicker = ({ value, onChange, placeholder = "Select date" }: Dat
                 </div>
             </div>
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-datepicker</code></td>
+                            <td>Base datepicker class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-datepicker-wrapper</code></td>
+                            <td>datepicker container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small datepicker size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large datepicker size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary datepicker variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
         <!-- Section 4: Accessibility & Best Practices -->
         <section class="section">
@@ -821,7 +868,7 @@ export const DatePicker = ({ value, onChange, placeholder = "Select date" }: Dat
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });

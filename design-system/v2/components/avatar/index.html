@@ -6,30 +6,25 @@
     <title>Avatar - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
+                :root {
+            /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
             --lyd-text: #111111;
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -39,6 +34,8 @@
             --font-size-3xl: 30px;
             --font-size-4xl: 36px;
             --font-size-5xl: 48px;
+            
+            /* Spacing */
             --spacing-xs: 4px;
             --spacing-sm: 8px;
             --spacing-md: 16px;
@@ -46,11 +43,18 @@
             --spacing-xl: 32px;
             --spacing-2xl: 48px;
             --spacing-3xl: 64px;
+            
+            /* Shadows */
             --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -59,10 +63,10 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: var(--font-family);
+                body {
+            font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
@@ -70,8 +74,8 @@
         
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -81,7 +85,7 @@
         
         .sidebar-header {
             padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
         }
         
@@ -97,7 +101,7 @@
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
@@ -117,7 +121,7 @@
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-decoration: none;
             font-size: var(--font-size-sm);
             font-weight: 500;
@@ -163,7 +167,7 @@
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             max-width: 800px;
             margin-bottom: var(--spacing-2xl);
         }
@@ -193,9 +197,9 @@
         }
         
         .showcase-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
@@ -205,20 +209,20 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
         }
         
         .showcase-item p {
             padding: 0 var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             margin-bottom: var(--spacing-md);
         }
         
         .showcase-demo {
             padding: var(--spacing-lg);
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
         }
         
         /* Avatar Components */
@@ -227,7 +231,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--lyd-gray-200) 0%, var(--lyd-gray-300) 100%);
+            background: linear-gradient(135deg, var(--lyd-line) 0%, var(--lyd-gray-300) 100%);
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
@@ -251,14 +255,14 @@
             font-weight: 600;
             text-transform: uppercase;
             background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
             border-radius: 50%;
         }
         
         .lyd-avatar-icon {
             width: 50%;
             height: 50%;
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         /* Size variants */
@@ -312,7 +316,7 @@
             width: 25%;
             height: 25%;
             border-radius: 50%;
-            border: 2px solid var(--lyd-white);
+            border: 2px solid var(--lyd-bg);
         }
         
         .lyd-avatar-status.online {
@@ -339,16 +343,16 @@
         
         .lyd-avatar-group .lyd-avatar {
             margin-left: -8px;
-            border: 2px solid var(--lyd-white);
+            border: 2px solid var(--lyd-bg);
         }
         
         .lyd-avatar-group .lyd-avatar:first-child {
             margin-left: 0;
         }
         
-        /* Profile card */
+        /* Profilee card */
         .profile-card {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
             padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
@@ -367,7 +371,7 @@
         
         .profile-info p {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             margin: 0;
         }
         
@@ -390,16 +394,16 @@
         
         .stat-label {
             font-size: var(--font-size-xs);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         /* Implementation sections and other styling same as other components */
         .implementation-section {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
@@ -410,7 +414,7 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
             margin: 0;
         }
@@ -449,7 +453,7 @@
         
         .lyd-button.copy {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         .lyd-button.copy:hover {
@@ -463,7 +467,7 @@
         }
         
         .accessibility-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 8px;
             padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
@@ -487,7 +491,7 @@
         }
         
         .accessibility-item p {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             line-height: 1.6;
         }
@@ -612,23 +616,23 @@
                     <p>Different sizes for various use cases</p>
                     <div class="showcase-demo">
                         <div style="display: flex; align-items: center; gap: var(--spacing-md); flex-wrap: wrap;">
-                            <div class="lyd-avatar xs">
-                                <div class="lyd-avatar-fallback">MS</div>
+                            <div class="lyd-avatar xs" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
                             </div>
-                            <div class="lyd-avatar sm">
-                                <div class="lyd-avatar-fallback">MS</div>
+                            <div class="lyd-avatar sm" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
                             </div>
-                            <div class="lyd-avatar">
-                                <div class="lyd-avatar-fallback">MS</div>
+                            <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
                             </div>
-                            <div class="lyd-avatar md">
-                                <div class="lyd-avatar-fallback">MS</div>
+                            <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
                             </div>
-                            <div class="lyd-avatar lg">
-                                <div class="lyd-avatar-fallback">MS</div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
                             </div>
-                            <div class="lyd-avatar xl">
-                                <div class="lyd-avatar-fallback">MS</div>
+                            <div class="lyd-avatar xl" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
                             </div>
                         </div>
                     </div>
@@ -639,21 +643,21 @@
                     <p>Show availability and activity status</p>
                     <div class="showcase-demo">
                         <div style="display: flex; align-items: center; gap: var(--spacing-lg); flex-wrap: wrap;">
-                            <div class="lyd-avatar lg">
-                                <div class="lyd-avatar-fallback">JD</div>
-                                <div class="lyd-avatar-status online"></div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">JD</div>
+                                <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
                             </div>
-                            <div class="lyd-avatar lg">
-                                <div class="lyd-avatar-fallback">SK</div>
-                                <div class="lyd-avatar-status away"></div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">SK</div>
+                                <div class="lyd-avatar-status away" aria-label="Avatar" role="img"></div>
                             </div>
-                            <div class="lyd-avatar lg">
-                                <div class="lyd-avatar-fallback">MR</div>
-                                <div class="lyd-avatar-status busy"></div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MR</div>
+                                <div class="lyd-avatar-status busy" aria-label="Avatar" role="img"></div>
                             </div>
-                            <div class="lyd-avatar lg">
-                                <div class="lyd-avatar-fallback">AB</div>
-                                <div class="lyd-avatar-status offline"></div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">AB</div>
+                                <div class="lyd-avatar-status offline" aria-label="Avatar" role="img"></div>
                             </div>
                         </div>
                     </div>
@@ -666,16 +670,16 @@
             
             <div class="showcase-grid">
                 <div class="showcase-item">
-                    <h3>Agent Profiles</h3>
+                    <h3>Agent Profilees</h3>
                     <p>Professional real estate agent representation</p>
                     <div class="showcase-demo">
                         <div class="profile-card">
-                            <div class="lyd-avatar xl">
+                            <div class="lyd-avatar xl" aria-label="Avatar" role="img">
                                 <svg class="lyd-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                     <circle cx="12" cy="7" r="4"/>
                                 </svg>
-                                <div class="lyd-avatar-status online"></div>
+                                <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
                             </div>
                             <div class="profile-info">
                                 <h4>Sarah Mueller</h4>
@@ -706,39 +710,39 @@
                     <div class="showcase-demo">
                         <div style="margin-bottom: var(--spacing-md);">
                             <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Munich Office Team</h4>
-                            <div class="lyd-avatar-group">
-                                <div class="lyd-avatar md">
-                                    <div class="lyd-avatar-fallback">SM</div>
+                            <div class="lyd-avatar-group" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">SM</div>
                                 </div>
-                                <div class="lyd-avatar md">
-                                    <div class="lyd-avatar-fallback">JK</div>
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">JK</div>
                                 </div>
-                                <div class="lyd-avatar md">
-                                    <div class="lyd-avatar-fallback">TR</div>
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">TR</div>
                                 </div>
-                                <div class="lyd-avatar md">
-                                    <div class="lyd-avatar-fallback">+3</div>
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">+3</div>
                                 </div>
                             </div>
                         </div>
                         
                         <div style="margin-bottom: var(--spacing-md);">
                             <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Property Specialists</h4>
-                            <div class="lyd-avatar-group">
-                                <div class="lyd-avatar">
+                            <div class="lyd-avatar-group" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar" aria-label="Avatar" role="img">
                                     <svg class="lyd-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                         <circle cx="12" cy="7" r="4"/>
                                     </svg>
-                                    <div class="lyd-avatar-status online"></div>
+                                    <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
                                 </div>
-                                <div class="lyd-avatar">
-                                    <div class="lyd-avatar-fallback">MK</div>
-                                    <div class="lyd-avatar-status away"></div>
+                                <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MK</div>
+                                    <div class="lyd-avatar-status away" aria-label="Avatar" role="img"></div>
                                 </div>
-                                <div class="lyd-avatar">
-                                    <div class="lyd-avatar-fallback">JL</div>
-                                    <div class="lyd-avatar-status online"></div>
+                                <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">JL</div>
+                                    <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
                                 </div>
                             </div>
                         </div>
@@ -754,7 +758,7 @@
                 <h3>HTML Usage</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>&lt;!-- Basic Avatar --&gt;
 &lt;div class="lyd-avatar"&gt;
     &lt;div class="lyd-avatar-fallback"&gt;JD&lt;/div&gt;
@@ -783,7 +787,7 @@
                 <h3>Next.js Integration</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Avatar.tsx
 interface AvatarProps {
   src?: string;
@@ -814,11 +818,70 @@ export const Avatar = ({ src, alt, initials, size = 'md', status, className = ''
                 </div>
             </div>
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-avatar</code></td>
+                            <td>Base avatar class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-avatar-wrapper</code></td>
+                            <td>avatar container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small avatar size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large avatar size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary avatar variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
         <section class="section">
             <h2 class="section-title">Accessibility & Best Practices</h2>
             
             <div class="accessibility-grid">
+                                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support with intuitive navigation patterns.</p>
+                    <ul>
+                        <li><kbd>Tab</kbd> - Navigate to next element</li>
+                        <li><kbd>Shift + Tab</kbd> - Navigate to previous element</li>
+                        <li><kbd>Enter</kbd> - Activate element</li>
+                        <li><kbd>Space</kbd> - Toggle/select element</li>
+                        <li><kbd>Escape</kbd> - Close/cancel action</li>
+                    </ul>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
+                </div>
                 <div class="accessibility-item">
                     <h3>Alt Text</h3>
                     <p>Proper alt text for images and meaningful fallback content for screen readers.</p>
@@ -846,7 +909,7 @@ export const Avatar = ({ src, alt, initials, size = 'md', status, className = ''
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });

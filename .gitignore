@@ -65,3 +65,8 @@ docs/Credentials/
 /temp/
 /archive/
 /tooling/testing/reports/
+
+# Tools and temporary files
+/tools/scripts/*.py
+/tools/analysis/*.md
+/tools/task-definitions/*.json

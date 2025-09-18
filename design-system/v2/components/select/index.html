@@ -13,7 +13,7 @@
     <!-- Cache Buster v30.4 - Enhanced Select Implementation -->
     
     <style>
-        :root {
+                :root {
             /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
@@ -56,14 +56,12 @@
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             
             /* Border Radius */
             --radius-sm: 4px;
             --radius-md: 8px;
             --radius-lg: 12px;
             --radius-xl: 16px;
-            --radius-2xl: 20px;
         }
         
         * {
@@ -72,7 +70,7 @@
             box-sizing: border-box;
         }
         
-        body {
+                body {
             font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             color: var(--lyd-text);
@@ -2048,34 +2046,56 @@ const PropertyFilterSelect = () => {
                 <div class="code-block">
                     <button class="lyd-button copy">Copy</button>
                     <pre>/* Select Component CSS Variables */
-:root {
-  /* Select Sizing */
-  --select-height-small: 36px;
-  --select-height-medium: 48px;
-  --select-height-large: 56px;
-  
-  /* Select Colors */
-  --select-bg: var(--lyd-bg);
-  --select-border: var(--lyd-line);
-  --select-border-hover: var(--lyd-royal-blue);
-  --select-border-focus: var(--lyd-royal-blue);
-  --select-border-error: var(--lyd-error);
-  --select-border-success: var(--lyd-success);
-  
-  /* Dropdown */
-  --select-dropdown-bg: var(--lyd-bg);
-  --select-dropdown-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  --select-option-hover: rgba(51, 102, 204, 0.05);
-  --select-option-selected: rgba(51, 102, 204, 0.1);
-  
-  /* Tag Colors */
-  --select-tag-bg: var(--lyd-royal-blue);
-  --select-tag-color: white;
-  --select-tag-remove-bg: rgba(255, 255, 255, 0.2);
-  
-  /* Transitions */
-  --select-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
 
 /* Dark Theme Override */
 [data-theme="dark"] {
@@ -2150,251 +2170,7 @@ const PropertyFilterSelect = () => {
         </section>
 
         <!-- Section: Advanced Features & Patterns -->
-        <section class="section">
-            <h2 class="section-title">Advanced Features & Patterns</h2>
-            
-            <div class="implementation-section">
-                <h3>Async Data Loading Pattern</h3>
-                <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
-                    <pre>// Async Select with Debounced Search
-const AsyncLocationSelect = () => {
-  const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  // Debounced search
-  const debouncedSearch = useMemo(
-    () => debounce(async (query: string) => {
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/locations?q=${query}`);
-        const data = await response.json();
-        setOptions(data.map(item => ({
-          value: item.id,
-          label: item.name,
-          metadata: { 
-            region: item.region,
-            postalCode: item.postalCode,
-            propertyCount: item.propertyCount
-          }
-        })));
-      } finally {
-        setLoading(false);
-      }
-    }, 300),
-    []
-  );
-  
-  useEffect(() => {
-    if (searchQuery) {
-      debouncedSearch(searchQuery);
-    }
-  }, [searchQuery]);
-  
-  return (
-    &lt;Select
-      options={options}
-      loading={loading}
-      searchable
-      asyncSearch
-      onSearch={setSearchQuery}
-      placeholder="Type to search locations..."
-      renderOption={(option) => (
-        &lt;div className="location-option"&gt;
-          &lt;div className="location-name"&gt;{option.label}&lt;/div&gt;
-          &lt;div className="location-meta"&gt;
-            {option.metadata.region} • {option.metadata.postalCode}
-            &lt;span className="property-count"&gt;
-              {option.metadata.propertyCount} properties
-            &lt;/span&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      )}
-    /&gt;
-  );
-};</pre>
-                </div>
-                
-                <h3>Controlled vs Uncontrolled Patterns</h3>
-                <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
-                    <pre>// Controlled Select with Form Integration
-const PropertyForm = () => {
-  const { control, watch, setValue } = useForm({
-    defaultValues: {
-      propertyType: '',
-      features: [],
-      priceRange: ''
-    }
-  });
-  
-  return (
-    &lt;form&gt;
-      &lt;Controller
-        name="propertyType"
-        control={control}
-        rules={{ required: 'Property type is required' }}
-        render={({ field, fieldState }) => (
-          &lt;Select
-            {...field}
-            options={propertyTypes}
-            error={fieldState.error?.message}
-            placeholder="Select property type..."
-          /&gt;
-        )}
-      /&gt;
-      
-      &lt;Controller
-        name="features"
-        control={control}
-        render={({ field }) => (
-          &lt;Select
-            {...field}
-            options={features}
-            multiple
-            searchable
-            placeholder="Add features..."
-          /&gt;
-        )}
-      /&gt;
-    &lt;/form&gt;
-  );
-};
-
-// Uncontrolled with Ref
-const UncontrolledSelect = () => {
-  const selectRef = useRef();
-  
-  const handleSubmit = () => {
-    const value = selectRef.current?.getValue();
-    console.log('Selected:', value);
-  };
-  
-  return (
-    &lt;Select
-      ref={selectRef}
-      options={options}
-      defaultValue="apartment"
-    /&gt;
-  );
-};</pre>
-                </div>
-                
-                <h3>Virtualization for Large Datasets</h3>
-                <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
-                    <pre>// Virtual Scrolling for 1000+ Options
-import { FixedSizeList } from 'react-window';
-
-const VirtualizedSelect = ({ options }) => {
-  const ITEM_HEIGHT = 40;
-  const MAX_HEIGHT = 300;
-  
-  const Row = ({ index, style }) => {
-    const option = options[index];
-    return (
-      &lt;div style={style} className="lyd-select-option"&gt;
-        {option.label}
-      &lt;/div&gt;
-    );
-  };
-  
-  return (
-    &lt;Select
-      options={options}
-      renderDropdown={() => (
-        &lt;FixedSizeList
-          height={Math.min(options.length * ITEM_HEIGHT, MAX_HEIGHT)}
-          itemCount={options.length}
-          itemSize={ITEM_HEIGHT}
-          width="100%"
-        &gt;
-          {Row}
-        &lt;/FixedSizeList&gt;
-      )}
-    /&gt;
-  );
-};</pre>
-                </div>
-            </div>
-            
-            <div class="accessibility-grid">
-                <div class="accessibility-item">
-                    <h4>Keyboard Navigation</h4>
-                    <ul>
-                        <li>Tab/Shift+Tab - Navigate between selects</li>
-                        <li>Space/Enter - Open dropdown</li>
-                        <li>Arrow Up/Down - Navigate options</li>
-                        <li>Home/End - Jump to first/last option</li>
-                        <li>Escape - Close dropdown</li>
-                        <li>Type - Search in searchable selects</li>
-                        <li>Backspace - Remove last tag in multi-select</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Screen Reader Support</h4>
-                    <ul>
-                        <li>ARIA roles: combobox, listbox, option</li>
-                        <li>ARIA states: expanded, selected, disabled</li>
-                        <li>Live regions for search results</li>
-                        <li>Descriptive labels and announcements</li>
-                        <li>Group labels for organized options</li>
-                        <li>Selection count announcements</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Performance Optimization</h4>
-                    <ul>
-                        <li>Virtual scrolling for 100+ options</li>
-                        <li>Debounced search (300ms default)</li>
-                        <li>Memoized filtered options</li>
-                        <li>Lazy loading for async data</li>
-                        <li>Request cancellation on unmount</li>
-                        <li>Optimistic UI updates</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Mobile Optimization</h4>
-                    <ul>
-                        <li>Touch-friendly targets (44x44px min)</li>
-                        <li>Native select fallback option</li>
-                        <li>Bottom sheet on mobile devices</li>
-                        <li>Haptic feedback on selection</li>
-                        <li>Swipe gestures for dismissal</li>
-                        <li>Auto-zoom prevention</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="implementation-section">
-                <h3>Real Estate-Specific Optimizations</h3>
-                <p>Diese erweiterte Select-Implementation bietet spezielle Features für Immobilien-Anwendungen:</p>
-                <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Property Type Icons:</strong> Visuelle Unterscheidung verschiedener Immobilientypen</li>
-                    <li><strong>Location Hierarchies:</strong> Gruppierung nach Städten und Bezirken</li>
-                    <li><strong>Price Range Display:</strong> Anzahl verfügbarer Objekte pro Preisbereich</li>
-                    <li><strong>Feature Categorization:</strong> Gruppierung von Ausstattungsmerkmalen</li>
-                    <li><strong>Async Location Search:</strong> Echtzeit-Suche in großen Standort-Datenbanken</li>
-                    <li><strong>Multi-Select Tags:</strong> Übersichtliche Darstellung mehrerer Auswahlkriterien</li>
-                    <li><strong>Custom Metadata:</strong> Zusätzliche Informationen pro Option (Anzahl, Region, etc.)</li>
-                    <li><strong>Smart Filtering:</strong> Kontextabhängige Filterung basierend auf anderen Auswahlfeldern</li>
-                </ul>
-                
-                <h3>Integration Best Practices</h3>
-                <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Form Libraries:</strong> Nahtlose Integration mit react-hook-form, Formik</li>
-                    <li><strong>State Management:</strong> Redux/Zustand Integration für globale Filter</li>
-                    <li><strong>API Integration:</strong> GraphQL/REST Endpoints für dynamische Daten</li>
-                    <li><strong>Caching Strategy:</strong> LRU Cache für häufig verwendete Optionen</li>
-                    <li><strong>Error Boundaries:</strong> Graceful degradation bei Fehlern</li>
-                    <li><strong>Testing:</strong> Unit Tests für Logik, E2E für User Flows</li>
-                </ul>
-            </div>
-        </section>
+        
         
         <!-- Section 4: Accessibility & Best Practices -->
         <section class="section">

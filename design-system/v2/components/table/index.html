@@ -8,46 +8,30 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     <!-- Cache Buster v30.7 - Enhanced Table with HeroUI-inspired States & Styled Dropdowns -->
     
     <style>
-        :root {
-            /* Design Tokens */
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
             
-            /* Colors */
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
             
-            /* Semantic Colors */
-            --lyd-background: var(--lyd-white);
-            --lyd-surface: var(--lyd-gray-50);
-            --lyd-text: var(--lyd-gray-900);
-            --lyd-text-secondary: var(--lyd-gray-600);
-            --lyd-grey: var(--lyd-gray-500);
-            --lyd-line: var(--lyd-gray-200);
-            
-            /* Typography */
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -72,7 +56,12 @@
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -81,10 +70,10 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: var(--font-family);
+                body {
+            font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
@@ -93,8 +82,8 @@
         /* Sidebar Navigation */
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -104,7 +93,7 @@
         
         .sidebar-header {
             padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
         }
         
@@ -120,7 +109,7 @@
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
@@ -140,7 +129,7 @@
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-decoration: none;
             font-size: var(--font-size-sm);
             font-weight: 500;
@@ -187,7 +176,7 @@
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             margin-bottom: var(--spacing-2xl);
             line-height: 1.7;
         }
@@ -212,11 +201,11 @@
         }
         
         .showcase-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
             padding: var(--spacing-xl);
             box-shadow: var(--shadow-md);
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             transition: all 0.3s ease;
         }
         
@@ -234,7 +223,7 @@
         
         .showcase-item p {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             margin-bottom: var(--spacing-lg);
         }
         
@@ -242,16 +231,16 @@
             padding: var(--spacing-lg);
             background: var(--lyd-gray-50);
             border-radius: 8px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow-x: auto;
         }
         
         /* Table Styling */
         .lyd-table-wrapper {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             margin-bottom: var(--spacing-lg);
         }
@@ -259,7 +248,7 @@
         .lyd-table-header {
             padding: var(--spacing-lg);
             background: var(--lyd-gray-50);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -281,7 +270,7 @@
         .lyd-table-filters {
             padding: var(--spacing-lg);
             background: var(--lyd-gray-50);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             display: flex;
             gap: var(--spacing-md);
             align-items: center;
@@ -315,7 +304,7 @@
             min-height: 40px;
             padding: 8px 12px;
             padding-right: 40px;
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border: 1px solid var(--lyd-gray-300);
             border-radius: 8px;
             font-size: var(--font-size-sm);
@@ -340,7 +329,7 @@
         .lyd-table-filter-icon {
             width: 16px;
             height: 16px;
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             transition: transform 0.2s ease;
         }
         
@@ -354,8 +343,8 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: var(--lyd-white);
-            border: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border: 1px solid var(--lyd-line);
             border-radius: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             z-index: 1000;
@@ -393,7 +382,7 @@
         
         .lyd-table-filter-option.selected {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
             font-weight: 500;
         }
         
@@ -415,7 +404,7 @@
             text-align: left;
             font-weight: 600;
             color: var(--lyd-gray-700);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             font-size: var(--font-size-sm);
             position: sticky;
             top: 0;
@@ -463,12 +452,12 @@
         }
         
         .lyd-table.bordered {
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
         }
         
         .lyd-table.bordered th,
         .lyd-table.bordered td {
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
         }
         
         .lyd-table.compact th,
@@ -490,7 +479,7 @@
             border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
-            background: var(--lyd-gray-200);
+            background: var(--lyd-line);
         }
 
         .lyd-user-avatar img {
@@ -512,7 +501,7 @@
         }
 
         .lyd-user-email {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-xs);
         }
 
@@ -529,7 +518,7 @@
         }
 
         .lyd-role-department {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-xs);
             text-transform: capitalize;
         }
@@ -564,7 +553,7 @@
             height: 32px;
             padding: 0;
             background: transparent;
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
         }
 
         .lyd-button.icon-only:hover {
@@ -636,7 +625,7 @@
             padding: 16px;
             background: var(--lyd-gray-50);
             border-radius: 8px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
         }
 
         .lyd-filter-group {
@@ -659,7 +648,7 @@
             border: 1px solid var(--lyd-gray-300);
             border-radius: 6px;
             font-size: var(--font-size-sm);
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             transition: all 0.2s ease;
             min-width: 200px;
         }
@@ -681,7 +670,7 @@
             background: transparent;
             border: 1px solid var(--lyd-gray-300);
             border-radius: 6px;
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             cursor: pointer;
             font-size: var(--font-size-sm);
             transition: all 0.2s ease;
@@ -789,7 +778,7 @@
         .lyd-table-pagination {
             padding: var(--spacing-lg);
             background: var(--lyd-gray-50);
-            border-top: 1px solid var(--lyd-gray-200);
+            border-top: 1px solid var(--lyd-line);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -798,7 +787,7 @@
         .lyd-button.pagination {
             padding: var(--spacing-sm) var(--spacing-md);
             border: 1px solid var(--lyd-gray-300);
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             color: var(--lyd-text);
             border-radius: 6px;
             font-size: var(--font-size-sm);
@@ -817,7 +806,7 @@
         
         .lyd-pagination-info {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             margin: 0 var(--spacing-lg);
         }
         
@@ -856,7 +845,7 @@
             align-items: center;
             justify-content: center;
             padding: var(--spacing-2xl);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             text-align: center;
         }
         
@@ -883,7 +872,7 @@
         .lyd-bulk-actions {
             padding: var(--spacing-md) var(--spacing-lg);
             background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-secondary) 100%);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
             display: none;
             align-items: center;
             gap: var(--spacing-md);
@@ -903,7 +892,7 @@
             padding: var(--spacing-xs) var(--spacing-sm);
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
             border-radius: 4px;
             font-size: var(--font-size-xs);
             cursor: pointer;
@@ -924,8 +913,8 @@
             position: absolute;
             top: 100%;
             right: 0;
-            background: var(--lyd-white);
-            border: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border: 1px solid var(--lyd-line);
             border-radius: 6px;
             box-shadow: var(--shadow-lg);
             min-width: 150px;
@@ -956,11 +945,11 @@
         
         /* Implementation Guide Styling */
         .implementation-section {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 8px;
             padding: var(--spacing-xl);
             margin-bottom: var(--spacing-xl);
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
         }
         
         .implementation-section h3 {
@@ -993,7 +982,7 @@
             top: var(--spacing-md);
             right: var(--spacing-md);
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
             border: none;
             padding: var(--spacing-xs) var(--spacing-sm);
             border-radius: 4px;
@@ -1011,7 +1000,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: var(--spacing-md);
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             border-radius: 8px;
             overflow: hidden;
         }
@@ -1020,7 +1009,7 @@
         .api-table td {
             padding: var(--spacing-md);
             text-align: left;
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
         }
         
         .api-table th {
@@ -1153,13 +1142,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -1252,44 +1241,9 @@
         </div>
 
         <!-- Section 1: Premium Table Effects -->
-        <section class="section">
-            <h2 class="section-title premium">Premium Interactive Tables & Micro-Animations</h2>
-            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Advanced table components with luxury-level interactions, glassmorphism effects, and premium animations for sophisticated backoffice applications</p>
-            
-            <div class="showcase-grid">
-                <!-- Premium Glassmorphism Table -->
-                <div class="showcase-item">
-                    <h3>Glassmorphism Table</h3>
-                    <p>Modern transparency effects with backdrop blur for premium presentations</p>
-                    
-                    <div class="lyd-table-container" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; overflow: hidden;">
-                        <table class="lyd-table">
-                            <thead style="background: rgba(0, 0, 102, 0.1);">
-                                <tr>
-                                    <th style="padding: 16px; color: var(--lyd-deep-blue); font-weight: 600;">Property</th>
-                                    <th style="padding: 16px; color: var(--lyd-deep-blue); font-weight: 600;">Value</th>
-                                    <th style="padding: 16px; color: var(--lyd-deep-blue); font-weight: 600;">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="transition: all 0.3s ease; border-bottom: 1px solid rgba(255, 255, 255, 0.1);" onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
-                                    <td style="padding: 16px; color: var(--lyd-text);">Villa München</td>
-                                    <td style="padding: 16px; color: var(--lyd-deep-blue); font-weight: 600;">€2.4M</td>
-                                    <td style="padding: 16px;"><span style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 500;">Active</span></td>
-                                </tr>
-                                <tr style="transition: all 0.3s ease; border-bottom: 1px solid rgba(255, 255, 255, 0.1);" onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
-                                    <td style="padding: 16px; color: var(--lyd-text);">Penthouse Berlin</td>
-                                    <td style="padding: 16px; color: var(--lyd-deep-blue); font-weight: 600;">€1.8M</td>
-                                    <td style="padding: 16px;"><span style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 500;">Pending</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
         
-        <!-- Section 2: Table Variants -->
+        
+        <!-- Section 1: Table Variants -->
         <section class="section">
             <h2 class="section-title premium">Table Variants</h2>
             
@@ -1314,19 +1268,19 @@
                                     <tbody>
                                         <tr>
                                             <td>#12345</td>
-                                            <td>Maximilianstraße 15, Munich</td>
+                                            <td>Maximilianstrasse 15, Munich</td>
                                             <td>€850,000</td>
                                             <td><span class="lyd-badge success">Available</span></td>
                                         </tr>
                                         <tr>
                                             <td>#12346</td>
-                                            <td>Leopoldstraße 28, Munich</td>
+                                            <td>Leopoldstrasse 28, Munich</td>
                                             <td>€1,200,000</td>
                                             <td><span class="lyd-badge warning">Reserved</span></td>
                                         </tr>
                                         <tr>
                                             <td>#12347</td>
-                                            <td>Sendlinger Straße 42, Munich</td>
+                                            <td>Sendlinger Strasse 42, Munich</td>
                                             <td>€950,000</td>
                                             <td><span class="lyd-badge error">Sold</span></td>
                                         </tr>
@@ -1448,7 +1402,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Maximilianstraße 15</td>
+                                            <td>Maximilianstrasse 15</td>
                                             <td>Apartment</td>
                                             <td>€850,000</td>
                                             <td><span class="lyd-badge success">Available</span></td>
@@ -1490,7 +1444,7 @@
                                             <td class="lyd-table-checkbox">
                                                 <input type="checkbox" checked>
                                             </td>
-                                            <td>Maximilianstraße 15</td>
+                                            <td>Maximilianstrasse 15</td>
                                             <td>€850,000</td>
                                             <td><span class="lyd-badge success">Available</span></td>
                                         </tr>
@@ -1498,7 +1452,7 @@
                                             <td class="lyd-table-checkbox">
                                                 <input type="checkbox" checked>
                                             </td>
-                                            <td>Leopoldstraße 28</td>
+                                            <td>Leopoldstrasse 28</td>
                                             <td>€1,200,000</td>
                                             <td><span class="lyd-badge warning">Reserved</span></td>
                                         </tr>
@@ -1506,7 +1460,7 @@
                                             <td class="lyd-table-checkbox">
                                                 <input type="checkbox">
                                             </td>
-                                            <td>Sendlinger Straße 42</td>
+                                            <td>Sendlinger Strasse 42</td>
                                             <td>€950,000</td>
                                             <td><span class="lyd-badge error">Sold</span></td>
                                         </tr>
@@ -1535,7 +1489,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Maximilianstraße 15</td>
+                                            <td>Maximilianstrasse 15</td>
                                             <td><span class="lyd-badge success">Available</span></td>
                                             <td>
                                                 <div class="lyd-table-row-actions">
@@ -1547,7 +1501,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Leopoldstraße 28</td>
+                                            <td>Leopoldstrasse 28</td>
                                             <td><span class="lyd-badge warning">Reserved</span></td>
                                             <td>
                                                 <div class="lyd-table-row-actions">
@@ -1622,7 +1576,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                                                     </svg>
                                                     <h4 style="color: var(--lyd-gray-700); margin-bottom: 8px;">No properties found</h4>
-                                                    <p style="color: var(--lyd-gray-500); margin-bottom: 16px;">Get started by adding your first property</p>
+                                                    <p style="color: var(--lyd-grey); margin-bottom: 16px;">Get started by adding your first property</p>
                                                     <button class="lyd-table-action" style="background: var(--lyd-primary); color: white; border: none;">Add Property</button>
                                                 </div>
                                             </td>
@@ -1654,19 +1608,19 @@
                                     <tbody>
                                         <tr>
                                             <td>#12345</td>
-                                            <td>Maximilianstraße 15, Munich</td>
+                                            <td>Maximilianstrasse 15, Munich</td>
                                             <td>€850,000</td>
                                             <td><span class="lyd-badge success">Available</span></td>
                                         </tr>
                                         <tr>
                                             <td>#12346</td>
-                                            <td>Leopoldstraße 28, Munich</td>
+                                            <td>Leopoldstrasse 28, Munich</td>
                                             <td>€1,200,000</td>
                                             <td><span class="lyd-badge warning">Reserved</span></td>
                                         </tr>
                                         <tr>
                                             <td>#12347</td>
-                                            <td>Sendlinger Straße 42, Munich</td>
+                                            <td>Sendlinger Strasse 42, Munich</td>
                                             <td>€950,000</td>
                                             <td><span class="lyd-badge error">Sold</span></td>
                                         </tr>
@@ -1705,7 +1659,7 @@
                                     <tbody>
                                         <tr>
                                             <td>#12345</td>
-                                            <td>Maximilianstraße 15</td>
+                                            <td>Maximilianstrasse 15</td>
                                             <td>Apartment</td>
                                             <td>€850,000</td>
                                             <td><span class="lyd-badge success">Available</span></td>
@@ -1713,7 +1667,7 @@
                                         </tr>
                                         <tr>
                                             <td>#12346</td>
-                                            <td>Leopoldstraße 28</td>
+                                            <td>Leopoldstrasse 28</td>
                                             <td>Villa</td>
                                             <td>€1,200,000</td>
                                             <td><span class="lyd-badge error">Sold</span></td>
@@ -1721,7 +1675,7 @@
                                         </tr>
                                         <tr>
                                             <td>#12347</td>
-                                            <td>Sendlinger Straße 42</td>
+                                            <td>Sendlinger Strasse 42</td>
                                             <td>House</td>
                                             <td>€950,000</td>
                                             <td><span class="lyd-badge warning">Reserved</span></td>
@@ -1958,7 +1912,7 @@
                                     <tbody id="sortable-tbody">
                                         <tr data-type="apartment" data-status="available" data-price="850000" data-size="95" data-date="2024-01-15">
                                             <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Maximilianstraße 15, München</td>
+                                            <td>Maximilianstrasse 15, Muenchen</td>
                                             <td>Apartment</td>
                                             <td>€850,000</td>
                                             <td>95</td>
@@ -1982,7 +1936,7 @@
                                         </tr>
                                         <tr data-type="villa" data-status="sold" data-price="1200000" data-size="180" data-date="2024-01-10">
                                             <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Leopoldstraße 28, München</td>
+                                            <td>Leopoldstrasse 28, Muenchen</td>
                                             <td>Villa</td>
                                             <td>€1,200,000</td>
                                             <td>180</td>
@@ -2006,7 +1960,7 @@
                                         </tr>
                                         <tr data-type="house" data-status="reserved" data-price="950000" data-size="120" data-date="2024-01-12">
                                             <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Sendlinger Straße 42, München</td>
+                                            <td>Sendlinger Strasse 42, Muenchen</td>
                                             <td>House</td>
                                             <td>€950,000</td>
                                             <td>120</td>
@@ -2030,7 +1984,7 @@
                                         </tr>
                                         <tr data-type="penthouse" data-status="available" data-price="2100000" data-size="250" data-date="2024-01-08">
                                             <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Marienplatz 8, München</td>
+                                            <td>Marienplatz 8, Muenchen</td>
                                             <td>Penthouse</td>
                                             <td>€2,100,000</td>
                                             <td>250</td>
@@ -2054,7 +2008,7 @@
                                         </tr>
                                         <tr data-type="apartment" data-status="available" data-price="675000" data-size="75" data-date="2024-01-20">
                                             <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Schwabing Allee 12, München</td>
+                                            <td>Schwabing Allee 12, Muenchen</td>
                                             <td>Apartment</td>
                                             <td>€675,000</td>
                                             <td>75</td>
@@ -2187,7 +2141,7 @@
                                                 <input type="checkbox">
                                             </td>
                                             <td>#12345</td>
-                                            <td>Maximilianstraße 15, 80539 Munich</td>
+                                            <td>Maximilianstrasse 15, 80539 Munich</td>
                                             <td>Apartment</td>
                                             <td>€850,000</td>
                                             <td><span class="lyd-badge success">Available</span></td>
@@ -2205,7 +2159,7 @@
                                                 <input type="checkbox">
                                             </td>
                                             <td>#12346</td>
-                                            <td>Leopoldstraße 28, 80802 Munich</td>
+                                            <td>Leopoldstrasse 28, 80802 Munich</td>
                                             <td>Villa</td>
                                             <td>€1,200,000</td>
                                             <td><span class="lyd-badge error">Sold</span></td>
@@ -2222,7 +2176,7 @@
                                                 <input type="checkbox">
                                             </td>
                                             <td>#12347</td>
-                                            <td>Sendlinger Straße 42, 80331 Munich</td>
+                                            <td>Sendlinger Strasse 42, 80331 Munich</td>
                                             <td>House</td>
                                             <td>€950,000</td>
                                             <td><span class="lyd-badge warning">Reserved</span></td>
@@ -2307,7 +2261,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Max Mustermann</td>
+                                            <td>Max Patternsmann</td>
                                             <td>max.mustermann@email.com</td>
                                             <td>3-Room Apartment, Munich Center</td>
                                             <td><span class="lyd-badge error">High</span></td>
@@ -2369,15 +2323,15 @@
                                     <tbody>
                                         <tr>
                                             <td>2024-01-20</td>
-                                            <td>Maximilianstraße 15</td>
-                                            <td>Max Mustermann</td>
+                                            <td>Maximilianstrasse 15</td>
+                                            <td>Max Patternsmann</td>
                                             <td>€850,000</td>
                                             <td>€25,500</td>
                                             <td><span class="lyd-badge success">Completed</span></td>
                                         </tr>
                                         <tr>
                                             <td>2024-01-18</td>
-                                            <td>Leopoldstraße 28</td>
+                                            <td>Leopoldstrasse 28</td>
                                             <td>Anna Schmidt</td>
                                             <td>€1,200,000</td>
                                             <td>€36,000</td>
@@ -2456,6 +2410,27 @@
         <!-- Section 3: Implementation Guide -->
         <section class="section">
             <h2 class="section-title premium">Implementation Guide</h2>
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                        <button class="lyd-button copy">Copy</button>
+                        <pre>&lt;!-- Basic table Usage --&gt;
+&lt;div class="lyd-table"&gt;
+    &lt;span&gt;table Content&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- table with States --&gt;
+&lt;div class="lyd-table primary"&gt;
+    &lt;span&gt;Primary table&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div class="lyd-table success"&gt;
+    &lt;span&gt;Success table&lt;/span&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                </div>
+            </div>
             
             <div class="implementation-section">
                 <h3>Backoffice Table Usage</h3>
@@ -2507,7 +2482,7 @@
                 &lt;tr&gt;
                     &lt;td class="lyd-table-checkbox"&gt;&lt;input type="checkbox"&gt;&lt;/td&gt;
                     &lt;td&gt;#12345&lt;/td&gt;
-                    &lt;td&gt;Maximilianstraße 15, Munich&lt;/td&gt;
+                    &lt;td&gt;Maximilianstrasse 15, Munich&lt;/td&gt;
                     &lt;td&gt;€850,000&lt;/td&gt;
                     &lt;td&gt;&lt;span class="lyd-badge success"&gt;Available&lt;/span&gt;&lt;/td&gt;
                     &lt;td&gt;
@@ -2529,6 +2504,52 @@
 &lt;/div&gt;</pre>
                 </div>
             </div>
+            
+            <div class="implementation-section">
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-table</code></td>
+                            <td>Base table class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-table-container</code></td>
+                            <td>Table wrapper with responsive scrolling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-table-header</code></td>
+                            <td>Table header with search and filters</td>
+                        </tr>
+                        <tr>
+                            <td><code>.sortable</code></td>
+                            <td>Sortable column header with arrow indicators</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-table-checkbox</code></td>
+                            <td>Checkbox column for bulk selection</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-bulk-actions</code></td>
+                            <td>Bulk action toolbar for selected rows</td>
+                        </tr>
+                        <tr>
+                            <td><code>.striped</code></td>
+                            <td>Alternating row colors for better readability</td>
+                        </tr>
+                        <tr>
+                            <td><code>.compact</code></td>
+                            <td>Reduced padding for dense data display</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <!-- Section 4: Accessibility & Best Practices -->
@@ -2536,15 +2557,26 @@
             <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
             
             <div class="accessibility-grid">
+                                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support with intuitive navigation patterns.</p>
+                    <ul>
+                        <li><kbd>Tab</kbd> - Navigate to next element</li>
+                        <li><kbd>Shift + Tab</kbd> - Navigate to previous element</li>
+                        <li><kbd>Enter</kbd> - Activate element</li>
+                        <li><kbd>Space</kbd> - Toggle/select element</li>
+                        <li><kbd>Escape</kbd> - Close/cancel action</li>
+                    </ul>
+                </div>
                 <div class="accessibility-item">
                     <h4>Backoffice Optimization</h4>
                     <ul>
-                        <li>Optimiert für komplexe Datenmengen (1000+ Einträge)</li>
-                        <li>Erweiterte Filterung und Suchfunktionen</li>
-                        <li>Bulk-Operationen für effiziente Verwaltung</li>
-                        <li>Export-Funktionen für Berichte und Analysen</li>
-                        <li>Responsive Design für Tablet-Nutzung</li>
-                        <li>Keyboard-Navigation für Power-User</li>
+                        <li>Optimiert fuer komplexe Datenmengen (1000+ Eintraege)</li>
+                        <li>Advanced Filterung und Suchfunktionen</li>
+                        <li>Bulk-Operationen fuer effiziente Verwaltung</li>
+                        <li>Export-Functions fuer Berichte und Analysen</li>
+                        <li>Responsive Design fuer Tablet-Nutzung</li>
+                        <li>Keyboard-Navigation fuer Power-User</li>
                     </ul>
                 </div>
                 
@@ -2563,7 +2595,7 @@
                 <div class="accessibility-item">
                     <h4>Performance</h4>
                     <ul>
-                        <li>Virtual Scrolling für große Datasets</li>
+                        <li>Virtual Scrolling fuer grosse Datasets</li>
                         <li>Lazy Loading mit Intersection Observer</li>
                         <li>Debounced Search (300ms)</li>
                         <li>Memoized Sorting und Filtering</li>
@@ -2583,20 +2615,32 @@
                         <li>Client Communication Tools</li>
                     </ul>
                 </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
+                    <ul>
+                        <li>Proper ARIA labeling for all table headers and cells</li>
+                        <li>Screen reader friendly table structure with scope attributes</li>
+                        <li>Alternative text for data visualizations and status indicators</li>
+                        <li>Descriptive aria-labels for sortable columns and filters</li>
+                        <li>Live regions for dynamic content updates</li>
+                    </ul>
+                </div>
             </div>
             
             <div class="implementation-section">
                 <h3>Backoffice Integration</h3>
-                <p>Diese Table-Implementation ist speziell für <strong>komplexe Backoffice-Anwendungen</strong> optimiert:</p>
+                <p>Diese Table-Implementation ist speziell fuer <strong>komplexe Backoffice-Anwendungen</strong> optimiert:</p>
                 <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Property Management:</strong> Umfassende Immobilienverwaltung mit Status-Tracking</li>
-                    <li><strong>Lead Management:</strong> Kundenbeziehungsmanagement mit Prioritäten und Follow-ups</li>
-                    <li><strong>Transaction History:</strong> Vollständige Transaktionsverfolgung mit Finanzdetails</li>
+                    <li><strong>Property Management:</strong> Umfassende Real Estateverwaltung mit Status-Tracking</li>
+                    <li><strong>Lead Management:</strong> Kundenbeziehungsmanagement mit Prioritaeten und Follow-ups</li>
+                    <li><strong>Transaction History:</strong> Vollstaendige Transaktionsverfolgung mit Finanzdetails</li>
                     <li><strong>Document Management:</strong> Dateiverwaltung mit Versionskontrolle</li>
-                    <li><strong>Bulk Operations:</strong> Massenoperationen für effiziente Datenverwaltung</li>
-                    <li><strong>Advanced Filtering:</strong> Multi-Kriterien-Filterung für große Datenmengen</li>
+                    <li><strong>Bulk Operations:</strong> Massenoperationen fuer effiziente Datenverwaltung</li>
+                    <li><strong>Advanced Filtering:</strong> Multi-Kriterien-Filterung fuer grosse Datenmengen</li>
                     <li><strong>Export Functions:</strong> Flexible Datenexporte (CSV, Excel, PDF)</li>
-                    <li><strong>Real-time Updates:</strong> Live-Aktualisierungen bei Datenänderungen</li>
+                    <li><strong>Real-time Updates:</strong> Live-Aktualisierungen bei Datenaenderungen</li>
                 </ul>
             </div>
         </section>
@@ -2628,7 +2672,7 @@
             // Set active navigation
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });
@@ -2643,8 +2687,8 @@
             
             document.querySelectorAll('.sortable').forEach(header => {
                 header.addEventListener('click', function() {
-                    const column = this.getAttribute('data-column');
-                    const type = this.getAttribute('data-type') || 'string';
+                    const column = this.getAttributes('data-column');
+                    const type = this.getAttributes('data-type') || 'string';
                     
                     // Skip checkbox column
                     if (!column) return;
@@ -2798,20 +2842,20 @@
                         bValue = b.children[2].textContent.trim();
                         break;
                     case 'price':
-                        aValue = parseFloat(a.getAttribute('data-price')) || 0;
-                        bValue = parseFloat(b.getAttribute('data-price')) || 0;
+                        aValue = parseFloat(a.getAttributes('data-price')) || 0;
+                        bValue = parseFloat(b.getAttributes('data-price')) || 0;
                         break;
                     case 'size':
-                        aValue = parseFloat(a.getAttribute('data-size')) || 0;
-                        bValue = parseFloat(b.getAttribute('data-size')) || 0;
+                        aValue = parseFloat(a.getAttributes('data-size')) || 0;
+                        bValue = parseFloat(b.getAttributes('data-size')) || 0;
                         break;
                     case 'status':
                         aValue = a.children[5].textContent.trim();
                         bValue = b.children[5].textContent.trim();
                         break;
                     case 'date':
-                        aValue = new Date(a.getAttribute('data-date'));
-                        bValue = new Date(b.getAttribute('data-date'));
+                        aValue = new Date(a.getAttributes('data-date'));
+                        bValue = new Date(b.getAttributes('data-date'));
                         break;
                     default:
                         aValue = a.children[1].textContent.trim();
@@ -2852,8 +2896,8 @@
             
             rows.forEach(row => {
                 const address = row.children[1].textContent.toLowerCase();
-                const type = row.getAttribute('data-type');
-                const status = row.getAttribute('data-status');
+                const type = row.getAttributes('data-type');
+                const status = row.getAttributes('data-status');
                 
                 // Check all filters
                 const matchesSearch = !searchTerm || address.includes(searchTerm);
@@ -2879,7 +2923,7 @@
                 const label = filter.parentElement.querySelector('.lyd-filter-label');
                 if (label && label.textContent.toLowerCase().includes(filterType.replace('-', ' '))) {
                     const selected = filter.querySelector('.lyd-table-filter-option.selected');
-                    return selected ? selected.getAttribute('data-value') : '';
+                    return selected ? selected.getAttributes('data-value') : '';
                 }
             }
             return '';

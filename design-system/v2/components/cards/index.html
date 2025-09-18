@@ -8,11 +8,11 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     
     <style>
-        :root {
+                :root {
             /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
@@ -55,14 +55,12 @@
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             
             /* Border Radius */
             --radius-sm: 4px;
             --radius-md: 8px;
             --radius-lg: 12px;
             --radius-xl: 16px;
-            --radius-2xl: 20px;
         }
         
         * {
@@ -71,7 +69,7 @@
             box-sizing: border-box;
         }
         
-        body {
+                body {
             font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             color: var(--lyd-text);
@@ -292,8 +290,13 @@
             margin: 0;
         }
         
-        .lyd-card-body {
-            padding: var(--spacing-lg);
+        .lyd-card-        body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
         }
         
         .lyd-card-text {
@@ -497,7 +500,7 @@
             background: var(--lyd-error);
         }
         
-        /* Button in Card - Konsistent mit Button-Komponente */
+        /* Button in Card - Konsistent mit Button-Component */
         .lyd-card .lyd-button {
             display: inline-flex;
             align-items: center;
@@ -798,13 +801,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2Card" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -906,16 +909,16 @@
                     <h3>Basic Card</h3>
                     <p>Clean, professional card with header, body, and footer sections</p>
                     <div class="showcase-demo">
-                        <div class="lyd-card" style="max-width: 300px;">
-                            <div class="lyd-card-header">
+                        <div class="lyd-card" style="max-width: 300px;" aria-label="Card" role="article">
+                            <div class="lyd-card-header" aria-label="Card" role="article">
                                 <h3 class="lyd-card-title">Property Overview</h3>
                                 <p class="lyd-card-subtitle">Market Analysis Report</p>
                             </div>
-                            <div class="lyd-card-body">
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <p class="lyd-card-text">Comprehensive analysis of current market trends and property valuations in Munich.</p>
                             </div>
-                            <div class="lyd-card-footer">
-                                <button class="lyd-button primary">View Details</button>
+                            <div class="lyd-card-footer" aria-label="Card" role="article">
+                                <button class="lyd-button primary" aria-label="Interactive button" role="button" aria-label="Button" role="button">View Details</button>
                             </div>
                         </div>
                     </div>
@@ -926,12 +929,12 @@
                     <h3>Image Card</h3>
                     <p>Card with hero image and smooth hover animations</p>
                     <div class="showcase-demo">
-                        <div class="lyd-card" style="max-width: 300px;">
-                            <div class="lyd-card-image-container">
+                        <div class="lyd-card" style="max-width: 300px;" aria-label="Card" role="article">
+                            <div class="lyd-card-image-container" aria-label="Card" role="article">
                                 <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80" alt="Luxury Villa with panoramic views" class="lyd-card-image">
-                                <div class="lyd-card-image-overlay"></div>
+                                <div class="lyd-card-image-overlay" aria-label="Card" role="article"></div>
                             </div>
-                            <div class="lyd-card-body">
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <h3 class="lyd-card-title">Luxury Villa</h3>
                                 <p class="lyd-card-text">Stunning 5-bedroom villa with panoramic city views.</p>
                             </div>
@@ -944,7 +947,7 @@
                     <h3>Feature Card</h3>
                     <p>Centered layout for showcasing features and benefits</p>
                     <div class="showcase-demo">
-                        <div class="lyd-card lyd-feature-card" style="max-width: 280px;">
+                        <div class="lyd-card lyd-feature-card" style="max-width: 280px;" aria-label="Card" role="article">
                             <svg class="lyd-feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
@@ -959,12 +962,12 @@
                     <h3>Interactive Card</h3>
                     <p>Clickable card with enhanced hover and active states</p>
                     <div class="showcase-demo">
-                        <div class="lyd-card interactive" style="max-width: 300px;">
-                            <div class="lyd-card-badge">NEW</div>
-                            <div class="lyd-card-body">
+                        <div class="lyd-card interactive" style="max-width: 300px;" aria-label="Card" role="article">
+                            <div class="lyd-card-badge" aria-label="Card" role="article">NEW</div>
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <h3 class="lyd-card-title">Market Update</h3>
                                 <p class="lyd-card-text">Latest market insights and property trends for Q4 2024.</p>
-                                <button class="lyd-button secondary">Read More</button>
+                                <button class="lyd-button secondary" aria-label="Interactive button" role="button" aria-label="Button" role="button">Read More</button>
                             </div>
                         </div>
                     </div>
@@ -975,12 +978,12 @@
                     <h3>Featured Card</h3>
                     <p>Highlighted card with premium border styling</p>
                     <div class="showcase-demo">
-                        <div class="lyd-card featured" style="max-width: 300px;">
-                            <div class="lyd-card-header">
+                        <div class="lyd-card featured" style="max-width: 300px;" aria-label="Card" role="article">
+                            <div class="lyd-card-header" aria-label="Card" role="article">
                                 <h3 class="lyd-card-title">Premium Service</h3>
                                 <p class="lyd-card-subtitle">Recommended</p>
                             </div>
-                            <div class="lyd-card-body">
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <p class="lyd-card-text">Comprehensive property management with 24/7 support.</p>
                             </div>
                         </div>
@@ -992,8 +995,8 @@
                     <h3>Glassmorphism Card</h3>
                     <p>Modern glassmorphism effect with LYD CI styling</p>
                     <div class="showcase-demo" style="background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); padding: 32px;">
-                        <div class="lyd-card glassmorphism" style="max-width: 280px; color: white;">
-                            <div class="lyd-card-body">
+                        <div class="lyd-card glassmorphism" style="max-width: 280px; color: white;" aria-label="Card" role="article">
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <h3 class="lyd-card-title" style="color: white;">Exclusive Offer</h3>
                                 <p class="lyd-card-text" style="color: rgba(255,255,255,0.9);">Premium properties with exceptional value and location.</p>
                             </div>
@@ -1013,12 +1016,12 @@
                     <h3 class="example-title">Property Listing Card</h3>
                     <p class="example-description">Complete property card with image, price, details, and location</p>
                     <div class="example-demo">
-                        <div class="lyd-card lyd-property-card">
-                            <div class="lyd-card-image-container">
+                        <div class="lyd-card lyd-property-card" aria-label="Card" role="article">
+                            <div class="lyd-card-image-container" aria-label="Card" role="article">
                                 <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=240&q=80" alt="Modern Villa in Munich Schwabing" class="lyd-card-image">
-                                <div class="lyd-card-badge success">Available</div>
+                                <div class="lyd-card-badge success" aria-label="Card" role="article">Available</div>
                             </div>
-                            <div class="lyd-card-body">
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <div class="lyd-property-price">€850.000</div>
                                 <h3 class="lyd-card-title">Modern Villa in Schwabing</h3>
                                 <div class="lyd-property-location">
@@ -1049,9 +1052,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lyd-card-footer">
-                                <button class="lyd-button primary">Schedule Viewing</button>
-                                <button class="lyd-button secondary">Save Property</button>
+                            <div class="lyd-card-footer" aria-label="Card" role="article">
+                                <button class="lyd-button primary" aria-label="Interactive button" role="button" aria-label="Button" role="button">Schedule Viewing</button>
+                                <button class="lyd-button secondary" aria-label="Interactive button" role="button" aria-label="Button" role="button">Save Property</button>
                             </div>
                         </div>
                     </div>
@@ -1059,16 +1062,16 @@
                 
                 <!-- Agent Card -->
                 <div class="example-item">
-                    <h3 class="example-title">Agent Profile Card</h3>
+                    <h3 class="example-title">Agent Profilee Card</h3>
                     <p class="example-description">Professional agent card with contact information and credentials</p>
                     <div class="example-demo">
-                        <div class="lyd-card" style="max-width: 320px;">
-                            <div class="lyd-card-header" style="text-align: center;">
+                        <div class="lyd-card" style="max-width: 320px;" aria-label="Card" role="article">
+                            <div class="lyd-card-header" style="text-align: center;" aria-label="Card" role="article">
                                 <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--lyd-royal-blue), var(--lyd-deep-blue)); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: 600;">MB</div>
                                 <h3 class="lyd-card-title">Max Bernecker</h3>
                                 <p class="lyd-card-subtitle">Senior Property Advisor</p>
                             </div>
-                            <div class="lyd-card-body">
+                            <div class="lyd-card-body" aria-label="Card" role="article">
                                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; color: var(--lyd-grey);">
                                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -1081,10 +1084,10 @@
                                     </svg>
                                     <span>+49 89 123 456 789</span>
                                 </div>
-                                <p style="font-size: 14px; color: var(--lyd-grey);">Spezialist für Luxusimmobilien in München mit über 10 Jahren Erfahrung.</p>
+                                <p style="font-size: 14px; color: var(--lyd-grey);">Spezialist fuer Luxusimmobilien in Muenchen mit ueber 10 Jahren Erfahrung.</p>
                             </div>
-                            <div class="lyd-card-footer">
-                                <button class="lyd-button primary">Contact Agent</button>
+                            <div class="lyd-card-footer" aria-label="Card" role="article">
+                                <button class="lyd-button primary" aria-label="Interactive button" role="button" aria-label="Button" role="button">Contact Agent</button>
                             </div>
                         </div>
                     </div>
@@ -1096,15 +1099,15 @@
                     <p class="example-description">Data visualization card for market metrics and KPIs</p>
                     <div class="example-demo">
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                            <div class="lyd-card" style="text-align: center;">
-                                <div class="lyd-card-body">
+                            <div class="lyd-card" style="text-align: center;" aria-label="Card" role="article">
+                                <div class="lyd-card-body" aria-label="Card" role="article">
                                     <div style="font-size: 32px; font-weight: 700; color: var(--lyd-deep-blue); margin-bottom: 8px;">1,247</div>
                                     <h4 style="font-size: 16px; font-weight: 600; color: var(--lyd-text); margin-bottom: 4px;">Active Properties</h4>
                                     <p style="font-size: 12px; color: var(--lyd-success);">↗ +12% vs last month</p>
                                 </div>
                             </div>
-                            <div class="lyd-card" style="text-align: center;">
-                                <div class="lyd-card-body">
+                            <div class="lyd-card" style="text-align: center;" aria-label="Card" role="article">
+                                <div class="lyd-card-body" aria-label="Card" role="article">
                                     <div style="font-size: 32px; font-weight: 700; color: var(--lyd-deep-blue); margin-bottom: 8px;">€847K</div>
                                     <h4 style="font-size: 16px; font-weight: 600; color: var(--lyd-text); margin-bottom: 4px;">Avg. Price</h4>
                                     <p style="font-size: 12px; color: var(--lyd-error);">↘ -3% vs last month</p>
@@ -1120,20 +1123,20 @@
                     <p class="example-description">Different card sizes for various layout requirements</p>
                     <div class="example-demo">
                         <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
-                            <div class="lyd-card small">
-                                <div class="lyd-card-body">
+                            <div class="lyd-card small" aria-label="Card" role="article">
+                                <div class="lyd-card-body" aria-label="Card" role="article">
                                     <h4 class="lyd-card-title">Small Card</h4>
                                     <p class="lyd-card-text">Compact card for sidebars and tight spaces.</p>
                                 </div>
                             </div>
-                            <div class="lyd-card">
-                                <div class="lyd-card-body">
+                            <div class="lyd-card" aria-label="Card" role="article">
+                                <div class="lyd-card-body" aria-label="Card" role="article">
                                     <h4 class="lyd-card-title">Regular Card</h4>
                                     <p class="lyd-card-text">Standard card size for most use cases and layouts.</p>
                                 </div>
                             </div>
-                            <div class="lyd-card large">
-                                <div class="lyd-card-body">
+                            <div class="lyd-card large" aria-label="Card" role="article">
+                                <div class="lyd-card-body" aria-label="Card" role="article">
                                     <h4 class="lyd-card-title">Large Card</h4>
                                     <p class="lyd-card-text">Large card for detailed content and featured sections with more space.</p>
                                 </div>
@@ -1151,7 +1154,7 @@
             <div class="implementation-section">
                 <h3>HTML Usage</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre><!-- Basic Card -->
 &lt;div class="lyd-card"&gt;
     &lt;div class="lyd-card-header"&gt;
@@ -1189,11 +1192,11 @@
                 
                 <h3>React/Next.js Integration</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Card.tsx
-import { ReactNode, HTMLAttributes } from 'react';
+import { ReactNode, HTMLAttributess } from 'react';
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {
+interface CardProps extends HTMLAttributess<HTMLDivElement> {
   variant?: 'default' | 'featured' | 'glassmorphism';
   size?: 'small' | 'medium' | 'large';
   interactive?: boolean;
@@ -1366,23 +1369,23 @@ export const CardTitle = ({ children, className = '', ...props }) => (
             
             <div class="implementation-section">
                 <h3>Typography Scale Integration</h3>
-                <p>Diese Card-Implementation nutzt die <strong>Typography Scale</strong> für 100%ige Konsistenz:</p>
+                <p>Diese Card-Implementation nutzt die <strong>Typography Scale</strong> fuer 100%ige Konsistenz:</p>
                 <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Card Title:</strong> <code>var(--font-size-lg)</code> (18px) - Prominente Überschriften</li>
-                    <li><strong>Card Subtitle:</strong> <code>var(--font-size-sm)</code> (14px) - Sekundäre Informationen</li>
+                    <li><strong>Card Title:</strong> <code>var(--font-size-lg)</code> (18px) - Prominente Aboutschriften</li>
+                    <li><strong>Card Subtitle:</strong> <code>var(--font-size-sm)</code> (14px) - Sekundaere Informationen</li>
                     <li><strong>Card Text:</strong> <code>var(--font-size-base)</code> (16px) - CI-Standard</li>
                     <li><strong>Property Price:</strong> <code>var(--font-size-2xl)</code> (24px) - Wichtige Zahlen</li>
                     <li><strong>Badge Text:</strong> <code>var(--font-size-xs)</code> (12px) - Kompakte Labels</li>
                 </ul>
                 
                 <h3>Real Estate Optimization</h3>
-                <p>Speziell optimiert für Immobilien-Anwendungen:</p>
+                <p>Speziell optimiert fuer Real Estate-Anwendungen:</p>
                 <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Property Cards:</strong> Preis, Zimmer, Fläche, Baujahr strukturiert dargestellt</li>
-                    <li><strong>Agent Cards:</strong> Professionelle Kontaktinformationen und Credentials</li>
-                    <li><strong>Statistics Cards:</strong> KPIs und Marktdaten übersichtlich präsentiert</li>
-                    <li><strong>Image Handling:</strong> Optimierte Hover-Effekte für Property-Bilder</li>
-                    <li><strong>Status Badges:</strong> Verfügbarkeit und Immobilien-Status</li>
+                    <li><strong>Property Cards:</strong> Preis, Zimmer, Flaeche, Baujahr strukturiert dargestellt</li>
+                    <li><strong>Agent Cards:</strong> Professionelle Contactinformationen und Credentials</li>
+                    <li><strong>Statistics Cards:</strong> KPIs und Marktdaten uebersichtlich praesentiert</li>
+                    <li><strong>Image Handling:</strong> Optimierte Hover-Effekte fuer Property-Bilder</li>
+                    <li><strong>Status Badges:</strong> Verfuegbarkeit und Real Estate-Status</li>
                 </ul>
             </div>
         </section>
@@ -1426,8 +1429,8 @@ export const CardTitle = ({ children, className = '', ...props }) => (
                 });
                 
                 // Make focusable
-                if (!card.hasAttribute('tabindex')) {
-                    card.setAttribute('tabindex', '0');
+                if (!card.hasAttributes('tabindex')) {
+                    card.setAttributes('tabindex', '0');
                 }
             });
 

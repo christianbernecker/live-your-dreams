@@ -8,41 +8,29 @@
     <!-- LYD Design System v2.0 - Centralized Architecture -->
     <link rel="stylesheet" href="../shared/tokens.css">
     <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option für Konsistenz -->
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
     <link rel="stylesheet" href="../shared/reset-cascade.css">
     
     <style>
-        :root {
+                :root {
             /* Live Your Dreams CI Colors */
             --lyd-deep-blue: #000066;
             --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
             --lyd-text: #111111;
+            --lyd-bg: #ffffff;
             
-            /* Design Tokens */
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
+            /* Additional Colors */
             --lyd-success: #10b981;
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
             
-            /* Colors */
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
-            
-            /* Typography */
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
             --font-size-xs: 12px;
             --font-size-sm: 14px;
             --font-size-base: 16px;
@@ -67,7 +55,12 @@
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         
         * {
@@ -76,10 +69,10 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: var(--font-family);
+                body {
+            font-family: var(--font-family-primary);
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
+            color: var(--lyd-text);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
@@ -88,8 +81,8 @@
         /* Sidebar Navigation */
         .sidebar {
             width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -99,7 +92,7 @@
         
         .sidebar-header {
             padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
         }
         
@@ -115,7 +108,7 @@
         
         .logo-subtitle {
             font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             font-weight: 500;
         }
         
@@ -135,7 +128,7 @@
         .nav-item {
             display: block;
             padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             text-decoration: none;
             font-size: var(--font-size-sm);
             font-weight: 500;
@@ -182,7 +175,7 @@
         
         .page-subtitle {
             font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             max-width: 800px;
             margin-bottom: var(--spacing-2xl);
         }
@@ -214,9 +207,9 @@
         }
         
         .showcase-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
@@ -226,20 +219,20 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
         }
         
         .showcase-item p {
             padding: 0 var(--spacing-lg);
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             margin-bottom: var(--spacing-md);
         }
         
         .showcase-demo {
             padding: var(--spacing-lg);
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
         }
         
         /* Slider Components */
@@ -279,7 +272,7 @@
         .lyd-slider-track {
             width: 100%;
             height: 6px;
-            background: var(--lyd-gray-200);
+            background: var(--lyd-line);
             border-radius: 3px;
             position: relative;
         }
@@ -296,7 +289,7 @@
         .lyd-slider-thumb {
             width: 20px;
             height: 20px;
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border: 3px solid var(--lyd-primary);
             border-radius: 50%;
             position: absolute;
@@ -400,7 +393,7 @@
         /* Slider helper text */
         .lyd-slider-helper {
             font-size: var(--font-size-xs);
-            color: var(--lyd-gray-500);
+            color: var(--lyd-grey);
             margin-top: var(--spacing-xs);
         }
         
@@ -414,9 +407,9 @@
         
         /* Implementation Guide */
         .implementation-section {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 12px;
-            border: 1px solid var(--lyd-gray-200);
+            border: 1px solid var(--lyd-line);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
@@ -427,7 +420,7 @@
             font-size: var(--font-size-lg);
             font-weight: 600;
             color: var(--lyd-gray-900);
-            border-bottom: 1px solid var(--lyd-gray-200);
+            border-bottom: 1px solid var(--lyd-line);
             background: var(--lyd-gray-50);
             margin: 0;
         }
@@ -466,7 +459,7 @@
         
         .lyd-button.copy {
             background: var(--lyd-primary);
-            color: var(--lyd-white);
+            color: var(--lyd-bg);
         }
         
         .lyd-button.copy:hover {
@@ -481,7 +474,7 @@
         }
         
         .accessibility-item {
-            background: var(--lyd-white);
+            background: var(--lyd-bg);
             border-radius: 8px;
             padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
@@ -505,7 +498,7 @@
         }
         
         .accessibility-item p {
-            color: var(--lyd-gray-600);
+            color: var(--lyd-grey);
             font-size: var(--font-size-sm);
             line-height: 1.6;
         }
@@ -535,13 +528,13 @@
         <div class="sidebar-header">
             <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <!-- Gradient für die Sichel -->
+                    <!-- Gradient fuer die Sichel -->
                     <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
                     </linearGradient>
                     
-                    <!-- Gradient für den gesamten Text -->
+                    <!-- Gradient fuer den gesamten Text -->
                     <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
                         <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
@@ -938,7 +931,7 @@
                 <h3>HTML Usage</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>&lt;!-- Single Value Slider --&gt;
 &lt;div class="lyd-slider-group"&gt;
     &lt;div class="lyd-slider-label"&gt;
@@ -980,7 +973,7 @@
                 <h3>Next.js Integration</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Slider.tsx
 import { useState, useEffect, useRef } from 'react';
 
@@ -1236,6 +1229,49 @@ export default function PropertyFilters() {
             </div>
             
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-slider</code></td>
+                            <td>Base slider class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-slider-wrapper</code></td>
+                            <td>slider container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small slider size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large slider size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary slider variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
         <!-- Section 4: Accessibility & Best Practices -->
         <section class="section">
@@ -1283,7 +1319,7 @@ export default function PropertyFilters() {
             // Set active navigation
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });

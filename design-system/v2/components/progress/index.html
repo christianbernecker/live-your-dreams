@@ -6,50 +6,92 @@
     <title>Progress - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --lyd-deep-blue: #000066; --lyd-royal-blue: #3366CC; --lyd-text: #111111;
-            --lyd-primary: #0066ff; --lyd-white: #ffffff; --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6; --lyd-gray-200: #e5e7eb; --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563; --lyd-gray-700: #374151; --lyd-gray-900: #111827;
-            --lyd-success: #10b981; --lyd-warning: #f59e0b; --lyd-error: #ef4444;
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px; --spacing-lg: 24px;
-            --spacing-xl: 32px; --spacing-2xl: 48px; --spacing-3xl: 64px;
-            --font-size-xs: 12px; --font-size-sm: 14px; --font-size-base: 16px;
-            --font-size-lg: 18px; --font-size-2xl: 24px; --font-size-3xl: 30px; --font-size-5xl: 48px;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); color: var(--lyd-gray-900); line-height: 1.6; display: flex; min-height: 100vh; }
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
         
         /* Navigation structure - same as other components */
-        .sidebar { width: 280px; background: var(--lyd-white); border-right: 1px solid var(--lyd-gray-200); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
-        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-gray-200); text-align: center; }
+        .sidebar { width: 280px; background: var(--lyd-bg); border-right: 1px solid var(--lyd-line); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-line); text-align: center; }
         .lyd-logo { width: 120px; height: auto; margin-bottom: var(--spacing-md); transform: scale(2); transform-origin: center; margin-top: 40px; margin-bottom: 60px; }
-        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-gray-500); font-weight: 500; }
+        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 500; }
         .nav-section { padding: var(--spacing-md) 0; }
         .nav-section-title { padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-gray-600); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
+        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
         .nav-item:hover { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
         .nav-item.active { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.1); font-weight: 600; }
         
         .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-2xl); max-width: 1400px; }
         .page-header { margin-bottom: var(--spacing-2xl); }
         .page-title { font-size: var(--font-size-5xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; margin-bottom: var(--spacing-md); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-gray-600); max-width: 800px; margin-bottom: var(--spacing-2xl); }
+        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-grey); max-width: 800px; margin-bottom: var(--spacing-2xl); }
         .section { margin-bottom: var(--spacing-3xl); }
         .section-title { font-size: var(--font-size-3xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; color: var(--lyd-text); margin-bottom: var(--spacing-xl); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
-        .showcase-item { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); }
-        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); }
-        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-gray-600); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
-        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-white); }
+        .showcase-item { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); }
+        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-grey); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
+        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-bg); }
         
         /* Component-specific styles */
         
-        .lyd-progress { background: linear-gradient(90deg, var(--lyd-gray-200) 0%, var(--lyd-gray-300) 100%); border-radius: 12px; height: 12px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); }
+        .lyd-progress { background: linear-gradient(90deg, var(--lyd-line) 0%, var(--lyd-gray-300) 100%); border-radius: 12px; height: 12px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); }
         .lyd-progress-bar { background: linear-gradient(90deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 50%, var(--lyd-deep-blue) 100%); height: 100%; border-radius: 12px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: relative; box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3); }
         .lyd-progress-bar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent); border-radius: 12px 12px 0 0; }
         .lyd-progress.success .lyd-progress-bar { background: linear-gradient(90deg, var(--lyd-success) 0%, #059669 50%, #047857 100%); box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
@@ -58,17 +100,17 @@
         
         
         /* Implementation and accessibility styling */
-        .implementation-section { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
-        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); margin: 0; }
+        .implementation-section { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
+        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); margin: 0; }
         .code-block { background: var(--lyd-gray-900); border-radius: 8px; padding: var(--spacing-lg); position: relative; overflow-x: auto; }
         .code-block pre { color: var(--lyd-gray-100); font-family: 'Monaco', 'Menlo', monospace; font-size: var(--font-size-sm); line-height: 1.6; margin: 0; }
         .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: var(--font-size-sm); border: none; cursor: pointer; transition: all 0.3s ease; position: absolute; top: 12px; right: 12px; }
-        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-white); }
+        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-bg); }
         .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
-        .accessibility-item { background: var(--lyd-white); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
+        .accessibility-item { background: var(--lyd-bg); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
         .accessibility-item h3 { font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); }
         .accessibility-item h3::before { content: "✓"; color: var(--lyd-primary); font-weight: bold; flex-shrink: 0; }
-        .accessibility-item p { color: var(--lyd-gray-600); font-size: var(--font-size-sm); line-height: 1.6; }
+        .accessibility-item p { color: var(--lyd-grey); font-size: var(--font-size-sm); line-height: 1.6; }
         
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -200,7 +242,7 @@
                         <div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-sm);">
                                 <span style="font-size: var(--font-size-sm); font-weight: 600;">Floor Plans</span>
-                                <span style="font-size: var(--font-size-sm); color: var(--lyd-gray-600);">25%</span>
+                                <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">25%</span>
                             </div>
                             <div class="lyd-progress">
                                 <div class="lyd-progress-bar" style="width: 25%;"></div>
@@ -219,8 +261,8 @@
                 <h3>HTML Usage</h3>
                 <div style="padding: var(--spacing-lg);">
                     <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
-                    <pre>&lt;!-- Document Upload Progress --&gt;
+                        <button class="lyd-button copy">Copy</button>
+                        <pre>&lt;!-- Document Upload Progress --&gt;
 &lt;div style="margin-bottom: var(--spacing-lg);"&gt;
     &lt;div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-sm);"&gt;
         &lt;span style="font-weight: 600;"&gt;Property Images&lt;/span&gt;
@@ -231,15 +273,305 @@
     &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- States --&gt;
+&lt;!-- Progress States --&gt;
 &lt;div class="lyd-progress success"&gt;
     &lt;div class="lyd-progress-bar" style="width: 100%;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="lyd-progress warning"&gt;
+    &lt;div class="lyd-progress-bar" style="width: 60%;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="lyd-progress error"&gt;
+    &lt;div class="lyd-progress-bar" style="width: 30%;"&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
                     </div>
                 </div>
             </div>
+
+            <div class="implementation-section">
+                <h3>Next.js Integration</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                        <button class="lyd-button copy">Copy</button>
+                        <pre>import { useState, useEffect } from 'react';
+
+interface ProgressProps {
+  value: number; // 0-100
+  max?: number;
+  variant?: 'default' | 'success' | 'warning' | 'error';
+  label?: string;
+  showPercentage?: boolean;
+  animated?: boolean;
+  className?: string;
+}
+
+export const LydProgress: React.FC&lt;ProgressProps&gt; = ({
+  value,
+  max = 100,
+  variant = 'default',
+  label,
+  showPercentage = true,
+  animated = true,
+  className = ''
+}) =&gt; {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() =&gt; {
+    if (animated) {
+      // Animate progress bar
+      const duration = 1000;
+      const increment = value / (duration / 16);
+      let current = 0;
+      
+      const timer = setInterval(() =&gt; {
+        current += increment;
+        if (current &gt;= value) {
+          setDisplayValue(value);
+          clearInterval(timer);
+        } else {
+          setDisplayValue(Math.round(current));
+        }
+      }, 16);
+      
+      return () =&gt; clearInterval(timer);
+    } else {
+      setDisplayValue(value);
+    }
+  }, [value, animated]);
+
+  const percentage = Math.min(Math.max((displayValue / max) * 100, 0), 100);
+  const progressClasses = [
+    'lyd-progress',
+    variant !== 'default' && variant,
+    className
+  ].filter(Boolean).join(' ');
+
+  return (
+    &lt;div className="lyd-progress-wrapper"&gt;
+      {(label || showPercentage) && (
+        &lt;div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: 'var(--spacing-sm)',
+          fontSize: 'var(--font-size-sm)'
+        }}&gt;
+          {label && &lt;span style={{ fontWeight: 600 }}&gt;{label}&lt;/span&gt;}
+          {showPercentage && (
+            &lt;span style={{ color: 'var(--lyd-primary)' }}&gt;
+              {Math.round(percentage)}%
+            &lt;/span&gt;
+          )}
+        &lt;/div&gt;
+      )}
+      
+      &lt;div className={progressClasses}&gt;
+        &lt;div 
+          className="lyd-progress-bar"
+          style={{ width: `${percentage}%` }}
+          role="progressbar"
+          aria-valuenow={displayValue}
+          aria-valuemin={0}
+          aria-valuemax={max}
+          aria-label={label}
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+// Advanced Progress with multiple steps
+interface ProgressStepProps {
+  steps: Array&lt;{
+    label: string;
+    completed: boolean;
+    current?: boolean;
+  }&gt;;
+  className?: string;
+}
+
+export const LydProgressSteps: React.FC&lt;ProgressStepProps&gt; = ({
+  steps,
+  className = ''
+}) =&gt; {
+  const completedSteps = steps.filter(step =&gt; step.completed).length;
+  const progress = (completedSteps / steps.length) * 100;
+
+  return (
+    &lt;div className={`lyd-progress-steps ${className}`}&gt;
+      &lt;LydProgress 
+        value={progress} 
+        label="Property Listing Progress"
+        showPercentage={true}
+        animated={true}
+      /&gt;
+      
+      &lt;div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        marginTop: 'var(--spacing-md)',
+        fontSize: 'var(--font-size-sm)'
+      }}&gt;
+        {steps.map((step, index) =&gt; (
+          &lt;div 
+            key={index}
+            style={{
+              textAlign: 'center',
+              color: step.completed 
+                ? 'var(--lyd-success)' 
+                : step.current 
+                  ? 'var(--lyd-primary)' 
+                  : 'var(--lyd-grey)'
+            }}
+          &gt;
+            &lt;div style={{
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              background: step.completed 
+                ? 'var(--lyd-success)' 
+                : step.current 
+                  ? 'var(--lyd-primary)' 
+                  : 'var(--lyd-gray-300)',
+              margin: '0 auto 4px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}&gt;
+              {step.completed && (
+                &lt;span style={{ color: 'white', fontSize: '12px' }}&gt;✓&lt;/span&gt;
+              )}
+            &lt;/div&gt;
+            &lt;div style={{ fontWeight: step.current ? 600 : 400 }}&gt;
+              {step.label}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+// Usage Examples
+export default function PropertyUpload() {
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [documentsProgress, setDocumentsProgress] = useState(45);
+
+  const listingSteps = [
+    { label: 'Basic Info', completed: true },
+    { label: 'Photos', completed: true, current: true },
+    { label: 'Description', completed: false },
+    { label: 'Pricing', completed: false },
+    { label: 'Review', completed: false }
+  ];
+
+  const simulateUpload = () =&gt; {
+    setUploadProgress(0);
+    const timer = setInterval(() =&gt; {
+      setUploadProgress(prev =&gt; {
+        if (prev &gt;= 100) {
+          clearInterval(timer);
+          return 100;
+        }
+        return prev + Math.random() * 10;
+      });
+    }, 200);
+  };
+
+  return (
+    &lt;div className="property-upload"&gt;
+      &lt;h3&gt;Document Upload&lt;/h3&gt;
+      &lt;LydProgress 
+        value={uploadProgress}
+        label="Property Images"
+        showPercentage={true}
+        animated={true}
+      /&gt;
+      
+      &lt;button onClick={simulateUpload}&gt;Start Upload&lt;/button&gt;
+
+      &lt;h3&gt;Processing Status&lt;/h3&gt;
+      &lt;LydProgress value={documentsProgress} variant="warning" label="Documents" /&gt;
+      
+      &lt;h3&gt;Listing Progress&lt;/h3&gt;
+      &lt;LydProgressSteps steps={listingSteps} /&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+            </div>
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-progress</code></td>
+                            <td>Base progress class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-progress-wrapper</code></td>
+                            <td>progress container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small progress size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large progress size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary progress variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
+        
+        <section class="section">
+            <h2 class="section-title">Real Estate Progress Types</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Property Management</h3>
+                    <p>Professional progress for real estate applications</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-progress primary">
+                            <span>Property Example</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <h3>Investment Analysis</h3>
+                    <p>Financial progress for property investment</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-progress secondary">
+                            <span>Investment Example</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="section">
             <h2 class="section-title">Accessibility & Best Practices</h2>
             
@@ -271,7 +603,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });

@@ -6,72 +6,115 @@
     <title>Navbar - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --lyd-deep-blue: #000066; --lyd-royal-blue: #3366CC; --lyd-text: #111111;
-            --lyd-primary: #0066ff; --lyd-white: #ffffff; --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6; --lyd-gray-200: #e5e7eb; --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563; --lyd-gray-900: #111827;
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            --spacing-xs: 4px; --spacing-sm: 8px; --spacing-md: 16px; --spacing-lg: 24px;
-            --spacing-xl: 32px; --spacing-2xl: 48px; --spacing-3xl: 64px;
-            --font-size-xs: 12px; --font-size-sm: 14px; --font-size-base: 16px;
-            --font-size-lg: 18px; --font-size-2xl: 24px; --font-size-3xl: 30px; --font-size-5xl: 48px;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); color: var(--lyd-gray-900); line-height: 1.6; display: flex; min-height: 100vh; }
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
         
         /* Navigation and layout structure same as other components */
-        .sidebar { width: 280px; background: var(--lyd-white); border-right: 1px solid var(--lyd-gray-200); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
-        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-gray-200); text-align: center; }
+        .sidebar { width: 280px; background: var(--lyd-bg); border-right: 1px solid var(--lyd-line); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-line); text-align: center; }
         .lyd-logo { width: 120px; height: auto; margin-bottom: var(--spacing-md); transform: scale(2); transform-origin: center; margin-top: 40px; margin-bottom: 60px; }
-        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-gray-500); font-weight: 500; }
+        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 500; }
         .nav-section { padding: var(--spacing-md) 0; }
         .nav-section-title { padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-gray-600); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
+        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
         .nav-item:hover { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
         .nav-item.active { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.1); font-weight: 600; }
         
         .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-2xl); max-width: 1400px; }
         .page-header { margin-bottom: var(--spacing-2xl); }
         .page-title { font-size: var(--font-size-5xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; margin-bottom: var(--spacing-md); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-gray-600); max-width: 800px; margin-bottom: var(--spacing-2xl); }
+        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-grey); max-width: 800px; margin-bottom: var(--spacing-2xl); }
         .section { margin-bottom: var(--spacing-3xl); }
         .section-title { font-size: var(--font-size-3xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; color: var(--lyd-text); margin-bottom: var(--spacing-xl); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
-        .showcase-item { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); }
-        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); }
-        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-gray-600); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
-        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-white); }
+        .showcase-item { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); }
+        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-grey); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
+        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-bg); }
         
         /* Navbar Components */
-        .lyd-navbar { background: linear-gradient(135deg, var(--lyd-white) 0%, var(--lyd-gray-50) 100%); border-bottom: 1px solid var(--lyd-gray-200); box-shadow: var(--shadow-lg); position: relative; }
+        .lyd-navbar { background: linear-gradient(135deg, var(--lyd-bg) 0%, var(--lyd-gray-50) 100%); border-bottom: 1px solid var(--lyd-line); box-shadow: var(--shadow-lg); position: relative; }
         .lyd-navbar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 50%, var(--lyd-deep-blue) 100%); }
         .lyd-navbar-container { max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing-lg); display: flex; align-items: center; justify-content: space-between; height: 64px; }
         .lyd-navbar-brand { display: flex; align-items: center; gap: var(--spacing-md); font-size: var(--font-size-lg); font-weight: 700; background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 50%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; transition: all 0.3s ease; }
         .lyd-navbar-logo { width: 32px; height: 32px; }
         .lyd-navbar-nav { display: flex; align-items: center; gap: var(--spacing-lg); }
-        .lyd-navbar-link { color: var(--lyd-gray-600); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; padding: var(--spacing-sm) var(--spacing-md); border-radius: 6px; transition: all 0.2s ease; }
+        .lyd-navbar-link { color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; padding: var(--spacing-sm) var(--spacing-md); border-radius: 6px; transition: all 0.2s ease; }
         .lyd-navbar-link:hover { color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
-        .lyd-navbar-link.active { color: var(--lyd-white); background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); font-weight: 700; box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); }
+        .lyd-navbar-link.active { color: var(--lyd-bg); background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); font-weight: 700; box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); }
         .lyd-navbar-user { display: flex; align-items: center; gap: var(--spacing-md); }
-        .lyd-navbar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-white); border: 2px solid var(--lyd-white); box-shadow: 0 2px 8px rgba(0, 102, 255, 0.2); transition: all 0.3s ease; cursor: pointer; }
+        .lyd-navbar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-bg); border: 2px solid var(--lyd-bg); box-shadow: 0 2px 8px rgba(0, 102, 255, 0.2); transition: all 0.3s ease; cursor: pointer; }
         .lyd-navbar-avatar:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); }
         
         /* Implementation and accessibility styling */
-        .implementation-section { background: var(--lyd-white); border-radius: 12px; border: 1px solid var(--lyd-gray-200); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
-        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-gray-200); background: var(--lyd-gray-50); margin: 0; }
+        .implementation-section { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
+        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); margin: 0; }
         .code-block { background: var(--lyd-gray-900); border-radius: 8px; padding: var(--spacing-lg); position: relative; overflow-x: auto; }
         .code-block pre { color: var(--lyd-gray-100); font-family: 'Monaco', 'Menlo', monospace; font-size: var(--font-size-sm); line-height: 1.6; margin: 0; }
         .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: var(--font-size-sm); border: none; cursor: pointer; transition: all 0.3s ease; position: absolute; top: 12px; right: 12px; }
-        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-white); }
+        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-bg); }
         .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
-        .accessibility-item { background: var(--lyd-white); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
+        .accessibility-item { background: var(--lyd-bg); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
         .accessibility-item h3 { font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); }
         .accessibility-item h3::before { content: "✓"; color: var(--lyd-primary); font-weight: bold; flex-shrink: 0; }
-        .accessibility-item p { color: var(--lyd-gray-600); font-size: var(--font-size-sm); line-height: 1.6; }
+        .accessibility-item p { color: var(--lyd-grey); font-size: var(--font-size-sm); line-height: 1.6; }
         
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -203,7 +246,56 @@
                 </div>
             </div>
         </section>
-        
+
+        <section class="section">
+            <h2 class="section-title">Real Estate Navbar Types</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Property Portal Navigation</h3>
+                    <p>Comprehensive navigation for property search platforms</p>
+                    <div class="showcase-demo">
+                        <nav class="lyd-navbar">
+                            <div class="navbar-brand">
+                                <span class="brand-text">PropertyHub</span>
+                            </div>
+                            <ul class="navbar-nav">
+                                <li><a href="#buy">Buy</a></li>
+                                <li><a href="#rent">Rent</a></li>
+                                <li><a href="#commercial">Commercial</a></li>
+                                <li><a href="#investment">Investment</a></li>
+                            </ul>
+                            <div class="navbar-actions">
+                                <button class="lyd-button outline small">Sign In</button>
+                                <button class="lyd-button primary small">List Property</button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <h3>Agent Dashboard Navigation</h3>
+                    <p>Navigation for real estate professionals</p>
+                    <div class="showcase-demo">
+                        <nav class="lyd-navbar agent">
+                            <div class="navbar-brand">
+                                <span class="brand-text">Agent Pro</span>
+                            </div>
+                            <ul class="navbar-nav">
+                                <li><a href="#properties">Properties</a></li>
+                                <li><a href="#clients">Clients</a></li>
+                                <li><a href="#leads">Leads</a></li>
+                                <li><a href="#analytics">Analytics</a></li>
+                            </ul>
+                            <div class="navbar-profile">
+                                <div class="profile-avatar">JD</div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="section">
             <h2 class="section-title">Implementation Guide</h2>
             
@@ -229,7 +321,188 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="implementation-section">
+                <h3>React/Next.js Integration</h3>
+                <div style="padding: var(--spacing-lg);">
+                    <div class="code-block">
+                        <button class="lyd-button copy">Copy</button>
+                        <pre>import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+interface NavbarProps {
+  brand?: string;
+  logo?: React.ReactNode;
+  user?: {
+    name: string;
+    avatar?: string;
+  };
+  links: Array<{
+    href: string;
+    label: string;
+    active?: boolean;
+  }>;
+  className?: string;
+}
+
+export const LydNavbar: React.FC<NavbarProps> = ({
+  brand = "Live Your Dreams",
+  logo,
+  user,
+  links,
+  className = '',
+  ...props
+}) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    const handleRouteChange = () => setIsMenuOpen(false);
+    router.events.on('routeChangeStart', handleRouteChange);
+    return () => router.events.off('routeChangeStart', handleRouteChange);
+  }, [router]);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  return (
+    &lt;nav className={`lyd-navbar ${className}`} {...props}&gt;
+      &lt;div className="lyd-navbar-container"&gt;
+        {/* Brand */}
+        &lt;Link href="/" className="lyd-navbar-brand"&gt;
+          {logo}
+          {brand}
+        &lt;/Link&gt;
+
+        {/* Desktop Navigation */}
+        &lt;div className="lyd-navbar-nav desktop"&gt;
+          {links.map((link, index) => (
+            &lt;Link
+              key={index}
+              href={link.href}
+              className={`lyd-navbar-link ${
+                router.pathname === link.href ? 'active' : ''
+              }`}
+            &gt;
+              {link.label}
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+
+        {/* User Section */}
+        {user && (
+          &lt;div className="lyd-navbar-user"&gt;
+            &lt;div className="lyd-navbar-avatar"&gt;
+              {user.avatar ? (
+                &lt;img src={user.avatar} alt={user.name} /&gt;
+              ) : (
+                user.name.charAt(0).toUpperCase()
+              )}
+            &lt;/div&gt;
+            &lt;span className="lyd-navbar-username"&gt;{user.name}&lt;/span&gt;
+          &lt;/div&gt;
+        )}
+
+        {/* Mobile Menu Button */}
+        &lt;button
+          className="lyd-navbar-toggle"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
+        &gt;
+          ☰
+        &lt;/button&gt;
+      &lt;/div&gt;
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        &lt;div className="lyd-navbar-mobile"&gt;
+          {links.map((link, index) => (
+            &lt;Link
+              key={index}
+              href={link.href}
+              className={`lyd-navbar-link mobile ${
+                router.pathname === link.href ? 'active' : ''
+              }`}
+            &gt;
+              {link.label}
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+      )}
+    &lt;/nav&gt;
+  );
+};
+
+// Usage Example
+const MyNavbar = () => {
+  const navLinks = [
+    { href: '/properties', label: 'Properties' },
+    { href: '/agents', label: 'Agents' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' }
+  ];
+
+  const currentUser = {
+    name: 'John Doe',
+    avatar: '/avatars/johndoe.jpg'
+  };
+
+  return (
+    &lt;LydNavbar
+      links={navLinks}
+      user={currentUser}
+      logo={&lt;img src="/logo.svg" alt="LYD Logo" /&gt;}
+    /&gt;
+  );
+};</pre>
+                    </div>
+                </div>
+            </div>
         </section>
+                <h3>API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-navbar</code></td>
+                            <td>Base navbar class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-navbar-wrapper</code></td>
+                            <td>navbar container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small navbar size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large navbar size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary navbar variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
         
         <section class="section">
             <h2 class="section-title">Accessibility & Best Practices</h2>
@@ -262,7 +535,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
+                if (item.getAttributes('href') === currentPath) {
                     item.classList.add('active');
                 }
             });
