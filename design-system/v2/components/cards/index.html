@@ -793,7 +793,30 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+        .code-block {
+            background: var(--lyd-gray-900);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            position: relative;
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .code-block pre {
+            color: var(--lyd-gray-100);
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .code-block code {
+            color: var(--lyd-gray-100);
+            font-family: inherit;
+        }
+        </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->

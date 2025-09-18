@@ -152,6 +152,41 @@
             .main-content { margin-left: 0; padding: var(--spacing-lg); }
             .showcase-grid { grid-template-columns: 1fr; }
         }
+    
+        .lyd-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            background: var(--lyd-gray-900);
+            color: var(--lyd-gray-100);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 6px;
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease-in-out;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        .lyd-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--lyd-gray-900);
+        }
+        
+        .lyd-tooltip-container:hover .lyd-tooltip,
+        .lyd-tooltip-trigger:focus + .lyd-tooltip {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateX(-50%) translateY(-8px) !important;
+        }
     </style>
 </head>
 <body>
@@ -519,6 +554,44 @@ export default function PropertyCard() {
                 });
             });
         });
+    
+        function initializeTooltips() {
+            const tooltipTriggers = document.querySelectorAll('.lyd-tooltip-trigger');
+            
+            tooltipTriggers.forEach(trigger => {
+                const tooltip = trigger.nextElementSibling;
+                if (!tooltip || !tooltip.classList.contains('lyd-tooltip')) return;
+                
+                // Show tooltip on hover/focus
+                trigger.addEventListener('mouseenter', () => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    tooltip.style.transform = 'translateY(-8px)';
+                });
+                
+                trigger.addEventListener('focus', () => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    tooltip.style.transform = 'translateY(-8px)';
+                });
+                
+                // Hide tooltip on leave/blur
+                trigger.addEventListener('mouseleave', () => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.transform = 'translateY(0)';
+                });
+                
+                trigger.addEventListener('blur', () => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
+                    tooltip.style.transform = 'translateY(0)';
+                });
+            });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeTooltips);
     </script>
 </body>
 </html>
