@@ -272,6 +272,48 @@ body {
 /* ========================================
    4. TYPOGRAPHY
    ======================================== */
+/* Global List Styling - Proper indentation */
+ul, ol {
+    padding-left: 0;
+    margin-left: var(--spacing-lg);
+}
+
+ul li, ol li {
+    padding-left: 0;
+    margin-bottom: var(--spacing-xs);
+    text-indent: 0;
+}
+
+/* Ensure bullets align with text above */
+ul {
+    list-style-position: outside;
+    list-style-type: disc;
+}
+
+ol {
+    list-style-position: outside;
+    list-style-type: decimal;
+}
+
+/* Nested lists */
+ul ul, ol ol, ul ol, ol ul {
+    margin-left: var(--spacing-lg);
+    margin-top: var(--spacing-xs);
+}
+
+/* Special styling for component lists */
+.component-card ul,
+.guide-card ul,
+.best-practices-list {
+    margin-left: var(--spacing-xl);
+}
+
+.component-card li,
+.guide-card li {
+    margin-bottom: var(--spacing-sm);
+    line-height: var(--line-height-relaxed);
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-family-display);
     font-weight: var(--font-weight-bold);

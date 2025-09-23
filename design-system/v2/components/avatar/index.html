@@ -71,12 +71,15 @@
         /* Avatar Status */
         .lyd-avatar-status {
             position: absolute;
-            bottom: 0;
-            right: 0;
+            bottom: -2px;
+            right: -2px;
             width: 25%;
             height: 25%;
+            min-width: 12px;
+            min-height: 12px;
             border-radius: 50%;
             border: 2px solid white;
+            z-index: 10;
         }
         
         .lyd-avatar-status.online {
@@ -199,8 +202,7 @@
                 <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
                 <a href="/components/pagination/" class="nav-item">Pagination</a>
                 <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-                <a href="/components/typography/" class="nav-item">Typography</a>
-            </div>
+                </div>
         </nav>
     </div>
     
