@@ -121,6 +121,8 @@
     --z-tooltip: 1070;
     --z-navbar: 900;
     --z-overlay: 9999;
+    --z-dropdown-active: 999999;
+    --z-dropdown-container: 50000;
     
     /* PREMIUM TRANSITIONS */
     --transition-luxury: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1046,21 +1048,68 @@ p {
     z-index: var(--z-base);
 }
 
-/* Ensure dropdowns can escape card boundaries */
+/* GLOBALES DROPDOWN Z-INDEX SYSTEM */
+
+/* Alle Dropdown-Container */
+.lyd-select,
+.lyd-dropdown,
+.lyd-autocomplete,
+.lyd-combobox,
+.lyd-datepicker {
+    z-index: var(--z-base) !important;
+}
+
+/* Aktive Dropdown-Container bekommen höchsten Z-Index */
+.lyd-select.active,
+.lyd-dropdown.active,
+.lyd-autocomplete.active,
+.lyd-combobox.active,
+.lyd-datepicker.active,
+.lyd-select:has(.lyd-select-dropdown.show),
+.lyd-dropdown:has(.lyd-dropdown-menu.active),
+.lyd-autocomplete:has(.lyd-autocomplete-dropdown.show) {
+    z-index: var(--z-dropdown-container) !important;
+}
+
+/* Alle Dropdown-Menüs */
+.lyd-select-dropdown,
+.lyd-dropdown-menu,
+.lyd-autocomplete-dropdown,
+.lyd-combobox-dropdown,
+.lyd-datepicker-dropdown {
+    z-index: var(--z-dropdown-active) !important;
+    background: white !important;
+    box-shadow: var(--shadow-xl) !important;
+    border: 1px solid var(--lyd-line) !important;
+    opacity: 1 !important;
+}
+
+/* Aktive/geöffnete Dropdown-Menüs */
+.lyd-select-dropdown.show,
+.lyd-dropdown-menu.active,
+.lyd-autocomplete-dropdown.show,
+.lyd-combobox-dropdown.show,
+.lyd-datepicker-dropdown.show {
+    z-index: var(--z-dropdown-active) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Cards mit aktiven Dropdowns */
 .component-card:has(.lyd-select.active),
-.component-card:has(.lyd-dropdown.open),
-.component-card:has(.lyd-autocomplete.active) {
-    z-index: 50000 !important;
+.component-card:has(.lyd-dropdown.active),
+.component-card:has(.lyd-autocomplete.active),
+.component-card:has(.lyd-select-dropdown.show),
+.component-card:has(.lyd-dropdown-menu.active),
+.component-card:has(.lyd-autocomplete-dropdown.show) {
+    z-index: var(--z-dropdown-container) !important;
     overflow: visible !important;
 }
 
-/* Ensure other cards don't interfere with dropdowns */
-.component-card {
-    z-index: 1 !important;
-}
-
-/* When a card has an active dropdown, all other cards get lower z-index */
-body:has(.lyd-select.active) .component-card:not(:has(.lyd-select.active)) {
+/* Alle anderen Cards bekommen niedrigeren Z-Index wenn irgendwo ein Dropdown aktiv ist */
+body:has(.lyd-select-dropdown.show) .component-card:not(:has(.lyd-select-dropdown.show)),
+body:has(.lyd-dropdown-menu.active) .component-card:not(:has(.lyd-dropdown-menu.active)),
+body:has(.lyd-autocomplete-dropdown.show) .component-card:not(:has(.lyd-autocomplete-dropdown.show)) {
     z-index: 0 !important;
 }
 
