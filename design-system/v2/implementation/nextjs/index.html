@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js Integration - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* Next.js Guide specific styles */
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .code-block .comment {
+            color: #6A9955;
+        }
+        
+        .code-block .keyword {
+            color: #569CD6;
+        }
+        
+        .code-block .string {
+            color: #CE9178;
+        }
+        
+        .code-block .function {
+            color: #DCDCAA;
+        }
+        
+        .code-block .tag {
+            color: #569CD6;
+        }
+        
+        .code-block .attr {
+            color: #9CDCFE;
+        }
+        
+        .file-label {
+            display: inline-block;
+            background: var(--lyd-gradient-primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: -1px;
+        }
+        
+        .installation-steps {
+            counter-reset: step-counter;
+        }
+        
+        .installation-step {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: var(--spacing-xl);
+            counter-increment: step-counter;
+        }
+        
+        .installation-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 36px;
+            height: 36px;
+            background: var(--lyd-gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--lyd-gradient-subtle);
+            border: 1px solid var(--lyd-primary);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            margin-right: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item active">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Next.js Integration</h1>
+            <p>Integration of the LYD Design System into Next.js projects</p>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">Supported Versions</h2>
+            
+            <div class="component-card">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <span class="tech-badge">Next.js 13+</span>
+                    <span class="tech-badge">React 18+</span>
+                    <span class="tech-badge">TypeScript 5+</span>
+                    <span class="tech-badge">App Router</span>
+                    <span class="tech-badge">Pages Router</span>
+                </div>
+                <p>The LYD Design System is fully compatible with the latest versions of Next.js and supports both App Router and Pages Router.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Installation</h2>
+            
+            <div class="installation-steps">
+                <div class="installation-step">
+                    <h3>CSS Integration</h3>
+                    <p>Copy the <code>master.css</code> to your Next.js project:</p>
+                    
+                    <span class="file-label">Terminal</span>
+                    <div class="code-block">
+<span class="comment"># Create the public/css folder</span>
+mkdir -p public/css
+
+<span class="comment"># Copy the master.css</span>
+cp path/to/master.css public/css/master.css
+                    </div>
+                </div>
+                
+                <div class="installation-step">
+                    <h3>Include Global CSS (App Router)</h3>
+                    
+                    <span class="file-label">app/layout.tsx</span>
+                    <div class="code-block">
+<span class="keyword">import</span> <span class="string">'./globals.css'</span>
+
+<span class="keyword">export default function</span> <span class="function">RootLayout</span>({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="string">"de"</span>&gt;
+      &lt;<span class="tag">head</span>&gt;
+        &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"/css/master.css"</span> /&gt;
+      &lt;/<span class="tag">head</span>&gt;
+      &lt;<span class="tag">body</span>&gt;{children}&lt;/<span class="tag">body</span>&gt;
+    &lt;/<span class="tag">html</span>&gt;
+  )
+}
+                    </div>
+                </div>
+                
+                <div class="installation-step">
+                    <h3>Component Library Setup</h3>
+                    <p>Create reusable React Components:</p>
+                    
+                    <span class="file-label">components/Button.tsx</span>
+                    <div class="code-block">
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>
+
+<span class="keyword">interface</span> ButtonProps {
+  variant?: <span class="string">'primary'</span> | <span class="string">'secondary'</span> | <span class="string">'outline'</span> | <span class="string">'ghost'</span>
+  children: React.ReactNode
+  onClick?: () => <span class="keyword">void</span>
+  icon?: React.ReactNode
+}
+
+<span class="keyword">export const</span> <span class="function">Button</span>: React.FC&lt;ButtonProps&gt; = ({
+  variant = <span class="string">'primary'</span>,
+  children,
+  onClick,
+  icon
+}) => {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">button</span>
+      <span class="attr">className</span>={`lyd-button ${variant}`}
+      <span class="attr">onClick</span>={onClick}
+    &gt;
+      {icon && &lt;<span class="tag">span</span> <span class="attr">className</span>=<span class="string">"lyd-icon"</span>&gt;{icon}&lt;/<span class="tag">span</span>&gt;}
+      {children}
+    &lt;/<span class="tag">button</span>&gt;
+  )
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Component Examples</h2>
+            
+            <div class="component-card">
+                <h3>Button Component with TypeScript</h3>
+                
+                <span class="file-label">components/ui/Button.tsx</span>
+                <div class="code-block">
+<span class="keyword">import</span> { ButtonHTMLAttributes, FC } <span class="keyword">from</span> <span class="string">'react'</span>
+<span class="keyword">import</span> { cn } <span class="keyword">from</span> <span class="string">'@/lib/utils'</span>
+
+<span class="keyword">interface</span> ButtonProps <span class="keyword">extends</span> ButtonHTMLAttributes&lt;HTMLButtonElement&gt; {
+  variant?: <span class="string">'primary'</span> | <span class="string">'secondary'</span> | <span class="string">'outline'</span> | <span class="string">'ghost'</span> | <span class="string">'luxury'</span>
+  size?: <span class="string">'small'</span> | <span class="string">'default'</span> | <span class="string">'large'</span>
+  loading?: <span class="keyword">boolean</span>
+  icon?: React.ReactNode
+}
+
+<span class="keyword">export const</span> <span class="function">Button</span>: FC&lt;ButtonProps&gt; = ({
+  className,
+  variant = <span class="string">'primary'</span>,
+  size = <span class="string">'default'</span>,
+  loading = <span class="keyword">false</span>,
+  disabled,
+  children,
+  icon,
+  ...props
+}) => {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">button</span>
+      <span class="attr">className</span>={cn(
+        <span class="string">'lyd-button'</span>,
+        variant,
+        size,
+        loading && <span class="string">'loading'</span>,
+        className
+      )}
+      <span class="attr">disabled</span>={disabled || loading}
+      {...props}
+    &gt;
+      {icon && !loading && (
+        &lt;<span class="tag">svg</span> <span class="attr">className</span>=<span class="string">"lyd-icon"</span> <span class="attr">viewBox</span>=<span class="string">"0 0 24 24"</span>&gt;
+          {icon}
+        &lt;/<span class="tag">svg</span>&gt;
+      )}
+      {loading && &lt;<span class="tag">span</span> <span class="attr">className</span>=<span class="string">"luxury-spinner"</span> /&gt;}
+      {children}
+    &lt;/<span class="tag">button</span>&gt;
+  )
+}
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Card Component</h3>
+                
+                <span class="file-label">components/ui/Card.tsx</span>
+                <div class="code-block">
+<span class="keyword">import</span> { FC, ReactNode } <span class="keyword">from</span> <span class="string">'react'</span>
+
+<span class="keyword">interface</span> CardProps {
+  title?: <span class="keyword">string</span>
+  subtitle?: <span class="keyword">string</span>
+  children: ReactNode
+  image?: <span class="keyword">string</span>
+  actions?: ReactNode
+  elevated?: <span class="keyword">boolean</span>
+}
+
+<span class="keyword">export const</span> <span class="function">Card</span>: FC&lt;CardProps&gt; = ({
+  title,
+  subtitle,
+  children,
+  image,
+  actions,
+  elevated = <span class="keyword">false</span>
+}) => {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span> <span class="attr">className</span>={`lyd-card ${elevated ? <span class="string">'elevated'</span> : <span class="string">''</span>}`}&gt;
+      {image && (
+        &lt;<span class="tag">img</span> 
+          <span class="attr">src</span>={image} 
+          <span class="attr">alt</span>=<span class="string">""</span>
+          <span class="attr">className</span>=<span class="string">"lyd-card-image"</span> 
+        /&gt;
+      )}
+      {(title || subtitle) && (
+        &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-card-header"</span>&gt;
+          {title && &lt;<span class="tag">h3</span> <span class="attr">className</span>=<span class="string">"lyd-card-title"</span>&gt;{title}&lt;/<span class="tag">h3</span>&gt;}
+          {subtitle && &lt;<span class="tag">p</span> <span class="attr">className</span>=<span class="string">"lyd-card-subtitle"</span>&gt;{subtitle}&lt;/<span class="tag">p</span>&gt;}
+        &lt;/<span class="tag">div</span>&gt;
+      )}
+      &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-card-body"</span>&gt;
+        {children}
+      &lt;/<span class="tag">div</span>&gt;
+      {actions && (
+        &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-card-footer"</span>&gt;
+          {actions}
+        &lt;/<span class="tag">div</span>&gt;
+      )}
+    &lt;/<span class="tag">div</span>&gt;
+  )
+}
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Client Components</h2>
+            
+            <div class="component-card">
+                <h3>Interactive Components with "use client"</h3>
+                
+                <span class="file-label">components/ui/Modal.tsx</span>
+                <div class="code-block">
+<span class="string">'use client'</span>
+
+<span class="keyword">import</span> { useState, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>
+<span class="keyword">import</span> { createPortal } <span class="keyword">from</span> <span class="string">'react-dom'</span>
+
+<span class="keyword">interface</span> ModalProps {
+  isOpen: <span class="keyword">boolean</span>
+  onClose: () => <span class="keyword">void</span>
+  title?: <span class="keyword">string</span>
+  children: React.ReactNode
+}
+
+<span class="keyword">export function</span> <span class="function">Modal</span>({ isOpen, onClose, title, children }: ModalProps) {
+  <span class="keyword">const</span> [mounted, setMounted] = <span class="function">useState</span>(<span class="keyword">false</span>)
+
+  <span class="function">useEffect</span>(() => {
+    <span class="function">setMounted</span>(<span class="keyword">true</span>)
+    <span class="keyword">return</span> () => <span class="function">setMounted</span>(<span class="keyword">false</span>)
+  }, [])
+
+  <span class="keyword">if</span> (!mounted || !isOpen) <span class="keyword">return null</span>
+
+  <span class="keyword">return</span> <span class="function">createPortal</span>(
+    &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-modal-backdrop"</span> <span class="attr">onClick</span>={onClose}&gt;
+      &lt;<span class="tag">div</span> 
+        <span class="attr">className</span>=<span class="string">"lyd-modal"</span>
+        <span class="attr">onClick</span>={(e) => e.stopPropagation()}
+      &gt;
+        {title && (
+          &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-modal-header"</span>&gt;
+            &lt;<span class="tag">h2</span>&gt;{title}&lt;/<span class="tag">h2</span>&gt;
+            &lt;<span class="tag">button</span> <span class="attr">onClick</span>={onClose} <span class="attr">className</span>=<span class="string">"lyd-modal-close"</span>&gt;
+              ×
+            &lt;/<span class="tag">button</span>&gt;
+          &lt;/<span class="tag">div</span>&gt;
+        )}
+        &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-modal-body"</span>&gt;
+          {children}
+        &lt;/<span class="tag">div</span>&gt;
+      &lt;/<span class="tag">div</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;,
+    document.body
+  )
+}
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Form Components</h2>
+            
+            <div class="component-card">
+                <h3>Form with React Hook Form</h3>
+                
+                <span class="file-label">app/contact/page.tsx</span>
+                <div class="code-block">
+<span class="string">'use client'</span>
+
+<span class="keyword">import</span> { useForm } <span class="keyword">from</span> <span class="string">'react-hook-form'</span>
+<span class="keyword">import</span> { Button } <span class="keyword">from</span> <span class="string">'@/components/ui/Button'</span>
+
+<span class="keyword">export default function</span> <span class="function">ContactForm</span>() {
+  <span class="keyword">const</span> { register, handleSubmit, formState: { errors } } = <span class="function">useForm</span>()
+
+  <span class="keyword">const</span> <span class="function">onSubmit</span> = (data: any) => {
+    console.log(data)
+  }
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">form</span> <span class="attr">onSubmit</span>={handleSubmit(onSubmit)}&gt;
+      &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-input-group"</span>&gt;
+        &lt;<span class="tag">label</span> <span class="attr">className</span>=<span class="string">"lyd-input-label"</span>&gt;Name&lt;/<span class="tag">label</span>&gt;
+        &lt;<span class="tag">input</span>
+          <span class="attr">className</span>=<span class="string">"lyd-input"</span>
+          {...register(<span class="string">'name'</span>, { required: <span class="keyword">true</span> })}
+        /&gt;
+        {errors.name && (
+          &lt;<span class="tag">span</span> <span class="attr">className</span>=<span class="string">"lyd-input-error"</span>&gt;
+            Name is required
+          &lt;/<span class="tag">span</span>&gt;
+        )}
+      &lt;/<span class="tag">div</span>&gt;
+
+      &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"lyd-input-group"</span>&gt;
+        &lt;<span class="tag">label</span> <span class="attr">className</span>=<span class="string">"lyd-input-label"</span>&gt;Email&lt;/<span class="tag">label</span>&gt;
+        &lt;<span class="tag">input</span>
+          <span class="attr">type</span>=<span class="string">"email"</span>
+          <span class="attr">className</span>=<span class="string">"lyd-input"</span>
+          {...register(<span class="string">'email'</span>, { required: <span class="keyword">true</span> })}
+        /&gt;
+      &lt;/<span class="tag">div</span>&gt;
+
+      &lt;<span class="tag">Button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">variant</span>=<span class="string">"primary"</span>&gt;
+        Submit
+      &lt;/<span class="tag">Button</span>&gt;
+    &lt;/<span class="tag">form</span>&gt;
+  )
+}
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Server Components</h2>
+            
+            <div class="component-card">
+                <h3>Server Component with Data Fetching</h3>
+                
+                <span class="file-label">app/properties/page.tsx</span>
+                <div class="code-block">
+<span class="keyword">import</span> { Card } <span class="keyword">from</span> <span class="string">'@/components/ui/Card'</span>
+
+<span class="keyword">async function</span> <span class="function">getProperties</span>() {
+  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://api.example.com/properties'</span>, {
+    next: { revalidate: 3600 }
+  })
+  <span class="keyword">return</span> res.json()
+}
+
+<span class="keyword">export default async function</span> <span class="function">PropertiesPage</span>() {
+  <span class="keyword">const</span> properties = <span class="keyword">await</span> <span class="function">getProperties</span>()
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span> <span class="attr">className</span>=<span class="string">"grid grid-cols-1 md:grid-cols-3 gap-6"</span>&gt;
+      {properties.map((property: any) => (
+        &lt;<span class="tag">Card</span>
+          <span class="attr">key</span>={property.id}
+          <span class="attr">title</span>={property.title}
+          <span class="attr">subtitle</span>={property.location}
+          <span class="attr">image</span>={property.image}
+        &gt;
+          &lt;<span class="tag">p</span>&gt;{property.description}&lt;/<span class="tag">p</span>&gt;
+          &lt;<span class="tag">p</span> <span class="attr">className</span>=<span class="string">"font-bold"</span>&gt;
+            €{property.price.toLocaleString()}
+          &lt;/<span class="tag">p</span>&gt;
+        &lt;/<span class="tag">Card</span>&gt;
+      ))}
+    &lt;/<span class="tag">div</span>&gt;
+  )
+}
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Optimierung</h2>
+            
+            <div class="component-card">
+                <h3>Performance Best Practices</h3>
+                <ul>
+                    <li><strong>Tree Shaking:</strong> Import only required components</li>
+                    <li><strong>CSS Modules:</strong> Combine master.css with CSS Modules for component-specific styles</li>
+                    <li><strong>Image Optimization:</strong> Use Next.js Image Component</li>
+                    <li><strong>Lazy Loading:</strong> Dynamic imports for large components</li>
+                    <li><strong>Bundle Size:</strong> Analyze with <code>@next/bundle-analyzer</code></li>
+                </ul>
+                
+                <span class="file-label">Lazy Loading Example</span>
+                <div class="code-block">
+<span class="keyword">import</span> dynamic <span class="keyword">from</span> <span class="string">'next/dynamic'</span>
+
+<span class="keyword">const</span> Modal = <span class="function">dynamic</span>(
+  () => <span class="keyword">import</span>(<span class="string">'@/components/ui/Modal'</span>),
+  { 
+    loading: () => &lt;<span class="tag">div</span>&gt;Loading...&lt;/<span class="tag">div</span>&gt;,
+    ssr: <span class="keyword">false</span> 
+  }
+)
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Testing</h2>
+            
+            <div class="component-card">
+                <h3>Component Testing with Jest & Testing Library</h3>
+                
+                <span class="file-label">__tests__/Button.test.tsx</span>
+                <div class="code-block">
+<span class="keyword">import</span> { render, screen, fireEvent } <span class="keyword">from</span> <span class="string">'@testing-library/react'</span>
+<span class="keyword">import</span> { Button } <span class="keyword">from</span> <span class="string">'@/components/ui/Button'</span>
+
+<span class="function">describe</span>(<span class="string">'Button Component'</span>, () => {
+  <span class="function">it</span>(<span class="string">'renders with text'</span>, () => {
+    <span class="function">render</span>(&lt;<span class="tag">Button</span>&gt;Click me&lt;/<span class="tag">Button</span>&gt;)
+    <span class="keyword">expect</span>(<span class="function">screen.getByText</span>(<span class="string">'Click me'</span>)).toBeInTheDocument()
+  })
+
+  <span class="function">it</span>(<span class="string">'handles click events'</span>, () => {
+    <span class="keyword">const</span> handleClick = <span class="function">jest.fn</span>()
+    <span class="function">render</span>(&lt;<span class="tag">Button</span> <span class="attr">onClick</span>={handleClick}&gt;Click&lt;/<span class="tag">Button</span>&gt;)
+    <span class="function">fireEvent.click</span>(<span class="function">screen.getByText</span>(<span class="string">'Click'</span>))
+    <span class="keyword">expect</span>(handleClick).toHaveBeenCalledTimes(1)
+  })
+
+  <span class="function">it</span>(<span class="string">'applies variant classes'</span>, () => {
+    <span class="keyword">const</span> { container } = <span class="function">render</span>(
+      &lt;<span class="tag">Button</span> <span class="attr">variant</span>=<span class="string">"secondary"</span>&gt;Secondary&lt;/<span class="tag">Button</span>&gt;
+    )
+    <span class="keyword">expect</span>(container.firstChild).toHaveClass(<span class="string">'lyd-button secondary'</span>)
+  })
+})
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

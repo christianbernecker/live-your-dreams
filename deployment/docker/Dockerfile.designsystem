@@ -56,7 +56,7 @@ server {
         expires 30d;
     }
     
-    # Handle V2 shared files (CSS + JavaScript) 
+    # Handle V2 shared files (CSS + JavaScript + HTML) 
     location ~ ^/shared/(.+\.css)$ {
         try_files /shared/\$1 =404;
         add_header Content-Type text/css;
@@ -65,6 +65,16 @@ server {
     location ~ ^/shared/(.+\.js)$ {
         try_files /shared/\$1 =404;
         add_header Content-Type application/javascript;
+    }
+    
+    location ~ ^/shared/(.+\.html)$ {
+        try_files /shared/\$1 =404;
+        add_header Content-Type text/html;
+    }
+    
+    location ~ ^/shared/(.+\.svg)$ {
+        try_files /shared/\$1 =404;
+        add_header Content-Type image/svg+xml;
     }
 
     # Main V2 routes (now without /v2/ prefix)

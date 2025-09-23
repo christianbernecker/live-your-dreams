@@ -490,8 +490,8 @@
         
         /* Code Block */
         .code-block {
-            background: var(--lyd-text);
-            color: var(--lyd-bg);
+            background: var(--lyd-gray-900);
+            color: var(--lyd-gray-100);
             padding: 24px;
             border-radius: 12px;
             overflow-x: auto;
@@ -703,51 +703,21 @@
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Gradient fuer die Sichel -->
-                    <linearGradient id="crescentGradientV2Typography" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    
-                    <!-- Gradient fuer den gesamten Text -->
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Sichel-Form mit eigenem Gradient -->
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Typography)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                
-                <!-- Text-Elemente -->
-                <g fill="url(#textGradientLYD)">
-                    <!-- LIVE -->
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <!-- YOUR -->
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <!-- DREAMS -->
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
         <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
+            <div class="nav-section-title">Design Principles</div>
+            <a href="/design-principles/overview/" class="nav-item">Introduction</a>
         </div>
         
         <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
+            <div class="nav-section-title">Implementation Guide</div>
+            <a href="/implementation/overview/" class="nav-item">Introduction</a>
+            <a href="/implementation/overview/nextjs/" class="nav-item">Next.js Integration</a>
         </div>        <div class="nav-section">
             <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
+            <a href="/components/overview/" class="nav-item">Overview</a>
             <a href="/components/buttons/" class="nav-item">Button</a>
             <a href="/components/inputs/" class="nav-item">Input</a>
             <a href="/components/cards/" class="nav-item">Card</a>
@@ -1092,7 +1062,13 @@ module.exports = {
 };</pre>
                 </div>
                 
-                <h3>API Reference</h3>
+            </div>
+        </section>
+        
+        <!-- Section 4: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-section">
                 <table class="api-table">
                     <thead>
                         <tr>
@@ -1171,8 +1147,10 @@ module.exports = {
                 </table>
             </div>
         </section>
+            </div>
+        </section>
         
-        <!-- Section 4: Accessibility & Best Practices -->
+        <!-- Section 5: Accessibility & Best Practices -->
         <section class="section">
             <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
             

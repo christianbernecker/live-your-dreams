@@ -5,1215 +5,331 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toast - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- LYD Design System v2.0 - Centralized Architecture -->
-    <link rel="stylesheet" href="../shared/tokens.css">
-    <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option fuer Konsistenz -->
-    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
     
     <style>
-                :root {
-            /* Live Your Dreams CI Colors */
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
-            --lyd-accent: #E8F0FE;
-            --lyd-grey: #666666;
-            --lyd-line: #E5E7EB;
-            --lyd-text: #111111;
-            --lyd-bg: #ffffff;
-            
-            /* Additional Colors */
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Typography Scale - CI konform */
-            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
-            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            --spacing-3xl: 64px;
-            
-            /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-                body {
-            font-family: var(--font-family-primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-text);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background: var(--lyd-bg);
-            border-right: 1px solid var(--lyd-line);
+        /* NUR TOAST-SPEZIFISCHE STYLES */
+        .lyd-toast-container {
             position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            top: 20px;
+            right: 20px;
+            z-index: var(--z-tooltip);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            max-width: 400px;
         }
         
-        .sidebar-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-line);
-            text-align: center;
-        }
-        
-        .lyd-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: var(--spacing-md);
-            transform: scale(2);
-            transform-origin: center;
-            margin-top: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .logo-subtitle {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            font-weight: 500;
-        }
-        
-        .nav-section {
-            padding: var(--spacing-md) 0;
-        }
-        
-        .nav-section-title {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            color: var(--lyd-grey);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 12px var(--spacing-lg);
-            color: var(--lyd-grey);
-            text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-        
-        .nav-item:hover {
-            color: var(--lyd-royal-blue);
-            border-left-color: var(--lyd-royal-blue);
-            background: rgba(51, 102, 204, 0.05);
-        }
-        
-        .nav-item.active {
-            color: var(--lyd-royal-blue);
-            border-left-color: var(--lyd-royal-blue);
-            background: rgba(51, 102, 204, 0.1);
-            font-weight: 600;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: var(--spacing-2xl);
-            max-width: 1400px;
-        }
-        
-        .page-header {
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .page-title {
-            font-size: var(--font-size-5xl);
-            font-weight: 400;
-            font-family: var(--font-family-display);
-            letter-spacing: 6px;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        .page-subtitle {
-            font-size: var(--font-size-lg);
-            color: var(--lyd-grey);
-            line-height: 1.6;
-            max-width: 600px;
-        }
-        
-        /* Section Styles */
-        .section {
-            margin-bottom: var(--spacing-3xl);
-        }
-        
-        .section-title {
-            font-size: var(--font-size-3xl);
-            font-weight: 400;
-            font-family: var(--font-family-display);
-            letter-spacing: 6px;
-            color: var(--lyd-text);
-            margin-bottom: var(--spacing-xl);
-            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        /* Input Showcase Grid */
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
-        
-        .showcase-item {
+        .lyd-toast {
             background: white;
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--lyd-line);
-            transition: all 0.3s ease;
-        }
-        
-        .showcase-item:hover {
-            transform: translateY(-4px);
+            border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
-            border-color: var(--lyd-royal-blue);
-        }
-        
-        .showcase-item h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--lyd-text);
-            margin-bottom: 8px;
-        }
-        
-        .showcase-item p {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            margin-bottom: 16px;
-        }
-        
-        .showcase-demo {
-            padding: 24px;
-            background: #f9fafb;
-            border-radius: var(--radius-md);
-        }
-        
-        /* Premium Input Styles */
-        .lyd-input-group {
-            position: relative;
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .lyd-input-label {
-            display: block;
-            font-size: var(--font-size-sm);
-            font-weight: 600;
-            color: var(--lyd-text);
-            margin-bottom: var(--spacing-xs);
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-input {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: var(--font-size-base);
-            font-family: var(--font-family-primary);
-            background: var(--lyd-bg);
-            border: 2px solid var(--lyd-line);
-            border-radius: var(--radius-md);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .lyd-input::placeholder {
-            color: var(--lyd-grey);
-            opacity: 0.7;
-        }
-        
-        .lyd-input:focus {
-            outline: none;
-            border-color: var(--lyd-royal-blue);
-            box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1);
-            transform: translateY(-1px);
-        }
-        
-        .lyd-input:focus + .lyd-input-label {
-            color: var(--lyd-royal-blue);
-        }
-        
-        /* Input with Icon */
-        .lyd-input-with-icon {
-            position: relative;
-        }
-        
-        .lyd-input-with-icon .lyd-input {
-            padding-left: 44px;
-        }
-        
-        .lyd-input-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
-            color: var(--lyd-grey);
-            transition: all 0.2s ease;
-            z-index: 2;
-        }
-        
-        .lyd-input-with-icon:focus-within .lyd-input-icon {
-            color: var(--lyd-royal-blue);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        /* Input States */
-        .lyd-input.success {
-            border-color: var(--lyd-success);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-        }
-        
-        .lyd-input.success:focus {
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-        }
-        
-        .lyd-input.error {
-            border-color: var(--lyd-error);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-            animation: shake 0.3s ease-in-out;
-        }
-        
-        .lyd-input.error:focus {
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-        }
-        
-        .lyd-input:disabled {
-            background: #f3f4f6;
-            color: var(--lyd-grey);
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        
-        /* Input Helper Text */
-        .lyd-input-helper {
-            font-size: var(--font-size-xs);
-            color: var(--lyd-grey);
-            margin-top: var(--spacing-xs);
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-input-helper.error {
-            color: var(--lyd-error);
-        }
-        
-        .lyd-input-helper.success {
-            color: var(--lyd-success);
-        }
-        
-        /* Premium Glassmorphism Input - LYD CI optimiert */
-        .lyd-input.glassmorphism {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .lyd-input.glassmorphism::placeholder {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 400;
-        }
-        
-        .lyd-input.glassmorphism:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                0 0 0 3px rgba(255, 255, 255, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        /* Floating Label Input - Korrigiert */
-        .lyd-input-floating {
-            position: relative;
-            margin-top: 8px;
-        }
-        
-        .lyd-input-floating .lyd-input {
-            padding-top: 24px;
-            padding-bottom: 8px;
-        }
-        
-        .lyd-input-floating .lyd-input-label {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--lyd-bg);
-            padding: 0 4px;
-            margin: 0;
-            z-index: 2;
-            color: var(--lyd-grey);
-            font-size: var(--font-size-base);
-        }
-        
-        .lyd-input-floating .lyd-input:focus + .lyd-input-label,
-        .lyd-input-floating .lyd-input:not(:placeholder-shown) + .lyd-input-label {
-            top: 2px;
-            transform: translateY(0) scale(0.85);
-            color: var(--lyd-royal-blue);
-            font-weight: 600;
-            font-size: var(--font-size-sm);
-        }
-        
-        .lyd-input-floating .lyd-input:focus {
-            border-color: var(--lyd-royal-blue);
-        }
-        
-        /* Search Input with Loading */
-        .lyd-input.loading {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%233366CC' stroke-width='2' stroke-dasharray='31.416' stroke-dashoffset='31.416'%3E%3CanimateTransform attributeName='transform' dur='2s' type='rotate' values='0 12 12;360 12 12' repeatCount='indefinite'/%3E%3Canimate attributeName='stroke-dashoffset' dur='2s' values='31.416;0' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 18px 18px;
-            padding-right: 44px;
-        }
-        
-        /* Input Sizes */
-        .lyd-input.small {
-            padding: 8px 12px;
-            font-size: var(--font-size-sm);
-        }
-        
-        .lyd-input.large {
-            padding: 16px 20px;
-            font-size: var(--font-size-lg);
-        }
-        
-        /* Real Estate Specific Inputs */
-        .lyd-input.price-input {
-            text-align: right;
-            font-weight: 600;
-            font-size: var(--font-size-lg);
-            color: var(--lyd-deep-blue);
-        }
-        
-        .lyd-input.price-input::before {
-            content: "€";
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--lyd-royal-blue);
-            font-weight: 600;
-        }
-        
-        /* Animations */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-2px); }
-        }
-        
-        /* Examples Grid */
-        .examples-grid {
-            display: grid;
-            gap: 32px;
-            margin-bottom: 48px;
-        }
-        
-        .example-item {
-            background: white;
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--lyd-line);
-        }
-        
-        .example-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--lyd-text);
-            margin-bottom: 16px;
-        }
-        
-        .example-description {
-            font-size: 15px;
-            color: var(--lyd-grey);
-            margin-bottom: 24px;
-        }
-        
-        .example-demo {
-            padding: 24px;
-            background: #f9fafb;
-            border-radius: var(--radius-md);
-            margin-bottom: 16px;
-        }
-        
-        /* Code Block */
-        .code-block {
-            background: var(--lyd-text);
-            color: var(--lyd-bg);
-            padding: 24px;
-            border-radius: var(--radius-lg);
-            overflow-x: auto;
-            margin: 24px 0;
-            position: relative;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-        }
-        
-        .code-block pre {
-            margin: 0;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .lyd-button.copy {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--lyd-bg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-button.copy:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Implementation Section */
-        .implementation-section {
-            background: white;
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--lyd-line);
-            margin-bottom: 32px;
-        }
-        
-        .api-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-        }
-        
-        .api-table th {
-            background: #f9fafb;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            border: 1px solid var(--lyd-line);
-        }
-        
-        .api-table td {
-            padding: 12px;
-            border: 1px solid var(--lyd-line);
-        }
-        
-        .api-table code {
-            background: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-        }
-        
-        /* Accessibility Grid - Screenshot-konform */
-        .accessibility-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin: 32px 0;
-            padding: 32px;
-            background: #E8F0FE;
-            border-radius: 8px;
-        }
-        
-        .accessibility-item {
-            background: white;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .accessibility-item h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111111;
-            margin-bottom: 12px;
-        }
-        
-        .accessibility-item ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .accessibility-item li {
-            padding: 4px 0;
-            color: #666666;
-            font-size: 14px;
+            padding: var(--spacing-md);
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: var(--spacing-sm);
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+            position: relative;
+            border-left: 4px solid var(--lyd-primary);
         }
         
-        .accessibility-item li:before {
-            content: "✓";
-            color: #3366CC;
-            font-weight: bold;
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        .lyd-toast.hiding {
+            animation: slideOut 0.3s ease forwards;
+        }
+        
+        .lyd-toast-icon {
+            width: 20px;
+            height: 20px;
             flex-shrink: 0;
         }
         
-        /* Premium Button Styles - Von Button-Component uebernommen */
-        .lyd-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
+        .lyd-toast-content {
+            flex: 1;
+        }
+        
+        .lyd-toast-title {
             font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .lyd-toast-message {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            line-height: 1.5;
+        }
+        
+        .lyd-toast-close {
+            background: none;
             border: none;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
+            color: var(--lyd-grey);
+            transition: all 0.2s ease;
+            border-radius: var(--radius-sm);
         }
         
-        .lyd-button .btn-icon {
-            width: 18px;
-            height: 18px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        .lyd-toast-close:hover {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-text);
         }
         
-        .lyd-button:hover .btn-icon {
-            transform: scale(1.1);
+        /* Toast Types */
+        .lyd-toast.success {
+            border-left-color: var(--lyd-success);
         }
         
-        /* Primary Button - Gradient */
-        .lyd-button.primary {
-            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
+        .lyd-toast.success .lyd-toast-icon {
+            color: var(--lyd-success);
         }
         
-        .lyd-button.primary:hover {
-            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+        .lyd-toast.error {
+            border-left-color: var(--lyd-error);
         }
         
-        /* Premium Secondary Button - Enhanced Glassmorphism */
-        .lyd-button.secondary {
-            background: linear-gradient(135deg, 
-                rgba(51, 102, 204, 0.08) 0%, 
-                rgba(0, 0, 102, 0.12) 100%);
-            border: 1px solid rgba(51, 102, 204, 0.25);
-            color: #1a365d;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 4px 16px rgba(51, 102, 204, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
+        .lyd-toast.error .lyd-toast-icon {
+            color: var(--lyd-error);
         }
         
-        .lyd-button.secondary::before {
-            content: "";
+        .lyd-toast.warning {
+            border-left-color: var(--lyd-warning);
+        }
+        
+        .lyd-toast.warning .lyd-toast-icon {
+            color: var(--lyd-warning);
+        }
+        
+        .lyd-toast.info {
+            border-left-color: var(--lyd-primary);
+        }
+        
+        .lyd-toast.info .lyd-toast-icon {
+            color: var(--lyd-primary);
+        }
+        
+        /* Progress Bar */
+        .lyd-toast-progress {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(51, 102, 204, 0.15), 
-                transparent);
-            transition: left 0.8s ease;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--lyd-primary);
+            animation: progress 5s linear;
         }
         
-        .lyd-button.secondary:hover::before {
-            left: 100%;
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
         }
         
-        .lyd-button.secondary:hover {
-            background: linear-gradient(135deg, 
-                rgba(51, 102, 204, 0.15) 0%, 
-                rgba(0, 0, 102, 0.2) 100%);
-            border-color: rgba(51, 102, 204, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 
-                0 8px 24px rgba(51, 102, 204, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                0 0 0 1px rgba(51, 102, 204, 0.1);
-            color: #0f2a44;
+        /* Position Variants */
+        .lyd-toast-container.top-left {
+            top: 20px;
+            right: auto;
+            left: 20px;
         }
         
-        /* Premium Outline Button */
-        .lyd-button.outline {
-            background: linear-gradient(#fff, #fff) padding-box,
-                        linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) border-box;
-            border: 2px solid transparent;
-            color: #4c1d95;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
+        .lyd-toast-container.bottom-right {
+            top: auto;
+            bottom: 20px;
+            right: 20px;
         }
         
-        .lyd-button.outline:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            color: #5b21b6;
+        .lyd-toast-container.bottom-left {
+            top: auto;
+            bottom: 20px;
+            right: auto;
+            left: 20px;
         }
-        
-        /* Ghost Button */
-        .lyd-button.ghost {
-            background: transparent;
-            color: #6b7280;
-            padding: 8px 16px;
-        }
-        
-        .lyd-button.ghost:hover {
-            background: rgba(0, 0, 0, 0.05);
-            color: #374151;
-        }
-        
-        /* Size Variations */
-        .lyd-button.small {
-            padding: 8px 16px;
-            font-size: var(--font-size-sm);
-        }
-        
-        .lyd-button.small .btn-icon {
-            width: 14px;
-            height: 14px;
-        }
-        
-        @media (max-width: 1200px) {
-            .accessibility-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .accessibility-grid {
-                grid-template-columns: 1fr;
-                padding: 16px;
-                gap: 16px;
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: var(--spacing-lg);
-            }
-            
-            .showcase-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    
-        .code-block {
-            background: var(--lyd-gray-900);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-            position: relative;
-            overflow-x: auto;
-            margin: var(--spacing-md) 0;
-        }
-        
-        .code-block pre {
-            color: var(--lyd-gray-100);
-            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-            font-size: var(--font-size-sm);
-            line-height: 1.6;
-            margin: 0;
-            white-space: pre-wrap;
-        }
-        
-        .code-block code {
-            color: var(--lyd-gray-100);
-            font-family: inherit;
-        }
-        </style>
+    </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Gradient fuer die Sichel -->
-                    <linearGradient id="crescentGradientV2Input" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    
-                    <!-- Gradient fuer den gesamten Text -->
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Sichel-Form mit eigenem Gradient -->
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Input)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                
-                <!-- Text-Elemente -->
-                <g fill="url(#textGradientLYD)">
-                    <!-- LIVE -->
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <!-- YOUR -->
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <!-- DREAMS -->
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
-        <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
-        </div>        <div class="nav-section">
-            <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
-            <a href="/components/buttons/" class="nav-item">Button</a>
-            <a href="/components/inputs/" class="nav-item">Input</a>
-            <a href="/components/cards/" class="nav-item">Card</a>
-            <a href="/components/select/" class="nav-item">Select</a>
-            <a href="/components/accordion/" class="nav-item">Accordion</a>
-            <a href="/components/modal/" class="nav-item">Modal</a>
-            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
-            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-            <a href="/components/radio/" class="nav-item">Radio</a>
-            <a href="/components/toast/" class="nav-item">Toast</a>
-            <a href="/components/table/" class="nav-item">Table</a>
-            <a href="/components/textarea/" class="nav-item">Textarea</a>
-            <a href="/components/switch/" class="nav-item">Switch</a>
-            <a href="/components/slider/" class="nav-item">Slider</a>
-            <a href="/components/alert/" class="nav-item">Alert</a>
-            <a href="/components/badge/" class="nav-item">Badge</a>
-            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
-            <a href="/components/avatar/" class="nav-item">Avatar</a>
-            <a href="/components/navbar/" class="nav-item">Navbar</a>
-            <a href="/components/tabs/" class="nav-item">Tabs</a>
-            <a href="/components/progress/" class="nav-item">Progress</a>
-            <a href="/components/calendar/" class="nav-item">Calendar</a>
-            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
-            <a href="/components/pagination/" class="nav-item">Pagination</a>
-            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Styles</div>
-            <a href="/styles/" class="nav-item">Introduction</a>
-            <a href="/components/typography/" class="nav-item">Typography</a>
-            <a href="/styles/grid/" class="nav-item">Grid</a>
-            <a href="/styles/colors/" class="nav-item">Colors</a>
-            <a href="/styles/spacing/" class="nav-item">Spacing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Patterns</div>
-            <a href="/patterns/" class="nav-item">Introduction</a>
-            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-            <a href="/patterns/header/" class="nav-item">Header</a>
-            <a href="/patterns/footer/" class="nav-item">Footer</a>
-            <a href="/patterns/forms/" class="nav-item">Forms</a>
-            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
-        </div>
-    </nav>
-    
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Toast</h1>
-            <p class="page-subtitle">Professional toast notification components with advanced animations, multiple variants, and real estate optimizations for premium user feedback.</p>
-        </div>
-        
-        <!-- Section 1: Input Variants -->
-        <section class="section">
-            <h2 class="section-title premium">Toast Variants</h2>
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
             
-            <div class="showcase-grid">
-                <!-- Success Toast -->
-                <div class="showcase-item">
-                    <h3>Success Toast</h3>
-                    <p>Positive feedback for successful actions</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-success" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #10b981; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <polyline points="20,6 9,17 4,12"/>
-                                </svg>
-                            </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Property Listed Successfully</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Your luxury property is now live and visible to potential buyers.</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('success', 'Property Listed Successfully', 'Your luxury property is now live and visible to potential buyers.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Success Toast</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item active">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <h1>Toast</h1>
+        <p>Non-intrusive notification components for feedback and status updates with auto-dismiss functionality.</p>
+        
+        <!-- Section 1: Toast Types -->
+        <section class="section">
+            <h2 class="section-title">Toast Types</h2>
+            
+            <div class="component-card">
+                <h3>Success Toast</h3>
+                <button class="lyd-button primary" onclick="showToast('success')">Show Success Toast</button>
                 
-                <!-- Error Toast -->
-                <div class="showcase-item">
-                    <h3>Error Toast</h3>
-                    <p>Critical error notifications</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-error" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #ef4444; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="15" y1="9" x2="9" y2="15"/>
-                                    <line x1="9" y1="9" x2="15" y2="15"/>
-                                </svg>
-                            </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Upload Failed</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Property images could not be uploaded. Please check your connection and try again.</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('error', 'Upload Failed', 'Property images could not be uploaded. Please check your connection and try again.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Error Toast</button>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="mt-lg">Error Toast</h3>
+                <button class="lyd-button primary" onclick="showToast('error')">Show Error Toast</button>
                 
-                <!-- Warning Toast -->
-                <div class="showcase-item">
-                    <h3>Warning Toast</h3>
-                    <p>Important warnings and alerts</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #f59e0b; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
-                                    <path d="M12 9v4"/>
-                                    <path d="m12 17 .01 0"/>
-                                </svg>
-                            </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Price Alert</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Property price is 15% below market average. Consider revision.</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('warning', 'Price Alert', 'Property price is 15% below market average. Consider revision.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Warning Toast</button>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="mt-lg">Warning Toast</h3>
+                <button class="lyd-button primary" onclick="showToast('warning')">Show Warning Toast</button>
                 
-                <!-- Info Toast -->
-                <div class="showcase-item">
-                    <h3>Info Toast</h3>
-                    <p>General information and updates</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-info" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(51, 102, 204, 0.15); border-left: 4px solid #3366CC; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #3366CC; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="m9,12 3,3 3,-3"/>
-                                    <path d="m12,8 0,7"/>
-                                </svg>
-                            </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Market Update</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">New luxury properties in your area. View recommendations.</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('info', 'Market Update', 'New luxury properties in your area. View recommendations.')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Info Toast</button>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="mt-lg">Info Toast</h3>
+                <button class="lyd-button primary" onclick="showToast('info')">Show Info Toast</button>
+            </div>
+            
+            <div class="component-card">
+                <h3>Toast with Progress</h3>
+                <button class="lyd-button primary" onclick="showToastWithProgress()">Show Toast with Progress</button>
                 
-                <!-- Toast Positions -->
-                <div class="showcase-item">
-                    <h3>Toast Positions</h3>
-                    <p>Different positioning options for toast notifications</p>
-                    <div class="showcase-demo">
-                        <div style="position: relative; height: 120px; border: 1px dashed #e5e7eb; border-radius: 8px; overflow: visible;">
-                            <div class="lyd-toast lyd-toast-info" style="position: absolute; top: 10px; right: 10px; max-width: 280px; padding: 12px 16px; background: white; border-radius: 8px; box-shadow: 0 6px 24px rgba(51, 102, 204, 0.15); border-left: 3px solid #3366CC; display: flex; align-items: center; gap: 10px;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-icon" style="width: 18px; height: 18px; color: #3366CC; flex-shrink: 0;" aria-label="Toast notification" role="alert">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <path d="m9,12 3,3 3,-3"/>
-                                        <path d="m12,8 0,7"/>
-                                    </svg>
-                                </div>
-                                <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                    <div class="lyd-toast-title" style="font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px;" aria-label="Toast notification" role="alert">Top Right</div>
-                                    <div class="lyd-toast-message" style="font-size: 11px; color: #6b7280;" aria-label="Toast notification" role="alert">Default position</div>
-                                </div>
-                                <button class="lyd-toast-close" style="width: 16px; height: 16px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px;">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div style="position: absolute; bottom: 10px; left: 10px; font-size: 12px; color: #666666;">Position: top-right (default)</div>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('info', 'Top Right', 'Default position')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Position Demo</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Toast Duration -->
-                <div class="showcase-item">
-                    <h3>Toast Duration</h3>
-                    <p>Auto-dismiss timing and persistent options</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 350px; padding: 16px 18px; background: white; border-radius: 10px; box-shadow: 0 6px 24px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: center; gap: 12px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 20px; height: 20px; color: #f59e0b; flex-shrink: 0;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <polyline points="12,6 12,12 16,14"/>
-                                </svg>
-                            </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 3px;" aria-label="Toast notification" role="alert">Auto-dismiss in 5s</div>
-                                <div class="lyd-toast-message" style="font-size: 13px; color: #6b7280;" aria-label="Toast notification" role="alert">Hover to pause auto-dismiss</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 20px; height: 20px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
-                            </button>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('warning', 'Auto-dismiss in 5s', 'Hover to pause auto-dismiss')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Duration Demo</button>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="mt-lg">Persistent Toast</h3>
+                <button class="lyd-button primary" onclick="showPersistentToast()">Show Persistent Toast</button>
             </div>
         </section>
         
-        <!-- Section 2: Real Estate Toast Types -->
+        <!-- Section 2: Toast Examples (Static) -->
         <section class="section">
-            <h2 class="section-title">Real Estate Toast Types</h2>
+            <h2 class="section-title">Static Examples</h2>
             
-            <div class="showcase-grid">
-                <!-- Property Status Toast -->
-                <div class="showcase-item">
-                    <h3>Property Status Updates</h3>
-                    <p>Real-time property status notifications</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-success" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #10b981; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                                </svg>
+            <div class="component-card">
+                <div style="position: relative; height: 400px; background: var(--lyd-gray-100); border-radius: var(--radius-lg); overflow: hidden;">
+                    <div style="position: absolute; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Success Toast -->
+                        <div class="lyd-toast success">
+                            <svg class="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div class="lyd-toast-content">
+                                <div class="lyd-toast-title">Property Saved</div>
+                                <div class="lyd-toast-message">Your property has been successfully saved to favorites.</div>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Property Status Changed</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Villa Bellagio is now marked as "Under Contract"</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                            <button class="lyd-toast-close">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('success', 'Property Status Changed', 'Villa Bellagio is now marked as \"Under Contract\"')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Status Update</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Client Inquiry Notifications -->
-                <div class="showcase-item">
-                    <h3>Client Inquiry Notifications</h3>
-                    <p>New client interest alerts</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-info" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(51, 102, 204, 0.15); border-left: 4px solid #3366CC; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #3366CC; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
+                        
+                        <!-- Error Toast -->
+                        <div class="lyd-toast error">
+                            <svg class="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div class="lyd-toast-content">
+                                <div class="lyd-toast-title">Upload Failed</div>
+                                <div class="lyd-toast-message">Could not upload images. Please try again.</div>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">New Inquiry Received</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Client interested in Penthouse Monaco - €2.8M</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                            <button class="lyd-toast-close">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('info', 'New Inquiry Received', 'Client interested in Penthouse Monaco - €2.8M')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Client Inquiry</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Market Intelligence Alerts -->
-                <div class="showcase-item">
-                    <h3>Market Intelligence Alerts</h3>
-                    <p>Market trends and price alerts</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-warning" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #f59e0b; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
+                        
+                        <!-- Warning Toast -->
+                        <div class="lyd-toast warning">
+                            <svg class="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <div class="lyd-toast-content">
+                                <div class="lyd-toast-title">Limited Availability</div>
+                                <div class="lyd-toast-message">Only 2 units remaining in this building.</div>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">Market Trend Alert</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Luxury market up 8% in your region this quarter</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                            <button class="lyd-toast-close">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('warning', 'Market Trend Alert', 'Luxury market up 8% in your region this quarter')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show Market Alert</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- System Notifications -->
-                <div class="showcase-item">
-                    <h3>System Notifications</h3>
-                    <p>Important system updates and maintenance alerts</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-toast lyd-toast-error" style="position: relative; max-width: 400px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; display: flex; align-items: flex-start; gap: 16px;" aria-label="Toast notification" role="alert">
-                            <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: #ef4444; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                                    <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
-                                </svg>
+                        
+                        <!-- Info Toast with Progress -->
+                        <div class="lyd-toast info">
+                            <svg class="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div class="lyd-toast-content">
+                                <div class="lyd-toast-title">New Properties</div>
+                                <div class="lyd-toast-message">5 new properties match your criteria.</div>
                             </div>
-                            <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                                <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">System Maintenance</div>
-                                <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">Scheduled maintenance tonight 2:00-4:00 AM</div>
-                            </div>
-                            <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                            <button class="lyd-toast-close">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
-                        </div>
-                        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center;">
-                            <button class="lyd-button primary small" onclick="showToast('error', 'System Maintenance', 'Scheduled maintenance tonight 2:00-4:00 AM')" aria-label="Interactive button" role="button" aria-label="Button" role="button">Show System Alert</button>
+                            <div class="lyd-toast-progress"></div>
                         </div>
                     </div>
                 </div>
@@ -1225,481 +341,351 @@
             <h2 class="section-title">Implementation Guide</h2>
             
             <div class="implementation-section">
-                <h3>HTML Usage</h3>
+                <h3>HTML Structure</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
-                    <pre>&lt;!-- Basic Toast Structure --&gt;
+                    <pre>&lt;!-- Toast Container --&gt;
 &lt;div class="lyd-toast-container"&gt;
-    &lt;div class="lyd-toast lyd-toast-success"&gt;
-        &lt;div class="lyd-toast-icon"&gt;✓&lt;/div&gt;
+    &lt;!-- Success Toast --&gt;
+    &lt;div class="lyd-toast success"&gt;
+        &lt;svg class="lyd-toast-icon"&gt;...&lt;/svg&gt;
         &lt;div class="lyd-toast-content"&gt;
-            &lt;div class="lyd-toast-title"&gt;Success Title&lt;/div&gt;
-            &lt;div class="lyd-toast-message"&gt;Success message text&lt;/div&gt;
+            &lt;div class="lyd-toast-title"&gt;Success!&lt;/div&gt;
+            &lt;div class="lyd-toast-message"&gt;Operation completed successfully.&lt;/div&gt;
         &lt;/div&gt;
-        &lt;button class="lyd-toast-close"&gt;×&lt;/button&gt;
+        &lt;button class="lyd-toast-close"&gt;
+            &lt;svg&gt;...&lt;/svg&gt;
+        &lt;/button&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Demo Buttons with JavaScript --&gt;
-&lt;button class="lyd-button primary small" 
-        onclick="showToast('success', 'Property Listed', 'Your property is now live')"&gt;
-    Show Success Toast
-&lt;/button&gt;
-
-&lt;button class="lyd-button primary small" 
-        onclick="showToast('error', 'Upload Failed', 'Images could not be uploaded')"&gt;
-    Show Error Toast
-&lt;/button&gt;
-
-&lt;!-- Toast Variants --&gt;
-&lt;div class="lyd-toast lyd-toast-success"&gt;...&lt;/div&gt;
-&lt;div class="lyd-toast lyd-toast-error"&gt;...&lt;/div&gt;
-&lt;div class="lyd-toast lyd-toast-warning"&gt;...&lt;/div&gt;
-&lt;div class="lyd-toast lyd-toast-info"&gt;...&lt;/div&gt;</pre>
+    
+    &lt;!-- Toast with Progress --&gt;
+    &lt;div class="lyd-toast info"&gt;
+        &lt;svg class="lyd-toast-icon"&gt;...&lt;/svg&gt;
+        &lt;div class="lyd-toast-content"&gt;
+            &lt;div class="lyd-toast-title"&gt;Processing&lt;/div&gt;
+            &lt;div class="lyd-toast-message"&gt;Please wait...&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="lyd-toast-progress"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
                 </div>
                 
-                <h3>JavaScript Toast System</h3>
+                <h3>JavaScript Functions</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
-                    <pre>// Show Toast Function - Automatically handles container creation and animations
-function showToast(type, title, message, duration = 5000) {
-    // Creates dynamic toast container and shows animated toast
-    // Types: 'success', 'error', 'warning', 'info'
-    // Auto-dismiss after duration (except error toasts)
-    // Supports hover-to-pause functionality
+                    <pre>// Toast Manager
+class ToastManager {
+    constructor() {
+        this.container = null;
+        this.init();
+    }
+    
+    init() {
+        // Create container if it doesn't exist
+        if (!document.querySelector('.lyd-toast-container')) {
+            this.container = document.createElement('div');
+            this.container.className = 'lyd-toast-container';
+            document.body.appendChild(this.container);
+        } else {
+            this.container = document.querySelector('.lyd-toast-container');
+        }
+    }
+    
+    show(type, title, message, duration = 5000) {
+        const toast = document.createElement('div');
+        toast.className = `lyd-toast ${type}`;
+        
+        const icons = {
+            success: '&lt;path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /&gt;',
+            error: '&lt;path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /&gt;',
+            warning: '&lt;path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /&gt;',
+            info: '&lt;path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /&gt;'
+        };
+        
+        toast.innerHTML = `
+            &lt;svg class="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"&gt;
+                ${icons[type]}
+            &lt;/svg&gt;
+            &lt;div class="lyd-toast-content"&gt;
+                &lt;div class="lyd-toast-title"&gt;${title}&lt;/div&gt;
+                &lt;div class="lyd-toast-message"&gt;${message}&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;button class="lyd-toast-close"&gt;
+                &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"&gt;
+                    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /&gt;
+                &lt;/svg&gt;
+            &lt;/button&gt;
+            ${duration > 0 ? '&lt;div class="lyd-toast-progress"&gt;&lt;/div&gt;' : ''}
+        `;
+        
+        this.container.appendChild(toast);
+        
+        // Close button
+        toast.querySelector('.lyd-toast-close').addEventListener('click', () => {
+            this.hide(toast);
+        });
+        
+        // Auto dismiss
+        if (duration > 0) {
+            setTimeout(() => {
+                this.hide(toast);
+            }, duration);
+        }
+    }
+    
+    hide(toast) {
+        toast.classList.add('hiding');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }
 }
 
-// Usage Examples
-showToast('success', 'Property Saved', 'Your listing is now live');
-showToast('error', 'Upload Failed', 'Please try again');
-showToast('warning', 'Price Alert', 'Below market average');
-showToast('info', 'Market Update', 'New properties available');</pre>
+// Initialize
+const toastManager = new ToastManager();
+
+// Helper functions
+function showToast(type) {
+    const messages = {
+        success: { title: 'Success!', message: 'Operation completed successfully.' },
+        error: { title: 'Error!', message: 'Something went wrong. Please try again.' },
+        warning: { title: 'Warning!', message: 'Please check your input.' },
+        info: { title: 'Info', message: 'Here\'s some useful information.' }
+    };
+    
+    toastManager.show(type, messages[type].title, messages[type].message);
+}</pre>
                 </div>
                 
-                <h3>React/Next.js Integration</h3>
+                <h3>React/Next.js Component</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
                     <pre>// components/Toast.tsx
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ToastProps {
-  type?: 'success' | 'error' | 'warning' | 'info';
-  title?: string;
-  message?: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  title: string;
+  message: string;
   duration?: number;
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
-  closeable?: boolean;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
-export const Toast: React.FC&lt;ToastProps&gt; = ({
-  type = 'info',
-  title,
-  message,
-  duration = 5000,
-  position = 'top-right',
-  closeable = true,
-  onClose
-}) =&gt; {
-  const [visible, setVisible] = useState(true);
+export const Toast = ({ type, title, message, duration = 5000, onClose }: ToastProps) => {
+  const [isVisible, setIsVisible] = useState(true);
   
-  const iconMap = {
-    success: '✓',
-    error: '⚠',
-    warning: '!',
-    info: 'i'
+  useEffect(() => {
+    if (duration > 0) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setTimeout(onClose, 300);
+      }, duration);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [duration, onClose]);
+  
+  const icons = {
+    success: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+    error: 'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
+    warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+    info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
   };
   
-  return (
-    &lt;div className={`lyd-toast lyd-toast-${type}`}&gt;
-      &lt;div className="lyd-toast-icon"&gt;{iconMap[type]}&lt;/div&gt;
+  return createPortal(
+    &lt;div className={`lyd-toast ${type} ${!isVisible ? 'hiding' : ''}`}&gt;
+      &lt;svg className="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"&gt;
+        &lt;path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icons[type]} /&gt;
+      &lt;/svg&gt;
       &lt;div className="lyd-toast-content"&gt;
-        {title && &lt;div className="lyd-toast-title"&gt;{title}&lt;/div&gt;}
-        {message && &lt;div className="lyd-toast-message"&gt;{message}&lt;/div&gt;}
+        &lt;div className="lyd-toast-title"&gt;{title}&lt;/div&gt;
+        &lt;div className="lyd-toast-message"&gt;{message}&lt;/div&gt;
       &lt;/div&gt;
-      {closeable && (
-        &lt;button className="lyd-toast-close" onClick={onClose}&gt;×&lt;/button&gt;
-      )}
-    &lt;/div&gt;
+      &lt;button className="lyd-toast-close" onClick={() => {
+        setIsVisible(false);
+        setTimeout(onClose, 300);
+      }}&gt;
+        &lt;svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"&gt;
+          &lt;path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /&gt;
+        &lt;/svg&gt;
+      &lt;/button&gt;
+      {duration > 0 && &lt;div className="lyd-toast-progress" /&gt;}
+    &lt;/div&gt;,
+    document.body
   );
-};
-
-// Usage Example:
-// &lt;Toast 
-//   type="success" 
-//   title="Success!" 
-//   message="Property saved successfully" 
-//   duration={5000}
-//   onClose={() => console.log('Toast closed')}
-// /&gt;</pre>
+};</pre>
                 </div>
-                
-                <h3>API Reference</h3>
-                <table class="api-table">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>type</code></td>
-                            <td><code>success | error | warning | info</code></td>
-                            <td><code>info</code></td>
-                            <td>Toast variant type</td>
-                        </tr>
-                        <tr>
-                            <td><code>title</code></td>
-                            <td><code>string</code></td>
-                            <td><code>""</code></td>
-                            <td>Toast title text</td>
-                        </tr>
-                        <tr>
-                            <td><code>message</code></td>
-                            <td><code>string</code></td>
-                            <td><code>""</code></td>
-                            <td>Toast message content</td>
-                        </tr>
-                        <tr>
-                            <td><code>duration</code></td>
-                            <td><code>number</code></td>
-                            <td><code>5000</code></td>
-                            <td>Auto-dismiss duration in ms</td>
-                        </tr>
-                        <tr>
-                            <td><code>position</code></td>
-                            <td><code>top-right | top-left | bottom-right | bottom-left</code></td>
-                            <td><code>top-right</code></td>
-                            <td>Toast container position</td>
-                        </tr>
-                        <tr>
-                            <td><code>closeable</code></td>
-                            <td><code>boolean</code></td>
-                            <td><code>true</code></td>
-                            <td>Show close button</td>
-                        </tr>
-                        <tr>
-                            <td><code>onClose</code></td>
-                            <td><code>function</code></td>
-                            <td><code>undefined</code></td>
-                            <td>Callback when toast is closed</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </section>
         
-        <!-- Section 4: Accessibility & Best Practices -->
+        <!-- Section 4: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.lyd-toast-container</code></td>
+                        <td>Container for toast notifications</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast</code></td>
+                        <td>Individual toast notification</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast-icon</code></td>
+                        <td>Toast type icon</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast-content</code></td>
+                        <td>Content wrapper</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast-title</code></td>
+                        <td>Toast title text</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast-message</code></td>
+                        <td>Toast message text</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast-close</code></td>
+                        <td>Close button</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-toast-progress</code></td>
+                        <td>Auto-dismiss progress bar</td>
+                    </tr>
+                    <tr>
+                        <td><code>.success</code></td>
+                        <td>Success toast styling</td>
+                    </tr>
+                    <tr>
+                        <td><code>.error</code></td>
+                        <td>Error toast styling</td>
+                    </tr>
+                    <tr>
+                        <td><code>.warning</code></td>
+                        <td>Warning toast styling</td>
+                    </tr>
+                    <tr>
+                        <td><code>.info</code></td>
+                        <td>Info toast styling</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Section 5: Accessibility -->
         <section class="section">
             <h2 class="section-title">Accessibility & Best Practices</h2>
             
-            <div class="accessibility-grid">
-                <div class="accessibility-item">
-                    <h4>Keyboard Navigation</h4>
-                    <ul>
-                        <li>Tab to navigate between buttons</li>
-                        <li>Space or Enter to activate</li>
-                        <li>Esc to cancel (in dialogs)</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Screen Reader Support</h4>
-                    <ul>
-                        <li>ARIA live regions announce toast content</li>
-                        <li>Descriptive labels for all controls</li>
-                        <li>State announcements for changes</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Timing Controls</h4>
-                    <ul>
-                        <li>Users can pause auto-dismiss by hovering</li>
-                        <li>Focus prevents auto-dismiss</li>
-                        <li>Critical errors persist until dismissed</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>High Contrast</h4>
-                    <ul>
-                        <li>Toast colors meet WCAG AA contrast ratios</li>
-                        <li>Clear focus indicators</li>
-                        <li>Sufficient touch targets (44x44px)</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Mobile Optimized</h4>
-                    <ul>
-                        <li>Touch-friendly close buttons</li>
-                        <li>Responsive positioning for mobile devices</li>
-                        <li>Minimum 44px touch targets</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Error Handling</h4>
-                    <ul>
-                        <li>Critical errors persist until manually dismissed</li>
-                        <li>Clear error messages</li>
-                        <li>Visual and audio feedback</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="implementation-section">
-                <h3>Toast Best Practices</h3>
-                <p>Diese Toast-Implementation nutzt bewaehrte UX-Patterns fuer optimale Nutzererfahrung:</p>
-                <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Auto-Dismiss:</strong> Success/Info Toasts verschwinden nach 5 Sekunden automatisch</li>
-                    <li><strong>Persistent Errors:</strong> Error Toasts bleiben bis zur manuellen Bestaetigung</li>
-                    <li><strong>Hover-Pause:</strong> Auto-Dismiss pausiert bei Hover/Focus</li>
-                    <li><strong>Stacking:</strong> Mehrere Toasts stapeln sich vertikal</li>
-                    <li><strong>Position:</strong> Top-right als Standard fuer minimale Stoerung</li>
+            <div class="component-card">
+                <h3>Accessibility Features</h3>
+                <ul>
+                    <li>ARIA live regions for screen readers</li>
+                    <li>Keyboard dismissible (Escape key)</li>
+                    <li>Focus management</li>
+                    <li>Sufficient color contrast</li>
                 </ul>
                 
-                <h3>Real Estate Optimization</h3>
-                <p>Speziell optimiert fuer Real Estate-Anwendungen:</p>
-                <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Property Updates:</strong> Status-Aenderungen mit Property-Icons</li>
-                    <li><strong>Client Notifications:</strong> Inquiry-Alerts mit Preis-Information</li>
-                    <li><strong>Market Intelligence:</strong> Trend-Alerts mit Markt-Daten</li>
-                    <li><strong>System Messages:</strong> Wartungs-Hinweise und Updates</li>
-                    <li><strong>Error Handling:</strong> Upload-Error und Validierung</li>
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Keep messages concise and actionable</li>
+                    <li>Use appropriate types for context</li>
+                    <li>Auto-dismiss after 5-7 seconds</li>
+                    <li>Allow manual dismissal</li>
+                    <li>Stack multiple toasts vertically</li>
+                    <li>Position consistently (top-right recommended)</li>
                 </ul>
             </div>
         </section>
     </main>
-
-    <script src="../shared/force-consistency.js"></script>
+    
+    <!-- Toast Container (Dynamic) -->
+    <div class="lyd-toast-container" id="toast-container"></div>
+    
     <script>
-        // Copy to clipboard functionality
-        document.querySelectorAll('.lyd-button.copy').forEach(button => {
-            button.addEventListener('click', () => {
-                const codeBlock = button.parentElement.querySelector('pre');
-                navigator.clipboard.writeText(codeBlock.textContent);
-                
-                button.textContent = 'Copied!';
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                }, 2000);
-            });
-        });
-
-        // Toast Functionality - Live Toast System
-        let toastContainer;
-        let toastCount = 0;
-
-        function initToastContainer() {
-            if (!toastContainer) {
-                toastContainer = document.createElement('div');
-                toastContainer.id = 'lyd-toast-container';
-                toastContainer.style.cssText = `
-                    position: fixed;
-                    top: 24px;
-                    right: 24px;
-                    z-index: 9999;
-                    max-width: 400px;
-                    width: 100%;
-                    pointer-events: none;
-                `;
-                document.body.appendChild(toastContainer);
+        // Toast Manager
+        class ToastManager {
+            constructor() {
+                this.container = document.getElementById('toast-container');
             }
-        }
-
-        function showToast(type, title, message, duration = 5000) {
-            initToastContainer();
-            toastCount++;
-
-            const toastId = `toast-${toastCount}`;
-            const toast = document.createElement('div');
-            toast.id = toastId;
-            toast.className = `lyd-toast lyd-toast-${type}`;
-            toast.style.cssText = `
-                position: relative;
-                margin-bottom: 16px;
-                padding: 20px;
-                background: white;
-                border-radius: 12px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-                border-left: 4px solid var(--toast-color);
-                display: flex;
-                align-items: flex-start;
-                gap: 16px;
-                pointer-events: auto;
-                transform: translateX(100%);
-                opacity: 0;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                max-width: 400px;
-            `;
-
-            // Set colors and icons based on type
-            let iconSvg, color;
-            switch(type) {
-                case 'success':
-                    color = '#10b981';
-                    iconSvg = '<polyline points="20,6 9,17 4,12"/>';
-                    break;
-                case 'error':
-                    color = '#ef4444';
-                    iconSvg = '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>';
-                    break;
-                case 'warning':
-                    color = '#f59e0b';
-                    iconSvg = '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="m12 17 .01 0"/>';
-                    break;
-                case 'info':
-                default:
-                    color = '#3366CC';
-                    iconSvg = '<circle cx="12" cy="12" r="10"/><path d="m9,12 3,3 3,-3"/><path d="m12,8 0,7"/>';
-                    break;
-            }
-
-            toast.style.setProperty('--toast-color', color);
-            toast.style.boxShadow = `0 8px 32px ${color}15`;
-
-            toast.innerHTML = `
-                <div class="lyd-toast-icon" style="width: 24px; height: 24px; color: ${color}; flex-shrink: 0; margin-top: 2px;" aria-label="Toast notification" role="alert">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 100%; height: 100%;">
-                        ${iconSvg}
-                    </svg>
-                </div>
-                <div class="lyd-toast-content" style="flex: 1;" aria-label="Toast notification" role="alert">
-                    <div class="lyd-toast-title" style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 6px; line-height: 1.4;" aria-label="Toast notification" role="alert">${title}</div>
-                    <div class="lyd-toast-message" style="font-size: 14px; color: #6b7280; line-height: 1.5;" aria-label="Toast notification" role="alert">${message}</div>
-                </div>
-                <button class="lyd-toast-close" style="width: 24px; height: 24px; background: none; border: none; color: #9ca3af; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; flex-shrink: 0;" onmouseover="this.style.background='#f3f4f6'; this.style.color='#374151';" onmouseout="this.style.background='none'; this.style.color='#9ca3af';">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            `;
-
-            toastContainer.appendChild(toast);
-
-            // Show animation
-            setTimeout(() => {
-                toast.style.transform = 'translateX(0)';
-                toast.style.opacity = '1';
-            }, 10);
-
-            // Close functionality
-            const closeBtn = toast.querySelector('.lyd-toast-close');
-            closeBtn.addEventListener('click', () => {
-                dismissToast(toast);
-            });
-
-            // Auto-dismiss (except for errors)
-            let autoHideTimer;
-            if (type !== 'error' && duration > 0) {
-                autoHideTimer = setTimeout(() => {
-                    dismissToast(toast);
-                }, duration);
-
-                // Pause on hover
-                toast.addEventListener('mouseenter', () => {
-                    if (autoHideTimer) clearTimeout(autoHideTimer);
-                });
-
-                toast.addEventListener('mouseleave', () => {
-                    autoHideTimer = setTimeout(() => {
-                        dismissToast(toast);
-                    }, duration);
-                });
-            }
-
-            return toast;
-        }
-
-        function dismissToast(toast) {
-            toast.style.transform = 'translateX(100%)';
-            toast.style.opacity = '0';
             
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
-                }
-            }, 300);
-        }
-
-        // Input animations and interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Focus animations for all inputs
-            document.querySelectorAll('.lyd-input').forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.style.transform = 'translateY(-1px)';
-                });
+            show(type, title, message, duration = 5000) {
+                const toast = document.createElement('div');
+                toast.className = `lyd-toast ${type}`;
                 
-                input.addEventListener('blur', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-
-            // Real-time validation demo
-            document.querySelectorAll('.lyd-input[type="email"]').forEach(input => {
-                input.addEventListener('input', function() {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    const isValid = emailRegex.test(this.value);
-                    
-                    this.classList.remove('success', 'error');
-                    
-                    if (this.value.length > 0) {
-                        if (isValid) {
-                            this.classList.add('success');
-                        } else {
-                            this.classList.add('error');
-                        }
-                    }
-                });
-            });
-
-            // Price formatting
-            document.querySelectorAll('.price-input').forEach(input => {
-                input.addEventListener('input', function() {
-                    let value = this.value.replace(/\D/g, '');
-                    if (value) {
-                        value = parseInt(value).toLocaleString('de-DE');
-                        this.value = value;
-                    }
-                });
-            });
-
-            // Floating label behavior - Korrigiert
-            document.querySelectorAll('.lyd-input-floating .lyd-input').forEach(input => {
-                const label = input.nextElementSibling;
-                
-                const updateLabel = () => {
-                    if (input.value.trim() || input === document.activeElement) {
-                        // Floating state - Label nach oben
-                        label.style.transform = 'translateY(0) scale(0.85)';
-                        label.style.top = '2px';
-                        label.style.color = 'var(--lyd-royal-blue)';
-                        label.style.fontWeight = '600';
-                        label.style.fontSize = 'var(--font-size-sm)';
-                    } else {
-                        // Default state - Label in der Mitte
-                        label.style.transform = 'translateY(-50%)';
-                        label.style.top = '50%';
-                        label.style.color = 'var(--lyd-grey)';
-                        label.style.fontWeight = '500';
-                        label.style.fontSize = 'var(--font-size-base)';
-                    }
+                const icons = {
+                    success: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+                    error: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+                    warning: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />',
+                    info: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />'
                 };
-
-                input.addEventListener('focus', updateLabel);
-                input.addEventListener('blur', updateLabel);
-                input.addEventListener('input', updateLabel);
                 
-                // Initial state
-                setTimeout(updateLabel, 100);
-            });
-        });
+                toast.innerHTML = `
+                    <svg class="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        ${icons[type]}
+                    </svg>
+                    <div class="lyd-toast-content">
+                        <div class="lyd-toast-title">${title}</div>
+                        <div class="lyd-toast-message">${message}</div>
+                    </div>
+                    <button class="lyd-toast-close">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    ${duration > 0 ? '<div class="lyd-toast-progress"></div>' : ''}
+                `;
+                
+                this.container.appendChild(toast);
+                
+                // Close button
+                toast.querySelector('.lyd-toast-close').addEventListener('click', () => {
+                    this.hide(toast);
+                });
+                
+                // Auto dismiss
+                if (duration > 0) {
+                    setTimeout(() => {
+                        this.hide(toast);
+                    }, duration);
+                }
+            }
+            
+            hide(toast) {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }
+        }
+        
+        const toastManager = new ToastManager();
+        
+        function showToast(type) {
+            const messages = {
+                success: { title: 'Property Saved!', message: 'Your property has been successfully saved.' },
+                error: { title: 'Error!', message: 'Could not save property. Please try again.' },
+                warning: { title: 'Warning!', message: 'Some fields require your attention.' },
+                info: { title: 'New Properties', message: '5 new properties match your criteria.' }
+            };
+            
+            toastManager.show(type, messages[type].title, messages[type].message);
+        }
+        
+        function showToastWithProgress() {
+            toastManager.show('info', 'Processing', 'Your request is being processed...', 5000);
+        }
+        
+        function showPersistentToast() {
+            toastManager.show('warning', 'Action Required', 'Please complete your profile to continue.', 0);
+        }
     </script>
 </body>
 </html>

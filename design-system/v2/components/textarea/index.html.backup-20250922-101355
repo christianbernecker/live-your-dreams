@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textarea - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-line);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-grey);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-grey);
+            max-width: 800px;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .showcase-item {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .showcase-item h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-line);
+            background: var(--lyd-gray-50);
+        }
+        
+        .showcase-item p {
+            padding: 0 var(--spacing-lg);
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .showcase-demo {
+            padding: var(--spacing-lg);
+            background: var(--lyd-bg);
+        }
+        
+        /* Textarea Components */
+        .lyd-textarea-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .lyd-textarea-label {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--lyd-gray-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .lyd-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--lyd-line);
+            border-radius: 8px;
+            background: var(--lyd-bg);
+            font-family: var(--font-family-primary);
+            font-size: var(--font-size-base);
+            color: var(--lyd-gray-900);
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-textarea::placeholder {
+            color: var(--lyd-gray-400);
+            opacity: 0.7;
+        }
+        
+        .lyd-textarea:focus {
+            outline: none;
+            border-color: var(--lyd-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .lyd-textarea:focus + .lyd-textarea-label {
+            color: var(--lyd-primary);
+        }
+        
+        /* Size variants */
+        .lyd-textarea.small {
+            min-height: 80px;
+            padding: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+        }
+        
+        .lyd-textarea.large {
+            min-height: 160px;
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+        }
+        
+        /* States */
+        .lyd-textarea.success {
+            border-color: var(--lyd-success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .lyd-textarea.success:focus {
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .lyd-textarea.error {
+            border-color: var(--lyd-error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        
+        .lyd-textarea.error:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        
+        .lyd-textarea:disabled {
+            background: var(--lyd-gray-100);
+            border-color: var(--lyd-line);
+            color: var(--lyd-gray-400);
+            cursor: not-allowed;
+        }
+        
+        .lyd-textarea-helper {
+            font-size: var(--font-size-xs);
+            color: var(--lyd-grey);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .lyd-textarea-helper.success {
+            color: var(--lyd-success);
+        }
+        
+        .lyd-textarea-helper.error {
+            color: var(--lyd-error);
+        }
+        
+        /* Character counter */
+        .lyd-textarea-counter {
+            font-size: var(--font-size-xs);
+            color: var(--lyd-gray-400);
+            text-align: right;
+            margin-top: var(--spacing-xs);
+        }
+        
+        .lyd-textarea-counter.warning {
+            color: var(--lyd-warning);
+        }
+        
+        .lyd-textarea-counter.error {
+            color: var(--lyd-error);
+        }
+        
+        /* Implementation Guide */
+        .implementation-section {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .implementation-section h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-line);
+            background: var(--lyd-gray-50);
+            margin: 0;
+        }
+        
+        .code-block {
+            background: var(--lyd-gray-900);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            color: var(--lyd-gray-100);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+        
+        .lyd-button.copy {
+            background: var(--lyd-primary);
+            color: var(--lyd-bg);
+        }
+        
+        .lyd-button.copy:hover {
+            background: var(--lyd-primary-hover);
+        }
+        
+        /* Accessibility Grid */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .accessibility-item {
+            background: var(--lyd-bg);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .accessibility-item h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .accessibility-item h3::before {
+            content: "✓";
+            color: var(--lyd-primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .accessibility-item p {
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient fuer die Sichel -->
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient fuer den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/developing/" class="nav-item">Introduction</a>
+            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/components/" class="nav-item">Introduction</a>
+            <a href="/components/buttons/" class="nav-item">Button</a>
+            <a href="/components/inputs/" class="nav-item">Input</a>
+            <a href="/components/cards/" class="nav-item">Card</a>
+            <a href="/components/select/" class="nav-item">Select</a>
+            <a href="/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/components/modal/" class="nav-item">Modal</a>
+            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/components/radio/" class="nav-item">Radio</a>
+            <a href="/components/toast/" class="nav-item">Toast</a>
+            <a href="/components/table/" class="nav-item">Table</a>
+            <a href="/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/components/switch/" class="nav-item">Switch</a>
+            <a href="/components/slider/" class="nav-item">Slider</a>
+            <a href="/components/alert/" class="nav-item">Alert</a>
+            <a href="/components/badge/" class="nav-item">Badge</a>
+            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/components/progress/" class="nav-item">Progress</a>
+            <a href="/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/styles/" class="nav-item">Introduction</a>
+            <a href="/components/typography/" class="nav-item">Typography</a>
+            <a href="/styles/grid/" class="nav-item">Grid</a>
+            <a href="/styles/colors/" class="nav-item">Colors</a>
+            <a href="/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/patterns/" class="nav-item">Introduction</a>
+            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/patterns/header/" class="nav-item">Header</a>
+            <a href="/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Textarea</h1>
+            <p class="page-subtitle">
+                Textarea components allow users to input multi-line text content. Perfect for property descriptions, customer inquiries, and detailed feedback forms.
+            </p>
+        </div>
+        
+        <!-- Section 1: Basic Textareas -->
+        <section class="section">
+            <h2 class="section-title">Basic Textareas</h2>
+            
+            <div class="showcase-grid">
+                <!-- Default Textarea -->
+                <div class="showcase-item">
+                    <h3>Default Textarea</h3>
+                    <p>Standard textarea for multi-line text input</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Property Description</label>
+                            <textarea class="lyd-textarea" placeholder="Enter detailed property description..." aria-label="Text area" role="textbox">This luxurious penthouse offers stunning panoramic views of the city skyline. With floor-to-ceiling windows and a private terrace, it's the perfect blend of modern elegance and comfort.</textarea>
+                            <div class="lyd-textarea-helper">Provide a detailed description to attract potential buyers</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Size Variants -->
+                <div class="showcase-item">
+                    <h3>Size Variants</h3>
+                    <p>Different sizes for various use cases</p>
+                    <div class="showcase-demo">
+                        <!-- Small -->
+                        <div class="lyd-textarea-group" style="margin-bottom: 24px;">
+                            <label class="lyd-textarea-label">Small Note</label>
+                            <textarea class="lyd-textarea small" placeholder="Quick note..." aria-label="Text area" role="textbox">Small textarea for brief comments</textarea>
+                        </div>
+                        
+                        <!-- Large -->
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Detailed Review</label>
+                            <textarea class="lyd-textarea large" placeholder="Write your detailed review..." aria-label="Text area" role="textbox">Large textarea for comprehensive property reviews, detailed feedback, or extensive property descriptions that require more space and better readability.</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Success State -->
+                <div class="showcase-item">
+                    <h3>Success State</h3>
+                    <p>Textarea with successful validation</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Customer Inquiry</label>
+                            <textarea class="lyd-textarea success" placeholder="Your message..." aria-label="Text area" role="textbox">Hello, I'm interested in scheduling a viewing for this beautiful property. Could we arrange a meeting next week?</textarea>
+                            <div class="lyd-textarea-helper success">Message looks great! Ready to send.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Error State -->
+                <div class="showcase-item">
+                    <h3>Error State</h3>
+                    <p>Textarea with error validation</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Feedback</label>
+                            <textarea class="lyd-textarea error" placeholder="Your feedback..." aria-label="Text area" role="textbox">Too short</textarea>
+                            <div class="lyd-textarea-helper error">Please provide at least 20 characters for meaningful feedback</div>
+                            <div class="lyd-textarea-counter error">9 / 20 characters</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real Estate Examples -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Examples</h2>
+            
+            <div class="showcase-grid">
+                <!-- Property Description -->
+                <div class="showcase-item">
+                    <h3>Property Description</h3>
+                    <p>Detailed property listing description</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Property Description</label>
+                            <textarea class="lyd-textarea large" placeholder="Describe the property features, location, and unique selling points..." aria-label="Text area" role="textbox">Discover luxury living in this exceptional 3-bedroom penthouse located in the heart of Munich's prestigious Maxvorstadt district. 
+
+Features:
+- 180m² of elegant living space
+- Floor-to-ceiling windows with panoramic city views  
+- Private 50m² rooftop terrace
+- High-end kitchen with premium appliances
+- Master suite with walk-in closet
+- 2 underground parking spaces
+- Building concierge service
+
+The property combines modern architecture with timeless elegance, offering the perfect sanctuary in one of Munich's most desirable neighborhoods. Walking distance to English Garden, fine dining, and cultural attractions.</textarea>
+                            <div class="lyd-textarea-counter">847 / 2000 characters</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Customer Inquiry -->
+                <div class="showcase-item">
+                    <h3>Customer Inquiry Form</h3>
+                    <p>Potential buyer inquiry message</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Your Message</label>
+                            <textarea class="lyd-textarea" placeholder="Tell us about your requirements, preferred viewing times, or any specific questions..." aria-label="Text area" role="textbox">Hello,
+
+I am very interested in this penthouse and would love to schedule a viewing. I'm particularly interested in:
+
+- The rooftop terrace and city views
+- Parking arrangements for 2 vehicles  
+- Pet policy for the building
+- Expected move-in timeline
+
+I'm available for viewings on weekdays after 4 PM or weekends. Looking forward to hearing from you.
+
+Best regards,
+Michael Schmidt</textarea>
+                            <div class="lyd-textarea-helper">We'll respond to your inquiry within 24 hours</div>
+                            <div class="lyd-textarea-counter">489 / 1000 characters</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Agent Notes -->
+                <div class="showcase-item">
+                    <h3>Agent Private Notes</h3>
+                    <p>Internal notes for property agents</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Private Agent Notes</label>
+                            <textarea class="lyd-textarea" placeholder="Internal notes about the property, client preferences, or special considerations..." aria-label="Text area" role="textbox">Client Notes:
+- High-net-worth individual, cash buyer
+- Prefers modern architecture  
+- Must have parking for luxury vehicles
+- Timeline: flexible, looking for Q2 2024 move-in
+- Budget: up to €2.5M
+- Previously viewed similar properties in Schwabing
+
+Property Status:
+- Minor cosmetic touch-ups needed
+- New kitchen appliances installed last month  
+- Building management very cooperative
+- Similar unit sold for €2.2M in December
+
+Next Steps:
+- Schedule viewing for Saturday 2 PM
+- Prepare comparable market analysis
+- Contact building management for any recent updates</textarea>
+                            <div class="lyd-textarea-counter">695 / 2000 characters</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Review -->
+                <div class="showcase-item">
+                    <h3>Property Review</h3>
+                    <p>Customer review and testimonial</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-textarea-group">
+                            <label class="lyd-textarea-label">Your Review</label>
+                            <textarea class="lyd-textarea success" placeholder="Share your experience with this property..." aria-label="Text area" role="textbox">Absolutely stunning property! The views from the rooftop terrace are breathtaking, especially during sunset. The interior design is impeccable - every detail has been carefully considered.
+
+The location is perfect - quiet enough for relaxation but close to everything you need. The English Garden is just a 5-minute walk, and there are excellent restaurants nearby.
+
+The building's concierge service is outstanding, very professional and accommodating. Parking in the underground garage is convenient and secure.
+
+I highly recommend this property to anyone looking for luxury living in Munich. The investment potential is also excellent given the prime location.
+
+Rating: 5/5 stars</textarea>
+                            <div class="lyd-textarea-helper success">Thank you for your detailed review!</div>
+                            <div class="lyd-textarea-counter">821 / 1500 characters</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                    <pre>&lt;!-- Basic Textarea --&gt;
+&lt;div class="lyd-textarea-group"&gt;
+    &lt;label class="lyd-textarea-label"&gt;Property Description&lt;/label&gt;
+    &lt;textarea class="lyd-textarea" placeholder="Describe the property..."&gt;&lt;/textarea&gt;
+    &lt;div class="lyd-textarea-helper"&gt;Provide detailed information&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- With Character Counter --&gt;
+&lt;div class="lyd-textarea-group"&gt;
+    &lt;label class="lyd-textarea-label"&gt;Customer Message&lt;/label&gt;
+    &lt;textarea class="lyd-textarea" maxlength="500" placeholder="Your message..."&gt;&lt;/textarea&gt;
+    &lt;div class="lyd-textarea-counter"&gt;0 / 500 characters&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Size Variants --&gt;
+&lt;textarea class="lyd-textarea small"&gt;...&lt;/textarea&gt;
+&lt;textarea class="lyd-textarea"&gt;...&lt;/textarea&gt;  &lt;!-- Default --&gt;
+&lt;textarea class="lyd-textarea large"&gt;...&lt;/textarea&gt;
+
+&lt;!-- States --&gt;
+&lt;textarea class="lyd-textarea success"&gt;...&lt;/textarea&gt;
+&lt;textarea class="lyd-textarea error"&gt;...&lt;/textarea&gt;
+&lt;textarea class="lyd-textarea" disabled&gt;...&lt;/textarea&gt;</pre>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                    <pre>// components/Textarea.tsx
+import { TextareaHTMLAttributess, forwardRef, useState } from 'react';
+
+interface TextareaProps extends TextareaHTMLAttributess<HTMLTextAreaElement> {
+  label?: string;
+  helperText?: string;
+  state?: 'default' | 'success' | 'error';
+  size?: 'small' | 'medium' | 'large';
+  showCounter?: boolean;
+  maxLength?: number;
+  className?: string;
+}
+
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
+  label,
+  helperText,
+  state = 'default',
+  size = 'medium',
+  showCounter = false,
+  maxLength,
+  className = '',
+  value,
+  onChange,
+  ...props
+}, ref) => {
+  const [currentLength, setCurrentLength] = useState(
+    typeof value === 'string' ? value.length : 0
+  );
+
+  const textareaClasses = \`
+    lyd-textarea 
+    \${size !== 'medium' ? size : ''} 
+    \${state !== 'default' ? state : ''}
+    \${className}
+  \`.trim();
+
+  const counterClasses = \`
+    lyd-textarea-counter
+    \${maxLength && currentLength > maxLength * 0.8 ? 'warning' : ''}
+    \${maxLength && currentLength > maxLength ? 'error' : ''}
+  \`.trim();
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCurrentLength(e.target.value.length);
+    onChange?.(e);
+  };
+
+  return (
+    &lt;div className="lyd-textarea-group"&gt;
+      {label && (
+        &lt;label className="lyd-textarea-label"&gt;{label}&lt;/label&gt;
+      )}
+      &lt;textarea
+        ref={ref}
+        className={textareaClasses}
+        maxLength={maxLength}
+        value={value}
+        onChange={handleChange}
+        {...props}
+      /&gt;
+      {helperText && (
+        &lt;div className={\`lyd-textarea-helper \${state !== 'default' ? state : ''}\`}&gt;
+          {helperText}
+        &lt;/div&gt;
+      )}
+      {showCounter && (
+        &lt;div className={counterClasses}&gt;
+          {currentLength}{maxLength ? \` / \${maxLength}\` : ''} characters
+        &lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  );
+});
+
+// Usage Example:
+export default function PropertyForm() {
+  const [description, setDescription] = useState('');
+  const [inquiry, setInquiry] = useState('');
+
+  return (
+    &lt;form&gt;
+      &lt;Textarea
+        label="Property Description"
+        placeholder="Describe the property features..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        size="large"
+        maxLength={2000}
+        showCounter
+        helperText="Provide detailed information to attract buyers"
+      /&gt;
+      
+      &lt;Textarea
+        label="Customer Inquiry"
+        placeholder="Tell us about your requirements..."
+        value={inquiry}
+        onChange={(e) => setInquiry(e.target.value)}
+        maxLength={1000}
+        showCounter
+        state={inquiry.length < 20 ? 'error' : 'success'}
+        helperText={inquiry.length < 20 ? 'Please provide at least 20 characters' : 'Message looks great!'}
+      /&gt;
+    &lt;/form&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-section">
+                <h3>Textarea Classes</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-textarea</code></td>
+                            <td>Base textarea class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-textarea-wrapper</code></td>
+                            <td>textarea container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small textarea size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large textarea size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary textarea variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Full keyboard support with Tab navigation, Arrow keys for cursor movement, and standard text editing shortcuts.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>Proper labeling with aria-describedby for helper text and character counters, ensuring full screen reader compatibility.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Focus Indicators</h3>
+                    <p>Clear visual focus indicators with enhanced border and shadow styling to help users identify the active textarea.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Character Limits</h3>
+                    <p>Visual and programmatic character counting with warning states at 80% capacity and error states when exceeded.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Resize Capability</h3>
+                    <p>Vertical resize enabled by default, allowing users to adjust textarea height based on their content needs.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Error Handling</h3>
+                    <p>Clear error states with color, text, and border changes to communicate validation issues effectively.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JavaScript -->
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Textarea functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active navigation
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttributes('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Character counter functionality
+            document.querySelectorAll('.lyd-textarea').forEach(textarea => {
+                const maxLength = textarea.getAttributes('maxlength');
+                const group = textarea.closest('.lyd-textarea-group');
+                let counter = group?.querySelector('.lyd-textarea-counter');
+                
+                if (counter || maxLength) {
+                    // Create counter if it doesn't exist but maxlength is set
+                    if (!counter && maxLength) {
+                        counter = document.createElement('div');
+                        counter.className = 'lyd-textarea-counter';
+                        group?.appendChild(counter);
+                    }
+                    
+                    const updateCounter = () => {
+                        const length = textarea.value.length;
+                        const maxLen = parseInt(maxLength) || 0;
+                        
+                        if (counter) {
+                            counter.textContent = maxLen ? `${length} / ${maxLen} characters` : `${length} characters`;
+                            
+                            // Update counter styling based on usage
+                            counter.classList.remove('warning', 'error');
+                            if (maxLen && length > maxLen * 0.8) {
+                                counter.classList.add('warning');
+                            }
+                            if (maxLen && length > maxLen) {
+                                counter.classList.add('error');
+                            }
+                        }
+                    };
+                    
+                    // Initial update
+                    updateCounter();
+                    
+                    // Update on input
+                    textarea.addEventListener('input', updateCounter);
+                }
+            });
+            
+            // Auto-resize functionality (optional enhancement)
+            document.querySelectorAll('.lyd-textarea').forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.max(this.scrollHeight, 120) + 'px';
+                });
+                
+                // Initial resize
+                if (textarea.value) {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = Math.max(textarea.scrollHeight, 120) + 'px';
+                }
+            });
+            
+            // Copy button functionality
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

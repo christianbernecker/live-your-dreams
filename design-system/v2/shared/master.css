@@ -1,0 +1,1236 @@
+/* ========================================
+   LIVE YOUR DREAMS - MASTER CSS SYSTEM
+   Zentrales CSS für alle Komponenten
+   Version: 2.0 - LUXURY EDITION
+   ======================================== */
+
+/* PREMIUM FONT IMPORTS */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ========================================
+   1. CSS VARIABLES & TOKENS
+   ======================================== */
+:root {
+    /* Live Your Dreams CI Colors */
+    --lyd-primary: #000066;
+    --lyd-deep-blue: #000066;
+    --lyd-royal-blue: #3366CC;
+    --lyd-accent: #E8F0FE;
+    --lyd-grey: #666666;
+    --lyd-line: #E5E7EB;
+    --lyd-text: #111111;
+    --lyd-bg: #ffffff;
+    
+    /* LUXURY GRADIENTS - Zentrale Elemente */
+    --lyd-gradient-primary: linear-gradient(135deg, #000066 0%, #3366CC 100%);
+    --lyd-gradient-hover: linear-gradient(135deg, #3366CC 0%, #000066 100%);
+    --lyd-gradient-subtle: linear-gradient(180deg, rgba(0,0,102,0.03) 0%, rgba(51,102,204,0.05) 100%);
+    --lyd-gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    --lyd-gradient-premium: linear-gradient(90deg, #000066 0%, #3366CC 50%, #000066 100%);
+    --lyd-gradient-radial: radial-gradient(circle at 50% 50%, #3366CC 0%, #000066 100%);
+    
+    /* Additional Colors */
+    --lyd-success: #10b981;
+    --lyd-warning: #f59e0b;
+    --lyd-error: #ef4444;
+    
+    /* Gray Scale */
+    --lyd-gray-100: #f3f4f6;
+    --lyd-gray-200: #e5e7eb;
+    --lyd-gray-300: #d1d5db;
+    --lyd-gray-400: #9ca3af;
+    --lyd-gray-500: #6b7280;
+    --lyd-gray-600: #4b5563;
+    --lyd-gray-700: #374151;
+    --lyd-gray-800: #1f2937;
+    --lyd-gray-900: #111827;
+    
+    /* PREMIUM TYPOGRAPHY - Luxury Schriften */
+    --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+    --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-family-luxury: 'Playfair Display', 'Georgia', serif;
+    --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    
+    /* Letter Spacing für Luxury Feel */
+    --letter-spacing-luxury: 0.15em;
+    --letter-spacing-wide: 0.1em;
+    --letter-spacing-normal: 0.05em;
+    --letter-spacing-tight: 0.02em;
+    
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+    --font-size-4xl: 36px;
+    --font-size-5xl: 48px;
+    
+    /* Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.6;
+    --line-height-relaxed: 1.8;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 6px;  /* Reduziert von 8px auf 6px für Buttons */
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+    
+    /* LUXURY SHADOWS & GLASSMORPHISM */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-luxury: 0 25px 50px -12px rgba(0, 0, 102, 0.25);
+    --shadow-glow: 0 0 40px rgba(51, 102, 204, 0.3);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 102, 0.06);
+    
+    /* Glassmorphism Effects */
+    --glass-white: rgba(255, 255, 255, 0.08);
+    --glass-blur: blur(20px);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+    
+    /* Z-Index Scale - Robust layering system */
+    --z-base: 1;
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-navbar: 900;
+    --z-overlay: 9999;
+    
+    /* PREMIUM TRANSITIONS */
+    --transition-luxury: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ========================================
+   2. RESET & BASE STYLES
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--lyd-text);
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ========================================
+   3. LAYOUT STRUCTURE
+   ======================================== */
+
+/* Layout Wrapper für konsistentes Verhalten */
+body {
+    display: block !important;
+    position: relative !important;
+}
+
+.sidebar {
+    width: 280px;
+    background: var(--lyd-bg);
+    border-right: 1px solid var(--lyd-line);
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar-header {
+    padding: var(--spacing-xl);
+    border-bottom: 1px solid var(--lyd-line);
+    text-align: center;
+}
+
+.lyd-logo {
+    width: 200%;
+    max-width: none;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    padding: var(--spacing-xl) 0;
+    transform: translateX(-10px); /* 10px nach links */
+}
+
+.logo-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--lyd-grey);
+    font-weight: var(--font-weight-medium);
+}
+
+.nav-section {
+    padding: var(--spacing-md) 0;
+}
+
+/* Alle Sections sind jetzt sichtbar - keine versteckten Sections mehr */
+
+.nav-section-title {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--lyd-gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-item {
+    display: block;
+    padding: 12px var(--spacing-lg);
+    color: var(--lyd-grey);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+    color: var(--lyd-primary);
+    border-left-color: var(--lyd-primary);
+    background: var(--lyd-gradient-subtle);
+    transform: translateX(4px);
+}
+
+.nav-item.active {
+    color: var(--lyd-primary);
+    border-left-color: var(--lyd-primary);
+    background: var(--lyd-gradient-subtle);
+    font-weight: var(--font-weight-semibold);
+    position: relative;
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--lyd-gradient-primary);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.main-content {
+    margin-left: 280px !important;
+    padding: var(--spacing-2xl);
+    min-height: 100vh;
+    width: calc(100% - 280px);
+    background: var(--lyd-bg);
+    overflow: visible !important;
+    position: relative;
+    z-index: var(--z-base);
+    display: block;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   4. TYPOGRAPHY
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--lyd-text);
+}
+
+h1 {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-xl);
+    background: linear-gradient(135deg, var(--lyd-deep-blue) 0%, var(--lyd-royal-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.page-title {
+    font-size: var(--font-size-5xl);
+    font-weight: 400;
+    font-family: var(--font-family-display);
+    letter-spacing: 6px;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+.page-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--lyd-grey);
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+h2 {
+    font-size: var(--font-size-3xl);
+    margin: var(--spacing-2xl) 0 var(--spacing-lg) 0;
+    color: var(--lyd-deep-blue);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+    color: var(--lyd-text);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-normal);
+}
+
+/* ========================================
+   5. SECTIONS & CARDS
+   ======================================== */
+.section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.section-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 400;
+    font-family: var(--font-family-display);
+    letter-spacing: 6px;
+    color: var(--lyd-gray-900);
+    margin-bottom: var(--spacing-xl);
+    background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+/* Component Showcase */
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.showcase-item {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--lyd-line);
+    transition: all 0.3s ease;
+}
+
+.showcase-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--lyd-primary);
+}
+
+.showcase-item h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--lyd-gray-900);
+    margin-bottom: 8px;
+}
+
+.showcase-item p {
+    font-size: 14px;
+    color: var(--lyd-gray-600);
+    margin-bottom: 16px;
+}
+
+.showcase-demo {
+    padding: 24px;
+    background: var(--lyd-gray-100);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--lyd-royal-blue);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.component-card {
+    background: linear-gradient(135deg, var(--glass-white), transparent);
+    backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    border: var(--glass-border);
+    transition: var(--transition-luxury);
+    position: relative;
+    overflow: visible; /* Fix für Dropdown z-index Problem */
+}
+
+.component-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--lyd-gradient-subtle);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+.component-card:hover {
+    box-shadow: var(--shadow-luxury);
+    border-color: rgba(0, 0, 102, 0.2);
+    /* transform entfernt um Stacking Context Probleme zu vermeiden */
+}
+
+.component-card:hover::before {
+    opacity: 1;
+}
+
+/* ========================================
+   6. BUTTONS
+   ======================================== */
+.lyd-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: 12px 24px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-family-primary);
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.lyd-button.primary {
+    background: var(--lyd-gradient-primary);
+    background-size: 200% 200%;
+    color: white;
+    box-shadow: var(--shadow-luxury);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-luxury);
+}
+
+.lyd-button.primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.lyd-button.primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-glow);
+    background-position: 100% 100%;
+}
+
+.lyd-button.primary:hover::before {
+    transform: rotate(45deg) translateX(100%);
+}
+
+.lyd-button.secondary {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    color: var(--lyd-deep-blue);
+    border: 1px solid var(--lyd-line);
+}
+
+.lyd-button.secondary:hover {
+    background: white;
+    border-color: var(--lyd-primary);
+    transform: translateY(-1px);
+}
+
+.lyd-button.outline {
+    background: transparent;
+    color: var(--lyd-primary);
+    border: 2px solid var(--lyd-primary);
+}
+
+.lyd-button.outline:hover {
+    background: var(--lyd-primary);
+    color: white;
+}
+
+.lyd-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.lyd-button.loading {
+    color: transparent;
+}
+
+.lyd-button.loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* LUXURY ANIMATED BUTTON */
+.lyd-button.luxury {
+    background: var(--lyd-gradient-premium);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+    box-shadow: 0 4px 20px rgba(0, 0, 102, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    font-weight: var(--font-weight-semibold);
+    position: relative;
+    overflow: hidden;
+}
+
+.lyd-button.luxury::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.lyd-button.luxury:hover::after {
+    left: 100%;
+}
+
+/* ========================================
+   7. FORMS & INPUTS
+   ======================================== */
+.lyd-input-group {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+}
+
+.lyd-input-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--lyd-grey);
+    margin-bottom: var(--spacing-xs);
+}
+
+.lyd-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-primary);
+    border: 1px solid var(--lyd-line);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: var(--lyd-text);
+    transition: var(--transition-luxury);
+    position: relative;
+}
+
+.lyd-input:focus {
+    outline: none;
+    border-color: var(--lyd-primary);
+    box-shadow: 0 0 0 3px rgba(0, 0, 102, 0.1), var(--shadow-md);
+    background: white;
+    transform: translateY(-1px);
+}
+
+.lyd-input.error {
+    border-color: var(--lyd-error);
+}
+
+.lyd-input.success {
+    border-color: var(--lyd-success);
+}
+
+.lyd-input:disabled {
+    background: var(--lyd-gray-100);
+    cursor: not-allowed;
+}
+
+/* ========================================
+   8. TABLES
+   ======================================== */
+.api-table-container {
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+}
+
+.api-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-lg) 0;
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--lyd-line);
+}
+
+.api-table th {
+    background: var(--lyd-gray-800);
+    color: white;
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    border: none;
+}
+
+.api-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--lyd-line);
+    color: var(--lyd-text);
+    background: white;
+}
+
+.api-table tr:last-child td {
+    border-bottom: none;
+}
+
+.api-table code {
+    background: var(--lyd-gray-100);
+    color: var(--lyd-text);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   9. CODE BLOCKS
+   ======================================== */
+.code-block {
+    background: var(--lyd-gray-800);
+    color: #f9fafb;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    position: relative;
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+}
+
+.code-block pre {
+    color: #f9fafb;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.code-block code {
+    color: inherit;
+    font-family: inherit;
+    background: none;
+    padding: 0;
+}
+
+/* ========================================
+   10. IMPLEMENTATION GUIDE
+   ======================================== */
+.implementation-section {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--lyd-line);
+    margin-bottom: var(--spacing-xl);
+}
+
+.implementation-section h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--lyd-deep-blue);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ========================================
+   11. COMPONENT DEMOS
+   ======================================== */
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.demo-item {
+    padding: var(--spacing-lg);
+    background: var(--lyd-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--lyd-line);
+}
+
+/* Accessibility Grid */
+.accessibility-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 32px 0;
+    padding: 32px;
+    background: var(--lyd-accent);
+    border-radius: 8px;
+}
+
+.accessibility-item {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.accessibility-item h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--lyd-text);
+    margin-bottom: 12px;
+}
+
+.accessibility-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.accessibility-item li {
+    padding: 4px 0;
+    color: var(--lyd-grey);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.accessibility-item li:before {
+    content: "✓";
+    color: var(--lyd-royal-blue);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+@media (max-width: 1200px) {
+    .accessibility-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .accessibility-grid {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 16px;
+    }
+}
+
+/* ========================================
+   12. UTILITY CLASSES & LUXURY COMPONENTS
+   ======================================== */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* LUXURY HOVER EFFECTS */
+.luxury-hover {
+    transition: var(--transition-luxury);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.luxury-hover:hover {
+    transform: translateY(-2px) scale(1.01);
+    filter: brightness(1.05);
+}
+
+/* GRADIENT TEXT */
+.gradient-text {
+    background: var(--lyd-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* GLASSMORPHISM CARD */
+.glass-card {
+    background: var(--glass-white);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-luxury);
+}
+
+/* LUXURY BADGE */
+.luxury-badge {
+    display: inline-flex;
+    padding: 4px 12px;
+    background: var(--lyd-gradient-primary);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    box-shadow: var(--shadow-md);
+}
+
+/* PREMIUM DIVIDER */
+.luxury-divider {
+    height: 1px;
+    background: var(--lyd-gradient-primary);
+    margin: var(--spacing-2xl) 0;
+    position: relative;
+    overflow: visible;
+}
+
+.luxury-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 3px;
+    background: var(--lyd-gradient-primary);
+    border-radius: var(--radius-full);
+}
+
+/* SVG ICON SYSTEM */
+.lyd-icon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+    transition: var(--transition-luxury);
+}
+
+.lyd-icon-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.lyd-icon-lg {
+    width: 32px;
+    height: 32px;
+}
+
+.lyd-icon-gradient {
+    stroke: url(#icon-gradient);
+}
+
+.lyd-icon-animated:hover {
+    transform: rotate(180deg) scale(1.1);
+    stroke: var(--lyd-primary);
+}
+
+/* LUXURY LOADING SPINNER */
+.luxury-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--glass-white);
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    background: var(--lyd-gradient-primary);
+    animation: spin 1s linear infinite, luxuryGlow 2s ease-in-out infinite;
+}
+
+/* PREMIUM TOOLTIP */
+.luxury-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.luxury-tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    padding: 8px 16px;
+    background: var(--lyd-gradient-primary);
+    color: white;
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-luxury);
+    box-shadow: var(--shadow-luxury);
+    backdrop-filter: var(--glass-blur);
+}
+
+.luxury-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: calc(125% - 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--lyd-primary);
+    opacity: 0;
+    transition: var(--transition-luxury);
+}
+
+.luxury-tooltip:hover::before,
+.luxury-tooltip:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* LUXURY NOTIFICATION / TOAST */
+.luxury-toast {
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--glass-white), rgba(255,255,255,0.95));
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-luxury);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    animation: slideIn 0.4s ease, fadeIn 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* COMPREHENSIVE Z-INDEX & OVERFLOW FIXES FOR ALL OVERLAY COMPONENTS */
+
+/* All dropdown/popup elements */
+.lyd-dropdown,
+.lyd-select-dropdown,
+.lyd-autocomplete-dropdown,
+.lyd-calendar,
+.lyd-datepicker-calendar,
+.lyd-tooltip-content,
+.lyd-popover,
+.lyd-context-menu,
+.lyd-modal,
+.lyd-modal-backdrop,
+.lyd-navbar-dropdown,
+.lyd-tabs-dropdown,
+.lyd-toast-container {
+    position: absolute !important;
+    z-index: var(--z-dropdown) !important;
+    background: white !important;
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--lyd-line);
+    opacity: 1 !important;
+}
+
+/* When active/open, use highest z-index */
+.lyd-dropdown.open,
+.lyd-select-dropdown.open,
+.lyd-autocomplete-dropdown.open,
+.lyd-calendar.open,
+.lyd-datepicker-calendar.open,
+.lyd-tooltip-content.visible,
+.lyd-popover.open,
+.lyd-context-menu.open,
+.lyd-navbar-dropdown.open,
+.lyd-tabs-dropdown.open {
+    z-index: var(--z-overlay) !important;
+    background: white !important;
+    opacity: 1 !important;
+}
+
+/* Modal specific z-index */
+.lyd-modal-backdrop {
+    z-index: var(--z-modal-backdrop) !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.lyd-modal {
+    z-index: var(--z-modal) !important;
+    position: fixed !important;
+    background: white !important;
+    opacity: 1 !important;
+}
+
+/* Modal specific z-index */
+.lyd-modal-backdrop {
+    z-index: var(--z-modal-backdrop) !important;
+}
+
+.lyd-modal {
+    z-index: var(--z-modal) !important;
+}
+
+/* Toast notifications should be on top */
+.lyd-toast-container {
+    z-index: var(--z-tooltip) !important;
+}
+
+/* All parent containers must not clip children */
+.lyd-select,
+.lyd-dropdown-container,
+.lyd-autocomplete,
+.lyd-datepicker,
+.lyd-date-picker,
+.lyd-navbar,
+.lyd-tabs,
+.lyd-accordion-item,
+.lyd-card,
+.component-card,
+.showcase-item,
+.showcase-demo,
+.section {
+    overflow: visible !important;
+    position: relative;
+    z-index: var(--z-base);
+}
+
+/* Ensure dropdowns can escape card boundaries */
+.component-card:has(.lyd-select.active),
+.component-card:has(.lyd-dropdown.open),
+.component-card:has(.lyd-autocomplete.active) {
+    z-index: 50000 !important;
+    overflow: visible !important;
+}
+
+/* Ensure other cards don't interfere with dropdowns */
+.component-card {
+    z-index: 1 !important;
+}
+
+/* When a card has an active dropdown, all other cards get lower z-index */
+body:has(.lyd-select.active) .component-card:not(:has(.lyd-select.active)) {
+    z-index: 0 !important;
+}
+
+/* Special handling for scrollable containers */
+.lyd-table-container,
+.lyd-modal-body {
+    overflow: auto !important;
+    position: relative;
+}
+
+/* When component has dropdown open, elevate it */
+.lyd-select.active,
+.lyd-dropdown-container.active,
+.lyd-autocomplete.active,
+.lyd-datepicker.active,
+.lyd-navbar.has-dropdown-open,
+.lyd-tabs.has-dropdown-open {
+    z-index: var(--z-dropdown) !important;
+}
+
+/* Ensure proper stacking context */
+.sidebar {
+    z-index: var(--z-navbar);
+    position: relative;
+}
+
+/* Fix for nested dropdowns */
+.lyd-dropdown .lyd-dropdown,
+.lyd-select-dropdown .lyd-select-dropdown {
+    z-index: calc(var(--z-dropdown) + 10) !important;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Ensure tooltips appear above everything except modals */
+.lyd-tooltip-content {
+    z-index: var(--z-tooltip) !important;
+    pointer-events: none;
+}
+
+.luxury-toast::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--lyd-gradient-primary);
+}
+
+.luxury-toast.success::before {
+    background: linear-gradient(135deg, var(--lyd-success) 0%, #059669 100%);
+}
+
+.luxury-toast.error::before {
+    background: linear-gradient(135deg, var(--lyd-error) 0%, #dc2626 100%);
+}
+
+.luxury-toast.warning::before {
+    background: linear-gradient(135deg, var(--lyd-warning) 0%, #d97706 100%);
+}
+
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-wrap { flex-wrap: wrap; }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+
+/* ========================================
+   13. ANIMATIONS - LUXURY EDITION
+   ======================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* NEUE LUXURY ANIMATIONEN */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes luxuryGlow {
+    0%, 100% { box-shadow: var(--shadow-luxury); }
+    50% { box-shadow: var(--shadow-glow); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes rotateIn {
+    from { transform: rotate(-200deg) scale(0); opacity: 0; }
+    to { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+/* ========================================
+   14. RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        padding: var(--spacing-lg);
+    }
+    
+    h1 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .demo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   15. PRINT STYLES
+   ======================================== */
+@media print {
+    .sidebar {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .component-card {
+        box-shadow: none;
+        border: 1px solid var(--lyd-line);
+    }
+}

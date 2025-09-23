@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CENTRAL CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* Typography specific styles */
+        .type-specimen {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .type-example {
+            padding: var(--spacing-xl);
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .type-example-label {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin-bottom: var(--spacing-sm);
+            font-family: var(--font-family-mono);
+        }
+        
+        .font-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .font-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--lyd-primary);
+        }
+        
+        .font-card h3 {
+            margin-bottom: var(--spacing-md);
+            color: var(--lyd-primary);
+        }
+        
+        .font-sample {
+            font-size: var(--font-size-2xl);
+            line-height: var(--line-height-tight);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .font-weights {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .weight-example {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .weight-label {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            min-width: 80px;
+            font-family: var(--font-family-mono);
+        }
+        
+        .scale-grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+        
+        .scale-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            align-items: baseline;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--radius-md);
+            transition: var(--transition-luxury);
+        }
+        
+        .scale-item:hover {
+            background: var(--lyd-gradient-subtle);
+            transform: translateX(4px);
+        }
+        
+        .scale-label {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-primary);
+        }
+        
+        .scale-value {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+        }
+        
+        .letter-spacing-examples {
+            display: grid;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .spacing-example {
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--lyd-primary);
+        }
+        
+        .spacing-label {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .line-height-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .height-example {
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .height-label {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item active">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Typography</h1>
+            <p>Premium typography system for luxury real estate applications</p>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">Font Families</h2>
+            
+            <div class="font-showcase">
+                <div class="font-card">
+                    <h3>Inter - Primary Font</h3>
+                    <div class="font-sample" style="font-family: var(--font-family-primary);">
+                        The quick brown fox jumps over the lazy dog
+                    </div>
+                    <p style="font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        Used for body text, UI elements, and general content. Excellent readability across all sizes.
+                    </p>
+                    <code style="font-size: var(--font-size-sm);">--font-family-primary</code>
+                </div>
+                
+                <div class="font-card">
+                    <h3>Playfair Display - Luxury Font</h3>
+                    <div class="font-sample" style="font-family: var(--font-family-luxury);">
+                        The quick brown fox jumps over the lazy dog
+                    </div>
+                    <p style="font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        Reserved for premium headlines and luxury accents. Adds elegance and sophistication.
+                    </p>
+                    <code style="font-size: var(--font-size-sm);">--font-family-luxury</code>
+                </div>
+                
+                <div class="font-card">
+                    <h3>JetBrains Mono - Code Font</h3>
+                    <div class="font-sample" style="font-family: var(--font-family-mono); font-size: var(--font-size-lg);">
+                        const luxury = "LYD Design System";
+                    </div>
+                    <p style="font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        For code snippets, technical values, and monospaced requirements.
+                    </p>
+                    <code style="font-size: var(--font-size-sm);">--font-family-mono</code>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Type Scale</h2>
+            
+            <div class="component-card">
+                <div class="scale-grid">
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-xs</span>
+                        <span style="font-size: var(--font-size-xs);">Extra Small Text</span>
+                        <span class="scale-value">12px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-sm</span>
+                        <span style="font-size: var(--font-size-sm);">Small Text</span>
+                        <span class="scale-value">14px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-base</span>
+                        <span style="font-size: var(--font-size-base);">Base Text Size</span>
+                        <span class="scale-value">16px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-lg</span>
+                        <span style="font-size: var(--font-size-lg);">Large Text</span>
+                        <span class="scale-value">18px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-xl</span>
+                        <span style="font-size: var(--font-size-xl);">Extra Large</span>
+                        <span class="scale-value">20px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-2xl</span>
+                        <span style="font-size: var(--font-size-2xl);">2X Large</span>
+                        <span class="scale-value">24px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-3xl</span>
+                        <span style="font-size: var(--font-size-3xl);">3X Large</span>
+                        <span class="scale-value">30px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-4xl</span>
+                        <span style="font-size: var(--font-size-4xl);">4X Large</span>
+                        <span class="scale-value">36px</span>
+                    </div>
+                    
+                    <div class="scale-item">
+                        <span class="scale-label">--font-size-5xl</span>
+                        <span style="font-size: var(--font-size-5xl);">5X Large</span>
+                        <span class="scale-value">48px</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Font Weights</h2>
+            
+            <div class="component-card">
+                <div class="font-weights">
+                    <div class="weight-example">
+                        <span class="weight-label">400</span>
+                        <span style="font-weight: var(--font-weight-normal); font-size: var(--font-size-xl);">Normal Weight - Regular body text</span>
+                    </div>
+                    
+                    <div class="weight-example">
+                        <span class="weight-label">500</span>
+                        <span style="font-weight: var(--font-weight-medium); font-size: var(--font-size-xl);">Medium Weight - Subtle emphasis</span>
+                    </div>
+                    
+                    <div class="weight-example">
+                        <span class="weight-label">600</span>
+                        <span style="font-weight: var(--font-weight-semibold); font-size: var(--font-size-xl);">Semibold Weight - Strong emphasis</span>
+                    </div>
+                    
+                    <div class="weight-example">
+                        <span class="weight-label">700</span>
+                        <span style="font-weight: var(--font-weight-bold); font-size: var(--font-size-xl);">Bold Weight - Headlines</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Letter Spacing</h2>
+            
+            <div class="letter-spacing-examples">
+                <div class="spacing-example">
+                    <div class="spacing-label">--letter-spacing-luxury: 0.15em</div>
+                    <div style="letter-spacing: var(--letter-spacing-luxury); font-size: var(--font-size-xl); text-transform: uppercase;">
+                        LUXURY REAL ESTATE
+                    </div>
+                </div>
+                
+                <div class="spacing-example">
+                    <div class="spacing-label">--letter-spacing-wide: 0.1em</div>
+                    <div style="letter-spacing: var(--letter-spacing-wide); font-size: var(--font-size-xl); text-transform: uppercase;">
+                        PREMIUM PROPERTIES
+                    </div>
+                </div>
+                
+                <div class="spacing-example">
+                    <div class="spacing-label">--letter-spacing-normal: 0.05em</div>
+                    <div style="letter-spacing: var(--letter-spacing-normal); font-size: var(--font-size-xl);">
+                        Modern Living Spaces
+                    </div>
+                </div>
+                
+                <div class="spacing-example">
+                    <div class="spacing-label">--letter-spacing-tight: 0.02em</div>
+                    <div style="letter-spacing: var(--letter-spacing-tight); font-size: var(--font-size-xl);">
+                        Contemporary Design
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Line Heights</h2>
+            
+            <div class="line-height-examples">
+                <div class="height-example">
+                    <div class="height-label">--line-height-tight: 1.2</div>
+                    <p style="line-height: var(--line-height-tight);">
+                        Tight line height is perfect for large headlines and display text where you want a compact, impactful appearance. Best used sparingly for maximum effect.
+                    </p>
+                </div>
+                
+                <div class="height-example">
+                    <div class="height-label">--line-height-normal: 1.6</div>
+                    <p style="line-height: var(--line-height-normal);">
+                        Normal line height provides comfortable reading for body text and general content. This is the default for most text elements in the design system.
+                    </p>
+                </div>
+                
+                <div class="height-example">
+                    <div class="height-label">--line-height-relaxed: 1.8</div>
+                    <p style="line-height: var(--line-height-relaxed);">
+                        Relaxed line height offers extra breathing room, ideal for longer passages of text or when you want to create a more open, luxurious feel in your content.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Typography Examples</h2>
+            
+            <div class="type-specimen">
+                <div class="type-example">
+                    <div class="type-example-label">Display Heading - Luxury</div>
+                    <h1 style="font-family: var(--font-family-luxury); font-size: var(--font-size-5xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-tight); background: var(--lyd-gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        Exclusive Properties
+                    </h1>
+                </div>
+                
+                <div class="type-example">
+                    <div class="type-example-label">Page Heading</div>
+                    <h1 style="font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); color: var(--lyd-primary);">
+                        Premium Real Estate Solutions
+                    </h1>
+                </div>
+                
+                <div class="type-example">
+                    <div class="type-example-label">Section Heading</div>
+                    <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); color: var(--lyd-text);">
+                        Featured Properties in Munich
+                    </h2>
+                </div>
+                
+                <div class="type-example">
+                    <div class="type-example-label">Body Text</div>
+                    <p style="font-size: var(--font-size-base); line-height: var(--line-height-normal); color: var(--lyd-text);">
+                        Discover exceptional properties in prime locations. Our curated selection of luxury real estate offers unparalleled quality, sophisticated design, and premium amenities for discerning buyers seeking their dream home.
+                    </p>
+                </div>
+                
+                <div class="type-example">
+                    <div class="type-example-label">Small Text / Caption</div>
+                    <p style="font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        *Prices subject to change. All properties verified and exclusively listed through LYD Real Estate Partners.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

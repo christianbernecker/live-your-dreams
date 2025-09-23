@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Overview - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* Overview specific styles */
+        .overview-intro {
+            padding: var(--spacing-2xl);
+            background: var(--lyd-gradient-subtle);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .overview-intro h1 {
+            background: var(--lyd-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .overview-table thead {
+            background: var(--lyd-gradient-primary);
+            color: white;
+        }
+        
+        .overview-table th {
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: left;
+            font-weight: var(--font-weight-semibold);
+            letter-spacing: var(--letter-spacing-wide);
+            text-transform: uppercase;
+            font-size: var(--font-size-sm);
+        }
+        
+        .overview-table td {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-line);
+        }
+        
+        .overview-table tbody tr {
+            transition: var(--transition-luxury);
+        }
+        
+        .overview-table tbody tr:hover {
+            background: var(--lyd-gradient-subtle);
+            transform: translateX(4px);
+        }
+        
+        .component-link {
+            color: var(--lyd-primary);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-luxury);
+        }
+        
+        .component-link:hover {
+            color: var(--lyd-royal-blue);
+            transform: translateX(4px);
+        }
+        
+        .component-link svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .component-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--lyd-gradient-primary);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: var(--font-weight-bold);
+            letter-spacing: var(--letter-spacing-wide);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item active">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <div class="overview-intro">
+            <h1>LYD Design System V2 - Component Overview</h1>
+            <p>Welcome to the Live Your Dreams Design System. This comprehensive library provides all the essential components for building modern, luxury real estate applications. Each component is crafted with attention to detail, incorporating our signature gradients, premium typography, and glassmorphism effects.</p>
+            <p>Our design system emphasizes consistency, accessibility, and a premium user experience that reflects the luxury segment we serve.</p>
+        </div>
+        
+        <section class="section">
+            <h2 class="section-title">All Components</h2>
+            
+            <table class="overview-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Button</strong></td>
+                        <td>Interactive elements for user actions with multiple variants and SVG icon support</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/buttons/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Input</strong></td>
+                        <td>Text input fields with various states and validation options</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/inputs/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Card</strong></td>
+                        <td>Container components with image support and flexible layouts</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/cards/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Select</strong></td>
+                        <td>Dropdown selection with multi-select and tag support</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/select/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modal</strong></td>
+                        <td>Overlay dialogs for focused user interactions</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/modal/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dropdown</strong></td>
+                        <td>Versatile dropdown menus with smooth animations</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/dropdown/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accordion</strong></td>
+                        <td>Expandable content panels for organized information</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/accordion/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Checkbox</strong></td>
+                        <td>Selection controls for multiple choices</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/checkbox/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Radio</strong></td>
+                        <td>Single selection from multiple options</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/radio/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toast</strong></td>
+                        <td>Non-intrusive notifications and feedback messages</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/toast/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Table</strong></td>
+                        <td>Data display in rows and columns with sorting</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/table/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Textarea</strong></td>
+                        <td>Multi-line text input for longer content</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/textarea/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Switch</strong></td>
+                        <td>Toggle controls for on/off states</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/switch/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Slider</strong></td>
+                        <td>Range selection with visual feedback</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/slider/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alert</strong></td>
+                        <td>Contextual feedback messages with different severity levels</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/alert/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Badge</strong></td>
+                        <td>Small status indicators and labels</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/badge/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Date Picker</strong></td>
+                        <td>Calendar-based date selection with interactive navigation</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/date-picker/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Avatar</strong></td>
+                        <td>User profile images and placeholders</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/avatar/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Navbar</strong></td>
+                        <td>Navigation bar with responsive menu and logo integration</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/navbar/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tabs</strong></td>
+                        <td>Tabbed interface for content organization</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/tabs/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Progress</strong></td>
+                        <td>Visual indicators for task completion</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/progress/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Calendar</strong></td>
+                        <td>Full calendar view for date management</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/calendar/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autocomplete</strong></td>
+                        <td>Intelligent search with real-time suggestions</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/autocomplete/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pagination</strong></td>
+                        <td>Navigation controls for multi-page content</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/pagination/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tooltip</strong></td>
+                        <td>Contextual information on hover</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/tooltip/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Typography</strong></td>
+                        <td>Text styles and formatting guidelines</td>
+                        <td><span class="component-badge">Ready</span></td>
+                        <td>
+                            <a href="/components/typography/" class="component-link">
+                                View Component
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

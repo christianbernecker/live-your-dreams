@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Architecture - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* CSS Guide specific styles */
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .code-example .comment {
+            color: #6A9955;
+        }
+        
+        .code-example .property {
+            color: #9CDCFE;
+        }
+        
+        .code-example .value {
+            color: #CE9178;
+        }
+        
+        .code-example .selector {
+            color: #D7BA7D;
+        }
+        
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .token-item {
+            background: white;
+            border: 1px solid var(--lyd-line);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+        
+        .token-item code {
+            display: block;
+            color: var(--lyd-primary);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .token-item .value {
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .color-swatch {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .color-swatch .color {
+            height: 80px;
+        }
+        
+        .color-swatch .label {
+            background: white;
+            padding: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item active">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <header class="page-header">
+            <h1>CSS Architecture</h1>
+            <p>The central master.css system of the LYD Design System</p>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">Master.css Concept</h2>
+            
+            <div class="component-card">
+                <h3>Central CSS System</h3>
+                <p>Our Design System is based on a single, centralized CSS file (<code>master.css</code>) that contains all global styles, design tokens, and component classes. This approach offers several advantages:</p>
+                
+                <ul style="margin-top: var(--spacing-md);">
+                    <li><strong>Consistency:</strong> All components use the same design tokens</li>
+                    <li><strong>Performance:</strong> Only one CSS file needs to be loaded</li>
+                    <li><strong>Maintainability:</strong> Central location for all style changes</li>
+                    <li><strong>Scalability:</strong> Easy extension through CSS Custom Properties</li>
+                </ul>
+            </div>
+            
+            <div class="component-card">
+                <h3>Integration</h3>
+                <div class="code-example">
+<span class="comment">&lt;!-- Integration in HTML --&gt;</span>
+&lt;<span class="selector">link</span> <span class="property">rel</span>=<span class="value">"stylesheet"</span> <span class="property">href</span>=<span class="value">"/shared/master.css"</span>&gt;
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Design Tokens</h2>
+            
+            <div class="component-card">
+                <h3>Colors</h3>
+                <p>Our color palette is based on the LYD Corporate Identity:</p>
+                
+                <div class="color-palette">
+                    <div class="color-swatch">
+                        <div class="color" style="background: #000066;"></div>
+                        <div class="label">
+                            <code>--lyd-primary</code><br>
+                            <span class="value">#000066</span>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #3366CC;"></div>
+                        <div class="label">
+                            <code>--lyd-royal-blue</code><br>
+                            <span class="value">#3366CC</span>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: linear-gradient(135deg, #000066 0%, #3366CC 100%);"></div>
+                        <div class="label">
+                            <code>--lyd-gradient-primary</code><br>
+                            <span class="value">Gradient</span>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #E8F0FE;"></div>
+                        <div class="label">
+                            <code>--lyd-accent</code><br>
+                            <span class="value">#E8F0FE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Typography</h3>
+                <div class="code-example">
+<span class="comment">/* Font Families */</span>
+<span class="selector">:root</span> {
+    <span class="property">--font-family-primary</span>: <span class="value">'Inter', system-ui, sans-serif</span>;
+    <span class="property">--font-family-luxury</span>: <span class="value">'Playfair Display', serif</span>;
+    <span class="property">--font-family-mono</span>: <span class="value">'JetBrains Mono', monospace</span>;
+}
+                </div>
+                
+                <div class="token-grid">
+                    <div class="token-item">
+                        <code>--font-size-xs</code>
+                        <span class="value">12px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--font-size-sm</code>
+                        <span class="value">14px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--font-size-base</code>
+                        <span class="value">16px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--font-size-lg</code>
+                        <span class="value">18px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--font-size-xl</code>
+                        <span class="value">20px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--font-size-2xl</code>
+                        <span class="value">24px</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Spacing System</h3>
+                <p>Consistent spacing based on a 4px grid:</p>
+                
+                <div class="token-grid">
+                    <div class="token-item">
+                        <code>--spacing-xs</code>
+                        <span class="value">4px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--spacing-sm</code>
+                        <span class="value">8px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--spacing-md</code>
+                        <span class="value">16px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--spacing-lg</code>
+                        <span class="value">24px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--spacing-xl</code>
+                        <span class="value">32px</span>
+                    </div>
+                    <div class="token-item">
+                        <code>--spacing-2xl</code>
+                        <span class="value">48px</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Luxury Design Features</h2>
+            
+            <div class="component-card">
+                <h3>Gradients</h3>
+                <div class="code-example">
+<span class="comment">/* Luxury Gradients */</span>
+<span class="property">--lyd-gradient-primary</span>: <span class="value">linear-gradient(135deg, #000066 0%, #3366CC 100%)</span>;
+<span class="property">--lyd-gradient-hover</span>: <span class="value">linear-gradient(135deg, #3366CC 0%, #000066 100%)</span>;
+<span class="property">--lyd-gradient-subtle</span>: <span class="value">linear-gradient(180deg, rgba(0,0,102,0.03) 0%, rgba(51,102,204,0.05) 100%)</span>;
+<span class="property">--lyd-gradient-glass</span>: <span class="value">linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)</span>;
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Glassmorphism</h3>
+                <div class="code-example">
+<span class="comment">/* Glassmorphism Effects */</span>
+<span class="selector">.glass-card</span> {
+    <span class="property">background</span>: <span class="value">var(--glass-white)</span>;
+    <span class="property">backdrop-filter</span>: <span class="value">var(--glass-blur)</span>;
+    <span class="property">border</span>: <span class="value">var(--glass-border)</span>;
+}
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Premium Transitions</h3>
+                <div class="code-example">
+<span class="comment">/* Luxury Transitions */</span>
+<span class="property">--transition-luxury</span>: <span class="value">all 0.4s cubic-bezier(0.4, 0, 0.2, 1)</span>;
+<span class="property">--transition-smooth</span>: <span class="value">all 0.6s cubic-bezier(0.23, 1, 0.32, 1)</span>;
+<span class="property">--transition-bounce</span>: <span class="value">all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)</span>;
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Component Classes</h2>
+            
+            <div class="component-card">
+                <h3>Naming Convention</h3>
+                <p>All component classes follow the prefix <code>.lyd-</code> for unique identification:</p>
+                
+                <div class="code-example">
+<span class="comment">/* Component Classes */</span>
+<span class="selector">.lyd-button</span> { }
+<span class="selector">.lyd-button.primary</span> { }
+<span class="selector">.lyd-button.secondary</span> { }
+
+<span class="selector">.lyd-card</span> { }
+<span class="selector">.lyd-card-header</span> { }
+<span class="selector">.lyd-card-body</span> { }
+
+<span class="selector">.lyd-input</span> { }
+<span class="selector">.lyd-select</span> { }
+<span class="selector">.lyd-modal</span> { }
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Utility Classes</h3>
+                <div class="code-example">
+<span class="comment">/* Utility Classes */</span>
+<span class="selector">.luxury-hover</span> { <span class="comment">/* Hover-Effekte */</span> }
+<span class="selector">.gradient-text</span> { <span class="comment">/* Gradient Text */</span> }
+<span class="selector">.glass-card</span> { <span class="comment">/* Glassmorphism */</span> }
+<span class="selector">.luxury-badge</span> { <span class="comment">/* Premium Badges */</span> }
+<span class="selector">.luxury-divider</span> { <span class="comment">/* Decorative Dividers */</span> }
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Best Practices</h2>
+            
+            <div class="component-card">
+                <h3>Using CSS Custom Properties</h3>
+                <p>Always use predefined CSS Variables instead of hardcoded values:</p>
+                
+                <div class="code-example">
+<span class="comment">/* ✅ Correct */</span>
+<span class="selector">.my-component</span> {
+    <span class="property">color</span>: <span class="value">var(--lyd-primary)</span>;
+    <span class="property">padding</span>: <span class="value">var(--spacing-md)</span>;
+    <span class="property">border-radius</span>: <span class="value">var(--radius-md)</span>;
+}
+
+<span class="comment">/* ❌ Wrong */</span>
+<span class="selector">.my-component</span> {
+    <span class="property">color</span>: <span class="value">#000066</span>;
+    <span class="property">padding</span>: <span class="value">16px</span>;
+    <span class="property">border-radius</span>: <span class="value">6px</span>;
+}
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Component-specific Styles</h3>
+                <p>For component-specific styles that are not included in master.css:</p>
+                
+                <div class="code-example">
+<span class="comment">&lt;!-- In the component file --&gt;</span>
+&lt;<span class="selector">style</span>&gt;
+    <span class="comment">/* ONLY component-specific styles */</span>
+    <span class="selector">.lyd-datepicker-calendar</span> {
+        <span class="property">position</span>: <span class="value">absolute</span>;
+        <span class="property">z-index</span>: <span class="value">var(--z-dropdown)</span>;
+    }
+&lt;/<span class="selector">style</span>&gt;
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Performance Optimization</h2>
+            
+            <div class="component-card">
+                <h3>CSS Loading Strategy</h3>
+                <ul>
+                    <li><strong>Single File:</strong> Only one CSS file reduces HTTP requests</li>
+                    <li><strong>Minification:</strong> Master.css should be minified in production</li>
+                    <li><strong>Compression:</strong> Use Gzip/Brotli for optimal file size</li>
+                    <li><strong>Caching:</strong> Long cache duration with proper versioning</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

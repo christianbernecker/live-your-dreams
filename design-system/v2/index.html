@@ -1,445 +1,303 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LYD Design System V2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <title>LYD Design System V2 - Home</title>
+    <link rel="stylesheet" href="/shared/master.css">
     <style>
-        :root {
-            /* Design Tokens */
-            --lyd-primary: #0066ff;
-            --lyd-primary-hover: #0052cc;
-            --lyd-secondary: #6366f1;
-            --lyd-accent: #ff6b35;
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Colors */
-            --lyd-white: #ffffff;
-            --lyd-gray-50: #f9fafb;
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-300: #d1d5db;
-            --lyd-gray-400: #9ca3af;
-            --lyd-gray-500: #6b7280;
-            --lyd-gray-600: #4b5563;
-            --lyd-gray-700: #374151;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
-            
-            /* Typography */
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            --spacing-3xl: 64px;
-            
-            /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: var(--font-family);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-gray-900);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background: var(--lyd-white);
-            border-right: 1px solid var(--lyd-gray-200);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .sidebar-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-gray-200);
+        /* Hero Section Styles */
+        .hero {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background: var(--lyd-gradient-subtle);
+            border-bottom: 1px solid var(--lyd-line);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
-        .lyd-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: var(--spacing-md);
-            transform: scale(2);
-            transform-origin: center;
-            margin-top: 40px;
-            margin-bottom: 60px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(51, 102, 204, 0.05) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
         }
         
-        .logo-subtitle {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-gray-500);
-            font-weight: 500;
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .nav-section {
-            padding: var(--spacing-md) 0;
-        }
-        
-        .nav-section-title {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            color: var(--lyd-gray-400);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 12px var(--spacing-lg);
-            color: var(--lyd-gray-600);
-            text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-        
-        .nav-item:hover {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .nav-item.active {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.1);
-            font-weight: 600;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: var(--spacing-2xl);
-            max-width: 1400px;
-        }
-        
-        .page-header {
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .page-title {
+        .hero-title {
             font-size: var(--font-size-5xl);
-            font-weight: 400;
-            font-family: system-ui, -apple-system, sans-serif;
-            letter-spacing: 6px;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
+            font-weight: var(--font-weight-bold);
+            background: var(--lyd-gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
+            background-clip: text;
+            margin-bottom: var(--spacing-lg);
+            letter-spacing: -0.02em;
         }
         
-        .page-subtitle {
-            font-size: var(--font-size-lg);
-            color: var(--lyd-gray-600);
-            line-height: 1.6;
-            max-width: 600px;
+        .hero-subtitle {
+            font-size: var(--font-size-xl);
+            color: var(--lyd-grey);
+            margin-bottom: var(--spacing-2xl);
+            line-height: var(--line-height-relaxed);
         }
         
-        /* Component Sections */
-        .section {
-            margin-bottom: var(--spacing-3xl);
+        .hero-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
-        .section-title {
-            font-size: var(--font-size-3xl);
-            font-weight: 700;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .component-grid {
+        /* Feature Grid */
+        .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--spacing-xl);
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        .component-card {
-            background: var(--lyd-white);
-            border-radius: 16px;
+        .feature-card {
+            background: linear-gradient(135deg, var(--glass-white), transparent);
+            backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            border-radius: var(--radius-lg);
             padding: var(--spacing-xl);
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            border: 1px solid var(--lyd-gray-100);
+            transition: var(--transition-luxury);
+            position: relative;
+            overflow: hidden;
         }
         
-        .component-card:hover {
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--lyd-gradient-subtle);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-luxury);
         }
         
-        .component-card h3 {
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: var(--spacing-md);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--lyd-primary);
+        }
+        
+        .feature-title {
             font-size: var(--font-size-xl);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
+            font-weight: var(--font-weight-semibold);
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-description {
+            color: var(--lyd-grey);
+            line-height: var(--line-height-relaxed);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Quick Links Section */
+        .quick-links {
+            background: var(--lyd-gradient-subtle);
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            border-top: 1px solid var(--lyd-line);
+        }
+        
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .link-group h3 {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--lyd-primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .link-group h3 svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .link-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .link-list li {
             margin-bottom: var(--spacing-sm);
         }
         
-        .component-card p {
-            color: var(--lyd-gray-600);
-            margin-bottom: var(--spacing-lg);
-            line-height: 1.5;
-        }
-        
-        .component-demo {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-        
-        /* Button Styles */
-        .lyd-button {
+        .link-list a {
+            color: var(--lyd-text);
+            text-decoration: none;
+            transition: var(--transition-luxury);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 15px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
+            gap: var(--spacing-xs);
         }
         
-        .lyd-button.primary {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, #004299 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
-        }
-        
-        .lyd-button.primary:hover {
-            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
-        }
-        
-        .lyd-button.secondary {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            color: var(--lyd-secondary);
-            backdrop-filter: blur(20px);
-        }
-        
-        .lyd-button.secondary:hover {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        .lyd-button.outline {
-            background: linear-gradient(#fff, #fff) padding-box,
-                        linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) border-box;
-            border: 2px solid transparent;
-            color: #4c1d95;
-        }
-        
-        .lyd-button.outline:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-        
-        /* Input Styles */
-        .lyd-input {
-            width: 100%;
-            padding: 12px 24px;
-            border: 2px solid transparent;
-            border-radius: 6px;
-            font-size: 15px;
-            font-family: inherit;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(white, white) padding-box,
-                        linear-gradient(135deg, #e5e7eb, #d1d5db) border-box;
-        }
-        
-        .lyd-input:focus {
-            outline: none;
-            background: linear-gradient(white, white) padding-box,
-                        linear-gradient(135deg, var(--lyd-primary), #0052cc) border-box;
-            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        /* Card Styles */
-        .property-card {
-            background: var(--lyd-white);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s ease;
-        }
-        
-        .property-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .property-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-        
-        .property-content {
-            padding: var(--spacing-lg);
-        }
-        
-        .property-title {
-            font-size: var(--font-size-lg);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .property-location {
-            color: var(--lyd-gray-600);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .property-details {
-            color: var(--lyd-gray-500);
-            font-size: var(--font-size-sm);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .property-price {
-            font-size: var(--font-size-2xl);
-            font-weight: 700;
+        .link-list a:hover {
             color: var(--lyd-primary);
-            margin-bottom: var(--spacing-lg);
+            transform: translateX(4px);
         }
         
-        /* Code Example */
-        .code-example {
-            background: var(--lyd-gray-800);
-            border-radius: 12px;
+        /* Stats Section */
+        .stats {
+            padding: var(--spacing-2xl) var(--spacing-xl);
+            background: white;
+            border-bottom: 1px solid var(--lyd-line);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-xl);
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .stat-item {
             padding: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            overflow-x: auto;
         }
         
-        .code-example pre {
-            color: #e5e7eb;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 14px;
-            line-height: 1.5;
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            background: var(--lyd-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: var(--spacing-xs);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: var(--spacing-lg);
-            }
-            
-            .component-grid {
-                grid-template-columns: 1fr;
-            }
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            text-transform: uppercase;
+            letter-spacing: var(--letter-spacing-wide);
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: var(--spacing-3xl) var(--spacing-xl);
+            background: var(--lyd-gradient-primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            color: white;
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .cta p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .cta .lyd-button {
+            background: white;
+            color: var(--lyd-primary);
+        }
+        
+        .cta .lyd-button:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Gradient für die Sichel -->
-                    <linearGradient id="crescentGradientV2Home" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    
-                    <!-- Gradient für den gesamten Text -->
-                    <linearGradient id="textGradientV2Home" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Sichel-Form mit eigenem Gradient -->
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Home)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                
-                <!-- Text-Elemente -->
-                <g fill="url(#textGradientV2Home)">
-                    <!-- LIVE -->
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <!-- YOUR -->
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <!-- DREAMS -->
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
             <div class="logo-subtitle">Design System V2</div>
         </div>
         
+        <nav>
         <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item active">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
         </div>
         
         <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
         </div>
         
         <div class="nav-section">
             <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
+                <a href="/components/overview/" class="nav-item">Overview</a>
             <a href="/components/buttons/" class="nav-item">Button</a>
             <a href="/components/inputs/" class="nav-item">Input</a>
             <a href="/components/cards/" class="nav-item">Card</a>
@@ -451,47 +309,228 @@
             <a href="/components/radio/" class="nav-item">Radio</a>
             <a href="/components/toast/" class="nav-item">Toast</a>
             <a href="/components/table/" class="nav-item">Table</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Styles</div>
-            <a href="/styles/" class="nav-item">Introduction</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
             <a href="/components/typography/" class="nav-item">Typography</a>
-            <a href="/styles/grid/" class="nav-item">Grid</a>
-            <a href="/styles/colors/" class="nav-item">Colors</a>
-            <a href="/styles/spacing/" class="nav-item">Spacing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Patterns</div>
-            <a href="/patterns/" class="nav-item">Introduction</a>
-            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-            <a href="/patterns/header/" class="nav-item">Header</a>
-            <a href="/patterns/footer/" class="nav-item">Footer</a>
-            <a href="/patterns/forms/" class="nav-item">Forms</a>
-            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
         </div>
     </nav>
+    </div>
     
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Home</h1>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">LYD Design System V2</h1>
+                <p class="hero-subtitle">
+                    A premium, luxury-focused design system built for modern web applications. 
+                    Featuring elegant components, sophisticated gradients, and a consistent visual language.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/components/overview/" class="lyd-button primary">
+                        <svg class="lyd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        Explore Components
+                    </a>
+                    <a href="/implementation/overview/" class="lyd-button secondary">
+                        <svg class="lyd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">26+</span>
+                    <span class="stat-label">Components</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Responsive</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">WCAG 2.1</span>
+                    <span class="stat-label">Accessible</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">TypeScript</span>
+                    <span class="stat-label">Ready</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Grid -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Luxury Design</h3>
+                <p class="feature-description">
+                    Premium gradients, glassmorphism effects, and sophisticated animations create an elevated user experience.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">High Performance</h3>
+                <p class="feature-description">
+                    Optimized CSS architecture with minimal footprint. Lazy-loading and efficient rendering for smooth interactions.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Enterprise Ready</h3>
+                <p class="feature-description">
+                    Built with TypeScript support, comprehensive documentation, and following industry best practices.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Developer Friendly</h3>
+                <p class="feature-description">
+                    Clean API, consistent naming conventions, and extensive code examples make integration seamless.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Fully Customizable</h3>
+                <p class="feature-description">
+                    CSS variables and design tokens allow for easy theming and brand customization.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Accessible</h3>
+                <p class="feature-description">
+                    WCAG 2.1 AA compliant with full keyboard navigation and screen reader support.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Quick Links -->
+        <section class="quick-links">
+            <div class="quick-links-grid">
+                <div class="link-group">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                        Documentation
+                    </h3>
+                    <ul class="link-list">
+                        <li><a href="/design-principles/overview/">Design Principles</a></li>
+                        <li><a href="/implementation/overview/">Implementation Guide</a></li>
+                        <li><a href="/implementation/css/">CSS Architecture</a></li>
+                        <li><a href="/implementation/nextjs/">Next.js Integration</a></li>
+                    </ul>
+                </div>
+                
+                <div class="link-group">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z" />
+                        </svg>
+                        Popular Components
+                    </h3>
+                    <ul class="link-list">
+                        <li><a href="/components/buttons/">Buttons</a></li>
+                        <li><a href="/components/cards/">Cards</a></li>
+                        <li><a href="/components/modal/">Modal</a></li>
+                        <li><a href="/components/select/">Select</a></li>
+                        <li><a href="/components/table/">Table</a></li>
+                    </ul>
+                </div>
+                
+                <div class="link-group">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+                        </svg>
+                        Design Resources
+                    </h3>
+                    <ul class="link-list">
+                        <li><a href="/design-principles/colors/">Color System</a></li>
+                        <li><a href="/design-principles/typography/">Typography</a></li>
+                        <li><a href="/design-principles/grid/">Grid System</a></li>
+                        <li><a href="/design-principles/spacing/">Spacing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="link-group">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+                        </svg>
+                        Resources
+                    </h3>
+                    <ul class="link-list">
+                        <li><a href="/components/overview/">All Components</a></li>
+                        <li><a href="https://github.com/liveyourdreams" target="_blank">GitHub</a></li>
+                        <li><a href="/changelog">Changelog</a></li>
+                        <li><a href="/support">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Ready to Build Something Amazing?</h2>
+                <p>Start using the LYD Design System today and create beautiful, consistent user interfaces.</p>
+                <a href="/implementation/overview/" class="lyd-button">
+                    Get Started Now
+                    <svg class="lyd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
         </div>
+        </section>
     </main>
-    
-    <!-- JavaScript -->
-    <script>
-        // Set active navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
-                    item.classList.add('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>

@@ -5,539 +5,570 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagination - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
     <style>
-                :root {
-            /* Live Your Dreams CI Colors */
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
-            --lyd-accent: #E8F0FE;
-            --lyd-grey: #666666;
-            --lyd-line: #E5E7EB;
-            --lyd-text: #111111;
-            --lyd-bg: #ffffff;
-            
-            /* Additional Colors */
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Typography Scale - CI konform */
-            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
-            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            --spacing-3xl: 64px;
-            
-            /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-                body {
-            font-family: var(--font-family-primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-text);
-            line-height: 1.6;
+        /* NUR PAGINATION-SPEZIFISCHE STYLES */
+        .lyd-pagination {
             display: flex;
-            min-height: 100vh;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
         
-        /* Navigation structure - same as other components */
-        .sidebar { width: 280px; background: var(--lyd-bg); border-right: 1px solid var(--lyd-line); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
-        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-line); text-align: center; }
-        .lyd-logo { width: 120px; height: auto; margin-bottom: var(--spacing-md); transform: scale(2); transform-origin: center; margin-top: 40px; margin-bottom: 60px; }
-        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 500; }
-        .nav-section { padding: var(--spacing-md) 0; }
-        .nav-section-title { padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
-        .nav-item:hover { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
-        .nav-item.active { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.1); font-weight: 600; }
+        .lyd-pagination-item {
+            min-width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--lyd-text);
+            background: white;
+            border: 1px solid var(--lyd-line);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
         
-        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-2xl); max-width: 1400px; }
-        .page-header { margin-bottom: var(--spacing-2xl); }
-        .page-title { font-size: var(--font-size-5xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; margin-bottom: var(--spacing-md); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-grey); max-width: 800px; margin-bottom: var(--spacing-2xl); }
-        .section { margin-bottom: var(--spacing-3xl); }
-        .section-title { font-size: var(--font-size-3xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; color: var(--lyd-text); margin-bottom: var(--spacing-xl); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
-        .showcase-item { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); }
-        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); }
-        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-grey); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
-        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-bg); }
+        .lyd-pagination-item:hover {
+            background: var(--lyd-gray-100);
+            border-color: var(--lyd-primary);
+        }
         
-        /* Component-specific styles */
+        .lyd-pagination-item.active {
+            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
+            color: white;
+            border-color: transparent;
+        }
         
-        .lyd-pagination { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-lg) 0; }
-        .lyd-pagination-info { color: var(--lyd-grey); font-size: var(--font-size-sm); }
-        .lyd-pagination-nav { display: flex; align-items: center; gap: var(--spacing-xs); }
-        .lyd-pagination-btn, .lyd-pagination-page { padding: var(--spacing-sm) var(--spacing-md); border: 1px solid var(--lyd-line); background: var(--lyd-bg); color: var(--lyd-gray-700); font-size: var(--font-size-sm); border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
-        .lyd-pagination-btn:hover, .lyd-pagination-page:hover { background: var(--lyd-gray-50); border-color: var(--lyd-primary); color: var(--lyd-primary); }
-        .lyd-pagination-page.active { 
-            background: linear-gradient(135deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); 
-            border-color: var(--lyd-royal-blue); 
-            color: var(--lyd-bg); 
-            box-shadow: 0 4px 12px rgba(51, 102, 204, 0.4); 
-            position: relative;
+        .lyd-pagination-item:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .lyd-pagination-item:disabled:hover {
+            background: white;
+            border-color: var(--lyd-line);
+        }
+        
+        .lyd-pagination-ellipsis {
+            min-width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--lyd-grey);
+            pointer-events: none;
+        }
+        
+        /* Pagination Sizes */
+        .lyd-pagination.small .lyd-pagination-item {
+            min-width: 32px;
+            height: 32px;
+            font-size: var(--font-size-xs);
+        }
+        
+        .lyd-pagination.large .lyd-pagination-item {
+            min-width: 48px;
+            height: 48px;
+            font-size: var(--font-size-base);
+        }
+        
+        /* Pagination with Info */
+        .lyd-pagination-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .lyd-pagination-info {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+        }
+        
+        /* Simple Pagination */
+        .lyd-pagination-simple {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .lyd-pagination-simple-text {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-text);
+        }
+        
+        /* Mini Pagination */
+        .lyd-pagination-mini {
+            display: inline-flex;
+            align-items: center;
+            background: white;
+            border: 1px solid var(--lyd-line);
+            border-radius: var(--radius-md);
             overflow: hidden;
         }
-        .lyd-pagination-page.active::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+        
+        .lyd-pagination-mini button {
+            padding: 8px 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--lyd-text);
+            transition: all 0.2s ease;
         }
-        .lyd-pagination-page.active:hover::before {
-            left: 100%;
+        
+        .lyd-pagination-mini button:hover:not(:disabled) {
+            background: var(--lyd-gray-100);
         }
-        .lyd-pagination-btn.disabled { opacity: 0.5; cursor: not-allowed; }
-        .lyd-pagination-ellipsis { padding: var(--spacing-sm); color: var(--lyd-grey); }
         
+        .lyd-pagination-mini button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         
-        /* Implementation and accessibility styling */
-        .implementation-section { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
-        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); margin: 0; }
-        .code-block { background: var(--lyd-gray-900); border-radius: 8px; padding: var(--spacing-lg); position: relative; overflow-x: auto; }
-        .code-block pre { color: var(--lyd-gray-100); font-family: 'Monaco', 'Menlo', monospace; font-size: var(--font-size-sm); line-height: 1.6; margin: 0; }
-        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: var(--font-size-sm); border: none; cursor: pointer; transition: all 0.3s ease; position: absolute; top: 12px; right: 12px; }
-        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-bg); }
-        .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
-        .accessibility-item { background: var(--lyd-bg); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
-        .accessibility-item h3 { font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); }
-        .accessibility-item h3::before { content: "✓"; color: var(--lyd-primary); font-weight: bold; flex-shrink: 0; }
-        .accessibility-item p { color: var(--lyd-grey); font-size: var(--font-size-sm); line-height: 1.6; }
+        .lyd-pagination-mini-text {
+            padding: 8px 16px;
+            font-size: var(--font-size-sm);
+            color: var(--lyd-text);
+            border-left: 1px solid var(--lyd-line);
+            border-right: 1px solid var(--lyd-line);
+        }
         
-        @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .main-content { margin-left: 0; padding: var(--spacing-lg); }
-            .showcase-grid { grid-template-columns: 1fr; }
+        /* Load More Style */
+        .lyd-pagination-loadmore {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .lyd-pagination-loadmore-btn {
+            padding: 12px 32px;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            color: var(--lyd-primary);
+            background: white;
+            border: 2px solid var(--lyd-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-pagination-loadmore-btn:hover {
+            background: var(--lyd-primary);
+            color: white;
+        }
+        
+        .lyd-pagination-loadmore-text {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
         }
     </style>
 </head>
 <body>
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                <g fill="url(#textGradientLYD)">
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
-        <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
-        </div>        <div class="nav-section">
-            <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
-            <a href="/components/buttons/" class="nav-item">Button</a>
-            <a href="/components/inputs/" class="nav-item">Input</a>
-            <a href="/components/cards/" class="nav-item">Card</a>
-            <a href="/components/select/" class="nav-item">Select</a>
-            <a href="/components/accordion/" class="nav-item">Accordion</a>
-            <a href="/components/modal/" class="nav-item">Modal</a>
-            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
-            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-            <a href="/components/radio/" class="nav-item">Radio</a>
-            <a href="/components/toast/" class="nav-item">Toast</a>
-            <a href="/components/table/" class="nav-item">Table</a>
-            <a href="/components/textarea/" class="nav-item">Textarea</a>
-            <a href="/components/switch/" class="nav-item">Switch</a>
-            <a href="/components/slider/" class="nav-item">Slider</a>
-            <a href="/components/alert/" class="nav-item">Alert</a>
-            <a href="/components/badge/" class="nav-item">Badge</a>
-            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
-            <a href="/components/avatar/" class="nav-item">Avatar</a>
-            <a href="/components/navbar/" class="nav-item">Navbar</a>
-            <a href="/components/tabs/" class="nav-item">Tabs</a>
-            <a href="/components/progress/" class="nav-item">Progress</a>
-            <a href="/components/calendar/" class="nav-item">Calendar</a>
-            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
-            <a href="/components/pagination/" class="nav-item">Pagination</a>
-            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Styles</div>
-            <a href="/styles/" class="nav-item">Introduction</a>
-            <a href="/components/typography/" class="nav-item">Typography</a>
-            <a href="/styles/grid/" class="nav-item">Grid</a>
-            <a href="/styles/colors/" class="nav-item">Colors</a>
-            <a href="/styles/spacing/" class="nav-item">Spacing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Patterns</div>
-            <a href="/patterns/" class="nav-item">Introduction</a>
-            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-            <a href="/patterns/header/" class="nav-item">Header</a>
-            <a href="/patterns/footer/" class="nav-item">Footer</a>
-            <a href="/patterns/forms/" class="nav-item">Forms</a>
-            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
-        </div>
-    </nav>
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item active">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
     
     <main class="main-content">
-        <div class="page-header">
-            <h1 class="page-title">Pagination</h1>
-            <p class="page-subtitle">Pagination components for large property lists, search results, and data tables. Essential for managing extensive real estate catalogs.</p>
-        </div>
+        <h1>Pagination</h1>
+        <p>Navigate through pages of property listings, search results, and data tables.</p>
         
-        
+        <!-- Section 1: Standard Pagination -->
         <section class="section">
-            <h2 class="section-title">Property List Pagination</h2>
+            <h2 class="section-title">Standard Pagination</h2>
             
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <h3>Search Results Navigation</h3>
-                    <p>Navigate through large property listings</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-pagination">
-                            <div class="lyd-pagination-info">
-                                Showing 1-20 of 347 properties
-                            </div>
-                            <div class="lyd-pagination-nav">
-                                <button class="lyd-pagination-btn disabled">Previous</button>
-                                <button class="lyd-pagination-page active">1</button>
-                                <button class="lyd-pagination-page">2</button>
-                                <button class="lyd-pagination-page">3</button>
-                                <span class="lyd-pagination-ellipsis">...</span>
-                                <button class="lyd-pagination-page">17</button>
-                                <button class="lyd-pagination-page">18</button>
-                                <button class="lyd-pagination-btn">Next</button>
-                            </div>
-                        </div>
+            <div class="component-card">
+                <h3>Default Pagination</h3>
+                <div class="lyd-pagination">
+                    <button class="lyd-pagination-item" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="lyd-pagination-item">1</button>
+                    <button class="lyd-pagination-item">2</button>
+                    <button class="lyd-pagination-item active">3</button>
+                    <button class="lyd-pagination-item">4</button>
+                    <button class="lyd-pagination-item">5</button>
+                    <button class="lyd-pagination-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>With Ellipsis</h3>
+                <div class="lyd-pagination">
+                    <button class="lyd-pagination-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="lyd-pagination-item">1</button>
+                    <span class="lyd-pagination-ellipsis">...</span>
+                    <button class="lyd-pagination-item">5</button>
+                    <button class="lyd-pagination-item">6</button>
+                    <button class="lyd-pagination-item active">7</button>
+                    <button class="lyd-pagination-item">8</button>
+                    <button class="lyd-pagination-item">9</button>
+                    <span class="lyd-pagination-ellipsis">...</span>
+                    <button class="lyd-pagination-item">20</button>
+                    <button class="lyd-pagination-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Size Variants</h3>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="lyd-pagination small">
+                        <button class="lyd-pagination-item">1</button>
+                        <button class="lyd-pagination-item active">2</button>
+                        <button class="lyd-pagination-item">3</button>
+                    </div>
+                    
+                    <div class="lyd-pagination">
+                        <button class="lyd-pagination-item">1</button>
+                        <button class="lyd-pagination-item active">2</button>
+                        <button class="lyd-pagination-item">3</button>
+                    </div>
+                    
+                    <div class="lyd-pagination large">
+                        <button class="lyd-pagination-item">1</button>
+                        <button class="lyd-pagination-item active">2</button>
+                        <button class="lyd-pagination-item">3</button>
                     </div>
                 </div>
             </div>
         </section>
         
+        <!-- Section 2: Pagination with Info -->
+        <section class="section">
+            <h2 class="section-title">Pagination with Info</h2>
+            
+            <div class="component-card">
+                <h3>Property Listings</h3>
+                <div class="lyd-pagination-wrapper">
+                    <div class="lyd-pagination-info">
+                        Showing 21-30 of 157 properties
+                    </div>
+                    <div class="lyd-pagination">
+                        <button class="lyd-pagination-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <button class="lyd-pagination-item">1</button>
+                        <button class="lyd-pagination-item">2</button>
+                        <button class="lyd-pagination-item active">3</button>
+                        <button class="lyd-pagination-item">4</button>
+                        <button class="lyd-pagination-item">5</button>
+                        <button class="lyd-pagination-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
         
+        <!-- Section 3: Alternative Styles -->
+        <section class="section">
+            <h2 class="section-title">Alternative Styles</h2>
+            
+            <div class="component-card">
+                <h3>Simple Pagination</h3>
+                <div class="lyd-pagination-simple">
+                    <button class="lyd-pagination-item">Previous</button>
+                    <span class="lyd-pagination-simple-text">Page 3 of 16</span>
+                    <button class="lyd-pagination-item">Next</button>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Mini Pagination</h3>
+                <div class="lyd-pagination-mini">
+                    <button>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <span class="lyd-pagination-mini-text">3 / 16</span>
+                    <button>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Load More</h3>
+                <div class="lyd-pagination-loadmore">
+                    <button class="lyd-pagination-loadmore-btn">Load More Properties</button>
+                    <span class="lyd-pagination-loadmore-text">Showing 20 of 157 properties</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Implementation Guide -->
         <section class="section">
             <h2 class="section-title">Implementation Guide</h2>
             
             <div class="implementation-section">
-                <h3>HTML Usage</h3>
-                <div style="padding: var(--spacing-lg);">
-                    <div class="code-block">
-                        <button class="lyd-button copy">Copy</button>
-                        <pre>&lt;!-- Property Listing Pagination --&gt;
+                <h3>HTML Structure</h3>
+                <div class="code-block">
+                    <pre>&lt;!-- Standard Pagination --&gt;
 &lt;div class="lyd-pagination"&gt;
-    &lt;div class="lyd-pagination-info"&gt;
-        Showing 1-20 of 143 properties
-    &lt;/div&gt;
-    &lt;nav class="lyd-pagination-nav" role="navigation" aria-label="Pagination Navigation"&gt;
-        &lt;button class="lyd-pagination-btn disabled" disabled&gt;Previous&lt;/button&gt;
-        &lt;button class="lyd-pagination-page active" aria-current="page"&gt;1&lt;/button&gt;
-        &lt;button class="lyd-pagination-page"&gt;2&lt;/button&gt;
-        &lt;button class="lyd-pagination-page"&gt;3&lt;/button&gt;
-        &lt;span class="lyd-pagination-ellipsis"&gt;...&lt;/span&gt;
-        &lt;button class="lyd-pagination-page"&gt;8&lt;/button&gt;
-        &lt;button class="lyd-pagination-btn"&gt;Next&lt;/button&gt;
-    &lt;/nav&gt;
+    &lt;button class="lyd-pagination-item" disabled&gt;
+        &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;button class="lyd-pagination-item"&gt;1&lt;/button&gt;
+    &lt;button class="lyd-pagination-item active"&gt;2&lt;/button&gt;
+    &lt;button class="lyd-pagination-item"&gt;3&lt;/button&gt;
+    &lt;span class="lyd-pagination-ellipsis"&gt;...&lt;/span&gt;
+    &lt;button class="lyd-pagination-item"&gt;10&lt;/button&gt;
+    &lt;button class="lyd-pagination-item"&gt;
+        &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/button&gt;
 &lt;/div&gt;
 
-&lt;!-- Compact Pagination --&gt;
-&lt;div class="lyd-pagination"&gt;
+&lt;!-- With Info --&gt;
+&lt;div class="lyd-pagination-wrapper"&gt;
     &lt;div class="lyd-pagination-info"&gt;
-        Page 2 of 8
+        Showing 1-10 of 100 results
     &lt;/div&gt;
-    &lt;nav class="lyd-pagination-nav"&gt;
-        &lt;button class="lyd-pagination-btn"&gt;‹ Prev&lt;/button&gt;
-        &lt;button class="lyd-pagination-page"&gt;1&lt;/button&gt;
-        &lt;button class="lyd-pagination-page active"&gt;2&lt;/button&gt;
-        &lt;button class="lyd-pagination-page"&gt;3&lt;/button&gt;
-        &lt;button class="lyd-pagination-btn"&gt;Next ›&lt;/button&gt;
-    &lt;/nav&gt;
+    &lt;div class="lyd-pagination"&gt;
+        &lt;!-- Pagination items --&gt;
+    &lt;/div&gt;
 &lt;/div&gt;</pre>
-                    </div>
                 </div>
-            </div>
-
-            <div class="implementation-section">
-                <h3>Next.js Integration</h3>
-                <div style="padding: var(--spacing-lg);">
-                    <div class="code-block">
-                        <button class="lyd-button copy">Copy</button>
-                        <pre>import { useState } from 'react';
-
+                
+                <h3>React/Next.js Component</h3>
+                <div class="code-block">
+                    <pre>// components/Pagination.tsx
 interface PaginationProps {
-  totalItems: number;
-  itemsPerPage: number;
   currentPage: number;
-  onPageChange: (page: number) =&gt; void;
-  className?: string;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  showInfo?: boolean;
+  totalItems?: number;
+  itemsPerPage?: number;
+  size?: 'small' | 'medium' | 'large';
 }
 
-export const LydPagination: React.FC&lt;PaginationProps&gt; = ({
-  totalItems,
-  itemsPerPage,
+export const Pagination = ({
   currentPage,
+  totalPages,
   onPageChange,
-  className = ''
-}) =&gt; {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const startItem = (currentPage - 1) * itemsPerPage + 1;
-  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
-
-  const generatePageNumbers = () =&gt; {
-    const pages: (number | string)[] = [];
+  showInfo = false,
+  totalItems = 0,
+  itemsPerPage = 10,
+  size = 'medium'
+}: PaginationProps) => {
+  const getPageNumbers = () => {
+    const pages = [];
+    const showEllipsis = totalPages > 7;
     
-    if (totalPages &lt;= 7) {
-      for (let i = 1; i &lt;= totalPages; i++) {
+    if (!showEllipsis) {
+      for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      pages.push(1);
-      if (currentPage &gt; 3) pages.push('...');
-      
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-      
-      for (let i = start; i &lt;= end; i++) {
-        pages.push(i);
+      if (currentPage <= 4) {
+        for (let i = 1; i <= 5; i++) pages.push(i);
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 4; i <= totalPages; i++) pages.push(i);
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
+        pages.push('...');
+        pages.push(totalPages);
       }
-      
-      if (currentPage &lt; totalPages - 2) pages.push('...');
-      if (totalPages &gt; 1) pages.push(totalPages);
     }
     
     return pages;
   };
-
+  
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+  
   return (
-    &lt;div className={`lyd-pagination ${className}`}&gt;
-      &lt;div className="lyd-pagination-info"&gt;
-        Showing {startItem}-{endItem} of {totalItems} properties
-      &lt;/div&gt;
-      &lt;nav className="lyd-pagination-nav" role="navigation" aria-label="Pagination Navigation"&gt;
-        &lt;button 
-          className={`lyd-pagination-btn ${currentPage === 1 ? 'disabled' : ''}`}
+    &lt;div className="lyd-pagination-wrapper"&gt;
+      {showInfo && (
+        &lt;div className="lyd-pagination-info"&gt;
+          Showing {startItem}-{endItem} of {totalItems} results
+        &lt;/div&gt;
+      )}
+      
+      &lt;div className={`lyd-pagination ${size}`}&gt;
+        &lt;button
+          className="lyd-pagination-item"
+          onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          onClick={() =&gt; onPageChange(currentPage - 1)}
         &gt;
-          Previous
+          &lt;svg width="16" height="16" viewBox="0 0 24 24"&gt;
+            &lt;path d="M15 19l-7-7 7-7" /&gt;
+          &lt;/svg&gt;
         &lt;/button&gt;
         
-        {generatePageNumbers().map((page, index) =&gt; (
-          typeof page === 'number' ? (
+        {getPageNumbers().map((page, index) => (
+          page === '...' ? (
+            &lt;span key={index} className="lyd-pagination-ellipsis"&gt;...&lt;/span&gt;
+          ) : (
             &lt;button
-              key={page}
-              className={`lyd-pagination-page ${page === currentPage ? 'active' : ''}`}
-              onClick={() =&gt; onPageChange(page)}
-              aria-current={page === currentPage ? 'page' : undefined}
+              key={index}
+              className={`lyd-pagination-item ${page === currentPage ? 'active' : ''}`}
+              onClick={() => onPageChange(page as number)}
             &gt;
               {page}
             &lt;/button&gt;
-          ) : (
-            &lt;span key={`ellipsis-${index}`} className="lyd-pagination-ellipsis"&gt;
-              {page}
-            &lt;/span&gt;
           )
         ))}
         
-        &lt;button 
-          className={`lyd-pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`}
+        &lt;button
+          className="lyd-pagination-item"
+          onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          onClick={() =&gt; onPageChange(currentPage + 1)}
         &gt;
-          Next
+          &lt;svg width="16" height="16" viewBox="0 0 24 24"&gt;
+            &lt;path d="M9 5l7 7-7 7" /&gt;
+          &lt;/svg&gt;
         &lt;/button&gt;
-      &lt;/nav&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   );
-};
-
-// Usage Example
-export default function PropertyList() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalProperties = 143;
-  const propertiesPerPage = 20;
-
-  return (
-    &lt;div&gt;
-      {/* Property listings would go here */}
-      
-      &lt;LydPagination
-        totalItems={totalProperties}
-        itemsPerPage={propertiesPerPage}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      /&gt;
-    &lt;/div&gt;
-  );
-}</pre>
-                    </div>
+};</pre>
                 </div>
             </div>
         </section>
-                <h3>API Reference</h3>
-                <table class="api-table">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>.lyd-pagination</code></td>
-                            <td>Base pagination class with premium styling</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-pagination-wrapper</code></td>
-                            <td>pagination container with consistent spacing</td>
-                        </tr>
-                        <tr>
-                            <td><code>.small</code></td>
-                            <td>Small pagination size (14px - Typography Scale)</td>
-                        </tr>
-                        <tr>
-                            <td><code>.large</code></td>
-                            <td>Large pagination size (18px - Typography Scale)</td>
-                        </tr>
-                        <tr>
-                            <td><code>.primary</code></td>
-                            <td>Primary pagination variant with CI gradient</td>
-                        </tr>
-                        <tr>
-                            <td><code>.success</code></td>
-                            <td>Success state with green styling</td>
-                        </tr>
-                        <tr>
-                            <td><code>.error</code></td>
-                            <td>Error state with red styling and validation</td>
-                        </tr>
-                        <tr>
-                            <td><code>.disabled</code></td>
-                            <td>Disabled state with reduced opacity</td>
-                        </tr>
-                    </tbody>
-                </table>
         
-        
+        <!-- Section 5: API Reference -->
         <section class="section">
-            <h2 class="section-title">Real Estate Pagination Types</h2>
+            <h2 class="section-title">API Reference</h2>
             
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <h3>Property Management</h3>
-                    <p>Professional pagination for real estate applications</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-pagination primary">
-                            <span>Property Example</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <h3>Investment Analysis</h3>
-                    <p>Financial pagination for property investment</p>
-                    <div class="showcase-demo">
-                        <div class="lyd-pagination secondary">
-                            <span>Investment Example</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section">
-            <h2 class="section-title">Accessibility & Best Practices</h2>
-            
-            <div class="accessibility-grid">
-                <div class="accessibility-item">
-                    <h3>Keyboard Navigation</h3>
-                    <p>Full keyboard support with proper focus management and navigation patterns.</p>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>Screen Reader Support</h3>
-                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>Visual Design</h3>
-                    <p>High contrast ratios and clear visual hierarchy for optimal user experience.</p>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>Performance</h3>
-                    <p>Optimized rendering and efficient state management for smooth interactions.</p>
-                </div>
-            </div>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.lyd-pagination</code></td>
+                        <td>Pagination container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-item</code></td>
+                        <td>Individual page button</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-ellipsis</code></td>
+                        <td>Ellipsis separator</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-wrapper</code></td>
+                        <td>Container with info</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-info</code></td>
+                        <td>Results info text</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-simple</code></td>
+                        <td>Simple pagination style</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-mini</code></td>
+                        <td>Compact pagination</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-pagination-loadmore</code></td>
+                        <td>Load more container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.active</code></td>
+                        <td>Current page indicator</td>
+                    </tr>
+                    <tr>
+                        <td><code>.small, .large</code></td>
+                        <td>Size variants</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </main>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttributes('href') === currentPath) {
-                    item.classList.add('active');
-                }
-            });
-            
-            document.querySelectorAll('.lyd-button.copy').forEach(button => {
-                button.addEventListener('click', function() {
-                    const codeBlock = this.parentElement.querySelector('pre');
-                    const text = codeBlock.textContent;
-                    navigator.clipboard.writeText(text).then(() => {
-                        const originalText = this.textContent;
-                        this.textContent = 'Copied!';
-                        setTimeout(() => { this.textContent = originalText; }, 2000);
-                    });
-                });
-            });
-        });
-    </script>
 </body>
 </html>

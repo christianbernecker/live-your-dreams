@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid System - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CENTRAL CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* Grid specific styles */
+        .grid-demo {
+            background: var(--lyd-gray-100);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .grid-container {
+            display: grid;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .grid-item {
+            background: var(--lyd-gradient-primary);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-weight: var(--font-weight-semibold);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .grid-item.secondary {
+            background: var(--lyd-royal-blue);
+        }
+        
+        .grid-item.outline {
+            background: white;
+            border: 2px solid var(--lyd-primary);
+            color: var(--lyd-primary);
+        }
+        
+        /* Grid Examples */
+        .grid-12 { grid-template-columns: repeat(12, 1fr); }
+        .grid-6 { grid-template-columns: repeat(6, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-auto { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        
+        .col-span-2 { grid-column: span 2; }
+        .col-span-3 { grid-column: span 3; }
+        .col-span-4 { grid-column: span 4; }
+        .col-span-6 { grid-column: span 6; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-full { grid-column: 1 / -1; }
+        
+        .breakpoint-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--lyd-gradient-primary);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            margin-right: var(--spacing-sm);
+        }
+        
+        .grid-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .grid-code .property {
+            color: #9CDCFE;
+        }
+        
+        .grid-code .value {
+            color: #CE9178;
+        }
+        
+        .responsive-demo {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .gap-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+        
+        .gap-xs { gap: var(--spacing-xs); }
+        .gap-sm { gap: var(--spacing-sm); }
+        .gap-md { gap: var(--spacing-md); }
+        .gap-lg { gap: var(--spacing-lg); }
+        .gap-xl { gap: var(--spacing-xl); }
+        
+        .alignment-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            height: 200px;
+            background: var(--lyd-gray-100);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .nested-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+        }
+        
+        .nested-item {
+            background: rgba(255, 255, 255, 0.5);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: var(--font-size-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item active">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Grid System</h1>
+            <p>Flexible and responsive grid layouts for modern web applications</p>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">12-Column Grid</h2>
+            
+            <div class="component-card">
+                <p>Our standard grid system is based on a 12-column layout, providing maximum flexibility for complex layouts.</p>
+                
+                <div class="grid-demo">
+                    <div class="grid-container grid-12">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>
+                        <div class="grid-item">7</div>
+                        <div class="grid-item">8</div>
+                        <div class="grid-item">9</div>
+                        <div class="grid-item">10</div>
+                        <div class="grid-item">11</div>
+                        <div class="grid-item">12</div>
+                    </div>
+                </div>
+                
+                <div class="grid-code">
+<span class="property">display</span>: <span class="value">grid</span>;
+<span class="property">grid-template-columns</span>: <span class="value">repeat(12, 1fr)</span>;
+<span class="property">gap</span>: <span class="value">var(--spacing-md)</span>;
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Column Spanning</h2>
+            
+            <div class="component-card">
+                <p>Elements can span multiple columns to create varied layouts.</p>
+                
+                <div class="grid-demo">
+                    <div class="grid-container grid-12">
+                        <div class="grid-item col-span-6">Span 6</div>
+                        <div class="grid-item col-span-6">Span 6</div>
+                        <div class="grid-item col-span-4">Span 4</div>
+                        <div class="grid-item col-span-4">Span 4</div>
+                        <div class="grid-item col-span-4">Span 4</div>
+                        <div class="grid-item col-span-3">Span 3</div>
+                        <div class="grid-item col-span-3">Span 3</div>
+                        <div class="grid-item col-span-3">Span 3</div>
+                        <div class="grid-item col-span-3">Span 3</div>
+                        <div class="grid-item col-span-8 secondary">Span 8</div>
+                        <div class="grid-item col-span-4 secondary">Span 4</div>
+                        <div class="grid-item col-span-full outline">Full Width</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Auto-Fit Grid</h2>
+            
+            <div class="component-card">
+                <p>Responsive grid that automatically adjusts columns based on available space.</p>
+                
+                <div class="grid-demo">
+                    <div class="grid-container grid-auto">
+                        <div class="grid-item">Auto</div>
+                        <div class="grid-item">Auto</div>
+                        <div class="grid-item">Auto</div>
+                        <div class="grid-item">Auto</div>
+                        <div class="grid-item">Auto</div>
+                        <div class="grid-item">Auto</div>
+                    </div>
+                </div>
+                
+                <div class="grid-code">
+<span class="property">display</span>: <span class="value">grid</span>;
+<span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(200px, 1fr))</span>;
+<span class="property">gap</span>: <span class="value">var(--spacing-md)</span>;
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Gap Spacing</h2>
+            
+            <div class="component-card">
+                <p>Control the spacing between grid items using our spacing tokens.</p>
+                
+                <div style="display: grid; gap: var(--spacing-lg);">
+                    <div>
+                        <h4 style="margin-bottom: var(--spacing-sm);">Extra Small Gap (4px)</h4>
+                        <div class="gap-demo gap-xs">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="margin-bottom: var(--spacing-sm);">Small Gap (8px)</h4>
+                        <div class="gap-demo gap-sm">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="margin-bottom: var(--spacing-sm);">Medium Gap (16px)</h4>
+                        <div class="gap-demo gap-md">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="margin-bottom: var(--spacing-sm);">Large Gap (24px)</h4>
+                        <div class="gap-demo gap-lg">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Responsive Breakpoints</h2>
+            
+            <div class="responsive-demo">
+                <h3>Breakpoint System</h3>
+                <p>Our grid system adapts to different screen sizes using these breakpoints:</p>
+                
+                <div style="display: grid; gap: var(--spacing-lg); margin-top: var(--spacing-lg);">
+                    <div>
+                        <span class="breakpoint-indicator">Mobile</span>
+                        <span style="font-family: var(--font-family-mono); color: var(--lyd-grey);">320px - 768px</span>
+                        <p style="margin-top: var(--spacing-sm); color: var(--lyd-grey);">Single column layout, stacked content</p>
+                    </div>
+                    
+                    <div>
+                        <span class="breakpoint-indicator">Tablet</span>
+                        <span style="font-family: var(--font-family-mono); color: var(--lyd-grey);">768px - 1024px</span>
+                        <p style="margin-top: var(--spacing-sm); color: var(--lyd-grey);">2-3 columns, flexible layouts</p>
+                    </div>
+                    
+                    <div>
+                        <span class="breakpoint-indicator">Desktop</span>
+                        <span style="font-family: var(--font-family-mono); color: var(--lyd-grey);">1024px - 1440px</span>
+                        <p style="margin-top: var(--spacing-sm); color: var(--lyd-grey);">Full 12-column grid available</p>
+                    </div>
+                    
+                    <div>
+                        <span class="breakpoint-indicator">Wide</span>
+                        <span style="font-family: var(--font-family-mono); color: var(--lyd-grey);">1440px+</span>
+                        <p style="margin-top: var(--spacing-sm); color: var(--lyd-grey);">Maximum width container, centered content</p>
+                    </div>
+                </div>
+                
+                <div class="grid-code">
+<span class="property">/* Mobile First Approach */</span>
+<span class="property">@media</span> (<span class="value">min-width: 768px</span>) { }
+<span class="property">@media</span> (<span class="value">min-width: 1024px</span>) { }
+<span class="property">@media</span> (<span class="value">min-width: 1440px</span>) { }
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Nested Grids</h2>
+            
+            <div class="component-card">
+                <p>Grids can be nested within grid items for complex layouts.</p>
+                
+                <div class="grid-demo">
+                    <div class="grid-container grid-2">
+                        <div class="grid-item">
+                            <div class="nested-grid">
+                                <div class="nested-item">A</div>
+                                <div class="nested-item">B</div>
+                                <div class="nested-item">C</div>
+                                <div class="nested-item">D</div>
+                            </div>
+                        </div>
+                        <div class="grid-item secondary">Single Item</div>
+                        <div class="grid-item secondary">Single Item</div>
+                        <div class="grid-item">
+                            <div class="nested-grid">
+                                <div class="nested-item">E</div>
+                                <div class="nested-item">F</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Common Layouts</h2>
+            
+            <div class="component-card">
+                <h3>Sidebar Layout</h3>
+                <div class="grid-demo">
+                    <div class="grid-container" style="grid-template-columns: 250px 1fr;">
+                        <div class="grid-item secondary">Sidebar</div>
+                        <div class="grid-item">Main Content</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Three Column Layout</h3>
+                <div class="grid-demo">
+                    <div class="grid-container grid-3">
+                        <div class="grid-item">Column 1</div>
+                        <div class="grid-item">Column 2</div>
+                        <div class="grid-item">Column 3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Card Grid</h3>
+                <div class="grid-demo">
+                    <div class="grid-container" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
+                        <div class="grid-item">Card 1</div>
+                        <div class="grid-item">Card 2</div>
+                        <div class="grid-item">Card 3</div>
+                        <div class="grid-item">Card 4</div>
+                        <div class="grid-item">Card 5</div>
+                        <div class="grid-item">Card 6</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Implementation</h2>
+            
+            <div class="component-card">
+                <h3>CSS Grid Properties</h3>
+                
+                <div class="grid-code">
+<span class="property">/* Container */</span>
+<span class="property">display</span>: <span class="value">grid</span>;
+<span class="property">grid-template-columns</span>: <span class="value">repeat(12, 1fr)</span>;
+<span class="property">gap</span>: <span class="value">var(--spacing-md)</span>;
+<span class="property">align-items</span>: <span class="value">start | center | end | stretch</span>;
+<span class="property">justify-items</span>: <span class="value">start | center | end | stretch</span>;
+
+<span class="property">/* Items */</span>
+<span class="property">grid-column</span>: <span class="value">span 6</span>;
+<span class="property">grid-row</span>: <span class="value">span 2</span>;
+<span class="property">align-self</span>: <span class="value">start | center | end</span>;
+<span class="property">justify-self</span>: <span class="value">start | center | end</span>;
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

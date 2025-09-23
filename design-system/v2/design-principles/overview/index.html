@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Principles - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* Design Principles specific styles */
+        .principles-hero {
+            padding: var(--spacing-3xl) var(--spacing-2xl);
+            background: var(--lyd-gradient-primary);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-2xl);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .principles-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 60%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(45deg);
+        }
+        
+        /* Neue robuste CSS-Klassen für Headlines */
+        .lyd-hero-title {
+            font-size: 48px !important;
+            font-weight: 800 !important;
+            color: #FFFFFF !important;
+            margin-bottom: 24px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
+            position: relative !important;
+            z-index: 1000 !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+        }
+        
+        .lyd-hero-subtitle {
+            font-size: 18px !important;
+            color: #FFFFFF !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
+            position: relative !important;
+            z-index: 1000 !important;
+            max-width: 800px !important;
+            line-height: 1.6 !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6) !important;
+        }
+        
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .principle-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-luxury);
+            border-top: 4px solid transparent;
+            background-image: linear-gradient(white, white), var(--lyd-gradient-primary);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+        
+        .principle-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-luxury);
+        }
+        
+        .principle-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--lyd-gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .principle-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+        }
+        
+        .principle-card h3 {
+            color: var(--lyd-primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+        }
+        
+        .principle-card p {
+            color: var(--lyd-grey);
+            line-height: var(--line-height-relaxed);
+        }
+        
+        .principle-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--lyd-primary);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+            margin-top: var(--spacing-md);
+            transition: var(--transition-luxury);
+        }
+        
+        .principle-card a:hover {
+            transform: translateX(4px);
+            color: var(--lyd-royal-blue);
+        }
+        
+        .principle-card a svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .values-section {
+            background: var(--lyd-gradient-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .value-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .value-item .icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .value-item .icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--lyd-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item active">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <div class="principles-hero">
+            <div class="lyd-hero-title">Design Principles</div>
+            <div class="lyd-hero-subtitle">The foundation of the LYD Design System. Our design principles define the visual and functional standards that ensure consistency, elegance, and a premium user experience across all digital touchpoints.</div>
+        </div>
+        
+        <section class="section">
+            <h2 class="section-title">Core Principles</h2>
+            
+            <div class="principle-grid">
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3>Colors</h3>
+                    <p>A sophisticated color system based on the LYD Corporate Identity. Premium gradients and carefully balanced color tones for the luxury segment.</p>
+                    <a href="/design-principles/colors/">
+                        Explore Colors
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 7V4h16v3M9 20h6M12 4v16"/>
+                        </svg>
+                    </div>
+                    <h3>Typography</h3>
+                    <p>Hierarchical typography with premium fonts. From headlines to body text - optimized for readability and elegance.</p>
+                    <a href="/design-principles/typography/">
+                        Discover Typography
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <h3>Grid System</h3>
+                    <p>Flexible grid system for responsive layouts. Consistent structures from mobile to desktop.</p>
+                    <a href="/design-principles/grid/">
+                        View Grid System
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                        </svg>
+                    </div>
+                    <h3>Spacing</h3>
+                    <p>Consistent spacing system based on a 4px grid. Harmonious distances for balanced composition.</p>
+                    <a href="/design-principles/spacing/">
+                        Understand Spacing
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="values-section">
+            <h2 class="section-title">Our Design Values</h2>
+            
+            <div class="values-list">
+                <div class="value-item">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>Premium Quality</strong><br>
+                        <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">Luxury-Segment Standards</span>
+                    </div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>User-Centric</strong><br>
+                        <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">Optimal User Experience</span>
+                    </div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>Consistency</strong><br>
+                        <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">Unified Design Language</span>
+                    </div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>Performance</strong><br>
+                        <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">Fast and Efficient</span>
+                    </div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>Innovation</strong><br>
+                        <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">Modern Technologies</span>
+                    </div>
+                </div>
+                
+                <div class="value-item">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>Accessibility</strong><br>
+                        <span style="font-size: var(--font-size-sm); color: var(--lyd-grey);">Accessible to Everyone</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Design Token Architecture</h2>
+            
+            <div class="component-card">
+                <h3>Systematic Structure</h3>
+                <p>Our design system is based on a hierarchical token system that ensures consistency and scalability:</p>
+                
+                <ul style="margin-top: var(--spacing-md); line-height: var(--line-height-relaxed);">
+                    <li><strong>Primitive Tokens:</strong> Base values like colors, font sizes, and spacing</li>
+                    <li><strong>Semantic Tokens:</strong> Context-based tokens like primary-color or heading-size</li>
+                    <li><strong>Component Tokens:</strong> Specific tokens for individual components</li>
+                    <li><strong>Utility Tokens:</strong> Helper tokens for shadows, transitions, and effects</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Responsive Design</h2>
+            
+            <div class="component-card">
+                <h3>Mobile-First Approach</h3>
+                <p>All our design principles are optimized for responsive applications:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); margin-top: var(--spacing-lg);">
+                    <div>
+                        <strong style="color: var(--lyd-primary);">Mobile</strong>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-top: var(--spacing-xs);">320px - 768px<br>Optimized for Touch</p>
+                    </div>
+                    <div>
+                        <strong style="color: var(--lyd-primary);">Tablet</strong>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-top: var(--spacing-xs);">768px - 1024px<br>Flexible Layouts</p>
+                    </div>
+                    <div>
+                        <strong style="color: var(--lyd-primary);">Desktop</strong>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-top: var(--spacing-xs);">1024px - 1440px<br>Full Functionality</p>
+                    </div>
+                    <div>
+                        <strong style="color: var(--lyd-primary);">Wide</strong>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-top: var(--spacing-xs);">1440px+<br>Maximum Width</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

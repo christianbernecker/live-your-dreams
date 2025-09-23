@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- LYD Design System v2.0 - Centralized Architecture -->
+    <link rel="stylesheet" href="../shared/tokens.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <!-- Force Override - Nuclear Option fuer Konsistenz -->
+    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <style>
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-line);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-grey);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-grey);
+            max-width: 800px;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        /* Showcase Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .showcase-item {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .showcase-item h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-line);
+            background: var(--lyd-gray-50);
+        }
+        
+        .showcase-item p {
+            padding: 0 var(--spacing-lg);
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .showcase-demo {
+            padding: var(--spacing-lg);
+            background: var(--lyd-bg);
+        }
+        
+        /* Checkbox Components */
+        .lyd-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .lyd-checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .lyd-checkbox-item:hover {
+            background: var(--lyd-gray-50);
+        }
+        
+        .lyd-checkbox-input {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--lyd-gray-300);
+            border-radius: 4px;
+            background: var(--lyd-bg);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .lyd-checkbox-input::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 6px;
+            height: 10px;
+            border: solid var(--lyd-bg);
+            border-width: 0 2px 2px 0;
+            transform: translate(-50%, -60%) rotate(45deg) scale(0);
+            transition: transform 0.2s ease;
+        }
+        
+        .lyd-checkbox-input.checked {
+            border-color: var(--lyd-primary);
+            background: var(--lyd-primary);
+        }
+        
+        .lyd-checkbox-input.checked::after {
+            transform: translate(-50%, -60%) rotate(45deg) scale(1);
+        }
+        
+        .lyd-checkbox-input.indeterminate {
+            border-color: var(--lyd-primary);
+            background: var(--lyd-primary);
+        }
+        
+        .lyd-checkbox-input.indeterminate::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 2px;
+            background: var(--lyd-bg);
+            border: none;
+            border-radius: 1px;
+        }
+        
+        .lyd-checkbox-input.disabled {
+            border-color: var(--lyd-line);
+            background: var(--lyd-gray-100);
+            cursor: not-allowed;
+        }
+        
+        .lyd-checkbox-input.disabled.checked {
+            background: var(--lyd-gray-400);
+            border-color: var(--lyd-gray-400);
+        }
+        
+        .lyd-checkbox-input.disabled.checked::after {
+            border-color: var(--lyd-bg);
+        }
+        
+        .lyd-checkbox-label {
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        .lyd-checkbox-label-text {
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--lyd-gray-900);
+            margin-bottom: 2px;
+        }
+        
+        .lyd-checkbox-label-description {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+        }
+        
+        /* Size variants */
+        .lyd-checkbox-small .lyd-checkbox-input {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .lyd-checkbox-small .lyd-checkbox-input::after {
+            width: 4px;
+            height: 8px;
+        }
+        
+        .lyd-checkbox-small .lyd-checkbox-label-text {
+            font-size: var(--font-size-sm);
+        }
+        
+        .lyd-checkbox-large .lyd-checkbox-input {
+            width: 24px;
+            height: 24px;
+            margin-top: 0;
+        }
+        
+        .lyd-checkbox-large .lyd-checkbox-input::after {
+            width: 8px;
+            height: 12px;
+        }
+        
+        .lyd-checkbox-large .lyd-checkbox-label-text {
+            font-size: var(--font-size-lg);
+        }
+        
+        /* Error state */
+        .lyd-checkbox-error .lyd-checkbox-input {
+            border-color: var(--lyd-error);
+        }
+        
+        .lyd-checkbox-error .lyd-checkbox-input.checked {
+            background: var(--lyd-error);
+            border-color: var(--lyd-error);
+        }
+        
+        .lyd-checkbox-error .lyd-checkbox-label-text {
+            color: var(--lyd-error);
+        }
+        
+        /* Implementation Guide */
+        .implementation-section {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .implementation-section h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-line);
+            background: var(--lyd-gray-50);
+            margin: 0;
+        }
+        
+        .code-block {
+            background: var(--lyd-gray-900);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            color: var(--lyd-gray-100);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+        
+        .lyd-button.copy {
+            background: var(--lyd-primary);
+            color: var(--lyd-bg);
+        }
+        
+        .lyd-button.copy:hover {
+            background: var(--lyd-primary-hover);
+        }
+        
+        /* Accessibility Grid */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .accessibility-item {
+            background: var(--lyd-bg);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .accessibility-item h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .accessibility-item h3::before {
+            content: "✓";
+            color: var(--lyd-primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .accessibility-item p {
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient fuer die Sichel -->
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <!-- Gradient fuer den gesamten Text -->
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Sichel-Form mit eigenem Gradient -->
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                
+                <!-- Text-Elemente -->
+                <g fill="url(#textGradientLYD)">
+                    <!-- LIVE -->
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <!-- YOUR -->
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <!-- DREAMS -->
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/developing/" class="nav-item">Introduction</a>
+            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/components/" class="nav-item">Introduction</a>
+            <a href="/components/buttons/" class="nav-item">Button</a>
+            <a href="/components/inputs/" class="nav-item">Input</a>
+            <a href="/components/cards/" class="nav-item">Card</a>
+            <a href="/components/select/" class="nav-item">Select</a>
+            <a href="/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/components/modal/" class="nav-item">Modal</a>
+            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/components/radio/" class="nav-item">Radio</a>
+            <a href="/components/toast/" class="nav-item">Toast</a>
+            <a href="/components/table/" class="nav-item">Table</a>
+            <a href="/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/components/switch/" class="nav-item">Switch</a>
+            <a href="/components/slider/" class="nav-item">Slider</a>
+            <a href="/components/alert/" class="nav-item">Alert</a>
+            <a href="/components/badge/" class="nav-item">Badge</a>
+            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/components/progress/" class="nav-item">Progress</a>
+            <a href="/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/styles/" class="nav-item">Introduction</a>
+            <a href="/components/typography/" class="nav-item">Typography</a>
+            <a href="/styles/grid/" class="nav-item">Grid</a>
+            <a href="/styles/colors/" class="nav-item">Colors</a>
+            <a href="/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/patterns/" class="nav-item">Introduction</a>
+            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/patterns/header/" class="nav-item">Header</a>
+            <a href="/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Checkbox</h1>
+            <p class="page-subtitle">
+                Checkboxes allow users to select multiple options from a set. They can be used individually or in groups to capture multiple selections simultaneously.
+            </p>
+        </div>
+        
+        <!-- Section 1: Basic Checkboxes -->
+        <section class="section">
+            <h2 class="section-title">Basic Checkboxes</h2>
+            
+            <div class="showcase-grid">
+                <!-- Default Checkbox Group -->
+                <div class="showcase-item">
+                    <h3>Default Checkbox Group</h3>
+                    <p>Standard checkboxes for multiple selections</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group" data-group="basic">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="option1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Option 1</div>
+                                    <div class="lyd-checkbox-label-description">First available choice</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="option2"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Option 2</div>
+                                    <div class="lyd-checkbox-label-description">Second available choice (selected)</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="option3"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Option 3</div>
+                                    <div class="lyd-checkbox-label-description">Third available choice (also selected)</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Size Variants -->
+                <div class="showcase-item">
+                    <h3>Size Variants</h3>
+                    <p>Different sizes for various use cases</p>
+                    <div class="showcase-demo">
+                        <!-- Small -->
+                        <div class="lyd-checkbox-group lyd-checkbox-small" data-group="small" style="margin-bottom: 24px;">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="small1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Small Checkbox</div>
+                                    <div class="lyd-checkbox-label-description">Compact size for dense layouts</div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Default -->
+                        <div class="lyd-checkbox-group" data-group="default" style="margin-bottom: 24px;">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="default1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Default Checkbox</div>
+                                    <div class="lyd-checkbox-label-description">Standard size for most use cases</div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Large -->
+                        <div class="lyd-checkbox-group lyd-checkbox-large" data-group="large">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="large1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Large Checkbox</div>
+                                    <div class="lyd-checkbox-label-description">Larger size for better accessibility</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Special States -->
+                <div class="showcase-item">
+                    <h3>Special States</h3>
+                    <p>Indeterminate and disabled states</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group" data-group="states">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input indeterminate" data-value="indeterminate1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Indeterminate State</div>
+                                    <div class="lyd-checkbox-label-description">Partially selected (some children selected)</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input disabled" data-value="disabled1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Disabled Option</div>
+                                    <div class="lyd-checkbox-label-description">This option cannot be selected</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input disabled checked" data-value="disabled2"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Disabled Selected</div>
+                                    <div class="lyd-checkbox-label-description">Pre-selected but disabled</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Error State -->
+                <div class="showcase-item">
+                    <h3>Error State</h3>
+                    <p>Checkboxes with error styling</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group lyd-checkbox-error" data-group="error">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="error1"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Error Option 1</div>
+                                    <div class="lyd-checkbox-label-description">This selection has an error</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="error2"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Error Option 2</div>
+                                    <div class="lyd-checkbox-label-description">Selected option with error state</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Real Estate Examples -->
+        <section class="section">
+            <h2 class="section-title">Real Estate Examples</h2>
+            
+            <div class="showcase-grid">
+                <!-- Property Features -->
+                <div class="showcase-item">
+                    <h3>Property Features</h3>
+                    <p>Select multiple property features</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group" data-group="property-features">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="balcony"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Balcony</div>
+                                    <div class="lyd-checkbox-label-description">Private outdoor space</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="garage"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Garage</div>
+                                    <div class="lyd-checkbox-label-description">Covered parking space</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="pool"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Swimming Pool</div>
+                                    <div class="lyd-checkbox-label-description">Private or shared pool access</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="elevator"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Elevator</div>
+                                    <div class="lyd-checkbox-label-description">Building elevator access</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Amenities Selection -->
+                <div class="showcase-item">
+                    <h3>Luxury Amenities</h3>
+                    <p>Choose from premium amenities</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group" data-group="amenities">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="concierge"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">24/7 Concierge</div>
+                                    <div class="lyd-checkbox-label-description">Personal assistance services</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="spa"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Spa & Wellness</div>
+                                    <div class="lyd-checkbox-label-description">On-site spa and fitness facilities</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="rooftop"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Rooftop Terrace</div>
+                                    <div class="lyd-checkbox-label-description">Panoramic city views</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="wine-cellar"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Wine Cellar</div>
+                                    <div class="lyd-checkbox-label-description">Temperature-controlled wine storage</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Marketing Preferences -->
+                <div class="showcase-item">
+                    <h3>Marketing Preferences</h3>
+                    <p>How would you like to receive updates?</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group" data-group="marketing">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="email-newsletter"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Email Newsletter</div>
+                                    <div class="lyd-checkbox-label-description">Weekly property updates and market insights</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="sms-alerts"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">SMS Alerts</div>
+                                    <div class="lyd-checkbox-label-description">Immediate notifications for new listings</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="exclusive-events"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Exclusive Events</div>
+                                    <div class="lyd-checkbox-label-description">Private viewings and luxury events</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment Services -->
+                <div class="showcase-item">
+                    <h3>Investment Services</h3>
+                    <p>Select investment advisory services</p>
+                    <div class="showcase-demo">
+                        <div class="lyd-checkbox-group" data-group="services">
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="portfolio-analysis"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Portfolio Analysis</div>
+                                    <div class="lyd-checkbox-label-description">Comprehensive investment portfolio review</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="market-research"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Market Research</div>
+                                    <div class="lyd-checkbox-label-description">Detailed location and trend analysis</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input checked" data-value="property-management"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Property Management</div>
+                                    <div class="lyd-checkbox-label-description">Full-service property management solutions</div>
+                                </label>
+                            </div>
+                            <div class="lyd-checkbox-item">
+                                <div class="lyd-checkbox-input" data-value="tax-advisory"></div>
+                                <label class="lyd-checkbox-label">
+                                    <div class="lyd-checkbox-label-text">Tax Advisory</div>
+                                    <div class="lyd-checkbox-label-description">Real estate tax optimization services</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Implementation Guide -->
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                    <pre>&lt;!-- Basic Checkbox Group --&gt;
+&lt;div class="lyd-checkbox-group" data-group="example"&gt;
+    &lt;div class="lyd-checkbox-item"&gt;
+        &lt;div class="lyd-checkbox-input" data-value="option1"&gt;&lt;/div&gt;
+        &lt;label class="lyd-checkbox-label"&gt;
+            &lt;div class="lyd-checkbox-label-text"&gt;Option 1&lt;/div&gt;
+            &lt;div class="lyd-checkbox-label-description"&gt;Description&lt;/div&gt;
+        &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-checkbox-item"&gt;
+        &lt;div class="lyd-checkbox-input checked" data-value="option2"&gt;&lt;/div&gt;
+        &lt;label class="lyd-checkbox-label"&gt;
+            &lt;div class="lyd-checkbox-label-text"&gt;Option 2&lt;/div&gt;
+            &lt;div class="lyd-checkbox-label-description"&gt;Description&lt;/div&gt;
+        &lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Size Variants --&gt;
+&lt;div class="lyd-checkbox-group lyd-checkbox-small"&gt;...&lt;/div&gt;
+&lt;div class="lyd-checkbox-group"&gt;...&lt;/div&gt;  &lt;!-- Default --&gt;
+&lt;div class="lyd-checkbox-group lyd-checkbox-large"&gt;...&lt;/div&gt;
+
+&lt;!-- States --&gt;
+&lt;div class="lyd-checkbox-input disabled"&gt;...&lt;/div&gt;
+&lt;div class="lyd-checkbox-input indeterminate"&gt;...&lt;/div&gt;
+&lt;div class="lyd-checkbox-group lyd-checkbox-error"&gt;...&lt;/div&gt;</pre>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                    <pre>// components/CheckboxGroup.tsx
+import { useState, useEffect } from 'react';
+
+interface CheckboxOption {
+  value: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+}
+
+interface CheckboxGroupProps {
+  name: string;
+  options: CheckboxOption[];
+  values?: string[];
+  defaultValues?: string[];
+  size?: 'small' | 'medium' | 'large';
+  error?: boolean;
+  indeterminate?: boolean;
+  onChange?: (values: string[]) => void;
+  className?: string;
+}
+
+export const CheckboxGroup = ({
+  name,
+  options,
+  values,
+  defaultValues = [],
+  size = 'medium',
+  error = false,
+  indeterminate = false,
+  onChange,
+  className = ''
+}: CheckboxGroupProps) => {
+  const [selectedValues, setSelectedValues] = useState(values || defaultValues);
+  
+  useEffect(() => {
+    if (values !== undefined) {
+      setSelectedValues(values);
+    }
+  }, [values]);
+
+  const handleChange = (optionValue: string, isChecked: boolean) => {
+    let newValues;
+    if (isChecked) {
+      newValues = [...selectedValues, optionValue];
+    } else {
+      newValues = selectedValues.filter(v => v !== optionValue);
+    }
+    
+    if (values === undefined) {
+      setSelectedValues(newValues);
+    }
+    onChange?.(newValues);
+  };
+
+  const groupClasses = \`
+    lyd-checkbox-group 
+    \${size !== 'medium' ? \`lyd-checkbox-\${size}\` : ''} 
+    \${error ? 'lyd-checkbox-error' : ''}
+    \${className}
+  \`.trim();
+
+  return (
+    &lt;div className={groupClasses} data-group={name}&gt;
+      {options.map((option) => {
+        const isChecked = selectedValues.includes(option.value);
+        return (
+          &lt;div key={option.value} className="lyd-checkbox-item"&gt;
+            &lt;div 
+              className={\`lyd-checkbox-input \${isChecked ? 'checked' : ''} \${indeterminate ? 'indeterminate' : ''} \${option.disabled ? 'disabled' : ''}\`}
+              data-value={option.value}
+              onClick={() => !option.disabled && handleChange(option.value, !isChecked)}
+            /&gt;
+            &lt;label 
+              className="lyd-checkbox-label" 
+              onClick={() => !option.disabled && handleChange(option.value, !isChecked)}
+            &gt;
+              &lt;div className="lyd-checkbox-label-text"&gt;{option.label}&lt;/div&gt;
+              {option.description && (
+                &lt;div className="lyd-checkbox-label-description"&gt;{option.description}&lt;/div&gt;
+              )}
+            &lt;/label&gt;
+          &lt;/div&gt;
+        );
+      })}
+    &lt;/div&gt;
+  );
+};
+
+// Usage Example:
+export default function PropertyForm() {
+  const [selectedFeatures, setSelectedFeatures] = useState(['balcony', 'garage']);
+  
+  const featureOptions = [
+    { value: 'balcony', label: 'Balcony', description: 'Private outdoor space' },
+    { value: 'garage', label: 'Garage', description: 'Covered parking space' },
+    { value: 'pool', label: 'Swimming Pool', description: 'Private or shared pool access' },
+    { value: 'elevator', label: 'Elevator', description: 'Building elevator access' }
+  ];
+
+  return (
+    &lt;form&gt;
+      &lt;CheckboxGroup
+        name="property-features"
+        options={featureOptions}
+        values={selectedFeatures}
+        onChange={setSelectedFeatures}
+      /&gt;
+    &lt;/form&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-section">
+                <h3>Checkbox Classes</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-checkbox</code></td>
+                            <td>Base checkbox class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-checkbox-wrapper</code></td>
+                            <td>checkbox container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small checkbox size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large checkbox size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary checkbox variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <h3>Keyboard Navigation</h3>
+                    <p>Navigate through checkbox options using Tab and Space keys for easy keyboard access and selection.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Screen Reader Support</h3>
+                    <p>Checkboxes include proper ARIA labels and group associations for comprehensive screen reader compatibility.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Focus Indicators</h3>
+                    <p>Clear visual focus indicators help users understand which checkbox is currently focused for interaction.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>High Contrast</h3>
+                    <p>Checkboxes maintain visibility and usability in high contrast modes and for users with visual impairments.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Indeterminate State</h3>
+                    <p>Support for indeterminate state when dealing with nested selections and partial selections.</p>
+                </div>
+                
+                <div class="accessibility-item">
+                    <h3>Multi-Select Clarity</h3>
+                    <p>Clear visual distinction from radio buttons to indicate multiple selection capability.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- JavaScript -->
+    <script src="../shared/force-consistency.js"></script>
+    <script>
+        // Checkbox functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set active navigation
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttributes('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Initialize checkbox groups
+            document.querySelectorAll('.lyd-checkbox-group').forEach(group => {
+                const groupName = group.dataset.group;
+                const checkboxInputs = group.querySelectorAll('.lyd-checkbox-input:not(.disabled)');
+                
+                checkboxInputs.forEach(input => {
+                    // Handle click on checkbox input
+                    input.addEventListener('click', function() {
+                        // Toggle checked state
+                        if (this.classList.contains('checked')) {
+                            this.classList.remove('checked');
+                        } else {
+                            this.classList.add('checked');
+                            // Remove indeterminate if it was set
+                            this.classList.remove('indeterminate');
+                        }
+                        
+                        // Get all selected values
+                        const selectedValues = [];
+                        group.querySelectorAll('.lyd-checkbox-input.checked').forEach(checkedInput => {
+                            selectedValues.push(checkedInput.dataset.value);
+                        });
+                        
+                        // Emit change event
+                        const event = new CustomEvent('checkboxChange', {
+                            detail: {
+                                group: groupName,
+                                values: selectedValues,
+                                changed: this.dataset.value,
+                                checked: this.classList.contains('checked')
+                            }
+                        });
+                        group.dispatchEvent(event);
+                    });
+                    
+                    // Handle click on label
+                    const checkboxItem = input.closest('.lyd-checkbox-item');
+                    const label = checkboxItem.querySelector('.lyd-checkbox-label');
+                    if (label) {
+                        label.addEventListener('click', function() {
+                            input.click();
+                        });
+                    }
+                });
+                
+                // Listen for changes
+                group.addEventListener('checkboxChange', function(e) {
+                    console.log(`Checkbox group "${e.detail.group}" changed:`, {
+                        selectedValues: e.detail.values,
+                        changedValue: e.detail.changed,
+                        isChecked: e.detail.checked
+                    });
+                });
+            });
+            
+            // Copy button functionality
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

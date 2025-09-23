@@ -5,452 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- LYD Design System v2.0 - Centralized Architecture -->
-    <link rel="stylesheet" href="../shared/tokens.css">
-    <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option fuer Konsistenz -->
-    <link rel="stylesheet" href="../shared/reset-cascade.css">
-    <!-- Cache Buster v30.7 - Enhanced Table with HeroUI-inspired States & Styled Dropdowns -->
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
     
     <style>
-                :root {
-            /* Live Your Dreams CI Colors */
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
-            --lyd-accent: #E8F0FE;
-            --lyd-grey: #666666;
-            --lyd-line: #E5E7EB;
-            --lyd-text: #111111;
-            --lyd-bg: #ffffff;
-            
-            /* Additional Colors */
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Typography Scale - CI konform */
-            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
-            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            --spacing-3xl: 64px;
-            
-            /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-                body {
-            font-family: var(--font-family-primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-text);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background: var(--lyd-bg);
-            border-right: 1px solid var(--lyd-line);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .sidebar-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-line);
-            text-align: center;
-        }
-        
-        .lyd-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: var(--spacing-md);
-            transform: scale(2);
-            transform-origin: center;
-            margin-top: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .logo-subtitle {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            font-weight: 500;
-        }
-        
-        .nav-section {
-            padding: var(--spacing-md) 0;
-        }
-        
-        .nav-section-title {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            color: var(--lyd-gray-400);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 12px var(--spacing-lg);
-            color: var(--lyd-grey);
-            text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-        
-        .nav-item:hover {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .nav-item.active {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.1);
-            font-weight: 600;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: var(--spacing-2xl);
-            max-width: 1400px;
-        }
-        
-        .page-header {
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .page-title {
-            font-size: var(--font-size-5xl);
-            font-weight: 400;
-            font-family: system-ui, -apple-system, sans-serif;
-            letter-spacing: 6px;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        .page-subtitle {
-            font-size: var(--font-size-lg);
-            color: var(--lyd-grey);
-            margin-bottom: var(--spacing-2xl);
-            line-height: 1.7;
-        }
-        
-        /* Section Styling */
-        .section {
-            margin-bottom: var(--spacing-3xl);
-        }
-        
-        .section-title {
-            font-size: var(--font-size-3xl);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--spacing-xl);
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .showcase-item {
-            background: var(--lyd-bg);
-            border-radius: 12px;
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--lyd-line);
-            transition: all 0.3s ease;
-        }
-        
-        .showcase-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .showcase-item h3 {
-            font-size: var(--font-size-xl);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .showcase-item p {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .showcase-demo {
-            padding: var(--spacing-lg);
-            background: var(--lyd-gray-50);
-            border-radius: 8px;
-            border: 1px solid var(--lyd-line);
-            overflow-x: auto;
-        }
-        
-        /* Table Styling */
-        .lyd-table-wrapper {
-            background: var(--lyd-bg);
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--lyd-line);
-            overflow: hidden;
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .lyd-table-header {
-            padding: var(--spacing-lg);
-            background: var(--lyd-gray-50);
-            border-bottom: 1px solid var(--lyd-line);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: var(--spacing-md);
-        }
-        
-        .lyd-table-title {
-            font-size: var(--font-size-lg);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-        }
-        
-        .lyd-table-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-        
-        .lyd-table-filters {
-            padding: var(--spacing-lg);
-            background: var(--lyd-gray-50);
-            border-bottom: 1px solid var(--lyd-line);
-            display: flex;
-            gap: var(--spacing-md);
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .lyd-table-search {
-            flex: 1;
-            min-width: 200px;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 1px solid var(--lyd-gray-300);
-            border-radius: 6px;
-            font-size: var(--font-size-sm);
-            transition: border-color 0.2s ease;
-        }
-        
-        .lyd-table-search:focus {
-            outline: none;
-            border-color: var(--lyd-primary);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-        }
-        
-        .lyd-table-filter {
-            position: relative;
-            min-width: 160px;
-        }
-        
-        .lyd-table-filter-trigger {
-            position: relative;
-            width: 100%;
-            min-height: 40px;
-            padding: 8px 12px;
-            padding-right: 40px;
-            background: var(--lyd-bg);
-            border: 1px solid var(--lyd-gray-300);
-            border-radius: 8px;
-            font-size: var(--font-size-sm);
-            color: var(--lyd-gray-900);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .lyd-table-filter-trigger:hover {
-            border-color: var(--lyd-primary);
-            box-shadow: 0 2px 8px rgba(0, 102, 255, 0.1);
-        }
-        
-        .lyd-table-filter-trigger.active {
-            border-color: var(--lyd-primary);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-        }
-        
-        .lyd-table-filter-icon {
-            width: 16px;
-            height: 16px;
-            color: var(--lyd-grey);
-            transition: transform 0.2s ease;
-        }
-        
-        .lyd-table-filter-trigger.active .lyd-table-filter-icon {
-            transform: rotate(180deg);
-            color: var(--lyd-primary);
-        }
-        
-        .lyd-table-filter-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--lyd-bg);
-            border: 1px solid var(--lyd-line);
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-table-filter-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-        .lyd-table-filter-option {
-            padding: 10px 12px;
-            cursor: pointer;
-            font-size: var(--font-size-sm);
-            color: var(--lyd-gray-700);
-            border-bottom: 1px solid var(--lyd-gray-100);
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-table-filter-option:last-child {
-            border-bottom: none;
-        }
-        
-        .lyd-table-filter-option:hover {
-            background: rgba(0, 102, 255, 0.05);
-            color: var(--lyd-primary);
-        }
-        
-        .lyd-table-filter-option.selected {
-            background: var(--lyd-primary);
-            color: var(--lyd-bg);
-            font-weight: 500;
-        }
-        
+        /* NUR TABLE-SPEZIFISCHE STYLES (Erweitert master.css api-table) */
         .lyd-table-container {
-            overflow-x: auto;
-            max-height: 600px;
-            overflow-y: auto;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
         }
         
         .lyd-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: var(--font-size-sm);
         }
         
         .lyd-table th {
-            background: var(--lyd-gray-50);
+            background: var(--lyd-gray-800);
+            color: white;
             padding: var(--spacing-md);
             text-align: left;
-            font-weight: 600;
-            color: var(--lyd-gray-700);
-            border-bottom: 1px solid var(--lyd-line);
+            font-weight: var(--font-weight-bold);
             font-size: var(--font-size-sm);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .lyd-table td {
             padding: var(--spacing-md);
-            border-bottom: 1px solid var(--lyd-gray-100);
-            color: var(--lyd-gray-900);
-            font-size: var(--font-size-base);
-            vertical-align: middle;
+            border-bottom: 1px solid var(--lyd-line);
+            color: var(--lyd-text);
+            font-size: var(--font-size-sm);
+        }
+        
+        .lyd-table tbody tr {
+            transition: background 0.2s ease;
         }
         
         .lyd-table tbody tr:hover {
-            background: var(--lyd-gray-50);
-        }
-        
-        .lyd-table tbody tr.selected {
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .lyd-table th.sortable {
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-        }
-        
-        .lyd-table th.sortable:hover {
             background: var(--lyd-gray-100);
         }
         
-        .sort-icon {
-            position: absolute;
-            right: var(--spacing-sm);
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            opacity: 0.5;
+        .lyd-table tbody tr:last-child td {
+            border-bottom: none;
         }
         
+        /* Striped Table */
         .lyd-table.striped tbody tr:nth-child(even) {
-            background: var(--lyd-gray-25);
+            background: var(--lyd-gray-100);
         }
         
+        /* Compact Table */
+        .lyd-table.compact th,
+        .lyd-table.compact td {
+            padding: var(--spacing-sm);
+        }
+        
+        /* Bordered Table */
         .lyd-table.bordered {
             border: 1px solid var(--lyd-line);
         }
@@ -460,2490 +74,626 @@
             border: 1px solid var(--lyd-line);
         }
         
-        .lyd-table.compact th,
-        .lyd-table.compact td {
-            padding: var(--spacing-sm);
-        }
-
-        /* Custom Cells Table Styles */
-        .lyd-user-cell {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 4px 0;
-        }
-
-        .lyd-user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: var(--lyd-line);
-        }
-
-        .lyd-user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .lyd-user-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .lyd-user-name {
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            font-size: var(--font-size-sm);
-        }
-
-        .lyd-user-email {
-            color: var(--lyd-grey);
-            font-size: var(--font-size-xs);
-        }
-
-        .lyd-role-cell {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .lyd-role-title {
-            font-weight: 500;
-            color: var(--lyd-gray-900);
-            font-size: var(--font-size-sm);
-        }
-
-        .lyd-role-department {
-            color: var(--lyd-grey);
-            font-size: var(--font-size-xs);
-            text-transform: capitalize;
-        }
-
-        .lyd-action-buttons {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        /* Standardized Button System - Using .lyd-button base */
-        .lyd-button {
+        /* Status Badges in Tables */
+        .table-badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lyd-button.icon-only {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            background: transparent;
-            color: var(--lyd-grey);
-        }
-
-        .lyd-button.icon-only:hover {
-            background: var(--lyd-gray-100);
-            color: var(--lyd-gray-700);
-            transform: scale(1.05);
-        }
-
-        .lyd-button.icon-only.view:hover {
-            background: rgba(0, 102, 255, 0.1);
-            color: var(--lyd-primary);
-        }
-
-        .lyd-button.icon-only.edit:hover {
-            background: rgba(255, 193, 7, 0.1);
-            color: #ffc107;
-        }
-
-        .lyd-button.icon-only.delete:hover {
-            background: rgba(220, 53, 69, 0.1);
-            color: #dc3545;
-        }
-
-        /* Sortable Column Headers */
-        .lyd-table th.sortable {
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-            padding-right: 24px;
-        }
-
-        .lyd-table th.sortable:hover {
-            background: var(--lyd-gray-100);
-        }
-
-        .lyd-table th.sortable::after {
-            content: '';
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-bottom: 4px solid var(--lyd-gray-400);
-            opacity: 0.5;
-            transition: all 0.2s ease;
-        }
-
-        .lyd-table th.sortable.asc::after {
-            border-bottom: 4px solid var(--lyd-primary);
-            border-top: none;
-            opacity: 1;
-        }
-
-        .lyd-table th.sortable.desc::after {
-            border-top: 4px solid var(--lyd-primary);
-            border-bottom: none;
-            opacity: 1;
-        }
-
-        /* Advanced Filter Controls */
-        .lyd-table-advanced-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
-            padding: 16px;
-            background: var(--lyd-gray-50);
-            border-radius: 8px;
-            border: 1px solid var(--lyd-line);
-        }
-
-        .lyd-filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            min-width: 150px;
-        }
-
-        .lyd-filter-label {
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
             font-size: var(--font-size-xs);
-            font-weight: 500;
-            color: var(--lyd-gray-700);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .lyd-search-input {
-            padding: 8px 12px;
-            border: 1px solid var(--lyd-gray-300);
-            border-radius: 6px;
-            font-size: var(--font-size-sm);
-            background: var(--lyd-bg);
-            transition: all 0.2s ease;
-            min-width: 200px;
-        }
-
-        .lyd-search-input:focus {
-            outline: none;
-            border-color: var(--lyd-primary);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-        }
-
-        .lyd-filter-actions {
-            display: flex;
-            gap: 8px;
-            align-items: end;
-        }
-
-        .lyd-filter-clear {
-            padding: 8px 12px;
-            background: transparent;
-            border: 1px solid var(--lyd-gray-300);
-            border-radius: 6px;
-            color: var(--lyd-grey);
-            cursor: pointer;
-            font-size: var(--font-size-sm);
-            transition: all 0.2s ease;
-        }
-
-        .lyd-filter-clear:hover {
-            background: var(--lyd-gray-100);
-            border-color: var(--lyd-gray-400);
+            font-weight: var(--font-weight-semibold);
         }
         
-        .lyd-table-checkbox {
-            width: 40px;
-            text-align: center;
-        }
-        
-        .lyd-table-row-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-        }
-        
-        /* Table Button Styles - Integrated from Button Component */
-        .lyd-table-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: var(--font-size-sm); /* 14px - CI Standard from Typography */
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, 
-                rgba(51, 102, 204, 0.08) 0%, 
-                rgba(0, 0, 102, 0.12) 100%);
-            border: 1px solid rgba(51, 102, 204, 0.25);
-            color: #1a365d;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 2px 8px rgba(51, 102, 204, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .lyd-table-action::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(51, 102, 204, 0.15), 
-                transparent);
-            transition: left 0.4s ease;
-        }
-
-        .lyd-table-action:hover::before {
-            left: 100%;
-        }
-
-        .lyd-table-action:hover {
-            background: linear-gradient(135deg, 
-                rgba(51, 102, 204, 0.15) 0%, 
-                rgba(0, 0, 102, 0.2) 100%);
-            border-color: rgba(51, 102, 204, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 
-                0 4px 12px rgba(51, 102, 204, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                0 0 0 1px rgba(51, 102, 204, 0.1);
-            color: #0f2a44;
-        }
-
-        .lyd-table-action:active {
-            transform: translateY(0);
-        }
-
-        /* Primary Table Action */
-        .lyd-table-action.primary {
-            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
-            border: none;
-        }
-
-        .lyd-table-action.primary:hover {
-            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
-            color: white;
-        }
-
-        .lyd-table-action.danger:hover {
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-        }
-        
-        .lyd-table-pagination {
-            padding: var(--spacing-lg);
-            background: var(--lyd-gray-50);
-            border-top: 1px solid var(--lyd-line);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .lyd-button.pagination {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 1px solid var(--lyd-gray-300);
-            background: var(--lyd-bg);
-            color: var(--lyd-text);
-            border-radius: 6px;
-            font-size: var(--font-size-sm);
-        }
-        
-        .lyd-button.pagination:hover:not(:disabled) {
-            border-color: var(--lyd-primary);
-            color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .lyd-button.pagination:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .lyd-pagination-info {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            margin: 0 var(--spacing-lg);
-        }
-        
-        .lyd-badge {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: 12px;
-            font-size: var(--font-size-xs);
-            font-weight: 500;
-            display: inline-block;
-        }
-        
-        .lyd-badge.success {
+        .table-badge.success {
             background: rgba(16, 185, 129, 0.1);
             color: var(--lyd-success);
         }
         
-        .lyd-badge.warning {
+        .table-badge.warning {
             background: rgba(245, 158, 11, 0.1);
             color: var(--lyd-warning);
         }
         
-        .lyd-badge.error {
+        .table-badge.error {
             background: rgba(239, 68, 68, 0.1);
             color: var(--lyd-error);
         }
         
-        .lyd-badge.info {
+        .table-badge.info {
             background: rgba(0, 102, 255, 0.1);
             color: var(--lyd-primary);
         }
         
-        .lyd-table-loading,
-        .lyd-table-empty {
+        /* Table Actions */
+        .table-actions {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: var(--spacing-2xl);
+            gap: var(--spacing-sm);
+        }
+        
+        .table-action {
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
             color: var(--lyd-grey);
-            text-align: center;
-        }
-        
-        .lyd-table-empty {
-            padding: var(--spacing-3xl) var(--spacing-2xl);
-        }
-        
-        .lyd-spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--lyd-gray-300);
-            border-top: 2px solid var(--lyd-primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: var(--spacing-sm);
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Bulk Actions */
-        .lyd-bulk-actions {
-            padding: var(--spacing-md) var(--spacing-lg);
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-secondary) 100%);
-            color: var(--lyd-bg);
-            display: none;
-            align-items: center;
-            gap: var(--spacing-md);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.15);
-        }
-        
-        .lyd-bulk-actions.active {
-            display: flex;
-        }
-        
-        .lyd-bulk-count {
-            font-weight: 600;
-        }
-        
-        .lyd-bulk-action {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--lyd-bg);
-            border-radius: 4px;
-            font-size: var(--font-size-xs);
-            cursor: pointer;
             transition: all 0.2s ease;
+            border-radius: var(--radius-sm);
         }
         
-        .lyd-bulk-action:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Export Features */
-        .lyd-export-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .lyd-export-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--lyd-bg);
-            border: 1px solid var(--lyd-line);
-            border-radius: 6px;
-            box-shadow: var(--shadow-lg);
-            min-width: 150px;
-            z-index: 1000;
-            display: none;
-        }
-        
-        .lyd-export-menu.active {
-            display: block;
-        }
-        
-        .lyd-export-option {
-            padding: var(--spacing-sm) var(--spacing-md);
-            cursor: pointer;
-            font-size: var(--font-size-sm);
-            color: var(--lyd-gray-700);
-            border-bottom: 1px solid var(--lyd-gray-100);
-        }
-        
-        .lyd-export-option:last-child {
-            border-bottom: none;
-        }
-        
-        .lyd-export-option:hover {
-            background: var(--lyd-gray-50);
+        .table-action:hover {
+            background: var(--lyd-gray-100);
             color: var(--lyd-primary);
         }
         
-        /* Implementation Guide Styling */
-        .implementation-section {
-            background: var(--lyd-bg);
-            border-radius: 8px;
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-            border: 1px solid var(--lyd-line);
-        }
-        
-        .implementation-section h3 {
-            font-size: var(--font-size-lg);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .code-block {
-            position: relative;
-            background: var(--lyd-gray-900);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-            overflow-x: auto;
-        }
-        
-        .code-block pre {
-            color: var(--lyd-gray-100);
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 0;
-            white-space: pre;
-        }
-        
-        .lyd-button.copy {
-            position: absolute;
-            top: var(--spacing-md);
-            right: var(--spacing-md);
-            background: var(--lyd-primary);
-            color: var(--lyd-bg);
-            border: none;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: 4px;
-            font-size: var(--font-size-xs);
+        /* Sortable Headers */
+        .lyd-table th.sortable {
             cursor: pointer;
-            transition: background 0.2s ease;
+            user-select: none;
         }
         
-        .lyd-button.copy:hover {
-            background: var(--lyd-primary-hover);
+        .lyd-table th.sortable:hover {
+            background: var(--lyd-gray-700);
         }
         
-        /* API Table */
-        .api-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: var(--spacing-md);
-            border: 1px solid var(--lyd-line);
-            border-radius: 8px;
-            overflow: hidden;
+        .sort-icon {
+            display: inline-block;
+            margin-left: var(--spacing-xs);
+            width: 12px;
+            height: 12px;
+            opacity: 0.5;
         }
         
-        .api-table th,
-        .api-table td {
-            padding: var(--spacing-md);
-            text-align: left;
-            border-bottom: 1px solid var(--lyd-line);
+        .lyd-table th.sortable.asc .sort-icon,
+        .lyd-table th.sortable.desc .sort-icon {
+            opacity: 1;
         }
         
-        .api-table th {
-            background: var(--lyd-gray-50);
-            font-weight: 600;
-            color: var(--lyd-gray-900);
-        }
-        
-        .api-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .api-table code {
-            background: var(--lyd-gray-100);
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 13px;
-        }
-        
-        /* Accessibility Grid */
-        .accessibility-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        /* Accessibility Grid - Screenshot-konform */
-        .accessibility-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin: 32px 0;
-            padding: 32px;
-            background: #E8F0FE;
-            border-radius: 8px;
-        }
-        
-        .accessibility-item {
-            background: white;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .accessibility-item h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111111;
-            margin-bottom: 12px;
-        }
-        
-        .accessibility-item ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .accessibility-item li {
-            padding: 4px 0;
-            color: #666666;
-            font-size: 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-        
-        .accessibility-item li:before {
-            content: "✓";
-            color: #3366CC;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        
-        @media (max-width: 1200px) {
-            .accessibility-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
+        /* Responsive Table */
         @media (max-width: 768px) {
-            .accessibility-grid {
-                grid-template-columns: 1fr;
-                padding: 16px;
-                gap: 16px;
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: var(--spacing-lg);
-            }
-            
-            .showcase-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-lg);
-            }
-            
-            .accessibility-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .lyd-table-filters {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .lyd-table-search {
-                min-width: auto;
-            }
-            
             .lyd-table-container {
-                max-height: 400px;
+                overflow-x: auto;
+            }
+            
+            .lyd-table {
+                min-width: 600px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Gradient fuer die Sichel -->
-                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    
-                    <!-- Gradient fuer den gesamten Text -->
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Sichel-Form mit eigenem Gradient -->
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                
-                <!-- Text-Elemente -->
-                <g fill="url(#textGradientLYD)">
-                    <!-- LIVE -->
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <!-- YOUR -->
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <!-- DREAMS -->
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
-        <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
-        </div>        <div class="nav-section">
-            <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
-            <a href="/components/buttons/" class="nav-item">Button</a>
-            <a href="/components/inputs/" class="nav-item">Input</a>
-            <a href="/components/cards/" class="nav-item">Card</a>
-            <a href="/components/select/" class="nav-item">Select</a>
-            <a href="/components/accordion/" class="nav-item">Accordion</a>
-            <a href="/components/modal/" class="nav-item">Modal</a>
-            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
-            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-            <a href="/components/radio/" class="nav-item">Radio</a>
-            <a href="/components/toast/" class="nav-item">Toast</a>
-            <a href="/components/table/" class="nav-item">Table</a>
-            <a href="/components/textarea/" class="nav-item">Textarea</a>
-            <a href="/components/switch/" class="nav-item">Switch</a>
-            <a href="/components/slider/" class="nav-item">Slider</a>
-            <a href="/components/alert/" class="nav-item">Alert</a>
-            <a href="/components/badge/" class="nav-item">Badge</a>
-            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
-            <a href="/components/avatar/" class="nav-item">Avatar</a>
-            <a href="/components/navbar/" class="nav-item">Navbar</a>
-            <a href="/components/tabs/" class="nav-item">Tabs</a>
-            <a href="/components/progress/" class="nav-item">Progress</a>
-            <a href="/components/calendar/" class="nav-item">Calendar</a>
-            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
-            <a href="/components/pagination/" class="nav-item">Pagination</a>
-            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Styles</div>
-            <a href="/styles/" class="nav-item">Introduction</a>
-            <a href="/components/typography/" class="nav-item">Typography</a>
-            <a href="/styles/grid/" class="nav-item">Grid</a>
-            <a href="/styles/colors/" class="nav-item">Colors</a>
-            <a href="/styles/spacing/" class="nav-item">Spacing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Patterns</div>
-            <a href="/patterns/" class="nav-item">Introduction</a>
-            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-            <a href="/patterns/header/" class="nav-item">Header</a>
-            <a href="/patterns/footer/" class="nav-item">Footer</a>
-            <a href="/patterns/forms/" class="nav-item">Forms</a>
-            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
-        </div>
-    </nav>
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item active">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
     
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Table</h1>
-            <p class="page-subtitle">Professional table components with advanced data management, filtering, and export capabilities specifically designed for complex backoffice applications and real estate management systems.</p>
-        </div>
-
-        <!-- Section 1: Premium Table Effects -->
-        
+        <h1>Table</h1>
+        <p>Professional data tables for property listings, client management, and analytics with sorting and filtering.</p>
         
         <!-- Section 1: Table Variants -->
         <section class="section">
-            <h2 class="section-title premium">Table Variants</h2>
+            <h2 class="section-title">Table Variants</h2>
             
-            <div class="showcase-grid">
-                <!-- Basic Data Table -->
-                <div class="showcase-item">
-                    <h3>Basic Data Table</h3>
-                    <p>Clean, professional table with essential features for data display</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Property ID</th>
-                                            <th>Address</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#12345</td>
-                                            <td>Maximilianstrasse 15, Munich</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12346</td>
-                                            <td>Leopoldstrasse 28, Munich</td>
-                                            <td>€1,200,000</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12347</td>
-                                            <td>Sendlinger Strasse 42, Munich</td>
-                                            <td>€950,000</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sortable Table -->
-                <div class="showcase-item">
-                    <h3>Sortable Table</h3>
-                    <p>Interactive table with sortable columns and visual indicators</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="sortable">
-                                                ID
-                                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
-                                                </svg>
-                                            </th>
-                                            <th class="sortable">
-                                                Price
-                                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
-                                                </svg>
-                                            </th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#12345</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12346</td>
-                                            <td>€1,200,000</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Advanced Filtering Table -->
-                <div class="showcase-item">
-                    <h3>Advanced Filtering</h3>
-                    <p>Comprehensive filtering with search and multiple filter criteria</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-filters">
-                                <input type="text" class="lyd-table-search" placeholder="Search properties...">
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Types</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
+            <div class="component-card">
+                <h3>Standard Table</h3>
+                <div class="lyd-table-container">
+                    <table class="lyd-table">
+                        <thead>
+                            <tr>
+                                <th>Property ID</th>
+                                <th>Address</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#LYD001</td>
+                                <td>Kurfürstendamm 123, Berlin</td>
+                                <td>Apartment</td>
+                                <td>€850,000</td>
+                                <td><span class="table-badge success">Available</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="table-action">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </button>
+                                        <button class="table-action">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </button>
                                     </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected">All Types</div>
-                                        <div class="lyd-table-filter-option">Apartment</div>
-                                        <div class="lyd-table-filter-option">House</div>
-                                        <div class="lyd-table-filter-option">Villa</div>
-                                        <div class="lyd-table-filter-option">Commercial</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#LYD002</td>
+                                <td>Prenzlauer Berg 45, Berlin</td>
+                                <td>House</td>
+                                <td>€1,250,000</td>
+                                <td><span class="table-badge warning">Pending</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="table-action">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </button>
+                                        <button class="table-action">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </button>
                                     </div>
-                                </div>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Status</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#LYD003</td>
+                                <td>Charlottenburg 78, Berlin</td>
+                                <td>Villa</td>
+                                <td>€2,500,000</td>
+                                <td><span class="table-badge error">Sold</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="table-action">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </button>
                                     </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected">All Status</div>
-                                        <div class="lyd-table-filter-option">Available</div>
-                                        <div class="lyd-table-filter-option">Reserved</div>
-                                        <div class="lyd-table-filter-option">Sold</div>
-                                        <div class="lyd-table-filter-option">Archived</div>
-                                    </div>
-                                </div>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>Price Range</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected">All Prices</div>
-                                        <div class="lyd-table-filter-option">€0 - €500k</div>
-                                        <div class="lyd-table-filter-option">€500k - €1M</div>
-                                        <div class="lyd-table-filter-option">€1M - €2M</div>
-                                        <div class="lyd-table-filter-option">€2M+</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Address</th>
-                                            <th>Type</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Maximilianstrasse 15</td>
-                                            <td>Apartment</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- Bulk Actions Table -->
-                <div class="showcase-item">
-                    <h3>Bulk Actions</h3>
-                    <p>Mass operations with row selection and bulk action capabilities</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-bulk-actions active">
-                                <span class="lyd-bulk-count">2 items selected</span>
-                                <button class="lyd-bulk-action">Archive</button>
-                                <button class="lyd-bulk-action">Export</button>
-                                <button class="lyd-bulk-action">Delete</button>
-                            </div>
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="lyd-table-checkbox">
-                                                <input type="checkbox" checked>
-                                            </th>
-                                            <th>Property</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="selected">
-                                            <td class="lyd-table-checkbox">
-                                                <input type="checkbox" checked>
-                                            </td>
-                                            <td>Maximilianstrasse 15</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                        </tr>
-                                        <tr class="selected">
-                                            <td class="lyd-table-checkbox">
-                                                <input type="checkbox" checked>
-                                            </td>
-                                            <td>Leopoldstrasse 28</td>
-                                            <td>€1,200,000</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lyd-table-checkbox">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td>Sendlinger Strasse 42</td>
-                                            <td>€950,000</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Striped Table</h3>
+                <div class="lyd-table-container">
+                    <table class="lyd-table striped">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Interest</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Max Mustermann</td>
+                                <td>max@example.com</td>
+                                <td>+49 30 12345678</td>
+                                <td>Apartment, 2-3 Rooms</td>
+                            </tr>
+                            <tr>
+                                <td>Anna Schmidt</td>
+                                <td>anna@example.com</td>
+                                <td>+49 30 87654321</td>
+                                <td>House, Garden</td>
+                            </tr>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>john@example.com</td>
+                                <td>+49 30 11223344</td>
+                                <td>Penthouse, City View</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- Action-Rich Table -->
-                <div class="showcase-item">
-                    <h3>Action-Rich Table</h3>
-                    <p>Comprehensive action buttons for detailed data management</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Property</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Maximilianstrasse 15</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">View</button>
-                                                    <button class="lyd-table-action">Edit</button>
-                                                    <button class="lyd-table-action">Clone</button>
-                                                    <button class="lyd-table-action danger">Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Leopoldstrasse 28</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">View</button>
-                                                    <button class="lyd-table-action">Edit</button>
-                                                    <button class="lyd-table-action">Archive</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Loading State -->
-                <div class="showcase-item">
-                    <h3>Loading State</h3>
-                    <p>Professional loading indicators for async data operations</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Property ID</th>
-                                            <th>Address</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="4">
-                                                <div class="lyd-table-loading">
-                                                    <div class="lyd-spinner"></div>
-                                                    Loading property data...
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Empty State -->
-                <div class="showcase-item">
-                    <h3>Empty State</h3>
-                    <p>User-friendly empty state with call-to-action</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Property ID</th>
-                                            <th>Address</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="4">
-                                                <div class="lyd-table-empty">
-                                                    <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--lyd-gray-400); margin-bottom: 12px;">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                                                    </svg>
-                                                    <h4 style="color: var(--lyd-gray-700); margin-bottom: 8px;">No properties found</h4>
-                                                    <p style="color: var(--lyd-grey); margin-bottom: 16px;">Get started by adding your first property</p>
-                                                    <button class="lyd-table-action" style="background: var(--lyd-primary); color: white; border: none;">Add Property</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Striped Rows -->
-                <div class="showcase-item">
-                    <h3>Striped Rows</h3>
-                    <p>Alternating row colors for better readability</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Property ID</th>
-                                            <th>Address</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#12345</td>
-                                            <td>Maximilianstrasse 15, Munich</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12346</td>
-                                            <td>Leopoldstrasse 28, Munich</td>
-                                            <td>€1,200,000</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12347</td>
-                                            <td>Sendlinger Strasse 42, Munich</td>
-                                            <td>€950,000</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12348</td>
-                                            <td>Marienplatz 1, Munich</td>
-                                            <td>€2,100,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Compact Table -->
-                <div class="showcase-item">
-                    <h3>Compact Table</h3>
-                    <p>Reduced padding for displaying more data in less space</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table compact">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Address</th>
-                                            <th>Type</th>
-                                            <th>Price</th>
-                                            <th>Status</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#12345</td>
-                                            <td>Maximilianstrasse 15</td>
-                                            <td>Apartment</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                            <td>2024-01-15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12346</td>
-                                            <td>Leopoldstrasse 28</td>
-                                            <td>Villa</td>
-                                            <td>€1,200,000</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                            <td>2024-01-10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#12347</td>
-                                            <td>Sendlinger Strasse 42</td>
-                                            <td>House</td>
-                                            <td>€950,000</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                            <td>2024-01-12</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Custom Cells Table -->
-                <div class="showcase-item">
-                    <h3>Custom Cells</h3>
-                    <p>Rich content with avatars, complex data and custom actions</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table custom-cells">
-                                    <thead>
-                                        <tr>
-                                            <th>Agent</th>
-                                            <th>Role</th>
-                                            <th>Status</th>
-                                            <th style="text-align: center;">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="lyd-user-cell">
-                                                    <div class="lyd-user-avatar">
-                                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Tony Reichert" />
-                                                    </div>
-                                                    <div class="lyd-user-info">
-                                                        <div class="lyd-user-name">Tony Reichert</div>
-                                                        <div class="lyd-user-email">tony.reichert@lyd-realestate.com</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="lyd-role-cell">
-                                                    <div class="lyd-role-title">Senior Agent</div>
-                                                    <div class="lyd-role-department">Sales</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="lyd-badge success">Active</span>
-                                            </td>
-                                            <td>
-                                                <div class="lyd-action-buttons">
-                                                    <button class="lyd-button icon-only view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-button icon-only edit" title="Edit Agent">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-button icon-only delete" title="Remove Agent">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="lyd-user-cell">
-                                                    <div class="lyd-user-avatar">
-                                                        <img src="https://images.unsplash.com/photo-1494790108755-2616c96f40b1?w=150&h=150&fit=crop&crop=face" alt="Sarah Johnson" />
-                                                    </div>
-                                                    <div class="lyd-user-info">
-                                                        <div class="lyd-user-name">Sarah Johnson</div>
-                                                        <div class="lyd-user-email">sarah.johnson@lyd-realestate.com</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="lyd-role-cell">
-                                                    <div class="lyd-role-title">Property Manager</div>
-                                                    <div class="lyd-role-department">Operations</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="lyd-badge warning">Vacation</span>
-                                            </td>
-                                            <td>
-                                                <div class="lyd-action-buttons">
-                                                    <button class="lyd-button icon-only view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-button icon-only edit" title="Edit Agent">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-button icon-only delete" title="Remove Agent">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="lyd-user-cell">
-                                                    <div class="lyd-user-avatar">
-                                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Michael Chen" />
-                                                    </div>
-                                                    <div class="lyd-user-info">
-                                                        <div class="lyd-user-name">Michael Chen</div>
-                                                        <div class="lyd-user-email">michael.chen@lyd-realestate.com</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="lyd-role-cell">
-                                                    <div class="lyd-role-title">Lead Agent</div>
-                                                    <div class="lyd-role-department">Sales</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="lyd-badge error">Paused</span>
-                                            </td>
-                                            <td>
-                                                <div class="lyd-action-buttons">
-                                                    <button class="lyd-button icon-only view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-button icon-only edit" title="Edit Agent">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-button icon-only delete" title="Remove Agent">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                <!-- Sortable & Filterable Table -->
-                <div class="showcase-item">
-                    <h3>Sortable & Filterable Table</h3>
-                    <p>Advanced table with functional sorting, filtering and search capabilities</p>
-                    
-                    <div class="showcase-demo">
-                        <!-- Advanced Filter Controls -->
-                        <div class="lyd-table-advanced-filters" id="advanced-filters">
-                            <div class="lyd-filter-group">
-                                <label class="lyd-filter-label">Search</label>
-                                <input type="text" class="lyd-search-input" id="global-search" placeholder="Search properties...">
-                            </div>
-                            
-                            <div class="lyd-filter-group">
-                                <label class="lyd-filter-label">Property Type</label>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Types</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected" data-value="">All Types</div>
-                                        <div class="lyd-table-filter-option" data-value="apartment">Apartment</div>
-                                        <div class="lyd-table-filter-option" data-value="house">House</div>
-                                        <div class="lyd-table-filter-option" data-value="villa">Villa</div>
-                                        <div class="lyd-table-filter-option" data-value="penthouse">Penthouse</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="lyd-filter-group">
-                                <label class="lyd-filter-label">Status</label>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Status</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected" data-value="">All Status</div>
-                                        <div class="lyd-table-filter-option" data-value="available">Available</div>
-                                        <div class="lyd-table-filter-option" data-value="reserved">Reserved</div>
-                                        <div class="lyd-table-filter-option" data-value="sold">Sold</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="lyd-filter-actions">
-                                <button class="lyd-filter-clear" id="clear-filters">Clear All</button>
-                            </div>
-                        </div>
-
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-container">
-                                <table class="lyd-table sortable-table" id="sortable-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="sortable" data-column="id">
-                                                <input type="checkbox" class="lyd-table-select-all">
-                                            </th>
-                                            <th class="sortable" data-column="address">Address</th>
-                                            <th class="sortable" data-column="type">Type</th>
-                                            <th class="sortable" data-column="price" data-type="number">Price</th>
-                                            <th class="sortable" data-column="size" data-type="number">Size (m²)</th>
-                                            <th class="sortable" data-column="status">Status</th>
-                                            <th class="sortable" data-column="date" data-type="date">Listed Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="sortable-tbody">
-                                        <tr data-type="apartment" data-status="available" data-price="850000" data-size="95" data-date="2024-01-15">
-                                            <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Maximilianstrasse 15, Muenchen</td>
-                                            <td>Apartment</td>
-                                            <td>€850,000</td>
-                                            <td>95</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                            <td>2024-01-15</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-table-action edit" title="Edit Property">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-type="villa" data-status="sold" data-price="1200000" data-size="180" data-date="2024-01-10">
-                                            <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Leopoldstrasse 28, Muenchen</td>
-                                            <td>Villa</td>
-                                            <td>€1,200,000</td>
-                                            <td>180</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                            <td>2024-01-10</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 616 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-table-action edit" title="Edit Property">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-type="house" data-status="reserved" data-price="950000" data-size="120" data-date="2024-01-12">
-                                            <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Sendlinger Strasse 42, Muenchen</td>
-                                            <td>House</td>
-                                            <td>€950,000</td>
-                                            <td>120</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                            <td>2024-01-12</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-table-action edit" title="Edit Property">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-type="penthouse" data-status="available" data-price="2100000" data-size="250" data-date="2024-01-08">
-                                            <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Marienplatz 8, Muenchen</td>
-                                            <td>Penthouse</td>
-                                            <td>€2,100,000</td>
-                                            <td>250</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                            <td>2024-01-08</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 616 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-table-action edit" title="Edit Property">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-type="apartment" data-status="available" data-price="675000" data-size="75" data-date="2024-01-20">
-                                            <td><input type="checkbox" class="lyd-table-row-select"></td>
-                                            <td>Schwabing Allee 12, Muenchen</td>
-                                            <td>Apartment</td>
-                                            <td>€675,000</td>
-                                            <td>75</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                            <td>2024-01-20</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action view" title="View Details">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 616 0z"/>
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                        </svg>
-                                                    </button>
-                                                    <button class="lyd-table-action edit" title="Edit Property">
-                                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <div class="lyd-table-info">
-                            <span id="table-results">Showing 5 of 5 properties</span>
-                        </div>
-                    </div>
-                </div>
-
+            </div>
+            
+            <div class="component-card">
+                <h3>Sortable Table</h3>
+                <div class="lyd-table-container">
+                    <table class="lyd-table" id="sortable-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" onclick="sortTable(0)">
+                                    Date
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                                    </svg>
+                                </th>
+                                <th class="sortable" onclick="sortTable(1)">
+                                    Property
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                                    </svg>
+                                </th>
+                                <th class="sortable" onclick="sortTable(2)">
+                                    Views
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                                    </svg>
+                                </th>
+                                <th class="sortable" onclick="sortTable(3)">
+                                    Inquiries
+                                    <svg class="sort-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                                    </svg>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-01-15</td>
+                                <td>Kurfürstendamm 123</td>
+                                <td>245</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-14</td>
+                                <td>Prenzlauer Berg 45</td>
+                                <td>189</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>2024-01-13</td>
+                                <td>Charlottenburg 78</td>
+                                <td>312</td>
+                                <td>15</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
-
-        <!-- Section 2: Real Estate Backoffice Applications -->
+        
+        <!-- Section 2: Implementation Guide -->
         <section class="section">
-            <h2 class="section-title premium">Real Estate Backoffice Applications</h2>
-            
-            <div class="showcase-grid">
-                <!-- Property Management Table -->
-                <div class="showcase-item">
-                    <h3>Property Management</h3>
-                    <p>Comprehensive property listing with advanced management features</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-header">
-                                <div class="lyd-table-title">Properties (247)</div>
-                                <div class="lyd-table-actions">
-                                    <div class="lyd-export-dropdown">
-                                        <button class="lyd-table-action">Export</button>
-                                        <div class="lyd-export-menu">
-                                            <div class="lyd-export-option">Export as CSV</div>
-                                            <div class="lyd-export-option">Export as Excel</div>
-                                            <div class="lyd-export-option">Export as PDF</div>
-                                        </div>
-                                    </div>
-                                    <button class="lyd-table-action">Add Property</button>
-                                </div>
-                            </div>
-                            <div class="lyd-table-filters">
-                                <input type="text" class="lyd-table-search" placeholder="Search by address, ID, or owner...">
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Types</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected">All Types</div>
-                                        <div class="lyd-table-filter-option">Apartment</div>
-                                        <div class="lyd-table-filter-option">House</div>
-                                        <div class="lyd-table-filter-option">Villa</div>
-                                        <div class="lyd-table-filter-option">Commercial</div>
-                                    </div>
-                                </div>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Status</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected">All Status</div>
-                                        <div class="lyd-table-filter-option">Available</div>
-                                        <div class="lyd-table-filter-option">Reserved</div>
-                                        <div class="lyd-table-filter-option">Sold</div>
-                                        <div class="lyd-table-filter-option">Archived</div>
-                                    </div>
-                                </div>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>Price Range</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected">All Prices</div>
-                                        <div class="lyd-table-filter-option">€0 - €500k</div>
-                                        <div class="lyd-table-filter-option">€500k - €1M</div>
-                                        <div class="lyd-table-filter-option">€1M - €2M</div>
-                                        <div class="lyd-table-filter-option">€2M+</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="lyd-table-checkbox">
-                                                <input type="checkbox">
-                                            </th>
-                                            <th class="sortable">ID</th>
-                                            <th class="sortable">Address</th>
-                                            <th class="sortable">Type</th>
-                                            <th class="sortable">Price</th>
-                                            <th>Status</th>
-                                            <th class="sortable">Listed Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="lyd-table-checkbox">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td>#12345</td>
-                                            <td>Maximilianstrasse 15, 80539 Munich</td>
-                                            <td>Apartment</td>
-                                            <td>€850,000</td>
-                                            <td><span class="lyd-badge success">Available</span></td>
-                                            <td>2024-01-15</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">View</button>
-                                                    <button class="lyd-table-action">Edit</button>
-                                                    <button class="lyd-table-action danger">Archive</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lyd-table-checkbox">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td>#12346</td>
-                                            <td>Leopoldstrasse 28, 80802 Munich</td>
-                                            <td>Villa</td>
-                                            <td>€1,200,000</td>
-                                            <td><span class="lyd-badge error">Sold</span></td>
-                                            <td>2024-01-10</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">View</button>
-                                                    <button class="lyd-table-action">Contract</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lyd-table-checkbox">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td>#12347</td>
-                                            <td>Sendlinger Strasse 42, 80331 Munich</td>
-                                            <td>House</td>
-                                            <td>€950,000</td>
-                                            <td><span class="lyd-badge warning">Reserved</span></td>
-                                            <td>2024-01-12</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">View</button>
-                                                    <button class="lyd-table-action">Edit</button>
-                                                    <button class="lyd-table-action">Release</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="lyd-table-pagination">
-                                <button class="lyd-button pagination" disabled>Previous</button>
-                                <span class="lyd-pagination-info">Page 1 of 13 (247 items)</span>
-                                <button class="lyd-button pagination">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lead Management Table -->
-                <div class="showcase-item">
-                    <h3>Lead Management</h3>
-                    <p>Customer lead tracking with contact information and follow-up status</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-header">
-                                <div class="lyd-table-title">Leads (89)</div>
-                                <div class="lyd-table-actions">
-                                    <button class="lyd-table-action">Export Leads</button>
-                                    <button class="lyd-table-action">Import Leads</button>
-                                </div>
-                            </div>
-                            <div class="lyd-table-filters">
-                                <input type="text" class="lyd-table-search" placeholder="Search leads...">
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Sources</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected" data-value="">All Sources</div>
-                                        <div class="lyd-table-filter-option" data-value="website">Website</div>
-                                        <div class="lyd-table-filter-option" data-value="phone">Phone</div>
-                                        <div class="lyd-table-filter-option" data-value="email">Email</div>
-                                        <div class="lyd-table-filter-option" data-value="referral">Referral</div>
-                                    </div>
-                                </div>
-                                <div class="lyd-table-filter">
-                                    <div class="lyd-table-filter-trigger">
-                                        <span>All Priorities</span>
-                                        <svg class="lyd-table-filter-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="lyd-table-filter-dropdown">
-                                        <div class="lyd-table-filter-option selected" data-value="">All Priorities</div>
-                                        <div class="lyd-table-filter-option" data-value="high">High</div>
-                                        <div class="lyd-table-filter-option" data-value="medium">Medium</div>
-                                        <div class="lyd-table-filter-option" data-value="low">Low</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Interest</th>
-                                            <th>Priority</th>
-                                            <th>Last Contact</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Max Patternsmann</td>
-                                            <td>max.mustermann@email.com</td>
-                                            <td>3-Room Apartment, Munich Center</td>
-                                            <td><span class="lyd-badge error">High</span></td>
-                                            <td>2024-01-20</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">Contact</button>
-                                                    <button class="lyd-table-action">Schedule</button>
-                                                    <button class="lyd-table-action">Convert</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Anna Schmidt</td>
-                                            <td>anna.schmidt@email.com</td>
-                                            <td>Villa, Bogenhausen</td>
-                                            <td><span class="lyd-badge warning">Medium</span></td>
-                                            <td>2024-01-18</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">Contact</button>
-                                                    <button class="lyd-table-action">Schedule</button>
-                                                    <button class="lyd-table-action">Notes</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transaction History Table -->
-                <div class="showcase-item">
-                    <h3>Transaction History</h3>
-                    <p>Comprehensive transaction tracking with financial details</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-header">
-                                <div class="lyd-table-title">Transactions (156)</div>
-                                <div class="lyd-table-actions">
-                                    <button class="lyd-table-action">Financial Report</button>
-                                </div>
-                            </div>
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="sortable">Date</th>
-                                            <th>Property</th>
-                                            <th>Client</th>
-                                            <th class="sortable">Amount</th>
-                                            <th>Commission</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2024-01-20</td>
-                                            <td>Maximilianstrasse 15</td>
-                                            <td>Max Patternsmann</td>
-                                            <td>€850,000</td>
-                                            <td>€25,500</td>
-                                            <td><span class="lyd-badge success">Completed</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2024-01-18</td>
-                                            <td>Leopoldstrasse 28</td>
-                                            <td>Anna Schmidt</td>
-                                            <td>€1,200,000</td>
-                                            <td>€36,000</td>
-                                            <td><span class="lyd-badge warning">Pending</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Document Management Table -->
-                <div class="showcase-item">
-                    <h3>Document Management</h3>
-                    <p>File and document tracking with version control</p>
-                    
-                    <div class="showcase-demo">
-                        <div class="lyd-table-wrapper">
-                            <div class="lyd-table-header">
-                                <div class="lyd-table-title">Documents (342)</div>
-                                <div class="lyd-table-actions">
-                                    <button class="lyd-table-action">Upload Document</button>
-                                </div>
-                            </div>
-                            <div class="lyd-table-container">
-                                <table class="lyd-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Document Name</th>
-                                            <th>Property</th>
-                                            <th>Type</th>
-                                            <th>Size</th>
-                                            <th>Modified</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Exposé_Maximilianstr_15.pdf</td>
-                                            <td>#12345</td>
-                                            <td><span class="lyd-badge info">PDF</span></td>
-                                            <td>2.4 MB</td>
-                                            <td>2024-01-20</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">Download</button>
-                                                    <button class="lyd-table-action">Preview</button>
-                                                    <button class="lyd-table-action">Share</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Contract_Leopoldstr_28.docx</td>
-                                            <td>#12346</td>
-                                            <td><span class="lyd-badge warning">DOCX</span></td>
-                                            <td>1.1 MB</td>
-                                            <td>2024-01-19</td>
-                                            <td>
-                                                <div class="lyd-table-row-actions">
-                                                    <button class="lyd-table-action">Download</button>
-                                                    <button class="lyd-table-action">Edit</button>
-                                                    <button class="lyd-table-action">Version History</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Implementation Guide -->
-        <section class="section">
-            <h2 class="section-title premium">Implementation Guide</h2>
-            <div class="implementation-section">
-                <h3>HTML Usage</h3>
-                <div style="padding: var(--spacing-lg);">
-                    <div class="code-block">
-                        <button class="lyd-button copy">Copy</button>
-                        <pre>&lt;!-- Basic table Usage --&gt;
-&lt;div class="lyd-table"&gt;
-    &lt;span&gt;table Content&lt;/span&gt;
-&lt;/div&gt;
-
-&lt;!-- table with States --&gt;
-&lt;div class="lyd-table primary"&gt;
-    &lt;span&gt;Primary table&lt;/span&gt;
-&lt;/div&gt;
-
-&lt;div class="lyd-table success"&gt;
-    &lt;span&gt;Success table&lt;/span&gt;
-&lt;/div&gt;</pre>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title">Implementation Guide</h2>
             
             <div class="implementation-section">
-                <h3>Backoffice Table Usage</h3>
+                <h3>HTML Structure</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy" onclick="copyToClipboard(this)">Copy</button>
-                    <pre>&lt;!-- Professional Backoffice Table --&gt;
-&lt;div class="lyd-table-wrapper"&gt;
-    &lt;div class="lyd-table-header"&gt;
-        &lt;div class="lyd-table-title"&gt;Properties (247)&lt;/div&gt;
-        &lt;div class="lyd-table-actions"&gt;
-            &lt;button class="lyd-table-action"&gt;Export&lt;/button&gt;
-            &lt;button class="lyd-table-action"&gt;Add Property&lt;/button&gt;
-        &lt;/div&gt;
+                    <pre>&lt;!-- Standard Table --&gt;
+&lt;div class="lyd-table-container"&gt;
+    &lt;table class="lyd-table"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Column 1&lt;/th&gt;
+                &lt;th&gt;Column 2&lt;/th&gt;
+                &lt;th&gt;Column 3&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Data 1&lt;/td&gt;
+                &lt;td&gt;Data 2&lt;/td&gt;
+                &lt;td&gt;Data 3&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- Table with Status Badge --&gt;
+&lt;td&gt;
+    &lt;span class="table-badge success"&gt;Active&lt;/span&gt;
+&lt;/td&gt;
+
+&lt;!-- Table with Actions --&gt;
+&lt;td&gt;
+    &lt;div class="table-actions"&gt;
+        &lt;button class="table-action"&gt;
+            &lt;svg&gt;...&lt;/svg&gt;
+        &lt;/button&gt;
     &lt;/div&gt;
-    &lt;div class="lyd-table-filters"&gt;
-        &lt;input type="text" class="lyd-table-search" placeholder="Search properties..."&gt;
-        &lt;select class="lyd-table-filter"&gt;
-            &lt;option&gt;All Types&lt;/option&gt;
-            &lt;option&gt;Apartment&lt;/option&gt;
-            &lt;option&gt;House&lt;/option&gt;
-            &lt;option&gt;Villa&lt;/option&gt;
-        &lt;/select&gt;
-        &lt;select class="lyd-table-filter"&gt;
-            &lt;option&gt;All Status&lt;/option&gt;
-            &lt;option&gt;Available&lt;/option&gt;
-            &lt;option&gt;Reserved&lt;/option&gt;
-            &lt;option&gt;Sold&lt;/option&gt;
-        &lt;/select&gt;
-    &lt;/div&gt;
-    &lt;div class="lyd-bulk-actions"&gt;
-        &lt;span class="lyd-bulk-count"&gt;2 items selected&lt;/span&gt;
-        &lt;button class="lyd-bulk-action"&gt;Archive&lt;/button&gt;
-        &lt;button class="lyd-bulk-action"&gt;Export Selected&lt;/button&gt;
-        &lt;button class="lyd-bulk-action"&gt;Delete&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;div class="lyd-table-container"&gt;
-        &lt;table class="lyd-table"&gt;
-            &lt;thead&gt;
-                &lt;tr&gt;
-                    &lt;th class="lyd-table-checkbox"&gt;&lt;input type="checkbox"&gt;&lt;/th&gt;
-                    &lt;th class="sortable"&gt;Property ID&lt;/th&gt;
-                    &lt;th class="sortable"&gt;Address&lt;/th&gt;
-                    &lt;th class="sortable"&gt;Price&lt;/th&gt;
-                    &lt;th&gt;Status&lt;/th&gt;
-                    &lt;th&gt;Actions&lt;/th&gt;
-                &lt;/tr&gt;
-            &lt;/thead&gt;
-            &lt;tbody&gt;
-                &lt;tr&gt;
-                    &lt;td class="lyd-table-checkbox"&gt;&lt;input type="checkbox"&gt;&lt;/td&gt;
-                    &lt;td&gt;#12345&lt;/td&gt;
-                    &lt;td&gt;Maximilianstrasse 15, Munich&lt;/td&gt;
-                    &lt;td&gt;€850,000&lt;/td&gt;
-                    &lt;td&gt;&lt;span class="lyd-badge success"&gt;Available&lt;/span&gt;&lt;/td&gt;
-                    &lt;td&gt;
-                        &lt;div class="lyd-table-row-actions"&gt;
-                            &lt;button class="lyd-table-action"&gt;View&lt;/button&gt;
-                            &lt;button class="lyd-table-action"&gt;Edit&lt;/button&gt;
-                            &lt;button class="lyd-table-action danger"&gt;Archive&lt;/button&gt;
-                        &lt;/div&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-            &lt;/tbody&gt;
-        &lt;/table&gt;
-    &lt;/div&gt;
-    &lt;div class="lyd-table-pagination"&gt;
-        &lt;button class="lyd-button pagination"&gt;Previous&lt;/button&gt;
-        &lt;span class="lyd-pagination-info"&gt;Page 1 of 13 (247 items)&lt;/span&gt;
-        &lt;button class="lyd-button pagination"&gt;Next&lt;/button&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/td&gt;</pre>
                 </div>
-            </div>
-            
-            <div class="implementation-section">
-                <h3>API Reference</h3>
-                <table class="api-table">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>.lyd-table</code></td>
-                            <td>Base table class with premium styling</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-table-container</code></td>
-                            <td>Table wrapper with responsive scrolling</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-table-header</code></td>
-                            <td>Table header with search and filters</td>
-                        </tr>
-                        <tr>
-                            <td><code>.sortable</code></td>
-                            <td>Sortable column header with arrow indicators</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-table-checkbox</code></td>
-                            <td>Checkbox column for bulk selection</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-bulk-actions</code></td>
-                            <td>Bulk action toolbar for selected rows</td>
-                        </tr>
-                        <tr>
-                            <td><code>.striped</code></td>
-                            <td>Alternating row colors for better readability</td>
-                        </tr>
-                        <tr>
-                            <td><code>.compact</code></td>
-                            <td>Reduced padding for dense data display</td>
-                        </tr>
-                    </tbody>
-                </table>
+                
+                <h3>JavaScript for Sorting</h3>
+                <div class="code-block">
+                    <pre>function sortTable(columnIndex) {
+    const table = document.getElementById('sortable-table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const header = table.querySelectorAll('th')[columnIndex];
+    
+    // Toggle sort direction
+    const isAsc = header.classList.contains('asc');
+    
+    // Remove all sort classes
+    table.querySelectorAll('th').forEach(th => {
+        th.classList.remove('asc', 'desc');
+    });
+    
+    // Sort rows
+    rows.sort((a, b) => {
+        const aValue = a.cells[columnIndex].textContent;
+        const bValue = b.cells[columnIndex].textContent;
+        
+        // Check if numeric
+        const aNum = parseFloat(aValue);
+        const bNum = parseFloat(bValue);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+            return isAsc ? bNum - aNum : aNum - bNum;
+        }
+        
+        // String comparison
+        return isAsc ? 
+            bValue.localeCompare(aValue) : 
+            aValue.localeCompare(bValue);
+    });
+    
+    // Update header class
+    header.classList.add(isAsc ? 'desc' : 'asc');
+    
+    // Reorder rows
+    rows.forEach(row => tbody.appendChild(row));
+}</pre>
+                </div>
+                
+                <h3>React/Next.js Component</h3>
+                <div class="code-block">
+                    <pre>// components/Table.tsx
+import { useState } from 'react';
+
+interface Column {
+  key: string;
+  label: string;
+  sortable?: boolean;
+}
+
+interface TableProps {
+  columns: Column[];
+  data: any[];
+  striped?: boolean;
+  compact?: boolean;
+}
+
+export const Table = ({ columns, data, striped = false, compact = false }: TableProps) => {
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: 'asc' | 'desc';
+  } | null>(null);
+  
+  const handleSort = (key: string) => {
+    let direction: 'asc' | 'desc' = 'asc';
+    
+    if (sortConfig?.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    
+    setSortConfig({ key, direction });
+  };
+  
+  const sortedData = sortConfig
+    ? [...data].sort((a, b) => {
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+        
+        if (aValue < bValue) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      })
+    : data;
+  
+  return (
+    &lt;div className="lyd-table-container"&gt;
+      &lt;table className={`lyd-table ${striped ? 'striped' : ''} ${compact ? 'compact' : ''}`}&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            {columns.map((column) => (
+              &lt;th
+                key={column.key}
+                className={column.sortable ? 'sortable' : ''}
+                onClick={() => column.sortable && handleSort(column.key)}
+              &gt;
+                {column.label}
+                {column.sortable && (
+                  &lt;svg className="sort-icon" viewBox="0 0 24 24"&gt;
+                    &lt;path d="M7 11l5-5m0 0l5 5m-5-5v12" /&gt;
+                  &lt;/svg&gt;
+                )}
+              &lt;/th&gt;
+            ))}
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          {sortedData.map((row, index) => (
+            &lt;tr key={index}&gt;
+              {columns.map((column) => (
+                &lt;td key={column.key}&gt;{row[column.key]}&lt;/td&gt;
+              ))}
+            &lt;/tr&gt;
+          ))}
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  );
+};</pre>
+                </div>
             </div>
         </section>
-
-        <!-- Section 4: Accessibility & Best Practices -->
+        
+        <!-- Section 3: API Reference -->
         <section class="section">
-            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
+            <h2 class="section-title">API Reference</h2>
             
-            <div class="accessibility-grid">
-                                <div class="accessibility-item">
-                    <h3>Keyboard Navigation</h3>
-                    <p>Full keyboard support with intuitive navigation patterns.</p>
-                    <ul>
-                        <li><kbd>Tab</kbd> - Navigate to next element</li>
-                        <li><kbd>Shift + Tab</kbd> - Navigate to previous element</li>
-                        <li><kbd>Enter</kbd> - Activate element</li>
-                        <li><kbd>Space</kbd> - Toggle/select element</li>
-                        <li><kbd>Escape</kbd> - Close/cancel action</li>
-                    </ul>
-                </div>
-                <div class="accessibility-item">
-                    <h4>Backoffice Optimization</h4>
-                    <ul>
-                        <li>Optimiert fuer komplexe Datenmengen (1000+ Eintraege)</li>
-                        <li>Advanced Filterung und Suchfunktionen</li>
-                        <li>Bulk-Operationen fuer effiziente Verwaltung</li>
-                        <li>Export-Functions fuer Berichte und Analysen</li>
-                        <li>Responsive Design fuer Tablet-Nutzung</li>
-                        <li>Keyboard-Navigation fuer Power-User</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Enterprise Features</h4>
-                    <ul>
-                        <li>Role-based Action Buttons</li>
-                        <li>Audit Trail Integration</li>
-                        <li>Real-time Data Updates</li>
-                        <li>Conflict Resolution</li>
-                        <li>Offline Mode Support</li>
-                        <li>Advanced Search Operators</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Performance</h4>
-                    <ul>
-                        <li>Virtual Scrolling fuer grosse Datasets</li>
-                        <li>Lazy Loading mit Intersection Observer</li>
-                        <li>Debounced Search (300ms)</li>
-                        <li>Memoized Sorting und Filtering</li>
-                        <li>Server-side Pagination Support</li>
-                        <li>Optimized Re-rendering</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Real Estate Specific</h4>
-                    <ul>
-                        <li>Property Management Workflows</li>
-                        <li>Lead Tracking und Follow-ups</li>
-                        <li>Transaction History</li>
-                        <li>Document Management</li>
-                        <li>Financial Reporting</li>
-                        <li>Client Communication Tools</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h3>Screen Reader Support</h3>
-                    <p>ARIA labels and semantic HTML ensure compatibility with assistive technologies.</p>
-                    <ul>
-                        <li>Proper ARIA labeling for all table headers and cells</li>
-                        <li>Screen reader friendly table structure with scope attributes</li>
-                        <li>Alternative text for data visualizations and status indicators</li>
-                        <li>Descriptive aria-labels for sortable columns and filters</li>
-                        <li>Live regions for dynamic content updates</li>
-                    </ul>
-                </div>
-            </div>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.lyd-table-container</code></td>
+                        <td>Container for responsive tables</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-table</code></td>
+                        <td>Base table class</td>
+                    </tr>
+                    <tr>
+                        <td><code>.striped</code></td>
+                        <td>Alternating row colors</td>
+                    </tr>
+                    <tr>
+                        <td><code>.compact</code></td>
+                        <td>Reduced padding variant</td>
+                    </tr>
+                    <tr>
+                        <td><code>.bordered</code></td>
+                        <td>Full border variant</td>
+                    </tr>
+                    <tr>
+                        <td><code>.sortable</code></td>
+                        <td>Sortable column header</td>
+                    </tr>
+                    <tr>
+                        <td><code>.table-badge</code></td>
+                        <td>Status badge in table cells</td>
+                    </tr>
+                    <tr>
+                        <td><code>.table-actions</code></td>
+                        <td>Action buttons container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.table-action</code></td>
+                        <td>Individual action button</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Section 4: Accessibility -->
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
             
-            <div class="implementation-section">
-                <h3>Backoffice Integration</h3>
-                <p>Diese Table-Implementation ist speziell fuer <strong>komplexe Backoffice-Anwendungen</strong> optimiert:</p>
-                <ul style="margin: 16px 0; padding-left: 20px;">
-                    <li><strong>Property Management:</strong> Umfassende Real Estateverwaltung mit Status-Tracking</li>
-                    <li><strong>Lead Management:</strong> Kundenbeziehungsmanagement mit Prioritaeten und Follow-ups</li>
-                    <li><strong>Transaction History:</strong> Vollstaendige Transaktionsverfolgung mit Finanzdetails</li>
-                    <li><strong>Document Management:</strong> Dateiverwaltung mit Versionskontrolle</li>
-                    <li><strong>Bulk Operations:</strong> Massenoperationen fuer effiziente Datenverwaltung</li>
-                    <li><strong>Advanced Filtering:</strong> Multi-Kriterien-Filterung fuer grosse Datenmengen</li>
-                    <li><strong>Export Functions:</strong> Flexible Datenexporte (CSV, Excel, PDF)</li>
-                    <li><strong>Real-time Updates:</strong> Live-Aktualisierungen bei Datenaenderungen</li>
+            <div class="component-card">
+                <h3>Accessibility Features</h3>
+                <ul>
+                    <li>Use semantic table elements</li>
+                    <li>Include table captions for context</li>
+                    <li>Provide scope attributes for headers</li>
+                    <li>Ensure keyboard navigation</li>
+                    <li>Add ARIA labels for actions</li>
+                </ul>
+                
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Keep tables simple and scannable</li>
+                    <li>Use consistent alignment</li>
+                    <li>Provide sorting and filtering</li>
+                    <li>Make tables responsive</li>
+                    <li>Use appropriate column widths</li>
+                    <li>Include hover states for rows</li>
                 </ul>
             </div>
         </section>
-        <!-- Cache Buster v30.8 - Advanced Table with Custom Cells, Functional Sorting & Filtering -->
     </main>
     
-    <!-- JavaScript -->
-    <script src="../shared/force-consistency.js"></script>
     <script>
-        // Copy to Clipboard Function
-        function copyToClipboard(button) {
-            const codeBlock = button.nextElementSibling;
-            const text = codeBlock.textContent;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.textContent;
-                button.textContent = 'Copied!';
-                button.style.background = 'var(--lyd-success)';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = 'var(--lyd-primary)';
-                }, 2000);
-            });
-        }
-        
-        // Table Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set active navigation
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttributes('href') === currentPath) {
-                    item.classList.add('active');
-                }
-            });
-            
-            // Initialize table interactions
-            initializeTableInteractions();
-        });
-        
-        function initializeTableInteractions() {
-            // Sortable columns with functional sorting
-            let currentSort = { column: null, direction: null };
-            
-            document.querySelectorAll('.sortable').forEach(header => {
-                header.addEventListener('click', function() {
-                    const column = this.getAttributes('data-column');
-                    const type = this.getAttributes('data-type') || 'string';
-                    
-                    // Skip checkbox column
-                    if (!column) return;
-                    
-                    // Determine sort direction
-                    let direction = 'asc';
-                    if (currentSort.column === column && currentSort.direction === 'asc') {
-                        direction = 'desc';
-                    }
-                    
-                    // Update visual indicators
-                    document.querySelectorAll('.sortable').forEach(h => h.classList.remove('asc', 'desc'));
-                    this.classList.add(direction);
-                    
-                    // Store current sort
-                    currentSort = { column, direction };
-                    
-                    // Sort the table
-                    sortTable(column, direction, type);
-                });
-            });
-
-            // Global search functionality
-            const globalSearch = document.getElementById('global-search');
-            if (globalSearch) {
-                globalSearch.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    filterTable();
-                });
-            }
-
-            // Clear filters functionality
-            const clearFilters = document.getElementById('clear-filters');
-            if (clearFilters) {
-                clearFilters.addEventListener('click', function() {
-                    // Reset search
-                    if (globalSearch) globalSearch.value = '';
-                    
-                    // Reset dropdowns
-                    document.querySelectorAll('.lyd-table-filter-option').forEach(option => {
-                        option.classList.remove('selected');
-                    });
-                    document.querySelectorAll('.lyd-table-filter-option[data-value=""]').forEach(option => {
-                        option.classList.add('selected');
-                        const trigger = option.closest('.lyd-table-filter').querySelector('.lyd-table-filter-trigger span');
-                        if (trigger) trigger.textContent = option.textContent;
-                    });
-                    
-                    // Show all rows
-                    filterTable();
-                });
-            }
-            
-            // Checkbox interactions
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const row = this.closest('tr');
-                    if (row) {
-                        row.classList.toggle('selected', this.checked);
-                    }
-                    
-                    // Update bulk actions visibility
-                    updateBulkActions();
-                });
-            });
-            
-            // Search functionality
-            document.querySelectorAll('.lyd-table-search').forEach(searchInput => {
-                searchInput.addEventListener('input', function() {
-                    console.log('Searching:', this.value);
-                    // Add search logic here
-                });
-            });
-            
-            // Filter dropdown functionality
-            document.querySelectorAll('.lyd-table-filter').forEach(filter => {
-                const trigger = filter.querySelector('.lyd-table-filter-trigger');
-                const dropdown = filter.querySelector('.lyd-table-filter-dropdown');
-                const options = filter.querySelectorAll('.lyd-table-filter-option');
-                
-                if (trigger && dropdown) {
-                    trigger.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        
-                        // Close other dropdowns
-                        document.querySelectorAll('.lyd-table-filter-trigger.active').forEach(other => {
-                            if (other !== trigger) {
-                                other.classList.remove('active');
-                                other.parentElement.querySelector('.lyd-table-filter-dropdown').classList.remove('active');
-                            }
-                        });
-                        
-                        // Toggle current dropdown
-                        trigger.classList.toggle('active');
-                        dropdown.classList.toggle('active');
-                    });
-                    
-                                            // Handle option selection
-                        options.forEach(option => {
-                            option.addEventListener('click', function() {
-                                // Update selected state
-                                options.forEach(opt => opt.classList.remove('selected'));
-                                this.classList.add('selected');
-
-                                // Update trigger text
-                                const span = trigger.querySelector('span');
-                                if (span) {
-                                    span.textContent = this.textContent;
-                                }
-
-                                // Close dropdown
-                                trigger.classList.remove('active');
-                                dropdown.classList.remove('active');
-
-                                // Apply filter
-                                filterTable();
-
-                                console.log('Filter selected:', this.textContent);
-                            });
-                        });
-                }
-            });
-            
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function() {
-                document.querySelectorAll('.lyd-table-filter-trigger.active').forEach(trigger => {
-                    trigger.classList.remove('active');
-                    trigger.parentElement.querySelector('.lyd-table-filter-dropdown').classList.remove('active');
-                });
-            });
-        }
-
-        // Sort table function
-        function sortTable(column, direction, type) {
-            const tbody = document.getElementById('sortable-tbody');
-            if (!tbody) return;
-            
+        function sortTable(columnIndex) {
+            const table = document.getElementById('sortable-table');
+            const tbody = table.querySelector('tbody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
+            const header = table.querySelectorAll('th')[columnIndex];
             
+            // Toggle sort direction
+            const isAsc = header.classList.contains('asc');
+            
+            // Remove all sort classes
+            table.querySelectorAll('th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
+            
+            // Sort rows
             rows.sort((a, b) => {
-                let aValue, bValue;
+                const aValue = a.cells[columnIndex].textContent;
+                const bValue = b.cells[columnIndex].textContent;
                 
-                // Get values based on column
-                switch (column) {
-                    case 'address':
-                        aValue = a.children[1].textContent.trim();
-                        bValue = b.children[1].textContent.trim();
-                        break;
-                    case 'type':
-                        aValue = a.children[2].textContent.trim();
-                        bValue = b.children[2].textContent.trim();
-                        break;
-                    case 'price':
-                        aValue = parseFloat(a.getAttributes('data-price')) || 0;
-                        bValue = parseFloat(b.getAttributes('data-price')) || 0;
-                        break;
-                    case 'size':
-                        aValue = parseFloat(a.getAttributes('data-size')) || 0;
-                        bValue = parseFloat(b.getAttributes('data-size')) || 0;
-                        break;
-                    case 'status':
-                        aValue = a.children[5].textContent.trim();
-                        bValue = b.children[5].textContent.trim();
-                        break;
-                    case 'date':
-                        aValue = new Date(a.getAttributes('data-date'));
-                        bValue = new Date(b.getAttributes('data-date'));
-                        break;
-                    default:
-                        aValue = a.children[1].textContent.trim();
-                        bValue = b.children[1].textContent.trim();
+                // Check if numeric
+                const aNum = parseFloat(aValue);
+                const bNum = parseFloat(bValue);
+                
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return isAsc ? bNum - aNum : aNum - bNum;
                 }
                 
-                // Compare values
-                let comparison = 0;
-                if (type === 'number' || type === 'date') {
-                    comparison = aValue - bValue;
-                } else {
-                    comparison = aValue.localeCompare(bValue);
-                }
-                
-                return direction === 'asc' ? comparison : -comparison;
+                // String comparison
+                return isAsc ? 
+                    bValue.localeCompare(aValue) : 
+                    aValue.localeCompare(bValue);
             });
             
-            // Re-append sorted rows
+            // Update header class
+            header.classList.add(isAsc ? 'desc' : 'asc');
+            
+            // Update icon rotation
+            const icon = header.querySelector('.sort-icon');
+            if (icon) {
+                icon.style.transform = isAsc ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+            
+            // Reorder rows
             rows.forEach(row => tbody.appendChild(row));
-        }
-
-        // Filter table function
-        function filterTable() {
-            const globalSearch = document.getElementById('global-search');
-            const tbody = document.getElementById('sortable-tbody');
-            const resultsSpan = document.getElementById('table-results');
-            
-            if (!tbody) return;
-            
-            const searchTerm = globalSearch ? globalSearch.value.toLowerCase() : '';
-            
-            // Get current filter values
-            const typeFilter = getSelectedFilterValue('property-type');
-            const statusFilter = getSelectedFilterValue('status');
-            
-            const rows = tbody.querySelectorAll('tr');
-            let visibleCount = 0;
-            
-            rows.forEach(row => {
-                const address = row.children[1].textContent.toLowerCase();
-                const type = row.getAttributes('data-type');
-                const status = row.getAttributes('data-status');
-                
-                // Check all filters
-                const matchesSearch = !searchTerm || address.includes(searchTerm);
-                const matchesType = !typeFilter || type === typeFilter;
-                const matchesStatus = !statusFilter || status === statusFilter;
-                
-                const shouldShow = matchesSearch && matchesType && matchesStatus;
-                
-                row.style.display = shouldShow ? '' : 'none';
-                if (shouldShow) visibleCount++;
-            });
-            
-            // Update results count
-            if (resultsSpan) {
-                resultsSpan.textContent = `Showing ${visibleCount} of ${rows.length} properties`;
-            }
-        }
-
-        // Helper function to get selected filter value
-        function getSelectedFilterValue(filterType) {
-            const filters = document.querySelectorAll('.lyd-table-filter');
-            for (const filter of filters) {
-                const label = filter.parentElement.querySelector('.lyd-filter-label');
-                if (label && label.textContent.toLowerCase().includes(filterType.replace('-', ' '))) {
-                    const selected = filter.querySelector('.lyd-table-filter-option.selected');
-                    return selected ? selected.getAttributes('data-value') : '';
-                }
-            }
-            return '';
-        }
-        
-        function updateBulkActions() {
-            const selectedCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]:checked');
-            const bulkActions = document.querySelector('.lyd-bulk-actions');
-            
-            if (bulkActions) {
-                if (selectedCheckboxes.length > 0) {
-                    bulkActions.classList.add('active');
-                    const countElement = bulkActions.querySelector('.lyd-bulk-count');
-                    if (countElement) {
-                        countElement.textContent = `${selectedCheckboxes.length} items selected`;
-                    }
-                } else {
-                    bulkActions.classList.remove('active');
-                }
-            }
         }
     </script>
 </body>

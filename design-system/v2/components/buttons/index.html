@@ -5,1233 +5,649 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Button - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- LYD Design System v2.0 - Centralized Architecture -->
-    <link rel="stylesheet" href="../shared/tokens.css">
-    <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option fuer Konsistenz -->
-    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
     
     <style>
-                :root {
-            /* Live Your Dreams CI Colors */
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
-            --lyd-accent: #E8F0FE;
-            --lyd-grey: #666666;
-            --lyd-line: #E5E7EB;
-            --lyd-text: #111111;
-            --lyd-bg: #ffffff;
-            
-            /* Additional Colors */
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Typography Scale - CI konform */
-            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
-            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            --spacing-3xl: 64px;
-            
-            /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-                body {
-            font-family: var(--font-family-primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-text);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background: var(--lyd-bg);
-            border-right: 1px solid var(--lyd-line);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .sidebar-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-line);
-            text-align: center;
-        }
-        
-        .lyd-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: var(--spacing-md);
-            transform: scale(2);
-            transform-origin: center;
-            margin-top: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .logo-subtitle {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            font-weight: 500;
-        }
-        
-        .nav-section {
-            padding: var(--spacing-md) 0;
-        }
-        
-        .nav-section-title {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            color: var(--lyd-gray-400);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 12px var(--spacing-lg);
-            color: var(--lyd-grey);
-            text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            transition: var(--transition-base);
-            border-left: 3px solid transparent;
-        }
-        
-        .nav-item:hover {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.05);
-        }
-        
-        .nav-item.active {
-            color: var(--lyd-primary);
-            border-left-color: var(--lyd-primary);
-            background: rgba(0, 102, 255, 0.1);
-            font-weight: 600;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: var(--spacing-2xl);
-            max-width: 1400px;
-        }
-        
-        .page-header {
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .page-title {
-            font-size: var(--font-size-5xl);
-            font-weight: 400;
-            font-family: system-ui, -apple-system, sans-serif;
-            letter-spacing: 6px;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        .page-subtitle {
-            font-size: var(--font-size-lg);
-            color: var(--lyd-grey);
-            line-height: 1.6;
-            max-width: 600px;
-        }
-        
-        /* Section Styles */
-        .section {
-            margin-bottom: var(--spacing-3xl);
-        }
-        
-        .section-title {
-            font-size: var(--font-size-3xl);
-            font-weight: 400;
-            font-family: system-ui, -apple-system, sans-serif;
-            letter-spacing: 6px;
-            color: var(--lyd-gray-900);
-            margin-bottom: var(--spacing-xl);
-            background: linear-gradient(180deg, #3366CC 0%, #000066 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        /* Component Showcase Grid */
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
-        
-        .showcase-item {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            transition: var(--transition-smooth);
-        }
-        
-        .showcase-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            border-color: #0066ff;
-        }
-        
-        .showcase-item h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 8px;
-        }
-        
-        .showcase-item p {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 16px;
-        }
-        
-        .showcase-demo {
-            padding: 24px;
-            background: #f9fafb;
-            border-radius: var(--radius-md);
-            border-left: 4px solid var(--lyd-royal-blue);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-            min-height: 80px;
-        }
-        
-        /* Examples Grid */
-        .examples-grid {
-            display: grid;
-            gap: 32px;
-            margin-bottom: 48px;
-        }
-        
-        .example-item {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .example-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 16px;
-        }
-        
-        .example-description {
-            font-size: 15px;
-            color: #6b7280;
-            margin-bottom: 24px;
-        }
-        
-        .example-demo {
-            padding: 24px;
-            background: #f9fafb;
-            border-radius: var(--radius-md);
-            border-left: 4px solid var(--lyd-royal-blue);
-            margin-bottom: 16px;
-        }
-        
-        /* Code Block */
-        .code-block {
-            background: #1f2937;
-            color: #f9fafb;
-            padding: 24px;
-            border-radius: 12px;
-            overflow-x: auto;
-            margin: 24px 0;
-            position: relative;
-        }
-        
-        .code-block pre {
-            margin: 0;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .lyd-button.copy {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #374151;
-            color: #f9fafb;
-            border: 1px solid #4b5563;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition-base);
-        }
-        
-        .lyd-button.copy:hover {
-            background: #4b5563;
-        }
-        
-        /* Implementation Guide */
-        .implementation-section {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            margin-bottom: 32px;
-        }
-        
-        .api-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-        }
-        
-        .api-table th {
-            background: #f9fafb;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .api-table td {
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .api-table code {
-            background: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-        }
-        
-        
-        /* Accessibility Grid - Screenshot-konform */
-        .accessibility-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin: 32px 0;
-            padding: 32px;
-            background: #E8F0FE;
-            border-radius: 8px;
-        }
-        
-        .accessibility-item {
-            background: white;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .accessibility-item h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111111;
-            margin-bottom: 12px;
-        }
-        
-        .accessibility-item ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .accessibility-item li {
-            padding: 4px 0;
-            color: #666666;
-            font-size: 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-        
-        .accessibility-item li:before {
-            content: "✓";
-            color: #3366CC;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        
-        @media (max-width: 1200px) {
-            .accessibility-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .accessibility-grid {
-                grid-template-columns: 1fr;
-                padding: 16px;
-                gap: 16px;
-            }
-        }
-        
-        /* Premium Button Styles - Original hochwertige Styles */
+        /* NUR BUTTON-SPEZIFISCHE STYLES */
         .lyd-button {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-md);
             font-size: var(--font-size-base);
-            border: none;
-            cursor: pointer;
+            font-weight: var(--font-weight-medium);
             transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            min-height: 44px;
+            text-decoration: none;
+            font-family: var(--font-family);
+            white-space: nowrap;
+            vertical-align: middle;
+            line-height: 1.2;
+            box-sizing: border-box;
         }
         
-        .lyd-button .btn-icon {
-            width: 18px;
-            height: 18px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .lyd-button:hover .btn-icon {
-            transform: scale(1.1);
-        }
-        
-        /* Primary Button - Gradient */
-        .lyd-button.primary {
-            background: linear-gradient(135deg, #0066ff 0%, #004299 100%);
+        /* Primary Button */
+        .lyd-button-primary {
+            background: var(--lyd-gradient-primary);
             color: white;
-            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
+            box-shadow: var(--shadow-md);
         }
         
-        .lyd-button.primary:hover {
-            background: linear-gradient(135deg, #0052cc 0%, #003366 100%);
+        .lyd-button-primary:hover {
+            background: var(--lyd-gradient-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
+            box-shadow: var(--shadow-lg);
         }
         
-        /* Premium Secondary Button - Enhanced Glassmorphism */
-        .lyd-button.secondary {
-            background: linear-gradient(135deg, 
-                rgba(51, 102, 204, 0.08) 0%, 
-                rgba(0, 0, 102, 0.12) 100%);
-            border: 1px solid rgba(51, 102, 204, 0.25);
-            color: #1a365d;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 4px 16px rgba(51, 102, 204, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
+        .lyd-button-primary:active {
+            transform: translateY(0);
         }
         
-        .lyd-button.secondary::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(51, 102, 204, 0.15), 
-                transparent);
-            transition: left 0.8s ease;
+        /* Secondary Button */
+        .lyd-button-secondary {
+            background: var(--lyd-royal-blue);
+            color: white;
         }
         
-        .lyd-button.secondary:hover::before {
-            left: 100%;
+        .lyd-button-secondary:hover {
+            background: var(--lyd-primary);
+            transform: translateY(-1px);
         }
         
-        .lyd-button.secondary:hover {
-            background: linear-gradient(135deg, 
-                rgba(51, 102, 204, 0.15) 0%, 
-                rgba(0, 0, 102, 0.2) 100%);
-            border-color: rgba(51, 102, 204, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 
-                0 8px 24px rgba(51, 102, 204, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                0 0 0 1px rgba(51, 102, 204, 0.1);
-            color: #0f2a44;
+        /* Outline Button */
+        .lyd-button-outline {
+            background: transparent;
+            color: var(--lyd-primary);
+            border: 2px solid var(--lyd-primary);
         }
         
-        /* Premium Outline Button */
-        .lyd-button.outline {
-            background: linear-gradient(#fff, #fff) padding-box,
-                        linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) border-box;
-            border: 2px solid transparent;
-            color: #4c1d95;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-        }
-        
-        .lyd-button.outline:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            color: #5b21b6;
-        }
-        
-        .lyd-button.outline .btn-icon {
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        
-        .lyd-button.outline:hover .btn-icon {
-            transform: rotate(360deg) scale(1.15);
-            filter: drop-shadow(0 0 6px rgba(102, 126, 234, 0.6));
+        .lyd-button-outline:hover {
+            background: var(--lyd-primary);
+            color: white;
         }
         
         /* Ghost Button */
-        .lyd-button.ghost {
+        .lyd-button-ghost {
             background: transparent;
-            color: #6b7280;
-            padding: 8px 16px;
+            color: var(--lyd-primary);
+            border: none;
+            font-weight: var(--font-weight-medium);
         }
         
-        .lyd-button.ghost:hover {
-            background: rgba(0, 0, 0, 0.05);
-            color: #374151;
+        .lyd-button-ghost:hover {
+            background: rgba(51, 102, 204, 0.1);
+            color: var(--lyd-primary);
         }
         
-        /* Size Variations */
-        .lyd-button.small {
-            padding: 8px 16px;
+        /* Glass Button */
+        .lyd-button-glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            color: var(--lyd-primary);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-weight: var(--font-weight-semibold);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+        
+        .lyd-button-glass:hover {
+            background: rgba(255, 255, 255, 0.35);
+            border-color: var(--lyd-primary);
+            transform: translateY(-1px);
+        }
+        
+        /* Button Sizes */
+        .lyd-button-small {
+            padding: var(--spacing-sm) var(--spacing-md);
             font-size: var(--font-size-sm);
+            min-height: 36px;
         }
         
-        .lyd-button.small .btn-icon {
-            width: 14px;
-            height: 14px;
-        }
-        
-        .lyd-button.large {
-            padding: 16px 32px;
+        .lyd-button-large {
+            padding: var(--spacing-lg) var(--spacing-2xl);
             font-size: var(--font-size-lg);
+            min-height: 52px;
         }
         
-        .lyd-button.large .btn-icon {
+        /* Icon Styles */
+        .lyd-button svg {
             width: 20px;
             height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+            vertical-align: middle;
+        }
+        
+        .lyd-button-icon-only {
+            padding: var(--spacing-md);
+            min-width: 44px;
         }
         
         /* Loading State */
         .lyd-button.loading {
+            color: transparent;
             pointer-events: none;
-            position: relative;
         }
         
-        .lyd-button.loading .spinner {
-            width: 16px;
-            height: 16px;
+        .lyd-button.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: currentColor;
+            border-top-color: white;
             border-radius: 50%;
-            animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-            display: inline-block;
-            margin-right: 8px;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        /* Disabled State */
+        .lyd-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
-        /* Success State */
-        .lyd-button.success {
-            background: linear-gradient(135deg, #3366CC 0%, #000066 100%) !important;
-            color: white !important;
-            animation: success-pulse 0.5s ease;
-            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.4);
-        }
-        
-        @keyframes success-pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Button Tiles */
-        .lyd-button-tile {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            padding: 24px;
-            min-width: 140px;
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .lyd-button-tile:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            border-color: #0066ff;
-        }
-        
-        .lyd-button-tile .tile-icon {
-            width: 32px;
-            height: 32px;
-            color: #000066;
-            transition: all 0.3s ease;
-        }
-        
-        .lyd-button-tile:hover .tile-icon {
-            color: #3366CC;
-            transform: scale(1.1);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 102, 0.3));
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: var(--spacing-lg);
-            }
-        }
-    
-        .code-block {
-            background: var(--lyd-gray-900);
-            border-radius: 8px;
-            padding: var(--spacing-lg);
-            position: relative;
-            overflow-x: auto;
-            margin: var(--spacing-md) 0;
-        }
-        
-        .code-block pre {
-            color: var(--lyd-gray-100);
-            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-            font-size: var(--font-size-sm);
-            line-height: 1.6;
-            margin: 0;
-            white-space: pre-wrap;
-        }
-        
-        .code-block code {
-            color: var(--lyd-gray-100);
-            font-family: inherit;
-        }
-        </style>
+    </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Gradient fuer die Sichel -->
-                    <linearGradient id="crescentGradientV2Buttons" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    
-                    <!-- Gradient fuer den gesamten Text -->
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                
-                <!-- Sichel-Form mit eigenem Gradient -->
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Buttons)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                
-                <!-- Text-Elemente -->
-                <g fill="url(#textGradientLYD)">
-                    <!-- LIVE -->
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <!-- YOUR -->
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <!-- DREAMS -->
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
-        <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
-        </div>        <div class="nav-section">
-            <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
-            <a href="/components/buttons/" class="nav-item">Button</a>
-            <a href="/components/inputs/" class="nav-item">Input</a>
-            <a href="/components/cards/" class="nav-item">Card</a>
-            <a href="/components/select/" class="nav-item">Select</a>
-            <a href="/components/accordion/" class="nav-item">Accordion</a>
-            <a href="/components/modal/" class="nav-item">Modal</a>
-            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
-            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-            <a href="/components/radio/" class="nav-item">Radio</a>
-            <a href="/components/toast/" class="nav-item">Toast</a>
-            <a href="/components/table/" class="nav-item">Table</a>
-            <a href="/components/textarea/" class="nav-item">Textarea</a>
-            <a href="/components/switch/" class="nav-item">Switch</a>
-            <a href="/components/slider/" class="nav-item">Slider</a>
-            <a href="/components/alert/" class="nav-item">Alert</a>
-            <a href="/components/badge/" class="nav-item">Badge</a>
-            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
-            <a href="/components/avatar/" class="nav-item">Avatar</a>
-            <a href="/components/navbar/" class="nav-item">Navbar</a>
-            <a href="/components/tabs/" class="nav-item">Tabs</a>
-            <a href="/components/progress/" class="nav-item">Progress</a>
-            <a href="/components/calendar/" class="nav-item">Calendar</a>
-            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
-            <a href="/components/pagination/" class="nav-item">Pagination</a>
-            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Styles</div>
-            <a href="/styles/" class="nav-item">Introduction</a>
-            <a href="/components/typography/" class="nav-item">Typography</a>
-            <a href="/styles/grid/" class="nav-item">Grid</a>
-            <a href="/styles/colors/" class="nav-item">Colors</a>
-            <a href="/styles/spacing/" class="nav-item">Spacing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Patterns</div>
-            <a href="/patterns/" class="nav-item">Introduction</a>
-            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-            <a href="/patterns/header/" class="nav-item">Header</a>
-            <a href="/patterns/footer/" class="nav-item">Footer</a>
-            <a href="/patterns/forms/" class="nav-item">Forms</a>
-            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
-        </div>
-    </nav>
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item active">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
     
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Button</h1>
-            <p class="page-subtitle">Professional button components with advanced interactions, loading states, and real estate optimizations.</p>
-        </div>
+        <h1>Button</h1>
+        <p>Interactive button components with LYD brand colors, luxury gradients, and premium styling for the luxury real estate segment.</p>
         
-        <!-- Section 1: Component Variants -->
+        <!-- Section 1: Button Variants -->
         <section class="section">
             <h2 class="section-title">Button Variants</h2>
-            
-            <div class="showcase-grid">
-                <!-- Primary Buttons -->
-                <div class="showcase-item">
-                    <h3>Primary Actions</h3>
-                    <p>Main call-to-action buttons with gradient background</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button primary">
-                            Schedule Property Viewing
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Primary Button</h3>
+                    <p class="text-muted">Main call to action with LYD primary gradient</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-primary">
+                            Primary Button
                         </button>
-                        <button class="lyd-button primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        <button class="lyd-button lyd-button-primary">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
                             </svg>
-                            Save Property
+                            With Icon
                         </button>
-                        <button class="lyd-button primary small">Confirm</button>
                     </div>
                 </div>
                 
-                <!-- Secondary Buttons -->
-                <div class="showcase-item">
-                    <h3>Secondary Actions</h3>
-                    <p>Supporting actions with glassmorphism effect</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button secondary">
-                            Add to Favorites
+                <div class="component-card">
+                    <h3>Secondary Button</h3>
+                    <p class="text-muted">Alternative action with Royal Blue</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-secondary">
+                            Secondary Button
                         </button>
-                        <button class="lyd-button secondary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        <button class="lyd-button lyd-button-secondary">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                             </svg>
-                            View Analytics
+                            View Details
                         </button>
-                        <button class="lyd-button secondary small">Settings</button>
                     </div>
                 </div>
                 
-                <!-- Outline Buttons -->
-                <div class="showcase-item">
-                    <h3>Outline Style</h3>
-                    <p>Subtle actions with border styling</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button outline">
-                            Download Exposé
+                <div class="component-card">
+                    <h3>Outline Button</h3>
+                    <p class="text-muted">Transparent background with primary border</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-outline">
+                            Outline Button
                         </button>
-                        <button class="lyd-button outline">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        <button class="lyd-button lyd-button-outline">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                             </svg>
-                            Contact Agent
+                            Contact
                         </button>
-                        <button class="lyd-button outline small">Share</button>
                     </div>
                 </div>
                 
-                <!-- States -->
-                <div class="showcase-item">
-                    <h3>Button States</h3>
-                    <p>Loading, disabled, and hover states</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button primary loading">
+                <div class="component-card">
+                    <h3>Ghost Button</h3>
+                    <p class="text-muted">Minimal style with subtle hover</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-ghost">
+                            Ghost Button
+                        </button>
+                        <button class="lyd-button lyd-button-ghost">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Glassmorphism Button</h3>
+                    <p class="text-muted">Premium glass effect with blur</p>
+                    <div class="component-preview" style="background: var(--lyd-gradient-subtle); padding: 2rem;">
+                        <button class="lyd-button lyd-button-glass">
+                            Glass Button
+                        </button>
+                        <button class="lyd-button lyd-button-glass">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            Premium
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Icon Only Buttons</h3>
+                    <p class="text-muted">Compact buttons with icons only</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-primary lyd-button-icon-only">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </button>
+                        <button class="lyd-button lyd-button-secondary lyd-button-icon-only">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"/>
+                            </svg>
+                        </button>
+                        <button class="lyd-button lyd-button-outline lyd-button-icon-only">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Button States -->
+        <section class="section">
+            <h2 class="section-title">Button States</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Loading State</h3>
+                    <p class="text-muted">Asynchronous action indicator</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-primary loading" id="loadingBtn">
+                            Loading...
+                        </button>
+                        <button class="lyd-button lyd-button-secondary loading">
                             Processing...
                         </button>
-                        <button class="lyd-button secondary" disabled>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <h3>Disabled State</h3>
+                    <p class="text-muted">Inactive button state</p>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-primary" disabled>
+                            Disabled
+                        </button>
+                        <button class="lyd-button lyd-button-outline" disabled>
                             Unavailable
                         </button>
-                        <button class="lyd-button outline">
-                            Normal State
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Icon-only Buttons -->
-                <div class="showcase-item">
-                    <h3>Icon Buttons</h3>
-                    <p>Compact icon-only actions</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button lyd-button-pure primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </button>
-                        <button class="lyd-button lyd-button-pure secondary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                            </svg>
-                        </button>
-                        <button class="lyd-button lyd-button-pure outline">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Button Tiles -->
-                <div class="showcase-item">
-                    <h3>Button Tiles</h3>
-                    <p>Large navigation tiles for dashboards</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button-tile">
-                            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                            </svg>
-                            <div class="tile-label">Properties</div>
-                            <div class="tile-description">23 active</div>
-                        </button>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Section 2: Premium Interactive States -->
-        
-            <p style="color: #6b7280; margin-bottom: 32px; font-size: 16px;">Hochwertige Animationen und States fuer optimale User Experience</p>
-            
-            <div class="showcase-grid">
-                <!-- Download with Progress -->
-                <div class="showcase-item">
-                    <h3>Download mit Progress-Animation</h3>
-                    <p>Premium Download-Erlebnis mit sanfter Progress-Bar</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button primary" onclick="simulateDownload(this)">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                                <polyline points="7,10 12,15 17,10"/>
-                                <line x1="12" y1="15" x2="12" y2="3"/>
-                            </svg>
-                            Download Exposé
-                        </button>
-                        <button class="lyd-button outline" onclick="simulateDownload(this)">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                            </svg>
-                            Export PDF
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Processing States -->
-                <div class="showcase-item">
-                    <h3>Processing & Loading States</h3>
-                    <p>Shimmer-Effekte und animierte Spinner</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button primary processing">
-                            Analyzing Property...
-                        </button>
-                        <button class="lyd-button secondary loading">
-                            <div class="spinner"></div>
-                            Loading Data
-                        </button>
-                        <button class="lyd-button outline" onclick="setProcessing(this, true); setTimeout(() => setProcessing(this, false), 3000)">
-                            Click to Process
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Hover Animations -->
-                <div class="showcase-item">
-                    <h3>Hover & Click Animations</h3>
-                    <p>Ripple-Effekte und Icon-Rotationen</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button primary">
-                            Hover for Shimmer
-                        </button>
-                        <button class="lyd-button outline">
-                            Gradient Border Animation
-                        </button>
-                        <button class="lyd-button secondary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                            Icon Rotation
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Success States -->
-                <div class="showcase-item">
-                    <h3>Success & Completion States</h3>
-                    <p>Animierte Checkmarks und Success-Feedback</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button success">
-                            <svg class="btn-icon success-checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20,6 9,17 4,12"/>
-                            </svg>
-                            Successfully Saved
-                        </button>
-                        <button class="lyd-button primary" onclick="this.classList.add('success'); setTimeout(() => this.classList.remove('success'), 2000)">
-                            Click for Success
-                        </button>
-                    </div>
+        <!-- Section 3: Button Sizes -->
+        <section class="section">
+            <h2 class="section-title">Button Sizes</h2>
+            <div class="component-card">
+                <h3>Size Variations</h3>
+                <p class="text-muted">Different button sizes for various use cases</p>
+                <div class="component-preview" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <button class="lyd-button lyd-button-primary lyd-button-small">Small</button>
+                    <button class="lyd-button lyd-button-primary">Default</button>
+                    <button class="lyd-button lyd-button-primary lyd-button-large">Large</button>
                 </div>
             </div>
         </section>
         
-        <!-- Section 3: Real Estate Use Cases -->
+        <!-- Section 4: Real Estate Use Cases -->
         <section class="section">
             <h2 class="section-title">Real Estate Use Cases</h2>
-            
-            <div class="examples-grid">
-                <!-- Property Management Example -->
-                <div class="example-item">
-                    <h3 class="example-title">Property Management</h3>
-                    <p class="example-description">Common button patterns for property listings and management</p>
-                    <div class="example-demo">
-                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <button class="lyd-button primary">
-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 4v16m8-8H4"/>
-                                </svg>
-                                Add New Property
-                            </button>
-                            <button class="lyd-button secondary">Edit Details</button>
-                            <button class="lyd-button outline small">Preview</button>
-                            <button class="lyd-button ghost small">Delete</button>
-                        </div>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Property Actions</h3>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-primary">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                            </svg>
+                            View Property
+                        </button>
+                        <button class="lyd-button lyd-button-secondary">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                            </svg>
+                            Save Listing
+                        </button>
                     </div>
                 </div>
                 
-                <!-- Lead Actions Example -->
-                <div class="example-item">
-                    <h3 class="example-title">Lead Actions</h3>
-                    <p class="example-description">Quick actions for lead management</p>
-                    <div class="example-demo">
-                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <button class="lyd-button primary">Call Lead</button>
-                            <button class="lyd-button secondary">Send Email</button>
-                            <button class="lyd-button outline">Schedule Meeting</button>
-                        </div>
+                <div class="component-card">
+                    <h3>Contact Actions</h3>
+                    <div class="component-preview">
+                        <button class="lyd-button lyd-button-outline">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                            </svg>
+                            Schedule Viewing
+                        </button>
+                        <button class="lyd-button lyd-button-ghost">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                            </svg>
+                            Ask Question
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Section 4: Implementation Guide -->
+        <!-- Section 5: Implementation Guide -->
         <section class="section">
             <h2 class="section-title">Implementation Guide</h2>
             
             <div class="implementation-section">
-                <h3>HTML Usage</h3>
+                <h3>HTML Implementation</h3>
                 <div class="code-block">
-                    <button class="copy-button">Copy</button>
-                    <pre>&lt;!-- Primary Button --&gt;
-&lt;button class="lyd-button primary"&gt;
-    Schedule Viewing
+                    <pre><code>&lt;!-- Primary Button --&gt;
+&lt;button class="lyd-button lyd-button-primary"&gt;
+    Primary Button
 &lt;/button&gt;
 
 &lt;!-- Button with Icon --&gt;
-&lt;button class="lyd-button secondary"&gt;
-    &lt;svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"&gt;
-        &lt;path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682..."&gt;
+&lt;button class="lyd-button lyd-button-secondary"&gt;
+    &lt;svg viewBox="0 0 24 24"&gt;
+        &lt;path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10..."&gt;
     &lt;/svg&gt;
-    Add to Favorites
+    With Icon
 &lt;/button&gt;
 
-&lt;!-- Button States --&gt;
-&lt;button class="lyd-button primary loading"&gt;Processing...&lt;/button&gt;
-&lt;button class="lyd-button secondary" disabled&gt;Unavailable&lt;/button&gt;</pre>
+&lt;!-- Loading Button --&gt;
+&lt;button class="lyd-button lyd-button-primary loading"&gt;
+    Loading...
+&lt;/button&gt;</code></pre>
                 </div>
-                
-                <h3>Next.js Integration</h3>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>React/Next.js Component</h3>
                 <div class="code-block">
-                    <button class="copy-button">Copy</button>
-                    <pre>// components/Button.tsx
-import { ButtonHTMLAttributess, FC } from 'react';
+                    <pre><code>import React, { useState } from 'react';
 
-interface ButtonProps extends ButtonHTMLAttributess&lt;HTMLButtonElement&gt; {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
-  size?: 'small' | 'medium' | 'large';
-  loading?: boolean;
-  icon?: React.ReactNode;
+interface ButtonProps {
+    variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass';
+    size?: 'small' | 'default' | 'large';
+    loading?: boolean;
+    disabled?: boolean;
+    icon?: React.ReactNode;
+    children: React.ReactNode;
+    onClick?: () => void;
 }
 
-export const Button: FC&lt;ButtonProps&gt; = ({
-  variant = 'primary',
-  size = 'medium',
-  loading = false,
-  icon,
-  children,
-  className = '',
-  disabled,
-  ...props
-}) =&gt; {
-  const classes = `lyd-button ${variant} ${size} ${loading ? 'loading' : ''} ${className}`;
-  
-  return (
-    &lt;button 
-      className={classes} 
-      disabled={disabled || loading}
-      {...props}
-    &gt;
-      {icon && &lt;span className="btn-icon"&gt;{icon}&lt;/span&gt;}
-      {children}
-    &lt;/button&gt;
-  );
-};</pre>
+export const Button: React.FC&lt;ButtonProps&gt; = ({
+    variant = 'primary',
+    size = 'default',
+    loading = false,
+    disabled = false,
+    icon,
+    children,
+    onClick
+}) => {
+    const classes = [
+        'lyd-button',
+        `lyd-button-${variant}`,
+        size !== 'default' && `lyd-button-${size}`,
+        loading && 'loading'
+    ].filter(Boolean).join(' ');
+    
+    return (
+        &lt;button 
+            className={classes}
+            disabled={disabled || loading}
+            onClick={onClick}
+        &gt;
+            {icon && !loading && icon}
+            {children}
+        &lt;/button&gt;
+    );
+};</code></pre>
                 </div>
-                
-                <h3>API Reference</h3>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>JavaScript Behavior</h3>
+                <div class="code-block">
+                    <pre><code>// Handle loading state
+function handleAsyncAction(button) {
+    button.classList.add('loading');
+    button.disabled = true;
+    
+    // Simulate async operation
+    setTimeout(() => {
+        button.classList.remove('loading');
+        button.disabled = false;
+    }, 2000);
+}
+
+// Add ripple effect
+function addRippleEffect(button) {
+    button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        this.appendChild(ripple);
+        
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        setTimeout(() => ripple.remove(), 600);
+    });
+}</code></pre>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-table-container">
                 <table class="api-table">
                     <thead>
                         <tr>
                             <th>Class</th>
                             <th>Description</th>
+                            <th>Usage</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><code>.lyd-button</code></td>
                             <td>Base button class</td>
+                            <td>Required on all buttons</td>
                         </tr>
                         <tr>
-                            <td><code>.primary</code></td>
-                            <td>Primary button with gradient background</td>
+                            <td><code>.lyd-button-primary</code></td>
+                            <td>Primary button variant</td>
+                            <td>Main CTAs</td>
                         </tr>
                         <tr>
-                            <td><code>.secondary</code></td>
-                            <td>Secondary button with glassmorphism</td>
+                            <td><code>.lyd-button-secondary</code></td>
+                            <td>Secondary button variant</td>
+                            <td>Alternative actions</td>
                         </tr>
                         <tr>
-                            <td><code>.outline</code></td>
-                            <td>Button with border only</td>
+                            <td><code>.lyd-button-outline</code></td>
+                            <td>Outline button variant</td>
+                            <td>Tertiary actions</td>
                         </tr>
                         <tr>
-                            <td><code>.ghost</code></td>
-                            <td>Minimal button style</td>
+                            <td><code>.lyd-button-ghost</code></td>
+                            <td>Ghost button variant</td>
+                            <td>Minimal emphasis</td>
                         </tr>
                         <tr>
-                            <td><code>.small</code></td>
-                            <td>Small size variant (14px - Typography Scale)</td>
+                            <td><code>.lyd-button-glass</code></td>
+                            <td>Glassmorphism button</td>
+                            <td>Premium sections</td>
                         </tr>
                         <tr>
-                            <td><code>.large</code></td>
-                            <td>Large size variant (18px - Typography Scale)</td>
+                            <td><code>.lyd-button-small</code></td>
+                            <td>Small size modifier</td>
+                            <td>Compact layouts</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-button-large</code></td>
+                            <td>Large size modifier</td>
+                            <td>Hero sections</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-button-icon-only</code></td>
+                            <td>Icon-only button</td>
+                            <td>Toolbars, actions</td>
                         </tr>
                         <tr>
                             <td><code>.loading</code></td>
-                            <td>Shows loading spinner</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-button-pure</code></td>
-                            <td>Icon-only button</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-button-tile</code></td>
-                            <td>Large tile button</td>
+                            <td>Loading state</td>
+                            <td>Async operations</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
         
-        <!-- Section 5: Accessibility -->
+        <!-- Section 7: Accessibility & Best Practices -->
         <section class="section">
-            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
-            
-            <div class="accessibility-grid">
-                <div class="accessibility-item">
-                    <h4>Keyboard Navigation</h4>
-                    <ul>
-                        <li>Tab to navigate between buttons</li>
-                        <li>Space or Enter to activate</li>
-                        <li>Esc to cancel (in dialogs)</li>
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h3>Accessibility Guidelines</h3>
+                    <ul class="best-practices-list">
+                        <li>Use semantic <code>&lt;button&gt;</code> elements for actions</li>
+                        <li>Provide clear, descriptive button text</li>
+                        <li>Ensure minimum touch target size of 44x44px</li>
+                        <li>Include focus states for keyboard navigation</li>
+                        <li>Add <code>aria-label</code> for icon-only buttons</li>
+                        <li>Use <code>aria-busy="true"</code> for loading states</li>
+                        <li>Maintain WCAG AA contrast ratios</li>
                     </ul>
                 </div>
                 
-                <div class="accessibility-item">
-                    <h4>Screen Reader Support</h4>
-                    <ul>
-                        <li>Semantic button elements</li>
-                        <li>Descriptive aria-labels</li>
-                        <li>State announcements</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Visual Accessibility</h4>
-                    <ul>
-                        <li>WCAG AA contrast ratios</li>
-                        <li>Clear focus indicators</li>
-                        <li>Sufficient touch targets (44x44px)</li>
-                    </ul>
-                </div>
-                
-                <div class="accessibility-item">
-                    <h4>Best Practices</h4>
-                    <ul>
-                        <li>Use semantic HTML buttons</li>
-                        <li>Provide text for icon-only buttons</li>
-                        <li>Indicate loading/disabled states</li>
+                <div class="component-card">
+                    <h3>LYD Brand Guidelines</h3>
+                    <ul class="best-practices-list">
+                        <li>Primary buttons use the LYD gradient</li>
+                        <li>Maintain consistent button heights across the application</li>
+                        <li>Use SVG icons for sharp rendering at all sizes</li>
+                        <li>Apply hover effects for better interactivity</li>
+                        <li>Keep button text concise and action-oriented</li>
+                        <li>Group related buttons with consistent spacing</li>
+                        <li>Use loading states for operations > 300ms</li>
                     </ul>
                 </div>
             </div>
         </section>
     </main>
     
-    <!-- JavaScript for Animations -->
-    <script src="../shared/force-consistency.js"></script>
     <script>
-        // Download Simulation
-        async function simulateDownload(button) {
-            const originalText = button.innerHTML;
-            
-            button.classList.add('download-progress');
-            button.innerHTML = 'Downloading...';
-            
-            for (let i = 0; i <= 100; i += 10) {
-                button.style.setProperty('--progress', i + '%');
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-            
-            button.classList.remove('download-progress');
-            button.classList.add('success');
-            button.innerHTML = '✓ Downloaded';
-            
-            setTimeout(() => {
-                button.classList.remove('success');
-                button.innerHTML = originalText;
-                button.style.removeProperty('--progress');
-            }, 2000);
-        }
-        
-        // Processing State
-        function setProcessing(button, isProcessing) {
-            if (isProcessing) {
-                button.classList.add('processing');
-                button.innerHTML = 'Processing...';
-            } else {
-                button.classList.remove('processing');
-                button.innerHTML = 'Click to Process';
-            }
-        }
-        
-        // Ripple Effect
+        // Button demo interactions
         document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading state
+            const demoLoadingBtn = document.getElementById('loadingBtn');
+            if (demoLoadingBtn) {
+                setInterval(() => {
+                    demoLoadingBtn.classList.toggle('loading');
+                }, 3000);
+            }
+            
+            // Add click feedback to all buttons
             document.querySelectorAll('.lyd-button').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    const ripple = document.createElement('span');
-                    ripple.classList.add('ripple');
-                    ripple.style.width = ripple.style.height = size + 'px';
-                    ripple.style.left = x + 'px';
-                    ripple.style.top = y + 'px';
-                    
-                    this.appendChild(ripple);
-                    
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                });
+                if (!button.disabled) {
+                    button.addEventListener('click', function() {
+                        // Visual feedback
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 100);
+                    });
+                }
             });
         });
     </script>

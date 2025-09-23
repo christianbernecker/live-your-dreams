@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: var(--lyd-bg);
+            border-right: 1px solid var(--lyd-line);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--lyd-line);
+            text-align: center;
+        }
+        
+        .lyd-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: var(--spacing-md);
+            transform: scale(2);
+            transform-origin: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            font-weight: 500;
+        }
+        
+        .nav-section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        .nav-section-title {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--lyd-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px var(--spacing-lg);
+            color: var(--lyd-grey);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.05);
+        }
+        
+        .nav-item.active {
+            color: var(--lyd-primary);
+            border-left-color: var(--lyd-primary);
+            background: rgba(0, 102, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-2xl);
+            max-width: 1400px;
+        }
+        
+        .page-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--lyd-grey);
+            max-width: 800px;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .section {
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 400;
+            font-family: var(--font-family-display);
+            letter-spacing: 6px;
+            color: var(--lyd-text);
+            margin-bottom: var(--spacing-xl);
+            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .showcase-item {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .showcase-item h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-line);
+            background: var(--lyd-gray-50);
+        }
+        
+        .showcase-item p {
+            padding: 0 var(--spacing-lg);
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .showcase-demo {
+            padding: var(--spacing-lg);
+            background: var(--lyd-bg);
+        }
+        
+        /* Avatar Components */
+        .lyd-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--lyd-line) 0%, var(--lyd-gray-300) 100%);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .lyd-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .lyd-avatar-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
+            color: var(--lyd-bg);
+            border-radius: 50%;
+        }
+        
+        .lyd-avatar-icon {
+            width: 50%;
+            height: 50%;
+            color: var(--lyd-bg);
+        }
+        
+        /* Size variants */
+        .lyd-avatar.xs {
+            width: 24px;
+            height: 24px;
+            font-size: 10px;
+        }
+        
+        .lyd-avatar.sm {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+        
+        .lyd-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+        
+        .lyd-avatar.md {
+            width: 48px;
+            height: 48px;
+            font-size: 16px;
+        }
+        
+        .lyd-avatar.lg {
+            width: 64px;
+            height: 64px;
+            font-size: 18px;
+        }
+        
+        .lyd-avatar.xl {
+            width: 96px;
+            height: 96px;
+            font-size: 24px;
+        }
+        
+        .lyd-avatar.xxl {
+            width: 128px;
+            height: 128px;
+            font-size: 32px;
+        }
+        
+        /* Status indicator */
+        .lyd-avatar-status {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 25%;
+            height: 25%;
+            border-radius: 50%;
+            border: 2px solid var(--lyd-bg);
+        }
+        
+        .lyd-avatar-status.online {
+            background: var(--lyd-success);
+        }
+        
+        .lyd-avatar-status.away {
+            background: var(--lyd-warning);
+        }
+        
+        .lyd-avatar-status.busy {
+            background: var(--lyd-error);
+        }
+        
+        .lyd-avatar-status.offline {
+            background: var(--lyd-gray-400);
+        }
+        
+        /* Avatar group */
+        .lyd-avatar-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .lyd-avatar-group .lyd-avatar {
+            margin-left: -8px;
+            border: 2px solid var(--lyd-bg);
+        }
+        
+        .lyd-avatar-group .lyd-avatar:first-child {
+            margin-left: 0;
+        }
+        
+        /* Profilee card */
+        .profile-card {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .profile-info h4 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: 2px;
+        }
+        
+        .profile-info p {
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+            margin: 0;
+        }
+        
+        .agent-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: var(--lyd-primary);
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-xs);
+            color: var(--lyd-grey);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Implementation sections and other styling same as other components */
+        .implementation-section {
+            background: var(--lyd-bg);
+            border-radius: 12px;
+            border: 1px solid var(--lyd-line);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .implementation-section h3 {
+            padding: var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            border-bottom: 1px solid var(--lyd-line);
+            background: var(--lyd-gray-50);
+            margin: 0;
+        }
+        
+        .code-block {
+            background: var(--lyd-gray-900);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            color: var(--lyd-gray-100);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .lyd-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+        
+        .lyd-button.copy {
+            background: var(--lyd-primary);
+            color: var(--lyd-bg);
+        }
+        
+        .lyd-button.copy:hover {
+            background: var(--lyd-primary-hover);
+        }
+        
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .accessibility-item {
+            background: var(--lyd-bg);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .accessibility-item h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--lyd-gray-900);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .accessibility-item h3::before {
+            content: "✓";
+            color: var(--lyd-primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .accessibility-item p {
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: var(--spacing-lg);
+            }
+            
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradientLYD)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/developing/" class="nav-item">Introduction</a>
+            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/components/" class="nav-item">Introduction</a>
+            <a href="/components/buttons/" class="nav-item">Button</a>
+            <a href="/components/inputs/" class="nav-item">Input</a>
+            <a href="/components/cards/" class="nav-item">Card</a>
+            <a href="/components/select/" class="nav-item">Select</a>
+            <a href="/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/components/modal/" class="nav-item">Modal</a>
+            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/components/radio/" class="nav-item">Radio</a>
+            <a href="/components/toast/" class="nav-item">Toast</a>
+            <a href="/components/table/" class="nav-item">Table</a>
+            <a href="/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/components/switch/" class="nav-item">Switch</a>
+            <a href="/components/slider/" class="nav-item">Slider</a>
+            <a href="/components/alert/" class="nav-item">Alert</a>
+            <a href="/components/badge/" class="nav-item">Badge</a>
+            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/components/progress/" class="nav-item">Progress</a>
+            <a href="/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/styles/" class="nav-item">Introduction</a>
+            <a href="/components/typography/" class="nav-item">Typography</a>
+            <a href="/styles/grid/" class="nav-item">Grid</a>
+            <a href="/styles/colors/" class="nav-item">Colors</a>
+            <a href="/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/patterns/" class="nav-item">Introduction</a>
+            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/patterns/header/" class="nav-item">Header</a>
+            <a href="/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Avatar</h1>
+            <p class="page-subtitle">
+                Avatar components for user profiles, agent displays, and team representations. Essential for personalizing the real estate experience.
+            </p>
+        </div>
+        
+        <section class="section">
+            <h2 class="section-title">Basic Avatars</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Size Variants</h3>
+                    <p>Different sizes for various use cases</p>
+                    <div class="showcase-demo">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-md); flex-wrap: wrap;">
+                            <div class="lyd-avatar xs" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
+                            </div>
+                            <div class="lyd-avatar sm" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
+                            </div>
+                            <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
+                            </div>
+                            <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
+                            </div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
+                            </div>
+                            <div class="lyd-avatar xl" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="showcase-item">
+                    <h3>Status Indicators</h3>
+                    <p>Show availability and activity status</p>
+                    <div class="showcase-demo">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-lg); flex-wrap: wrap;">
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">JD</div>
+                                <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
+                            </div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">SK</div>
+                                <div class="lyd-avatar-status away" aria-label="Avatar" role="img"></div>
+                            </div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MR</div>
+                                <div class="lyd-avatar-status busy" aria-label="Avatar" role="img"></div>
+                            </div>
+                            <div class="lyd-avatar lg" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">AB</div>
+                                <div class="lyd-avatar-status offline" aria-label="Avatar" role="img"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Real Estate Examples</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Agent Profilees</h3>
+                    <p>Professional real estate agent representation</p>
+                    <div class="showcase-demo">
+                        <div class="profile-card">
+                            <div class="lyd-avatar xl" aria-label="Avatar" role="img">
+                                <svg class="lyd-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
+                            </div>
+                            <div class="profile-info">
+                                <h4>Sarah Mueller</h4>
+                                <p>Senior Real Estate Agent</p>
+                                <p style="color: var(--lyd-primary); font-size: var(--font-size-xs); margin-top: 4px;">Available for viewings</p>
+                                <div class="agent-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-value">127</div>
+                                        <div class="stat-label">Properties Sold</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">4.9</div>
+                                        <div class="stat-label">Client Rating</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">8</div>
+                                        <div class="stat-label">Years Experience</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="showcase-item">
+                    <h3>Property Team</h3>
+                    <p>Team members working on properties</p>
+                    <div class="showcase-demo">
+                        <div style="margin-bottom: var(--spacing-md);">
+                            <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Munich Office Team</h4>
+                            <div class="lyd-avatar-group" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">SM</div>
+                                </div>
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">JK</div>
+                                </div>
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">TR</div>
+                                </div>
+                                <div class="lyd-avatar md" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">+3</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: var(--spacing-md);">
+                            <h4 style="margin-bottom: var(--spacing-sm); font-size: var(--font-size-base);">Property Specialists</h4>
+                            <div class="lyd-avatar-group" aria-label="Avatar" role="img">
+                                <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                    <svg class="lyd-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
+                                </div>
+                                <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">MK</div>
+                                    <div class="lyd-avatar-status away" aria-label="Avatar" role="img"></div>
+                                </div>
+                                <div class="lyd-avatar" aria-label="Avatar" role="img">
+                                    <div class="lyd-avatar-fallback" aria-label="Avatar" role="img">JL</div>
+                                    <div class="lyd-avatar-status online" aria-label="Avatar" role="img"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                    <pre>&lt;!-- Basic Avatar --&gt;
+&lt;div class="lyd-avatar"&gt;
+    &lt;div class="lyd-avatar-fallback"&gt;JD&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Avatar with Image --&gt;
+&lt;div class="lyd-avatar lg"&gt;
+    &lt;img src="agent-photo.jpg" alt="John Doe"&gt;
+    &lt;div class="lyd-avatar-status online"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Avatar Group --&gt;
+&lt;div class="lyd-avatar-group"&gt;
+    &lt;div class="lyd-avatar md"&gt;
+        &lt;div class="lyd-avatar-fallback"&gt;SM&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-avatar md"&gt;
+        &lt;div class="lyd-avatar-fallback"&gt;JK&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>Next.js Integration</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                    <pre>// components/Avatar.tsx
+interface AvatarProps {
+  src?: string;
+  alt?: string;
+  initials?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  status?: 'online' | 'away' | 'busy' | 'offline';
+  className?: string;
+}
+
+export const Avatar = ({ src, alt, initials, size = 'md', status, className = '' }: AvatarProps) => {
+  const avatarClasses = \`lyd-avatar \${size} \${className}\`.trim();
+  
+  return (
+    &lt;div className={avatarClasses}&gt;
+      {src ? (
+        &lt;img src={src} alt={alt || 'Avatar'} /&gt;
+      ) : initials ? (
+        &lt;div className="lyd-avatar-fallback"&gt;{initials}&lt;/div&gt;
+      ) : (
+        &lt;UserIcon className="lyd-avatar-icon" /&gt;
+      )}
+      {status && &lt;div className={\`lyd-avatar-status \${status}\`} /&gt;}
+    &lt;/div&gt;
+  );
+};</pre>
+                </div>
+            </div>
+        </section>
+            </div>
+        </section>
+        
+        <!-- Section 4: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-section">
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-avatar</code></td>
+                            <td>Base avatar class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-avatar-wrapper</code></td>
+                            <td>avatar container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small avatar size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large avatar size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary avatar variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-content">
+                <h3>Avatar Accessibility Features</h3>
+                <ul>
+                    <li><strong>Alt Text:</strong> Always provide meaningful alt text for avatar images</li>
+                    <li><strong>Role Attributes:</strong> Use <code>role="img"</code> for avatar containers</li>
+                    <li><strong>ARIA Labels:</strong> Include <code>aria-label</code> describing the person</li>
+                    <li><strong>Keyboard Focus:</strong> Clickable avatars should be keyboard accessible</li>
+                    <li><strong>High Contrast:</strong> Ensure sufficient contrast for initials and borders</li>
+                </ul>
+                
+                <h3>Real Estate Avatar Best Practices</h3>
+                <ul>
+                    <li><strong>Agent Photos:</strong> Use professional, high-quality agent photos</li>
+                    <li><strong>Client Privacy:</strong> Use initials for client avatars to protect privacy</li>
+                    <li><strong>Consistent Sizing:</strong> Maintain uniform avatar sizes in agent listings</li>
+                    <li><strong>Fallback Strategy:</strong> Always provide initials fallback for missing images</li>
+                    <li><strong>Loading States:</strong> Show skeleton loaders while avatar images load</li>
+                </ul>
+                
+                <div class="code-example">
+                    <h4>Accessible Avatar Example</h4>
+                    <div class="code-block">
+                        <pre><code>&lt;div class="lyd-avatar" role="img" aria-label="Sarah Johnson, Real Estate Agent"&gt;
+    &lt;img src="agent-photo.jpg" alt="Sarah Johnson" /&gt;
+&lt;/div&gt;
+
+&lt;!-- Fallback with initials --&gt;
+&lt;div class="lyd-avatar" role="img" aria-label="Michael Brown, Property Manager"&gt;
+    &lt;span class="avatar-initials"&gt;MB&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div></section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttributes('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

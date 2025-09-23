@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spacing - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CENTRAL CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <style>
+        /* Spacing specific styles */
+        .spacing-scale {
+            display: grid;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .spacing-item {
+            display: grid;
+            grid-template-columns: 150px 1fr auto;
+            align-items: center;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-luxury);
+        }
+        
+        .spacing-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .spacing-label {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-primary);
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .spacing-visual {
+            display: flex;
+            align-items: center;
+        }
+        
+        .spacing-bar {
+            background: var(--lyd-gradient-primary);
+            height: 24px;
+            border-radius: var(--radius-sm);
+            position: relative;
+        }
+        
+        .spacing-value {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--lyd-grey);
+        }
+        
+        .padding-demo {
+            background: var(--lyd-gray-100);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .padding-box {
+            background: var(--lyd-gradient-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-weight-semibold);
+            min-height: 80px;
+        }
+        
+        .margin-demo {
+            background: var(--lyd-gray-100);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .margin-box {
+            background: white;
+            border: 2px dashed var(--lyd-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            position: relative;
+        }
+        
+        .margin-content {
+            background: var(--lyd-gradient-primary);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .gap-demo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .gap-example {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .gap-example h4 {
+            color: var(--lyd-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-lg);
+        }
+        
+        .gap-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .gap-item {
+            background: var(--lyd-gradient-primary);
+            color: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: var(--font-size-sm);
+        }
+        
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .use-case-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--lyd-primary);
+        }
+        
+        .use-case-card h4 {
+            color: var(--lyd-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .use-case-card p {
+            color: var(--lyd-grey);
+            font-size: var(--font-size-sm);
+            line-height: var(--line-height-relaxed);
+        }
+        
+        .spacing-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .spacing-code .property {
+            color: #9CDCFE;
+        }
+        
+        .spacing-code .value {
+            color: #CE9178;
+        }
+        
+        .spacing-principle {
+            background: var(--lyd-gradient-subtle);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            border-left: 4px solid var(--lyd-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item active">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Spacing</h1>
+            <p>Consistent spacing system based on a 4px grid for harmonious layouts</p>
+        </header>
+        
+        <div class="spacing-principle">
+            <h3>4px Grid System</h3>
+            <p>Our spacing system is built on a 4px base unit, creating a consistent rhythm throughout the design. This mathematical approach ensures visual harmony and makes spacing decisions predictable and scalable.</p>
+        </div>
+        
+        <section class="section">
+            <h2 class="section-title">Spacing Scale</h2>
+            
+            <div class="spacing-scale">
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-xs</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 4px;"></div>
+                    </div>
+                    <span class="spacing-value">4px</span>
+                </div>
+                
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-sm</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 8px;"></div>
+                    </div>
+                    <span class="spacing-value">8px</span>
+                </div>
+                
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-md</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 16px;"></div>
+                    </div>
+                    <span class="spacing-value">16px</span>
+                </div>
+                
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-lg</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 24px;"></div>
+                    </div>
+                    <span class="spacing-value">24px</span>
+                </div>
+                
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-xl</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 32px;"></div>
+                    </div>
+                    <span class="spacing-value">32px</span>
+                </div>
+                
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-2xl</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 48px;"></div>
+                    </div>
+                    <span class="spacing-value">48px</span>
+                </div>
+                
+                <div class="spacing-item">
+                    <span class="spacing-label">--spacing-3xl</span>
+                    <div class="spacing-visual">
+                        <div class="spacing-bar" style="width: 64px;"></div>
+                    </div>
+                    <span class="spacing-value">64px</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Padding Examples</h2>
+            
+            <div class="component-card">
+                <h3>Padding Applications</h3>
+                <p>Padding creates internal space within elements.</p>
+                
+                <div style="display: grid; gap: var(--spacing-lg); margin-top: var(--spacing-lg);">
+                    <div>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-bottom: var(--spacing-sm);">
+                            <code>padding: var(--spacing-sm);</code> (8px)
+                        </p>
+                        <div class="padding-demo" style="padding: var(--spacing-sm);">
+                            <div class="padding-box">Small Padding</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-bottom: var(--spacing-sm);">
+                            <code>padding: var(--spacing-md);</code> (16px)
+                        </p>
+                        <div class="padding-demo" style="padding: var(--spacing-md);">
+                            <div class="padding-box">Medium Padding</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-bottom: var(--spacing-sm);">
+                            <code>padding: var(--spacing-lg);</code> (24px)
+                        </p>
+                        <div class="padding-demo" style="padding: var(--spacing-lg);">
+                            <div class="padding-box">Large Padding</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p style="font-size: var(--font-size-sm); color: var(--lyd-grey); margin-bottom: var(--spacing-sm);">
+                            <code>padding: var(--spacing-xl);</code> (32px)
+                        </p>
+                        <div class="padding-demo" style="padding: var(--spacing-xl);">
+                            <div class="padding-box">Extra Large Padding</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Margin Examples</h2>
+            
+            <div class="component-card">
+                <h3>Margin Applications</h3>
+                <p>Margin creates external space between elements.</p>
+                
+                <div class="margin-demo">
+                    <div class="margin-box">
+                        <div class="margin-content" style="margin: 0;">No Margin</div>
+                    </div>
+                </div>
+                
+                <div class="margin-demo">
+                    <div class="margin-box">
+                        <div class="margin-content" style="margin: var(--spacing-md);">Medium Margin (16px)</div>
+                    </div>
+                </div>
+                
+                <div class="margin-demo">
+                    <div class="margin-box">
+                        <div class="margin-content" style="margin: var(--spacing-xl);">Extra Large Margin (32px)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Gap Spacing</h2>
+            
+            <div class="gap-demo-container">
+                <div class="gap-example">
+                    <h4>Small Gap</h4>
+                    <div class="gap-grid" style="gap: var(--spacing-sm);">
+                        <div class="gap-item">1</div>
+                        <div class="gap-item">2</div>
+                        <div class="gap-item">3</div>
+                        <div class="gap-item">4</div>
+                    </div>
+                    <p style="margin-top: var(--spacing-md); font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        <code>gap: var(--spacing-sm);</code>
+                    </p>
+                </div>
+                
+                <div class="gap-example">
+                    <h4>Medium Gap</h4>
+                    <div class="gap-grid" style="gap: var(--spacing-md);">
+                        <div class="gap-item">1</div>
+                        <div class="gap-item">2</div>
+                        <div class="gap-item">3</div>
+                        <div class="gap-item">4</div>
+                    </div>
+                    <p style="margin-top: var(--spacing-md); font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        <code>gap: var(--spacing-md);</code>
+                    </p>
+                </div>
+                
+                <div class="gap-example">
+                    <h4>Large Gap</h4>
+                    <div class="gap-grid" style="gap: var(--spacing-lg);">
+                        <div class="gap-item">1</div>
+                        <div class="gap-item">2</div>
+                        <div class="gap-item">3</div>
+                        <div class="gap-item">4</div>
+                    </div>
+                    <p style="margin-top: var(--spacing-md); font-size: var(--font-size-sm); color: var(--lyd-grey);">
+                        <code>gap: var(--spacing-lg);</code>
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Common Use Cases</h2>
+            
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <h4>Component Spacing</h4>
+                    <p>Buttons, inputs, and form elements typically use <code>--spacing-md</code> for internal padding and <code>--spacing-sm</code> to <code>--spacing-md</code> for gaps between elements.</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <h4>Card Layouts</h4>
+                    <p>Cards use <code>--spacing-xl</code> for padding, creating comfortable reading space. Card grids use <code>--spacing-lg</code> to <code>--spacing-xl</code> for gaps.</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <h4>Section Spacing</h4>
+                    <p>Major sections use <code>--spacing-2xl</code> to <code>--spacing-3xl</code> for vertical separation, creating clear content hierarchy.</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <h4>Inline Elements</h4>
+                    <p>Icons and inline elements use <code>--spacing-xs</code> to <code>--spacing-sm</code> for subtle separation without breaking flow.</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <h4>Navigation</h4>
+                    <p>Navigation items use <code>--spacing-md</code> for padding and <code>--spacing-sm</code> for gaps, balancing density with usability.</p>
+                </div>
+                
+                <div class="use-case-card">
+                    <h4>Modals & Overlays</h4>
+                    <p>Modal content uses <code>--spacing-xl</code> to <code>--spacing-2xl</code> for padding, creating focus and breathing room.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Implementation</h2>
+            
+            <div class="component-card">
+                <h3>Using Spacing Variables</h3>
+                <p>Always use spacing variables instead of hardcoded pixel values for consistency.</p>
+                
+                <div class="spacing-code">
+<span class="property">/* ✅ Correct Usage */</span>
+<span class="property">padding</span>: <span class="value">var(--spacing-md)</span>;
+<span class="property">margin-bottom</span>: <span class="value">var(--spacing-lg)</span>;
+<span class="property">gap</span>: <span class="value">var(--spacing-sm)</span>;
+
+<span class="property">/* ❌ Avoid Hardcoded Values */</span>
+<span class="property">padding</span>: <span class="value">16px</span>;
+<span class="property">margin-bottom</span>: <span class="value">24px</span>;
+<span class="property">gap</span>: <span class="value">8px</span>;
+
+<span class="property">/* Combining Spacing */</span>
+<span class="property">padding</span>: <span class="value">var(--spacing-md) var(--spacing-xl)</span>;
+<span class="property">margin</span>: <span class="value">var(--spacing-lg) auto</span>;
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Responsive Spacing</h3>
+                <p>Adjust spacing for different screen sizes while maintaining proportions.</p>
+                
+                <div class="spacing-code">
+<span class="property">/* Mobile */</span>
+<span class="property">padding</span>: <span class="value">var(--spacing-md)</span>;
+<span class="property">gap</span>: <span class="value">var(--spacing-sm)</span>;
+
+<span class="property">/* Tablet and up */</span>
+<span class="property">@media</span> (<span class="value">min-width: 768px</span>) {
+  <span class="property">padding</span>: <span class="value">var(--spacing-lg)</span>;
+  <span class="property">gap</span>: <span class="value">var(--spacing-md)</span>;
+}
+
+<span class="property">/* Desktop */</span>
+<span class="property">@media</span> (<span class="value">min-width: 1024px</span>) {
+  <span class="property">padding</span>: <span class="value">var(--spacing-xl)</span>;
+  <span class="property">gap</span>: <span class="value">var(--spacing-lg)</span>;
+}
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Best Practices</h2>
+            
+            <div class="component-card">
+                <ul style="line-height: var(--line-height-relaxed);">
+                    <li><strong>Consistency:</strong> Use the same spacing values for similar elements throughout the application</li>
+                    <li><strong>Hierarchy:</strong> Larger spacing for major sections, smaller for related elements</li>
+                    <li><strong>Breathing Room:</strong> Don't be afraid of whitespace - it improves readability</li>
+                    <li><strong>Touch Targets:</strong> Ensure interactive elements have at least <code>--spacing-xl</code> (32px) tap area on mobile</li>
+                    <li><strong>Optical Adjustments:</strong> Sometimes visual balance requires slight adjustments to mathematical spacing</li>
+                    <li><strong>Performance:</strong> Use CSS variables for easy theme switching and maintenance</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

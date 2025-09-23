@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+                :root {
+            /* Live Your Dreams CI Colors */
+            --lyd-deep-blue: #000066;
+            --lyd-royal-blue: #3366CC;
+            --lyd-accent: #E8F0FE;
+            --lyd-grey: #666666;
+            --lyd-line: #E5E7EB;
+            --lyd-text: #111111;
+            --lyd-bg: #ffffff;
+            
+            /* Additional Colors */
+            --lyd-success: #10b981;
+            --lyd-warning: #f59e0b;
+            --lyd-error: #ef4444;
+            
+            /* Typography Scale - CI konform */
+            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
+            
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 30px;
+            --font-size-4xl: 36px;
+            --font-size-5xl: 48px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+                body {
+            font-family: var(--font-family-primary);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--lyd-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Navigation and layout structure same as other components */
+        .sidebar { width: 280px; background: var(--lyd-bg); border-right: 1px solid var(--lyd-line); position: fixed; height: 100vh; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .sidebar-header { padding: var(--spacing-xl); border-bottom: 1px solid var(--lyd-line); text-align: center; }
+        .lyd-logo { width: 120px; height: auto; margin-bottom: var(--spacing-md); transform: scale(2); transform-origin: center; margin-top: 40px; margin-bottom: 60px; }
+        .logo-subtitle { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 500; }
+        .nav-section { padding: var(--spacing-md) 0; }
+        .nav-section-title { padding: var(--spacing-sm) var(--spacing-lg); font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-item { display: block; padding: 12px var(--spacing-lg); color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; transition: all 0.2s ease; border-left: 3px solid transparent; }
+        .nav-item:hover { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
+        .nav-item.active { color: var(--lyd-primary); border-left-color: var(--lyd-primary); background: rgba(0, 102, 255, 0.1); font-weight: 600; }
+        
+        .main-content { flex: 1; margin-left: 280px; padding: var(--spacing-2xl); max-width: 1400px; }
+        .page-header { margin-bottom: var(--spacing-2xl); }
+        .page-title { font-size: var(--font-size-5xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; margin-bottom: var(--spacing-md); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .page-subtitle { font-size: var(--font-size-lg); color: var(--lyd-grey); max-width: 800px; margin-bottom: var(--spacing-2xl); }
+        .section { margin-bottom: var(--spacing-3xl); }
+        .section-title { font-size: var(--font-size-3xl); font-weight: 400; font-family: var(--font-family-display); letter-spacing: 6px; color: var(--lyd-text); margin-bottom: var(--spacing-xl); background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
+        .showcase-item { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); }
+        .showcase-item h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); }
+        .showcase-item p { padding: 0 var(--spacing-lg); color: var(--lyd-grey); font-size: var(--font-size-sm); margin-bottom: var(--spacing-md); }
+        .showcase-demo { padding: var(--spacing-lg); background: var(--lyd-bg); }
+        
+        /* Navbar Components */
+        .lyd-navbar { background: linear-gradient(135deg, var(--lyd-bg) 0%, var(--lyd-gray-50) 100%); border-bottom: 1px solid var(--lyd-line); box-shadow: var(--shadow-lg); position: relative; }
+        .lyd-navbar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 50%, var(--lyd-deep-blue) 100%); }
+        .lyd-navbar-container { max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing-lg); display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .lyd-navbar-brand { display: flex; align-items: center; gap: var(--spacing-md); font-size: var(--font-size-lg); font-weight: 700; background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 50%, var(--lyd-deep-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; transition: all 0.3s ease; }
+        .lyd-navbar-logo { width: 32px; height: 32px; }
+        .lyd-navbar-nav { display: flex; align-items: center; gap: var(--spacing-lg); }
+        .lyd-navbar-link { color: var(--lyd-grey); text-decoration: none; font-size: var(--font-size-sm); font-weight: 500; padding: var(--spacing-sm) var(--spacing-md); border-radius: 6px; transition: all 0.2s ease; }
+        .lyd-navbar-link:hover { color: var(--lyd-primary); background: rgba(0, 102, 255, 0.05); }
+        .lyd-navbar-link.active { color: var(--lyd-bg); background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); font-weight: 700; box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); }
+        .lyd-navbar-user { display: flex; align-items: center; gap: var(--spacing-md); }
+        .lyd-navbar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); font-weight: 600; color: var(--lyd-bg); border: 2px solid var(--lyd-bg); box-shadow: 0 2px 8px rgba(0, 102, 255, 0.2); transition: all 0.3s ease; cursor: pointer; }
+        .lyd-navbar-avatar:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3); }
+        
+        /* Implementation and accessibility styling */
+        .implementation-section { background: var(--lyd-bg); border-radius: 12px; border: 1px solid var(--lyd-line); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg); }
+        .implementation-section h3 { padding: var(--spacing-lg); font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); border-bottom: 1px solid var(--lyd-line); background: var(--lyd-gray-50); margin: 0; }
+        .code-block { background: var(--lyd-gray-900); border-radius: 8px; padding: var(--spacing-lg); position: relative; overflow-x: auto; }
+        .code-block pre { color: var(--lyd-gray-100); font-family: 'Monaco', 'Menlo', monospace; font-size: var(--font-size-sm); line-height: 1.6; margin: 0; }
+        .lyd-button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: var(--font-size-sm); border: none; cursor: pointer; transition: all 0.3s ease; position: absolute; top: 12px; right: 12px; }
+        .lyd-button.copy { background: var(--lyd-primary); color: var(--lyd-bg); }
+        .accessibility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
+        .accessibility-item { background: var(--lyd-bg); border-radius: 8px; padding: var(--spacing-lg); box-shadow: var(--shadow-sm); }
+        .accessibility-item h3 { font-size: var(--font-size-lg); font-weight: 600; color: var(--lyd-gray-900); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); }
+        .accessibility-item h3::before { content: "✓"; color: var(--lyd-primary); font-weight: bold; flex-shrink: 0; }
+        .accessibility-item p { color: var(--lyd-grey); font-size: var(--font-size-sm); line-height: 1.6; }
+        
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-left: 0; padding: var(--spacing-lg); }
+            .showcase-grid { grid-template-columns: 1fr; }
+            .lyd-navbar-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
+                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
+                </g>
+                <g fill="url(#textGradientLYD)">
+                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
+                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
+                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
+                </g>
+            </svg>
+            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Designing</div>
+            <a href="/designing/" class="nav-item">Introduction</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Developing</div>
+            <a href="/developing/" class="nav-item">Introduction</a>
+            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
+        </div>        <div class="nav-section">
+            <div class="nav-section-title">Components</div>
+            <a href="/components/" class="nav-item">Introduction</a>
+            <a href="/components/buttons/" class="nav-item">Button</a>
+            <a href="/components/inputs/" class="nav-item">Input</a>
+            <a href="/components/cards/" class="nav-item">Card</a>
+            <a href="/components/select/" class="nav-item">Select</a>
+            <a href="/components/accordion/" class="nav-item">Accordion</a>
+            <a href="/components/modal/" class="nav-item">Modal</a>
+            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+            <a href="/components/radio/" class="nav-item">Radio</a>
+            <a href="/components/toast/" class="nav-item">Toast</a>
+            <a href="/components/table/" class="nav-item">Table</a>
+            <a href="/components/textarea/" class="nav-item">Textarea</a>
+            <a href="/components/switch/" class="nav-item">Switch</a>
+            <a href="/components/slider/" class="nav-item">Slider</a>
+            <a href="/components/alert/" class="nav-item">Alert</a>
+            <a href="/components/badge/" class="nav-item">Badge</a>
+            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
+            <a href="/components/avatar/" class="nav-item">Avatar</a>
+            <a href="/components/navbar/" class="nav-item">Navbar</a>
+            <a href="/components/tabs/" class="nav-item">Tabs</a>
+            <a href="/components/progress/" class="nav-item">Progress</a>
+            <a href="/components/calendar/" class="nav-item">Calendar</a>
+            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+            <a href="/components/pagination/" class="nav-item">Pagination</a>
+            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Styles</div>
+            <a href="/styles/" class="nav-item">Introduction</a>
+            <a href="/components/typography/" class="nav-item">Typography</a>
+            <a href="/styles/grid/" class="nav-item">Grid</a>
+            <a href="/styles/colors/" class="nav-item">Colors</a>
+            <a href="/styles/spacing/" class="nav-item">Spacing</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Patterns</div>
+            <a href="/patterns/" class="nav-item">Introduction</a>
+            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
+            <a href="/patterns/header/" class="nav-item">Header</a>
+            <a href="/patterns/footer/" class="nav-item">Footer</a>
+            <a href="/patterns/forms/" class="nav-item">Forms</a>
+            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Navbar</h1>
+            <p class="page-subtitle">Navigation bar components for website headers and application navigation. Essential for property portal navigation and user experience.</p>
+        </div>
+        
+        <section class="section">
+            <h2 class="section-title">Basic Navbar</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Property Portal Navigation</h3>
+                    <p>Complete navigation for real estate portals</p>
+                    <div class="showcase-demo">
+                        <nav class="lyd-navbar">
+                            <div class="lyd-navbar-container">
+                                <a href="#" class="lyd-navbar-brand">
+                                    <svg class="lyd-navbar-logo" viewBox="0 0 32 32" fill="currentColor">
+                                        <path d="M16 3l13 10h-3v16H6V13H3l13-10z"/>
+                                    </svg>
+                                    LYD Properties
+                                </a>
+                                <div class="lyd-navbar-nav">
+                                    <a href="#" class="lyd-navbar-link active">Properties</a>
+                                    <a href="#" class="lyd-navbar-link">Agents</a>
+                                    <a href="#" class="lyd-navbar-link">Services</a>
+                                    <a href="#" class="lyd-navbar-link">About</a>
+                                </div>
+                                <div class="lyd-navbar-user">
+                                    <div class="lyd-navbar-avatar">SM</div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Real Estate Navbar Types</h2>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <h3>Property Portal Navigation</h3>
+                    <p>Comprehensive navigation for property search platforms</p>
+                    <div class="showcase-demo">
+                        <nav class="lyd-navbar">
+                            <div class="navbar-brand">
+                                <span class="brand-text">PropertyHub</span>
+                            </div>
+                            <ul class="navbar-nav">
+                                <li><a href="#buy">Buy</a></li>
+                                <li><a href="#rent">Rent</a></li>
+                                <li><a href="#commercial">Commercial</a></li>
+                                <li><a href="#investment">Investment</a></li>
+                            </ul>
+                            <div class="navbar-actions">
+                                <button class="lyd-button outline small">Sign In</button>
+                                <button class="lyd-button primary small">List Property</button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <h3>Agent Dashboard Navigation</h3>
+                    <p>Navigation for real estate professionals</p>
+                    <div class="showcase-demo">
+                        <nav class="lyd-navbar agent">
+                            <div class="navbar-brand">
+                                <span class="brand-text">Agent Pro</span>
+                            </div>
+                            <ul class="navbar-nav">
+                                <li><a href="#properties">Properties</a></li>
+                                <li><a href="#clients">Clients</a></li>
+                                <li><a href="#leads">Leads</a></li>
+                                <li><a href="#analytics">Analytics</a></li>
+                            </ul>
+                            <div class="navbar-profile">
+                                <div class="profile-avatar">JD</div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Implementation Guide</h2>
+            
+            <div class="implementation-section">
+                <h3>HTML Usage</h3>
+                <div class="code-block">
+                    <button class="lyd-button copy">Copy</button>
+                    <pre>&lt;nav class="lyd-navbar"&gt;
+    &lt;div class="lyd-navbar-container"&gt;
+        &lt;a href="#" class="lyd-navbar-brand"&gt;
+            &lt;svg class="lyd-navbar-logo"&gt;...&lt;/svg&gt;
+            Brand Name
+        &lt;/a&gt;
+        &lt;div class="lyd-navbar-nav"&gt;
+            &lt;a href="#" class="lyd-navbar-link"&gt;Link&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="lyd-navbar-user"&gt;
+            &lt;div class="lyd-navbar-avatar"&gt;U&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>React/Next.js Integration</h3>
+                <div class="code-block">
+                        <button class="lyd-button copy">Copy</button>
+                        <pre>import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+interface NavbarProps {
+  brand?: string;
+  logo?: React.ReactNode;
+  user?: {
+    name: string;
+    avatar?: string;
+  };
+  links: Array<{
+    href: string;
+    label: string;
+    active?: boolean;
+  }>;
+  className?: string;
+}
+
+export const LydNavbar: React.FC<NavbarProps> = ({
+  brand = "Live Your Dreams",
+  logo,
+  user,
+  links,
+  className = '',
+  ...props
+}) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    const handleRouteChange = () => setIsMenuOpen(false);
+    router.events.on('routeChangeStart', handleRouteChange);
+    return () => router.events.off('routeChangeStart', handleRouteChange);
+  }, [router]);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  return (
+    &lt;nav className={`lyd-navbar ${className}`} {...props}&gt;
+      &lt;div className="lyd-navbar-container"&gt;
+        {/* Brand */}
+        &lt;Link href="/" className="lyd-navbar-brand"&gt;
+          {logo}
+          {brand}
+        &lt;/Link&gt;
+
+        {/* Desktop Navigation */}
+        &lt;div className="lyd-navbar-nav desktop"&gt;
+          {links.map((link, index) => (
+            &lt;Link
+              key={index}
+              href={link.href}
+              className={`lyd-navbar-link ${
+                router.pathname === link.href ? 'active' : ''
+              }`}
+            &gt;
+              {link.label}
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+
+        {/* User Section */}
+        {user && (
+          &lt;div className="lyd-navbar-user"&gt;
+            &lt;div className="lyd-navbar-avatar"&gt;
+              {user.avatar ? (
+                &lt;img src={user.avatar} alt={user.name} /&gt;
+              ) : (
+                user.name.charAt(0).toUpperCase()
+              )}
+            &lt;/div&gt;
+            &lt;span className="lyd-navbar-username"&gt;{user.name}&lt;/span&gt;
+          &lt;/div&gt;
+        )}
+
+        {/* Mobile Menu Button */}
+        &lt;button
+          className="lyd-navbar-toggle"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
+        &gt;
+          ☰
+        &lt;/button&gt;
+      &lt;/div&gt;
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        &lt;div className="lyd-navbar-mobile"&gt;
+          {links.map((link, index) => (
+            &lt;Link
+              key={index}
+              href={link.href}
+              className={`lyd-navbar-link mobile ${
+                router.pathname === link.href ? 'active' : ''
+              }`}
+            &gt;
+              {link.label}
+            &lt;/Link&gt;
+          ))}
+        &lt;/div&gt;
+      )}
+    &lt;/nav&gt;
+  );
+};
+
+// Usage Example
+const MyNavbar = () => {
+  const navLinks = [
+    { href: '/properties', label: 'Properties' },
+    { href: '/agents', label: 'Agents' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' }
+  ];
+
+  const currentUser = {
+    name: 'John Doe',
+    avatar: '/avatars/johndoe.jpg'
+  };
+
+  return (
+    &lt;LydNavbar
+      links={navLinks}
+      user={currentUser}
+      logo={&lt;img src="/logo.svg" alt="LYD Logo" /&gt;}
+    /&gt;
+  );
+};</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+            </div>
+        </section>
+        
+        <!-- Section 4: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-section">
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>.lyd-navbar</code></td>
+                            <td>Base navbar class with premium styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.lyd-navbar-wrapper</code></td>
+                            <td>navbar container with consistent spacing</td>
+                        </tr>
+                        <tr>
+                            <td><code>.small</code></td>
+                            <td>Small navbar size (14px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.large</code></td>
+                            <td>Large navbar size (18px - Typography Scale)</td>
+                        </tr>
+                        <tr>
+                            <td><code>.primary</code></td>
+                            <td>Primary navbar variant with CI gradient</td>
+                        </tr>
+                        <tr>
+                            <td><code>.success</code></td>
+                            <td>Success state with green styling</td>
+                        </tr>
+                        <tr>
+                            <td><code>.error</code></td>
+                            <td>Error state with red styling and validation</td>
+                        </tr>
+                        <tr>
+                            <td><code>.disabled</code></td>
+                            <td>Disabled state with reduced opacity</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="accessibility-content">
+                <h3>Accessibility & Best Practices</h3>
+                <div class="accessibility-grid">
+                    <div class="accessibility-item">
+                        <h4>Keyboard Navigation</h4>
+                        <ul>
+                            <li>Tab navigation support</li>
+                            <li>Enter/Space key activation</li>
+                            <li>Arrow keys for selection</li>
+                            <li>Escape key to close</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="accessibility-item">
+                        <h4>Screen Reader Support</h4>
+                        <ul>
+                            <li>ARIA labels and descriptions</li>
+                            <li>Role attributes</li>
+                            <li>State announcements</li>
+                            <li>Focus management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="accessibility-item">
+                        <h4>Visual Accessibility</h4>
+                        <ul>
+                            <li>High contrast mode support</li>
+                            <li>Focus indicators</li>
+                            <li>Color contrast compliance</li>
+                            <li>Reduced motion support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="accessibility-item">
+                        <h4>Best Practices</h4>
+                        <ul>
+                            <li>Use semantic HTML elements</li>
+                            <li>Provide meaningful labels</li>
+                            <li>Test with assistive technologies</li>
+                            <li>Follow WCAG 2.2 AA guidelines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div></section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttributes('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.lyd-button.copy').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.querySelector('pre');
+                    const text = codeBlock.textContent;
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        setTimeout(() => { this.textContent = originalText; }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

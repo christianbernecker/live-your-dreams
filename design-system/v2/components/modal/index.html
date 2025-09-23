@@ -5,561 +5,345 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modal - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- LYD Design System v2.0 - Centralized Architecture -->
-    <link rel="stylesheet" href="../shared/tokens.css">
-    <link rel="stylesheet" href="../shared/components.css">
-    <!-- Force Override - Nuclear Option fuer Konsistenz -->
-    <link rel="stylesheet" href="../shared/reset-cascade.css">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
     
     <style>
-                :root {
-            /* Live Your Dreams CI Colors */
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
-            --lyd-accent: #E8F0FE;
-            --lyd-grey: #666666;
-            --lyd-line: #E5E7EB;
-            --lyd-text: #111111;
-            --lyd-bg: #ffffff;
-            
-            /* Additional Colors */
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Typography Scale - CI konform */
-            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
-            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            --spacing-3xl: 64px;
-            
-            /* Shadows */
-            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
-            /* Border Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-                body {
-            font-family: var(--font-family-primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-text);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background: var(--lyd-bg);
-            border-right: 1px solid var(--lyd-line);
+        /* NUR MODAL-SPEZIFISCHE STYLES */
+        .lyd-modal-backdrop {
             position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .sidebar-header {
-            padding: var(--spacing-xl);
-            border-bottom: 1px solid var(--lyd-line);
-            text-align: center;
-        }
-        
-        .lyd-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: var(--spacing-md);
-            transform: scale(2);
-            transform-origin: center;
-            margin-top: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .logo-subtitle {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            font-weight: 500;
-        }
-        
-        .nav-section {
-            padding: var(--spacing-md) 0;
-        }
-        
-        .nav-section-title {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            color: var(--lyd-grey);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 12px var(--spacing-lg);
-            color: var(--lyd-grey);
-            text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-        
-        .nav-item:hover {
-            color: var(--lyd-royal-blue);
-            border-left-color: var(--lyd-royal-blue);
-            background: rgba(51, 102, 204, 0.05);
-        }
-        
-        .nav-item.active {
-            color: var(--lyd-royal-blue);
-            border-left-color: var(--lyd-royal-blue);
-            background: rgba(51, 102, 204, 0.1);
-            font-weight: 600;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: var(--spacing-2xl);
-            max-width: 1400px;
-        }
-        
-        .page-header {
-            margin-bottom: var(--spacing-2xl);
-        }
-        
-        .page-title {
-            font-size: var(--font-size-5xl);
-            font-weight: 400;
-            font-family: var(--font-family-display);
-            letter-spacing: 6px;
-            margin-bottom: var(--spacing-md);
-            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        .page-subtitle {
-            font-size: var(--font-size-lg);
-            color: var(--lyd-grey);
-            line-height: 1.6;
-            max-width: 600px;
-        }
-        
-        /* Section Styles */
-        .section {
-            margin-bottom: var(--spacing-3xl);
-        }
-        
-        .section-title {
-            font-size: var(--font-size-3xl);
-            font-weight: 400;
-            font-family: var(--font-family-display);
-            letter-spacing: 6px;
-            color: var(--lyd-text);
-            margin-bottom: var(--spacing-xl);
-            background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        
-        /* Showcase Grid */
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
-        }
-        
-        .showcase-item {
-            background: white;
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--lyd-line);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000 !important;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
         }
         
-        .showcase-item:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--lyd-royal-blue);
+        .lyd-modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
         }
         
-        .showcase-item h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--lyd-text);
-            margin-bottom: 8px;
-        }
-        
-        .showcase-item p {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-grey);
-            margin-bottom: 16px;
-        }
-        
-        .showcase-demo {
-            padding: 24px;
-            background: #f9fafb;
-            border-radius: var(--radius-md);
-        }
-        
-        /* Modal System (autark) */
         .lyd-modal {
             position: fixed;
-            inset: 0;
-            display: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white !important;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+            z-index: 10001 !important;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .lyd-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 10001 !important;
+        }
+        
+        .lyd-modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--lyd-line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .lyd-modal-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--lyd-deep-blue);
+        }
+        
+        .lyd-modal-close {
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--spacing-lg);
-            z-index: 9999;
-        }
-        .lyd-modal.active { display: flex; animation: fadeIn 0.2s ease-out; }
-        .lyd-modal-backdrop {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
-        }
-        .lyd-modal-backdrop.premium { background: linear-gradient(135deg, rgba(102,126,234,0.35), rgba(118,75,162,0.35)); }
-        .lyd-modal-content {
-            position: relative;
-            background: #fff;
-            width: 100%;
-            max-width: 640px;
-            max-height: 90vh;
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--lyd-line);
-            box-shadow: var(--shadow-lg);
-            display: flex; flex-direction: column; overflow: hidden;
-            animation: slideIn 0.25s ease-out;
-        }
-        .lyd-modal-content.large { max-width: 760px; }
-        .lyd-modal-content.small { max-width: 420px; }
-        .lyd-modal-content.glassmorphism { background: rgba(255,255,255,0.12); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.3); }
-        .lyd-modal-header { padding: var(--spacing-lg); border-bottom: 1px solid var(--lyd-line); display: flex; align-items: center; gap: var(--spacing-md); }
-        .lyd-modal-title { margin: 0; font-size: var(--font-size-xl); font-weight: 600; color: var(--lyd-text); }
-        .lyd-modal-        body {
-            font-family: var(--font-family-primary);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: var(--lyd-text);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-        .lyd-modal-footer { padding: var(--spacing-lg); border-top: 1px solid var(--lyd-line); display: flex; gap: var(--spacing-sm); justify-content: flex-end; }
-        .lyd-modal-close { background: transparent; border: 0; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; color: var(--lyd-grey); }
-        .lyd-modal-close:hover { background: #f3f4f6; color: var(--lyd-text); }
-        .lyd-modal-icon { width: 40px; height: 40px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; }
-        .lyd-modal-icon.error { background: rgba(239,68,68,0.12); color: var(--lyd-error); }
-        .lyd-modal-icon.success { background: rgba(16,185,129,0.12); color: var(--lyd-success); }
-        
-        /* Buttons werden zentral in shared/components.css definiert */
-        
-        /* Inputs (Gold Standard extrahiert) */
-        .lyd-input { width: 100%; padding: 12px 16px; font-size: var(--font-size-base); font-family: var(--font-family-primary); background: var(--lyd-bg); border: 2px solid var(--lyd-line); border-radius: var(--radius-md); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .lyd-input::placeholder { color: var(--lyd-grey); opacity: 0.7; }
-        .lyd-input:focus { outline: none; border-color: var(--lyd-royal-blue); box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.1); transform: translateY(-1px); }
-
-        /* Select (Gold Standard, reduziert) */
-        .lyd-select { position: relative; display: flex; flex-direction: column; gap: 6px; }
-        .lyd-select-label { font-size: var(--font-size-sm); color: var(--lyd-grey); font-weight: 600; }
-        .lyd-select-trigger { display:flex; align-items:center; justify-content: space-between; gap:12px; padding: 12px 16px; border:2px solid var(--lyd-line); border-radius: var(--radius-md); background: #fff; cursor: pointer; transition: all .2s ease; }
-        .lyd-select-trigger:hover { border-color: var(--lyd-royal-blue); }
-        .lyd-select-trigger:focus, .lyd-select-trigger.active { outline: none; border-color: var(--lyd-royal-blue); box-shadow: 0 0 0 3px rgba(51,102,204,.1); }
-        .lyd-select-value { color: var(--lyd-text); font-size: var(--font-size-base); }
-        .lyd-select-placeholder { color: var(--lyd-grey); opacity: .8; }
-        .lyd-select-icon { width: 18px; height: 18px; color: var(--lyd-grey); transition: transform .2s ease; }
-        .lyd-select-trigger.active .lyd-select-icon { transform: rotate(180deg); }
-        .lyd-select-dropdown { position:absolute; top: calc(100% + 6px); left: 0; right: 0; background:#fff; border:1px solid var(--lyd-line); border-radius: 10px; box-shadow: var(--shadow-lg); padding: 6px; display:none; max-height: 220px; overflow:auto; z-index: 50; }
-        .lyd-select-dropdown.active { display:block; }
-        .lyd-select-option { padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: var(--font-size-base); color: var(--lyd-text); }
-        .lyd-select-option:hover { background: rgba(51, 102, 204, 0.06); }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateY(-6px); opacity: .96; } to { transform: translateY(0); opacity: 1; } }
-        
-        /* Code Block */
-        .code-block {
-            background: var(--lyd-text);
-            color: var(--lyd-bg);
-            padding: 24px;
-            border-radius: var(--radius-lg);
-            overflow-x: auto;
-            margin: 24px 0;
-            position: relative;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-        }
-        
-        .code-block pre {
-            margin: 0;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .lyd-button.copy {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--lyd-bg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
+            color: var(--lyd-grey);
         }
         
-        .lyd-button.copy:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .lyd-modal-close:hover {
+            background: var(--lyd-gray-100);
+            color: var(--lyd-text);
         }
         
-        /* Implementation Section */
-        .implementation-section {
-            background: white;
-            padding: 32px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--lyd-line);
-            margin-bottom: 32px;
-        }
-        
-        /* Accessibility Grid */
-        .accessibility-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin: 32px 0;
-            padding: 32px;
-            background: #E8F0FE;
-            border-radius: 8px;
-        }
-        
-        .accessibility-item { background: white; padding: 20px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .accessibility-item h4 { font-size: 16px; font-weight: 600; color: #111111; margin-bottom: 12px; }
-        .accessibility-item ul { list-style: none; padding: 0; margin: 0; }
-        .accessibility-item li { padding: 4px 0; color: #666666; font-size: 14px; display: flex; align-items: flex-start; gap: 8px; }
-        .accessibility-item li:before { content: "✓"; color: #3366CC; font-weight: bold; flex-shrink: 0; }
-        
-        @media (max-width: 1200px) { .accessibility-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) {
-            .accessibility-grid { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .main-content { margin-left: 0; padding: var(--spacing-lg); }
-            .showcase-grid { grid-template-columns: 1fr; }
-        }
-    
-        .code-block {
-            background: var(--lyd-gray-900);
-            border-radius: 8px;
+        .lyd-modal-body {
             padding: var(--spacing-lg);
-            position: relative;
-            overflow-x: auto;
-            margin: var(--spacing-md) 0;
         }
         
-        .code-block pre {
-            color: var(--lyd-gray-100);
-            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-            font-size: var(--font-size-sm);
-            line-height: 1.6;
-            margin: 0;
-            white-space: pre-wrap;
+        .lyd-modal-footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--lyd-line);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
         }
         
-        .code-block code {
-            color: var(--lyd-gray-100);
-            font-family: inherit;
+        /* Modal Sizes */
+        .lyd-modal.small {
+            max-width: 400px;
         }
-        </style>
+        
+        .lyd-modal.large {
+            max-width: 900px;
+        }
+        
+        .lyd-modal.fullscreen {
+            max-width: 100%;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            border-radius: 0;
+        }
+        
+        /* Special Modals */
+        .lyd-modal.glassmorphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .lyd-modal.slide-up {
+            transform: translate(-50%, 100%);
+        }
+        
+        .lyd-modal.slide-up.active {
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <div class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="crescentGradientV2Input" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2Input)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                <g fill="url(#textGradientLYD)">
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
-        <div class="nav-section">
-            <div class="nav-section-title">Designing</div>
-            <a href="/designing/" class="nav-item">Introduction</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Developing</div>
-            <a href="/developing/" class="nav-item">Introduction</a>
-            <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
-        </div>        <div class="nav-section">
-            <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
-            <a href="/components/buttons/" class="nav-item">Button</a>
-            <a href="/components/inputs/" class="nav-item">Input</a>
-            <a href="/components/cards/" class="nav-item">Card</a>
-            <a href="/components/select/" class="nav-item">Select</a>
-            <a href="/components/accordion/" class="nav-item">Accordion</a>
-            <a href="/components/modal/" class="nav-item">Modal</a>
-            <a href="/components/dropdown/" class="nav-item">Dropdown</a>
-            <a href="/components/checkbox/" class="nav-item">Checkbox</a>
-            <a href="/components/radio/" class="nav-item">Radio</a>
-            <a href="/components/toast/" class="nav-item">Toast</a>
-            <a href="/components/table/" class="nav-item">Table</a>
-            <a href="/components/textarea/" class="nav-item">Textarea</a>
-            <a href="/components/switch/" class="nav-item">Switch</a>
-            <a href="/components/slider/" class="nav-item">Slider</a>
-            <a href="/components/alert/" class="nav-item">Alert</a>
-            <a href="/components/badge/" class="nav-item">Badge</a>
-            <a href="/components/datepicker/" class="nav-item">Date Picker</a>
-            <a href="/components/avatar/" class="nav-item">Avatar</a>
-            <a href="/components/navbar/" class="nav-item">Navbar</a>
-            <a href="/components/tabs/" class="nav-item">Tabs</a>
-            <a href="/components/progress/" class="nav-item">Progress</a>
-            <a href="/components/calendar/" class="nav-item">Calendar</a>
-            <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
-            <a href="/components/pagination/" class="nav-item">Pagination</a>
-            <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Styles</div>
-            <a href="/styles/" class="nav-item">Introduction</a>
-            <a href="/components/typography/" class="nav-item">Typography</a>
-            <a href="/styles/grid/" class="nav-item">Grid</a>
-            <a href="/styles/colors/" class="nav-item">Colors</a>
-            <a href="/styles/spacing/" class="nav-item">Spacing</a>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">Patterns</div>
-            <a href="/patterns/" class="nav-item">Introduction</a>
-            <a href="/patterns/property-cards/" class="nav-item">Property Cards</a>
-            <a href="/patterns/header/" class="nav-item">Header</a>
-            <a href="/patterns/footer/" class="nav-item">Footer</a>
-            <a href="/patterns/forms/" class="nav-item">Forms</a>
-            <a href="/patterns/lead-management/" class="nav-item">Lead Management</a>
-        </div>
-    </nav>
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item active">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/typography/" class="nav-item">Typography</a>
+            </div>
+        </nav>
+    </div>
     
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Modal</h1>
-            <p class="page-subtitle">Professional modal dialog system with premium animations, accessibility features, and glassmorphism effects for sophisticated user interactions and real estate applications.</p>
-        </div>
+        <h1>Modal</h1>
+        <p>Professional modal dialogs for property details, forms, and confirmations with smooth animations.</p>
         
         <!-- Section 1: Modal Variants -->
         <section class="section">
             <h2 class="section-title">Modal Variants</h2>
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <h3>Basic Information Modal</h3>
-                    <p>Standard modal dialog with clean styling and smooth animations for general information display</p>
-                    <button class="lyd-button primary" onclick="openModal('basicModal')">Open Information Modal</button>
+            
+            <div class="component-card">
+                <h3>Standard Modal</h3>
+                <p>Classic modal with header, body, and footer</p>
+                
+                <button class="lyd-button primary" onclick="openModal('modal1')">
+                    Open Standard Modal
+                </button>
+                
+                <!-- Modal Structure -->
+                <div class="lyd-modal-backdrop" id="modal1-backdrop">
+                    <div class="lyd-modal" id="modal1">
+                        <div class="lyd-modal-header">
+                            <h3 class="lyd-modal-title">Property Details</h3>
+                            <button class="lyd-modal-close" onclick="closeModal('modal1')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="lyd-modal-body">
+                            <p>This luxury penthouse offers breathtaking views of the city skyline.</p>
+                            <ul style="margin-top: 16px;">
+                                <li>Living Area: 185 m²</li>
+                                <li>Bedrooms: 3</li>
+                                <li>Bathrooms: 2</li>
+                                <li>Terrace: 45 m²</li>
+                            </ul>
+                        </div>
+                        <div class="lyd-modal-footer">
+                            <button class="lyd-button secondary" onclick="closeModal('modal1')">
+                                Cancel
+                            </button>
+                            <button class="lyd-button primary">
+                                Schedule Viewing
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="showcase-item">
-                    <h3>Confirmation Modal</h3>
-                    <p>Critical action confirmation with clear visual hierarchy and prominent action buttons</p>
-                    <button class="lyd-button error" onclick="openModal('confirmModal')">Delete Property</button>
+            </div>
+            
+            <div class="component-card">
+                <h3>Small Modal</h3>
+                <p>Compact modal for confirmations</p>
+                
+                <button class="lyd-button secondary" onclick="openModal('modal2')">
+                    Open Small Modal
+                </button>
+                
+                <div class="lyd-modal-backdrop" id="modal2-backdrop">
+                    <div class="lyd-modal small" id="modal2">
+                        <div class="lyd-modal-header">
+                            <h3 class="lyd-modal-title">Confirm Action</h3>
+                            <button class="lyd-modal-close" onclick="closeModal('modal2')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="lyd-modal-body">
+                            <p>Are you sure you want to delete this property listing?</p>
+                        </div>
+                        <div class="lyd-modal-footer">
+                            <button class="lyd-button secondary" onclick="closeModal('modal2')">
+                                Cancel
+                            </button>
+                            <button class="lyd-button primary" style="background: var(--lyd-error);">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="showcase-item">
-                    <h3>Form Modal</h3>
-                    <p>Complex form interactions within modal context with validation and structured layout</p>
-                    <button class="lyd-button secondary" onclick="openModal('formModal')">Add New Property</button>
-                </div>
-                <div class="showcase-item">
-                    <h3>Premium Glassmorphism</h3>
-                    <p>Luxury modal with advanced glassmorphism effects and premium gradient styling</p>
-                    <button class="lyd-button secondary" onclick="openModal('premiumModal')">Premium Experience</button>
+            </div>
+            
+            <div class="component-card">
+                <h3>Large Modal</h3>
+                <p>Spacious modal for detailed content</p>
+                
+                <button class="lyd-button outline" onclick="openModal('modal3')">
+                    Open Large Modal
+                </button>
+                
+                <div class="lyd-modal-backdrop" id="modal3-backdrop">
+                    <div class="lyd-modal large" id="modal3">
+                        <div class="lyd-modal-header">
+                            <h3 class="lyd-modal-title">Property Gallery</h3>
+                            <button class="lyd-modal-close" onclick="closeModal('modal3')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="lyd-modal-body">
+                            <div class="demo-grid">
+                                <div class="demo-item">Image 1</div>
+                                <div class="demo-item">Image 2</div>
+                                <div class="demo-item">Image 3</div>
+                                <div class="demo-item">Image 4</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         
+        <!-- Section 2: Real Estate Use Cases -->
         <section class="section">
-            <h2 class="section-title">Real Estate Modal Types</h2>
+            <h2 class="section-title">Real Estate Use Cases</h2>
             
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <h3>Property Details Modal</h3>
-                    <p>Showcase detailed property information in elegant modal</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button primary" onclick="showModal('property-modal')">View Property Details</button>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <h3>Contact Form Modal</h3>
-                    <p>Lead generation form for property inquiries</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button outline" onclick="showModal('contact-modal')">Request Information</button>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <h3>Virtual Tour Modal</h3>
-                    <p>Immersive property viewing experience</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button accent" onclick="showModal('tour-modal')">Start Virtual Tour</button>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <h3>Booking Confirmation</h3>
-                    <p>Appointment scheduling and confirmation</p>
-                    <div class="showcase-demo">
-                        <button class="lyd-button success" onclick="showModal('booking-modal')">Schedule Viewing</button>
+            <div class="component-card">
+                <h3>Contact Form Modal</h3>
+                
+                <button class="lyd-button primary" onclick="openModal('modal4')">
+                    Contact Agent
+                </button>
+                
+                <div class="lyd-modal-backdrop" id="modal4-backdrop">
+                    <div class="lyd-modal" id="modal4">
+                        <div class="lyd-modal-header">
+                            <h3 class="lyd-modal-title">Contact Agent</h3>
+                            <button class="lyd-modal-close" onclick="closeModal('modal4')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="lyd-modal-body">
+                            <div class="lyd-input-group">
+                                <label class="lyd-input-label">Your Name</label>
+                                <input type="text" class="lyd-input" placeholder="Enter your name">
+                            </div>
+                            <div class="lyd-input-group">
+                                <label class="lyd-input-label">Email</label>
+                                <input type="email" class="lyd-input" placeholder="your@email.com">
+                            </div>
+                            <div class="lyd-input-group">
+                                <label class="lyd-input-label">Message</label>
+                                <textarea class="lyd-input" rows="4" placeholder="I'm interested in this property..."></textarea>
+                            </div>
+                        </div>
+                        <div class="lyd-modal-footer">
+                            <button class="lyd-button secondary" onclick="closeModal('modal4')">
+                                Cancel
+                            </button>
+                            <button class="lyd-button primary">
+                                Send Message
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -568,424 +352,267 @@
         <!-- Section 3: Implementation Guide -->
         <section class="section">
             <h2 class="section-title">Implementation Guide</h2>
+            
             <div class="implementation-section">
-                <h3 class="section-subtitle">HTML Usage</h3>
+                <h3>HTML Structure</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
-                    <pre>&lt;!-- Basic Modal --&gt;
-&lt;div id="myModal" class="lyd-modal"&gt;
-    &lt;div class="lyd-modal-backdrop" onclick="closeModal('myModal')"&gt;&lt;/div&gt;
-    &lt;div class="lyd-modal-content"&gt;
+                    <pre>&lt;!-- Trigger Button --&gt;
+&lt;button class="lyd-button primary" onclick="openModal('myModal')"&gt;
+    Open Modal
+&lt;/button&gt;
+
+&lt;!-- Modal Structure --&gt;
+&lt;div class="lyd-modal-backdrop" id="myModal-backdrop"&gt;
+    &lt;div class="lyd-modal" id="myModal"&gt;
         &lt;div class="lyd-modal-header"&gt;
             &lt;h3 class="lyd-modal-title"&gt;Modal Title&lt;/h3&gt;
-            &lt;button class="lyd-modal-close" onclick="closeModal('myModal')"&gt;×&lt;/button&gt;
+            &lt;button class="lyd-modal-close" onclick="closeModal('myModal')"&gt;
+                &lt;svg&gt;...&lt;/svg&gt;
+            &lt;/button&gt;
         &lt;/div&gt;
         &lt;div class="lyd-modal-body"&gt;
-            &lt;p&gt;Modal content goes here.&lt;/p&gt;
+            &lt;!-- Modal content --&gt;
         &lt;/div&gt;
         &lt;div class="lyd-modal-footer"&gt;
-            &lt;button class="lyd-button ghost"&gt;Cancel&lt;/button&gt;
+            &lt;button class="lyd-button secondary"&gt;Cancel&lt;/button&gt;
             &lt;button class="lyd-button primary"&gt;Confirm&lt;/button&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
                 </div>
                 
-                <h3 class="section-subtitle">Next.js Integration</h3>
+                <h3>JavaScript Functions</h3>
                 <div class="code-block">
-                    <button class="lyd-button copy">Copy</button>
+                    <pre>// Open modal
+function openModal(modalId) {
+    const backdrop = document.getElementById(modalId + '-backdrop');
+    const modal = document.getElementById(modalId);
+    
+    if (backdrop && modal) {
+        backdrop.classList.add('active');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Close modal
+function closeModal(modalId) {
+    const backdrop = document.getElementById(modalId + '-backdrop');
+    const modal = document.getElementById(modalId);
+    
+    if (backdrop && modal) {
+        backdrop.classList.remove('active');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close on backdrop click
+document.querySelectorAll('.lyd-modal-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+            const modalId = backdrop.id.replace('-backdrop', '');
+            closeModal(modalId);
+        }
+    });
+});</pre>
+                </div>
+                
+                <h3>React/Next.js Component</h3>
+                <div class="code-block">
                     <pre>// components/Modal.tsx
 import { ReactNode, useEffect } from 'react';
-
-type ModalSize = 'small' | 'medium' | 'large';
-type ModalVariant = 'default' | 'glassmorphism';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  size?: ModalSize;
-  variant?: ModalVariant;
   children: ReactNode;
+  size?: 'small' | 'medium' | 'large';
 }
 
-export const Modal = ({
-  isOpen,
-  onClose,
-  title,
-  size = 'medium',
-  variant = 'default',
-  children
+export const Modal = ({ 
+  isOpen, 
+  onClose, 
+  title, 
+  children,
+  size = 'medium' 
 }: ModalProps) => {
   useEffect(() => {
-    if (!isOpen) return;
-    document.body.style.overflow = 'hidden';
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    document.addEventListener('keydown', onKey);
-    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
-  }, [isOpen, onClose]);
-
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+  
   if (!isOpen) return null;
-
+  
   return (
-    &lt;div className="lyd-modal active" role="dialog" aria-modal="true"&gt;
-      &lt;div className="lyd-modal-backdrop" onClick={onClose} /&gt;
-      &lt;div className={`lyd-modal-content ${size} ${variant}`}&gt;
+    &lt;div 
+      className={`lyd-modal-backdrop ${isOpen ? 'active' : ''}`}
+      onClick={onClose}
+    &gt;
+      &lt;div 
+        className={`lyd-modal ${size} ${isOpen ? 'active' : ''}`}
+        onClick={(e) => e.stopPropagation()}
+      &gt;
         &lt;div className="lyd-modal-header"&gt;
           &lt;h3 className="lyd-modal-title"&gt;{title}&lt;/h3&gt;
-          &lt;button className="lyd-modal-close" onClick={onClose} aria-label="Close"&gt;×&lt;/button&gt;
+          &lt;button className="lyd-modal-close" onClick={onClose}&gt;
+            &lt;svg&gt;...&lt;/svg&gt;
+          &lt;/button&gt;
         &lt;/div&gt;
-        &lt;div className="lyd-modal-body"&gt;{children}&lt;/div&gt;
-        &lt;div className="lyd-modal-footer"&gt;
-          &lt;button className="lyd-button ghost" onClick={onClose}&gt;Close&lt;/button&gt;
-          &lt;button className="lyd-button primary"&gt;Confirm&lt;/button&gt;
+        &lt;div className="lyd-modal-body"&gt;
+          {children}
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   );
-};
-
-// usage (Next.js)
-// const [open, setOpen] = useState(false);
-// &lt;button className="lyd-button" onClick={() => setOpen(true)}&gt;Open&lt;/button&gt;
-// &lt;Modal isOpen={open} onClose={() => setOpen(false)} title="Add New Property"&gt;...&lt;/Modal&gt;
-</pre>
+};</pre>
                 </div>
-            </div>
-            
-            <div class="implementation-section">
-                <h3>API Reference</h3>
-                <table class="api-table">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>.lyd-modal</code></td>
-                            <td>Base modal class with premium styling</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-modal-backdrop</code></td>
-                            <td>Modal backdrop with blur effect</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-modal-content</code></td>
-                            <td>Modal content container with consistent spacing</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-modal-header</code></td>
-                            <td>Modal header with title and close button</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-modal-body</code></td>
-                            <td>Modal body for main content</td>
-                        </tr>
-                        <tr>
-                            <td><code>.lyd-modal-footer</code></td>
-                            <td>Modal footer for action buttons</td>
-                        </tr>
-                        <tr>
-                            <td><code>.small</code></td>
-                            <td>Small modal size (400px width)</td>
-                        </tr>
-                        <tr>
-                            <td><code>.large</code></td>
-                            <td>Large modal size (800px width)</td>
-                        </tr>
-                        <tr>
-                            <td><code>.active</code></td>
-                            <td>Active state with modal visible</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </section>
         
-        <!-- Section 3: Accessibility & Best Practices -->
+        <!-- Section 4: API Reference -->
         <section class="section">
-            <h2 class="section-title accessibility">Accessibility & Best Practices</h2>
-            <div class="accessibility-grid">
-                <div class="accessibility-item">
-                    <h4>Keyboard Navigation</h4>
-                    <ul>
-                        <li>Tab to navigate between modal elements</li>
-                        <li>Escape to close modal</li>
-                        <li>Enter/Space to activate buttons</li>
-                        <li>Focus trap within modal content</li>
-                        <li>Return focus to trigger element on close</li>
-                    </ul>
-                </div>
-                <div class="accessibility-item">
-                    <h4>Screen Reader Support</h4>
-                    <ul>
-                        <li>ARIA role="dialog" for modal containers</li>
-                        <li>ARIA labelledby for modal titles</li>
-                        <li>ARIA describedby for modal descriptions</li>
-                        <li>ARIA hidden for background content</li>
-                        <li>Live region announcements for state changes</li>
-                    </ul>
-                </div>
-                <div class="accessibility-item">
-                    <h4>Visual Accessibility</h4>
-                    <ul>
-                        <li>WCAG AA contrast ratios</li>
-                        <li>Clear focus indicators</li>
-                        <li>Readable typography</li>
-                        <li>Reduced motion support</li>
-                    </ul>
-                </div>
+            <h2 class="section-title">API Reference</h2>
+            
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.lyd-modal-backdrop</code></td>
+                        <td>Dark overlay behind modal</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-modal</code></td>
+                        <td>Main modal container</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-modal-header</code></td>
+                        <td>Modal header with title and close button</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-modal-title</code></td>
+                        <td>Modal title text</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-modal-close</code></td>
+                        <td>Close button in header</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-modal-body</code></td>
+                        <td>Main content area</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-modal-footer</code></td>
+                        <td>Footer with action buttons</td>
+                    </tr>
+                    <tr>
+                        <td><code>.small</code></td>
+                        <td>Small modal size (400px)</td>
+                    </tr>
+                    <tr>
+                        <td><code>.large</code></td>
+                        <td>Large modal size (900px)</td>
+                    </tr>
+                    <tr>
+                        <td><code>.fullscreen</code></td>
+                        <td>Fullscreen modal</td>
+                    </tr>
+                    <tr>
+                        <td><code>.active</code></td>
+                        <td>Shows modal and backdrop</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- Section 5: Accessibility -->
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="component-card">
+                <h3>Keyboard Navigation</h3>
+                <ul>
+                    <li>Escape key to close modal</li>
+                    <li>Tab to navigate within modal</li>
+                    <li>Focus trap inside modal</li>
+                    <li>Return focus to trigger on close</li>
+                </ul>
+                
+                <h3>Screen Reader Support</h3>
+                <ul>
+                    <li>Use role="dialog" and aria-modal="true"</li>
+                    <li>Provide aria-labelledby for title</li>
+                    <li>Announce modal opening/closing</li>
+                    <li>Hide background content with aria-hidden</li>
+                </ul>
+                
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Prevent body scroll when open</li>
+                    <li>Close on backdrop click</li>
+                    <li>Smooth open/close animations</li>
+                    <li>Responsive sizing on mobile</li>
+                    <li>Clear visual hierarchy</li>
+                </ul>
             </div>
         </section>
     </main>
-
-    <!-- Minimal funktionsfaehige Modals (unveraendert) -->
-    <div id="basicModal" class="lyd-modal" style="display:none">
-        <div class="lyd-modal-backdrop" onclick="closeModal('basicModal')"></div>
-        <div class="lyd-modal-content">
-            <div class="lyd-modal-header">
-                <h3 class="lyd-modal-title">Property Information</h3>
-                <button class="lyd-modal-close" onclick="closeModal('basicModal')">×</button>
-            </div>
-            <div class="lyd-modal-body">
-                <p>Basic info modal content.</p>
-            </div>
-            <div class="lyd-modal-footer">
-                <button class="lyd-button ghost" onclick="closeModal('basicModal')">Close</button>
-                <button class="lyd-button primary">Learn More</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="lyd-modal" style="display:none">
-        <div class="lyd-modal-backdrop" onclick="closeModal('confirmModal')"></div>
-        <div class="lyd-modal-content small">
-            <div class="lyd-modal-header">
-                <div class="lyd-modal-icon error">!</nobr></div>
-                <h3 class="lyd-modal-title">Delete Property</h3>
-                <button class="lyd-modal-close" onclick="closeModal('confirmModal')">×</button>
-            </div>
-            <div class="lyd-modal-body">
-                <p>Are you sure you want to delete “Villa Muenchen”? This action cannot be undone.</p>
-            </div>
-            <div class="lyd-modal-footer">
-                <button class="lyd-button ghost" onclick="closeModal('confirmModal')">Cancel</button>
-                <button class="lyd-button error">Delete</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Form Modal -->
-    <div id="formModal" class="lyd-modal" style="display:none">
-        <div class="lyd-modal-backdrop" onclick="closeModal('formModal')"></div>
-        <div class="lyd-modal-content large">
-            <div class="lyd-modal-header">
-                <h3 class="lyd-modal-title">Add New Property</h3>
-                <button class="lyd-modal-close" onclick="closeModal('formModal')">×</button>
-            </div>
-            <div class="lyd-modal-body">
-                <form style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-                    <label style="display:flex; flex-direction:column; gap:6px; grid-column: span 2;">
-                        <span style="font-size:14px; color:var(--lyd-grey);">Title</span>
-                        <input class="lyd-input" placeholder="Luxury Villa Muenchen" />
-                    </label>
-                    <label class="lyd-select" style="grid-column: span 1;">
-                        <span class="lyd-select-label">Property Type</span>
-                        <div class="lyd-select-trigger" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
-                            <span class="lyd-select-value lyd-select-placeholder">Choose property type...</span>
-                            <svg class="lyd-select-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </div>
-                        <div class="lyd-select-dropdown">
-                            <div class="lyd-select-option" data-value="apartment">Apartment</div>
-                            <div class="lyd-select-option" data-value="house">House</div>
-                            <div class="lyd-select-option" data-value="villa">Villa</div>
-                            <div class="lyd-select-option" data-value="penthouse">Penthouse</div>
-                        </div>
-                    </label>
-                    <label style="display:flex; flex-direction:column; gap:6px;">
-                        <span style="font-size:14px; color:var(--lyd-grey);">Rooms</span>
-                        <input class="lyd-input" type="number" placeholder="5" />
-                    </label>
-                    <label style="display:flex; flex-direction:column; gap:6px; grid-column: span 2;">
-                        <span style="font-size:14px; color:var(--lyd-grey);">Description</span>
-                        <textarea class="lyd-input" rows="3" placeholder="Describe the property..."></textarea>
-                    </label>
-                </form>
-            </div>
-            <div class="lyd-modal-footer">
-                <button class="lyd-button ghost" onclick="closeModal('formModal')">Cancel</button>
-                <button class="lyd-button secondary">Save Draft</button>
-                <button class="lyd-button primary">Create</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Premium Glassmorphism Modal -->
-    <div id="premiumModal" class="lyd-modal" style="display:none">
-        <div class="lyd-modal-backdrop premium" onclick="closeModal('premiumModal')"></div>
-        <div class="lyd-modal-content glassmorphism">
-            <div class="lyd-modal-header">
-                <h3 class="lyd-modal-title" style="background: linear-gradient(180deg, var(--lyd-royal-blue) 0%, var(--lyd-deep-blue) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Premium Experience</h3>
-                <button class="lyd-modal-close" onclick="closeModal('premiumModal')">×</button>
-            </div>
-            <div class="lyd-modal-body">
-                <p>Premium modal with glassmorphism, gradients and micro animations.</p>
-            </div>
-            <div class="lyd-modal-footer">
-                <button class="lyd-button ghost" onclick="closeModal('premiumModal')">Close</button>
-                <button class="lyd-button primary">Upgrade Now</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="../shared/force-consistency.js"></script>
-    
-    <!-- CRITICAL: Inline Button Styles as Backup -->
-    <style>
-        /* Force Button Styles - Exakt wie Button-Component */
-        .lyd-button {
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 10px !important;
-            padding: 12px 24px !important;
-            border-radius: 6px !important;
-            font-weight: 600 !important;
-            font-size: var(--font-size-base) !important;
-            border: none !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            text-decoration: none !important;
-            font-family: var(--font-family-primary) !important;
-        }
-        
-        .lyd-button.primary {
-            background: linear-gradient(135deg, #0066ff 0%, #004299 100%) !important;
-            color: white !important;
-            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3) !important;
-        }
-        
-        .lyd-button.primary:hover {
-            background: linear-gradient(135deg, #0052cc 0%, #003366 100%) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4) !important;
-        }
-        
-        .lyd-button.secondary {
-            background: linear-gradient(135deg, rgba(51, 102, 204, 0.08) 0%, rgba(0, 0, 102, 0.12) 100%) !important;
-            border: 1px solid rgba(51, 102, 204, 0.25) !important;
-            color: #1a365d !important;
-            backdrop-filter: blur(20px) !important;
-            box-shadow: 0 4px 16px rgba(51, 102, 204, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-            position: relative !important;
-            overflow: hidden !important;
-        }
-        
-        .lyd-button.secondary:hover {
-            background: linear-gradient(135deg, rgba(51, 102, 204, 0.15) 0%, rgba(0, 0, 102, 0.2) 100%) !important;
-            border-color: rgba(51, 102, 204, 0.4) !important;
-            transform: translateY(-3px) !important;
-            box-shadow: 0 8px 24px rgba(51, 102, 204, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(51, 102, 204, 0.1) !important;
-            color: #0f2a44 !important;
-        }
-        
-        .lyd-button.error {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
-            color: white !important;
-            box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3) !important;
-        }
-        
-        .lyd-button.error:hover {
-            background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 24px rgba(220, 53, 69, 0.4) !important;
-        }
-        
-        .lyd-button.ghost {
-            background: transparent !important;
-            color: #6b7280 !important;
-            padding: 8px 16px !important;
-        }
-        
-        .lyd-button.ghost:hover {
-            background: rgba(0, 0, 0, 0.05) !important;
-            color: #374151 !important;
-        }
-        
-        .lyd-button.copy {
-            position: absolute !important;
-            top: 16px !important;
-            right: 16px !important;
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: #374151 !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            backdrop-filter: blur(4px) !important;
-        }
-        
-        .lyd-button.copy:hover {
-            background: rgba(255, 255, 255, 0.2) !important;
-            transform: translateY(-1px) !important;
-        }
-        
-        /* Section Subtitle Styling */
-        .section-subtitle {
-            font-size: var(--font-size-xl) !important;
-            font-weight: 700 !important;
-            color: var(--lyd-text-primary) !important;
-            margin-bottom: var(--spacing-lg) !important;
-            margin-top: 0 !important;
-        }
-        
-        /* Erste Sub-Headline ohne oberen Abstand */
-        .implementation-section .section-subtitle:first-of-type {
-            margin-top: 0 !important;
-        }
-        
-        /* Implementation Section Styling - wie Button-Component */
-        .implementation-section {
-            background: white !important;
-            padding: 32px !important;
-            border-radius: 12px !important;
-            border: 1px solid #e5e7eb !important;
-            margin-bottom: 32px !important;
-        }
-    </style>
     
     <script>
-        function openModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.add('active'); m.style.display='flex'; document.body.style.overflow='hidden'; }
-        function closeModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.remove('active'); setTimeout(()=>{ m.style.display='none'; document.body.style.overflow=''; },200); }
-        // Minimal Select-Interaktionen
-        document.addEventListener('click', (e) => {
-            const trigger = e.target.closest('.lyd-select-trigger');
-            if (trigger) {
-                const container = trigger.closest('.lyd-select');
-                const dd = container.querySelector('.lyd-select-dropdown');
-                const expanded = trigger.getAttributes('aria-expanded') === 'true';
-                trigger.classList.toggle('active', !expanded);
-                trigger.setAttributes('aria-expanded', (!expanded).toString());
-                dd.classList.toggle('active', !expanded);
-                return;
+        // Modal functions
+        function openModal(modalId) {
+            const backdrop = document.getElementById(modalId + '-backdrop');
+            const modal = document.getElementById(modalId);
+            
+            if (backdrop && modal) {
+                backdrop.classList.add('active');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
-            const opt = e.target.closest('.lyd-select-option');
-            if (opt) {
-                const container = opt.closest('.lyd-select');
-                const valNode = container.querySelector('.lyd-select-value');
-                valNode.textContent = opt.textContent;
-                valNode.classList.remove('lyd-select-placeholder');
-                container.querySelector('.lyd-select-trigger').classList.remove('active');
-                container.querySelector('.lyd-select-trigger').setAttributes('aria-expanded','false');
-                container.querySelector('.lyd-select-dropdown').classList.remove('active');
-                return;
+        }
+        
+        function closeModal(modalId) {
+            const backdrop = document.getElementById(modalId + '-backdrop');
+            const modal = document.getElementById(modalId);
+            
+            if (backdrop && modal) {
+                backdrop.classList.remove('active');
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
             }
-            // Outside click
-            document.querySelectorAll('.lyd-select-dropdown.active').forEach(dd => dd.classList.remove('active'));
-            document.querySelectorAll('.lyd-select-trigger.active').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.lyd-select-trigger[aria-expanded="true"]').forEach(t => t.setAttributes('aria-expanded','false'));
+        }
+        
+        // Close on backdrop click
+        document.querySelectorAll('.lyd-modal-backdrop').forEach(backdrop => {
+            backdrop.addEventListener('click', (e) => {
+                if (e.target === backdrop) {
+                    const modalId = backdrop.id.replace('-backdrop', '');
+                    closeModal(modalId);
+                }
+            });
         });
-        document.querySelectorAll('.lyd-button.copy').forEach(b=>{ b.addEventListener('click',()=>{ const pre=b.parentElement.querySelector('pre'); navigator.clipboard.writeText(pre.textContent); b.textContent='Copied!'; setTimeout(()=>b.textContent='Copy',2000); }); });
+        
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.lyd-modal-backdrop.active').forEach(backdrop => {
+                    const modalId = backdrop.id.replace('-backdrop', '');
+                    closeModal(modalId);
+                });
+            }
+        });
     </script>
 </body>
 </html>
-

@@ -407,11 +407,11 @@ body {
    ======================================== */
 
 .implementation-section {
-    background: var(--lyd-white);
-    padding: var(--spacing-8);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--lyd-gray-200);
-    margin-bottom: var(--spacing-8);
+    background: white !important;
+    padding: 32px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+    margin-bottom: 32px !important;
 }
 
 .implementation-section h3 {

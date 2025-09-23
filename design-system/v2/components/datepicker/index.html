@@ -21,6 +21,12 @@
             --lyd-warning: #f59e0b;
             --lyd-error: #ef4444;
             
+            /* Gray Scale */
+            --lyd-gray-100: #f3f4f6;
+            --lyd-gray-200: #e5e7eb;
+            --lyd-gray-800: #1f2937;
+            --lyd-gray-900: #111827;
+            
             /* Typography Scale - CI konform */
             --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
             --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
@@ -509,27 +515,7 @@
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <svg class="lyd-logo" viewBox="0 0 990 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="crescentGradientV2" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" style="stop-color:#000066;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#3366CC;stop-opacity:1" />
-                    </linearGradient>
-                    <linearGradient id="textGradientLYD" x1="0" y1="360" x2="0" y2="700" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" style="stop-color:#3366CC;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#000066;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <g transform="translate(0.000000,748.000000) scale(0.100000,-0.100000)" fill="url(#crescentGradientV2)" stroke="none">
-                    <path d="M3049 5306 c-8 -7 -66 -45 -131 -84 -386 -239 -848 -602 -1168 -922 -612 -610 -818 -1104 -650 -1558 46 -122 119 -239 257 -408 43 -53 118 -148 166 -212 294 -387 385 -708 302 -1067 -68 -294 -287 -641 -619 -983 -51 -52 -65 -72 -52 -72 34 0 328 159 471 255 371 248 627 534 751 839 54 131 92 298 106 456 15 181 2 423 -54 965 -39 382 -42 431 -42 715 -1 310 3 369 45 610 82 474 274 935 576 1379 61 90 73 116 42 87z"/>
-                </g>
-                <g fill="url(#textGradientLYD)">
-                    <text x="370" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">LIVE</text>
-                    <text x="370" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="22px">YOUR</text>
-                    <text x="370" y="660" font-family="system-ui, -apple-system, sans-serif" font-size="132" font-weight="400" letter-spacing="6px">DREAMS</text>
-                </g>
-            </svg>
-            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
         </div>
         
         <div class="nav-section">
@@ -543,7 +529,7 @@
             <a href="/developing/nextjs/" class="nav-item">Next.js Integration</a>
         </div>        <div class="nav-section">
             <div class="nav-section-title">Components</div>
-            <a href="/components/" class="nav-item">Introduction</a>
+            <a href="/components/overview/" class="nav-item">Overview</a>
             <a href="/components/buttons/" class="nav-item">Button</a>
             <a href="/components/inputs/" class="nav-item">Input</a>
             <a href="/components/cards/" class="nav-item">Card</a>
@@ -732,9 +718,8 @@
             
             <div class="implementation-section">
                 <h3>HTML Usage</h3>
-                <div style="padding: var(--spacing-lg);">
-                    <div class="code-block">
-                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                <div class="code-block">
+                    
                     <pre>&lt;div class="lyd-datepicker"&gt;
     &lt;div class="lyd-datepicker-input" tabindex="0"&gt;
         &lt;svg class="lyd-datepicker-icon" viewBox="0 0 24 24"&gt;...&lt;/svg&gt;
@@ -755,9 +740,8 @@
             
             <div class="implementation-section">
                 <h3>Next.js Integration</h3>
-                <div style="padding: var(--spacing-lg);">
-                    <div class="code-block">
-                    <button class="lyd-button copy" aria-label="Interactive button" role="button" aria-label="Button" role="button">Copy</button>
+                <div class="code-block">
+                    
                     <pre>// components/DatePicker.tsx
 import { useState } from 'react';
 
@@ -792,7 +776,13 @@ export const DatePicker = ({ value, onChange, placeholder = "Select date" }: Dat
                 </div>
             </div>
         </section>
-                <h3>API Reference</h3>
+            </div>
+        </section>
+        
+        <!-- Section 4: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            <div class="api-section">
                 <table class="api-table">
                     <thead>
                         <tr>
@@ -835,8 +825,10 @@ export const DatePicker = ({ value, onChange, placeholder = "Select date" }: Dat
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </section>
         
-        <!-- Section 4: Accessibility & Best Practices -->
+        <!-- Section 5: Accessibility & Best Practices -->
         <section class="section">
             <h2 class="section-title">Accessibility & Best Practices</h2>
             
