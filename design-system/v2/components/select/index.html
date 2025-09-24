@@ -9,8 +9,8 @@
     <!-- ZENTRALES CSS SYSTEM -->
     <link rel="stylesheet" href="/shared/master.css">
     
-    <!-- GLOBALES DROPDOWN MANAGEMENT -->
-    <script src="/shared/dropdown-manager.js"></script>
+    <!-- EINFACHE DROPDOWN-LÖSUNG MIT DEBUG -->
+    <script src="/shared/simple-dropdown-fix.js"></script>
     
     <style>
         /* NUR SELECT-SPEZIFISCHE STYLES */
@@ -63,6 +63,7 @@
         }
         
         .lyd-select-dropdown {
+            /* Position wird durch master.css überschrieben (fixed) */
             position: absolute;
             top: calc(100% + 8px);
             left: 0;
@@ -297,17 +298,17 @@
                 <p>Basic dropdown selection</p>
                 
                         <div class="lyd-select">
-                    <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                    <button class="lyd-select-trigger" >
                         <span>Choose an option</span>
                         <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                     </button>
                             <div class="lyd-select-dropdown">
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Option 1')">Option 1</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Option 2')">Option 2</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Option 3')">Option 3</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Option 4')">Option 4</div>
+                        <div class="lyd-select-option" data-value="Option 1">Option 1</div>
+                        <div class="lyd-select-option" data-value="Option 2">Option 2</div>
+                        <div class="lyd-select-option" data-value="Option 3">Option 3</div>
+                        <div class="lyd-select-option" data-value="Option 4">Option 4</div>
                         </div>
                     </div>
                 </div>
@@ -317,7 +318,7 @@
                 <p>Filterable dropdown list</p>
                 
                         <div class="lyd-select">
-                    <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                    <button class="lyd-select-trigger" >
                         <span>Select a country</span>
                         <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -327,12 +328,12 @@
                         <div class="lyd-select-search">
                             <input type="text" placeholder="Search..." onkeyup="filterOptions(this)">
                             </div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Germany')">Germany</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'France')">France</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'United States')">United States</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'United Kingdom')">United Kingdom</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Japan')">Japan</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Australia')">Australia</div>
+                        <div class="lyd-select-option" data-value="Germany">Germany</div>
+                        <div class="lyd-select-option" data-value="France">France</div>
+                        <div class="lyd-select-option" data-value="United States">United States</div>
+                        <div class="lyd-select-option" data-value="United Kingdom">United Kingdom</div>
+                        <div class="lyd-select-option" data-value="Japan">Japan</div>
+                        <div class="lyd-select-option" data-value="Australia">Australia</div>
                         </div>
                     </div>
                 </div>
@@ -342,16 +343,16 @@
                 <p>Select with disabled items</p>
                 
                         <div class="lyd-select">
-                    <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                    <button class="lyd-select-trigger" >
                         <span>Choose status</span>
                         <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                     </button>
                             <div class="lyd-select-dropdown">
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Active')">Active</div>
+                        <div class="lyd-select-option" data-value="Active">Active</div>
                         <div class="lyd-select-option disabled">Pending (unavailable)</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Completed')">Completed</div>
+                        <div class="lyd-select-option" data-value="Completed">Completed</div>
                         <div class="lyd-select-option disabled">Archived (unavailable)</div>
                         </div>
                     </div>
@@ -363,38 +364,38 @@
                 
                 <div style="display: flex; flex-direction: column; gap: 16px;">
                     <div class="lyd-select small">
-                        <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                        <button class="lyd-select-trigger" >
                             <span>Small</span>
                             <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                         </button>
                         <div class="lyd-select-dropdown">
-                            <div class="lyd-select-option" onclick="selectOption(this, 'Option 1')">Option 1</div>
+                            <div class="lyd-select-option" data-value="Option 1">Option 1</div>
                                 </div>
                             </div>
                             
                     <div class="lyd-select">
-                        <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                        <button class="lyd-select-trigger" >
                             <span>Default</span>
                             <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                         </button>
                                 <div class="lyd-select-dropdown">
-                            <div class="lyd-select-option" onclick="selectOption(this, 'Option 1')">Option 1</div>
+                            <div class="lyd-select-option" data-value="Option 1">Option 1</div>
                     </div>
                 </div>
                 
                     <div class="lyd-select large">
-                        <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                        <button class="lyd-select-trigger" >
                             <span>Large</span>
                             <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                         </button>
                             <div class="lyd-select-dropdown">
-                            <div class="lyd-select-option" onclick="selectOption(this, 'Option 1')">Option 1</div>
+                            <div class="lyd-select-option" data-value="Option 1">Option 1</div>
                             </div>
                         </div>
                     </div>
@@ -454,17 +455,17 @@
                         </span>
                             </div>
                     <div class="lyd-select">
-                        <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                        <button class="lyd-select-trigger" >
                             <span>Add cities...</span>
                             <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
                             <div class="lyd-select-dropdown">
-                            <div class="lyd-select-option" onclick="addTag(this, 'Hamburg')">Hamburg</div>
-                            <div class="lyd-select-option" onclick="addTag(this, 'Frankfurt')">Frankfurt</div>
-                            <div class="lyd-select-option" onclick="addTag(this, 'Stuttgart')">Stuttgart</div>
-                            <div class="lyd-select-option" onclick="addTag(this, 'Cologne')">Cologne</div>
+                            <div class="lyd-select-option" onclick="addTag(this, 'Hamburg">Hamburg</div>
+                            <div class="lyd-select-option" onclick="addTag(this, 'Frankfurt">Frankfurt</div>
+                            <div class="lyd-select-option" onclick="addTag(this, 'Stuttgart">Stuttgart</div>
+                            <div class="lyd-select-option" onclick="addTag(this, 'Cologne">Cologne</div>
                                 </div>
                                 </div>
                                 </div>
@@ -479,17 +480,17 @@
                 <h3>Property Type</h3>
                 
                         <div class="lyd-select">
-                    <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                    <button class="lyd-select-trigger" >
                         <span>Select property type</span>
                         <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                     </button>
                             <div class="lyd-select-dropdown">
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Apartment')">Apartment</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'House')">House</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Villa')">Villa</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, 'Studio')">Studio</div>
+                        <div class="lyd-select-option" data-value="Apartment">Apartment</div>
+                        <div class="lyd-select-option" data-value="House">House</div>
+                        <div class="lyd-select-option" data-value="Villa">Villa</div>
+                        <div class="lyd-select-option" data-value="Studio">Studio</div>
                         </div>
                     </div>
                 </div>
@@ -498,17 +499,17 @@
                 <h3>Price Range</h3>
                 
                         <div class="lyd-select">
-                    <button class="lyd-select-trigger" onclick="toggleSelect(this)">
+                    <button class="lyd-select-trigger" >
                         <span>Select price range</span>
                         <svg class="lyd-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                     </button>
                             <div class="lyd-select-dropdown">
-                        <div class="lyd-select-option" onclick="selectOption(this, '€0 - €500,000')">€0 - €500,000</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, '€500,000 - €1,000,000')">€500,000 - €1,000,000</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, '€1,000,000 - €2,000,000')">€1,000,000 - €2,000,000</div>
-                        <div class="lyd-select-option" onclick="selectOption(this, '€2,000,000+')">€2,000,000+</div>
+                        <div class="lyd-select-option" data-value="€0 - €500,000">€0 - €500,000</div>
+                        <div class="lyd-select-option" data-value="€500,000 - €1,000,000">€500,000 - €1,000,000</div>
+                        <div class="lyd-select-option" data-value="€1,000,000 - €2,000,000">€1,000,000 - €2,000,000</div>
+                        <div class="lyd-select-option" data-value="€2,000,000+">€2,000,000+</div>
                     </div>
                 </div>
             </div>
@@ -523,7 +524,7 @@
                 <div class="code-block">
                     <pre>&lt;!-- Standard Select --&gt;
 &lt;div class="lyd-select"&gt;
-    &lt;button class="lyd-select-trigger" onclick="toggleSelect(this)"&gt;
+    &lt;button class="lyd-select-trigger" &gt;
         &lt;span&gt;Choose an option&lt;/span&gt;
         &lt;svg class="lyd-select-icon" width="20" height="20" viewBox="0 0 24 24"&gt;
             &lt;path d="M6 9l6 6 6-6" /&gt;
@@ -825,122 +826,6 @@ export const Select = ({
         </section>
     </main>
     
-    <script>
-        // Wait for DOM to load
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // Add click handlers to all select triggers
-            document.querySelectorAll('.lyd-select-trigger').forEach(function(trigger) {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const dropdown = this.nextElementSibling;
-                    const select = this.closest('.lyd-select');
-                    const isOpen = this.classList.contains('active');
-                    
-                    // Close all other selects first
-                    document.querySelectorAll('.lyd-select').forEach(function(otherSelect) {
-                        if (otherSelect !== select) {
-                            otherSelect.classList.remove('active');
-                            const otherTrigger = otherSelect.querySelector('.lyd-select-trigger');
-                            const otherDropdown = otherSelect.querySelector('.lyd-select-dropdown');
-                            if (otherTrigger) otherTrigger.classList.remove('active');
-                            if (otherDropdown) otherDropdown.classList.remove('show');
-                        }
-                    });
-                    
-                    // Toggle current select
-                    if (isOpen) {
-                        select.classList.remove('active');
-                        this.classList.remove('active');
-                        dropdown.classList.remove('show');
-                    } else {
-                        select.classList.add('active');
-                        this.classList.add('active');
-                        dropdown.classList.add('show');
-                    }
-                });
-            });
-            
-            // Add click handlers to all options
-            document.querySelectorAll('.lyd-select-option').forEach(function(option) {
-                option.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const dropdown = this.closest('.lyd-select-dropdown');
-                    const select = this.closest('.lyd-select');
-                    const trigger = select.querySelector('.lyd-select-trigger');
-                    const selectedText = trigger.querySelector('.lyd-select-text');
-                    const isMulti = this.classList.contains('multi');
-                    
-                    if (isMulti) {
-                        // Multi-select logic
-                        const checkbox = this.querySelector('input[type="checkbox"]');
-                        if (checkbox) {
-                            checkbox.checked = !checkbox.checked;
-                            this.classList.toggle('selected', checkbox.checked);
-                        }
-                        
-                        // Update trigger text with selected count
-                        const selectedOptions = dropdown.querySelectorAll('.lyd-select-option.selected');
-                        if (selectedOptions.length === 0) {
-                            selectedText.textContent = 'Select amenities...';
-                        } else if (selectedOptions.length === 1) {
-                            selectedText.textContent = selectedOptions[0].textContent.trim();
-                        } else {
-                            selectedText.textContent = selectedOptions.length + ' items selected';
-                        }
-                        
-                        // Don't close dropdown for multi-select
-                    } else {
-                        // Single select logic
-                        if (selectedText) {
-                            selectedText.textContent = this.textContent;
-                        }
-                        
-                        // Update selected state
-                        dropdown.querySelectorAll('.lyd-select-option').forEach(function(opt) {
-                            opt.classList.remove('selected');
-                        });
-                        this.classList.add('selected');
-                        
-                        // Close dropdown
-                        select.classList.remove('active');
-                        trigger.classList.remove('active');
-                        dropdown.classList.remove('show');
-                    }
-                });
-            });
-            
-            // Close on outside click
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.lyd-select')) {
-                    document.querySelectorAll('.lyd-select').forEach(function(select) {
-                        select.classList.remove('active');
-                        const trigger = select.querySelector('.lyd-select-trigger');
-                        const dropdown = select.querySelector('.lyd-select-dropdown');
-                        if (trigger) trigger.classList.remove('active');
-                        if (dropdown) dropdown.classList.remove('show');
-                    });
-                }
-            });
-            
-            // Search functionality
-            document.querySelectorAll('.lyd-select-search input').forEach(function(input) {
-                input.addEventListener('input', function() {
-                    const filter = this.value.toLowerCase();
-                    const options = this.closest('.lyd-select-dropdown')
-                        .querySelectorAll('.lyd-select-option');
-                    
-                    options.forEach(function(option) {
-                        const text = option.textContent.toLowerCase();
-                        option.style.display = text.includes(filter) ? '' : 'none';
-                    });
-                });
-            });
-        });
-    </script>
+    <!-- Lokale JavaScript-Handler entfernt - verwendet globales DropdownManager -->
 </body>
 </html>
