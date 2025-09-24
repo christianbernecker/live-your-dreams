@@ -2,7 +2,7 @@
   "version": "1.0",
   "description": "Realistische MCP Server Konfiguration für LYD Design System",
   "mcpServers": {
-    "filesystem": {
+    "filesystem-design": {
       "command": "npx",
       "args": [
         "@modelcontextprotocol/server-filesystem",
@@ -16,6 +16,39 @@
         "create_directories",
         "batch_updates",
         "search_replace_across_files"
+      ]
+    },
+    "filesystem-apps": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/christianbernecker/live-your-dreams/apps"
+      ],
+      "description": "Apps development - Backoffice, future apps, component integration",
+      "enabled": true,
+      "capabilities": [
+        "read_files",
+        "write_files",
+        "create_directories", 
+        "nextjs_development",
+        "component_integration",
+        "typescript_support"
+      ]
+    },
+    "filesystem-root": {
+      "command": "npx", 
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/christianbernecker/live-your-dreams"
+      ],
+      "description": "Full project access - deployment, docs, infrastructure",
+      "enabled": true,
+      "capabilities": [
+        "read_files",
+        "write_files",
+        "deployment_management",
+        "documentation_updates",
+        "infrastructure_changes"
       ]
     },
     "git-local": {
@@ -60,12 +93,81 @@
         "Update CSS variables",
         "Verify visual consistency"
       ]
+    },
+    "backoffice_feature": {
+      "description": "Develop new Backoffice feature with Design System integration",
+      "steps": [
+        "Create Next.js component/page structure",
+        "Integrate LYD Design System components",
+        "Add TypeScript types and interfaces",
+        "Implement responsive design",
+        "Add tests and documentation",
+        "Deploy and verify functionality"
+      ]
+    },
+    "app_scaffold": {
+      "description": "Scaffold new application in /apps/",
+      "steps": [
+        "Create app directory structure",
+        "Setup Next.js/React configuration",
+        "Integrate Design System master.css",
+        "Setup deployment pipeline",
+        "Add to root documentation"
+      ]
+    },
+    "design_system_integration": {
+      "description": "Integrate Design System updates into all apps",
+      "steps": [
+        "Update master.css references",
+        "Update component usage",
+        "Test component compatibility",
+        "Update app-specific styles",
+        "Deploy and verify"
+      ]
     }
   },
   "aliases": {
-    "create-component": "Use filesystem MCP to create new component with navigation updates",
-    "update-colors": "Use filesystem MCP to update color tokens across all files",
-    "fix-navigation": "Use filesystem MCP to fix navigation links in all HTML files",
-    "commit-changes": "Use git MCP to commit Design System changes"
+    "create-component": "Use filesystem-design MCP to create new component with navigation updates",
+    "update-colors": "Use filesystem-design MCP to update color tokens across all files",
+    "fix-navigation": "Use filesystem-design MCP to fix navigation links in all HTML files",
+    "commit-changes": "Use git MCP to commit Design System changes",
+    "backoffice-feature": "Use filesystem-apps MCP to develop new Backoffice feature",
+    "integrate-design-system": "Use filesystem-apps MCP to integrate Design System updates",
+    "new-app": "Use filesystem-root MCP to scaffold new application",
+    "deploy-apps": "Use filesystem-root MCP to deploy applications"
+  },
+  "enforcement": {
+    "design_system_compliance": {
+      "description": "Ensure all apps use LYD Design System",
+      "rules": [
+        "All new components must use master.css",
+        "All colors must use CSS custom properties (--lyd-*)",
+        "All typography must follow LYD font families",
+        "All spacing must use LYD spacing scale",
+        "All new features must be documented",
+        "All changes must be tested and deployed"
+      ]
+    },
+    "code_quality": {
+      "description": "Maintain high code quality standards",
+      "rules": [
+        "TypeScript strict mode required",
+        "ESLint errors must be fixed",
+        "All functions must have JSDoc comments",
+        "All components must have proper error boundaries",
+        "All API calls must have error handling",
+        "All forms must have validation"
+      ]
+    },
+    "deployment_pipeline": {
+      "description": "Ensure proper deployment workflow",
+      "rules": [
+        "All changes must be committed with conventional commits",
+        "All features must be tested locally before deploy",
+        "All deployments must be verified on live URLs",
+        "All breaking changes must be documented",
+        "All rollbacks must be possible within 5 minutes"
+      ]
+    }
   }
 }
