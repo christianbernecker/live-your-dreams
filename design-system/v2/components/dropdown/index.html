@@ -233,19 +233,34 @@
                 <h3>Standard Dropdown</h3>
                 <p>Basic dropdown with text items</p>
                 
-                <div class="lyd-dropdown">
-                    <button class="lyd-dropdown-trigger" onclick="LYDDropdown.toggle('dropdown1')">
+                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
+                    <button class="lyd-dropdown-trigger" onclick="
+                        var menu = this.nextElementSibling;
+                        var isOpen = menu.style.display === 'block';
+                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
+                        menu.style.display = isOpen ? 'none' : 'block';
+                        menu.style.position = 'absolute';
+                        menu.style.top = '100%';
+                        menu.style.left = '0';
+                        menu.style.zIndex = '999999';
+                        menu.style.background = 'white';
+                        menu.style.border = '1px solid #e5e7eb';
+                        menu.style.borderRadius = '8px';
+                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                        menu.style.minWidth = '200px';
+                        menu.style.padding = '8px 0';
+                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
                         <span>Options</span>
-                        <svg class="lyd-dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="lyd-dropdown-menu" id="dropdown1">
-                        <a href="#" class="lyd-dropdown-item">View Details</a>
-                        <a href="#" class="lyd-dropdown-item">Edit Property</a>
-                        <a href="#" class="lyd-dropdown-item">Share Listing</a>
-                        <div class="lyd-dropdown-divider"></div>
-                        <a href="#" class="lyd-dropdown-item" style="color: var(--lyd-error);">Delete</a>
+                    <div class="lyd-dropdown-menu" style="display: none;">
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">View Details</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Edit Property</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Share Listing</a>
+                        <div style="height: 1px; background: #e5e7eb; margin: 8px 0;"></div>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #ef4444; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Delete</a>
                     </div>
                 </div>
             </div>
@@ -254,30 +269,45 @@
                 <h3>Dropdown with Icons</h3>
                 <p>Enhanced dropdown with icon indicators</p>
                 
-                <div class="lyd-dropdown">
-                    <button class="lyd-dropdown-trigger" onclick="LYDDropdown.toggle('dropdown2')">
+                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
+                    <button class="lyd-dropdown-trigger" onclick="
+                        var menu = this.nextElementSibling;
+                        var isOpen = menu.style.display === 'block';
+                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
+                        menu.style.display = isOpen ? 'none' : 'block';
+                        menu.style.position = 'absolute';
+                        menu.style.top = '100%';
+                        menu.style.left = '0';
+                        menu.style.zIndex = '999999';
+                        menu.style.background = 'white';
+                        menu.style.border = '1px solid #e5e7eb';
+                        menu.style.borderRadius = '8px';
+                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                        menu.style.minWidth = '200px';
+                        menu.style.padding = '8px 0';
+                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
                         <span>Actions</span>
-                        <svg class="lyd-dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="lyd-dropdown-menu" id="dropdown2">
-                        <a href="#" class="lyd-dropdown-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <div class="lyd-dropdown-menu" style="display: none;">
+                        <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
+                            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <circle cx="12" cy="12" r="10"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
                             View
                         </a>
-                        <a href="#" class="lyd-dropdown-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
+                            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
                                 <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                             Edit
                         </a>
-                        <a href="#" class="lyd-dropdown-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
+                            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                                 <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
                             </svg>
@@ -291,19 +321,34 @@
                 <h3>Multi-Select Dropdown</h3>
                 <p>Dropdown with checkbox selection</p>
                 
-                <div class="lyd-dropdown">
-                    <button class="lyd-dropdown-trigger" onclick="LYDDropdown.toggle('dropdown3')">
+                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
+                    <button class="lyd-dropdown-trigger" onclick="
+                        var menu = this.nextElementSibling;
+                        var isOpen = menu.style.display === 'block';
+                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
+                        menu.style.display = isOpen ? 'none' : 'block';
+                        menu.style.position = 'absolute';
+                        menu.style.top = '100%';
+                        menu.style.left = '0';
+                        menu.style.zIndex = '999999';
+                        menu.style.background = 'white';
+                        menu.style.border = '1px solid #e5e7eb';
+                        menu.style.borderRadius = '8px';
+                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                        menu.style.minWidth = '200px';
+                        menu.style.padding = '8px 0';
+                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
                         <span>Filter Properties</span>
-                        <svg class="lyd-dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="lyd-dropdown-menu" id="dropdown3">
-                        <div class="lyd-dropdown-header">Property Type</div>
-                        <button class="lyd-dropdown-item checkbox" onclick="this.classList.toggle('selected')">Apartment</button>
-                        <button class="lyd-dropdown-item checkbox selected" onclick="this.classList.toggle('selected')">House</button>
-                        <button class="lyd-dropdown-item checkbox" onclick="this.classList.toggle('selected')">Villa</button>
-                        <button class="lyd-dropdown-item checkbox" onclick="this.classList.toggle('selected')">Penthouse</button>
+                    <div class="lyd-dropdown-menu" style="display: none;">
+                        <div style="padding: 8px 16px; font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase;">Property Type</div>
+                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: white; color: #111; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">Apartment</button>
+                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: #0066ff; color: white; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">House</button>
+                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: white; color: #111; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">Villa</button>
+                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: white; color: #111; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">Penthouse</button>
                     </div>
                 </div>
             </div>
@@ -316,24 +361,40 @@
             <div class="component-card">
                 <h3>User Menu</h3>
                 
-                <div class="lyd-dropdown">
-                    <button class="lyd-dropdown-trigger" onclick="LYDDropdown.toggle('dropdown4')">
-                        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--lyd-gradient-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
+                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
+                    <button class="lyd-dropdown-trigger" onclick="
+                        var menu = this.nextElementSibling;
+                        var isOpen = menu.style.display === 'block';
+                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
+                        menu.style.display = isOpen ? 'none' : 'block';
+                        menu.style.position = 'absolute';
+                        menu.style.top = '100%';
+                        menu.style.right = '0';
+                        menu.style.left = 'auto';
+                        menu.style.zIndex = '999999';
+                        menu.style.background = 'white';
+                        menu.style.border = '1px solid #e5e7eb';
+                        menu.style.borderRadius = '8px';
+                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                        menu.style.minWidth = '200px';
+                        menu.style.padding = '8px 0';
+                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #000066, #3366CC); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
                             JD
                         </div>
                         <span>John Doe</span>
-                        <svg class="lyd-dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="lyd-dropdown-menu right" id="dropdown4">
-                        <div class="lyd-dropdown-header">Account</div>
-                        <a href="#" class="lyd-dropdown-item">My Profile</a>
-                        <a href="#" class="lyd-dropdown-item">My Properties</a>
-                        <a href="#" class="lyd-dropdown-item">Saved Searches</a>
-                        <div class="lyd-dropdown-divider"></div>
-                        <a href="#" class="lyd-dropdown-item">Settings</a>
-                        <a href="#" class="lyd-dropdown-item" style="color: var(--lyd-error);">Sign Out</a>
+                    <div class="lyd-dropdown-menu" style="display: none;">
+                        <div style="padding: 8px 16px; font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase;">Account</div>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">My Profile</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">My Properties</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Saved Searches</a>
+                        <div style="height: 1px; background: #e5e7eb; margin: 8px 0;"></div>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Settings</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #ef4444; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Sign Out</a>
                     </div>
                 </div>
             </div>

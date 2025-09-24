@@ -13,7 +13,7 @@
     <script src="/shared/interactions.js"></script>
     
     <style>
-        /* HEROUI-INSPIRIERTES TOOLTIP SYSTEM */
+        /* NUCLEAR OPTION: CSS-ONLY TOOLTIP SYSTEM */
         .lyd-tooltip {
             position: relative;
             display: inline-block;
@@ -21,19 +21,19 @@
         
         .lyd-tooltip-content {
             position: absolute;
-            z-index: 9999999;
+            z-index: 999999 !important;
             padding: 8px 12px;
-            background: var(--lyd-gray-900);
-            color: white;
-            font-size: var(--font-size-sm);
-            font-weight: var(--font-weight-medium);
-            border-radius: var(--radius-md);
-            white-space: nowrap;
-            pointer-events: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: #1f2937 !important;
+            color: white !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            border-radius: 6px !important;
+            white-space: nowrap !important;
+            pointer-events: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0.2s ease !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
         }
         
         .lyd-tooltip:hover .lyd-tooltip-content,
@@ -222,24 +222,24 @@
                 <h3>Directional Tooltips</h3>
                 <div class="component-preview" style="padding: 60px; display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
                     
-                    <div class="lyd-tooltip">
+                    <div style="position: relative; display: inline-block;">
                         <button class="lyd-button primary">Top</button>
-                        <div class="lyd-tooltip-content top">This tooltip appears above</div>
+                        <div style="position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 999999; padding: 8px 12px; background: #1f2937; color: white; font-size: 14px; border-radius: 6px; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" onmouseenter="this.style.opacity='1'; this.style.visibility='visible';" onmouseleave="this.style.opacity='0'; this.style.visibility='hidden';">This tooltip appears above</div>
                     </div>
                     
-                    <div class="lyd-tooltip">
-                        <button class="lyd-button primary">Bottom</button>
-                        <div class="lyd-tooltip-content bottom">This tooltip appears below</div>
+                    <div style="position: relative; display: inline-block;">
+                        <button class="lyd-button primary" onmouseenter="this.nextElementSibling.style.opacity='1'; this.nextElementSibling.style.visibility='visible';" onmouseleave="this.nextElementSibling.style.opacity='0'; this.nextElementSibling.style.visibility='hidden';">Bottom</button>
+                        <div style="position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 999999; padding: 8px 12px; background: #1f2937; color: white; font-size: 14px; border-radius: 6px; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">This tooltip appears below</div>
                     </div>
                     
-                    <div class="lyd-tooltip">
-                        <button class="lyd-button primary">Left</button>
-                        <div class="lyd-tooltip-content left">This tooltip appears to the left</div>
+                    <div style="position: relative; display: inline-block;">
+                        <button class="lyd-button primary" onmouseenter="this.nextElementSibling.style.opacity='1'; this.nextElementSibling.style.visibility='visible';" onmouseleave="this.nextElementSibling.style.opacity='0'; this.nextElementSibling.style.visibility='hidden';">Left</button>
+                        <div style="position: absolute; right: calc(100% + 8px); top: 50%; transform: translateY(-50%); z-index: 999999; padding: 8px 12px; background: #1f2937; color: white; font-size: 14px; border-radius: 6px; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">This tooltip appears to the left</div>
                     </div>
                     
-                    <div class="lyd-tooltip">
-                        <button class="lyd-button primary">Right</button>
-                        <div class="lyd-tooltip-content right">This tooltip appears to the right</div>
+                    <div style="position: relative; display: inline-block;">
+                        <button class="lyd-button primary" onmouseenter="this.nextElementSibling.style.opacity='1'; this.nextElementSibling.style.visibility='visible';" onmouseleave="this.nextElementSibling.style.opacity='0'; this.nextElementSibling.style.visibility='hidden';">Right</button>
+                        <div style="position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); z-index: 999999; padding: 8px 12px; background: #1f2937; color: white; font-size: 14px; border-radius: 6px; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">This tooltip appears to the right</div>
                     </div>
                     
                 </div>
