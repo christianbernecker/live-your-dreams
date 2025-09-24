@@ -9,6 +9,9 @@
     <!-- ZENTRALES CSS SYSTEM -->
     <link rel="stylesheet" href="/shared/master.css">
     
+    <!-- ZENTRALE JAVASCRIPT INTERAKTIONEN -->
+    <script src="/shared/interactions.js"></script>
+    
     <style>
         /* BUTTON-SEITE SPEZIFISCHE ANPASSUNGEN - Basiert auf master.css */
         
@@ -626,30 +629,6 @@ function addRippleEffect(button) {
         </section>
     </main>
     
-    <script>
-        // Button demo interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simulate loading state
-            const demoLoadingBtn = document.getElementById('loadingBtn');
-            if (demoLoadingBtn) {
-                setInterval(() => {
-                    demoLoadingBtn.classList.toggle('loading');
-                }, 3000);
-            }
-            
-            // Add click feedback to all buttons
-            document.querySelectorAll('.lyd-button').forEach(button => {
-                if (!button.disabled) {
-                    button.addEventListener('click', function() {
-                        // Visual feedback
-                        this.style.transform = 'scale(0.98)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 100);
-                    });
-                }
-            });
-        });
-    </script>
+    <!-- JavaScript-Funktionalitäten werden durch /shared/interactions.js bereitgestellt -->
 </body>
 </html>

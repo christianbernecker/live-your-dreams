@@ -9,6 +9,9 @@
     <!-- ZENTRALES CSS SYSTEM -->
     <link rel="stylesheet" href="/shared/master.css">
     
+    <!-- ZENTRALE JAVASCRIPT INTERAKTIONEN -->
+    <script src="/shared/interactions.js"></script>
+    
     <style>
         /* NUR MODAL-SPEZIFISCHE STYLES */
         .lyd-modal-backdrop {
@@ -569,49 +572,6 @@ export const Modal = ({
         </section>
     </main>
     
-    <script>
-        // Modal functions
-        function openModal(modalId) {
-            const backdrop = document.getElementById(modalId + '-backdrop');
-            const modal = document.getElementById(modalId);
-            
-            if (backdrop && modal) {
-                backdrop.classList.add('active');
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        function closeModal(modalId) {
-            const backdrop = document.getElementById(modalId + '-backdrop');
-            const modal = document.getElementById(modalId);
-            
-            if (backdrop && modal) {
-                backdrop.classList.remove('active');
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-        
-        // Close on backdrop click
-        document.querySelectorAll('.lyd-modal-backdrop').forEach(backdrop => {
-            backdrop.addEventListener('click', (e) => {
-                if (e.target === backdrop) {
-                    const modalId = backdrop.id.replace('-backdrop', '');
-                    closeModal(modalId);
-                }
-            });
-        });
-        
-        // Close on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.lyd-modal-backdrop.active').forEach(backdrop => {
-                    const modalId = backdrop.id.replace('-backdrop', '');
-                    closeModal(modalId);
-                });
-            }
-        });
-    </script>
+    <!-- JavaScript-Funktionalitäten werden durch /shared/interactions.js bereitgestellt -->
 </body>
 </html>
