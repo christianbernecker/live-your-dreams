@@ -46,25 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.classList.remove('active');
                     console.log('🔒 Select closed');
                 } else {
-                    // EINFACHER ANSATZ: Nur Z-Index und Position setzen
-                    dropdown.style.position = 'fixed';
-                    dropdown.style.zIndex = '2147483647';
-                    
-                    // Position berechnen
-                    try {
-                        const rect = this.getBoundingClientRect();
-                        dropdown.style.top = (rect.bottom + 8) + 'px';
-                        dropdown.style.left = rect.left + 'px';
-                        dropdown.style.width = rect.width + 'px';
-                        console.log('📐 Position berechnet:', rect.bottom, rect.left, rect.width);
-                    } catch (error) {
-                        console.log('❌ Position-Fehler:', error);
-                    }
-                    
+                    // EINFACH: Nur CSS-Klassen setzen - Position über CSS
                     dropdown.classList.add('show');
                     select.classList.add('active');
                     this.classList.add('active');
-                    console.log('🔓 Select opened with Fixed Position');
+                    console.log('🔓 Select opened - CSS handles positioning');
                 }
             });
         });

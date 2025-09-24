@@ -574,6 +574,36 @@ cp path/to/master.css public/css/master.css
                 </div>
             </div>
         </section>
+
+        <section class="section">
+            <h2 class="section-title">Dropdown Integration</h2>
+            
+            <div class="component-card">
+                <h3>HeroUI-Pattern Dropdown in Next.js</h3>
+                
+                <span class="file-label">components/ui/Select.tsx</span>
+                <div class="code-block">
+<!-- HeroUI-Inspired Dropdown (Robust Z-Index) -->
+<div class="lyd-select">
+    <button class="lyd-select-trigger">
+        <span class="lyd-select-text">Choose option</span>
+        <svg class="lyd-select-icon" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7"/>
+        </svg>
+    </button>
+    <div class="lyd-select-dropdown">
+        <div class="lyd-select-option">Option 1</div>
+        <div class="lyd-select-option">Option 2</div>
+    </div>
+</div>
+
+<!-- Required JavaScript -->
+<script src="/shared/heroui-inspired-dropdowns.js"></script>
+                </div>
+                
+                <p>Das HeroUI-inspirierte System löst alle Z-Index-Probleme durch Portal-Rendering.</p>
+            </div>
+        </section>
     </main>
 </body>
 </html>
