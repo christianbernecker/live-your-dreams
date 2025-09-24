@@ -1428,7 +1428,7 @@ button.lyd-button.large {
     z-index: var(--z-dropdown-container) !important;
 }
 
-/* EINFACHE FUNKTIONIERENDE DROPDOWN-LÖSUNG */
+/* ULTIMATIVE DROPDOWN-LÖSUNG - Z-INDEX PROBLEME BEHOBEN */
 .lyd-select-dropdown,
 .lyd-dropdown-menu,
 .lyd-autocomplete-dropdown,
@@ -1438,13 +1438,18 @@ button.lyd-button.large {
     top: calc(100% + 8px) !important;
     left: 0 !important;
     right: 0 !important;
-    z-index: 999999 !important;
+    z-index: 2147483646 !important; /* Maximaler Z-Index */
     background: white !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
     border: 1px solid var(--lyd-line) !important;
     border-radius: var(--radius-md) !important;
     max-height: 300px !important;
     overflow-y: auto !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important;
+    transition: all 0.2s ease !important;
+    pointer-events: none !important;
 }
 
 /* Aktive/geöffnete Dropdown-Menüs */
@@ -1453,9 +1458,18 @@ button.lyd-button.large {
 .lyd-autocomplete-dropdown.show,
 .lyd-combobox-dropdown.show,
 .lyd-datepicker-dropdown.show {
-    z-index: var(--z-dropdown-active) !important;
+    z-index: 2147483647 !important; /* Höchster Z-Index */
     opacity: 1 !important;
     visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+}
+
+/* Dropdown-Container Stacking */
+.component-card:has(.lyd-dropdown-menu.active),
+.component-card:has(.lyd-select-dropdown.show) {
+    z-index: 2147483645 !important;
+    position: relative !important;
 }
 
 /* ISOLATION-BASIERTE LÖSUNG FÜR CARDS */
