@@ -70,3 +70,16 @@ docs/Credentials/
 /tools/scripts/*.py
 /tools/analysis/*.md
 /tools/task-definitions/*.json
+
+# Root-level cleanup - keep root clean
+/screenshot-*.js
+/create_navigation_screenshots.py
+/remove_component_typography.py
+/check-navigation-consistency.sh
+/*.py
+/*.js
+/temp/
+
+# Screenshot directories (keep organized)
+/screenshots/*/
+!/screenshots/README.md
