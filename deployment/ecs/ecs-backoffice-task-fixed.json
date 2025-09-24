@@ -1,0 +1,66 @@
+{
+  "family": "lyd-backoffice-production",
+  "taskRoleArn": "arn:aws:iam::835474150597:role/ecsTaskRole",
+  "executionRoleArn": "arn:aws:iam::835474150597:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "backoffice",
+      "image": "835474150597.dkr.ecr.eu-central-1.amazonaws.com/lyd-backoffice:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        },
+        {
+          "name": "NEXTAUTH_URL",
+          "value": "https://backoffice.liveyourdreams.online"
+        },
+        {
+          "name": "NEXT_PUBLIC_APP_URL",
+          "value": "https://backoffice.liveyourdreams.online"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:835474150597:secret:lyd/prod/database-url"
+        },
+        {
+          "name": "NEXTAUTH_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:eu-central-1:835474150597:secret:lyd/prod/nextauth-secret"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/lyd-backoffice",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      }
+    }
+  ]
+}
