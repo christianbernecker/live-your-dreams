@@ -29,12 +29,11 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built application
+# Copy built application - WICHTIG: standalone muss vorhanden sein!
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
-
-# Create public directory (may not exist)
+# Public directory may not exist - create it
 RUN mkdir -p ./public
 
 # Set permissions
@@ -47,4 +46,5 @@ ENV PORT=3000
 ENV NODE_ENV=production
 ENV HOSTNAME="0.0.0.0"
 
+# WICHTIG: server.js kommt aus standalone build
 CMD ["node", "server.js"]
