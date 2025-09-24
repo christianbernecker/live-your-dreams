@@ -9,91 +9,75 @@
     <!-- ZENTRALES CSS SYSTEM -->
     <link rel="stylesheet" href="/shared/master.css">
     
-    <!-- ZENTRALE JAVASCRIPT INTERAKTIONEN -->
-    <script src="/shared/interactions.js"></script>
-    
     <style>
-        /* HEROUI-INSPIRIERTES DROPDOWN SYSTEM */
-        .lyd-dropdown {
+        /* HEROUI-BASIERTE DROPDOWN ARCHITEKTUR */
+        .heroui-dropdown {
             position: relative;
             display: inline-block;
         }
         
-        .lyd-dropdown-trigger {
+        .heroui-trigger {
             display: inline-flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            justify-content: space-between;
+            gap: 8px;
             padding: 12px 16px;
+            min-width: 150px;
             background: white;
-            border: 2px solid var(--lyd-line);
-            border-radius: var(--radius-lg);
-            font-size: var(--font-size-base);
-            font-weight: var(--font-weight-medium);
-            color: var(--lyd-text);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #111;
             cursor: pointer;
             transition: all 0.2s ease;
-            min-height: 44px;
+            outline: none;
         }
         
-        .lyd-dropdown-trigger:hover {
-            border-color: var(--lyd-primary);
-            background: var(--lyd-gradient-subtle);
+        .heroui-trigger:hover {
+            border-color: #0066ff;
+            background: #f8fafc;
         }
         
-        .lyd-dropdown-trigger.active {
-            border-color: var(--lyd-primary);
+        .heroui-trigger:focus {
+            border-color: #0066ff;
             box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
         }
         
-        .lyd-dropdown-icon {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-        
-        .lyd-dropdown-trigger.active .lyd-dropdown-icon {
-            transform: rotate(180deg);
-        }
-        
-        .lyd-dropdown-menu {
+        .heroui-menu {
             position: absolute;
             top: calc(100% + 8px);
             left: 0;
             min-width: 200px;
             background: white;
-            border: 1px solid var(--lyd-line);
-            border-radius: var(--radius-lg);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            z-index: 9999999;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            z-index: 999999999;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-8px) scale(0.95);
             transition: all 0.2s ease;
-            padding: var(--spacing-sm) 0;
+            padding: 8px 0;
+            overflow: hidden;
         }
         
-        .lyd-dropdown-menu.active {
+        .heroui-menu[data-open="true"] {
             opacity: 1;
             visibility: visible;
             transform: translateY(0) scale(1);
         }
         
-        .lyd-dropdown-menu.right {
-            left: auto;
-            right: 0;
-        }
-        
-        .lyd-dropdown-item {
+        .heroui-item {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 8px;
             padding: 12px 16px;
-            color: var(--lyd-text);
+            color: #111;
             text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: var(--font-weight-medium);
-            transition: all 0.15s ease;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.15s ease;
             border: none;
             background: none;
             width: 100%;
@@ -101,38 +85,32 @@
             cursor: pointer;
         }
         
-        .lyd-dropdown-item:hover {
-            background: var(--lyd-gradient-subtle);
-            color: var(--lyd-primary);
+        .heroui-item:hover {
+            background: #f3f4f6;
         }
         
-        .lyd-dropdown-item svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-        }
-        
-        .lyd-dropdown-divider {
-            height: 1px;
-            background: var(--lyd-line);
-            margin: var(--spacing-sm) 0;
-        }
-        
-        .lyd-dropdown-header {
-            padding: var(--spacing-sm) 16px;
-            font-size: var(--font-size-xs);
-            font-weight: var(--font-weight-bold);
-            color: var(--lyd-grey);
+        .heroui-section-header {
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        .lyd-dropdown-item.checkbox {
+        .heroui-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 8px 0;
+        }
+        
+        /* Checkbox Styles */
+        .heroui-checkbox {
             position: relative;
             padding-left: 40px;
         }
         
-        .lyd-dropdown-item.checkbox::before {
+        .heroui-checkbox::before {
             content: '';
             position: absolute;
             left: 16px;
@@ -140,18 +118,17 @@
             transform: translateY(-50%);
             width: 16px;
             height: 16px;
-            border: 2px solid var(--lyd-line);
-            border-radius: var(--radius-sm);
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
             background: white;
-            transition: all 0.2s ease;
         }
         
-        .lyd-dropdown-item.checkbox.selected::before {
-            background: var(--lyd-primary);
-            border-color: var(--lyd-primary);
+        .heroui-checkbox[data-selected="true"]::before {
+            background: #0066ff;
+            border-color: #0066ff;
         }
         
-        .lyd-dropdown-item.checkbox.selected::after {
+        .heroui-checkbox[data-selected="true"]::after {
             content: '';
             position: absolute;
             left: 20px;
@@ -164,6 +141,48 @@
             border-left: none;
         }
     </style>
+    
+    <script>
+        // HEROUI-BASIERTE DROPDOWN FUNKTIONALITÄT
+        function toggleHeroUIDropdown(triggerId) {
+            const trigger = document.getElementById(triggerId);
+            const menu = trigger.nextElementSibling;
+            const isOpen = menu.getAttribute('data-open') === 'true';
+            
+            // Close all dropdowns
+            document.querySelectorAll('.heroui-menu').forEach(m => {
+                m.setAttribute('data-open', 'false');
+            });
+            
+            // Toggle current dropdown
+            if (!isOpen) {
+                menu.setAttribute('data-open', 'true');
+            }
+        }
+        
+        function toggleCheckbox(item) {
+            const isSelected = item.getAttribute('data-selected') === 'true';
+            item.setAttribute('data-selected', isSelected ? 'false' : 'true');
+        }
+        
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.heroui-dropdown')) {
+                document.querySelectorAll('.heroui-menu').forEach(m => {
+                    m.setAttribute('data-open', 'false');
+                });
+            }
+        });
+        
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.heroui-menu').forEach(m => {
+                    m.setAttribute('data-open', 'false');
+                });
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="sidebar">
@@ -223,56 +242,61 @@
     
     <main class="main-content">
         <h1>Dropdown</h1>
-        <p>Versatile dropdown menus for navigation, actions, and selections with smooth animations.</p>
+        <p>Versatile dropdown menus for navigation, actions, and selections with smooth animations - rebuilt with HeroUI architecture.</p>
         
-        <!-- Section 1: Dropdown Variants -->
+        <!-- Section 1: HeroUI Dropdown Variants -->
         <section class="section">
-            <h2 class="section-title">Dropdown Variants</h2>
+            <h2 class="section-title">HeroUI Dropdown Variants</h2>
             
-            <!-- CARD ENTFERNT FÜR TEST -->
-            <h3 style="margin: 24px 0 16px 0;">Standard Dropdown</h3>
-            <p style="margin-bottom: 24px; color: #666;">Basic dropdown with text items</p>
-            
-            <div style="position: relative; display: inline-block; margin: 50px;">
-                <button onclick="alert('OHNE CARD: JavaScript funktioniert!'); var m=this.nextElementSibling; if(m.style.display==='block'){m.style.display='none';}else{m.style.display='block'; m.style.position='absolute'; m.style.top='50px'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='yellow'; m.style.border='3px solid red'; m.style.padding='15px'; m.style.borderRadius='8px';}" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
-                    <span>Options OHNE CARD</span>
-                    <span style="margin-left: auto;">▼</span>
-                </button>
-                <div style="display: none;">
-                    <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">View Details</a>
-                    <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Edit Property</a>
-                    <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Share Listing</a>
-                    <div style="height: 1px; background: #e5e7eb; margin: 8px 0;"></div>
-                    <a href="#" style="display: block; padding: 12px 16px; color: #ef4444; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Delete</a>
+            <div class="component-card">
+                <h3>Standard Dropdown</h3>
+                <p>Basic dropdown with text items</p>
+                
+                <div class="heroui-dropdown">
+                    <button class="heroui-trigger" id="dropdown1" onclick="toggleHeroUIDropdown('dropdown1')">
+                        <span>Options</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="heroui-menu" data-open="false">
+                        <a href="#" class="heroui-item">View Details</a>
+                        <a href="#" class="heroui-item">Edit Property</a>
+                        <a href="#" class="heroui-item">Share Listing</a>
+                        <div class="heroui-divider"></div>
+                        <a href="#" class="heroui-item" style="color: #ef4444;">Delete</a>
+                    </div>
                 </div>
             </div>
             
-            <!-- CARD ENTFERNT - FUNKTIONIERT! -->
-            <h3 style="margin: 24px 0 16px 0;">Dropdown with Icons</h3>
-            <p style="margin-bottom: 24px; color: #666;">Enhanced dropdown with icon indicators</p>
-            
-            <div style="position: relative; display: inline-block; margin: 50px;">
-                <button onclick="alert('Actions JavaScript funktioniert!'); var m=this.nextElementSibling; if(m.style.display==='block'){m.style.display='none';}else{m.style.display='block'; m.style.position='absolute'; m.style.top='50px'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='yellow'; m.style.border='3px solid red'; m.style.padding='15px'; m.style.borderRadius='8px';}" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
-                    <span>Actions</span>
-                    <span style="margin-left: auto;">▼</span>
-                </button>
-                    <div class="lyd-dropdown-menu" style="display: none;">
-                        <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
-                            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <div class="component-card">
+                <h3>Dropdown with Icons</h3>
+                <p>Enhanced dropdown with icon indicators</p>
+                
+                <div class="heroui-dropdown">
+                    <button class="heroui-trigger" id="dropdown2" onclick="toggleHeroUIDropdown('dropdown2')">
+                        <span>Actions</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="heroui-menu" data-open="false">
+                        <a href="#" class="heroui-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <circle cx="12" cy="12" r="10"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
                             View
                         </a>
-                        <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
-                            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <a href="#" class="heroui-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
                                 <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                             Edit
                         </a>
-                        <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
-                            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <a href="#" class="heroui-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                                 <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
                             </svg>
@@ -282,21 +306,23 @@
                 </div>
             </div>
             
-            <!-- CARD ENTFERNT - FUNKTIONIERT! -->
-            <h3 style="margin: 24px 0 16px 0;">Multi-Select Dropdown</h3>
-            <p style="margin-bottom: 24px; color: #666;">Dropdown with checkbox selection</p>
-            
-            <div style="position: relative; display: inline-block; margin: 50px;">
-                <button onclick="alert('Filter Properties JavaScript funktioniert!'); var m=this.nextElementSibling; if(m.style.display==='block'){m.style.display='none';}else{m.style.display='block'; m.style.position='absolute'; m.style.top='50px'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='yellow'; m.style.border='3px solid red'; m.style.padding='15px'; m.style.borderRadius='8px';}" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
-                    <span>Filter Properties</span>
-                    <span style="margin-left: auto;">▼</span>
-                </button>
-                    <div class="lyd-dropdown-menu" style="display: none;">
-                        <div style="padding: 8px 16px; font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase;">Property Type</div>
-                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: white; color: #111; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">Apartment</button>
-                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: #0066ff; color: white; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">House</button>
-                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: white; color: #111; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">Villa</button>
-                        <button onclick="this.style.background = this.style.background === 'rgb(0, 102, 255)' ? 'white' : '#0066ff'; this.style.color = this.style.color === 'white' ? '#111' : 'white';" style="display: block; width: 100%; text-align: left; padding: 12px 16px; border: none; background: white; color: #111; font-size: 14px; cursor: pointer;" onmouseover="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='#f3f4f6'" onmouseout="if(this.style.background !== 'rgb(0, 102, 255)') this.style.background='white'">Penthouse</button>
+            <div class="component-card">
+                <h3>Multi-Select Dropdown</h3>
+                <p>Dropdown with checkbox selection</p>
+                
+                <div class="heroui-dropdown">
+                    <button class="heroui-trigger" id="dropdown3" onclick="toggleHeroUIDropdown('dropdown3')">
+                        <span>Filter Properties</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="heroui-menu" data-open="false">
+                        <div class="heroui-section-header">Property Type</div>
+                        <button class="heroui-item heroui-checkbox" data-selected="false" onclick="toggleCheckbox(this)">Apartment</button>
+                        <button class="heroui-item heroui-checkbox" data-selected="true" onclick="toggleCheckbox(this)">House</button>
+                        <button class="heroui-item heroui-checkbox" data-selected="false" onclick="toggleCheckbox(this)">Villa</button>
+                        <button class="heroui-item heroui-checkbox" data-selected="false" onclick="toggleCheckbox(this)">Penthouse</button>
                     </div>
                 </div>
             </div>
@@ -306,25 +332,27 @@
         <section class="section">
             <h2 class="section-title">Real Estate Use Cases</h2>
             
-            <!-- CARD ENTFERNT - FUNKTIONIERT! -->
-            <h3 style="margin: 24px 0 16px 0;">User Menu</h3>
-            
-            <div style="position: relative; display: inline-block; margin: 50px;">
-                <button onclick="alert('John Doe JavaScript funktioniert!'); var m=this.nextElementSibling; if(m.style.display==='block'){m.style.display='none';}else{m.style.display='block'; m.style.position='absolute'; m.style.top='50px'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='yellow'; m.style.border='3px solid red'; m.style.padding='15px'; m.style.borderRadius='8px';}" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #000066, #3366CC); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
-                        JD
-                    </div>
-                    <span>John Doe</span>
-                    <span style="margin-left: auto;">▼</span>
-                </button>
-                    <div class="lyd-dropdown-menu" style="display: none;">
-                        <div style="padding: 8px 16px; font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase;">Account</div>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">My Profile</a>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">My Properties</a>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Saved Searches</a>
-                        <div style="height: 1px; background: #e5e7eb; margin: 8px 0;"></div>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Settings</a>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #ef4444; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Sign Out</a>
+            <div class="component-card">
+                <h3>User Menu</h3>
+                
+                <div class="heroui-dropdown">
+                    <button class="heroui-trigger" id="dropdown4" onclick="toggleHeroUIDropdown('dropdown4')">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #000066, #3366CC); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
+                            JD
+                        </div>
+                        <span>John Doe</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="heroui-menu" data-open="false" style="right: 0; left: auto;">
+                        <div class="heroui-section-header">Account</div>
+                        <a href="#" class="heroui-item">My Profile</a>
+                        <a href="#" class="heroui-item">My Properties</a>
+                        <a href="#" class="heroui-item">Saved Searches</a>
+                        <div class="heroui-divider"></div>
+                        <a href="#" class="heroui-item">Settings</a>
+                        <a href="#" class="heroui-item" style="color: #ef4444;">Sign Out</a>
                     </div>
                 </div>
             </div>
