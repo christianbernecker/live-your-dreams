@@ -1,6 +1,4 @@
-// TEMPORÄR: CSS Imports deaktiviert für Docker Build
-// import '@liveyourdreams/design-tokens/dist/css/tokens.css';
-// import '@liveyourdreams/design-system/dist/styles/global.css';
+// DESIGN SYSTEM CSS - AKTIVIERT FÜR RADIKALE UI-ÜBERARBEITUNG
 import './globals.css';
 import { Providers } from './providers';
 

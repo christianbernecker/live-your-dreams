@@ -1,10 +1,4 @@
-import { 
-  LdsCard, 
-  LdsCardHeader, 
-  LdsCardTitle, 
-  LdsButton,
-  LdsBadge
-} from '@liveyourdreams/design-system-react';
+// RADIKALE UI-ÜBERARBEITUNG: Keine React-Komponenten - nur Design System CSS!
 
 // Mock dashboard data
 const dashboardData = {
@@ -38,87 +32,115 @@ const dashboardData = {
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600 mt-2">Überblick über Ihre Immobilienvermarktung</p>
-          </div>
-          
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <LdsCard>
-              <div className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-600">Immobilien gesamt</p>
-                    <p className="text-2xl font-bold text-gray-900">{dashboardData.properties.total}</p>
-                  </div>
-                </div>
-                <div className="mt-4 flex space-x-2">
-                  <LdsBadge variant="success" size="sm">{dashboardData.properties.published} veröffentlicht</LdsBadge>
-                  <LdsBadge variant="warning" size="sm">{dashboardData.properties.draft} Entwurf</LdsBadge>
-                </div>
-              </div>
-            </LdsCard>
-            
-            <LdsCard>
-              <div className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-600">Interessenten</p>
-                    <p className="text-2xl font-bold text-gray-900">{dashboardData.leads.total}</p>
-                  </div>
-                </div>
-                <div className="mt-4 flex space-x-2">
-                  <LdsBadge variant="warning" size="sm">{dashboardData.leads.new} neu</LdsBadge>
-                  <LdsBadge variant="info" size="sm">{dashboardData.leads.contacted} kontaktiert</LdsBadge>
-                </div>
-              </div>
-            </LdsCard>
-          </div>
-          
-          {/* Recent Activity */}
-          <LdsCard>
-            <LdsCardHeader>
-              <LdsCardTitle>Letzte Aktivitäten</LdsCardTitle>
-            </LdsCardHeader>
-            <div className="p-6 pt-0">
-              <div className="space-y-4">
-                {dashboardData.recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-start space-x-3">
-                    <div className="flex-shrink-0">
-                      <LdsBadge variant={activity.type === 'lead' ? 'info' : 'success'}>
-                        {activity.type === 'lead' ? 'Lead' : 'Property'}
-                      </LdsBadge>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900">{activity.message}</p>
-                      <p className="text-xs text-gray-500">
-                        {activity.timestamp.toLocaleString('de-DE')}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+    <div className="backoffice-layout">
+      {/* Sidebar Navigation */}
+      <aside className="backoffice-sidebar">
+        <div style={{ marginBottom: '32px' }}>
+          <img src="/shared/lyd-logo.svg" alt="Live Your Dreams" style={{ height: '48px', marginBottom: '8px' }} />
+          <div style={{ fontSize: '14px', opacity: '0.8' }}>Backoffice</div>
+        </div>
+        
+        <nav>
+          <a href="/dashboard" className="backoffice-nav-item active">
+            <span>📊</span> Dashboard
+          </a>
+          <a href="/properties" className="backoffice-nav-item">
+            <span>🏠</span> Immobilien
+          </a>
+          <a href="/leads" className="backoffice-nav-item">
+            <span>👥</span> Interessenten
+          </a>
+          <a href="/pricing" className="backoffice-nav-item">
+            <span>💰</span> Preisrechner
+          </a>
+          <a href="/settings" className="backoffice-nav-item">
+            <span>⚙️</span> Einstellungen
+          </a>
+        </nav>
+      </aside>
+      
+      {/* Main Content */}
+      <main className="backoffice-main">
+        <header className="backoffice-header">
+          <h1 style={{ margin: '0', fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>Dashboard</h1>
+          <p style={{ margin: '8px 0 0 0', color: 'var(--lyd-grey)' }}>Überblick über Ihre Immobilienvermarktung</p>
+        </header>
+        
+        {/* Stats Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--spacing-lg)', marginBottom: 'var(--spacing-xl)' }}>
+          <div className="component-card">
+            <h3>Immobilien gesamt</h3>
+            <div style={{ fontSize: '32px', fontWeight: 'var(--font-weight-bold)', color: 'var(--lyd-primary)', margin: '8px 0' }}>
+              {dashboardData.properties.total}
             </div>
-          </LdsCard>
+            <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-md)' }}>
+              <span style={{ padding: '4px 8px', backgroundColor: '#16a34a', color: 'white', borderRadius: 'var(--radius-sm)', fontSize: 'var(--font-size-sm)' }}>
+                {dashboardData.properties.published} veröffentlicht
+              </span>
+              <span style={{ padding: '4px 8px', backgroundColor: '#f59e0b', color: 'white', borderRadius: 'var(--radius-sm)', fontSize: 'var(--font-size-sm)' }}>
+                {dashboardData.properties.draft} Entwurf
+              </span>
+            </div>
+          </div>
           
-          {/* Quick Actions */}
-          <div className="flex space-x-4">
-            <LdsButton variant="primary">
-              Neue Immobilie anlegen
-            </LdsButton>
-            <LdsButton variant="outline">
-              Leads verwalten
-            </LdsButton>
-            <LdsButton variant="outline">
-              Medien hochladen
-            </LdsButton>
+          <div className="component-card">
+            <h3>Interessenten</h3>
+            <div style={{ fontSize: '32px', fontWeight: 'var(--font-weight-bold)', color: 'var(--lyd-primary)', margin: '8px 0' }}>
+              {dashboardData.leads.total}
+            </div>
+            <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-md)' }}>
+              <span style={{ padding: '4px 8px', backgroundColor: '#f59e0b', color: 'white', borderRadius: 'var(--radius-sm)', fontSize: 'var(--font-size-sm)' }}>
+                {dashboardData.leads.new} neu
+              </span>
+              <span style={{ padding: '4px 8px', backgroundColor: '#0066ff', color: 'white', borderRadius: 'var(--radius-sm)', fontSize: 'var(--font-size-sm)' }}>
+                {dashboardData.leads.contacted} kontaktiert
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+        
+        {/* Recent Activity */}
+        <div className="component-card" style={{ marginBottom: 'var(--spacing-xl)' }}>
+          <h3>Letzte Aktivitäten</h3>
+          <div style={{ marginTop: 'var(--spacing-md)' }}>
+            {dashboardData.recentActivity.map((activity) => (
+              <div key={activity.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--spacing-md)', padding: 'var(--spacing-md) 0', borderBottom: '1px solid var(--lyd-line)' }}>
+                <span style={{ 
+                  padding: '4px 8px', 
+                  backgroundColor: activity.type === 'lead' ? '#0066ff' : '#16a34a', 
+                  color: 'white', 
+                  borderRadius: 'var(--radius-sm)', 
+                  fontSize: 'var(--font-size-sm)',
+                  flexShrink: 0
+                }}>
+                  {activity.type === 'lead' ? 'Lead' : 'Property'}
+                </span>
+                <div style={{ flex: 1 }}>
+                  <p style={{ margin: '0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)' }}>
+                    {activity.message}
+                  </p>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: 'var(--lyd-grey)' }}>
+                    {activity.timestamp.toLocaleString('de-DE')}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Quick Actions */}
+        <div style={{ display: 'flex', gap: 'var(--spacing-md)', flexWrap: 'wrap' }}>
+          <a href="/properties/new" className="lyd-button lyd-button-primary">
+            Neue Immobilie anlegen
+          </a>
+          <a href="/leads" className="lyd-button lyd-button-secondary">
+            Leads verwalten
+          </a>
+          <a href="/media" className="lyd-button lyd-button-secondary">
+            Medien hochladen
+          </a>
+        </div>
+      </main>
     </div>
   );
 }

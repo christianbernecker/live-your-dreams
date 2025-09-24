@@ -1,16 +1,4 @@
-import { 
-  LdsCard, 
-  LdsCardHeader, 
-  LdsCardTitle, 
-  LdsButton,
-  LdsTable,
-  LdsTableHeader,
-  LdsTableBody,
-  LdsTableRow,
-  LdsTableHeaderCell,
-  LdsTableCell,
-  LdsBadge
-} from '@liveyourdreams/design-system-react';
+// RADIKALE UI-ÜBERARBEITUNG: Keine React-Komponenten - nur Design System CSS!
 
 // Mock data for development
 const mockProperties = [
@@ -60,87 +48,112 @@ function getStatusVariant(status: string) {
 
 export default function PropertiesPage() {
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Immobilien</h1>
-          <p className="text-gray-600 mt-2">Verwalten Sie Ihre Immobilienangebote</p>
+    <div className="backoffice-layout">
+      {/* Sidebar Navigation */}
+      <aside className="backoffice-sidebar">
+        <div style={{ marginBottom: '32px' }}>
+          <img src="/shared/lyd-logo.svg" alt="Live Your Dreams" style={{ height: '48px', marginBottom: '8px' }} />
+          <div style={{ fontSize: '14px', opacity: '0.8' }}>Backoffice</div>
         </div>
-        <LdsButton variant="primary" href="/properties/new">
-          Neue Immobilie
-        </LdsButton>
-      </div>
-      
-      <LdsCard>
-        <LdsCardHeader>
-          <LdsCardTitle>Aktuelle Angebote</LdsCardTitle>
-        </LdsCardHeader>
         
-        <LdsTable>
-          <LdsTableHeader>
-            <LdsTableRow>
-              <LdsTableHeaderCell>Titel</LdsTableHeaderCell>
-              <LdsTableHeaderCell>Ort</LdsTableHeaderCell>
-              <LdsTableHeaderCell>Preis</LdsTableHeaderCell>
-              <LdsTableHeaderCell>Details</LdsTableHeaderCell>
-              <LdsTableHeaderCell>Status</LdsTableHeaderCell>
-              <LdsTableHeaderCell>Leads</LdsTableHeaderCell>
-              <LdsTableHeaderCell>Aktionen</LdsTableHeaderCell>
-            </LdsTableRow>
-          </LdsTableHeader>
-          <LdsTableBody>
-            {mockProperties.map((property) => (
-              <LdsTableRow key={property.id}>
-                <LdsTableCell>
-                  <div className="font-medium">{property.title}</div>
-                  <div className="text-sm text-gray-500">
-                    Erstellt: {property.createdAt.toLocaleDateString('de-DE')}
-                  </div>
-                </LdsTableCell>
-                <LdsTableCell>
-                  {property.city} {property.postcode}
-                </LdsTableCell>
-                <LdsTableCell>
-                  <div className="font-medium">{formatPrice(property.price)}</div>
-                </LdsTableCell>
-                <LdsTableCell>
-                  <div className="text-sm">
-                    {property.livingArea}m² • {property.roomCount} Zimmer
-                  </div>
-                </LdsTableCell>
-                <LdsTableCell>
-                  <LdsBadge variant={getStatusVariant(property.status) as any}>
-                    {property.status}
-                  </LdsBadge>
-                </LdsTableCell>
-                <LdsTableCell>
-                  <div className="text-sm">
-                    {property._count.leads} Interessenten
-                  </div>
-                </LdsTableCell>
-                <LdsTableCell>
-                  <div className="flex space-x-2">
-                    <LdsButton 
-                      variant="outline" 
-                      size="sm"
-                      href={`/properties/${property.id}`}
-                    >
-                      Bearbeiten
-                    </LdsButton>
-                    <LdsButton 
-                      variant="outline" 
-                      size="sm"
-                      href={`/properties/${property.id}?tab=preview`}
-                    >
-                      Ansehen
-                    </LdsButton>
-                  </div>
-                </LdsTableCell>
-              </LdsTableRow>
-            ))}
-          </LdsTableBody>
-        </LdsTable>
-      </LdsCard>
+        <nav>
+          <a href="/dashboard" className="backoffice-nav-item">
+            <span>📊</span> Dashboard
+          </a>
+          <a href="/properties" className="backoffice-nav-item active">
+            <span>🏠</span> Immobilien
+          </a>
+          <a href="/leads" className="backoffice-nav-item">
+            <span>👥</span> Interessenten
+          </a>
+          <a href="/pricing" className="backoffice-nav-item">
+            <span>💰</span> Preisrechner
+          </a>
+          <a href="/settings" className="backoffice-nav-item">
+            <span>⚙️</span> Einstellungen
+          </a>
+        </nav>
+      </aside>
+      
+      {/* Main Content */}
+      <main className="backoffice-main">
+        <header className="backoffice-header">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h1 style={{ margin: '0', fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>Immobilien</h1>
+              <p style={{ margin: '8px 0 0 0', color: 'var(--lyd-grey)' }}>Verwalten Sie Ihre Immobilienangebote</p>
+            </div>
+            <a href="/properties/new" className="lyd-button lyd-button-primary">
+              Neue Immobilie
+            </a>
+          </div>
+        </header>
+        
+        <div className="component-card">
+          <h3>Aktuelle Angebote</h3>
+          
+          <table className="lyd-table">
+            <thead>
+              <tr>
+                <th>Titel</th>
+                <th>Ort</th>
+                <th>Preis</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>Leads</th>
+                <th>Aktionen</th>
+              </tr>
+            </thead>
+            <tbody>
+              {mockProperties.map((property) => (
+                <tr key={property.id}>
+                  <td>
+                    <div style={{ fontWeight: 'var(--font-weight-medium)' }}>{property.title}</div>
+                    <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--lyd-grey)', marginTop: '4px' }}>
+                      Erstellt: {property.createdAt.toLocaleDateString('de-DE')}
+                    </div>
+                  </td>
+                  <td>{property.city} {property.postcode}</td>
+                  <td>
+                    <div style={{ fontWeight: 'var(--font-weight-medium)' }}>{formatPrice(property.price)}</div>
+                  </td>
+                  <td>
+                    <div style={{ fontSize: 'var(--font-size-sm)' }}>
+                      {property.livingArea}m² • {property.roomCount} Zimmer
+                    </div>
+                  </td>
+                  <td>
+                    <span style={{ 
+                      padding: '4px 8px', 
+                      backgroundColor: property.status === 'PUBLISHED' ? '#16a34a' : '#f59e0b', 
+                      color: 'white', 
+                      borderRadius: 'var(--radius-sm)', 
+                      fontSize: 'var(--font-size-sm)' 
+                    }}>
+                      {property.status}
+                    </span>
+                  </td>
+                  <td>
+                    <div style={{ fontSize: 'var(--font-size-sm)' }}>
+                      {property._count.leads} Interessenten
+                    </div>
+                  </td>
+                  <td>
+                    <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
+                      <a href={`/properties/${property.id}`} className="lyd-button lyd-button-secondary" style={{ fontSize: 'var(--font-size-sm)', padding: '8px 12px' }}>
+                        Bearbeiten
+                      </a>
+                      <a href={`/properties/${property.id}?tab=preview`} className="lyd-button lyd-button-secondary" style={{ fontSize: 'var(--font-size-sm)', padding: '8px 12px' }}>
+                        Ansehen
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </main>
     </div>
   );
 }
