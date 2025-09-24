@@ -5,49 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Date Picker - LYD Design System V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <!-- ZENTRALE JAVASCRIPT INTERAKTIONEN -->
+    <script src="/shared/interactions.js"></script>
+    
     <style>
-                :root {
-            /* Live Your Dreams CI Colors */
-            --lyd-deep-blue: #000066;
-            --lyd-royal-blue: #3366CC;
-            --lyd-accent: #E8F0FE;
-            --lyd-grey: #666666;
-            --lyd-line: #E5E7EB;
-            --lyd-text: #111111;
-            --lyd-bg: #ffffff;
-            
-            /* Additional Colors */
-            --lyd-success: #10b981;
-            --lyd-warning: #f59e0b;
-            --lyd-error: #ef4444;
-            
-            /* Gray Scale */
-            --lyd-gray-100: #f3f4f6;
-            --lyd-gray-200: #e5e7eb;
-            --lyd-gray-800: #1f2937;
-            --lyd-gray-900: #111827;
-            
-            /* Typography Scale - CI konform */
-            --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
-            --font-family-display: 'Inter', system-ui, -apple-system, sans-serif;
-            
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 20px;
-            --font-size-2xl: 24px;
-            --font-size-3xl: 30px;
-            --font-size-4xl: 36px;
-            --font-size-5xl: 48px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
+        /* DATEPICKER-SPEZIFISCHE STYLES - NUR UNIQUE COMPONENTS */
             --spacing-3xl: 64px;
             
             /* Shadows */
@@ -864,19 +829,7 @@ export const DatePicker = ({ value, onChange, placeholder = "Select date" }: Dat
                 }
             });
             
-            document.querySelectorAll('.lyd-button.copy').forEach(button => {
-                button.addEventListener('click', function() {
-                    const codeBlock = this.parentElement.querySelector('pre');
-                    const text = codeBlock.textContent;
-                    navigator.clipboard.writeText(text).then(() => {
-                        const originalText = this.textContent;
-                        this.textContent = 'Copied!';
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                        }, 2000);
-                    });
-                });
-            });
+            // Copy-Funktionalität wird durch /shared/interactions.js bereitgestellt
             
             // Date Picker functionality
             document.querySelectorAll('.lyd-datepicker-input').forEach(input => {

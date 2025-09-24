@@ -983,32 +983,59 @@ button.lyd-button.large {
     border-radius: var(--radius-full);
 }
 
-/* SVG ICON SYSTEM */
-.lyd-icon {
+/* SVG ICON SYSTEM - ZENTRAL STANDARDISIERT */
+.lyd-icon,
+.lyd-button svg,
+.lyd-modal svg,
+.lyd-toast svg,
+.lyd-dropdown svg,
+.lyd-select svg,
+.lyd-datepicker svg {
     width: 24px;
     height: 24px;
     stroke: currentColor;
-    stroke-width: 1.5;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     fill: none;
     transition: var(--transition-luxury);
+    flex-shrink: 0;
 }
 
-.lyd-icon-sm {
+/* Icon Größen-Varianten */
+.lyd-icon-sm,
+.lyd-button.small svg,
+.lyd-toast svg {
     width: 16px;
     height: 16px;
+    stroke-width: 2;
 }
 
-.lyd-icon-lg {
+.lyd-icon-lg,
+.lyd-button.large svg {
     width: 32px;
     height: 32px;
+    stroke-width: 1.5;
 }
 
+.lyd-icon-xl {
+    width: 48px;
+    height: 48px;
+    stroke-width: 1;
+}
+
+/* Icon States */
 .lyd-icon-gradient {
     stroke: url(#icon-gradient);
 }
 
 .lyd-icon-animated:hover {
     transform: rotate(180deg) scale(1.1);
+    stroke: var(--lyd-primary);
+}
+
+.lyd-icon-interactive:hover {
+    transform: scale(1.1);
     stroke: var(--lyd-primary);
 }
 
