@@ -53,36 +53,60 @@ window.LYDModal = {
     }
 };
 
-// DROPDOWN SYSTEM - GLOBAL
+// DROPDOWN SYSTEM - EINFACH UND FUNKTIONAL
 window.LYDDropdown = {
     toggle: function(dropdownId) {
         const dropdown = document.getElementById(dropdownId);
-        if (dropdown) {
-            // Close all other dropdowns first
-            document.querySelectorAll('.lyd-dropdown-menu.active, .lyd-select-dropdown.show').forEach(dd => {
-                if (dd.id !== dropdownId) {
-                    dd.classList.remove('active', 'show');
+        const trigger = dropdown?.previousElementSibling;
+        
+        if (dropdown && trigger) {
+            // Close ALL other dropdowns first
+            document.querySelectorAll('.lyd-dropdown-menu').forEach(menu => {
+                if (menu.id !== dropdownId) {
+                    menu.classList.remove('active');
+                    menu.style.display = 'none';
                 }
             });
             
-            dropdown.classList.toggle('active');
-            dropdown.classList.toggle('show');
-        }
-    },
-    
-    close: function(dropdownId) {
-        const dropdown = document.getElementById(dropdownId);
-        if (dropdown) {
-            dropdown.classList.remove('active', 'show');
+            document.querySelectorAll('.lyd-dropdown-trigger').forEach(btn => {
+                if (btn !== trigger) {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Toggle current dropdown
+            const isActive = dropdown.classList.contains('active');
+            if (isActive) {
+                dropdown.classList.remove('active');
+                dropdown.style.display = 'none';
+                trigger.classList.remove('active');
+            } else {
+                dropdown.classList.add('active');
+                dropdown.style.display = 'block';
+                dropdown.style.position = 'absolute';
+                dropdown.style.top = 'calc(100% + 8px)';
+                dropdown.style.left = '0';
+                dropdown.style.right = '0';
+                dropdown.style.zIndex = '99999999';
+                dropdown.style.background = 'white';
+                dropdown.style.border = '1px solid #e5e7eb';
+                dropdown.style.borderRadius = '8px';
+                dropdown.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+                trigger.classList.add('active');
+            }
         }
     },
     
     init: function() {
         // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.lyd-dropdown') && !e.target.closest('.lyd-select')) {
-                document.querySelectorAll('.lyd-dropdown-menu.active, .lyd-select-dropdown.show').forEach(dropdown => {
-                    dropdown.classList.remove('active', 'show');
+            if (!e.target.closest('.lyd-dropdown')) {
+                document.querySelectorAll('.lyd-dropdown-menu.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                    dropdown.style.display = 'none';
+                });
+                document.querySelectorAll('.lyd-dropdown-trigger.active').forEach(trigger => {
+                    trigger.classList.remove('active');
                 });
             }
         });
