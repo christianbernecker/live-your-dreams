@@ -1,25 +1,11 @@
-# Live Your Dreams Design System - V2 as Main Production Docker Image
-FROM node:18-alpine AS builder
-
-# Build Design System (Legacy V1 components for compatibility)
-WORKDIR /app
-COPY design-system/package.json design-system/vite.config.js ./
-COPY design-system/src/ ./src/
-COPY design-system/assets/ ./assets/
-COPY design-system/*.html ./
-
-RUN npm install && npm run build
-
-# Production stage with Nginx
+# Live Your Dreams Design System - V2 Only (Optimized)
 FROM nginx:alpine
 
-# Copy V2 as ROOT (main version)
+# Copy V2 as ROOT (only version needed)
 COPY design-system/v2/ /usr/share/nginx/html/
 
-# Copy legacy build assets for compatibility
-COPY --from=builder /app/dist/ /usr/share/nginx/html/dist/
-COPY --from=builder /app/assets/ /usr/share/nginx/html/assets/
-COPY --from=builder /app/src/ /usr/share/nginx/html/src/
+# Copy V1 assets for backward compatibility (logos, etc.)
+COPY design-system/assets/ /usr/share/nginx/html/assets/
 
 # Nginx configuration - V2 as Main
 COPY <<EOF /etc/nginx/conf.d/default.conf
@@ -43,16 +29,6 @@ server {
     location /assets/ {
         try_files \$uri =404;
         add_header Content-Type image/svg+xml;
-        expires 30d;
-    }
-    
-    location /src/ {
-        try_files \$uri =404;
-        add_header Content-Type application/javascript;
-    }
-    
-    location /dist/ {
-        try_files \$uri =404;
         expires 30d;
     }
     
@@ -131,7 +107,7 @@ server {
     }
     
     location /health {
-        return 200 "healthy - v2 as main\n";
+        return 200 "healthy - v2 only\n";
         add_header Content-Type text/plain;
     }
 }
