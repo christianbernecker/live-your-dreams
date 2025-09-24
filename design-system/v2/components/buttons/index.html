@@ -32,7 +32,6 @@
         /* EINHEITLICHE BUTTON-DIMENSIONEN */
         .lyd-button {
             min-height: 44px;
-            max-width: 200px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -43,7 +42,6 @@
         .lyd-button.icon-only {
             padding: var(--spacing-md);
             min-width: 44px;
-            max-width: 44px;
             min-height: 44px;
         }
         
@@ -52,7 +50,6 @@
             padding: var(--spacing-sm) var(--spacing-md);
             font-size: var(--font-size-sm);
             min-height: 36px;
-            max-width: 150px;
         }
         
         /* Large Button Size */
@@ -60,7 +57,6 @@
             padding: var(--spacing-lg) var(--spacing-2xl);
             font-size: var(--font-size-lg);
             min-height: 52px;
-            max-width: 250px;
         }
         
         /* Ghost Button - Spezielle Variante */
@@ -133,14 +129,6 @@
         
         .lyd-button.secondary:hover::before {
             left: 100%;
-        }
-        
-        /* MODAL-SPEZIFISCHE BUTTON-OPTIMIERUNG */
-        .lyd-modal .lyd-button,
-        .lyd-modal-footer .lyd-button {
-            max-width: 120px;
-            min-width: 80px;
-            flex-shrink: 0;
         }
         
         /* BUTTON ALIGNMENT IN GRUPPEN */

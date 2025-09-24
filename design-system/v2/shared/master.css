@@ -559,11 +559,52 @@ p {
     cursor: not-allowed;
 }
 
-/* MODAL-SPEZIFISCHE BUTTON-OPTIMIERUNG - GLOBAL */
+/* BUTTON-BREITEN-BEGRENZUNG - GLOBAL ROBUST */
+button.lyd-button,
+.lyd-button {
+    max-width: 200px !important;
+    word-wrap: break-word;
+    box-sizing: border-box !important;
+}
+
+/* MODAL-SPEZIFISCHE BUTTON-OPTIMIERUNG - ULTRA-SPEZIFISCH */
+.lyd-modal button.lyd-button,
+.lyd-modal-footer button.lyd-button,
 .lyd-modal .lyd-button,
-.lyd-modal-footer .lyd-button {
-    max-width: 120px;
-    min-width: 80px;
+.lyd-modal-footer .lyd-button,
+div.lyd-modal button.lyd-button.primary,
+div.lyd-modal button.lyd-button.secondary,
+div.lyd-modal button.lyd-button.outline,
+div.lyd-modal-footer button.lyd-button.primary,
+div.lyd-modal-footer button.lyd-button.secondary,
+div.lyd-modal-footer button.lyd-button.outline {
+    max-width: 120px !important;
+    min-width: 80px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: auto !important;
+}
+
+/* TOAST-SPEZIFISCHE BUTTON-OPTIMIERUNG - ULTRA-SPEZIFISCH */
+.lyd-toast button.lyd-button,
+.luxury-toast button.lyd-button,
+.toast-container button.lyd-button,
+div.lyd-toast .lyd-button,
+div.luxury-toast .lyd-button,
+div.toast-container .lyd-button {
+    max-width: 100px !important;
+    min-width: 60px !important;
+    font-size: var(--font-size-sm) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    width: auto !important;
+}
+
+/* COMPONENT-CARD BUTTON-TRIGGER OPTIMIERUNG */
+.component-card button.lyd-button,
+.component-card .lyd-button {
+    max-width: 180px !important;
     flex-shrink: 0;
 }
 
