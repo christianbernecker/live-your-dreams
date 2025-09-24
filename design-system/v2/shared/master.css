@@ -559,6 +559,14 @@ p {
     cursor: not-allowed;
 }
 
+/* MODAL-SPEZIFISCHE BUTTON-OPTIMIERUNG - GLOBAL */
+.lyd-modal .lyd-button,
+.lyd-modal-footer .lyd-button {
+    max-width: 120px;
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
 .lyd-button.loading {
     color: transparent;
 }
