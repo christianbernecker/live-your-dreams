@@ -13,7 +13,7 @@
     <script src="/shared/interactions.js"></script>
     
     <style>
-        /* NUR TOOLTIP-SPEZIFISCHE STYLES */
+        /* HEROUI-INSPIRIERTES TOOLTIP SYSTEM */
         .lyd-tooltip {
             position: relative;
             display: inline-block;
@@ -21,99 +21,108 @@
         
         .lyd-tooltip-content {
             position: absolute;
-            z-index: var(--z-tooltip);
+            z-index: 9999999;
             padding: 8px 12px;
             background: var(--lyd-gray-900);
             color: white;
             font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
             border-radius: var(--radius-md);
             white-space: nowrap;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.2s ease;
-            box-shadow: var(--shadow-lg);
+            visibility: hidden;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
         .lyd-tooltip:hover .lyd-tooltip-content,
         .lyd-tooltip.show .lyd-tooltip-content {
             opacity: 1;
+            visibility: visible;
         }
         
         /* Tooltip Positions */
         .lyd-tooltip-content.top {
             bottom: calc(100% + 8px);
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(4px);
         }
         
-        .lyd-tooltip-content.top::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 6px solid transparent;
-            border-top-color: var(--lyd-gray-900);
+        .lyd-tooltip:hover .lyd-tooltip-content.top {
+            transform: translateX(-50%) translateY(0);
         }
         
         .lyd-tooltip-content.bottom {
             top: calc(100% + 8px);
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-4px);
         }
         
-        .lyd-tooltip-content.bottom::after {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 6px solid transparent;
-            border-bottom-color: var(--lyd-gray-900);
+        .lyd-tooltip:hover .lyd-tooltip-content.bottom {
+            transform: translateX(-50%) translateY(0);
         }
         
         .lyd-tooltip-content.left {
             right: calc(100% + 8px);
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-50%) translateX(-4px);
         }
         
-        .lyd-tooltip-content.left::after {
-            content: '';
-            position: absolute;
-            left: 100%;
-            top: 50%;
-            transform: translateY(-50%);
-            border: 6px solid transparent;
-            border-left-color: var(--lyd-gray-900);
+        .lyd-tooltip:hover .lyd-tooltip-content.left {
+            transform: translateY(-50%) translateX(0);
         }
         
         .lyd-tooltip-content.right {
             left: calc(100% + 8px);
             top: 50%;
+            transform: translateY(-50%) translateX(4px);
+        }
+        
+        .lyd-tooltip:hover .lyd-tooltip-content.right {
+            transform: translateY(-50%) translateX(0);
+        }
+        
+        /* Tooltip Arrows */
+        .lyd-tooltip-content::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+        }
+        
+        .lyd-tooltip-content.top::after {
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top-color: var(--lyd-gray-900);
+        }
+        
+        .lyd-tooltip-content.bottom::after {
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-color: var(--lyd-gray-900);
+        }
+        
+        .lyd-tooltip-content.left::after {
+            left: 100%;
+            top: 50%;
             transform: translateY(-50%);
+            border-left-color: var(--lyd-gray-900);
         }
         
         .lyd-tooltip-content.right::after {
-            content: '';
-            position: absolute;
             right: 100%;
             top: 50%;
             transform: translateY(-50%);
-            border: 6px solid transparent;
             border-right-color: var(--lyd-gray-900);
         }
         
-        /* Multi-line Tooltip */
-        .lyd-tooltip-content.multiline {
-            white-space: normal;
-            max-width: 250px;
-            text-align: left;
-        }
-        
-        /* Custom Colors */
+        /* Tooltip Variants */
         .lyd-tooltip-content.primary {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
+            background: var(--lyd-primary);
         }
         
         .lyd-tooltip-content.primary.top::after {
@@ -132,55 +141,24 @@
             border-right-color: var(--lyd-primary);
         }
         
-        .lyd-tooltip-content.success {
-            background: var(--lyd-success);
-        }
+        /* Success/Error/Warning Variants */
+        .lyd-tooltip-content.success { background: var(--lyd-success); }
+        .lyd-tooltip-content.error { background: var(--lyd-error); }
+        .lyd-tooltip-content.warning { background: var(--lyd-warning); }
         
-        .lyd-tooltip-content.success.top::after {
-            border-top-color: var(--lyd-success);
-        }
-        
-        .lyd-tooltip-content.warning {
-            background: var(--lyd-warning);
-        }
-        
-        .lyd-tooltip-content.warning.top::after {
-            border-top-color: var(--lyd-warning);
-        }
-        
-        .lyd-tooltip-content.error {
-            background: var(--lyd-error);
-        }
-        
-        .lyd-tooltip-content.error.top::after {
-            border-top-color: var(--lyd-error);
-        }
-        
-        /* Demo Styles */
-        .tooltip-demo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 48px;
-            padding: 48px;
-            place-items: center;
-        }
-        
-        .tooltip-demo-button {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: var(--font-size-base);
-            font-weight: var(--font-weight-medium);
+        /* Multi-line tooltips */
+        .lyd-tooltip-content.large {
+            white-space: normal;
+            max-width: 250px;
+            padding: 12px 16px;
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
         </div>
         
         <nav>
@@ -228,7 +206,7 @@
                 <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
                 <a href="/components/pagination/" class="nav-item">Pagination</a>
                 <a href="/components/tooltip/" class="nav-item active">Tooltip</a>
-                </div>
+            </div>
         </nav>
     </div>
     
@@ -242,26 +220,28 @@
             
             <div class="component-card">
                 <h3>Directional Tooltips</h3>
-                <div class="tooltip-demo-grid">
+                <div class="component-preview" style="padding: 60px; display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+                    
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button">Top</button>
-                        <div class="lyd-tooltip-content top">Tooltip on top</div>
+                        <button class="lyd-button primary">Top</button>
+                        <div class="lyd-tooltip-content top">This tooltip appears above</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button">Bottom</button>
-                        <div class="lyd-tooltip-content bottom">Tooltip on bottom</div>
+                        <button class="lyd-button primary">Bottom</button>
+                        <div class="lyd-tooltip-content bottom">This tooltip appears below</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button">Left</button>
-                        <div class="lyd-tooltip-content left">Tooltip on left</div>
+                        <button class="lyd-button primary">Left</button>
+                        <div class="lyd-tooltip-content left">This tooltip appears to the left</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button">Right</button>
-                        <div class="lyd-tooltip-content right">Tooltip on right</div>
+                        <button class="lyd-button primary">Right</button>
+                        <div class="lyd-tooltip-content right">This tooltip appears to the right</div>
                     </div>
+                    
                 </div>
             </div>
         </section>
@@ -272,41 +252,47 @@
             
             <div class="component-card">
                 <h3>Color Variants</h3>
-                <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                <div class="component-preview" style="padding: 40px; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button">Default</button>
-                        <div class="lyd-tooltip-content top">Default tooltip</div>
+                        <button class="lyd-button secondary">Default</button>
+                        <div class="lyd-tooltip-content top">Default dark tooltip</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button">Primary</button>
-                        <div class="lyd-tooltip-content top primary">Primary tooltip</div>
+                        <button class="lyd-button primary">Primary</button>
+                        <div class="lyd-tooltip-content primary top">Primary colored tooltip</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button" style="background: var(--lyd-success);">Success</button>
-                        <div class="lyd-tooltip-content top success">Success tooltip</div>
+                        <button class="lyd-button" style="background: var(--lyd-success); color: white;">Success</button>
+                        <div class="lyd-tooltip-content success top">Success message</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button" style="background: var(--lyd-warning);">Warning</button>
-                        <div class="lyd-tooltip-content top warning">Warning tooltip</div>
+                        <button class="lyd-button" style="background: var(--lyd-warning); color: white;">Warning</button>
+                        <div class="lyd-tooltip-content warning top">Warning message</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <button class="tooltip-demo-button" style="background: var(--lyd-error);">Error</button>
-                        <div class="lyd-tooltip-content top error">Error tooltip</div>
+                        <button class="lyd-button" style="background: var(--lyd-error); color: white;">Error</button>
+                        <div class="lyd-tooltip-content error top">Error message</div>
                     </div>
+                    
                 </div>
             </div>
             
             <div class="component-card">
                 <h3>Multi-line Tooltip</h3>
-                <div class="lyd-tooltip">
-                    <button class="tooltip-demo-button">Hover for Details</button>
-                    <div class="lyd-tooltip-content top multiline">
-                        This property features luxury amenities including a private pool, landscaped garden, and panoramic city views.
+                <div class="component-preview" style="padding: 40px; text-align: center;">
+                    
+                    <div class="lyd-tooltip">
+                        <button class="lyd-button primary">Hover for Details</button>
+                        <div class="lyd-tooltip-content large top">
+                            This is a multi-line tooltip that can contain longer descriptions and additional information about the element you're hovering over.
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </section>
@@ -316,58 +302,36 @@
             <h2 class="section-title">Real Estate Use Cases</h2>
             
             <div class="component-card">
-                <h3>Property Features</h3>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <h3>Property Information</h3>
+                <div class="component-preview" style="padding: 40px; display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+                    
                     <div class="lyd-tooltip">
-                        <span style="display: inline-flex; align-items: center; gap: 4px; padding: 8px 12px; background: var(--lyd-gray-100); border-radius: var(--radius-md);">
+                        <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--lyd-gray-100); border-radius: var(--radius-md);">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                                <polyline points="9,22 9,12 15,12 15,22"/>
                             </svg>
-                            250 m²
-                        </span>
-                        <div class="lyd-tooltip-content top">Total Living Area</div>
+                            <span>250 m²</span>
+                        </div>
+                        <div class="lyd-tooltip-content top">Total living area</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <span style="display: inline-flex; align-items: center; gap: 4px; padding: 8px 12px; background: var(--lyd-gray-100); border-radius: var(--radius-md);">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            A++
-                        </span>
-                        <div class="lyd-tooltip-content top multiline">Energy Efficiency Rating: Excellent insulation, solar panels, and heat pump</div>
+                        <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--lyd-gray-100); border-radius: var(--radius-md);">
+                            <span>★</span>
+                            <span>A+</span>
+                        </div>
+                        <div class="lyd-tooltip-content top">Energy efficiency rating</div>
                     </div>
                     
                     <div class="lyd-tooltip">
-                        <span style="display: inline-flex; align-items: center; gap: 4px; padding: 8px 12px; background: var(--lyd-gray-100); border-radius: var(--radius-md);">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            2019
-                        </span>
-                        <div class="lyd-tooltip-content top">Year of Construction</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="component-card">
-                <h3>Status Indicators</h3>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <div class="lyd-tooltip">
-                        <span style="display: inline-block; width: 12px; height: 12px; background: var(--lyd-success); border-radius: 50%;"></span>
-                        <div class="lyd-tooltip-content right">Available for Viewing</div>
+                        <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--lyd-gray-100); border-radius: var(--radius-md);">
+                            <span>📅</span>
+                            <span>2019</span>
+                        </div>
+                        <div class="lyd-tooltip-content top">Year built</div>
                     </div>
                     
-                    <div class="lyd-tooltip">
-                        <span style="display: inline-block; width: 12px; height: 12px; background: var(--lyd-warning); border-radius: 50%;"></span>
-                        <div class="lyd-tooltip-content right">Under Negotiation</div>
-                    </div>
-                    
-                    <div class="lyd-tooltip">
-                        <span style="display: inline-block; width: 12px; height: 12px; background: var(--lyd-error); border-radius: 50%;"></span>
-                        <div class="lyd-tooltip-content right">Sold</div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -381,89 +345,56 @@
                 <div class="code-block">
                     <pre>&lt;!-- Basic Tooltip --&gt;
 &lt;div class="lyd-tooltip"&gt;
-    &lt;button&gt;Hover me&lt;/button&gt;
-    &lt;div class="lyd-tooltip-content top"&gt;
-        Tooltip text
-    &lt;/div&gt;
+    &lt;button class="lyd-button primary"&gt;Hover me&lt;/button&gt;
+    &lt;div class="lyd-tooltip-content top"&gt;Tooltip text&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- Multi-line Tooltip --&gt;
 &lt;div class="lyd-tooltip"&gt;
-    &lt;span&gt;Info&lt;/span&gt;
-    &lt;div class="lyd-tooltip-content bottom multiline"&gt;
-        This is a longer tooltip with multiple lines of text
-        that provides more detailed information.
-    &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Colored Tooltip --&gt;
-&lt;div class="lyd-tooltip"&gt;
-    &lt;button&gt;Success&lt;/button&gt;
-    &lt;div class="lyd-tooltip-content top success"&gt;
-        Operation completed
+    &lt;button class="lyd-button primary"&gt;Hover for details&lt;/button&gt;
+    &lt;div class="lyd-tooltip-content large top"&gt;
+        This is a longer tooltip with multiple lines of text.
     &lt;/div&gt;
 &lt;/div&gt;</pre>
                 </div>
-                
+            </div>
+            
+            <div class="implementation-section">
                 <h3>React/Next.js Component</h3>
                 <div class="code-block">
-                    <pre>// components/Tooltip.tsx
-import { ReactNode, useState } from 'react';
+                    <pre>import { ReactNode } from 'react';
 
 interface TooltipProps {
   children: ReactNode;
-  content: string | ReactNode;
+  content: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   variant?: 'default' | 'primary' | 'success' | 'warning' | 'error';
-  multiline?: boolean;
-  className?: string;
+  size?: 'default' | 'large';
 }
 
-export const Tooltip = ({
-  children,
-  content,
+export const Tooltip = ({ 
+  children, 
+  content, 
   position = 'top',
   variant = 'default',
-  multiline = false,
-  className = ''
+  size = 'default'
 }: TooltipProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  const variantClass = variant !== 'default' ? variant : '';
-  const multilineClass = multiline ? 'multiline' : '';
+  const tooltipClasses = [
+    'lyd-tooltip-content',
+    position,
+    variant !== 'default' && variant,
+    size !== 'default' && size
+  ].filter(Boolean).join(' ');
   
   return (
-    &lt;div 
-      className={`lyd-tooltip ${className}`}
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-    &gt;
+    &lt;div className="lyd-tooltip"&gt;
       {children}
-      {isVisible && (
-        &lt;div className={`lyd-tooltip-content ${position} ${variantClass} ${multilineClass}`}&gt;
-          {content}
-        &lt;/div&gt;
-      )}
+      &lt;div className={tooltipClasses}&gt;
+        {content}
+      &lt;/div&gt;
     &lt;/div&gt;
   );
-};
-
-// Usage Examples
-&lt;Tooltip content="Total living area"&gt;
-  &lt;span&gt;250 m²&lt;/span&gt;
-&lt;/Tooltip&gt;
-
-&lt;Tooltip 
-  content="This property features luxury amenities including a private pool"
-  position="bottom"
-  multiline
-&gt;
-  &lt;button&gt;View Details&lt;/button&gt;
-&lt;/Tooltip&gt;
-
-&lt;Tooltip content="Available" variant="success" position="right"&gt;
-  &lt;StatusIndicator /&gt;
-&lt;/Tooltip&gt;</pre>
+};</pre>
                 </div>
             </div>
         </section>
@@ -482,19 +413,27 @@ export const Tooltip = ({
                 <tbody>
                     <tr>
                         <td><code>.lyd-tooltip</code></td>
-                        <td>Tooltip container</td>
+                        <td>Container for tooltip component</td>
                     </tr>
                     <tr>
                         <td><code>.lyd-tooltip-content</code></td>
-                        <td>Tooltip content box</td>
+                        <td>Tooltip content container</td>
                     </tr>
                     <tr>
-                        <td><code>.top, .bottom, .left, .right</code></td>
-                        <td>Position modifiers</td>
+                        <td><code>.top</code></td>
+                        <td>Position tooltip above trigger</td>
                     </tr>
                     <tr>
-                        <td><code>.multiline</code></td>
-                        <td>Multi-line text support</td>
+                        <td><code>.bottom</code></td>
+                        <td>Position tooltip below trigger</td>
+                    </tr>
+                    <tr>
+                        <td><code>.left</code></td>
+                        <td>Position tooltip to the left</td>
+                    </tr>
+                    <tr>
+                        <td><code>.right</code></td>
+                        <td>Position tooltip to the right</td>
                     </tr>
                     <tr>
                         <td><code>.primary</code></td>
@@ -513,11 +452,36 @@ export const Tooltip = ({
                         <td>Error color variant</td>
                     </tr>
                     <tr>
-                        <td><code>.show</code></td>
-                        <td>Force tooltip visible</td>
+                        <td><code>.large</code></td>
+                        <td>Multi-line tooltip variant</td>
                     </tr>
                 </tbody>
             </table>
+        </section>
+        
+        <!-- Section 6: Accessibility -->
+        <section class="section">
+            <h2 class="section-title">Accessibility & Best Practices</h2>
+            
+            <div class="component-card">
+                <h3>Accessibility Guidelines</h3>
+                <ul>
+                    <li>Use <code>aria-describedby</code> to associate tooltip with trigger</li>
+                    <li>Ensure tooltip appears on focus for keyboard users</li>
+                    <li>Provide sufficient contrast (4.5:1 minimum)</li>
+                    <li>Keep tooltip text concise and descriptive</li>
+                    <li>Don't rely solely on tooltips for critical information</li>
+                </ul>
+                
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Position tooltips to avoid viewport edges</li>
+                    <li>Use appropriate delay before showing</li>
+                    <li>Ensure tooltips don't interfere with interactions</li>
+                    <li>Test on mobile devices (consider alternatives)</li>
+                    <li>Keep animations smooth and fast</li>
+                </ul>
+            </div>
         </section>
     </main>
 </body>

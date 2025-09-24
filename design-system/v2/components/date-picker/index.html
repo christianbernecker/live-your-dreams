@@ -13,25 +13,35 @@
     <script src="/shared/interactions.js"></script>
     
     <style>
-        /* NUR DATE PICKER-SPEZIFISCHE STYLES */
+        /* HEROUI-INSPIRIERTES DATE PICKER SYSTEM */
         .lyd-datepicker {
             position: relative;
+            display: inline-block;
             width: 100%;
+            max-width: 300px;
         }
         
         .lyd-datepicker-input {
             width: 100%;
-            padding: 12px 40px 12px 16px;
-            font-size: var(--font-size-base);
-            border: 1px solid var(--lyd-line);
-            border-radius: var(--radius-md);
+            padding: 12px 48px 12px 16px;
             background: white;
+            border: 2px solid var(--lyd-line);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
             color: var(--lyd-text);
             cursor: pointer;
             transition: all 0.2s ease;
+            font-family: var(--font-family-primary);
         }
         
-        .lyd-datepicker-input:focus {
+        .lyd-datepicker-input:hover {
+            border-color: var(--lyd-primary);
+            background: var(--lyd-gradient-subtle);
+        }
+        
+        .lyd-datepicker-input:focus,
+        .lyd-datepicker.active .lyd-datepicker-input {
             outline: none;
             border-color: var(--lyd-primary);
             box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
@@ -39,42 +49,53 @@
         
         .lyd-datepicker-icon {
             position: absolute;
-            right: 12px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             width: 20px;
             height: 20px;
-            color: var(--lyd-grey);
+            stroke: var(--lyd-grey);
+            transition: all 0.2s ease;
             pointer-events: none;
+        }
+        
+        .lyd-datepicker.active .lyd-datepicker-icon {
+            stroke: var(--lyd-primary);
         }
         
         .lyd-calendar {
             position: absolute;
             top: calc(100% + 8px);
             left: 0;
+            right: 0;
             background: white;
+            border: 1px solid var(--lyd-line);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: var(--spacing-md);
-            z-index: var(--z-dropdown);
-            display: none;
-            min-width: 320px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            z-index: 9999999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(0.95);
+            transition: all 0.2s ease;
+            padding: var(--spacing-lg);
         }
         
         .lyd-calendar.open {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
         }
         
         .lyd-calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
         }
         
         .lyd-calendar-title {
-            font-size: var(--font-size-base);
-            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-bold);
             color: var(--lyd-text);
         }
         
@@ -83,21 +104,41 @@
             gap: var(--spacing-sm);
         }
         
-        .lyd-calendar-nav button {
-            width: 32px;
-            height: 32px;
+        .lyd-calendar-nav-btn {
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: none;
-            border: none;
-            border-radius: var(--radius-sm);
+            border: 1px solid var(--lyd-line);
+            border-radius: var(--radius-md);
+            color: var(--lyd-text);
             cursor: pointer;
             transition: all 0.2s ease;
+            font-size: 16px;
+            font-weight: bold;
         }
         
-        .lyd-calendar-nav button:hover {
-            background: var(--lyd-gray-100);
+        .lyd-calendar-nav-btn:hover {
+            background: var(--lyd-gradient-subtle);
+            border-color: var(--lyd-primary);
+            color: var(--lyd-primary);
+        }
+        
+        .lyd-calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .lyd-calendar-weekday {
+            text-align: center;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+            color: var(--lyd-grey);
+            padding: 8px 4px;
         }
         
         .lyd-calendar-grid {
@@ -106,100 +147,71 @@
             gap: 2px;
         }
         
-        .lyd-calendar-weekday {
-            padding: 8px;
-            text-align: center;
-            font-size: var(--font-size-xs);
-            font-weight: var(--font-weight-semibold);
-            color: var(--lyd-grey);
-            text-transform: uppercase;
-        }
-        
         .lyd-calendar-day {
-            padding: 8px;
-            text-align: center;
-            font-size: var(--font-size-sm);
-            color: var(--lyd-text);
-            background: none;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: none;
-            border-radius: var(--radius-sm);
+            background: none;
+            color: var(--lyd-text);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            border-radius: var(--radius-md);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
         
-        .lyd-calendar-day:hover:not(:disabled) {
-            background: var(--lyd-gray-100);
-        }
-        
-        .lyd-calendar-day.selected {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: white;
+        .lyd-calendar-day:hover {
+            background: var(--lyd-gradient-subtle);
+            color: var(--lyd-primary);
         }
         
         .lyd-calendar-day.today {
+            background: var(--lyd-primary);
+            color: white;
             font-weight: var(--font-weight-bold);
-            border: 1px solid var(--lyd-primary);
         }
         
-        .lyd-calendar-day:disabled {
-            color: var(--lyd-gray-400);
+        .lyd-calendar-day.selected {
+            background: var(--lyd-gradient-primary);
+            color: white;
+            font-weight: var(--font-weight-bold);
+        }
+        
+        .lyd-calendar-day.disabled {
+            color: var(--lyd-gray-300);
             cursor: not-allowed;
         }
         
-        .lyd-calendar-day.other-month {
-            color: var(--lyd-gray-400);
+        .lyd-calendar-day.disabled:hover {
+            background: none;
+            color: var(--lyd-gray-300);
         }
         
-        /* Date Range Picker */
-        .lyd-daterange {
+        /* Date Range Styles */
+        .lyd-datepicker-range {
             display: flex;
             gap: var(--spacing-md);
             align-items: center;
         }
         
-        .lyd-daterange-separator {
+        .lyd-datepicker-range .lyd-datepicker {
+            flex: 1;
+        }
+        
+        .lyd-datepicker-separator {
             color: var(--lyd-grey);
-        }
-        
-        .lyd-calendar-day.in-range {
-            background: rgba(0, 102, 255, 0.1);
-        }
-        
-        .lyd-calendar-day.range-start,
-        .lyd-calendar-day.range-end {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: white;
-        }
-        
-        /* Quick Select */
-        .lyd-calendar-quick-select {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-md);
-            padding-top: var(--spacing-md);
-            border-top: 1px solid var(--lyd-line);
-        }
-        
-        .lyd-calendar-quick-btn {
-            padding: 6px 12px;
-            font-size: var(--font-size-sm);
-            background: var(--lyd-gray-100);
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-calendar-quick-btn:hover {
-            background: var(--lyd-primary);
-            color: white;
+            font-weight: var(--font-weight-bold);
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
         </div>
         
         <nav>
@@ -247,7 +259,7 @@
                 <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
                 <a href="/components/pagination/" class="nav-item">Pagination</a>
                 <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-                </div>
+            </div>
         </nav>
     </div>
     
@@ -261,30 +273,85 @@
             
             <div class="component-card">
                 <h3>Single Date Picker</h3>
+                
                 <div class="lyd-input-group">
                     <label class="lyd-input-label">Viewing Date</label>
-                    <div class="lyd-datepicker">
+                    <div class="lyd-datepicker" onclick="toggleDatePicker('datepicker1')">
                         <input type="text" class="lyd-datepicker-input" placeholder="Select date" value="September 22, 2025" readonly>
                         <svg class="lyd-datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
+                        <div class="lyd-calendar" id="calendar1">
+                            <div class="lyd-calendar-header">
+                                <button class="lyd-calendar-nav-btn" onclick="previousMonth()">‹</button>
+                                <div class="lyd-calendar-title">September 2025</div>
+                                <button class="lyd-calendar-nav-btn" onclick="nextMonth()">›</button>
+                            </div>
+                            
+                            <div class="lyd-calendar-weekdays">
+                                <div class="lyd-calendar-weekday">Su</div>
+                                <div class="lyd-calendar-weekday">Mo</div>
+                                <div class="lyd-calendar-weekday">Tu</div>
+                                <div class="lyd-calendar-weekday">We</div>
+                                <div class="lyd-calendar-weekday">Th</div>
+                                <div class="lyd-calendar-weekday">Fr</div>
+                                <div class="lyd-calendar-weekday">Sa</div>
+                            </div>
+                            
+                            <div class="lyd-calendar-grid">
+                                <button class="lyd-calendar-day disabled">31</button>
+                                <button class="lyd-calendar-day">1</button>
+                                <button class="lyd-calendar-day">2</button>
+                                <button class="lyd-calendar-day">3</button>
+                                <button class="lyd-calendar-day">4</button>
+                                <button class="lyd-calendar-day">5</button>
+                                <button class="lyd-calendar-day">6</button>
+                                <button class="lyd-calendar-day">7</button>
+                                <button class="lyd-calendar-day">8</button>
+                                <button class="lyd-calendar-day">9</button>
+                                <button class="lyd-calendar-day">10</button>
+                                <button class="lyd-calendar-day">11</button>
+                                <button class="lyd-calendar-day">12</button>
+                                <button class="lyd-calendar-day">13</button>
+                                <button class="lyd-calendar-day">14</button>
+                                <button class="lyd-calendar-day">15</button>
+                                <button class="lyd-calendar-day">16</button>
+                                <button class="lyd-calendar-day">17</button>
+                                <button class="lyd-calendar-day">18</button>
+                                <button class="lyd-calendar-day">19</button>
+                                <button class="lyd-calendar-day">20</button>
+                                <button class="lyd-calendar-day">21</button>
+                                <button class="lyd-calendar-day selected">22</button>
+                                <button class="lyd-calendar-day">23</button>
+                                <button class="lyd-calendar-day today">24</button>
+                                <button class="lyd-calendar-day">25</button>
+                                <button class="lyd-calendar-day">26</button>
+                                <button class="lyd-calendar-day">27</button>
+                                <button class="lyd-calendar-day">28</button>
+                                <button class="lyd-calendar-day">29</button>
+                                <button class="lyd-calendar-day">30</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="component-card">
                 <h3>Date Range Picker</h3>
+                
                 <div class="lyd-input-group">
                     <label class="lyd-input-label">Availability Period</label>
-                    <div class="lyd-daterange">
-                        <div class="lyd-datepicker">
+                    <div class="lyd-datepicker-range">
+                        <div class="lyd-datepicker" onclick="toggleDatePicker('datepicker2')">
                             <input type="text" class="lyd-datepicker-input" placeholder="Start date" value="Sep 15, 2025" readonly>
                             <svg class="lyd-datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <span class="lyd-daterange-separator">→</span>
-                        <div class="lyd-datepicker">
+                        
+                        <div class="lyd-datepicker-separator">→</div>
+                        
+                        <div class="lyd-datepicker" onclick="toggleDatePicker('datepicker3')">
                             <input type="text" class="lyd-datepicker-input" placeholder="End date" value="Sep 30, 2025" readonly>
                             <svg class="lyd-datepicker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -296,24 +363,15 @@
             
             <div class="component-card">
                 <h3>Calendar View</h3>
-                <div class="lyd-calendar open" style="position: static; box-shadow: none; border: 1px solid var(--lyd-line);">
+                
+                <div class="lyd-calendar open" style="position: relative; transform: none; opacity: 1; visibility: visible;">
                     <div class="lyd-calendar-header">
+                        <button class="lyd-calendar-nav-btn">‹</button>
                         <div class="lyd-calendar-title">September 2025</div>
-                        <div class="lyd-calendar-nav">
-                            <button>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                        <button class="lyd-calendar-nav-btn">›</button>
                     </div>
                     
-                    <div class="lyd-calendar-grid">
+                    <div class="lyd-calendar-weekdays">
                         <div class="lyd-calendar-weekday">Su</div>
                         <div class="lyd-calendar-weekday">Mo</div>
                         <div class="lyd-calendar-weekday">Tu</div>
@@ -321,15 +379,16 @@
                         <div class="lyd-calendar-weekday">Th</div>
                         <div class="lyd-calendar-weekday">Fr</div>
                         <div class="lyd-calendar-weekday">Sa</div>
-                        
-                        <button class="lyd-calendar-day other-month">31</button>
+                    </div>
+                    
+                    <div class="lyd-calendar-grid">
+                        <button class="lyd-calendar-day disabled">31</button>
                         <button class="lyd-calendar-day">1</button>
                         <button class="lyd-calendar-day">2</button>
                         <button class="lyd-calendar-day">3</button>
                         <button class="lyd-calendar-day">4</button>
                         <button class="lyd-calendar-day">5</button>
                         <button class="lyd-calendar-day">6</button>
-                        
                         <button class="lyd-calendar-day">7</button>
                         <button class="lyd-calendar-day">8</button>
                         <button class="lyd-calendar-day">9</button>
@@ -337,37 +396,27 @@
                         <button class="lyd-calendar-day">11</button>
                         <button class="lyd-calendar-day">12</button>
                         <button class="lyd-calendar-day">13</button>
-                        
                         <button class="lyd-calendar-day">14</button>
-                        <button class="lyd-calendar-day range-start">15</button>
-                        <button class="lyd-calendar-day in-range">16</button>
-                        <button class="lyd-calendar-day in-range">17</button>
-                        <button class="lyd-calendar-day in-range">18</button>
-                        <button class="lyd-calendar-day in-range">19</button>
-                        <button class="lyd-calendar-day in-range">20</button>
-                        
-                        <button class="lyd-calendar-day in-range">21</button>
-                        <button class="lyd-calendar-day today selected">22</button>
-                        <button class="lyd-calendar-day in-range">23</button>
-                        <button class="lyd-calendar-day in-range">24</button>
-                        <button class="lyd-calendar-day in-range">25</button>
-                        <button class="lyd-calendar-day in-range">26</button>
-                        <button class="lyd-calendar-day in-range">27</button>
-                        
-                        <button class="lyd-calendar-day in-range">28</button>
-                        <button class="lyd-calendar-day in-range">29</button>
-                        <button class="lyd-calendar-day range-end">30</button>
-                        <button class="lyd-calendar-day other-month">1</button>
-                        <button class="lyd-calendar-day other-month">2</button>
-                        <button class="lyd-calendar-day other-month">3</button>
-                        <button class="lyd-calendar-day other-month">4</button>
-                    </div>
-                    
-                    <div class="lyd-calendar-quick-select">
-                        <button class="lyd-calendar-quick-btn">Today</button>
-                        <button class="lyd-calendar-quick-btn">Tomorrow</button>
-                        <button class="lyd-calendar-quick-btn">Next Week</button>
-                        <button class="lyd-calendar-quick-btn">Next Month</button>
+                        <button class="lyd-calendar-day">15</button>
+                        <button class="lyd-calendar-day">16</button>
+                        <button class="lyd-calendar-day">17</button>
+                        <button class="lyd-calendar-day">18</button>
+                        <button class="lyd-calendar-day">19</button>
+                        <button class="lyd-calendar-day">20</button>
+                        <button class="lyd-calendar-day">21</button>
+                        <button class="lyd-calendar-day selected">22</button>
+                        <button class="lyd-calendar-day">23</button>
+                        <button class="lyd-calendar-day today">24</button>
+                        <button class="lyd-calendar-day">25</button>
+                        <button class="lyd-calendar-day">26</button>
+                        <button class="lyd-calendar-day">27</button>
+                        <button class="lyd-calendar-day">28</button>
+                        <button class="lyd-calendar-day">29</button>
+                        <button class="lyd-calendar-day">30</button>
+                        <button class="lyd-calendar-day disabled">1</button>
+                        <button class="lyd-calendar-day disabled">2</button>
+                        <button class="lyd-calendar-day disabled">3</button>
+                        <button class="lyd-calendar-day disabled">4</button>
                     </div>
                 </div>
             </div>
@@ -388,28 +437,29 @@
     
     &lt;div class="lyd-calendar"&gt;
         &lt;div class="lyd-calendar-header"&gt;
+            &lt;button class="lyd-calendar-nav-btn"&gt;‹&lt;/button&gt;
             &lt;div class="lyd-calendar-title"&gt;September 2025&lt;/div&gt;
-            &lt;div class="lyd-calendar-nav"&gt;
-                &lt;button&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
-                &lt;button&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
-            &lt;/div&gt;
+            &lt;button class="lyd-calendar-nav-btn"&gt;›&lt;/button&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="lyd-calendar-weekdays"&gt;
+            &lt;div class="lyd-calendar-weekday"&gt;Su&lt;/div&gt;
+            &lt;!-- ... more weekdays ... --&gt;
         &lt;/div&gt;
         
         &lt;div class="lyd-calendar-grid"&gt;
-            &lt;div class="lyd-calendar-weekday"&gt;Su&lt;/div&gt;
-            &lt;!-- ... more weekdays ... --&gt;
-            
             &lt;button class="lyd-calendar-day"&gt;1&lt;/button&gt;
             &lt;!-- ... more days ... --&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
                 </div>
-                
+            </div>
+            
+            <div class="implementation-section">
                 <h3>React/Next.js Component</h3>
                 <div class="code-block">
-                    <pre>// components/DatePicker.tsx
-import { useState, useRef, useEffect } from 'react';
+                    <pre>import { useState, useRef, useEffect } from 'react';
 
 interface DatePickerProps {
   label?: string;
@@ -430,9 +480,8 @@ export const DatePicker = ({
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(value || new Date());
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
   
-  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -450,12 +499,6 @@ export const DatePicker = ({
       month: 'long',
       day: 'numeric'
     });
-  };
-  
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
-    onChange?.(date);
-    setIsOpen(false);
   };
   
   return (
@@ -477,7 +520,11 @@ export const DatePicker = ({
         {isOpen && (
           &lt;Calendar
             selectedDate={selectedDate}
-            onDateSelect={handleDateSelect}
+            onDateSelect={(date) => {
+              setSelectedDate(date);
+              onChange?.(date);
+              setIsOpen(false);
+            }}
             minDate={minDate}
             maxDate={maxDate}
           /&gt;
@@ -520,7 +567,7 @@ export const DatePicker = ({
                     </tr>
                     <tr>
                         <td><code>.lyd-calendar-header</code></td>
-                        <td>Calendar header with month/year</td>
+                        <td>Calendar header with navigation</td>
                     </tr>
                     <tr>
                         <td><code>.lyd-calendar-grid</code></td>
@@ -548,152 +595,104 @@ export const DatePicker = ({
     </main>
     
     <script>
-        // Funktionaler Date Picker
-        let currentDate = new Date();
-        let selectedDate = null;
-        
-        function generateCalendar(container, date) {
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            const firstDay = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
+        // HeroUI-inspirierte Date Picker Funktionalität
+        function toggleDatePicker(pickerId) {
+            const picker = document.querySelector(`#${pickerId.replace('datepicker', 'calendar')}`);
+            const input = document.querySelector(`[onclick*="${pickerId}"] .lyd-datepicker-input`);
             
-            // Update header
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                              'July', 'August', 'September', 'October', 'November', 'December'];
-            const title = container.querySelector('.lyd-calendar-title');
-            if (title) {
-                title.textContent = `${monthNames[month]} ${year}`;
-            }
-            
-            // Generate days
-            const grid = container.querySelector('.lyd-calendar-grid tbody');
-            if (!grid) return;
-            
-            grid.innerHTML = '';
-            let dayCount = 1;
-            
-            for (let week = 0; week < 6; week++) {
-                const row = document.createElement('tr');
-                
-                for (let day = 0; day < 7; day++) {
-                    const cell = document.createElement('td');
-                    
-                    if (week === 0 && day < firstDay) {
-                        // Empty cells before first day
-                        cell.innerHTML = '<button class="lyd-calendar-day other-month">&nbsp;</button>';
-                    } else if (dayCount > lastDate) {
-                        // Empty cells after last day
-                        cell.innerHTML = '<button class="lyd-calendar-day other-month">&nbsp;</button>';
-                    } else {
-                        const button = document.createElement('button');
-                        button.className = 'lyd-calendar-day';
-                        button.textContent = dayCount;
-                        
-                        // Check if today
-                        const today = new Date();
-                        if (year === today.getFullYear() && 
-                            month === today.getMonth() && 
-                            dayCount === today.getDate()) {
-                            button.classList.add('today');
-                        }
-                        
-                        // Check if selected
-                        if (selectedDate && 
-                            year === selectedDate.getFullYear() && 
-                            month === selectedDate.getMonth() && 
-                            dayCount === selectedDate.getDate()) {
-                            button.classList.add('selected');
-                        }
-                        
-                        // Add click handler
-                        button.addEventListener('click', function() {
-                            selectDate(year, month, parseInt(this.textContent));
-                        });
-                        
-                        cell.appendChild(button);
-                        dayCount++;
-                    }
-                    
-                    row.appendChild(cell);
-                }
-                
-                grid.appendChild(row);
-                if (dayCount > lastDate) break;
-            }
-        }
-        
-        function selectDate(year, month, day) {
-            selectedDate = new Date(year, month, day);
-            
-            // Update all inputs
-            document.querySelectorAll('.lyd-datepicker-input').forEach(input => {
-                const calendar = input.parentElement.querySelector('.lyd-calendar');
-                if (calendar && calendar.classList.contains('open')) {
-                    input.value = selectedDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
-                    calendar.classList.remove('open');
-                    
-                    // Regenerate calendar to update selected state
-                    generateCalendar(calendar, currentDate);
-                }
-            });
-        }
-        
-        // Initialize all date pickers
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.lyd-datepicker').forEach(picker => {
-                const input = picker.querySelector('.lyd-datepicker-input');
-                const calendar = picker.querySelector('.lyd-calendar');
-                
-                if (input && calendar) {
-                    // Toggle calendar on input click
-                    input.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        
-                        // Close other calendars
-                        document.querySelectorAll('.lyd-calendar.open').forEach(cal => {
-                            if (cal !== calendar) cal.classList.remove('open');
-                        });
-                        
-                        calendar.classList.toggle('open');
-                        if (calendar.classList.contains('open')) {
-                            generateCalendar(calendar, currentDate);
-                        }
-                    });
-                    
-                    // Navigation buttons
-                    const prevBtn = calendar.querySelector('.lyd-calendar-nav button:first-child');
-                    const nextBtn = calendar.querySelector('.lyd-calendar-nav button:last-child');
-                    
-                    if (prevBtn) {
-                        prevBtn.addEventListener('click', function() {
-                            currentDate.setMonth(currentDate.getMonth() - 1);
-                            generateCalendar(calendar, currentDate);
-                        });
-                    }
-                    
-                    if (nextBtn) {
-                        nextBtn.addEventListener('click', function() {
-                            currentDate.setMonth(currentDate.getMonth() + 1);
-                            generateCalendar(calendar, currentDate);
-                        });
-                    }
-                }
-            });
-            
-            // Close calendar on outside click
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.lyd-datepicker')) {
-                    document.querySelectorAll('.lyd-calendar.open').forEach(cal => {
+            if (picker) {
+                // Close other date pickers
+                document.querySelectorAll('.lyd-calendar.open').forEach(cal => {
+                    if (cal.id !== picker.id) {
                         cal.classList.remove('open');
-                    });
+                    }
+                });
+                
+                picker.classList.toggle('open');
+                
+                if (input) {
+                    input.closest('.lyd-datepicker').classList.toggle('active');
                 }
+            }
+        }
+        
+        // Close date pickers on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lyd-datepicker')) {
+                document.querySelectorAll('.lyd-calendar.open').forEach(calendar => {
+                    calendar.classList.remove('open');
+                });
+                document.querySelectorAll('.lyd-datepicker.active').forEach(picker => {
+                    picker.classList.remove('active');
+                });
+            }
+        });
+        
+        // Day selection
+        document.querySelectorAll('.lyd-calendar-day:not(.disabled)').forEach(day => {
+            day.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const calendar = this.closest('.lyd-calendar');
+                const picker = calendar.closest('.lyd-datepicker');
+                const input = picker?.querySelector('.lyd-datepicker-input');
+                
+                // Remove previous selection in this calendar
+                calendar.querySelectorAll('.lyd-calendar-day.selected').forEach(d => {
+                    if (!d.classList.contains('today')) {
+                        d.classList.remove('selected');
+                    }
+                });
+                
+                // Add selection to clicked day
+                if (!this.classList.contains('today')) {
+                    this.classList.add('selected');
+                }
+                
+                // Update input value
+                if (input) {
+                    const dayNum = this.textContent;
+                    input.value = `September ${dayNum}, 2025`;
+                }
+                
+                // Close calendar
+                calendar.classList.remove('open');
+                picker?.classList.remove('active');
             });
         });
+        
+        // Calendar navigation
+        let currentMonth = 8; // September
+        let currentYear = 2025;
+        
+        function previousMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateCalendarTitle();
+        }
+        
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendarTitle();
+        }
+        
+        function updateCalendarTitle() {
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            document.querySelectorAll('.lyd-calendar-title').forEach(title => {
+                title.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            });
+        }
     </script>
 </body>
 </html>

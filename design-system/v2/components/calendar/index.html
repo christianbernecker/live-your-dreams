@@ -13,13 +13,15 @@
     <script src="/shared/interactions.js"></script>
     
     <style>
-        /* NUR CALENDAR-SPEZIFISCHE STYLES */
+        /* HEROUI-INSPIRIERTES CALENDAR SYSTEM */
         .lyd-calendar {
             background: white;
+            border: 1px solid var(--lyd-line);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
             padding: var(--spacing-lg);
             max-width: 400px;
+            font-family: var(--font-family-primary);
         }
         
         .lyd-calendar-header {
@@ -27,11 +29,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--lyd-line);
         }
         
         .lyd-calendar-title {
             font-size: var(--font-size-lg);
-            font-weight: var(--font-weight-semibold);
+            font-weight: var(--font-weight-bold);
             color: var(--lyd-text);
         }
         
@@ -40,22 +44,41 @@
             gap: var(--spacing-sm);
         }
         
-        .lyd-calendar-nav button {
+        .lyd-calendar-nav-btn {
             width: 36px;
             height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: none;
-            border: none;
+            border: 1px solid var(--lyd-line);
             border-radius: var(--radius-md);
+            color: var(--lyd-text);
             cursor: pointer;
             transition: all 0.2s ease;
-            color: var(--lyd-text);
+            font-size: 18px;
+            font-weight: bold;
         }
         
-        .lyd-calendar-nav button:hover {
-            background: var(--lyd-gray-100);
+        .lyd-calendar-nav-btn:hover {
+            background: var(--lyd-gradient-subtle);
+            border-color: var(--lyd-primary);
+            color: var(--lyd-primary);
+        }
+        
+        .lyd-calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .lyd-calendar-weekday {
+            text-align: center;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+            color: var(--lyd-grey);
+            padding: 8px 4px;
         }
         
         .lyd-calendar-grid {
@@ -64,190 +87,104 @@
             gap: 2px;
         }
         
-        .lyd-calendar-weekday {
-            padding: 8px;
-            text-align: center;
-            font-size: var(--font-size-xs);
-            font-weight: var(--font-weight-semibold);
-            color: var(--lyd-grey);
-            text-transform: uppercase;
-        }
-        
         .lyd-calendar-day {
-            aspect-ratio: 1;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: var(--font-size-sm);
-            color: var(--lyd-text);
-            background: none;
             border: none;
+            background: none;
+            color: var(--lyd-text);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
             border-radius: var(--radius-md);
             cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
+            transition: all 0.15s ease;
         }
         
-        .lyd-calendar-day:hover:not(:disabled) {
-            background: var(--lyd-gray-100);
-        }
-        
-        .lyd-calendar-day.selected {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: white;
+        .lyd-calendar-day:hover {
+            background: var(--lyd-gradient-subtle);
+            color: var(--lyd-primary);
         }
         
         .lyd-calendar-day.today {
+            background: var(--lyd-primary);
+            color: white;
             font-weight: var(--font-weight-bold);
-            border: 2px solid var(--lyd-primary);
         }
         
-        .lyd-calendar-day:disabled {
-            color: var(--lyd-gray-400);
+        .lyd-calendar-day.selected {
+            background: var(--lyd-gradient-primary);
+            color: white;
+            font-weight: var(--font-weight-bold);
+        }
+        
+        .lyd-calendar-day.disabled {
+            color: var(--lyd-gray-300);
             cursor: not-allowed;
         }
         
-        .lyd-calendar-day.other-month {
-            color: var(--lyd-gray-400);
+        .lyd-calendar-day.disabled:hover {
+            background: none;
+            color: var(--lyd-gray-300);
         }
         
-        .lyd-calendar-day.has-event::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--lyd-primary);
+        .lyd-calendar-day.in-range {
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--lyd-primary);
         }
         
-        .lyd-calendar-day.selected.has-event::after {
+        /* Month/Year Selector */
+        .lyd-month-selector,
+        .lyd-year-selector {
+            background: white;
+            border: 1px solid var(--lyd-line);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .lyd-month-grid,
+        .lyd-year-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-sm);
+        }
+        
+        .lyd-month-item,
+        .lyd-year-item {
+            padding: 12px 16px;
+            text-align: center;
+            border: 1px solid var(--lyd-line);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
             background: white;
         }
         
-        /* Month View */
-        .lyd-calendar-month {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--spacing-sm);
-        }
-        
-        .lyd-calendar-month-item {
-            padding: var(--spacing-md);
-            text-align: center;
-            font-size: var(--font-size-sm);
-            background: none;
-            border: 1px solid var(--lyd-line);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-calendar-month-item:hover {
+        .lyd-month-item:hover,
+        .lyd-year-item:hover {
+            background: var(--lyd-gradient-subtle);
             border-color: var(--lyd-primary);
-            background: var(--lyd-accent);
+            color: var(--lyd-primary);
         }
         
-        .lyd-calendar-month-item.selected {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: white;
-            border-color: transparent;
-        }
-        
-        /* Year View */
-        .lyd-calendar-year {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--spacing-sm);
-        }
-        
-        .lyd-calendar-year-item {
-            padding: var(--spacing-md);
-            text-align: center;
-            font-size: var(--font-size-sm);
-            background: none;
-            border: 1px solid var(--lyd-line);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .lyd-calendar-year-item:hover {
-            border-color: var(--lyd-primary);
-            background: var(--lyd-accent);
-        }
-        
-        .lyd-calendar-year-item.selected {
-            background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
-            color: white;
-            border-color: transparent;
-        }
-        
-        /* Event List */
-        .lyd-calendar-events {
-            margin-top: var(--spacing-lg);
-            padding-top: var(--spacing-lg);
-            border-top: 1px solid var(--lyd-line);
-        }
-        
-        .lyd-calendar-events-title {
-            font-size: var(--font-size-sm);
-            font-weight: var(--font-weight-semibold);
-            color: var(--lyd-grey);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .lyd-calendar-event {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .lyd-calendar-event:hover {
-            background: var(--lyd-gray-100);
-        }
-        
-        .lyd-calendar-event-time {
-            font-size: var(--font-size-xs);
-            color: var(--lyd-grey);
-            min-width: 60px;
-        }
-        
-        .lyd-calendar-event-title {
-            font-size: var(--font-size-sm);
-            color: var(--lyd-text);
-            flex: 1;
-        }
-        
-        .lyd-calendar-event-badge {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .lyd-month-item.selected,
+        .lyd-year-item.selected {
             background: var(--lyd-primary);
-        }
-        
-        .lyd-calendar-event-badge.viewing {
-            background: var(--lyd-success);
-        }
-        
-        .lyd-calendar-event-badge.meeting {
-            background: var(--lyd-warning);
-        }
-        
-        .lyd-calendar-event-badge.deadline {
-            background: var(--lyd-error);
+            border-color: var(--lyd-primary);
+            color: white;
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />
+            <div class="logo-subtitle">Design System V2</div>
         </div>
         
         <nav>
@@ -295,7 +232,7 @@
                 <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
                 <a href="/components/pagination/" class="nav-item">Pagination</a>
                 <a href="/components/tooltip/" class="nav-item">Tooltip</a>
-                </div>
+            </div>
         </nav>
     </div>
     
@@ -308,25 +245,16 @@
             <h2 class="section-title">Month View</h2>
             
             <div class="component-card">
-                <h3>September 2025</h3>
+                <h3>Default Calendar</h3>
+                
                 <div class="lyd-calendar">
                     <div class="lyd-calendar-header">
+                        <button class="lyd-calendar-nav-btn" onclick="previousMonth()">‹</button>
                         <div class="lyd-calendar-title">September 2025</div>
-                        <div class="lyd-calendar-nav">
-                            <button>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                        <button class="lyd-calendar-nav-btn" onclick="nextMonth()">›</button>
                     </div>
                     
-                    <div class="lyd-calendar-grid">
+                    <div class="lyd-calendar-weekdays">
                         <div class="lyd-calendar-weekday">Su</div>
                         <div class="lyd-calendar-weekday">Mo</div>
                         <div class="lyd-calendar-weekday">Tu</div>
@@ -334,65 +262,44 @@
                         <div class="lyd-calendar-weekday">Th</div>
                         <div class="lyd-calendar-weekday">Fr</div>
                         <div class="lyd-calendar-weekday">Sa</div>
-                        
-                        <button class="lyd-calendar-day other-month">31</button>
+                    </div>
+                    
+                    <div class="lyd-calendar-grid">
+                        <button class="lyd-calendar-day disabled">31</button>
                         <button class="lyd-calendar-day">1</button>
                         <button class="lyd-calendar-day">2</button>
-                        <button class="lyd-calendar-day has-event">3</button>
+                        <button class="lyd-calendar-day">3</button>
                         <button class="lyd-calendar-day">4</button>
                         <button class="lyd-calendar-day">5</button>
                         <button class="lyd-calendar-day">6</button>
-                        
                         <button class="lyd-calendar-day">7</button>
-                        <button class="lyd-calendar-day has-event">8</button>
+                        <button class="lyd-calendar-day">8</button>
                         <button class="lyd-calendar-day">9</button>
                         <button class="lyd-calendar-day">10</button>
-                        <button class="lyd-calendar-day has-event">11</button>
+                        <button class="lyd-calendar-day">11</button>
                         <button class="lyd-calendar-day">12</button>
                         <button class="lyd-calendar-day">13</button>
-                        
                         <button class="lyd-calendar-day">14</button>
-                        <button class="lyd-calendar-day has-event">15</button>
+                        <button class="lyd-calendar-day">15</button>
                         <button class="lyd-calendar-day">16</button>
                         <button class="lyd-calendar-day">17</button>
                         <button class="lyd-calendar-day">18</button>
                         <button class="lyd-calendar-day">19</button>
-                        <button class="lyd-calendar-day has-event">20</button>
-                        
+                        <button class="lyd-calendar-day">20</button>
                         <button class="lyd-calendar-day">21</button>
-                        <button class="lyd-calendar-day today selected has-event">22</button>
+                        <button class="lyd-calendar-day selected">22</button>
                         <button class="lyd-calendar-day">23</button>
-                        <button class="lyd-calendar-day has-event">24</button>
+                        <button class="lyd-calendar-day today">24</button>
                         <button class="lyd-calendar-day">25</button>
                         <button class="lyd-calendar-day">26</button>
                         <button class="lyd-calendar-day">27</button>
-                        
                         <button class="lyd-calendar-day">28</button>
                         <button class="lyd-calendar-day">29</button>
                         <button class="lyd-calendar-day">30</button>
-                        <button class="lyd-calendar-day other-month">1</button>
-                        <button class="lyd-calendar-day other-month">2</button>
-                        <button class="lyd-calendar-day other-month">3</button>
-                        <button class="lyd-calendar-day other-month">4</button>
-                    </div>
-                    
-                    <div class="lyd-calendar-events">
-                        <div class="lyd-calendar-events-title">Today's Schedule</div>
-                        <div class="lyd-calendar-event">
-                            <span class="lyd-calendar-event-badge viewing"></span>
-                            <span class="lyd-calendar-event-time">10:00</span>
-                            <span class="lyd-calendar-event-title">Property Viewing - Villa Monaco</span>
-                        </div>
-                        <div class="lyd-calendar-event">
-                            <span class="lyd-calendar-event-badge meeting"></span>
-                            <span class="lyd-calendar-event-time">14:00</span>
-                            <span class="lyd-calendar-event-title">Client Meeting - John Doe</span>
-                        </div>
-                        <div class="lyd-calendar-event">
-                            <span class="lyd-calendar-event-badge deadline"></span>
-                            <span class="lyd-calendar-event-time">17:00</span>
-                            <span class="lyd-calendar-event-title">Contract Deadline</span>
-                        </div>
+                        <button class="lyd-calendar-day disabled">1</button>
+                        <button class="lyd-calendar-day disabled">2</button>
+                        <button class="lyd-calendar-day disabled">3</button>
+                        <button class="lyd-calendar-day disabled">4</button>
                     </div>
                 </div>
             </div>
@@ -403,37 +310,28 @@
             <h2 class="section-title">Month Selector</h2>
             
             <div class="component-card">
-                <h3>Select Month</h3>
-                <div class="lyd-calendar">
+                <h3>Month Selection</h3>
+                
+                <div class="lyd-month-selector">
                     <div class="lyd-calendar-header">
+                        <button class="lyd-calendar-nav-btn">‹</button>
                         <div class="lyd-calendar-title">2025</div>
-                        <div class="lyd-calendar-nav">
-                            <button>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                        <button class="lyd-calendar-nav-btn">›</button>
                     </div>
                     
-                    <div class="lyd-calendar-month">
-                        <button class="lyd-calendar-month-item">Jan</button>
-                        <button class="lyd-calendar-month-item">Feb</button>
-                        <button class="lyd-calendar-month-item">Mar</button>
-                        <button class="lyd-calendar-month-item">Apr</button>
-                        <button class="lyd-calendar-month-item">May</button>
-                        <button class="lyd-calendar-month-item">Jun</button>
-                        <button class="lyd-calendar-month-item">Jul</button>
-                        <button class="lyd-calendar-month-item">Aug</button>
-                        <button class="lyd-calendar-month-item selected">Sep</button>
-                        <button class="lyd-calendar-month-item">Oct</button>
-                        <button class="lyd-calendar-month-item">Nov</button>
-                        <button class="lyd-calendar-month-item">Dec</button>
+                    <div class="lyd-month-grid">
+                        <button class="lyd-month-item">Jan</button>
+                        <button class="lyd-month-item">Feb</button>
+                        <button class="lyd-month-item">Mar</button>
+                        <button class="lyd-month-item">Apr</button>
+                        <button class="lyd-month-item">May</button>
+                        <button class="lyd-month-item">Jun</button>
+                        <button class="lyd-month-item">Jul</button>
+                        <button class="lyd-month-item">Aug</button>
+                        <button class="lyd-month-item selected">Sep</button>
+                        <button class="lyd-month-item">Oct</button>
+                        <button class="lyd-month-item">Nov</button>
+                        <button class="lyd-month-item">Dec</button>
                     </div>
                 </div>
             </div>
@@ -444,37 +342,28 @@
             <h2 class="section-title">Year Selector</h2>
             
             <div class="component-card">
-                <h3>Select Year</h3>
-                <div class="lyd-calendar">
+                <h3>Year Range Selection</h3>
+                
+                <div class="lyd-year-selector">
                     <div class="lyd-calendar-header">
+                        <button class="lyd-calendar-nav-btn">‹</button>
                         <div class="lyd-calendar-title">2020 - 2031</div>
-                        <div class="lyd-calendar-nav">
-                            <button>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                        <button class="lyd-calendar-nav-btn">›</button>
                     </div>
                     
-                    <div class="lyd-calendar-year">
-                        <button class="lyd-calendar-year-item">2020</button>
-                        <button class="lyd-calendar-year-item">2021</button>
-                        <button class="lyd-calendar-year-item">2022</button>
-                        <button class="lyd-calendar-year-item">2023</button>
-                        <button class="lyd-calendar-year-item">2024</button>
-                        <button class="lyd-calendar-year-item selected">2025</button>
-                        <button class="lyd-calendar-year-item">2026</button>
-                        <button class="lyd-calendar-year-item">2027</button>
-                        <button class="lyd-calendar-year-item">2028</button>
-                        <button class="lyd-calendar-year-item">2029</button>
-                        <button class="lyd-calendar-year-item">2030</button>
-                        <button class="lyd-calendar-year-item">2031</button>
+                    <div class="lyd-year-grid">
+                        <button class="lyd-year-item">2020</button>
+                        <button class="lyd-year-item">2021</button>
+                        <button class="lyd-year-item">2022</button>
+                        <button class="lyd-year-item">2023</button>
+                        <button class="lyd-year-item">2024</button>
+                        <button class="lyd-year-item selected">2025</button>
+                        <button class="lyd-year-item">2026</button>
+                        <button class="lyd-year-item">2027</button>
+                        <button class="lyd-year-item">2028</button>
+                        <button class="lyd-year-item">2029</button>
+                        <button class="lyd-year-item">2030</button>
+                        <button class="lyd-year-item">2031</button>
                     </div>
                 </div>
             </div>
@@ -490,142 +379,104 @@
                     <pre>&lt;!-- Calendar Month View --&gt;
 &lt;div class="lyd-calendar"&gt;
     &lt;div class="lyd-calendar-header"&gt;
+        &lt;button class="lyd-calendar-nav-btn"&gt;‹&lt;/button&gt;
         &lt;div class="lyd-calendar-title"&gt;September 2025&lt;/div&gt;
-        &lt;div class="lyd-calendar-nav"&gt;
-            &lt;button&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
-            &lt;button&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;
-        &lt;/div&gt;
+        &lt;button class="lyd-calendar-nav-btn"&gt;›&lt;/button&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="lyd-calendar-weekdays"&gt;
+        &lt;div class="lyd-calendar-weekday"&gt;Su&lt;/div&gt;
+        &lt;!-- ... more weekdays ... --&gt;
     &lt;/div&gt;
     
     &lt;div class="lyd-calendar-grid"&gt;
-        &lt;div class="lyd-calendar-weekday"&gt;Su&lt;/div&gt;
-        &lt;!-- More weekdays... --&gt;
-        
         &lt;button class="lyd-calendar-day"&gt;1&lt;/button&gt;
-        &lt;button class="lyd-calendar-day has-event"&gt;2&lt;/button&gt;
-        &lt;button class="lyd-calendar-day today selected"&gt;22&lt;/button&gt;
-        &lt;!-- More days... --&gt;
-    &lt;/div&gt;
-    
-    &lt;div class="lyd-calendar-events"&gt;
-        &lt;div class="lyd-calendar-event"&gt;
-            &lt;span class="lyd-calendar-event-badge viewing"&gt;&lt;/span&gt;
-            &lt;span class="lyd-calendar-event-time"&gt;10:00&lt;/span&gt;
-            &lt;span class="lyd-calendar-event-title"&gt;Property Viewing&lt;/span&gt;
-        &lt;/div&gt;
+        &lt;button class="lyd-calendar-day today"&gt;24&lt;/button&gt;
+        &lt;!-- ... more days ... --&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
                 </div>
-                
+            </div>
+            
+            <div class="implementation-section">
                 <h3>React/Next.js Component</h3>
                 <div class="code-block">
-                    <pre>// components/Calendar.tsx
-import { useState } from 'react';
-
-interface Event {
-  id: string;
-  date: Date;
-  time: string;
-  title: string;
-  type: 'viewing' | 'meeting' | 'deadline';
-}
+                    <pre>import { useState } from 'react';
 
 interface CalendarProps {
-  events?: Event[];
   selectedDate?: Date;
   onDateSelect?: (date: Date) => void;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
-export const Calendar = ({
-  events = [],
-  selectedDate = new Date(),
-  onDateSelect
+export const Calendar = ({ 
+  selectedDate, 
+  onDateSelect, 
+  minDate, 
+  maxDate 
 }: CalendarProps) => {
-  const [currentMonth, setCurrentMonth] = useState(selectedDate);
-  const [view, setView] = useState<'month' | 'year' | 'decade'>('month');
+  const [currentDate, setCurrentDate] = useState(new Date());
   
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    
     const days = [];
-    
-    // Previous month days
-    const startDay = firstDay.getDay();
-    for (let i = startDay - 1; i >= 0; i--) {
-      const day = new Date(year, month, -i);
-      days.push({ date: day, otherMonth: true });
+    for (let i = 0; i &lt; 42; i++) {
+      const day = new Date(startDate);
+      day.setDate(startDate.getDate() + i);
+      days.push(day);
     }
-    
-    // Current month days
-    for (let i = 1; i <= lastDay.getDate(); i++) {
-      const day = new Date(year, month, i);
-      days.push({ date: day, otherMonth: false });
-    }
-    
-    // Next month days
-    const endDay = lastDay.getDay();
-    for (let i = 1; i < 7 - endDay; i++) {
-      const day = new Date(year, month + 1, i);
-      days.push({ date: day, otherMonth: true });
-    }
-    
     return days;
   };
   
-  const hasEvent = (date: Date) => {
-    return events.some(event => 
-      event.date.toDateString() === date.toDateString()
-    );
+  const handleDateClick = (date: Date) => {
+    onDateSelect?.(date);
   };
   
-  const isToday = (date: Date) => {
-    return date.toDateString() === new Date().toDateString();
+  const previousMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
   };
   
-  const isSelected = (date: Date) => {
-    return date.toDateString() === selectedDate.toDateString();
+  const nextMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
   };
+  
+  const days = getDaysInMonth(currentDate);
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
   
   return (
     &lt;div className="lyd-calendar"&gt;
       &lt;div className="lyd-calendar-header"&gt;
+        &lt;button className="lyd-calendar-nav-btn" onClick={previousMonth}&gt;‹&lt;/button&gt;
         &lt;div className="lyd-calendar-title"&gt;
-          {currentMonth.toLocaleDateString('en-US', { 
-            month: 'long', 
-            year: 'numeric' 
-          })}
+          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
         &lt;/div&gt;
-        &lt;div className="lyd-calendar-nav"&gt;
-          &lt;button onClick={() => setCurrentMonth(/* prev month */)}&gt;
-            &lt;svg&gt;...&lt;/svg&gt;
-          &lt;/button&gt;
-          &lt;button onClick={() => setCurrentMonth(/* next month */)}&gt;
-            &lt;svg&gt;...&lt;/svg&gt;
-          &lt;/button&gt;
-        &lt;/div&gt;
+        &lt;button className="lyd-calendar-nav-btn" onClick={nextMonth}&gt;›&lt;/button&gt;
       &lt;/div&gt;
       
-      {/* Calendar grid */}
-      &lt;div className="lyd-calendar-grid"&gt;
+      &lt;div className="lyd-calendar-weekdays"&gt;
         {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
           &lt;div key={day} className="lyd-calendar-weekday"&gt;{day}&lt;/div&gt;
         ))}
-        
-        {getDaysInMonth(currentMonth).map(({ date, otherMonth }) => (
+      &lt;/div&gt;
+      
+      &lt;div className="lyd-calendar-grid"&gt;
+        {days.map((day, index) => (
           &lt;button
-            key={date.toISOString()}
-            className={`
-              lyd-calendar-day
-              ${otherMonth ? 'other-month' : ''}
-              ${isToday(date) ? 'today' : ''}
-              ${isSelected(date) ? 'selected' : ''}
-              ${hasEvent(date) ? 'has-event' : ''}
-            `}
-            onClick={() => onDateSelect?.(date)}
+            key={index}
+            className={`lyd-calendar-day ${getDayClasses(day)}`}
+            onClick={() => handleDateClick(day)}
           &gt;
-            {date.getDate()}
+            {day.getDate()}
           &lt;/button&gt;
         ))}
       &lt;/div&gt;
@@ -650,43 +501,100 @@ export const Calendar = ({
                 <tbody>
                     <tr>
                         <td><code>.lyd-calendar</code></td>
-                        <td>Calendar container</td>
+                        <td>Main calendar container</td>
                     </tr>
                     <tr>
                         <td><code>.lyd-calendar-header</code></td>
-                        <td>Header with title and navigation</td>
+                        <td>Calendar header with navigation</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-calendar-title</code></td>
+                        <td>Month/year title</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-calendar-nav-btn</code></td>
+                        <td>Previous/next navigation buttons</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-calendar-weekdays</code></td>
+                        <td>Weekday labels container</td>
                     </tr>
                     <tr>
                         <td><code>.lyd-calendar-grid</code></td>
-                        <td>Days grid container</td>
+                        <td>Calendar days grid</td>
                     </tr>
                     <tr>
                         <td><code>.lyd-calendar-day</code></td>
                         <td>Individual day button</td>
                     </tr>
                     <tr>
-                        <td><code>.lyd-calendar-events</code></td>
-                        <td>Events list container</td>
-                    </tr>
-                    <tr>
                         <td><code>.today</code></td>
-                        <td>Today's date indicator</td>
+                        <td>Current date styling</td>
                     </tr>
                     <tr>
                         <td><code>.selected</code></td>
                         <td>Selected date styling</td>
                     </tr>
                     <tr>
-                        <td><code>.has-event</code></td>
-                        <td>Date with event indicator</td>
-                    </tr>
-                    <tr>
-                        <td><code>.other-month</code></td>
-                        <td>Days from other months</td>
+                        <td><code>.disabled</code></td>
+                        <td>Disabled date styling</td>
                     </tr>
                 </tbody>
             </table>
         </section>
     </main>
+    
+    <script>
+        // HeroUI-inspirierte Calendar-Funktionalität
+        let currentMonth = 8; // September (0-based)
+        let currentYear = 2025;
+        
+        function previousMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateCalendar();
+        }
+        
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendar();
+        }
+        
+        function updateCalendar() {
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const titleElement = document.querySelector('.lyd-calendar-title');
+            if (titleElement) {
+                titleElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            }
+        }
+        
+        // Day selection
+        document.querySelectorAll('.lyd-calendar-day:not(.disabled)').forEach(day => {
+            day.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.lyd-calendar-day.selected').forEach(d => {
+                    if (!d.classList.contains('today')) {
+                        d.classList.remove('selected');
+                    }
+                });
+                
+                // Add selection to clicked day
+                if (!this.classList.contains('today')) {
+                    this.classList.add('selected');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
