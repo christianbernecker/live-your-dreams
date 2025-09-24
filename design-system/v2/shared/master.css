@@ -451,6 +451,9 @@ p {
     transition: var(--transition-luxury);
     position: relative;
     overflow: visible; /* Fix für Dropdown z-index Problem */
+    min-height: 200px; /* Mindesthöhe für Dropdown-Komponenten */
+    display: flex;
+    flex-direction: column;
 }
 
 .component-card::before {
@@ -1113,17 +1116,20 @@ p {
     z-index: var(--z-dropdown-container) !important;
 }
 
-/* Alle Dropdown-Menüs */
+/* ULTIMATIVE DROPDOWN Z-INDEX LÖSUNG - POSITION FIXED */
 .lyd-select-dropdown,
 .lyd-dropdown-menu,
 .lyd-autocomplete-dropdown,
 .lyd-combobox-dropdown,
 .lyd-datepicker-dropdown {
-    z-index: var(--z-dropdown-active) !important;
+    position: fixed !important;
+    z-index: 999999 !important;
     background: white !important;
     box-shadow: var(--shadow-xl) !important;
     border: 1px solid var(--lyd-line) !important;
     opacity: 1 !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
 }
 
 /* Aktive/geöffnete Dropdown-Menüs */

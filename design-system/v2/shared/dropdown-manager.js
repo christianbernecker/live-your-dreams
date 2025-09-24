@@ -84,6 +84,9 @@ class DropdownManager {
         // Container als aktiv markieren
         container.classList.add('active');
         
+        // Position Fixed Dropdown korrekt positionieren
+        this.positionFixedDropdown(container, dropdown);
+        
         // Dropdown öffnen
         dropdown.classList.add('show', 'active', 'open');
         
@@ -94,6 +97,23 @@ class DropdownManager {
         this.updateZIndexHierarchy();
         
         console.log('Dropdown opened:', container.className);
+    }
+    
+    positionFixedDropdown(container, dropdown) {
+        // Trigger-Element finden
+        const trigger = container.querySelector('.lyd-select-trigger, .lyd-dropdown-trigger, .lyd-autocomplete-input');
+        if (!trigger) return;
+        
+        // Position berechnen
+        const rect = trigger.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        // Fixed Position setzen
+        dropdown.style.top = (rect.bottom + scrollTop + 8) + 'px';
+        dropdown.style.left = (rect.left + scrollLeft) + 'px';
+        dropdown.style.width = rect.width + 'px';
+        dropdown.style.minWidth = '200px';
     }
     
     closeDropdown(container, dropdown) {
@@ -190,6 +210,25 @@ class DropdownManager {
             if (!e.target.closest('.lyd-select, .lyd-dropdown, .lyd-autocomplete, .lyd-combobox, .lyd-datepicker')) {
                 this.closeAllDropdowns();
             }
+        });
+        
+        // Reposition on scroll/resize für Fixed Dropdowns
+        window.addEventListener('scroll', () => {
+            this.activeDropdowns.forEach(container => {
+                const dropdown = container.querySelector('.lyd-select-dropdown, .lyd-dropdown-menu, .lyd-autocomplete-dropdown');
+                if (dropdown && this.isDropdownOpen(dropdown)) {
+                    this.positionFixedDropdown(container, dropdown);
+                }
+            });
+        });
+        
+        window.addEventListener('resize', () => {
+            this.activeDropdowns.forEach(container => {
+                const dropdown = container.querySelector('.lyd-select-dropdown, .lyd-dropdown-menu, .lyd-autocomplete-dropdown');
+                if (dropdown && this.isDropdownOpen(dropdown)) {
+                    this.positionFixedDropdown(container, dropdown);
+                }
+            });
         });
     }
 }
