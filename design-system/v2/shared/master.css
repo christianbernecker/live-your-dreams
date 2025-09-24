@@ -559,15 +559,20 @@ p {
     cursor: not-allowed;
 }
 
-/* BUTTON-BREITEN-BEGRENZUNG - GLOBAL ROBUST */
+/* DYNAMISCHE BUTTON-BREITEN - VERHINDERT ZWEIZEILIGE TEXTE */
 button.lyd-button,
 .lyd-button {
-    max-width: 200px !important;
-    word-wrap: break-word;
+    width: fit-content !important;
+    max-width: min(250px, 35vw) !important;
+    min-width: fit-content !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
     box-sizing: border-box !important;
+    flex-shrink: 0 !important;
 }
 
-/* MODAL-SPEZIFISCHE BUTTON-OPTIMIERUNG - ULTRA-SPEZIFISCH */
+/* MODAL-SPEZIFISCHE BUTTON-OPTIMIERUNG - DYNAMISCH */
 .lyd-modal button.lyd-button,
 .lyd-modal-footer button.lyd-button,
 .lyd-modal .lyd-button,
@@ -578,34 +583,61 @@ div.lyd-modal button.lyd-button.outline,
 div.lyd-modal-footer button.lyd-button.primary,
 div.lyd-modal-footer button.lyd-button.secondary,
 div.lyd-modal-footer button.lyd-button.outline {
-    max-width: 120px !important;
+    width: fit-content !important;
+    max-width: min(140px, 25vw) !important;
     min-width: 80px !important;
     flex-shrink: 0 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    width: auto !important;
 }
 
-/* TOAST-SPEZIFISCHE BUTTON-OPTIMIERUNG - ULTRA-SPEZIFISCH */
+/* TOAST-SPEZIFISCHE BUTTON-OPTIMIERUNG - KOMPAKT */
 .lyd-toast button.lyd-button,
 .luxury-toast button.lyd-button,
 .toast-container button.lyd-button,
 div.lyd-toast .lyd-button,
 div.luxury-toast .lyd-button,
 div.toast-container .lyd-button {
-    max-width: 100px !important;
+    width: fit-content !important;
+    max-width: min(110px, 20vw) !important;
     min-width: 60px !important;
     font-size: var(--font-size-sm) !important;
     padding: var(--spacing-sm) var(--spacing-md) !important;
-    width: auto !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
-/* COMPONENT-CARD BUTTON-TRIGGER OPTIMIERUNG */
+/* COMPONENT-CARD BUTTON-TRIGGER OPTIMIERUNG - DEMO-BEREICH */
 .component-card button.lyd-button,
 .component-card .lyd-button {
-    max-width: 180px !important;
+    width: fit-content !important;
+    max-width: min(200px, 30vw) !important;
     flex-shrink: 0;
+    white-space: nowrap !important;
+}
+
+/* ICON-ONLY BUTTONS - SPEZIELLE BEHANDLUNG */
+.lyd-button.icon-only,
+button.lyd-button.icon-only {
+    width: 44px !important;
+    max-width: 44px !important;
+    min-width: 44px !important;
+    padding: var(--spacing-md) !important;
+}
+
+/* SMALL/LARGE BUTTON ANPASSUNGEN */
+.lyd-button.small,
+button.lyd-button.small {
+    max-width: min(180px, 25vw) !important;
+    font-size: var(--font-size-sm) !important;
+}
+
+.lyd-button.large,
+button.lyd-button.large {
+    max-width: min(300px, 40vw) !important;
+    font-size: var(--font-size-lg) !important;
 }
 
 .lyd-button.loading {
