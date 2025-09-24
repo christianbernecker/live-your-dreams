@@ -233,34 +233,17 @@
                 <h3>Standard Dropdown</h3>
                 <p>Basic dropdown with text items</p>
                 
-                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
-                    <button class="lyd-dropdown-trigger" onclick="
-                        var menu = this.nextElementSibling;
-                        var isOpen = menu.style.display === 'block';
-                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
-                        menu.style.display = isOpen ? 'none' : 'block';
-                        menu.style.position = 'absolute';
-                        menu.style.top = '100%';
-                        menu.style.left = '0';
-                        menu.style.zIndex = '999999';
-                        menu.style.background = 'white';
-                        menu.style.border = '1px solid #e5e7eb';
-                        menu.style.borderRadius = '8px';
-                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                        menu.style.minWidth = '200px';
-                        menu.style.padding = '8px 0';
-                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
+                <div style="position: relative; display: inline-block;">
+                    <button onclick="var m=this.nextElementSibling; m.style.display = m.style.display==='block' ? 'none' : 'block'; m.style.position='absolute'; m.style.top='130%'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='white'; m.style.border='1px solid #e5e7eb'; m.style.borderRadius='8px'; m.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; m.style.minWidth='220px'; m.style.padding='12px 0';" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
                         <span>Options</span>
-                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <span style="margin-left: auto;">▼</span>
                     </button>
-                    <div class="lyd-dropdown-menu" style="display: none;">
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">View Details</a>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Edit Property</a>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Share Listing</a>
+                    <div style="display: none;">
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">View Details</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Edit Property</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Share Listing</a>
                         <div style="height: 1px; background: #e5e7eb; margin: 8px 0;"></div>
-                        <a href="#" style="display: block; padding: 12px 16px; color: #ef4444; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Delete</a>
+                        <a href="#" style="display: block; padding: 12px 16px; color: #ef4444; text-decoration: none; font-size: 14px; background: white;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">Delete</a>
                     </div>
                 </div>
             </div>
@@ -269,27 +252,10 @@
                 <h3>Dropdown with Icons</h3>
                 <p>Enhanced dropdown with icon indicators</p>
                 
-                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
-                    <button class="lyd-dropdown-trigger" onclick="
-                        var menu = this.nextElementSibling;
-                        var isOpen = menu.style.display === 'block';
-                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
-                        menu.style.display = isOpen ? 'none' : 'block';
-                        menu.style.position = 'absolute';
-                        menu.style.top = '100%';
-                        menu.style.left = '0';
-                        menu.style.zIndex = '999999';
-                        menu.style.background = 'white';
-                        menu.style.border = '1px solid #e5e7eb';
-                        menu.style.borderRadius = '8px';
-                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                        menu.style.minWidth = '200px';
-                        menu.style.padding = '8px 0';
-                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
+                <div style="position: relative; display: inline-block;">
+                    <button onclick="var m=this.nextElementSibling; m.style.display = m.style.display==='block' ? 'none' : 'block'; m.style.position='absolute'; m.style.top='130%'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='white'; m.style.border='1px solid #e5e7eb'; m.style.borderRadius='8px'; m.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; m.style.minWidth='220px'; m.style.padding='12px 0';" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
                         <span>Actions</span>
-                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <span style="margin-left: auto;">▼</span>
                     </button>
                     <div class="lyd-dropdown-menu" style="display: none;">
                         <a href="#" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; color: #111; text-decoration: none; font-size: 14px;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
@@ -321,27 +287,10 @@
                 <h3>Multi-Select Dropdown</h3>
                 <p>Dropdown with checkbox selection</p>
                 
-                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
-                    <button class="lyd-dropdown-trigger" onclick="
-                        var menu = this.nextElementSibling;
-                        var isOpen = menu.style.display === 'block';
-                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
-                        menu.style.display = isOpen ? 'none' : 'block';
-                        menu.style.position = 'absolute';
-                        menu.style.top = '100%';
-                        menu.style.left = '0';
-                        menu.style.zIndex = '999999';
-                        menu.style.background = 'white';
-                        menu.style.border = '1px solid #e5e7eb';
-                        menu.style.borderRadius = '8px';
-                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                        menu.style.minWidth = '200px';
-                        menu.style.padding = '8px 0';
-                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
+                <div style="position: relative; display: inline-block;">
+                    <button onclick="var m=this.nextElementSibling; m.style.display = m.style.display==='block' ? 'none' : 'block'; m.style.position='absolute'; m.style.top='130%'; m.style.left='0'; m.style.zIndex='999999'; m.style.background='white'; m.style.border='1px solid #e5e7eb'; m.style.borderRadius='8px'; m.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; m.style.minWidth='220px'; m.style.padding='12px 0';" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
                         <span>Filter Properties</span>
-                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <span style="margin-left: auto;">▼</span>
                     </button>
                     <div class="lyd-dropdown-menu" style="display: none;">
                         <div style="padding: 8px 16px; font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase;">Property Type</div>
@@ -361,31 +310,13 @@
             <div class="component-card">
                 <h3>User Menu</h3>
                 
-                <div class="lyd-dropdown" style="position: relative; display: inline-block;">
-                    <button class="lyd-dropdown-trigger" onclick="
-                        var menu = this.nextElementSibling;
-                        var isOpen = menu.style.display === 'block';
-                        document.querySelectorAll('.lyd-dropdown-menu').forEach(m => m.style.display = 'none');
-                        menu.style.display = isOpen ? 'none' : 'block';
-                        menu.style.position = 'absolute';
-                        menu.style.top = '100%';
-                        menu.style.right = '0';
-                        menu.style.left = 'auto';
-                        menu.style.zIndex = '999999';
-                        menu.style.background = 'white';
-                        menu.style.border = '1px solid #e5e7eb';
-                        menu.style.borderRadius = '8px';
-                        menu.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                        menu.style.minWidth = '200px';
-                        menu.style.padding = '8px 0';
-                    " style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
+                <div style="position: relative; display: inline-block;">
+                    <button onclick="var m=this.nextElementSibling; m.style.display = m.style.display==='block' ? 'none' : 'block'; m.style.position='absolute'; m.style.top='130%'; m.style.right='0'; m.style.left='auto'; m.style.zIndex='999999'; m.style.background='white'; m.style.border='1px solid #e5e7eb'; m.style.borderRadius='8px'; m.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; m.style.minWidth='220px'; m.style.padding='12px 0';" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
                         <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #000066, #3366CC); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
                             JD
                         </div>
                         <span>John Doe</span>
-                        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <span style="margin-left: auto;">▼</span>
                     </button>
                     <div class="lyd-dropdown-menu" style="display: none;">
                         <div style="padding: 8px 16px; font-size: 12px; font-weight: bold; color: #666; text-transform: uppercase;">Account</div>
