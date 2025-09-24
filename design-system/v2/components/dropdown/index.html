@@ -234,7 +234,7 @@
                 <p>Basic dropdown with text items</p>
                 
                 <div style="position: relative; display: inline-block;">
-                    <button onclick="var m=this.nextElementSibling; m.style.display = m.style.display==='block' ? 'none' : 'block'; m.style.position='fixed'; m.style.top='130%'; m.style.left='0'; m.style.zIndex='2147483647'; m.style.background='white'; m.style.border='1px solid #e5e7eb'; m.style.borderRadius='8px'; m.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; m.style.minWidth='220px'; m.style.padding='12px 0';" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
+                    <button onclick="alert('TEST: JavaScript funktioniert!'); var m=this.nextElementSibling; if(m.style.display==='block'){m.style.display='none';}else{m.style.display='block'; m.style.position='absolute'; m.style.top='50px'; m.style.left='0'; m.style.zIndex='99999'; m.style.background='white'; m.style.border='2px solid red'; m.style.padding='10px';}" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: white; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500;">
                         <span>Options</span>
                         <span style="margin-left: auto;">▼</span>
                     </button>
