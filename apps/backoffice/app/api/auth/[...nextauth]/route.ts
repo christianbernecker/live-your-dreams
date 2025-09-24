@@ -1,6 +1,18 @@
-import NextAuth from 'next-auth';
-import { authOptions } from '@/lib/auth';
+// PLACEHOLDER: API Route
+import { NextRequest, NextResponse } from "next/server";
 
-const handler = NextAuth(authOptions);
+export async function GET(request: NextRequest) {
+  return NextResponse.json({ success: true, data: [] });
+}
 
-export { handler as GET, handler as POST };
+export async function POST(request: NextRequest) {
+  return NextResponse.json({ success: true, message: "Operation completed" });
+}
+
+export async function PUT(request: NextRequest) {
+  return NextResponse.json({ success: true, message: "Updated" });
+}
+
+export async function DELETE(request: NextRequest) {
+  return NextResponse.json({ success: true, message: "Deleted" });
+}
