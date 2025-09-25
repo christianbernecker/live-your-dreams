@@ -4,10 +4,15 @@
   "private": true,
   "description": "Live Your Dreams Backoffice - Design System Clean Implementation",
   "scripts": {
-    "dev": "next dev --port 3001",
-    "build": "next build",
-    "start": "next start --port 3001",
-    "lint": "next lint"
+    "dev": "NEXT_TELEMETRY_DISABLED=1 next dev --port 3001 --turbo",
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "start": "NEXT_TELEMETRY_DISABLED=1 next start --port 3001",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .next",
+    "analyze": "ANALYZE=true npm run build",
+    "deploy": "vercel --prod",
+    "deploy-preview": "vercel"
   },
   "dependencies": {
     "next": "14.2.33",

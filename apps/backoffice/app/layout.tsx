@@ -1,15 +1,9 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
-
-export const metadata: Metadata = {
-  title: 'LYD Backoffice',
-  description: 'Live Your Dreams - Premium Real Estate Backoffice',
+export const metadata = {
+  title: 'Live Your Dreams - Backoffice',
+  description: 'Exklusive Immobilienvermarktung - Backoffice System',
 }
 
 export default function RootLayout({
@@ -19,8 +13,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <body className={inter.variable}>
-        {children}
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000066" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body style={{ fontFamily: 'var(--font-family-primary)' }}>
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   )
