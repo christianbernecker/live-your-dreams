@@ -83,14 +83,23 @@ function AuthErrorContent() {
             </div>
           </div>
 
-          {/* Design System Grid für Buttons (rechts ausgerichtet) */}
+          {/* Design System Grid für Buttons (links & rechts am Rand) */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'auto auto',
             gap: 'var(--spacing-md)',
             width: '100%',
-            justifyContent: 'end'
+            justifyContent: 'space-between'
           }}>
+            <Link 
+              href="/auth/forgot-password" 
+              className="lyd-button secondary"
+              style={{ 
+                whiteSpace: 'nowrap'
+              }}
+            >
+              Passwort vergessen
+            </Link>
             <Link 
               href="/" 
               className="lyd-button primary"
@@ -105,21 +114,6 @@ function AuthErrorContent() {
                 <path d="M4 12l8-8 8 8M6 10.5V19a1 1 0 001 1h3v-3a1 1 0 011-1h2a1 1 0 011 1v3h3a1 1 0 001-1v-8.5"/>
               </svg>
               Erneut versuchen
-            </Link>
-            <Link 
-              href="/auth/forgot-password" 
-              className="lyd-button secondary"
-              style={{ 
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--spacing-xs)',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M15 3h6v18h-6M10 17l5-5-5-5M6 21V3"/>
-              </svg>
-              Passwort vergessen
             </Link>
           </div>
         </div>
