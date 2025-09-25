@@ -10,10 +10,11 @@ export default function Home() {
             <Image
               src="/lyd-logo-v3.svg"
               alt="Live Your Dreams"
-              width={167}
+              width={176}
               height={100}
               priority
               className="h-auto"
+              style={{ display: 'block', margin: '0 auto' }}
             />
           </div>
           <div style={{ 
