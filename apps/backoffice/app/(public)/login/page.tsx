@@ -17,8 +17,8 @@ export default function LoginPage() {
               priority
             />
           </div>
-          <h1 className="lyd-heading-luxury">Backoffice</h1>
-          <p className="lyd-text-muted">Exklusive Immobilienvermarktung</p>
+          <div className="lyd-page-heading">Page Heading</div>
+          <h1 className="lyd-heading-luxury">Premium Real Estate Solutions</h1>
         </header>
         <form className="lyd-login__form" action="/api/auth/signin" method="post">
           <div className="lyd-input-field">

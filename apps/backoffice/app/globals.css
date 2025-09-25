@@ -6,10 +6,11 @@
 /* TOKENS LAYER - Design System Variables */
 @layer tokens {
   :root {
-    /* Brand Colors */
-    --lyd-color-brand-primary: #0066ff;
-    --lyd-color-brand-secondary: #1a73e8;
-    --lyd-color-brand-gradient: linear-gradient(135deg, #0066ff, #1a73e8);
+    /* Brand Colors - Design System Konform */
+    --lyd-color-brand-primary: #3b4bdb;
+    --lyd-color-brand-secondary: #4338ca;
+    --lyd-color-brand-gradient: linear-gradient(135deg, #4338ca, #3b4bdb);
+    --lyd-color-brand-light: #6366f1;
 
     /* Text Colors */
     --lyd-color-text-default: #1a1a1a;
@@ -101,12 +102,24 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* LYD Typography Classes */
+  /* LYD Typography Classes - Design System */
+  .lyd-page-heading {
+    color: var(--lyd-color-brand-light);
+    font-family: var(--lyd-font-family-primary);
+    font-weight: var(--lyd-font-weight-medium);
+    font-size: var(--lyd-font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--lyd-letter-spacing-wide);
+    margin-bottom: var(--lyd-space-xs);
+  }
+
   .lyd-heading-luxury {
-    font-family: var(--lyd-font-family-luxury);
+    font-family: var(--lyd-font-family-primary);
     font-weight: var(--lyd-font-weight-bold);
     line-height: var(--lyd-line-height-tight);
-    letter-spacing: var(--lyd-letter-spacing-normal);
+    letter-spacing: var(--lyd-letter-spacing-tight);
+    color: var(--lyd-color-brand-primary);
+    font-size: var(--lyd-font-size-4xl);
   }
 
   .lyd-text-muted {
