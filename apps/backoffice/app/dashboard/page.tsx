@@ -1,8 +1,8 @@
 'use client'
 
-import { DashboardLayout } from "@/components/layout/DashboardLayout"
 import DashboardMetrics from '@/components/dashboard/DashboardMetrics'
 import RecentActivity from '@/components/dashboard/RecentActivity'
+import { DashboardLayout } from "@/components/layout/DashboardLayout"
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'

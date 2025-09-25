@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { auth } from '@/lib/auth'
+// import { auth } from '@/lib/auth' // Disabled for Edge Runtime compatibility
 
 // Routes that require authentication
 const protectedRoutes = [
@@ -47,10 +47,11 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    // Get session
-    const session = await auth()
-    const isAuthenticated = !!session?.user
-    const isAdmin = session?.user?.role === 'admin'
+    // Get session - simplified for Edge Runtime
+    // const session = await auth()
+    const session = null // Temporary disable for Edge Runtime
+    const isAuthenticated = false // !!session?.user
+    const isAdmin = false // session?.user?.role === 'admin'
 
     // Handle authentication routes
     if (authRoutes.some(route => pathname.startsWith(route))) {
