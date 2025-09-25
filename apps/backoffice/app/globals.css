@@ -1,12 +1,12 @@
-/* apps/backoffice/app/globals.css - DESIGN SYSTEM FOUNDATIONS KONSOLIDIERT */
+/* LYD BACKOFFICE - DESIGN SYSTEM FOUNDATION */
 
 /* Define Cascade Layers for predictable priority */
 @layer tokens, base, components, utilities, app;
 
-/* TOKENS LAYER - Design System Variables */
+/* DESIGN SYSTEM TOKENS - @layer tokens */
 @layer tokens {
   :root {
-    /* Brand Colors - Design System Konform */
+    /* Brand Colors - Authentic LYD Design System */
     --lyd-color-brand-primary: #3b4bdb;
     --lyd-color-brand-secondary: #4338ca;
     --lyd-color-brand-gradient: linear-gradient(135deg, #4338ca, #3b4bdb);
@@ -20,25 +20,15 @@
     /* Surface Colors */
     --lyd-color-surface-bg: #fafafa;
     --lyd-color-surface-card: #ffffff;
-    --lyd-color-surface-line: #e5e7eb;
+    --lyd-color-surface-line: #e0e0e0;
 
-    /* Semantic Colors */
-    --lyd-color-semantic-success: #10b981;
-    --lyd-color-semantic-warning: #f59e0b;
-    --lyd-color-semantic-error: #ef4444;
-    --lyd-color-semantic-info: #3b82f6;
-
-    /* Radius */
-    --lyd-radius-sm: 4px;
-    --lyd-radius-md: 8px;
-    --lyd-radius-lg: 12px;
-
-    /* Spacing */
+    /* Spacing Scale */
     --lyd-space-xs: 4px;
     --lyd-space-sm: 8px;
     --lyd-space-md: 16px;
     --lyd-space-lg: 24px;
     --lyd-space-xl: 32px;
+    --lyd-space-2xl: 48px;
 
     /* Typography Scale */
     --lyd-font-size-xs: 12px;
@@ -54,7 +44,6 @@
     /* Font Families */
     --lyd-font-family-primary: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --lyd-font-family-luxury: 'Playfair Display', Georgia, serif;
-    --lyd-font-family-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
     /* Font Weights */
     --lyd-font-weight-normal: 400;
@@ -73,25 +62,38 @@
     --lyd-line-height-normal: 1.6;
     --lyd-line-height-relaxed: 1.8;
 
+    /* Border Radii */
+    --lyd-radius-sm: 4px;
+    --lyd-radius-md: 8px;
+    --lyd-radius-lg: 12px;
+    --lyd-radius-xl: 16px;
+
     /* Transitions */
     --lyd-transition-fast: 150ms ease;
     --lyd-transition-normal: 200ms ease;
     --lyd-transition-luxury: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shadows */
+    --lyd-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --lyd-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --lyd-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --lyd-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 }
 
-/* BASE LAYER - Reset + Typography */
+/* BASE LAYER - Resets and Base Styles */
 @layer base {
-  *, *::before, *::after { 
-    box-sizing: border-box; 
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
-  
+
   html, body { 
     height: 100%; 
-  }
-  
-  body {
     margin: 0;
+    padding: 0;
+  }
+
+  body {
     background: var(--lyd-color-surface-bg);
     color: var(--lyd-color-text-default);
     font-family: var(--lyd-font-family-primary);
@@ -102,7 +104,47 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* LYD Typography Classes - Design System */
+  /* Typography Base */
+  h1, h2, h3, h4, h5, h6 { 
+    font-family: var(--lyd-font-family-primary);
+    font-weight: var(--lyd-font-weight-bold); 
+    line-height: var(--lyd-line-height-tight); 
+    margin: 0;
+  }
+
+  h1 { font-size: var(--lyd-font-size-4xl); }
+  h2 { font-size: var(--lyd-font-size-3xl); }
+  h3 { font-size: var(--lyd-font-size-2xl); }
+
+  a { 
+    color: var(--lyd-color-brand-primary); 
+    text-decoration: none; 
+    transition: color var(--lyd-transition-fast);
+  }
+
+  a:hover { 
+    color: var(--lyd-color-brand-secondary); 
+    text-decoration: underline;
+  }
+
+  p { 
+    margin-top: 0; 
+    margin-bottom: var(--lyd-space-md); 
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  input, textarea, select {
+    font-family: inherit;
+  }
+}
+
+/* COMPONENTS LAYER - Design System UI Elements */
+@layer components {
+
+  /* Typography Classes */
   .lyd-page-heading {
     color: var(--lyd-color-brand-light);
     font-family: var(--lyd-font-family-primary);
@@ -130,115 +172,16 @@
     font-size: var(--lyd-font-size-sm);
   }
 
-  h1, h2, h3, h4, h5, h6 { 
-    font-family: var(--lyd-font-family-primary);
-    font-weight: var(--lyd-font-weight-bold); 
-    line-height: var(--lyd-line-height-tight); 
-    margin: 0;
-  }
-  
-  h1 { font-size: var(--lyd-font-size-4xl); }
-  h2 { font-size: var(--lyd-font-size-3xl); }
-  h3 { font-size: var(--lyd-font-size-2xl); }
-
-  a { 
-    color: var(--lyd-color-brand-primary); 
-    text-decoration: none; 
-    transition: color var(--lyd-transition-fast);
-  }
-  
-  a:hover { 
-    color: var(--lyd-color-brand-secondary);
-    text-decoration: underline; 
-  }
-}
-
-/* COMPONENTS LAYER - UI Elements */
-@layer components {
-  
-  /* LYD Design System - Input Components */
-  .lyd-input-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--lyd-space-xs);
-    width: 100%;
-  }
-
-  .lyd-input-label {
-    font-family: var(--lyd-font-family-primary, Inter, system-ui, sans-serif);
-    font-weight: 500; /* medium */
-    font-size: 14px; /* --font-size-sm */
-    color: var(--lyd-color-text-default);
-    margin-bottom: 4px;
-  }
-
-  .lyd-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .lyd-input-wrapper.has-icon {
-    position: relative;
-  }
-
-  .lyd-input-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--lyd-color-text-muted);
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .lyd-input {
-    width: 100%;
-    padding: 12px 16px;
-    font-family: var(--lyd-font-family-primary, Inter, system-ui, sans-serif);
-    font-size: 16px; /* --font-size-base */
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--lyd-color-text-default);
-    background: var(--lyd-color-surface-card);
-    border: 1px solid var(--lyd-color-surface-line);
-    border-radius: var(--lyd-radius-md);
-    transition: all var(--lyd-transition-normal);
-    outline: none;
-  }
-
-  .lyd-input-wrapper.has-icon .lyd-input {
-    padding-left: 44px;
-  }
-
-  .lyd-input:focus {
-    border-color: var(--lyd-color-brand-primary);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-    background: var(--lyd-color-surface-card);
-  }
-
-  .lyd-input::placeholder {
-    color: var(--lyd-color-text-muted);
-    font-weight: 400;
-  }
-
-  /* Premium Input Variant */
-  .lyd-input.premium {
-    border: 2px solid transparent;
-    background: linear-gradient(var(--lyd-color-surface-card), var(--lyd-color-surface-card)) padding-box,
-                var(--lyd-color-brand-gradient) border-box;
-  }
-
-  /* LYD Design System - Button Components */
+  /* Button Components */
   .lyd-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: var(--lyd-space-sm);
     padding: 12px 24px;
-    font-family: var(--lyd-font-family-primary, Inter, system-ui, sans-serif);
-    font-size: 16px; /* --font-size-base */
-    font-weight: 500; /* medium */
+    font-family: var(--lyd-font-family-primary);
+    font-size: var(--lyd-font-size-base);
+    font-weight: var(--lyd-font-weight-medium);
     line-height: 1.5;
     text-align: center;
     text-decoration: none;
@@ -255,33 +198,27 @@
     background: var(--lyd-color-brand-gradient);
     color: var(--lyd-color-text-inverse);
     border-color: var(--lyd-color-brand-primary);
-    box-shadow: 0 2px 4px rgba(0, 102, 255, 0.2);
+    box-shadow: var(--lyd-shadow-md);
   }
 
   .lyd-button-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--lyd-shadow-xl);
   }
 
   .lyd-button-primary:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 102, 255, 0.2);
+    box-shadow: var(--lyd-shadow-md);
   }
 
   .lyd-button-primary:focus {
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.3);
-  }
-
-  /* Button Sizes */
-  .lyd-button.small {
-    padding: 8px 16px;
-    font-size: 14px; /* --font-size-sm */
+    box-shadow: 0 0 0 3px rgba(59, 75, 219, 0.3);
   }
 
   .lyd-button.large {
     padding: 16px 32px;
-    font-size: 18px; /* --font-size-lg */
-    font-weight: 600; /* semibold */
+    font-size: var(--lyd-font-size-lg);
+    font-weight: var(--lyd-font-weight-semibold);
   }
 
   .lyd-button:disabled {
@@ -291,84 +228,114 @@
     box-shadow: none !important;
   }
 
-  /* Loading State */
-  .lyd-button.loading {
+  /* Input Components */
+  .lyd-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lyd-space-xs);
+    width: 100%;
+  }
+
+  .lyd-input-label {
+    font-family: var(--lyd-font-family-primary);
+    font-weight: var(--lyd-font-weight-medium);
+    font-size: var(--lyd-font-size-sm);
+    color: var(--lyd-color-text-default);
+    margin-bottom: var(--lyd-space-xs);
+  }
+
+  .lyd-input-wrapper {
     position: relative;
-    color: transparent;
+    display: flex;
+    align-items: center;
   }
 
-  .lyd-button.loading::after {
-    content: '';
+  .lyd-input-icon {
     position: absolute;
-    width: 16px;
-    height: 16px;
+    left: 12px;
     top: 50%;
-    left: 50%;
-    margin: -8px 0 0 -8px;
-    border: 2px solid transparent;
-    border-top-color: currentColor;
-    border-radius: 50%;
-    animation: lyd-spin 0.8s linear infinite;
+    transform: translateY(-50%);
+    color: var(--lyd-color-text-muted);
+    z-index: 1;
+    pointer-events: none;
   }
 
-  @keyframes lyd-spin {
-    to {
-      transform: rotate(360deg);
-    }
+  .lyd-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-family: var(--lyd-font-family-primary);
+    font-size: var(--lyd-font-size-base);
+    font-weight: var(--lyd-font-weight-normal);
+    line-height: var(--lyd-line-height-normal);
+    color: var(--lyd-color-text-default);
+    background: var(--lyd-color-surface-card);
+    border: 1px solid var(--lyd-color-surface-line);
+    border-radius: var(--lyd-radius-md);
+    transition: all var(--lyd-transition-normal);
+    outline: none;
+  }
+
+  .lyd-input-wrapper.has-icon .lyd-input {
+    padding-left: 44px;
+  }
+
+  .lyd-input:focus {
+    border-color: var(--lyd-color-brand-primary);
+    box-shadow: 0 0 0 3px rgba(59, 75, 219, 0.1);
+    background: var(--lyd-color-surface-card);
+  }
+
+  .lyd-input::placeholder {
+    color: var(--lyd-color-text-muted);
+    font-weight: var(--lyd-font-weight-normal);
   }
 }
 
 /* UTILITIES LAYER - Helper Classes */
 @layer utilities {
   .text-center { text-align: center; }
-  .d-flex { display: flex; }
+  .text-left { text-align: left; }
+  .text-right { text-align: right; }
+  
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
   .items-center { align-items: center; }
+  .justify-center { justify-content: center; }
   .justify-between { justify-content: space-between; }
+  
   .w-full { width: 100%; }
-  .rounded-lg { border-radius: var(--lyd-radius-lg); }
+  .h-full { height: 100%; }
+  .min-h-screen { min-height: 100vh; }
+  
+  .space-y-4 > * + * { margin-top: var(--lyd-space-md); }
+  .space-y-6 > * + * { margin-top: var(--lyd-space-lg); }
 }
 
-/* APP LAYER - Application Layout */
+/* APP LAYER - Application Specific Layout */
 @layer app {
-  .lyd-shell { 
-    min-height: 100dvh; 
-    display: grid; 
-    grid-template-columns: 280px 1fr; 
-  }
-  
-  .lyd-sidebar { 
-    background: var(--lyd-color-brand-gradient); 
-    color: var(--lyd-color-text-inverse); 
-    padding: var(--lyd-space-lg); 
-  }
-  
-  .lyd-main { 
-    padding: clamp(16px, 3vw, 32px); 
-  }
-
-  /* Login Page Layout - Verbesserte Zentrierung */
-  .lyd-login { 
-    display: flex; 
+  /* Login Page Layout */
+  .lyd-login {
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100dvh; 
-    padding: var(--lyd-space-xl); 
+    min-height: 100vh;
+    padding: var(--lyd-space-xl);
     background: var(--lyd-color-surface-bg);
   }
 
-  .lyd-login__card { 
-    width: min(520px, 90vw); 
+  .lyd-login__card {
+    width: min(520px, 90vw);
     max-width: 520px;
-    background: var(--lyd-color-surface-card); 
-    border: 1px solid var(--lyd-color-surface-line); 
-    border-radius: var(--lyd-radius-lg); 
-    padding: clamp(32px, 4vw, 48px); 
-    box-shadow: 0 10px 25px rgba(0,0,0,.08), 0 4px 10px rgba(0,0,0,.04); 
+    background: var(--lyd-color-surface-card);
+    border: 1px solid var(--lyd-color-surface-line);
+    border-radius: var(--lyd-radius-xl);
+    padding: clamp(32px, 4vw, 48px);
+    box-shadow: var(--lyd-shadow-lg);
   }
 
   .lyd-login__header {
     text-align: center;
-    margin-bottom: var(--lyd-space-xl);
+    margin-bottom: var(--lyd-space-2xl);
   }
 
   .lyd-login__logo {
@@ -377,36 +344,25 @@
     justify-content: center;
   }
 
-  .lyd-login__header .lyd-heading-luxury { 
-    font-size: var(--lyd-font-size-3xl);
-    margin: 0 0 var(--lyd-space-xs); 
-    color: var(--lyd-color-text-default);
+  .lyd-login__form {
+    display: grid;
+    gap: var(--lyd-space-lg);
+    margin-block: 0 var(--lyd-space-xl);
   }
 
-  .lyd-login__header .lyd-text-muted { 
-    margin: 0 0 var(--lyd-space-xl); 
+  .lyd-login__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--lyd-font-size-sm);
+    color: var(--lyd-color-text-muted);
+    margin-top: var(--lyd-space-xl);
+    padding-top: var(--lyd-space-lg);
+    border-top: 1px solid var(--lyd-color-surface-line);
   }
 
-  .lyd-login__form { 
-    display: grid; 
-    gap: var(--lyd-space-lg); 
-    margin-block: 0 var(--lyd-space-xl); 
-  }
-
-  .lyd-login__footer { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    color: var(--lyd-color-text-muted); 
-    font-size: 12px;
-  }
-
-  .lyd-login__footer a {
-    color: var(--lyd-color-brand-primary);
-    text-decoration: none;
-  }
-
-  .lyd-login__footer a:hover {
-    text-decoration: underline;
+  .lyd-login__footer nav a {
+    font-weight: var(--lyd-font-weight-medium);
+    margin: 0 var(--lyd-space-xs);
   }
 }

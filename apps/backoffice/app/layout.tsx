@@ -1,28 +1,27 @@
-// apps/backoffice/app/layout.tsx - DESIGN SYSTEM FOUNDATIONS
-import { Inter } from 'next/font/google';
-import "./globals.css"; // Jetzt mit @layer foundations
-import { Providers } from './providers';
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
 
 const inter = Inter({ 
-  subsets: ["latin"],
-  display: 'swap',  // Optimized font loading
-  variable: '--font-inter'
-});
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+
+export const metadata: Metadata = {
+  title: 'LYD Backoffice',
+  description: 'Live Your Dreams - Premium Real Estate Backoffice',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="de">
-      <body className={inter.className}>
-        <div className="lyd-shell">
-          <Providers>
-            {children}
-          </Providers>
-        </div>
+      <body className={inter.variable}>
+        {children}
       </body>
     </html>
-  );
+  )
 }
