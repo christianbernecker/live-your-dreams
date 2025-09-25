@@ -1,103 +1,157 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--lyd-gradient-subtle, #fafafa)' }}>
+      <div className="lyd-card elevated" style={{ maxWidth: '480px', width: '100%' }}>
+        <div className="lyd-card-header text-center">
+          <div className="flex justify-center mb-6">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/lyd-logo.svg"
+              alt="Live Your Dreams"
+              width={180}
+              height={54}
+              priority
+              className="h-auto"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          <h1 className="lyd-card-title" style={{ 
+            fontSize: 'var(--font-size-2xl)', 
+            color: 'var(--lyd-deep-blue)', 
+            marginBottom: 'var(--spacing-xs)' 
+          }}>
+            Backoffice Login
+          </h1>
+          <p style={{ 
+            color: 'var(--lyd-grey)', 
+            fontSize: 'var(--font-size-sm)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            fontWeight: '500'
+          }}>
+            Premium Real Estate Solutions
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        
+        <div className="lyd-card-body">
+          <form className="space-y-6">
+            {/* Email Input */}
+            <div>
+              <label className="lyd-input-label required">
+                E-Mail-Adresse
+              </label>
+              <div className="lyd-input-wrapper has-icon">
+                <svg className="lyd-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <input
+                  type="email"
+                  className="lyd-input"
+                  placeholder="ihre@email.de"
+                  required
+                  autoComplete="username"
+                />
+              </div>
+            </div>
+
+            {/* Password Input */}
+            <div>
+              <label className="lyd-input-label required">
+                Passwort
+              </label>
+              <div className="lyd-input-wrapper has-icon">
+                <svg className="lyd-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <circle cx="12" cy="16" r="1"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <input
+                  type="password"
+                  className="lyd-input"
+                  placeholder="••••••••••••"
+                  required
+                  autoComplete="current-password"
+                />
+              </div>
+            </div>
+
+            {/* Remember Me */}
+            <div className="flex items-center justify-between">
+              <label className="flex items-center space-x-2" style={{ fontSize: 'var(--font-size-sm)' }}>
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded border-2"
+                  style={{ borderColor: 'var(--lyd-line)', accentColor: 'var(--lyd-primary)' }}
+                />
+                <span style={{ color: 'var(--lyd-grey)' }}>Angemeldet bleiben</span>
+              </label>
+              <Link 
+                href="/forgot-password" 
+                style={{ 
+                  color: 'var(--lyd-primary)', 
+                  fontSize: 'var(--font-size-sm)',
+                  textDecoration: 'none',
+                  fontWeight: '500'
+                }}
+                className="hover:underline"
+              >
+                Passwort vergessen?
+              </Link>
+            </div>
+
+            {/* Login Button */}
+            <button
+              type="submit"
+              className="lyd-button primary large w-full"
+              style={{ marginTop: 'var(--spacing-xl)' }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 3h6v18h-6M10 17l5-5-5-5M6 21V3"/>
+              </svg>
+              Anmelden
+            </button>
+          </form>
+        </div>
+
+        <div className="lyd-card-footer" style={{ 
+          flexDirection: 'column', 
+          gap: 'var(--spacing-md)',
+          textAlign: 'center' as const,
+          borderTop: '1px solid var(--lyd-line)',
+          marginTop: 'var(--spacing-xl)',
+          paddingTop: 'var(--spacing-lg)'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            width: '100%',
+            fontSize: 'var(--font-size-xs)',
+            color: 'var(--lyd-grey)'
+          }}>
+            <span>© {new Date().getFullYear()} Live Your Dreams</span>
+            <div className="flex space-x-4">
+              <Link href="/impressum" style={{ color: 'var(--lyd-grey)' }} className="hover:text-blue-600">
+                Impressum
+              </Link>
+              <Link href="/datenschutz" style={{ color: 'var(--lyd-grey)' }} className="hover:text-blue-600">
+                Datenschutz
+              </Link>
+            </div>
+          </div>
+          
+          {/* Status Indicator */}
+          <div className="flex items-center justify-center space-x-2" style={{ fontSize: 'var(--font-size-xs)' }}>
+            <div 
+              className="w-2 h-2 rounded-full bg-green-500"
+              style={{ backgroundColor: 'var(--lyd-success)' }}
+            ></div>
+            <span style={{ color: 'var(--lyd-grey)' }}>System Online</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
