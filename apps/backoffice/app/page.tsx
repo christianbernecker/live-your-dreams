@@ -125,7 +125,7 @@ export default async function LoginPage() {
               Passwort: admin123
             </div>
 
-            {/* Design System Grid für Button (zentriert, volle Breite) */}
+            {/* Design System Grid für Button (rechts ausgerichtet) */}
             <div style={{
               display: 'grid',
               gridTemplateColumns: '1fr',
@@ -137,8 +137,7 @@ export default async function LoginPage() {
                 className="lyd-button primary large"
                 style={{ 
                   fontFamily: 'var(--font-family-primary)',
-                  width: '100%',
-                  justifyContent: 'center',
+                  justifySelf: 'end',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 'var(--spacing-xs)'
