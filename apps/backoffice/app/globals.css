@@ -167,7 +167,7 @@
   overflow: hidden;
 }
 
-/* Authentic Primary Button with Design System Effects */
+/* EXACT Design System Primary Button - From master.css */
 .lyd-button.primary {
   background: var(--lyd-gradient-primary);
   background-size: 200% 200%;
@@ -179,7 +179,7 @@
   transition: var(--transition-luxury);
 }
 
-/* Primary Button Shimmer Effect */
+/* EXACT Primary Button Shimmer Effect - From master.css */
 .lyd-button.primary::before {
   content: '';
   position: absolute;
@@ -192,7 +192,7 @@
   transition: transform 0.6s;
 }
 
-/* Authentic Primary Button Hover Effects */
+/* EXACT Primary Button Hover Effects - From master.css */
 .lyd-button.primary:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: var(--shadow-glow);

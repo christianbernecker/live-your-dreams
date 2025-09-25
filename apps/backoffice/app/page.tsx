@@ -6,7 +6,7 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--lyd-gradient-subtle, #fafafa)' }}>
       <div className="lyd-card elevated" style={{ maxWidth: '480px', width: '100%' }}>
         <div className="lyd-card-header text-center">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-6" style={{ marginLeft: '25px' }}>
             <Image
               src="/lyd-logo.svg"
               alt="Live Your Dreams"
@@ -25,7 +25,7 @@ export default function Home() {
             fontFamily: 'var(--font-family-primary)',
             marginBottom: 'var(--spacing-xs)'
           }}>
-            Page Heading
+            Willkommen
           </div>
           <h1 style={{ 
             fontSize: 'var(--font-size-2xl)', 
