@@ -1,0 +1,49 @@
+/**
+ * @liveyourdreams/ui - Component Styles
+ * Import this file to include all component styles
+ */
+
+/* Import Design Tokens */
+@import '@liveyourdreams/design-tokens/css/tokens.css';
+
+/* Import Component Styles */
+@import './src/components/button/button.css';
+@import './src/components/input/input.css';
+@import './src/components/card/card.css';
+
+/* Global UI Utilities */
+.lyd-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lyd-focus-ring:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--lyd-color-brand-primary), white 60%);
+  outline-offset: 2px;
+}
+
+.lyd-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lyd-animate-pulse {
+  animation: lyd-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes lyd-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,121 @@
+/* Input Component - Token-based Styles */
+.lyd-field { 
+  display: flex; 
+  flex-direction: column; 
+  gap: var(--lyd-space-xs);
+  width: 100%;
+}
+
+.lyd-field__label { 
+  font-weight: var(--lyd-font-weight-medium); 
+  font-size: var(--lyd-font-size-sm);
+  color: var(--lyd-color-text-default); 
+  line-height: var(--lyd-font-lineHeight-tight);
+}
+
+.lyd-field__hint, 
+.lyd-field__error { 
+  font-size: var(--lyd-font-size-xs); 
+  line-height: var(--lyd-font-lineHeight-normal);
+}
+
+.lyd-field__hint { 
+  color: var(--lyd-color-text-muted); 
+}
+
+.lyd-field__error { 
+  color: var(--lyd-color-semantic-error); 
+}
+
+.lyd-input { 
+  display: flex; 
+  align-items: center; 
+  gap: var(--lyd-space-sm); 
+  border: 1px solid var(--lyd-color-surface-line); 
+  border-radius: var(--lyd-radius-md); 
+  background: var(--lyd-color-surface-card); 
+  padding: var(--lyd-space-sm) var(--lyd-space-md);
+  transition: border-color var(--lyd-transition-fast), box-shadow var(--lyd-transition-fast);
+  position: relative;
+}
+
+.lyd-input:focus-within { 
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--lyd-color-brand-primary), white 70%); 
+  border-color: var(--lyd-color-brand-primary); 
+  outline: none;
+}
+
+.lyd-field.is-error .lyd-input {
+  border-color: var(--lyd-color-semantic-error);
+}
+
+.lyd-field.is-error .lyd-input:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--lyd-color-semantic-error), white 70%);
+  border-color: var(--lyd-color-semantic-error);
+}
+
+.lyd-input__control { 
+  flex: 1 1 auto; 
+  min-width: 0; 
+  font: inherit; 
+  font-size: var(--lyd-font-size-base);
+  color: var(--lyd-color-text-default); 
+  background: transparent; 
+  border: 0; 
+  outline: 0;
+  padding: 0;
+}
+
+.lyd-input__control::placeholder { 
+  color: var(--lyd-color-text-muted); 
+}
+
+.lyd-input__control:disabled {
+  color: var(--lyd-color-text-muted);
+  cursor: not-allowed;
+}
+
+.lyd-input__slot {
+  display: flex;
+  align-items: center;
+  color: var(--lyd-color-text-muted);
+  flex-shrink: 0;
+}
+
+.lyd-input__slot svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* Variants */
+.lyd-input--search .lyd-input__control {
+  padding-left: var(--lyd-space-xs);
+}
+
+.lyd-input--currency .lyd-input__slot:first-child {
+  font-weight: var(--lyd-font-weight-medium);
+  color: var(--lyd-color-text-default);
+}
+
+/* Disabled State */
+.lyd-input:has(.lyd-input__control:disabled) {
+  background: var(--lyd-color-surface-bg);
+  border-color: color-mix(in oklab, var(--lyd-color-surface-line), transparent 50%);
+}
+
+/* Size Variants */
+.lyd-input--sm {
+  padding: 6px var(--lyd-space-sm);
+}
+
+.lyd-input--sm .lyd-input__control {
+  font-size: var(--lyd-font-size-sm);
+}
+
+.lyd-input--lg {
+  padding: var(--lyd-space-md) var(--lyd-space-lg);
+}
+
+.lyd-input--lg .lyd-input__control {
+  font-size: var(--lyd-font-size-lg);
+}

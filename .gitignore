@@ -83,3 +83,4 @@ docs/Credentials/
 # Screenshot directories (keep organized)
 /screenshots/*/
 !/screenshots/README.md
+.vercel

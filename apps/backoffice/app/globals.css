@@ -219,41 +219,55 @@
     padding: clamp(16px, 3vw, 32px); 
   }
 
-  /* Login Page Layout */
+  /* Login Page Layout - Verbesserte Zentrierung */
   .lyd-login { 
-    display: grid; 
-    place-items: center; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
     min-height: 100dvh; 
-    padding: var(--lyd-space-lg); 
+    padding: var(--lyd-space-xl); 
     background: var(--lyd-color-surface-bg);
   }
 
   .lyd-login__card { 
-    width: min(480px, 100%); 
+    width: min(520px, 90vw); 
+    max-width: 520px;
     background: var(--lyd-color-surface-card); 
     border: 1px solid var(--lyd-color-surface-line); 
     border-radius: var(--lyd-radius-lg); 
-    padding: clamp(16px, 3vw, 32px); 
-    box-shadow: 0 1px 3px rgba(0,0,0,.06); 
+    padding: clamp(32px, 4vw, 48px); 
+    box-shadow: 0 10px 25px rgba(0,0,0,.08), 0 4px 10px rgba(0,0,0,.04); 
+  }
+
+  .lyd-login__header {
+    text-align: center;
+    margin-bottom: var(--lyd-space-xl);
+  }
+
+  .lyd-login__logo {
+    margin-bottom: var(--lyd-space-lg);
+    display: flex;
+    justify-content: center;
   }
 
   .lyd-login__header h1 { 
-    font-size: clamp(20px, 3vw, 24px); 
-    margin: 0 0 4px; 
+    font-size: clamp(24px, 3vw, 28px); 
+    margin: 0 0 var(--lyd-space-xs); 
     font-weight: var(--lyd-font-weight-bold);
     color: var(--lyd-color-text-default);
   }
 
   .lyd-login__header p { 
-    margin: 0 0 var(--lyd-space-lg); 
+    margin: 0 0 var(--lyd-space-xl); 
     color: var(--lyd-color-text-muted); 
-    font-size: var(--lyd-font-size-sm);
+    font-size: var(--lyd-font-size-base);
+    font-weight: var(--lyd-font-weight-medium);
   }
 
   .lyd-login__form { 
     display: grid; 
-    gap: var(--lyd-space-md); 
-    margin-block: var(--lyd-space-md) var(--lyd-space-lg); 
+    gap: var(--lyd-space-lg); 
+    margin-block: 0 var(--lyd-space-xl); 
   }
 
   .lyd-login__footer { 

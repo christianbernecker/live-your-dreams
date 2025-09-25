@@ -1,0 +1,123 @@
+/* Button Component - Token-based Styles */
+.lyd-btn {
+  --_radius: var(--lyd-radius-md);
+  --_pad-y: 10px; 
+  --_pad-x: 16px;
+  --_fw: var(--lyd-font-weight-medium);
+  --_transition: var(--lyd-transition-fast);
+  
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: var(--lyd-space-xs);
+  border-radius: var(--_radius);
+  padding: var(--_pad-y) var(--_pad-x);
+  font-weight: var(--_fw); 
+  font-size: var(--lyd-font-size-base);
+  line-height: var(--lyd-font-lineHeight-tight);
+  border: 1px solid transparent; 
+  background: transparent;
+  color: inherit;
+  cursor: pointer; 
+  transition: background var(--_transition), border-color var(--_transition), box-shadow var(--_transition), color var(--_transition), transform var(--_transition);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.lyd-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.lyd-btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* Variants */
+.lyd-btn--primary { 
+  background: var(--lyd-color-brand-gradient); 
+  color: var(--lyd-color-text-inverse);
+  border-color: var(--lyd-color-brand-primary);
+}
+
+.lyd-btn--primary:hover:not(:disabled) {
+  box-shadow: var(--lyd-shadow-md);
+  transform: translateY(-1px);
+}
+
+.lyd-btn--secondary { 
+  color: var(--lyd-color-brand-primary); 
+  border-color: var(--lyd-color-brand-primary); 
+  background: var(--lyd-color-surface-card);
+}
+
+.lyd-btn--secondary:hover:not(:disabled) {
+  background: var(--lyd-color-brand-primary);
+  color: var(--lyd-color-text-inverse);
+}
+
+.lyd-btn--ghost { 
+  color: var(--lyd-color-brand-primary); 
+  background: color-mix(in oklab, var(--lyd-color-brand-primary) 8%, transparent);
+}
+
+.lyd-btn--ghost:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--lyd-color-brand-primary) 15%, transparent);
+}
+
+.lyd-btn--danger { 
+  color: var(--lyd-color-text-inverse); 
+  background: var(--lyd-color-semantic-error); 
+  border-color: var(--lyd-color-semantic-error);
+}
+
+.lyd-btn--danger:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--lyd-color-semantic-error), black 15%);
+  border-color: color-mix(in oklab, var(--lyd-color-semantic-error), black 15%);
+}
+
+/* Sizes */
+.lyd-btn--sm { 
+  --_pad-y: 6px;
+  --_pad-x: 12px;
+  font-size: var(--lyd-font-size-sm); 
+}
+
+.lyd-btn--md { 
+  font-size: var(--lyd-font-size-base); 
+}
+
+.lyd-btn--lg { 
+  --_pad-y: 12px;
+  --_pad-x: 20px;
+  font-size: var(--lyd-font-size-lg); 
+}
+
+/* Full Width */
+.lyd-btn--block { 
+  width: 100%; 
+}
+
+/* Focus Styles */
+.lyd-btn:focus-visible { 
+  outline: 3px solid color-mix(in oklab, var(--lyd-color-brand-primary), white 60%); 
+  outline-offset: 2px; 
+}
+
+/* Icon Styling */
+.lyd-btn__icon {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.lyd-btn__icon svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.lyd-btn__label {
+  line-height: 1;
+}

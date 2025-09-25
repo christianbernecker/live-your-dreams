@@ -1,14 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
     <main className="lyd-login">
       <div className="lyd-login__card">
         <header className="lyd-login__header">
-          <h1>Live Your Dreams</h1>
-          <p>Backoffice für Immobilienvermarktung</p>
+          <div className="lyd-login__logo">
+            <Image 
+              src="/lyd-logo.svg" 
+              alt="Live Your Dreams Logo" 
+              width={160} 
+              height={48}
+              priority
+            />
+          </div>
+          <h1>Backoffice</h1>
+          <p>Immobilienvermarktung</p>
         </header>
         <form className="lyd-login__form" action="/api/auth/signin" method="post">
           <label className="lyd-field">

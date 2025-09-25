@@ -1,0 +1,115 @@
+/* packages/design-system/components.css - Core UI Components */
+@layer components {
+  
+  /* Form Components */
+  .lyd-field { 
+    display: flex; 
+    flex-direction: column; 
+    gap: var(--lyd-space-xs);
+    width: 100%;
+  }
+
+  .lyd-field__label { 
+    font-weight: var(--lyd-font-weight-medium); 
+    font-size: var(--lyd-font-size-sm);
+    color: var(--lyd-color-text-default); 
+  }
+
+  .lyd-input { 
+    display: flex; 
+    align-items: center; 
+    gap: var(--lyd-space-sm); 
+    border: 1px solid var(--lyd-color-surface-line); 
+    border-radius: var(--lyd-radius-md); 
+    background: var(--lyd-color-surface-card); 
+    padding: var(--lyd-space-sm) var(--lyd-space-md);
+    transition: border-color var(--lyd-transition-fast), box-shadow var(--lyd-transition-fast);
+  }
+
+  .lyd-input:focus-within { 
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--lyd-color-brand-primary), white 70%); 
+    border-color: var(--lyd-color-brand-primary); 
+    outline: none;
+  }
+
+  .lyd-input__control { 
+    flex: 1 1 auto; 
+    min-width: 0; 
+    font: inherit; 
+    font-size: var(--lyd-font-size-base);
+    color: var(--lyd-color-text-default); 
+    background: transparent; 
+    border: 0; 
+    outline: 0;
+    padding: 0;
+  }
+
+  .lyd-input__control::placeholder { 
+    color: var(--lyd-color-text-muted); 
+  }
+
+  /* Button Components */
+  .lyd-btn {
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: var(--lyd-space-xs);
+    border-radius: var(--lyd-radius-md);
+    padding: 10px 16px;
+    font-weight: var(--lyd-font-weight-medium); 
+    font-size: var(--lyd-font-size-base);
+    border: 1px solid transparent; 
+    background: transparent;
+    color: inherit;
+    cursor: pointer; 
+    transition: background var(--lyd-transition-fast), border-color var(--lyd-transition-fast), box-shadow var(--lyd-transition-fast), color var(--lyd-transition-fast);
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .lyd-btn--primary { 
+    background: var(--lyd-color-brand-gradient); 
+    color: var(--lyd-color-text-inverse);
+    border-color: var(--lyd-color-brand-primary);
+  }
+
+  .lyd-btn--primary:hover:not(:disabled) {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .lyd-btn--secondary { 
+    color: var(--lyd-color-brand-primary); 
+    border-color: var(--lyd-color-brand-primary); 
+    background: var(--lyd-color-surface-card);
+  }
+
+  .lyd-btn--secondary:hover:not(:disabled) {
+    background: var(--lyd-color-brand-primary);
+    color: var(--lyd-color-text-inverse);
+  }
+
+  .lyd-btn--block { 
+    width: 100%; 
+  }
+
+  .lyd-btn__label {
+    line-height: 1;
+  }
+
+  /* Card Components */
+  .lyd-card {
+    border-radius: var(--lyd-radius-lg);
+    background: var(--lyd-color-surface-card);
+    transition: box-shadow var(--lyd-transition-normal);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--lyd-color-surface-line);
+    padding: var(--lyd-space-lg);
+  }
+
+  .lyd-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+}

@@ -1,0 +1,118 @@
+/* Card Component - Token-based Styles */
+.lyd-card {
+  border-radius: var(--lyd-radius-lg);
+  background: var(--lyd-color-surface-card);
+  transition: box-shadow var(--lyd-transition-normal), transform var(--lyd-transition-normal);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Variants */
+.lyd-card--default {
+  border: 1px solid var(--lyd-color-surface-line);
+}
+
+.lyd-card--bordered {
+  border: 2px solid var(--lyd-color-surface-line);
+}
+
+.lyd-card--elevated {
+  border: 1px solid var(--lyd-color-surface-line);
+  box-shadow: var(--lyd-shadow-md);
+}
+
+.lyd-card--elevated:hover {
+  box-shadow: var(--lyd-shadow-lg);
+  transform: translateY(-2px);
+}
+
+.lyd-card--glass {
+  background: color-mix(in oklab, var(--lyd-color-surface-card) 80%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in oklab, var(--lyd-color-surface-line) 50%, transparent);
+}
+
+/* Padding */
+.lyd-card--padding-sm {
+  padding: var(--lyd-space-md);
+}
+
+.lyd-card--padding-md {
+  padding: var(--lyd-space-lg);
+}
+
+.lyd-card--padding-lg {
+  padding: var(--lyd-space-xl);
+}
+
+/* Card Structure */
+.lyd-card__header {
+  padding: var(--lyd-space-lg);
+  border-bottom: 1px solid var(--lyd-color-surface-line);
+}
+
+.lyd-card__body {
+  padding: var(--lyd-space-lg);
+  flex: 1;
+}
+
+.lyd-card__footer {
+  padding: var(--lyd-space-lg);
+  border-top: 1px solid var(--lyd-color-surface-line);
+  background: color-mix(in oklab, var(--lyd-color-surface-bg) 30%, transparent);
+}
+
+/* When using structured cards, remove default padding */
+.lyd-card:has(.lyd-card__header, .lyd-card__body, .lyd-card__footer) {
+  padding: 0;
+}
+
+/* Card Content Styling */
+.lyd-card__header h1,
+.lyd-card__header h2,
+.lyd-card__header h3,
+.lyd-card__header h4,
+.lyd-card__header h5,
+.lyd-card__header h6 {
+  margin: 0 0 var(--lyd-space-xs) 0;
+  font-weight: var(--lyd-font-weight-semibold);
+  color: var(--lyd-color-text-default);
+}
+
+.lyd-card__header p {
+  margin: 0;
+  color: var(--lyd-color-text-muted);
+  font-size: var(--lyd-font-size-sm);
+}
+
+.lyd-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--lyd-space-sm);
+}
+
+/* Interactive Cards */
+.lyd-card[role="button"],
+.lyd-card--interactive {
+  cursor: pointer;
+  user-select: none;
+}
+
+.lyd-card[role="button"]:hover,
+.lyd-card--interactive:hover {
+  box-shadow: var(--lyd-shadow-md);
+  transform: translateY(-1px);
+}
+
+.lyd-card[role="button"]:active,
+.lyd-card--interactive:active {
+  transform: translateY(0);
+}
+
+/* Focus styles */
+.lyd-card[role="button"]:focus-visible,
+.lyd-card--interactive:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--lyd-color-brand-primary), white 60%);
+  outline-offset: 2px;
+}

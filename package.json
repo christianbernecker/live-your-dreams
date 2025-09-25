@@ -15,12 +15,30 @@
     "ds:crawl": "npx tsx tests/ds/scripts/crawl-components.ts",
     "ds:test": "playwright test --config=playwright.ds.config.ts --grep @",
     "ds:test:visual": "playwright test --config=playwright.ds.config.ts",
-    "ds:update": "playwright test --config=playwright.ds.config.ts --update-snapshots"
+    "ds:update": "playwright test --config=playwright.ds.config.ts --update-snapshots",
+    "build:tokens": "npm run build -w packages/design-tokens",
+    "build:ui": "npm run build -w packages/ui",
+    "build:packages": "npm run build:tokens && npm run build:ui",
+    "lint:css": "stylelint \"**/*.{css,scss}\"",
+    "lint:ts": "eslint --ext .ts,.tsx apps/",
+    "check:design": "npm run lint:css && npm run lint:ts",
+    "fix:design": "npm run lint:css --fix && npm run lint:ts --fix"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "design-system"
+  ],
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@storybook/addon-essentials": "^7.6.20",
     "@storybook/html-vite": "^7.6.20",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0",
     "lit": "^3.3.1",
     "storybook": "^7.6.20",
     "tsx": "^4.20.5",
@@ -28,6 +46,9 @@
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "dependencies": {
-    "playwright": "^1.55.0"
+    "chrome-remote-interface": "^0.33.2",
+    "puppeteer": "^23.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
