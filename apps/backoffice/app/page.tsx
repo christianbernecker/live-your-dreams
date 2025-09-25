@@ -6,12 +6,12 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--lyd-gradient-subtle, #fafafa)' }}>
       <div className="lyd-card elevated" style={{ maxWidth: '480px', width: '100%' }}>
         <div className="lyd-card-header text-center">
-          <div className="flex justify-center mb-6" style={{ marginLeft: '15px' }}>
+          <div className="flex justify-center mb-6">
             <Image
-              src="/lyd-logo.svg"
+              src="/lyd-logo-v3.svg"
               alt="Live Your Dreams"
-              width={180}
-              height={63}
+              width={167}
+              height={100}
               priority
               className="h-auto"
             />
