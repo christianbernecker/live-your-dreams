@@ -1,208 +1,275 @@
-/* RADIKALE UI-ÜBERARBEITUNG: DESIGN SYSTEM STATT TAILWIND */
+/* apps/backoffice/app/globals.css - DESIGN SYSTEM FOUNDATIONS KONSOLIDIERT */
 
-/* Import Design System CSS direkt - aber lokale Kopie für Auth-geschütztes System */
-/* @import url('http://designsystem.liveyourdreams.online/shared/master.css'); */
+/* Define Cascade Layers for predictable priority */
+@layer tokens, base, components, utilities, app;
 
-/* DESIGN SYSTEM CSS DIREKT EINGEBUNDEN */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* TOKENS LAYER - Design System Variables */
+@layer tokens {
+  :root {
+    /* Brand Colors */
+    --lyd-color-brand-primary: #0066ff;
+    --lyd-color-brand-secondary: #1a73e8;
+    --lyd-color-brand-gradient: linear-gradient(135deg, #0066ff, #1a73e8);
 
-/* Core Design System Variables */
-:root {
-  --lyd-primary: #0066ff;
-  --lyd-secondary: #3366CC;
-  --lyd-deep: #000066;
-  --lyd-text: #111;
-  --lyd-grey: #666;
-  --lyd-line: #e5e7eb;
-  --lyd-bg: #f8fafc;
-  --lyd-white: #ffffff;
-  --lyd-gradient: linear-gradient(135deg, #000066, #3366CC);
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --font-size-sm: 14px;
-  --font-size-base: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 24px;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+    /* Text Colors */
+    --lyd-color-text-default: #1a1a1a;
+    --lyd-color-text-muted: #6b7280;
+    --lyd-color-text-inverse: #ffffff;
+
+    /* Surface Colors */
+    --lyd-color-surface-bg: #fafafa;
+    --lyd-color-surface-card: #ffffff;
+    --lyd-color-surface-line: #e5e7eb;
+
+    /* Semantic Colors */
+    --lyd-color-semantic-success: #10b981;
+    --lyd-color-semantic-warning: #f59e0b;
+    --lyd-color-semantic-error: #ef4444;
+    --lyd-color-semantic-info: #3b82f6;
+
+    /* Radius */
+    --lyd-radius-sm: 4px;
+    --lyd-radius-md: 8px;
+    --lyd-radius-lg: 12px;
+
+    /* Spacing */
+    --lyd-space-xs: 4px;
+    --lyd-space-sm: 8px;
+    --lyd-space-md: 16px;
+    --lyd-space-lg: 24px;
+    --lyd-space-xl: 32px;
+
+    /* Typography */
+    --lyd-font-size-sm: 14px;
+    --lyd-font-size-base: 16px;
+    --lyd-font-size-lg: 18px;
+    --lyd-font-size-xl: 24px;
+
+    --lyd-font-weight-regular: 400;
+    --lyd-font-weight-medium: 500;
+    --lyd-font-weight-semibold: 600;
+    --lyd-font-weight-bold: 700;
+
+    /* Transitions */
+    --lyd-transition-fast: 150ms ease;
+    --lyd-transition-normal: 200ms ease;
+    --lyd-transition-luxury: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
-/* Design System Base Styles */
-* {
-  box-sizing: border-box;
+/* BASE LAYER - Reset + Typography */
+@layer base {
+  *, *::before, *::after { 
+    box-sizing: border-box; 
+  }
+  
+  html, body { 
+    height: 100%; 
+  }
+  
+  body {
+    margin: 0;
+    background: var(--lyd-color-surface-bg);
+    color: var(--lyd-color-text-default);
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 { 
+    font-weight: var(--lyd-font-weight-bold); 
+    line-height: 1.2; 
+    margin: 0;
+  }
+  
+  h1 { font-size: clamp(24px, 3vw, 28px); }
+  h2 { font-size: clamp(20px, 2.5vw, 24px); }
+  h3 { font-size: clamp(18px, 2vw, 20px); }
+
+  a { 
+    color: var(--lyd-color-brand-primary); 
+    text-decoration: none; 
+    transition: color var(--lyd-transition-fast);
+  }
+  
+  a:hover { 
+    color: var(--lyd-color-brand-secondary);
+    text-decoration: underline; 
+  }
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  color: var(--lyd-text);
-  background: var(--lyd-bg);
+/* COMPONENTS LAYER - UI Elements */
+@layer components {
+  
+  /* Form Components */
+  .lyd-field { 
+    display: flex; 
+    flex-direction: column; 
+    gap: var(--lyd-space-xs);
+    width: 100%;
+  }
+
+  .lyd-field__label { 
+    font-weight: var(--lyd-font-weight-medium); 
+    font-size: var(--lyd-font-size-sm);
+    color: var(--lyd-color-text-default); 
+  }
+
+  .lyd-input { 
+    display: flex; 
+    align-items: center; 
+    gap: var(--lyd-space-sm); 
+    border: 1px solid var(--lyd-color-surface-line); 
+    border-radius: var(--lyd-radius-md); 
+    background: var(--lyd-color-surface-card); 
+    padding: var(--lyd-space-sm) var(--lyd-space-md);
+    transition: border-color var(--lyd-transition-fast), box-shadow var(--lyd-transition-fast);
+  }
+
+  .lyd-input:focus-within { 
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--lyd-color-brand-primary), white 70%); 
+    border-color: var(--lyd-color-brand-primary); 
+    outline: none;
+  }
+
+  .lyd-input__control { 
+    flex: 1 1 auto; 
+    min-width: 0; 
+    font: inherit; 
+    font-size: var(--lyd-font-size-base);
+    color: var(--lyd-color-text-default); 
+    background: transparent; 
+    border: 0; 
+    outline: 0;
+    padding: 0;
+  }
+
+  .lyd-input__control::placeholder { 
+    color: var(--lyd-color-text-muted); 
+  }
+
+  /* Button Components */
+  .lyd-btn {
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: var(--lyd-space-xs);
+    border-radius: var(--lyd-radius-md);
+    padding: 10px 16px;
+    font-weight: var(--lyd-font-weight-medium); 
+    font-size: var(--lyd-font-size-base);
+    border: 1px solid transparent; 
+    background: transparent;
+    color: inherit;
+    cursor: pointer; 
+    transition: background var(--lyd-transition-fast), border-color var(--lyd-transition-fast), box-shadow var(--lyd-transition-fast), color var(--lyd-transition-fast), transform var(--lyd-transition-fast);
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .lyd-btn--primary { 
+    background: var(--lyd-color-brand-gradient); 
+    color: var(--lyd-color-text-inverse);
+    border-color: var(--lyd-color-brand-primary);
+  }
+
+  .lyd-btn--primary:hover:not(:disabled) {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .lyd-btn--block { 
+    width: 100%; 
+  }
+
+  .lyd-btn__label {
+    line-height: 1;
+  }
 }
 
-/* Design System Components für Backoffice */
-.component-card {
-  background: var(--lyd-white);
-  border: 1px solid var(--lyd-line);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
+/* UTILITIES LAYER - Helper Classes */
+@layer utilities {
+  .text-center { text-align: center; }
+  .d-flex { display: flex; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .w-full { width: 100%; }
+  .rounded-lg { border-radius: var(--lyd-radius-lg); }
 }
 
-.component-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
+/* APP LAYER - Application Layout */
+@layer app {
+  .lyd-shell { 
+    min-height: 100dvh; 
+    display: grid; 
+    grid-template-columns: 280px 1fr; 
+  }
+  
+  .lyd-sidebar { 
+    background: var(--lyd-color-brand-gradient); 
+    color: var(--lyd-color-text-inverse); 
+    padding: var(--lyd-space-lg); 
+  }
+  
+  .lyd-main { 
+    padding: clamp(16px, 3vw, 32px); 
+  }
 
-.component-card h3 {
-  margin: 0 0 var(--spacing-md) 0;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--lyd-text);
-}
+  /* Login Page Layout */
+  .lyd-login { 
+    display: grid; 
+    place-items: center; 
+    min-height: 100dvh; 
+    padding: var(--lyd-space-lg); 
+    background: var(--lyd-color-surface-bg);
+  }
 
-/* Design System Buttons */
-.lyd-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  padding: 12px 20px;
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  text-decoration: none;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
+  .lyd-login__card { 
+    width: min(480px, 100%); 
+    background: var(--lyd-color-surface-card); 
+    border: 1px solid var(--lyd-color-surface-line); 
+    border-radius: var(--lyd-radius-lg); 
+    padding: clamp(16px, 3vw, 32px); 
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); 
+  }
 
-.lyd-button-primary {
-  background: var(--lyd-gradient);
-  color: white;
-  border-color: var(--lyd-primary);
-}
+  .lyd-login__header h1 { 
+    font-size: clamp(20px, 3vw, 24px); 
+    margin: 0 0 4px; 
+    font-weight: var(--lyd-font-weight-bold);
+    color: var(--lyd-color-text-default);
+  }
 
-.lyd-button-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
-  text-decoration: none;
-  color: white;
-}
+  .lyd-login__header p { 
+    margin: 0 0 var(--lyd-space-lg); 
+    color: var(--lyd-color-text-muted); 
+    font-size: var(--lyd-font-size-sm);
+  }
 
-.lyd-button-secondary {
-  background: transparent;
-  color: var(--lyd-primary);
-  border-color: var(--lyd-primary);
-}
+  .lyd-login__form { 
+    display: grid; 
+    gap: var(--lyd-space-md); 
+    margin-block: var(--lyd-space-md) var(--lyd-space-lg); 
+  }
 
-.lyd-button-secondary:hover {
-  background: var(--lyd-primary);
-  color: white;
-  text-decoration: none;
-}
+  .lyd-login__footer { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    color: var(--lyd-color-text-muted); 
+    font-size: 12px;
+  }
 
-/* Design System Tables */
-.lyd-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
+  .lyd-login__footer a {
+    color: var(--lyd-color-brand-primary);
+    text-decoration: none;
+  }
 
-.lyd-table th,
-.lyd-table td {
-  padding: var(--spacing-md);
-  text-align: left;
-  border-bottom: 1px solid var(--lyd-line);
-}
-
-.lyd-table th {
-  background: var(--lyd-bg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--lyd-text);
-  font-size: var(--font-size-sm);
-}
-
-.lyd-table td {
-  font-size: var(--font-size-sm);
-}
-
-.lyd-table tbody tr:hover {
-  background: #f8fafc;
-}
-
-/* Backoffice-spezifische Ergänzungen */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #f8fafc;
-}
-
-/* Design System Layout für Backoffice */
-.backoffice-layout {
-  display: flex;
-  min-height: 100vh;
-  background: #fff;
-}
-
-.backoffice-sidebar {
-  width: 280px;
-  background: linear-gradient(135deg, #000066, #3366CC);
-  color: white;
-  padding: 24px;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
-}
-
-.backoffice-main {
-  flex: 1;
-  margin-left: 280px;
-  padding: 32px;
-  background: #f8fafc;
-  min-height: 100vh;
-}
-
-.backoffice-header {
-  background: white;
-  padding: 24px 32px;
-  border-bottom: 1px solid #e5e7eb;
-  margin: -32px -32px 32px -32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.backoffice-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  margin: 4px 0;
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}
-
-.backoffice-nav-item:hover,
-.backoffice-nav-item.active {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  text-decoration: none;
+  .lyd-login__footer a:hover {
+    text-decoration: underline;
+  }
 }

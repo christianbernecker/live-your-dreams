@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { DashboardIcon, IntegrationsIcon, LeadIcon, MediaIcon, MicrositeIcon, PricingIcon, PropertyIcon, SettingsIcon } from '@/components/icons/LYDIcons';
 
 // Mock-Daten für Entwicklung - später durch echte DB-Abfragen ersetzen
 async function getDashboardData() {
@@ -263,37 +263,37 @@ export default async function DashboardPage() {
 
   return (
     <div className="backoffice-layout">
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation - 100% Design System */}
       <aside className="backoffice-sidebar">
         <div style={{ marginBottom: '32px' }}>
-          <img src="/shared/lyd-logo.svg" alt="Live Your Dreams" style={{ height: '48px', marginBottom: '8px' }} />
-          <div style={{ fontSize: '14px', opacity: '0.8' }}>Backoffice</div>
+          <img src="/shared/Live_Your_Dreams_Perfect.svg" alt="Live Your Dreams" className="lyd-logo-backoffice" />
+          <div className="lyd-logo-subtitle">Backoffice</div>
         </div>
         
         <nav>
           <a href="/dashboard" className="backoffice-nav-item active">
-            <span>📊</span> Dashboard
+            <DashboardIcon size="default" /> Dashboard
           </a>
           <a href="/properties" className="backoffice-nav-item">
-            <span>🏠</span> Immobilien
+            <PropertyIcon size="default" /> Immobilien
           </a>
           <a href="/leads" className="backoffice-nav-item">
-            <span>👥</span> Interessenten
+            <LeadIcon size="default" /> Interessenten
           </a>
           <a href="/pricing" className="backoffice-nav-item">
-            <span>💰</span> Preisrechner
+            <PricingIcon size="default" /> Preisrechner
           </a>
           <a href="/media" className="backoffice-nav-item">
-            <span>🖼️</span> Medien
+            <MediaIcon size="default" /> Medien
           </a>
           <a href="/microsite" className="backoffice-nav-item">
-            <span>🌐</span> Microsites
+            <MicrositeIcon size="default" /> Microsites
           </a>
           <a href="/integrations" className="backoffice-nav-item">
-            <span>🔗</span> Integrationen
+            <IntegrationsIcon size="default" /> Integrationen
           </a>
           <a href="/settings" className="backoffice-nav-item">
-            <span>⚙️</span> Einstellungen
+            <SettingsIcon size="default" /> Einstellungen
           </a>
         </nav>
 

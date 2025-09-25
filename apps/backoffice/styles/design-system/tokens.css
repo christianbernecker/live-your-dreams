@@ -1,0 +1,53 @@
+/* Design System Tokens - @layer tokens */
+@layer tokens {
+  :root {
+    /* Brand Colors */
+    --lyd-color-brand-primary: #0066ff;
+    --lyd-color-brand-secondary: #1a73e8;
+    --lyd-color-brand-gradient: linear-gradient(135deg, #0066ff, #1a73e8);
+
+    /* Text Colors */
+    --lyd-color-text-default: #1a1a1a;
+    --lyd-color-text-muted: #6b7280;
+    --lyd-color-text-inverse: #ffffff;
+
+    /* Surface Colors */
+    --lyd-color-surface-bg: #fafafa;
+    --lyd-color-surface-card: #ffffff;
+    --lyd-color-surface-line: #e5e7eb;
+
+    /* Semantic Colors */
+    --lyd-color-semantic-success: #10b981;
+    --lyd-color-semantic-warning: #f59e0b;
+    --lyd-color-semantic-error: #ef4444;
+    --lyd-color-semantic-info: #3b82f6;
+
+    /* Radius */
+    --lyd-radius-sm: 4px;
+    --lyd-radius-md: 8px;
+    --lyd-radius-lg: 12px;
+
+    /* Spacing */
+    --lyd-space-xs: 4px;
+    --lyd-space-sm: 8px;
+    --lyd-space-md: 16px;
+    --lyd-space-lg: 24px;
+    --lyd-space-xl: 32px;
+
+    /* Typography */
+    --lyd-font-size-sm: 14px;
+    --lyd-font-size-base: 16px;
+    --lyd-font-size-lg: 18px;
+    --lyd-font-size-xl: 24px;
+
+    --lyd-font-weight-regular: 400;
+    --lyd-font-weight-medium: 500;
+    --lyd-font-weight-semibold: 600;
+    --lyd-font-weight-bold: 700;
+
+    /* Transitions */
+    --lyd-transition-fast: 150ms ease;
+    --lyd-transition-normal: 200ms ease;
+    --lyd-transition-luxury: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
