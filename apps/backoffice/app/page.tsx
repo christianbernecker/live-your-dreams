@@ -1,6 +1,6 @@
 import { auth, signIn } from "@/lib/auth"
-import { redirect } from "next/navigation"
 import Image from "next/image"
+import { redirect } from "next/navigation"
 
 async function handleSignIn(formData: FormData) {
   'use server'
