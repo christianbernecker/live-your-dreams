@@ -11,27 +11,32 @@ export default function Home() {
               src="/lyd-logo.svg"
               alt="Live Your Dreams"
               width={180}
-              height={54}
+              height={63}
               priority
               className="h-auto"
             />
           </div>
-          <h1 className="lyd-card-title" style={{ 
-            fontSize: 'var(--font-size-2xl)', 
-            color: 'var(--lyd-deep-blue)', 
-            marginBottom: 'var(--spacing-xs)' 
-          }}>
-            Backoffice Login
-          </h1>
-          <p style={{ 
+          <div style={{ 
             color: 'var(--lyd-grey)', 
             fontSize: 'var(--font-size-sm)',
             textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            fontWeight: '500'
+            letterSpacing: 'var(--letter-spacing-wide)',
+            fontWeight: 'var(--font-weight-medium)',
+            fontFamily: 'var(--font-family-primary)',
+            marginBottom: 'var(--spacing-xs)'
           }}>
-            Premium Real Estate Solutions
-          </p>
+            Page Heading
+          </div>
+          <h1 style={{ 
+            fontSize: 'var(--font-size-2xl)', 
+            color: 'var(--lyd-deep-blue)', 
+            marginBottom: 'var(--spacing-lg)',
+            fontFamily: 'var(--font-family-primary)',
+            fontWeight: 'var(--font-weight-bold)',
+            margin: '0'
+          }}>
+            Backoffice Login
+          </h1>
         </div>
         
         <div className="lyd-card-body">
@@ -85,7 +90,7 @@ export default function Home() {
                   className="w-4 h-4 rounded border-2"
                   style={{ borderColor: 'var(--lyd-line)', accentColor: 'var(--lyd-primary)' }}
                 />
-                <span style={{ color: 'var(--lyd-grey)' }}>Angemeldet bleiben</span>
+                <span style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }}>Angemeldet bleiben</span>
               </label>
               <Link 
                 href="/forgot-password" 
@@ -93,7 +98,8 @@ export default function Home() {
                   color: 'var(--lyd-primary)', 
                   fontSize: 'var(--font-size-sm)',
                   textDecoration: 'none',
-                  fontWeight: '500'
+                  fontWeight: '500',
+                  fontFamily: 'var(--font-family-primary)'
                 }}
                 className="hover:underline"
               >
@@ -105,7 +111,10 @@ export default function Home() {
             <button
               type="submit"
               className="lyd-button primary large w-full"
-              style={{ marginTop: 'var(--spacing-xl)' }}
+              style={{ 
+                marginTop: 'var(--spacing-xl)',
+                fontFamily: 'var(--font-family-primary)'
+              }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M15 3h6v18h-6M10 17l5-5-5-5M6 21V3"/>
@@ -129,14 +138,15 @@ export default function Home() {
             alignItems: 'center',
             width: '100%',
             fontSize: 'var(--font-size-xs)',
-            color: 'var(--lyd-grey)'
+            color: 'var(--lyd-grey)',
+            fontFamily: 'var(--font-family-primary)'
           }}>
             <span>© {new Date().getFullYear()} Live Your Dreams</span>
             <div className="flex space-x-4">
-              <Link href="/impressum" style={{ color: 'var(--lyd-grey)' }} className="hover:text-blue-600">
+              <Link href="/impressum" style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }} className="hover:text-blue-600">
                 Impressum
               </Link>
-              <Link href="/datenschutz" style={{ color: 'var(--lyd-grey)' }} className="hover:text-blue-600">
+              <Link href="/datenschutz" style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }} className="hover:text-blue-600">
                 Datenschutz
               </Link>
             </div>
@@ -148,7 +158,7 @@ export default function Home() {
               className="w-2 h-2 rounded-full bg-green-500"
               style={{ backgroundColor: 'var(--lyd-success)' }}
             ></div>
-            <span style={{ color: 'var(--lyd-grey)' }}>System Online</span>
+            <span style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }}>System Online</span>
           </div>
         </div>
       </div>

@@ -103,7 +103,12 @@
   --lyd-text: #111111;
   --lyd-bg: #ffffff;
   --lyd-success: #10b981;
+  --lyd-gradient-primary: linear-gradient(135deg, #000066 0%, #3366CC 100%);
   --lyd-gradient-subtle: linear-gradient(180deg, rgba(0,0,102,0.03) 0%, rgba(51,102,204,0.05) 100%);
+  
+  /* Typography */
+  --font-family-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans', sans-serif;
+  --letter-spacing-wide: 0.1em;
   
   /* Spacing */
   --spacing-xs: 4px;
@@ -136,10 +141,11 @@
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 25px 50px -12px rgba(0, 102, 255, 0.25);
+  --shadow-luxury: 0 25px 50px -12px rgba(0, 0, 102, 0.25);
+  --shadow-glow: 0 0 40px rgba(51, 102, 204, 0.3);
   
   /* Transitions */
-  --transition-luxury: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-luxury: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Fallback Design System Styles if CDN fails */
@@ -151,7 +157,7 @@
   padding: 12px 24px;
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-family-primary);
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
@@ -161,16 +167,40 @@
   overflow: hidden;
 }
 
+/* Authentic Primary Button with Design System Effects */
 .lyd-button.primary {
-  background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
+  background: var(--lyd-gradient-primary);
+  background-size: 200% 200%;
   color: white;
-  box-shadow: 0 4px 16px rgba(0, 102, 255, 0.3);
+  box-shadow: var(--shadow-luxury);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-luxury);
 }
 
+/* Primary Button Shimmer Effect */
+.lyd-button.primary::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.6s;
+}
+
+/* Authentic Primary Button Hover Effects */
 .lyd-button.primary:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: var(--shadow-glow);
+  background-position: 100% 100%;
+}
+
+.lyd-button.primary:hover::before {
+  transform: rotate(45deg) translateX(100%);
 }
 
 .lyd-button.large {
@@ -225,7 +255,7 @@
   border: 2px solid var(--lyd-line);
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-family-primary);
   background: white;
   color: var(--lyd-text);
   transition: all 0.3s ease;
@@ -274,6 +304,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--lyd-text);
+  font-family: var(--font-family-primary);
 }
 
 .lyd-input-label.required::after {
