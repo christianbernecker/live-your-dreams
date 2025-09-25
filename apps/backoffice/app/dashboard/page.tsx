@@ -1,12 +1,18 @@
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 
 export default async function DashboardPage() {
-  const session = await auth();
+  // AUTHENTICATION DEAKTIVIERT FÜR DEVELOPMENT
+  // const session = await auth();
+  // if (!session?.user) {
+  //   redirect("/");
+  // }
 
-  if (!session?.user) {
-    redirect("/");
+  // Mock session für Development
+  const session = {
+    user: {
+      email: "admin@liveyourdreams.online",
+      name: "LYD Admin"
+    }
   }
 
   return (
