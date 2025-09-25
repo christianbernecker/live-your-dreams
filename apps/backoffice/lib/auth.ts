@@ -1,97 +1,164 @@
-import bcrypt from "bcryptjs"
-import type { NextAuthConfig } from "next-auth"
-import NextAuth from "next-auth"
+import { NextAuthConfig } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import bcrypt from "bcryptjs"
 
-// Für zukünftige Prisma-Integration vorbereitet
-// import { PrismaAdapter } from "@auth/prisma-adapter"
-// import { prisma } from "@/lib/prisma"
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      email: string
+      name?: string | null
+      image?: string | null
+      role: string
+      isActive: boolean
+      permissions: string[]
+    }
+  }
 
-export const config: NextAuthConfig = {
-  providers: [
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        email: { 
-          label: "E-Mail", 
-          type: "email",
-          placeholder: "ihre@email.de" 
-        },
-        password: { 
-          label: "Passwort", 
-          type: "password" 
-        },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null
-        }
+  interface User {
+    role: string
+    isActive: boolean
+    permissions: string[]
+  }
+}
 
-        // TODO: Später durch echte Datenbankabfrage ersetzen
-        // Temporäre Demo-User für Entwicklung
-        const demoUser = {
-          id: "1",
-          email: "admin@liveyourdreams.online",
-          password: await bcrypt.hash("admin123", 12), // Gehasht für Sicherheit
-          name: "LYD Admin",
-          role: "admin"
-        }
+// JWT token type handled by NextAuth automatically
 
-        // E-Mail prüfen
-        if (credentials.email !== demoUser.email) {
-          throw new Error("Ungültige E-Mail-Adresse")
-        }
-
-        // Passwort prüfen - VEREINFACHT FÜR DEMO
-        // const isValidPassword = await bcrypt.compare(
-        //   credentials.password as string, 
-        //   demoUser.password
-        // )
-        
-        // Temporär: Direct string comparison für Demo
-        const isValidPassword = credentials.password === "admin123"
-
-        if (!isValidPassword) {
-          console.log("❌ Passwort-Fehler:", credentials.password)
-          throw new Error("Ungültiges Passwort")
-        }
-        
-        console.log("✅ Login erfolgreich für:", credentials.email)
-
-        // Erfolgreiche Authentifizierung
-        return {
-          id: demoUser.id,
-          email: demoUser.email,
-          name: demoUser.name,
-          role: demoUser.role,
-        }
-      },
-    }),
-  ],
+export const authConfig: NextAuthConfig = {
   pages: {
-    signIn: "/", // Login-Seite ist die Startseite
+    signIn: "/",
     error: "/auth/error",
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.id = user.id
+        token.email = user.email
+        token.name = user.name
+        token.image = user.image
+        token.role = (user as any).role
+        token.isActive = (user as any).isActive
+        token.permissions = (user as any).permissions
       }
       return token
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.sub!
-        session.user.role = token.role as string
+      if (token && session.user) {
+        session.user.id = token.id as string
+        session.user.email = token.email as string
+        session.user.name = token.name as string
+        session.user.image = token.image as string
+        session.user.role = (token as any).role
+        session.user.isActive = (token as any).isActive
+        session.user.permissions = (token as any).permissions
       }
       return session
     },
+    async authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user
+      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
+      
+      if (isOnDashboard) {
+        if (isLoggedIn) {
+          // Check if user is active
+          if (!auth.user.isActive) {
+            return Response.redirect(new URL('/auth/error?error=AccountDeactivated', nextUrl))
+          }
+          return true
+        }
+        return false // Redirect to login page
+      } else if (isLoggedIn) {
+        return Response.redirect(new URL('/dashboard', nextUrl))
+      }
+      return true
+    },
   },
+  providers: [
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Email und Passwort sind erforderlich')
+        }
+
+        try {
+          // Initialize Prisma Client for server-side usage
+          const { PrismaClient } = await import('@prisma/client')
+          const prisma = new PrismaClient()
+
+          // Find user in database
+          const user = await prisma.user.findUnique({
+            where: { 
+              email: credentials.email as string 
+            }
+          })
+
+          if (!user) {
+            throw new Error('Kein Benutzer mit dieser E-Mail-Adresse gefunden')
+          }
+
+          // Check if user is active 
+          const isActive = (user as any).isActive
+          if (!isActive) {
+            throw new Error('Ihr Konto wurde deaktiviert. Kontaktieren Sie den Administrator.')
+          }
+
+          // Verify password
+          if (!user.password) {
+            throw new Error('Kein Passwort für diesen Benutzer hinterlegt')
+          }
+
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password as string,
+            user.password
+          )
+
+          if (!isPasswordValid) {
+            throw new Error('Ungültiges Passwort')
+          }
+
+          // Note: lastLoginAt update skipped for deployment compatibility
+
+          // For now, assign basic permissions based on user role
+          // TODO: Implement proper role-permission system
+          let permissions: string[] = []
+          
+          if (user.role === 'admin') {
+            permissions = ['users.create', 'users.read', 'users.update', 'users.delete', 'posts.create', 'posts.read', 'posts.update', 'posts.delete', 'posts.publish', 'media.upload', 'media.read', 'media.update', 'media.delete', 'settings.read', 'settings.update']
+          } else if (user.role === 'editor') {
+            permissions = ['posts.create', 'posts.read', 'posts.update', 'posts.delete', 'posts.publish', 'media.upload', 'media.read', 'media.update', 'media.delete', 'users.read', 'settings.read']
+          } else {
+            permissions = ['posts.read', 'media.read', 'users.read', 'settings.read']
+          }
+
+          // Cleanup
+          await prisma.$disconnect()
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            role: user.role,
+            isActive: isActive,
+            permissions: permissions,
+          }
+        } catch (error) {
+          console.error('Auth error:', error)
+          throw error
+        }
+      },
+    }),
+  ],
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 Tage
+    maxAge: 24 * 60 * 60, // 24 hours
   },
-  // adapter: PrismaAdapter(prisma), // Für zukünftige Datenbankintegration
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config)
+export default authConfig

@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="1050.000000pt" height="550.000000pt" viewBox="80 150 1100 550"
+ width="970.000000pt" height="550.000000pt" viewBox="80 150 1250 550"
  preserveAspectRatio="xMidYMid meet">
 
 <defs>
@@ -30,9 +30,9 @@ fill="url(#crescentGradient)" stroke="none">
 474 274 935 576 1379 61 90 73 116 42 87z"/>
 </g>
 
-<!-- LYD - Komplett weiß ohne Transparenz -->
-<g fill="white">
-  <!-- LYD - D-Buchstabe hat jetzt ausreichend Platz -->
+<!-- LYD - Ultra-kompakt ohne Weißraum links -->
+<g fill="url(#textGradient)">
+  <!-- LYD - Sichel beginnt praktisch am Rand -->
   <text x="370" y="560" font-family="system-ui, -apple-system, sans-serif" font-size="360" font-weight="500" letter-spacing="25px">LYD</text>
 </g>
 </svg>

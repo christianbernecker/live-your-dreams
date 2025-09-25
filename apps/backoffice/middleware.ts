@@ -1,55 +1,133 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { auth } from '@/lib/auth'
 
-export function middleware(request: NextRequest) {
-  const response = NextResponse.next()
+// Routes that require authentication
+const protectedRoutes = [
+  '/dashboard',
+  '/api/media',
+  '/api/posts',
+  '/api/users',
+  '/api/roles'
+]
 
-  // Security Headers
-  response.headers.set('X-Frame-Options', 'DENY')
-  response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('X-XSS-Protection', '1; mode=block')
-  
-  // Content Security Policy
-  const csp = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline'", // Next.js benötigt diese für Development
-    "style-src 'self' 'unsafe-inline' https://designsystem.liveyourdreams.online",
-    "img-src 'self' data: https://designsystem.liveyourdreams.online",
-    "font-src 'self' https://designsystem.liveyourdreams.online",
-    "connect-src 'self' https://api.vercel.com",
-    "frame-ancestors 'none'",
-  ].join('; ')
-  
-  response.headers.set('Content-Security-Policy', csp)
+// Routes that redirect to dashboard if already authenticated
+const authRoutes = [
+  '/login',
+  '/auth/signin',
+  '/auth/signup'
+]
 
-  // CORS für API Routes
-  if (request.nextUrl.pathname.startsWith('/api/')) {
-    const allowedOrigins = [
-      'http://localhost:3001',
-      'https://backoffice.liveyourdreams.online',
-      'https://backoffice-plk35u2yv-christianberneckers-projects.vercel.app'
-    ]
-    
-    const origin = request.headers.get('origin')
-    if (origin && allowedOrigins.includes(origin)) {
-      response.headers.set('Access-Control-Allow-Origin', origin)
-    }
-    
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+// Admin-only routes
+const adminRoutes = [
+  '/dashboard/users',
+  '/dashboard/roles',
+  '/dashboard/settings',
+  '/api/users',
+  '/api/roles'
+]
+
+// API routes that need special handling
+const apiRoutes = [
+  '/api/auth',
+  '/api/media/upload'
+]
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Skip middleware for static files and API auth routes
+  if (
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/api/auth/') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/lyd-logo')
+  ) {
+    return NextResponse.next()
   }
 
-  return response
+  try {
+    // Get session
+    const session = await auth()
+    const isAuthenticated = !!session?.user
+    const isAdmin = session?.user?.role === 'admin'
+
+    // Handle authentication routes
+    if (authRoutes.some(route => pathname.startsWith(route))) {
+      if (isAuthenticated) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
+      return NextResponse.next()
+    }
+
+    // Handle protected routes
+    if (protectedRoutes.some(route => pathname.startsWith(route))) {
+      if (!isAuthenticated) {
+        const url = new URL('/login', request.url)
+        url.searchParams.set('callbackUrl', pathname)
+        return NextResponse.redirect(url)
+      }
+
+      // Check admin routes
+      if (adminRoutes.some(route => pathname.startsWith(route)) && !isAdmin) {
+        return NextResponse.redirect(new URL('/dashboard?error=access_denied', request.url))
+      }
+
+      return NextResponse.next()
+    }
+
+    // Handle API routes
+    if (apiRoutes.some(route => pathname.startsWith(route))) {
+      if (!isAuthenticated) {
+        return NextResponse.json(
+          { error: 'Authentication required' },
+          { status: 401 }
+        )
+      }
+
+      // Admin API routes
+      if (adminRoutes.some(route => pathname.startsWith(route)) && !isAdmin) {
+        return NextResponse.json(
+          { error: 'Admin access required' },
+          { status: 403 }
+        )
+      }
+
+      return NextResponse.next()
+    }
+
+    // Root route - redirect based on auth status
+    if (pathname === '/') {
+      if (isAuthenticated) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      } else {
+        return NextResponse.redirect(new URL('/login', request.url))
+      }
+    }
+
+    return NextResponse.next()
+
+  } catch (error) {
+    console.error('Middleware error:', error)
+    
+    // On error, redirect to login for protected routes
+    if (protectedRoutes.some(route => pathname.startsWith(route))) {
+      return NextResponse.redirect(new URL('/login?error=session_error', request.url))
+    }
+    
+    return NextResponse.next()
+  }
 }
 
 export const config = {
   matcher: [
     /*
-     * Middleware für alle Requests außer:
-     * - API routes die mit /api/auth beginnen (NextAuth)
-     * - Static files (_next/static)
-     * - Images, favicon etc.
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder files
      */
-    '/((?!api/auth|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$).*)',
   ],
 }

@@ -1,8 +1,8 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import Image from 'next/image'
 
 interface NavigationItem {
   name: string
@@ -37,10 +37,10 @@ const navigationItems: NavigationItem[] = [
         <polyline points="10,9 9,9 8,9"/>
       </svg>
     ),
-    badge: 'NEW'
+    badge: 'NEU'
   },
   {
-    name: 'Properties',
+    name: 'Immobilien',
     href: '/dashboard/properties',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -51,7 +51,7 @@ const navigationItems: NavigationItem[] = [
     badge: 24
   },
   {
-    name: 'Analytics',
+    name: 'Auswertungen',
     href: '/dashboard/analytics',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -60,7 +60,7 @@ const navigationItems: NavigationItem[] = [
     )
   },
   {
-    name: 'Customers',
+    name: 'Kunden',
     href: '/dashboard/customers',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -72,7 +72,7 @@ const navigationItems: NavigationItem[] = [
     )
   },
   {
-    name: 'Settings',
+    name: 'Einstellungen',
     href: '/dashboard/settings',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -95,42 +95,46 @@ export function SidebarNavigation() {
       flexDirection: 'column',
       padding: 'var(--spacing-xl) var(--spacing-lg)'
     }}>
-      {/* Logo Header */}
+      {/* Logo Header - Größeres Logo oberhalb von Backoffice */}
       <div style={{
         marginBottom: 'var(--spacing-2xl)',
         paddingBottom: 'var(--spacing-lg)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        textAlign: 'center'
       }}>
+        {/* LYD Logo - Deutlich größer und zentriert */}
         <div style={{
           display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--spacing-md)',
-          marginBottom: 'var(--spacing-sm)'
+          justifyContent: 'center',
+          marginBottom: 'var(--spacing-lg)'
         }}>
-          <Image
-            src="/lyd-logo-perfect.svg"
-            alt="Live Your Dreams"
-            width={32}
-            height={19}
-            priority
-            style={{ filter: 'brightness(0) invert(1)' }}
-          />
-          <div style={{
-            color: 'white',
-            fontSize: 'var(--font-size-lg)',
-            fontWeight: 'var(--font-weight-bold)',
-            letterSpacing: '-0.025em'
-          }}>
-            Backoffice
-          </div>
+            <Image
+              src="/lyd-logo-white-final.svg"
+              alt="Live Your Dreams"
+              width={80}
+              height={48}
+              priority
+            />
         </div>
+        
+        {/* Backoffice Titel darunter */}
+        <div style={{
+          color: 'white',
+          fontSize: 'var(--font-size-xl)',
+          fontWeight: 'var(--font-weight-bold)',
+          letterSpacing: '-0.025em',
+          marginBottom: 'var(--spacing-xs)'
+        }}>
+          Backoffice
+        </div>
+        
         <div style={{
           color: 'rgba(255, 255, 255, 0.7)',
           fontSize: 'var(--font-size-xs)',
           textTransform: 'uppercase',
           letterSpacing: '0.1em'
         }}>
-          Real Estate Platform
+          Immobilien-Plattform
         </div>
       </div>
 

@@ -16,12 +16,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -40,6 +40,75 @@ model Session {
   @@map("sessions")
 }
 
+// ============================================================================
+// ROLE & PERMISSION SYSTEM
+// ============================================================================
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // "admin", "editor", "viewer"
+  displayName String   @map("display_name") // "Administrator", "Editor", "Viewer"
+  description String?
+  color       String?  // Hex color for UI
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users       UserRole[]
+  permissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique // "users.create", "posts.publish", "media.upload"
+  displayName String   @map("display_name")
+  description String?
+  module      String   // "users", "posts", "media", "settings"
+  action      String   // "create", "read", "update", "delete", "publish"
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations  
+  roles       RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String     @map("role_id")
+  permissionId String     @map("permission_id")
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  // Relations
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserRole {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  roleId    String   @map("role_id")
+  assignedAt DateTime @default(now()) @map("assigned_at")
+  assignedBy String?  @map("assigned_by") // Who assigned this role
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+// ============================================================================
+// EXTENDED USER SYSTEM  
+// ============================================================================
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -47,12 +116,36 @@ model User {
   emailVerified DateTime? @map("email_verified")
   password      String?   // For credentials provider
   image         String?
-  role          String    @default("user")
+  
+  // Extended Profile Fields
+  firstName     String?   @map("first_name")
+  lastName      String?   @map("last_name")
+  phone         String?
+  bio           String?
+  location      String?
+  website       String?
+  timezone      String?   @default("Europe/Berlin")
+  locale        String?   @default("de")
+  
+  // Status & Metadata
+  isActive      Boolean   @default(true) @map("is_active")
+  isVerified    Boolean   @default(false) @map("is_verified")
+  lastLoginAt   DateTime? @map("last_login_at")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   
+  // Legacy role field (will be deprecated)
+  role          String    @default("user")
+
+  // Relations
   accounts      Account[]
   sessions      Session[]
+  roles         UserRole[]
+  media         Media[]
+  
+  // Activity tracking
+  createdPosts  Post[]    @relation("PostAuthor")
+  updatedPosts  Post[]    @relation("PostUpdatedBy")
 
   @@map("users")
 }
@@ -64,4 +157,173 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+// ============================================================================
+// CONTENT MANAGEMENT SYSTEM (für Blog System)
+// ============================================================================
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  color       String?  // Hex color for UI
+  image       String?  // Category image
+  isActive    Boolean  @default(true) @map("is_active")
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  posts       PostCategory[]
+
+  @@map("categories")
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  excerpt     String?
+  content     String
+  
+  // Content metadata
+  metaTitle   String?    @map("meta_title")
+  metaDescription String? @map("meta_description")
+  featuredImage String?  @map("featured_image")
+  
+  // Publishing
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?  @map("published_at")
+  
+  // SEO & Social
+  readingTime Int?       @map("reading_time") // in minutes
+  viewCount   Int        @default(0) @map("view_count")
+  likeCount   Int        @default(0) @map("like_count")
+  
+  // Authoring
+  authorId    String     @map("author_id")
+  updatedById String?    @map("updated_by_id")
+  
+  // Timestamps
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  // Relations
+  author      User       @relation("PostAuthor", fields: [authorId], references: [id])
+  updatedBy   User?      @relation("PostUpdatedBy", fields: [updatedById], references: [id])
+  categories  PostCategory[]
+  tags        PostTag[]
+  media       PostMedia[]
+
+  @@map("posts")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  color     String?  // Hex color for UI
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  posts     PostTag[]
+
+  @@map("tags")
+}
+
+model PostCategory {
+  id         String   @id @default(cuid())
+  postId     String   @map("post_id")
+  categoryId String   @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, categoryId])
+  @@map("post_categories")
+}
+
+model PostTag {
+  id        String   @id @default(cuid())
+  postId    String   @map("post_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, tagId])
+  @@map("post_tags")
+}
+
+// ============================================================================
+// MEDIA MANAGEMENT SYSTEM
+// ============================================================================
+
+model Media {
+  id           String    @id @default(cuid())
+  filename     String
+  originalName String    @map("original_name")
+  mimetype     String
+  size         Int       // in bytes
+  width        Int?      // for images
+  height       Int?      // for images
+  
+  // Storage
+  path         String    // relative path
+  url          String    // full URL
+  thumbnailUrl String?   @map("thumbnail_url")
+  
+  // Metadata
+  alt          String?   // Alt text for accessibility
+  caption      String?
+  description  String?
+  
+  // Organization
+  folder       String?   @default("/") // virtual folder structure
+  isPublic     Boolean   @default(true) @map("is_public")
+  
+  // Authoring
+  uploadedById String    @map("uploaded_by_id")
+  
+  // Timestamps
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  uploadedBy   User      @relation(fields: [uploadedById], references: [id])
+  posts        PostMedia[]
+
+  @@map("media")
+}
+
+model PostMedia {
+  id        String   @id @default(cuid())
+  postId    String   @map("post_id")
+  mediaId   String   @map("media_id")
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, mediaId])
+  @@map("post_media")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  SCHEDULED
 }

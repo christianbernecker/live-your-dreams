@@ -13,7 +13,11 @@ export function DashboardHeader({ title = "Dashboard", subtitle, userEmail }: Da
   const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   const handleSignOut = async () => {
-    window.location.href = '/'
+    const { signOut } = await import('next-auth/react')
+    await signOut({ 
+      redirect: true,
+      callbackUrl: '/'
+    })
   }
 
   return (

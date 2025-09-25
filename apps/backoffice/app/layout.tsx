@@ -1,4 +1,5 @@
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { SessionProvider } from 'next-auth/react'
 import './globals.css'
 
 export const metadata = {
@@ -19,9 +20,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body style={{ fontFamily: 'var(--font-family-primary)' }}>
-        <ErrorBoundary>
-          {children}
-        </ErrorBoundary>
+        <SessionProvider>
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
+        </SessionProvider>
       </body>
     </html>
   )

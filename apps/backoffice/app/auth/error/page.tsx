@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { Suspense } from "react"
-import { Button } from "@/components/ui/Button"
 
 function AuthErrorContent() {
   return (
@@ -90,30 +89,38 @@ function AuthErrorContent() {
             gridTemplateColumns: 'auto auto',
             gap: 'var(--spacing-md)',
             width: '100%',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}>
             <Link href="/auth/forgot-password">
-              <Button 
-                variant="secondary"
-                size="default"
-                style={{ whiteSpace: 'nowrap' }}
+              <button 
+                className="lyd-button secondary"
+                style={{ 
+                  whiteSpace: 'nowrap',
+                  height: '44px',
+                  minHeight: '44px'
+                }}
               >
                 Passwort vergessen
-              </Button>
+              </button>
             </Link>
             <Link href="/">
-              <Button 
-                variant="primary"
-                size="default"
-                style={{ whiteSpace: 'nowrap' }}
-                icon={
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 12l8-8 8 8M6 10.5V19a1 1 0 001 1h3v-3a1 1 0 011-1h2a1 1 0 011 1v3h3a1 1 0 001-1v-8.5"/>
-                  </svg>
-                }
+              <button 
+                className="lyd-button primary"
+                style={{ 
+                  whiteSpace: 'nowrap',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--spacing-xs)',
+                  height: '44px',
+                  minHeight: '44px'
+                }}
               >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 12l8-8 8 8M6 10.5V19a1 1 0 001 1h3v-3a1 1 0 011-1h2a1 1 0 011 1v3h3a1 1 0 001-1v-8.5"/>
+                </svg>
                 Erneut versuchen
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
