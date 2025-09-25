@@ -1,7 +1,31 @@
-import Image from "next/image";
-import Link from "next/link";
+import { auth, signIn } from "@/lib/auth"
+import { redirect } from "next/navigation"
+import Image from "next/image"
 
-export default function Home() {
+async function handleSignIn(formData: FormData) {
+  'use server'
+  
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  
+  try {
+    await signIn('credentials', {
+      email,
+      password,
+      redirectTo: '/dashboard'
+    })
+  } catch (error) {
+    redirect('/auth/error')
+  }
+}
+
+export default async function LoginPage() {
+  const session = await auth()
+  
+  if (session?.user) {
+    redirect('/dashboard')
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--lyd-gradient-subtle, #fafafa)' }}>
       <div className="lyd-card elevated" style={{ maxWidth: '480px', width: '100%' }}>
@@ -41,7 +65,7 @@ export default function Home() {
         </div>
         
         <div className="lyd-card-body">
-          <form className="space-y-6">
+          <form action={handleSignIn} className="space-y-6">
             {/* Email Input */}
             <div>
               <label className="lyd-input-label required">
@@ -53,11 +77,13 @@ export default function Home() {
                   <polyline points="22,6 12,13 2,6"/>
                 </svg>
                 <input
+                  name="email"
                   type="email"
                   className="lyd-input"
-                  placeholder="ihre@email.de"
+                  placeholder="admin@liveyourdreams.online"
                   required
                   autoComplete="username"
+                  defaultValue="admin@liveyourdreams.online"
                 />
               </div>
             </div>
@@ -74,38 +100,29 @@ export default function Home() {
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
                 <input
+                  name="password"
                   type="password"
                   className="lyd-input"
                   placeholder="••••••••••••"
                   required
                   autoComplete="current-password"
+                  defaultValue="admin123"
                 />
               </div>
             </div>
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center space-x-2" style={{ fontSize: 'var(--font-size-sm)' }}>
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded border-2"
-                  style={{ borderColor: 'var(--lyd-line)', accentColor: 'var(--lyd-primary)' }}
-                />
-                <span style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }}>Angemeldet bleiben</span>
-              </label>
-              <Link 
-                href="/forgot-password" 
-                style={{ 
-                  color: 'var(--lyd-primary)', 
-                  fontSize: 'var(--font-size-sm)',
-                  textDecoration: 'none',
-                  fontWeight: '500',
-                  fontFamily: 'var(--font-family-primary)'
-                }}
-                className="hover:underline"
-              >
-                Passwort vergessen?
-              </Link>
+            {/* Demo Hint */}
+            <div style={{
+              backgroundColor: 'var(--lyd-info-bg, #f0f9ff)',
+              border: '1px solid var(--lyd-info-border, #bae6fd)',
+              borderRadius: 'var(--border-radius-md)',
+              padding: 'var(--spacing-md)',
+              fontSize: 'var(--font-size-sm)',
+              color: 'var(--lyd-info, #0369a1)'
+            }}>
+              <strong>Demo-Login:</strong><br />
+              E-Mail: admin@liveyourdreams.online<br />
+              Passwort: admin123
             </div>
 
             {/* Login Button */}
@@ -144,12 +161,12 @@ export default function Home() {
           }}>
             <span>© {new Date().getFullYear()} Live Your Dreams</span>
             <div className="flex space-x-4">
-              <Link href="/impressum" style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }} className="hover:text-blue-600">
+              <a href="/impressum" style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }} className="hover:text-blue-600">
                 Impressum
-              </Link>
-              <Link href="/datenschutz" style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }} className="hover:text-blue-600">
+              </a>
+              <a href="/datenschutz" style={{ color: 'var(--lyd-grey)', fontFamily: 'var(--font-family-primary)' }} className="hover:text-blue-600">
                 Datenschutz
-              </Link>
+              </a>
             </div>
           </div>
           
@@ -164,5 +181,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }

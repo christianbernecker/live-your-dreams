@@ -1,5 +1,5 @@
-import './globals.css'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import './globals.css'
 
 export const metadata = {
   title: 'Live Your Dreams - Backoffice',
