@@ -5,7 +5,7 @@
   "description": "Live Your Dreams Backoffice - Design System Clean Implementation",
   "scripts": {
     "dev": "NEXT_TELEMETRY_DISABLED=1 next dev --port 3001 --turbo",
-    "build": "prisma generate && NEXT_TELEMETRY_DISABLED=1 next build",
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start --port 3001",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
