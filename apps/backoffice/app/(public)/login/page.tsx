@@ -11,46 +11,52 @@ export default function LoginPage() {
           <div className="lyd-login__logo">
             <Image 
               src="/lyd-logo.svg" 
-              alt="Live Your Dreams Logo" 
-              width={160} 
-              height={48}
+              alt="Live Your Dreams - Real Estate Logo" 
+              width={200} 
+              height={60}
               priority
             />
           </div>
-          <h1>Backoffice</h1>
-          <p>Immobilienvermarktung</p>
+          <h1 className="lyd-heading-luxury">Backoffice</h1>
+          <p className="lyd-text-muted">Exklusive Immobilienvermarktung</p>
         </header>
         <form className="lyd-login__form" action="/api/auth/signin" method="post">
-          <label className="lyd-field">
-            <span className="lyd-field__label">E-Mail-Adresse</span>
-            <span className="lyd-input">
+          <div className="lyd-input-field">
+            <label className="lyd-input-label">E-Mail-Adresse</label>
+            <div className="lyd-input-wrapper has-icon">
+              <svg className="lyd-input-icon" viewBox="0 0 24 24" width="16" height="16">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
+              </svg>
               <input 
                 name="email" 
                 type="email" 
-                className="lyd-input__control"
+                className="lyd-input"
                 autoComplete="username" 
                 required 
                 placeholder="ihre@email.de"
               />
-            </span>
-          </label>
+            </div>
+          </div>
           
-          <label className="lyd-field">
-            <span className="lyd-field__label">Passwort</span>
-            <span className="lyd-input">
+          <div className="lyd-input-field">
+            <label className="lyd-input-label">Passwort</label>
+            <div className="lyd-input-wrapper has-icon">
+              <svg className="lyd-input-icon" viewBox="0 0 24 24" width="16" height="16">
+                <path d="M18 10V6c0-3.3-2.7-6-6-6s-6 2.7-6 6v4H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V12c0-1.1-.9-2-2-2H18zm-1 0H7V6c0-2.8 2.2-5 5-5s5 2.2 5 5v4z" fill="currentColor"/>
+              </svg>
               <input 
                 name="password" 
                 type="password" 
-                className="lyd-input__control"
+                className="lyd-input"
                 autoComplete="current-password" 
                 required 
                 placeholder="••••••••"
               />
-            </span>
-          </label>
+            </div>
+          </div>
           
-          <button type="submit" className="lyd-btn lyd-btn--primary lyd-btn--block">
-            <span className="lyd-btn__label">Anmelden</span>
+          <button type="submit" className="lyd-button lyd-button-primary large">
+            Anmelden
           </button>
         </form>
         <footer className="lyd-login__footer">
