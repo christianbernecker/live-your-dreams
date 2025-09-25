@@ -33,20 +33,53 @@ function AuthErrorContent() {
         </div>
 
         <div className="lyd-card-body">
-          {/* Design System Alert Component */}
-          <div className="lyd-alert error" style={{ marginBottom: 'var(--spacing-lg)' }}>
-            <svg className="lyd-alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          {/* Kompakte Error-Info Box */}
+          <div style={{
+            backgroundColor: 'var(--lyd-error-bg, #fef2f2)',
+            border: '1px solid var(--lyd-error-border, #fecaca)',
+            borderRadius: 'var(--border-radius-md)',
+            padding: 'var(--spacing-md)',
+            marginBottom: 'var(--spacing-lg)',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 'var(--spacing-sm)'
+          }}>
+            <svg 
+              width="20" 
+              height="20" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="var(--lyd-error)" 
+              strokeWidth="2"
+              style={{ 
+                flexShrink: 0,
+                marginTop: '2px'
+              }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <div className="lyd-alert-content">
-              <div className="lyd-alert-title">Mögliche Ursachen:</div>
-              <div className="lyd-alert-message">
-                <ul style={{ marginTop: 'var(--spacing-xs)', paddingLeft: 'var(--spacing-md)' }}>
-                  <li>Ungültige E-Mail-Adresse oder Passwort</li>
-                  <li>Account wurde deaktiviert</li>
-                  <li>Temporärer Serverfehler</li>
-                </ul>
+            <div style={{ flex: 1 }}>
+              <div style={{ 
+                fontWeight: 'var(--font-weight-medium)', 
+                color: 'var(--lyd-error)',
+                marginBottom: 'var(--spacing-xs)',
+                fontSize: 'var(--font-size-sm)',
+                fontFamily: 'var(--font-family-primary)'
+              }}>
+                Mögliche Ursachen:
               </div>
+              <ul style={{ 
+                margin: 0, 
+                paddingLeft: 'var(--spacing-md)',
+                fontSize: 'var(--font-size-sm)',
+                color: 'var(--lyd-error)',
+                fontFamily: 'var(--font-family-primary)',
+                lineHeight: '1.5'
+              }}>
+                <li>Ungültige E-Mail-Adresse oder Passwort</li>
+                <li>Account wurde deaktiviert</li>
+                <li>Temporärer Serverfehler</li>
+              </ul>
             </div>
           </div>
 
