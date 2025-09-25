@@ -1,6 +1,42 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
   "rules": {
-    "@next/next/no-img-element": "warn"
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    
+    // DESIGN SYSTEM GOVERNANCE RULES
+    "no-inline-styles": "error",
+    "no-hardcoded-colors": "error",
+    
+    // Custom rules für LYD Design System
+    "lyd-design-system/use-lyd-components": "error",
+    "lyd-design-system/no-direct-css": "error",
+    "lyd-design-system/require-design-tokens": "error"
+  },
+  
+  "overrides": [
+    {
+      "files": ["**/*.tsx", "**/*.ts"],
+      "rules": {
+        "react/no-inline-styles": "error",
+        "react-hooks/exhaustive-deps": "error"
+      }
+    }
+  ],
+  
+  "settings": {
+    "lyd-design-system": {
+      "tokensPath": "./design-system/tokens.json",
+      "componentsPath": "./components/ui/",
+      "allowedClasses": [
+        "lyd-button",
+        "lyd-card", 
+        "lyd-input",
+        "lyd-modal"
+      ]
+    }
   }
 }
