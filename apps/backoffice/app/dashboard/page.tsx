@@ -21,10 +21,10 @@ export default async function DashboardPage() {
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <Image
-              src="/lyd-logo-v3.svg"
+              src="/lyd-logo-perfect.svg"
               alt="Live Your Dreams"
-              width={120}
-              height={68}
+              width={127}
+              height={67}
               priority
             />
             <div>

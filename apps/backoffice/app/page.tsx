@@ -32,9 +32,9 @@ export default async function LoginPage() {
         <div className="lyd-card-header text-center">
           <div className="flex justify-center mb-6">
             <Image
-              src="/lyd-logo-v3.svg"
+              src="/lyd-logo-perfect.svg"
               alt="Live Your Dreams"
-              width={176}
+              width={191}
               height={100}
               priority
               className="h-auto"
@@ -126,19 +126,20 @@ export default async function LoginPage() {
             </div>
 
             {/* Login Button */}
-            <button
-              type="submit"
-              className="lyd-button primary large w-full"
-              style={{ 
-                marginTop: 'var(--spacing-xl)',
-                fontFamily: 'var(--font-family-primary)'
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M15 3h6v18h-6M10 17l5-5-5-5M6 21V3"/>
-              </svg>
-              Anmelden
-            </button>
+            <div className="flex justify-end" style={{ marginTop: 'var(--spacing-xl)' }}>
+              <button
+                type="submit"
+                className="lyd-button primary large"
+                style={{ 
+                  fontFamily: 'var(--font-family-primary)'
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 3h6v18h-6M10 17l5-5-5-5M6 21V3"/>
+                </svg>
+                Anmelden
+              </button>
+            </div>
           </form>
         </div>
 
