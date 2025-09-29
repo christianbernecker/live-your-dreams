@@ -108,6 +108,12 @@ npm run dev
 - **[Docker Setup](deployment/docker/)** - Container configurations
 - **[ECS Configuration](deployment/ecs/)** - Task definitions
 
+### **🎯 Development Learnings & Best Practices**
+- **[Database Sync Epic](docs/CRITICAL_LEARNINGS_DATABASE_SYNC_EPIC.md)** - Complete analysis & solution patterns
+- **[Sync Checklist](docs/DATABASE_SYNC_CHECKLIST.md)** - Quick reference for CRUD operations
+- **[Best Practices](docs/DATABASE_SYNC_BEST_PRACTICES.md)** - Enterprise-grade implementation patterns
+- **[Session Summary](docs/SESSION_SUMMARY_DB_SYNC_EPIC.md)** - Real-world problem solving documentation
+
 ---
 
 ## 🛠️ **Development**

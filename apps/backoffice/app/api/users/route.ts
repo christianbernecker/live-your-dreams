@@ -11,7 +11,6 @@ export const dynamic = 'force-dynamic';
 import { auditUserAction } from '@/lib/audit';
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
-import { enforcePermission } from '@/lib/permissions';
 import { NextRequest, NextResponse } from 'next/server';
 
 // ============================================================================
