@@ -761,30 +761,39 @@ export default function AdminUsersPage() {
         console.log('✅ API Success:', result);
         
         if (isEdit) {
-          // Update existing user in list with full user data
-          const updatedUser = {
-            ...selectedUser,
-            ...apiData,
-            roles: roles.filter(role => apiData.roleIds.includes(role.id))
-          };
+          // ✅ CRITICAL FIX: Use API response data, not local apiData!
+          const updatedUserFromAPI = result.user;
+          console.log('🔄 Using API Response for UI Update:', updatedUserFromAPI);
           
-          setUsers(prev => prev.map(u => 
-            u.id === selectedUser.id ? updatedUser : u
-          ));
-          setShowEditModal(false);
-          showSuccess('Benutzer aktualisiert', `${userData.name} wurde erfolgreich bearbeitet.`);
+          if (updatedUserFromAPI) {
+            setUsers(prev => prev.map(u => 
+              u.id === selectedUser.id ? updatedUserFromAPI : u
+            ));
+            setShowEditModal(false);
+            showSuccess('Benutzer aktualisiert', `${userData.name} wurde erfolgreich bearbeitet - Datenbank synchronisiert.`);
+          } else {
+            console.error('❌ API Response missing user data - falling back to refresh');
+            // Fallback: Refresh all users from database
+            fetchUsers();
+            setShowEditModal(false);
+            showSuccess('Benutzer aktualisiert', 'Daten aus Datenbank neu geladen.');
+          }
         } else {
-          // Add new user to list with API response
-          const newUser = result.user || {
-            id: result.id || Math.random().toString(36).substr(2, 9),
-            ...apiData,
-            roles: roles.filter(role => apiData.roleIds.includes(role.id))
-          };
+          // ✅ CRITICAL FIX: Use API response data, not local apiData!
+          const newUserFromAPI = result.user;
+          console.log('👤 New User from API:', newUserFromAPI);
           
-          console.log('👤 New User Added:', newUser);
-          setUsers(prev => [...prev, newUser]);
-          setShowCreateModal(false);
-          showSuccess('Benutzer erstellt', `${userData.name} wurde erfolgreich hinzugefügt.`);
+          if (newUserFromAPI) {
+            setUsers(prev => [...prev, newUserFromAPI]);
+            setShowCreateModal(false);
+            showSuccess('Benutzer erstellt', `${userData.name} wurde erfolgreich hinzugefügt - Datenbank synchronisiert.`);
+          } else {
+            console.error('❌ API Response missing user data - falling back to refresh');
+            // Fallback: Refresh all users from database
+            fetchUsers();
+            setShowCreateModal(false);
+            showSuccess('Benutzer erstellt', 'Daten aus Datenbank neu geladen.');
+          }
         }
         
         setSelectedUser(null);

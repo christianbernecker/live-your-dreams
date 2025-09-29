@@ -168,8 +168,15 @@ export async function PATCH(
       timezone,
       locale,
       isActive,
-      isVerified
+      isVerified,
+      roleIds // ← CRITICAL: ROLE IDS HINZUGEFÜGT
     } = body;
+
+    console.log('🔄 PATCH User Update:', { 
+      userId: params.id, 
+      body: body,
+      roleIds: roleIds 
+    });
 
     // Get current user for audit trail
     const currentUser = await prisma.user.findUnique({
@@ -197,29 +204,79 @@ export async function PATCH(
       );
     }
 
-    // Update user
-    const updatedUser = await prisma.user.update({
-      where: { id: params.id },
-      data: {
-        ...(name !== undefined && { name }),
-        ...(firstName !== undefined && { firstName }),
-        ...(lastName !== undefined && { lastName }),
-        ...(phone !== undefined && { phone }),
-        ...(bio !== undefined && { bio }),
-        ...(location !== undefined && { location }),
-        ...(website !== undefined && { website }),
-        ...(timezone !== undefined && { timezone }),
-        ...(locale !== undefined && { locale }),
-        ...(isActive !== undefined && { isActive }),
-        ...(isVerified !== undefined && { isVerified })
-      },
-      include: {
-        roles: {
-          include: {
-            role: true
+    // Update user with role management in transaction
+    const updatedUser = await prisma.$transaction(async (tx) => {
+      // Update basic user fields
+      const user = await tx.user.update({
+        where: { id: params.id },
+        data: {
+          ...(name !== undefined && { name }),
+          ...(firstName !== undefined && { firstName }),
+          ...(lastName !== undefined && { lastName }),
+          ...(phone !== undefined && { phone }),
+          ...(bio !== undefined && { bio }),
+          ...(location !== undefined && { location }),
+          ...(website !== undefined && { website }),
+          ...(timezone !== undefined && { timezone }),
+          ...(locale !== undefined && { locale }),
+          ...(isActive !== undefined && { isActive }),
+          ...(isVerified !== undefined && { isVerified })
+        }
+      });
+
+      // Handle role updates if roleIds is provided
+      if (roleIds !== undefined && Array.isArray(roleIds)) {
+        console.log('🔄 Updating user roles:', { userId: params.id, newRoleIds: roleIds });
+        
+        // Remove existing roles
+        console.log('🗑️ Removing existing roles...');
+        await tx.userRole.deleteMany({
+          where: { userId: params.id }
+        });
+
+        // Add new roles if any provided
+        if (roleIds.length > 0) {
+          console.log('✅ Adding new roles...', roleIds);
+          
+          // Verify roles exist
+          const validRoles = await tx.role.findMany({
+            where: { 
+              id: { in: roleIds },
+              isActive: true 
+            }
+          });
+
+          if (validRoles.length !== roleIds.length) {
+            throw new Error(`Invalid roles provided. Expected: ${roleIds.length}, Found: ${validRoles.length}`);
           }
+
+          // Create new role assignments
+          await tx.userRole.createMany({
+            data: roleIds.map((roleId: string) => ({
+              userId: params.id,
+              roleId: roleId,
+              assignedBy: session?.user?.id || 'system',
+              assignedAt: new Date()
+            }))
+          });
+
+          console.log('✅ Roles updated successfully');
+        } else {
+          console.log('⚠️ No roles assigned - user has no roles now');
         }
       }
+
+      // Return updated user with roles
+      return await tx.user.findUnique({
+        where: { id: params.id },
+        include: {
+          roles: {
+            include: {
+              role: true
+            }
+          }
+        }
+      });
     });
 
     // Determine what changed for audit
@@ -253,6 +310,7 @@ export async function PATCH(
     }
 
     return NextResponse.json({
+      message: 'User updated successfully',
       user: {
         id: updatedUser.id,
         name: updatedUser.name,
@@ -267,8 +325,13 @@ export async function PATCH(
         locale: updatedUser.locale,
         isActive: updatedUser.isActive,
         isVerified: updatedUser.isVerified,
+        emailVerified: updatedUser.isVerified, // Alias für Frontend-Kompatibilität
         updatedAt: updatedUser.updatedAt,
-        roles: updatedUser.roles.map(ur => ur.role)
+        roles: updatedUser.roles.map(ur => ({
+          id: ur.role.id,
+          name: ur.role.name,
+          displayName: ur.role.displayName
+        }))
       }
     });
 
