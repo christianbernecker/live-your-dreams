@@ -11,26 +11,32 @@ export const LoadingSpinner = ({
   label = 'Laden...', 
   variant = 'gradient' 
 }: LoadingSpinnerProps) => {
-  const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12'
+  const sizeStyles = {
+    sm: { width: '16px', height: '16px' },
+    md: { width: '32px', height: '32px' },
+    lg: { width: '48px', height: '48px' }
   };
 
-  const labelSizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+  const labelSizeStyles = {
+    sm: { fontSize: '14px' },
+    md: { fontSize: '16px' },
+    lg: { fontSize: '18px' }
   };
 
   if (variant === 'gradient') {
     return (
       <div className="lyd-loading-spinner-container">
-        <div className={`lyd-loading-spinner-gradient ${sizeClasses[size]}`}>
+        <div 
+          className="lyd-loading-spinner-gradient"
+          style={sizeStyles[size]}
+        >
           <div className="lyd-loading-spinner-inner"></div>
         </div>
         {label && (
-          <div className={`lyd-loading-spinner-label ${labelSizeClasses[size]}`}>
+          <div 
+            className="lyd-loading-spinner-label"
+            style={labelSizeStyles[size]}
+          >
             {label}
           </div>
         )}
@@ -47,7 +53,10 @@ export const LoadingSpinner = ({
           <div className="lyd-dot"></div>
         </div>
         {label && (
-          <div className={`lyd-loading-spinner-label ${labelSizeClasses[size]}`}>
+          <div 
+            className="lyd-loading-spinner-label"
+            style={labelSizeStyles[size]}
+          >
             {label}
           </div>
         )}
@@ -58,8 +67,11 @@ export const LoadingSpinner = ({
   // Default variant
   return (
     <div className="lyd-loading-spinner-container">
-      <div className={`lyd-loading-spinner-default ${sizeClasses[size]}`}>
-        <svg viewBox="0 0 24 24" fill="none">
+      <div 
+        className="lyd-loading-spinner-default"
+        style={sizeStyles[size]}
+      >
+        <svg viewBox="0 0 24 24" fill="none" style={{ width: '100%', height: '100%' }}>
           <circle
             cx="12"
             cy="12"
@@ -82,7 +94,10 @@ export const LoadingSpinner = ({
         </svg>
       </div>
       {label && (
-        <div className={`lyd-loading-spinner-label ${labelSizeClasses[size]}`}>
+        <div 
+          className="lyd-loading-spinner-label"
+          style={labelSizeStyles[size]}
+        >
           {label}
         </div>
       )}
