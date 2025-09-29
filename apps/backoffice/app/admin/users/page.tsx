@@ -1,43 +1,66 @@
 /**
- * User Management Page - Clean Design System Implementation
+ * User Management Page - FIXED VERSION
  * 
- * Provides comprehensive user management with AUTHENTIC Design System Table
- * Based on: https://designsystem.liveyourdreams.online/components/table
+ * ✅ Toast notifications instead of alerts
+ * ✅ Icons in modals  
+ * ✅ Role selection functionality
+ * ✅ Fixed delete functionality
+ * ✅ Correct checkbox styling
  */
 
 'use client';
 
-import { Avatar } from '@/components/ui/Avatar';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { useCallback, useEffect, useState } from 'react';
+import { useToast, Toast } from '@/components/ui/Toast';
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
-interface SelectOption {
-  value: string;
-  label: string;
+interface Role {
+  id: string;
+  name: string;
+  displayName: string;
 }
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  isActive: boolean;
+  emailVerified: boolean;
+  roles: Role[];
+}
+
+interface UserFormData {
+  name: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  roleIds: string[];
+}
+
+// ============================================================================
+// CUSTOM COMPONENTS
+// ============================================================================
 
 interface CustomSelectProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
-  options: SelectOption[];
+  options: { value: string; label: string; }[];
 }
-
-// ============================================================================
-// CUSTOM DROPDOWN COMPONENT
-// ============================================================================
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholder, options }) => {
   const [isOpen, setIsOpen] = useState(false);
   
   const selectedOption = options.find(option => option.value === value);
   
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
@@ -52,7 +75,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
   
   return (
     <div className="lyd-custom-select-container" style={{ position: 'relative', width: '100%' }}>
-      {/* Trigger Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -98,7 +120,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
         </svg>
       </button>
       
-      {/* Dropdown Menu */}
       {isOpen && (
         <div
           className="lyd-custom-select-dropdown"
@@ -148,51 +169,290 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
   );
 };
 
-// ============================================================================
-
-interface User {
-  id: string;
-  name: string;
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  image?: string;
-  isActive: boolean;
-  emailVerified: boolean;
-  roles: Array<{
-    id: string;
-    name: string;
-    displayName: string;
-  }>;
+// User Form Component
+interface UserFormProps {
+  user?: User | null;
+  roles: Role[];
+  onSubmit: (data: UserFormData) => void;
+  onCancel: () => void;
+  isEdit?: boolean;
 }
 
-interface Role {
-  id: string;
-  name: string;
-  displayName: string;
+const UserForm: React.FC<UserFormProps> = ({ user, roles, onSubmit, onCancel, isEdit = false }) => {
+  const [formData, setFormData] = useState<UserFormData>({
+    name: user?.name || '',
+    email: user?.email || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    isActive: user?.isActive ?? true,
+    roleIds: user?.roles.map(r => r.id) || []
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  const handleRoleToggle = (roleId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      roleIds: prev.roleIds.includes(roleId)
+        ? prev.roleIds.filter(id => id !== roleId)
+        : [...prev.roleIds, roleId]
+    }));
+  };
+
+  return (
+    <div className="lyd-modal-overlay" style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000
+    }}>
+      <div className="lyd-modal" style={{
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        padding: '24px',
+        maxWidth: '500px',
+        width: '90%',
+        maxHeight: '80vh',
+        overflowY: 'auto'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+          {/* MODAL ICON */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>
+            {isEdit ? 'Benutzer bearbeiten' : 'Neuen Benutzer erstellen'}
+          </h2>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Name */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+              Name *
+            </label>
+            <Input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              required
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+              E-Mail *
+            </label>
+            <Input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              required
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          {/* First Name & Last Name */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+                Vorname
+              </label>
+              <Input
+                type="text"
+                value={formData.firstName}
+                onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
+                style={{ width: '100%' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+                Nachname
+              </label>
+              <Input
+                type="text"
+                value={formData.lastName}
+                onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
+                style={{ width: '100%' }}
+              />
+            </div>
+          </div>
+
+          {/* Roles */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+              Rollen
+            </label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {roles.map(role => (
+                <label 
+                  key={role.id} 
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    cursor: 'pointer',
+                    padding: '8px',
+                    borderRadius: '4px',
+                    backgroundColor: formData.roleIds.includes(role.id) ? 'var(--lyd-primary-50, #eff6ff)' : 'transparent'
+                  }}
+                >
+                  {/* FIXED CHECKBOX STYLING */}
+                  <input
+                    type="checkbox"
+                    checked={formData.roleIds.includes(role.id)}
+                    onChange={() => handleRoleToggle(role.id)}
+                    style={{
+                      width: '16px',
+                      height: '16px',
+                      accentColor: 'var(--lyd-primary, #3b82f6)'
+                    }}
+                  />
+                  <span style={{ fontSize: '14px' }}>{role.displayName}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Status */}
+          <div>
+            <label style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              cursor: 'pointer',
+              padding: '8px',
+              borderRadius: '4px',
+              backgroundColor: formData.isActive ? 'var(--lyd-success-50, #ecfdf5)' : 'var(--lyd-gray-50, #f9fafb)'
+            }}>
+              {/* FIXED CHECKBOX STYLING */}
+              <input
+                type="checkbox"
+                checked={formData.isActive}
+                onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  accentColor: 'var(--lyd-success, #10b981)'
+                }}
+              />
+              <span style={{ fontWeight: '500' }}>Benutzer ist aktiv</span>
+            </label>
+          </div>
+
+          {/* Actions */}
+          <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Abbrechen
+            </Button>
+            <Button type="submit" variant="primary">
+              {isEdit ? 'Aktualisieren' : 'Speichern'}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+// Delete Confirmation Component
+interface DeleteConfirmProps {
+  user: User;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
+
+const DeleteConfirm: React.FC<DeleteConfirmProps> = ({ user, onConfirm, onCancel }) => {
+  return (
+    <div className="lyd-modal-overlay" style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000
+    }}>
+      <div className="lyd-modal" style={{
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        padding: '24px',
+        maxWidth: '400px',
+        width: '90%'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+          {/* MODAL DELETE ICON */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lyd-error, #ef4444)">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+            Benutzer löschen
+          </h2>
+        </div>
+
+        <p style={{ marginBottom: '24px', color: 'var(--lyd-text-secondary)' }}>
+          Sind Sie sicher, dass Sie <strong>{user.name}</strong> ({user.email}) löschen möchten? 
+          Diese Aktion kann nicht rückgängig gemacht werden.
+        </p>
+
+        <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+          <Button variant="outline" onClick={onCancel}>
+            Abbrechen
+          </Button>
+          <Button 
+            variant="secondary" 
+            onClick={onConfirm}
+            style={{
+              backgroundColor: 'var(--lyd-error, #ef4444)',
+              color: 'white',
+              border: 'none'
+            }}
+          >
+            Löschen
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 
-export default function UserManagementPage() {
-  // State Management
+export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  // Filters
+
+  // Filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  
-  // Modal State
+
+  // Modal states
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  
+
+  // Toast system
+  const { toasts, showSuccess, showError, showWarning } = useToast();
+
   // ============================================================================
   // DATA FETCHING
   // ============================================================================
@@ -201,7 +461,6 @@ export default function UserManagementPage() {
     try {
       setLoading(true);
       
-      // API-FIRST: Versuche echte API-Daten zu laden
       const response = await fetch('/api/users');
       
       if (response.ok) {
@@ -209,21 +468,18 @@ export default function UserManagementPage() {
         setUsers(data.users || []);
         console.log('✅ Users loaded from API:', data.users?.length || 0);
       } else if (response.status === 401) {
-        // Authentication erforderlich
         console.log('🔐 Authentication required - redirecting to login');
         window.location.href = '/api/auth/signin';
         return;
       } else if (response.status === 403) {
-        // Permissions fehlen
         console.log('⛔ Insufficient permissions for user management');
-        alert('Fehler: Sie haben keine Berechtigung für die Benutzerverwaltung. Bitte kontaktieren Sie einen Administrator.');
+        showError('Zugriff verweigert', 'Sie haben keine Berechtigung für die Benutzerverwaltung.');
         setUsers([]);
       } else {
-        // API-Fehler mit Fallback zu Demo-Daten
         console.error('❌ API Error:', response.status);
-        console.log('🔄 Falling back to demo data for debugging...');
+        showWarning('API nicht verfügbar', 'Demo-Daten wurden geladen.');
         
-        // TEMPORARY FALLBACK für Debugging
+        // Demo fallback
         const demoUsers: User[] = [
           {
             id: 'demo-1',
@@ -244,56 +500,30 @@ export default function UserManagementPage() {
         ];
         
         setUsers(demoUsers);
-        setLoading(false); // Ensure loading state is properly cleared
-        alert('⚠️ API nicht verfügbar - Demo-Daten geladen. Bitte prüfen Sie die Server-Logs.');
       }
       
       setLoading(false);
     } catch (error) {
       console.error('❌ Network/API Error:', error);
-      console.log('🔄 Loading demo data due to network error...');
-      
-      // FALLBACK zu Demo-Daten bei Netzwerk-Fehlern
-      const demoUsers: User[] = [
-        {
-          id: 'demo-1',
-          name: 'System Administrator',
-          email: 'admin@liveyourdreams.online',
-          isActive: true,
-          emailVerified: true,
-          roles: [{ id: '1', name: 'admin', displayName: 'Administrator' }]
-        },
-        {
-          id: 'demo-2',
-          name: 'Demo User',
-          email: 'demo@liveyourdreams.online',
-          isActive: true,
-          emailVerified: true,
-          roles: [{ id: '2', name: 'editor', displayName: 'Editor' }]
-        }
-      ];
-      
-      setUsers(demoUsers);
-      setLoading(false); // Clear loading first to ensure state update
-      alert('⚠️ Netzwerkfehler - Demo-Daten geladen. Prüfen Sie Ihre Internetverbindung und Server-Status.');
+      showError('Netzwerkfehler', 'Verbindung fehlgeschlagen.');
+      setUsers([]);
+      setLoading(false);
     }
-  }, []);
+  }, [showError, showWarning]);
 
   const fetchRoles = useCallback(async () => {
     try {
-      // Try API first
       const response = await fetch('/api/roles');
       if (response.ok) {
         const data = await response.json();
         setRoles(data.roles || []);
-        console.log('✅ Roles loaded from API:', data.roles?.length || 0);
         return;
       }
     } catch (error) {
       console.log('❌ Roles API not available, using fallback');
     }
     
-    // Fallback roles for new installs or API issues
+    // Fallback roles
     const fallbackRoles: Role[] = [
       { id: '1', name: 'admin', displayName: 'Administrator' },
       { id: '2', name: 'editor', displayName: 'Editor' },
@@ -309,28 +539,7 @@ export default function UserManagementPage() {
   }, [fetchUsers, fetchRoles]);
 
   // ============================================================================
-  // FILTERING
-  // ============================================================================
-
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = !searchTerm || 
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesRole = !roleFilter || 
-      user.roles.some(role => role.name === roleFilter);
-    
-    const matchesStatus = !statusFilter || 
-      (statusFilter === 'true' && user.emailVerified) ||
-      (statusFilter === 'false' && !user.emailVerified);
-    
-    return matchesSearch && matchesRole && matchesStatus;
-  });
-
-  const paginatedUsers = filteredUsers.slice(0, 20); // Erste 20 für Demo
-
-  // ============================================================================
-  // HANDLERS
+  // CRUD FUNCTIONS
   // ============================================================================
 
   const handleCreateUser = () => {
@@ -350,100 +559,101 @@ export default function UserManagementPage() {
 
   const confirmDeleteUser = async () => {
     if (!selectedUser) return;
-    
+
     try {
       const response = await fetch(`/api/users/${selectedUser.id}`, {
-        method: 'DELETE',
+        method: 'DELETE'
       });
-      
+
       if (response.ok) {
-        // API success - refresh users list
-        await fetchUsers();
-        
-        // Close modal
+        // CRITICAL: Update UI state immediately to remove user from list
+        setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
         setShowDeleteModal(false);
         setSelectedUser(null);
-        
-        alert('Benutzer erfolgreich gelöscht');
-        console.log('✅ User deleted successfully via API');
+        showSuccess('Benutzer gelöscht', `${selectedUser.name} wurde erfolgreich entfernt.`);
       } else if (response.status === 401) {
-        alert('Session abgelaufen. Bitte loggen Sie sich erneut ein.');
         window.location.href = '/api/auth/signin';
+        return;
       } else if (response.status === 403) {
-        alert('Sie haben keine Berechtigung zum Löschen von Benutzern.');
+        showError('Zugriff verweigert', 'Sie haben keine Berechtigung zum Löschen von Benutzern.');
       } else {
-        const errorData = await response.text();
-        console.error('❌ Delete API Error:', response.status, errorData);
-        alert('Fehler beim Löschen des Benutzers. Bitte versuchen Sie es erneut.');
+        showError('Fehler beim Löschen', 'Der Benutzer konnte nicht gelöscht werden.');
       }
-      
-      // Close modal on any outcome
-      setShowDeleteModal(false);
-      setSelectedUser(null);
-      
     } catch (error) {
-      console.error('❌ Network error deleting user:', error);
-      alert('Netzwerkfehler beim Löschen des Benutzers. Prüfen Sie Ihre Internetverbindung.');
-      
-      // Close modal
-      setShowDeleteModal(false);
-      setSelectedUser(null);
+      showError('Netzwerkfehler', 'Verbindung fehlgeschlagen.');
     }
   };
 
-  const handleSubmitUser = async (userData: Partial<User>) => {
+  const handleSubmitUser = async (userData: UserFormData) => {
+    if (!userData.email || !userData.name) {
+      showError('Validierungsfehler', 'E-Mail und Name sind erforderlich');
+      return;
+    }
+
     try {
-      const url = selectedUser ? `/api/users/${selectedUser.id}` : '/api/users';
-      const method = selectedUser ? 'PATCH' : 'POST';
-      
+      const isEdit = selectedUser && selectedUser.id;
+      const url = isEdit ? `/api/users/${selectedUser.id}` : '/api/users';
+      const method = isEdit ? 'PATCH' : 'POST';
+
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(userData)
       });
-      
+
       if (response.ok) {
-        // API success - refresh users list
-        await fetchUsers();
+        const result = await response.json();
         
-        // Close modals
-        setShowCreateModal(false);
-        setShowEditModal(false);
+        if (isEdit) {
+          // Update existing user in list
+          setUsers(prev => prev.map(u => 
+            u.id === selectedUser.id ? { ...u, ...userData } : u
+          ));
+          setShowEditModal(false);
+          showSuccess('Benutzer aktualisiert', `${userData.name} wurde erfolgreich bearbeitet.`);
+        } else {
+          // Add new user to list
+          setUsers(prev => [...prev, result.user]);
+          setShowCreateModal(false);
+          showSuccess('Benutzer erstellt', `${userData.name} wurde erfolgreich hinzugefügt.`);
+        }
+        
         setSelectedUser(null);
         
-        alert(`Benutzer erfolgreich ${selectedUser ? 'bearbeitet' : 'erstellt'}`);
-        console.log(`✅ User ${selectedUser ? 'updated' : 'created'} successfully via API`);
       } else if (response.status === 401) {
-        alert('Session abgelaufen. Bitte loggen Sie sich erneut ein.');
         window.location.href = '/api/auth/signin';
+        return;
       } else if (response.status === 403) {
-        alert('Sie haben keine Berechtigung zum Bearbeiten von Benutzern.');
+        showError('Zugriff verweigert', 'Sie haben keine Berechtigung für diese Aktion.');
       } else if (response.status === 409) {
-        const errorData = await response.json();
-        alert(`Fehler: ${errorData.error || 'Benutzer mit dieser E-Mail existiert bereits'}`);
+        showError('Benutzer existiert bereits', 'Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.');
       } else {
-        const errorData = await response.text();
-        console.error(`❌ ${method} API Error:`, response.status, errorData);
-        alert(`Fehler beim ${selectedUser ? 'Bearbeiten' : 'Erstellen'} des Benutzers. Bitte versuchen Sie es erneut.`);
+        showError('Fehler bei der Benutzeroperation', 'Bitte versuchen Sie es erneut.');
       }
-      
-      // Close modals on any outcome
-      setShowCreateModal(false);
-      setShowEditModal(false);
-      setSelectedUser(null);
-      
     } catch (error) {
-      console.error(`❌ Network error ${selectedUser ? 'updating' : 'creating'} user:`, error);
-      alert(`Netzwerkfehler beim ${selectedUser ? 'Bearbeiten' : 'Erstellen'} des Benutzers. Prüfen Sie Ihre Internetverbindung.`);
-      
-      // Close modals
-      setShowCreateModal(false);
-      setShowEditModal(false);
-      setSelectedUser(null);
+      showError('Netzwerkfehler', 'Prüfen Sie Ihre Internetverbindung.');
     }
   };
+
+  // ============================================================================
+  // FILTERING
+  // ============================================================================
+
+  const filteredUsers = users.filter(user => {
+    const matchesSearch = !searchTerm || 
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesRole = !roleFilter || 
+      user.roles.some(role => role.name === roleFilter);
+    
+    const matchesStatus = !statusFilter || 
+      (statusFilter === 'true' ? user.emailVerified : !user.emailVerified);
+    
+    return matchesSearch && matchesRole && matchesStatus;
+  });
 
   // ============================================================================
   // RENDER
@@ -451,234 +661,166 @@ export default function UserManagementPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      {/* TOAST NOTIFICATIONS */}
+      {toasts.map(toast => (
+        <Toast key={toast.id} {...toast} />
+      ))}
+
       {/* Page Header */}
       <div className="lyd-card">
-        <div className="lyd-card-header">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h1 style={{ fontSize: '24px', fontWeight: '600', margin: 0 }}>Benutzer-Verwaltung</h1>
-              <p style={{ color: 'var(--lyd-text-secondary, #6b7280)', margin: '4px 0 0 0' }}>
-                Benutzer, Rollen und Berechtigungen verwalten
-              </p>
-            </div>
-            <Button 
-              variant="primary" 
-              onClick={handleCreateUser}
-              icon={
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 5v14m-7-7h14"/>
-                </svg>
-              }
-            >
-              Neuer Benutzer
-            </Button>
-          </div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '8px'
+        }}>
+          <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700' }}>
+            Benutzer-Verwaltung
+          </h1>
+          <Button
+            variant="primary"
+            onClick={handleCreateUser}
+            icon={
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            }
+          >
+            Neuer Benutzer
+          </Button>
         </div>
+        <p style={{ margin: 0, color: 'var(--lyd-text-secondary)' }}>
+          Benutzer, Rollen und Berechtigungen verwalten
+        </p>
       </div>
 
-      {/* Filters - Design System Compliant */}
+      {/* Filter Section */}
       <div className="lyd-card">
-        <div className="lyd-card-body">
-          {/* Filter Description */}
-          <div style={{ marginBottom: '16px' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: '500', margin: '0 0 4px 0', color: 'var(--lyd-text, #374151)' }}>
-              Suchen und Filtern
-            </h3>
-            <p style={{ fontSize: '14px', color: 'var(--lyd-text-secondary, #6b7280)', margin: 0 }}>
-              Durchsuchen Sie Benutzer nach Namen oder E-Mail und filtern Sie nach Rollen und Status.
-            </p>
-          </div>
-          {/* ROBUST FILTER LAYOUT - CSS GRID für garantierte Positionierung */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '2fr 1fr 1fr auto',
-            gap: '16px',
-            alignItems: 'start',
-            width: '100%',
-            marginBottom: '0'
-          }}>
-            
-            {/* Search Input - NATIVE HTML für garantierte Kontrolle */}
-            <div style={{ 
-              position: 'relative',
-              minWidth: '0' // Grid overflow fix
-            }}>
-              <input
-                type="text"
-                placeholder="Benutzer suchen..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="lyd-input-search-with-icon"
-                style={{
-                  width: '100%',
-                  height: '40px',
-                  padding: '8px 40px 8px 12px',
-                  border: '1px solid var(--lyd-border, #d1d5db)',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  backgroundColor: 'white',
-                  outline: 'none'
-                }}
-              />
-              {/* Icon RECHTS - Absolute Position */}
-              <div style={{
-                position: 'absolute',
-                right: '12px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'var(--lyd-text-secondary, #6b7280)',
-                pointerEvents: 'none',
-                zIndex: 10
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.35-4.35"/>
-                </svg>
-              </div>
-            </div>
-            
-            {/* Role Filter - Custom Dropdown für Design System Styling */}
-            <div style={{ minWidth: '0', position: 'relative' }}>
-              <CustomSelect
-                value={roleFilter}
-                onChange={setRoleFilter}
-                placeholder="Alle Rollen"
-                options={[
-                  { value: '', label: 'Alle Rollen' },
-                  ...roles.map(role => ({
-                    value: role.name,
-                    label: role.displayName
-                  }))
-                ]}
-              />
-            </div>
-            
-            {/* Status Filter - Custom Dropdown für Design System Styling */}
-            <div style={{ minWidth: '0', position: 'relative' }}>
-              <CustomSelect
-                value={statusFilter}
-                onChange={setStatusFilter}
-                placeholder="Alle Status"
-                options={[
-                  { value: '', label: 'Alle Status' },
-                  { value: 'true', label: 'Aktiv' },
-                  { value: 'false', label: 'Inaktiv' }
-                ]}
-              />
-            </div>
-            
-            {/* Reset Button - TOP aligned mit Input-Höhe */}
-            <button 
-              type="button"
-              className="lyd-button-reset-custom"
-              onClick={() => {
-                setSearchTerm('');
-                setRoleFilter('');
-                setStatusFilter('');
-              }}
+        <h2 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '600' }}>
+          Suchen und Filtern
+        </h2>
+        <p style={{ margin: '0 0 16px 0', color: 'var(--lyd-text-secondary)', fontSize: '14px' }}>
+          Durchsuchen Sie Benutzer nach Namen oder E-Mail und filtern Sie nach Rollen und Status.
+        </p>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr 1fr auto',
+          gap: '16px',
+          alignItems: 'start',
+          width: '100%',
+          marginBottom: '0'
+        }}>
+          {/* Search Input */}
+          <div style={{ position: 'relative', minWidth: '0' }}>
+            <input
+              type="text"
+              placeholder="Benutzer suchen..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                backgroundColor: 'transparent',
-                border: '1px solid var(--lyd-primary, #3b82f6)',
-                color: 'var(--lyd-primary, #3b82f6)',
-                borderRadius: '6px',
-                padding: '8px 16px',
+                width: '100%',
                 height: '40px',
+                padding: '8px 40px 8px 12px',
+                border: '1px solid var(--lyd-border, #d1d5db)',
+                borderRadius: '6px',
                 fontSize: '14px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                whiteSpace: 'nowrap',
-                minWidth: '120px',
-                marginTop: '0px',
-                alignSelf: 'start'
+                backgroundColor: 'white',
+                outline: 'none'
               }}
-            >
+            />
+            <div style={{
+              position: 'absolute',
+              right: '12px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: 'var(--lyd-text-secondary, #6b7280)',
+              pointerEvents: 'none',
+              zIndex: 10
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+              </svg>
+            </div>
+          </div>
+          
+          {/* Role Filter */}
+          <CustomSelect
+            value={roleFilter}
+            onChange={setRoleFilter}
+            placeholder="Alle Rollen"
+            options={[
+              { value: '', label: 'Alle Rollen' },
+              ...roles.map(role => ({
+                value: role.name,
+                label: role.displayName
+              }))
+            ]}
+          />
+          
+          {/* Status Filter */}
+          <CustomSelect
+            value={statusFilter}
+            onChange={setStatusFilter}
+            placeholder="Alle Status"
+            options={[
+              { value: '', label: 'Alle Status' },
+              { value: 'true', label: 'Aktiv' },
+              { value: 'false', label: 'Inaktiv' }
+            ]}
+          />
+          
+          {/* Reset Button */}
+          <Button 
+            type="button"
+            variant="outline"
+            onClick={() => {
+              setSearchTerm('');
+              setRoleFilter('');
+              setStatusFilter('');
+            }}
+            style={{
+              height: '40px',
+              alignSelf: 'start'
+            }}
+            icon={
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 6h18"/>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
                 <path d="M8 6V4c0-1 1-2 2-2h4c0 1 1 2 1 2v2"/>
               </svg>
-              Zurücksetzen
-            </button>
-            
-          </div>
-          
-          {/* CSS Styles für Custom Components */}
-          <style jsx>{`
-            .lyd-input-search-with-icon:focus {
-              border-color: var(--lyd-primary, #3b82f6) !important;
-              box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
             }
-            .lyd-button-reset-custom:hover {
-              background-color: var(--lyd-primary-50, #eff6ff) !important;
-            }
-            .lyd-custom-select-trigger:focus {
-              border-color: var(--lyd-primary, #3b82f6) !important;
-              box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
-            }
-            .lyd-custom-select-trigger:hover {
-              border-color: var(--lyd-border-hover, #9ca3af) !important;
-            }
-            .lyd-custom-select-option:hover {
-              background-color: var(--lyd-gray-50, #f9fafb) !important;
-            }
-            @media (max-width: 768px) {
-            div[style*="gridTemplateColumns"] {
-              display: flex !important;
-              flex-direction: column !important;
-              gap: var(--spacing-sm) !important;
-            }
-            }
-          `}</style>
+          >
+            Zurücksetzen
+          </Button>
         </div>
       </div>
 
-      {/* Users Table - AUTHENTIC DESIGN SYSTEM TABLE */}
-      <div className="lyd-table-container">
-        <table className="api-table striped">
-          <thead>
-            <tr>
-              <th>Benutzer</th>
-              <th>Rollen</th>
-              <th>Status</th>
-              <th>Aktionen</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+      {/* Table Section */}
+      <div className="lyd-card">
+        {loading ? (
+          <div style={{ padding: '40px', textAlign: 'center' }}>
+            Lade Benutzer...
+          </div>
+        ) : (
+          <table className="api-table striped">
+            <thead>
               <tr>
-                <td colSpan={4} style={{ textAlign: 'center', padding: '40px' }}>
-                  <div style={{ color: 'var(--lyd-text-secondary, #6b7280)' }}>
-                    Lade Benutzer...
-                  </div>
-                </td>
+                <th>Benutzer</th>
+                <th>Rolle</th>
+                <th>Status</th>
+                <th>Aktionen</th>
               </tr>
-            ) : paginatedUsers.length === 0 ? (
-              <tr>
-                <td colSpan={4} style={{ textAlign: 'center', padding: '40px' }}>
-                  <div style={{ color: 'var(--lyd-text-secondary, #6b7280)' }}>
-                    Keine Benutzer gefunden
-                  </div>
-                </td>
-              </tr>
-            ) : (
-              paginatedUsers.map((user) => (
+            </thead>
+            <tbody>
+              {filteredUsers.map((user) => (
                 <tr key={user.id}>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <Avatar
-                        size="sm"
-                        fallback={user.name?.charAt(0) || user.email.charAt(0)}
-                        status={user.emailVerified ? 'online' : 'offline'}
-                      />
                       <div>
-                        <div style={{ fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
-                          {user.name || 'Unbekannt'}
-                        </div>
-                        <div style={{ fontSize: '12px', color: 'var(--lyd-text-secondary, #6b7280)' }}>
+                        <div style={{ fontWeight: '600' }}>{user.name}</div>
+                        <div style={{ color: 'var(--lyd-text-secondary)', fontSize: '14px' }}>
                           {user.email}
                         </div>
                       </div>
@@ -686,20 +828,15 @@ export default function UserManagementPage() {
                   </td>
                   <td>
                     <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-                      {user.roles && user.roles.length > 0 ? (
-                        user.roles.map((role) => (
-                          <span key={role.id} className={`luxury-badge ${
-                            role.name === 'admin' ? 'error' :
-                            role.name === 'editor' ? 'info' :
-                            role.name === 'author' ? 'warning' :
-                            'success'
-                          }`}>
-                            {role.displayName}
-                          </span>
-                        ))
-                      ) : (
-                        <span className="luxury-badge">Keine Rolle</span>
-                      )}
+                      {user.roles.map((role) => (
+                        <span key={role.id} className={`lyd-badge ${
+                          role.name === 'admin' ? 'error' : 
+                          role.name === 'editor' ? 'info' : 
+                          role.name === 'author' ? 'warning' : 'success'
+                        }`}>
+                          {role.displayName}
+                        </span>
+                      ))}
                     </div>
                   </td>
                   <td>
@@ -708,314 +845,76 @@ export default function UserManagementPage() {
                     </span>
                   </td>
                   <td>
-                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-start' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '8px' }}>
                       <button
-                        type="button"
                         onClick={() => handleEditUser(user)}
-                        title="Bearbeiten"
+                        className="lyd-button ghost icon-only"
                         style={{
                           background: 'transparent',
                           border: 'none',
-                          cursor: 'pointer',
                           padding: '4px',
-                          color: 'var(--lyd-text-secondary, #6b7280)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
+                          color: 'var(--lyd-text-secondary)'
                         }}
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                          <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                         </svg>
                       </button>
+                      
                       <button
-                        type="button"
                         onClick={() => handleDeleteUser(user)}
-                        title="Löschen"
+                        className="lyd-button ghost icon-only"
                         style={{
                           background: 'transparent',
                           border: 'none',
-                          cursor: 'pointer',
                           padding: '4px',
-                          color: 'var(--lyd-error, #ef4444)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
+                          color: 'var(--lyd-error)'
                         }}
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <polyline points="3,6 5,6 21,6"/>
                           <path d="m19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
+                          <line x1="10" y1="11" x2="10" y2="17"/>
+                          <line x1="14" y1="11" x2="14" y2="17"/>
                         </svg>
                       </button>
                     </div>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
-      {/* ============================================================================ */}
       {/* MODALS */}
-      {/* ============================================================================ */}
-      
-      {/* Delete Confirmation Modal */}
-      {showDeleteModal && selectedUser && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            padding: 'var(--spacing-xl)',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            maxWidth: '400px',
-            width: '90%',
-            margin: 'var(--spacing-lg)'
-          }}>
-            <h3 style={{
-              fontSize: '18px',
-              fontWeight: '600',
-              margin: '0 0 var(--spacing-md) 0',
-              color: 'var(--lyd-text, #374151)'
-            }}>
-              Benutzer löschen
-            </h3>
-            <p style={{
-              color: 'var(--lyd-text-secondary, #6b7280)',
-              margin: '0 0 var(--spacing-lg) 0',
-              lineHeight: '1.5'
-            }}>
-              Sind Sie sicher, dass Sie <strong>{selectedUser.name}</strong> ({selectedUser.email}) löschen möchten? 
-              Diese Aktion kann nicht rückgängig gemacht werden.
-            </p>
-            <div style={{
-              display: 'flex',
-              gap: 'var(--spacing-md)',
-              justifyContent: 'flex-end'
-            }}>
-              <Button 
-                variant="outline"
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  setSelectedUser(null);
-                }}
-              >
-                Abbrechen
-              </Button>
-              <Button 
-                variant="secondary"
-                onClick={confirmDeleteUser}
-                style={{
-                  backgroundColor: 'var(--lyd-error, #ef4444)',
-                  color: 'white',
-                  border: 'none'
-                }}
-              >
-                Löschen
-              </Button>
-            </div>
-          </div>
-        </div>
+      {showCreateModal && (
+        <UserForm
+          roles={roles}
+          onSubmit={handleSubmitUser}
+          onCancel={() => setShowCreateModal(false)}
+          isEdit={false}
+        />
       )}
 
-      {/* Simple User Form Modal (Create/Edit) */}
-      {(showCreateModal || showEditModal) && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            padding: 'var(--spacing-xl)',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            maxWidth: '500px',
-            width: '90%',
-            margin: 'var(--spacing-lg)',
-            maxHeight: '80vh',
-            overflowY: 'auto'
-          }}>
-            <h3 style={{
-              fontSize: '18px',
-              fontWeight: '600',
-              margin: '0 0 var(--spacing-lg) 0',
-              color: 'var(--lyd-text, #374151)'
-            }}>
-              {selectedUser ? 'Benutzer bearbeiten' : 'Neuen Benutzer erstellen'}
-            </h3>
-            
-            <UserForm 
-              user={selectedUser}
-              roles={roles}
-              onSubmit={handleSubmitUser}
-              onCancel={() => {
-                setShowCreateModal(false);
-                setShowEditModal(false);
-                setSelectedUser(null);
-              }}
-            />
-          </div>
-        </div>
+      {showEditModal && selectedUser && (
+        <UserForm
+          user={selectedUser}
+          roles={roles}
+          onSubmit={handleSubmitUser}
+          onCancel={() => setShowEditModal(false)}
+          isEdit={true}
+        />
+      )}
+
+      {showDeleteModal && selectedUser && (
+        <DeleteConfirm
+          user={selectedUser}
+          onConfirm={confirmDeleteUser}
+          onCancel={() => setShowDeleteModal(false)}
+        />
       )}
     </div>
-  );
-}
-
-// ============================================================================
-// USER FORM COMPONENT
-// ============================================================================
-
-interface UserFormProps {
-  user: User | null;
-  roles: Role[];
-  onSubmit: (userData: Partial<User>) => Promise<void>;
-  onCancel: () => void;
-}
-
-function UserForm({ user, roles, onSubmit, onCancel }: UserFormProps) {
-  const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    isActive: user?.isActive ?? true,
-    // roleIds: user?.roles.map(r => r.id) || [] // Not used in demo mode
-  });
-  
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name.trim() || !formData.email.trim()) {
-      alert('Name und E-Mail sind erforderlich.');
-      return;
-    }
-    
-    setIsSubmitting(true);
-    try {
-      await onSubmit(formData);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-        <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
-          Name *
-        </label>
-        <Input
-          type="text"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required
-          placeholder="Vollständiger Name"
-        />
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-        <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
-          E-Mail *
-        </label>
-        <Input
-          type="email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
-          disabled={!!user}
-          placeholder="benutzer@liveyourdreams.online"
-        />
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-          <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
-            Vorname
-          </label>
-          <Input
-            type="text"
-            value={formData.firstName}
-            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-            placeholder="Max"
-          />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-          <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
-            Nachname
-          </label>
-          <Input
-            type="text"
-            value={formData.lastName}
-            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-            placeholder="Mustermann"
-          />
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
-        <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
-          Status
-        </label>
-        <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', cursor: 'pointer' }}>
-          <input
-            type="checkbox"
-            checked={formData.isActive}
-            onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-            style={{ cursor: 'pointer' }}
-          />
-          <span style={{ fontSize: '14px', color: 'var(--lyd-text, #374151)' }}>
-            Benutzer ist aktiv
-          </span>
-        </label>
-      </div>
-
-      <div style={{
-        display: 'flex',
-        gap: 'var(--spacing-md)',
-        justifyContent: 'flex-end',
-        paddingTop: 'var(--spacing-md)',
-        borderTop: '1px solid var(--lyd-border, #e5e7eb)'
-      }}>
-        <Button 
-          variant="outline"
-          type="button"
-          onClick={onCancel}
-          disabled={isSubmitting}
-        >
-          Abbrechen
-        </Button>
-        <Button 
-          variant="primary"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Speichere...' : (user ? 'Aktualisieren' : 'Erstellen')}
-        </Button>
-      </div>
-    </form>
   );
 }

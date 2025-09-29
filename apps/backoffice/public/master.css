@@ -1900,3 +1900,169 @@ body.modal-open {
     background: rgba(0, 102, 255, 0.1);
     color: var(--lyd-primary);
 }
+
+/* ========================================
+   TOAST COMPONENTS - Live Your Dreams Design System
+   ======================================== */
+
+/* Toast Container */
+.lyd-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    pointer-events: none;
+}
+
+/* Base Toast Styling */
+.lyd-toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--lyd-gray-300);
+    min-width: 320px;
+    max-width: 400px;
+    pointer-events: auto;
+    position: relative;
+    transform: translateX(0);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.lyd-toast.hiding {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Toast Icon */
+.lyd-toast-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Toast Content */
+.lyd-toast-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.lyd-toast-title {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.lyd-toast-message {
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    color: var(--lyd-text-secondary);
+}
+
+/* Toast Close Button */
+.lyd-toast-close {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--lyd-text-secondary);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.lyd-toast-close:hover {
+    background: var(--lyd-gray-100);
+    color: var(--lyd-text);
+}
+
+/* Toast Progress Bar */
+.lyd-toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: currentColor;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    animation: toast-progress 5s linear forwards;
+    opacity: 0.3;
+}
+
+@keyframes toast-progress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Toast Type Variants */
+.lyd-toast.success {
+    border-left-color: var(--lyd-success);
+}
+
+.lyd-toast.success .lyd-toast-icon {
+    color: var(--lyd-success);
+}
+
+.lyd-toast.success .lyd-toast-progress {
+    background: var(--lyd-success);
+}
+
+.lyd-toast.error {
+    border-left-color: var(--lyd-error);
+}
+
+.lyd-toast.error .lyd-toast-icon {
+    color: var(--lyd-error);
+}
+
+.lyd-toast.error .lyd-toast-progress {
+    background: var(--lyd-error);
+}
+
+.lyd-toast.warning {
+    border-left-color: var(--lyd-warning);
+}
+
+.lyd-toast.warning .lyd-toast-icon {
+    color: var(--lyd-warning);
+}
+
+.lyd-toast.warning .lyd-toast-progress {
+    background: var(--lyd-warning);
+}
+
+.lyd-toast.info {
+    border-left-color: var(--lyd-primary);
+}
+
+.lyd-toast.info .lyd-toast-icon {
+    color: var(--lyd-primary);
+}
+
+.lyd-toast.info .lyd-toast-progress {
+    background: var(--lyd-primary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .lyd-toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .lyd-toast {
+        min-width: auto;
+        max-width: none;
+    }
+}
