@@ -29,7 +29,10 @@
     "@prisma/client": "5.19.1",
     "zod": "3.22.4",
     "@vercel/blob": "^0.23.4",
-    "react-dropzone": "^14.2.3"
+    "react-dropzone": "^14.2.3",
+    "isomorphic-dompurify": "^2.12.0",
+    "jsdom": "^25.0.0",
+    "@aws-sdk/client-s3": "^3.651.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.47.0",
@@ -43,6 +46,7 @@
     "eslint": "8.57.1",
     "eslint-config-next": "14.2.33",
     "tsx": "4.19.1",
-    "@types/react-dropzone": "^5.1.0"
+    "@types/react-dropzone": "^5.1.0",
+    "@types/jsdom": "^21.1.7"
   }
 }

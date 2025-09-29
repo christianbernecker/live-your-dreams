@@ -6,9 +6,9 @@
 
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { useSession } from 'next-auth/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 // ============================================================================
 // TYPES & INTERFACES
