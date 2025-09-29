@@ -205,85 +205,111 @@ export async function PATCH(
     }
 
     // Update user with role management in transaction
+    console.log('🚀 STARTING TRANSACTION for user update:', params.id);
+    
     const updatedUser = await prisma.$transaction(async (tx) => {
-      // Update basic user fields
-      const user = await tx.user.update({
-        where: { id: params.id },
-        data: {
-          ...(name !== undefined && { name }),
-          ...(firstName !== undefined && { firstName }),
-          ...(lastName !== undefined && { lastName }),
-          ...(phone !== undefined && { phone }),
-          ...(bio !== undefined && { bio }),
-          ...(location !== undefined && { location }),
-          ...(website !== undefined && { website }),
-          ...(timezone !== undefined && { timezone }),
-          ...(locale !== undefined && { locale }),
-          ...(isActive !== undefined && { isActive }),
-          ...(isVerified !== undefined && { isVerified })
-        }
-      });
+      try {
+        console.log('📝 Step 1: Updating basic user fields...');
+        // Update basic user fields
+        const user = await tx.user.update({
+          where: { id: params.id },
+          data: {
+            ...(name !== undefined && { name }),
+            ...(firstName !== undefined && { firstName }),
+            ...(lastName !== undefined && { lastName }),
+            ...(phone !== undefined && { phone }),
+            ...(bio !== undefined && { bio }),
+            ...(location !== undefined && { location }),
+            ...(website !== undefined && { website }),
+            ...(timezone !== undefined && { timezone }),
+            ...(locale !== undefined && { locale }),
+            ...(isActive !== undefined && { isActive }),
+            ...(isVerified !== undefined && { isVerified })
+          }
+        });
+        console.log('✅ Step 1 COMPLETE: User basic fields updated');
 
-      // Handle role updates if roleIds is provided
-      if (roleIds !== undefined && Array.isArray(roleIds)) {
-        console.log('🔄 Updating user roles:', { userId: params.id, newRoleIds: roleIds });
-        
-        // Remove existing roles
-        console.log('🗑️ Removing existing roles...');
-        await tx.userRole.deleteMany({
-          where: { userId: params.id }
+        // Handle role updates if roleIds is provided
+        if (roleIds !== undefined && Array.isArray(roleIds)) {
+          console.log('🔄 Step 2: Updating user roles:', { userId: params.id, newRoleIds: roleIds });
+          
+          // Remove existing roles
+          console.log('🗑️ Step 2a: Removing existing roles...');
+          await tx.userRole.deleteMany({
+            where: { userId: params.id }
+          });
+          console.log('✅ Step 2a COMPLETE: Existing roles removed');
+
+          // Add new roles if any provided
+          if (roleIds.length > 0) {
+            console.log('➕ Step 2b: Adding new roles...', roleIds);
+            
+            // Verify roles exist
+            const validRoles = await tx.role.findMany({
+              where: { 
+                id: { in: roleIds },
+                isActive: true 
+              }
+            });
+            console.log('🔍 Step 2b: Role validation result:', { 
+              requested: roleIds.length, 
+              found: validRoles.length,
+              validRoleIds: validRoles.map(r => r.id)
+            });
+
+            if (validRoles.length !== roleIds.length) {
+              throw new Error(`Invalid roles provided. Expected: ${roleIds.length}, Found: ${validRoles.length}. Valid roles: ${validRoles.map(r => r.id).join(', ')}`);
+            }
+
+            // Create new role assignments
+            console.log('🔗 Step 2c: Creating role assignments...');
+            await tx.userRole.createMany({
+              data: roleIds.map((roleId: string) => ({
+                userId: params.id,
+                roleId: roleId,
+                assignedBy: session?.user?.id || 'system'
+                // assignedAt has default value in schema - let Prisma handle it
+              }))
+            });
+
+            console.log('✅ Step 2 COMPLETE: Roles updated successfully');
+          } else {
+            console.log('⚠️ Step 2: No roles assigned - user has no roles now');
+          }
+        }
+
+        console.log('🔍 Step 3: Fetching updated user with roles...');
+        // Return updated user with roles
+        const finalUser = await tx.user.findUnique({
+          where: { id: params.id },
+          include: {
+            roles: {
+              include: {
+                role: true
+              }
+            }
+          }
         });
 
-        // Add new roles if any provided
-        if (roleIds.length > 0) {
-          console.log('✅ Adding new roles...', roleIds);
-          
-          // Verify roles exist
-          const validRoles = await tx.role.findMany({
-            where: { 
-              id: { in: roleIds },
-              isActive: true 
-            }
-          });
-
-          if (validRoles.length !== roleIds.length) {
-            throw new Error(`Invalid roles provided. Expected: ${roleIds.length}, Found: ${validRoles.length}`);
-          }
-
-          // Create new role assignments
-          await tx.userRole.createMany({
-            data: roleIds.map((roleId: string) => ({
-              userId: params.id,
-              roleId: roleId,
-              assignedBy: session?.user?.id || 'system',
-              assignedAt: new Date()
-            }))
-          });
-
-          console.log('✅ Roles updated successfully');
-        } else {
-          console.log('⚠️ No roles assigned - user has no roles now');
+        if (!finalUser) {
+          throw new Error('User not found after update');
         }
+
+        console.log('✅ Step 3 COMPLETE: Final user data retrieved:', { 
+          userId: finalUser.id, 
+          rolesCount: finalUser.roles.length,
+          roleNames: finalUser.roles.map(ur => ur.role.name)
+        });
+
+        return finalUser;
+        
+      } catch (transactionError) {
+        console.error('❌ TRANSACTION ERROR:', transactionError);
+        throw transactionError;
       }
-
-      // Return updated user with roles
-      const finalUser = await tx.user.findUnique({
-        where: { id: params.id },
-        include: {
-          roles: {
-            include: {
-              role: true
-            }
-          }
-        }
-      });
-
-      if (!finalUser) {
-        throw new Error('User not found after update');
-      }
-
-      return finalUser;
     });
+    
+    console.log('✅ TRANSACTION COMPLETE:', updatedUser.id);
 
     // Determine what changed for audit
     const changes: any = {};
@@ -342,14 +368,27 @@ export async function PATCH(
     });
 
   } catch (error) {
-    console.error('Error in PATCH /api/users/[id]:', error);
+    console.error('❌ CRITICAL ERROR in PATCH /api/users/[id]:', error);
+    console.error('❌ Error Details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      userId: params.id,
+      requestBody: body
+    });
     
     if (error instanceof Response) {
       throw error;
     }
     
+    // Return detailed error for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown server error';
+    
     return NextResponse.json(
-      { error: 'Failed to update user' },
+      { 
+        error: 'Failed to update user', 
+        details: errorMessage,
+        userId: params.id 
+      },
       { status: 500 }
     );
   }
