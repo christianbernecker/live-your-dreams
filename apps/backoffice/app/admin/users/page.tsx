@@ -193,42 +193,38 @@ export default function UserManagementPage() {
               Durchsuchen Sie Benutzer nach Namen oder E-Mail und filtern Sie nach Rollen und Status.
             </p>
           </div>
-          {/* Filter Layout: INLINE-STYLES für garantierte Spezifität */}
-          <div style={{ 
-            display: 'flex', 
-            gap: '16px', 
-            flexWrap: 'wrap', 
-            alignItems: 'flex-end',
-            width: '100%'
+          {/* ROBUST FILTER LAYOUT - CSS GRID für garantierte Positionierung */}
+          <div style={{
+            display: 'grid !important',
+            gridTemplateColumns: '2fr 1fr 1fr auto',
+            gap: '16px',
+            alignItems: 'end',
+            width: '100%',
+            marginBottom: '0'
           }}>
             
-            {/* Search Input mit manueller Icon-Position (Component-API funktioniert nicht) */}
-            <div style={{ flex: '2 1 250px', minWidth: '200px', position: 'relative' }}>
+            {/* Search Input - Component mit Inline Override */}
+            <div style={{ 
+              position: 'relative',
+              minWidth: '0' // Grid overflow fix
+            }}>
               <Input
                 type="text"
                 placeholder="Benutzer suchen..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ paddingRight: '40px' }}
+                icon={
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                  </svg>
+                }
+                iconPosition="right"
               />
-              <div style={{
-                position: 'absolute',
-                right: '12px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'var(--lyd-text-secondary, #6b7280)',
-                pointerEvents: 'none',
-                zIndex: 2
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.35-4.35"/>
-                </svg>
-              </div>
             </div>
             
             {/* Role Filter */}
-            <div style={{ flex: '1 1 180px', minWidth: '150px' }}>
+            <div style={{ minWidth: '0' }}>
               <InputLikeSelect
                 placeholder="Alle Rollen"
                 value={roleFilter}
@@ -244,9 +240,9 @@ export default function UserManagementPage() {
             </div>
             
             {/* Status Filter */}
-            <div style={{ flex: '1 1 180px', minWidth: '150px' }}>
+            <div style={{ minWidth: '0' }}>
               <InputLikeSelect
-                placeholder="Alle Status"
+                placeholder="Alle Status"  
                 value={statusFilter}
                 onChange={(value) => setStatusFilter(value)}
                 options={[
@@ -257,48 +253,52 @@ export default function UserManagementPage() {
               />
             </div>
             
-            {/* Reset Button - Height-aligned mit Input-Komponenten */}
-            <div style={{ height: '40px', display: 'flex', alignItems: 'center' }}>
-              <button 
-                type="button"
-                onClick={() => {
-                  setSearchTerm('');
-                  setRoleFilter('');
-                  setStatusFilter('');
-                }}
-                style={{
-                  backgroundColor: 'transparent',
-                  border: '1px solid var(--lyd-primary, #3b82f6)',
-                  color: 'var(--lyd-primary, #3b82f6)',
-                  borderRadius: '6px',
-                  padding: '8px 16px',
-                  height: '40px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  transition: 'all 0.2s ease',
-                  whiteSpace: 'nowrap'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--lyd-primary-50, #eff6ff)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M3 6h18"/>
-                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                  <path d="M8 6V4c0-1 1-2 2-2h4c0 1 1 2 1 2v2"/>
-                </svg>
-                Zurücksetzen
-              </button>
-            </div>
+            {/* Reset Button - Grid aligned */}
+            <button 
+              type="button"
+              onClick={() => {
+                setSearchTerm('');
+                setRoleFilter('');
+                setStatusFilter('');
+              }}
+              style={{
+                backgroundColor: 'transparent !important',
+                border: '1px solid var(--lyd-primary, #3b82f6) !important',
+                color: 'var(--lyd-primary, #3b82f6) !important',
+                borderRadius: '6px !important',
+                padding: '8px 16px !important',
+                height: '40px !important',
+                fontSize: '14px !important',
+                fontWeight: '500 !important',
+                cursor: 'pointer !important',
+                display: 'flex !important',
+                alignItems: 'center !important',
+                justifyContent: 'center !important',
+                gap: '8px !important',
+                whiteSpace: 'nowrap !important',
+                minWidth: '120px !important'
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 6h18"/>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                <path d="M8 6V4c0-1 1-2 2-2h4c0 1 1 2 1 2v2"/>
+              </svg>
+              Zurücksetzen
+            </button>
             
           </div>
+          
+          {/* Mobile Responsive - Stacked Layout */}
+          <style jsx>{`
+            @media (max-width: 768px) {
+              div[style*="gridTemplateColumns"] {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+              }
+            }
+          `}</style>
         </div>
       </div>
 
