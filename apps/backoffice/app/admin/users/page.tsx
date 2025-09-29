@@ -686,22 +686,18 @@ export default function AdminUsersPage() {
           console.log('⚠️ SOFT DELETE (Fallback):', result);
         }
         
-        // IMMEDIATE UI UPDATE
-        console.log('🔄 Removing user from UI:', deletedUserId);
-        setUsers(prev => {
-          const newUsers = prev.filter(u => u.id !== deletedUserId);
-          console.log('📊 Users before delete:', prev.length, '-> after:', newUsers.length);
-          return newUsers;
-        });
-        
-        // CLOSE MODAL IMMEDIATELY
-        setShowDeleteModal(false);
-        setSelectedUser(null);
-        
-        // SHOW SUCCESS TOAST WITH SPECIFIC MESSAGE
-        const deleteType = result.message?.includes('permanently') ? 'permanent aus der Datenbank' : 'erfolgreich';
-        console.log('🎉 Showing success toast for:', deletedUserName, 'Delete type:', deleteType);
-        showSuccess('Benutzer gelöscht', `${deletedUserName} wurde ${deleteType} entfernt.`);
+          // CLOSE MODAL IMMEDIATELY for user feedback
+          setShowDeleteModal(false);
+          setSelectedUser(null);
+          
+          // SHOW SUCCESS TOAST WITH SPECIFIC MESSAGE
+          const deleteType = result.message?.includes('permanently') ? 'permanent aus der Datenbank' : 'erfolgreich';
+          console.log('🎉 Showing success toast for:', deletedUserName, 'Delete type:', deleteType);
+          showSuccess('Benutzer gelöscht', `${deletedUserName} wurde ${deleteType} entfernt.`);
+          
+          // CRITICAL: Refresh all users from database to ensure UI sync
+          console.log('🔄 Calling fetchUsers() after delete to refresh table data...');
+          await fetchUsers();
         
       } else if (response.status === 401) {
         showError('Sitzung abgelaufen', 'Bitte melden Sie sich erneut an.');
@@ -710,12 +706,15 @@ export default function AdminUsersPage() {
       } else if (response.status === 403) {
         showError('Zugriff verweigert', 'Sie haben keine Berechtigung zum Löschen von Benutzern.');
       } else if (response.status === 404) {
-        // User already deleted - STILL remove from UI for consistency
-        console.log('⚠️ User not found in DB, removing from UI anyway');
-        setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
+        // User already deleted - refresh to get current state
+        console.log('⚠️ User not found in DB, refreshing to get current state');
         setShowDeleteModal(false);
         setSelectedUser(null);
         showWarning('Benutzer nicht gefunden', 'Der Benutzer wurde bereits gelöscht.');
+        
+        // Refresh data to ensure consistency
+        console.log('🔄 Calling fetchUsers() after 404 to refresh table data...');
+        await fetchUsers();
       } else if (response.status >= 500) {
         const errorText = await response.text();
         console.error('❌ DELETE Server Error:', response.status, errorText);
@@ -784,42 +783,35 @@ export default function AdminUsersPage() {
         console.log('✅ API Success:', result);
         
         if (isEdit) {
-          // ✅ CRITICAL FIX: Use API response data, not local apiData!
-          const updatedUserFromAPI = result.user;
-          console.log('🔄 Using API Response for UI Update:', updatedUserFromAPI);
+          // ✅ ALWAYS REFRESH FROM DATABASE for consistency
+          console.log('🔄 User updated successfully - refreshing all data from database...');
           
-          if (updatedUserFromAPI) {
-            setUsers(prev => prev.map(u => 
-              u.id === selectedUser.id ? updatedUserFromAPI : u
-            ));
-            setShowEditModal(false);
-            showSuccess('Benutzer aktualisiert', `${userData.name} wurde erfolgreich bearbeitet - Datenbank synchronisiert.`);
-          } else {
-            console.error('❌ API Response missing user data - falling back to refresh');
-            // Fallback: Refresh all users from database
-            fetchUsers();
-            setShowEditModal(false);
-            showSuccess('Benutzer aktualisiert', 'Daten aus Datenbank neu geladen.');
-          }
+          // Close modal first for immediate user feedback
+          setShowEditModal(false);
+          setSelectedUser(null);
+          
+          // Show success message
+          showSuccess('Benutzer aktualisiert', `${userData.name} wurde erfolgreich bearbeitet.`);
+          
+          // CRITICAL: Refresh all users from database to ensure UI sync
+          console.log('🔄 Calling fetchUsers() to refresh table data...');
+          await fetchUsers();
+          
         } else {
-          // ✅ CRITICAL FIX: Use API response data, not local apiData!
-          const newUserFromAPI = result.user;
-          console.log('👤 New User from API:', newUserFromAPI);
+          // ✅ ALWAYS REFRESH FROM DATABASE for consistency  
+          console.log('👤 User created successfully - refreshing all data from database...');
           
-          if (newUserFromAPI) {
-            setUsers(prev => [...prev, newUserFromAPI]);
-            setShowCreateModal(false);
-            showSuccess('Benutzer erstellt', `${userData.name} wurde erfolgreich hinzugefügt - Datenbank synchronisiert.`);
-          } else {
-            console.error('❌ API Response missing user data - falling back to refresh');
-            // Fallback: Refresh all users from database
-            fetchUsers();
-            setShowCreateModal(false);
-            showSuccess('Benutzer erstellt', 'Daten aus Datenbank neu geladen.');
-          }
+          // Close modal first for immediate user feedback
+          setShowCreateModal(false);
+          setSelectedUser(null);
+          
+          // Show success message
+          showSuccess('Benutzer erstellt', `${userData.name} wurde erfolgreich hinzugefügt.`);
+          
+          // CRITICAL: Refresh all users from database to ensure UI sync
+          console.log('🔄 Calling fetchUsers() to refresh table data...');
+          await fetchUsers();
         }
-        
-        setSelectedUser(null);
         
       } else {
         // Handle API errors with detailed logging
