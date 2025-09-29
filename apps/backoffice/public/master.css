@@ -2468,18 +2468,18 @@ body.modal-open {
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
-/* Checkmark Icon - DESIGN SYSTEM EXACT SPECS - KORRIGIERTE GRÖßE */
+/* Checkmark Icon - DESIGN SYSTEM EXACT SPECS - KORREKTE GRÖßE */
 .lyd-checkbox-checkmark {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     opacity: 0;
     transition: all 0.2s ease;
     stroke: var(--lyd-bg, #ffffff) !important;
-    stroke-width: 2.5;
+    stroke-width: 3;
     fill: none;
     color: var(--lyd-bg, #ffffff) !important;
 }
@@ -2505,16 +2505,16 @@ body.modal-open {
     line-height: 1.4;
 }
 
-/* Size Variants - DESIGN SYSTEM AUTHENTIC - KORRIGIERTE GRÖßEN */
+/* Size Variants - DESIGN SYSTEM AUTHENTIC - OPTIMIERTE GRÖßEN */
 .lyd-checkbox-group.small .lyd-checkbox {
     width: 16px;
     height: 16px;
 }
 
 .lyd-checkbox-group.small .lyd-checkbox-checkmark {
-    width: 8px;
-    height: 8px;
-    stroke-width: 2;
+    width: 10px;
+    height: 10px;
+    stroke-width: 2.5;
 }
 
 .lyd-checkbox-group.large .lyd-checkbox {
@@ -2523,9 +2523,9 @@ body.modal-open {
 }
 
 .lyd-checkbox-group.large .lyd-checkbox-checkmark {
-    width: 12px;
-    height: 12px;
-    stroke-width: 3;
+    width: 16px;
+    height: 16px;
+    stroke-width: 3.5;
 }
 
 /* Error State */
