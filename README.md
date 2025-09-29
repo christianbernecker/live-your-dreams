@@ -100,13 +100,19 @@ npm run dev
 - **[Next.js Integration](docs/integration/NEXTJS_INTEGRATION.md)** - Backoffice integration guide
 
 ### **🚀 Deployment**
-- **[Vercel Deployment Guide](docs/deployment/VERCEL_BACKOFFICE_DEPLOYMENT.md)** - Complete production setup
-- **[Local Development](docs/development/MCP_WORKFLOW.md)** - Development workflow
-- **[Database Setup](apps/backoffice/DATABASE_SETUP.md)** - Neon PostgreSQL configuration
+- **[Vercel Complete Guide](docs/deployment/VERCEL_COMPLETE_GUIDE.md)** - Comprehensive deployment guide
+- **[Vercel Backoffice Setup](docs/deployment/VERCEL_BACKOFFICE_DEPLOYMENT.md)** - Backoffice-specific setup
+- **[Neon Database Setup](docs/deployment/NEON_DATABASE_SETUP.md)** - PostgreSQL configuration
+- **[Quick Start Guide](docs/development/QUICK_START_GUIDE.md)** - 10-minute local setup
 
 ### **🏗️ Architecture** 
-- **[System Architecture](docs/architecture/ARCHITECTURE.md)** - Technical overview
+- **[Vercel Architecture](docs/architecture/VERCEL_ARCHITECTURE.md)** - Complete system architecture
+- **[System Overview](docs/architecture/ARCHITECTURE.md)** - Technical overview
 - **[Database Decisions](docs/architecture/DATABASE_DECISION.md)** - PostgreSQL + Neon setup
+
+### **📚 Development**
+- **[Local Development](docs/development/MCP_WORKFLOW.md)** - Development workflow
+- **[Design System Docs](docs/design-system/README.md)** - Consolidated DS documentation
 
 ### **🆕 Latest Updates**
 - **[Spinner Component](https://designsystem.liveyourdreams.online/components/spinner)** - Hero UI-inspired loading animations with LYD gradient
