@@ -91,7 +91,7 @@ export async function auditLog(eventData: AuditEventData): Promise<void> {
         blogPostId: eventData.blogPostId || null,
         
         // Metadata
-        meta: eventData.meta || null,
+        meta: eventData.meta || undefined,
         
         // Timestamp is auto-generated
       }
