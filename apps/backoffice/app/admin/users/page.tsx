@@ -818,8 +818,13 @@ export default function UserManagementPage() {
                 Abbrechen
               </Button>
               <Button 
-                variant="destructive"
+                variant="secondary"
                 onClick={confirmDeleteUser}
+                style={{
+                  backgroundColor: 'var(--lyd-error, #ef4444)',
+                  color: 'white',
+                  border: 'none'
+                }}
               >
                 Löschen
               </Button>
