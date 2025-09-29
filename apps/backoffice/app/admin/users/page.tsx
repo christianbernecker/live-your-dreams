@@ -566,23 +566,32 @@ export default function AdminUsersPage() {
 
   const fetchRoles = useCallback(async () => {
     try {
+      console.log('🔄 FETCHING ROLES from /api/roles...');
       const response = await fetch('/api/roles');
+      console.log('📡 ROLES API Response:', response.status, response.statusText);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('✅ ROLES API Success:', data);
+        console.log('🎯 ROLES LOADED FROM API:', data.roles?.map(r => ({ id: r.id, name: r.name })));
         setRoles(data.roles || []);
         return;
+      } else {
+        console.log('❌ ROLES API failed:', response.status, response.statusText);
       }
     } catch (error) {
-      console.log('❌ Roles API not available, using fallback');
+      console.log('❌ ROLES API error:', error);
     }
     
     // Fallback roles
+    console.log('🔄 USING FALLBACK ROLES with demo IDs...');
     const fallbackRoles: Role[] = [
       { id: '1', name: 'admin', displayName: 'Administrator' },
       { id: '2', name: 'editor', displayName: 'Editor' },
       { id: '3', name: 'author', displayName: 'Autor' },
       { id: '4', name: 'viewer', displayName: 'Betrachter' }
     ];
+    console.log('🎯 FALLBACK ROLES:', fallbackRoles.map(r => ({ id: r.id, name: r.name })));
     setRoles(fallbackRoles);
   }, []);
 
@@ -741,6 +750,13 @@ export default function AdminUsersPage() {
       console.log('🔄 CRUD Operation:', { method, url, userData, isEdit, selectedUserId: selectedUser?.id });
 
       // Prepare data for API
+      console.log('🔍 ROLE DEBUGGING - Available roles in component:', roles.map(r => ({ id: r.id, name: r.name })));
+      console.log('🔍 ROLE DEBUGGING - User selected roleIds:', userData.roleIds);
+      console.log('🔍 ROLE DEBUGGING - Role name mapping:', userData.roleIds?.map(id => {
+        const role = roles.find(r => r.id === id);
+        return { id, name: role?.name || 'NOT_FOUND' };
+      }));
+      
       const apiData = {
         name: userData.name,
         email: userData.email,
@@ -750,6 +766,8 @@ export default function AdminUsersPage() {
         emailVerified: userData.isActive, // Set verified if active
         roleIds: userData.roleIds || []
       };
+      
+      console.log('📤 SENDING TO API:', apiData);
 
       const response = await fetch(url, {
         method,

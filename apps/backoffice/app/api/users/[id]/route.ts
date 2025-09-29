@@ -245,6 +245,15 @@ export async function PATCH(
             console.log('➕ Step 2b: Adding new roles...', roleIds);
             
             // Verify roles exist
+            console.log('🔍 DEBUGGING: Frontend sent roleIds:', roleIds);
+            console.log('🔍 DEBUGGING: Searching in DB for roles with IDs:', roleIds);
+            
+            // First: Get ALL roles in database for debugging
+            const allRoles = await tx.role.findMany({
+              select: { id: true, name: true, displayName: true, isActive: true }
+            });
+            console.log('🔍 DEBUGGING: ALL roles in database:', allRoles);
+            
             const validRoles = await tx.role.findMany({
               where: { 
                 id: { in: roleIds },
@@ -254,7 +263,9 @@ export async function PATCH(
             console.log('🔍 Step 2b: Role validation result:', { 
               requested: roleIds.length, 
               found: validRoles.length,
-              validRoleIds: validRoles.map(r => r.id)
+              requestedIds: roleIds,
+              validRoleIds: validRoles.map(r => r.id),
+              validRoleNames: validRoles.map(r => r.name)
             });
 
             if (validRoles.length !== roleIds.length) {
