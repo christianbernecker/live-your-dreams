@@ -573,7 +573,7 @@ export default function AdminUsersPage() {
       if (response.ok) {
         const data = await response.json();
         console.log('✅ ROLES API Success:', data);
-        console.log('🎯 ROLES LOADED FROM API:', data.roles?.map(r => ({ id: r.id, name: r.name })));
+        console.log('🎯 ROLES LOADED FROM API:', data.roles?.map((r: any) => ({ id: r.id, name: r.name })));
         setRoles(data.roles || []);
         return;
       } else {
@@ -591,7 +591,7 @@ export default function AdminUsersPage() {
       { id: '3', name: 'author', displayName: 'Autor' },
       { id: '4', name: 'viewer', displayName: 'Betrachter' }
     ];
-    console.log('🎯 FALLBACK ROLES:', fallbackRoles.map(r => ({ id: r.id, name: r.name })));
+    console.log('🎯 FALLBACK ROLES:', fallbackRoles.map((r: Role) => ({ id: r.id, name: r.name })));
     setRoles(fallbackRoles);
   }, []);
 
@@ -750,10 +750,10 @@ export default function AdminUsersPage() {
       console.log('🔄 CRUD Operation:', { method, url, userData, isEdit, selectedUserId: selectedUser?.id });
 
       // Prepare data for API
-      console.log('🔍 ROLE DEBUGGING - Available roles in component:', roles.map(r => ({ id: r.id, name: r.name })));
+      console.log('🔍 ROLE DEBUGGING - Available roles in component:', roles.map((r: Role) => ({ id: r.id, name: r.name })));
       console.log('🔍 ROLE DEBUGGING - User selected roleIds:', userData.roleIds);
-      console.log('🔍 ROLE DEBUGGING - Role name mapping:', userData.roleIds?.map(id => {
-        const role = roles.find(r => r.id === id);
+      console.log('🔍 ROLE DEBUGGING - Role name mapping:', userData.roleIds?.map((id: string) => {
+        const role = roles.find((r: Role) => r.id === id);
         return { id, name: role?.name || 'NOT_FOUND' };
       }));
       
