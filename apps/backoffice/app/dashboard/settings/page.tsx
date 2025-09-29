@@ -65,8 +65,8 @@ export default function SettingsPage() {
         ...prev,
         profile: {
           ...prev.profile,
-          firstName: session.user.firstName || '',
-          lastName: session.user.lastName || '',
+          firstName: (session.user as any)?.firstName || '',
+          lastName: (session.user as any)?.lastName || '',
           email: session.user.email || '',
           // Load other fields from API in real implementation
         }

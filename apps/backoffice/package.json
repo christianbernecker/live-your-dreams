@@ -5,7 +5,7 @@
   "description": "Live Your Dreams Backoffice - Design System Clean Implementation",
   "scripts": {
     "dev": "NEXT_TELEMETRY_DISABLED=1 next dev --port 3001 --turbo",
-    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "build": "NEXT_TELEMETRY_DISABLED=1 prisma generate && next build",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start --port 3001",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
@@ -16,7 +16,9 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "test:visual": "playwright test --project=visual",
+    "test:visual:update": "playwright test --project=visual --update-snapshots"
   },
   "dependencies": {
     "next": "14.2.33",
@@ -30,10 +32,12 @@
     "react-dropzone": "^14.2.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.47.0",
     "@types/node": "20.16.5",
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
     "@types/bcryptjs": "2.4.6",
+    "playwright": "^1.47.0",
     "prisma": "5.19.1",
     "typescript": "5.5.4",
     "eslint": "8.57.1",

@@ -50,10 +50,67 @@ export const Button: React.FC<ButtonProps> = ({
     className
   ].filter(Boolean).join(' ')
 
+  // Fallback styles for button variants
+  const getVariantStyles = () => {
+    const baseStyle = {
+      padding: size === 'small' ? '6px 12px' : size === 'large' ? '12px 24px' : '8px 16px',
+      borderRadius: '6px',
+      border: 'none',
+      fontWeight: '500',
+      fontSize: size === 'small' ? '14px' : size === 'large' ? '16px' : '15px',
+      cursor: disabled || loading ? 'not-allowed' : 'pointer',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      transition: 'all 0.2s ease',
+      opacity: disabled || loading ? 0.6 : 1,
+      width: fullWidth ? '100%' : 'auto',
+      justifyContent: 'center'
+    };
+
+    switch (variant) {
+      case 'primary':
+        return {
+          ...baseStyle,
+          backgroundColor: 'var(--lyd-primary, #3b82f6)',
+          color: 'white'
+        };
+      case 'secondary':
+        return {
+          ...baseStyle,
+          backgroundColor: 'var(--lyd-secondary, #f1f5f9)',
+          color: 'var(--lyd-text-primary, #1e293b)'
+        };
+      case 'outline':
+        return {
+          ...baseStyle,
+          backgroundColor: 'transparent',
+          color: 'var(--lyd-primary, #3b82f6)',
+          border: '1px solid var(--lyd-primary, #3b82f6)'
+        };
+      case 'ghost':
+        return {
+          ...baseStyle,
+          backgroundColor: 'transparent',
+          color: 'var(--lyd-text-primary, #1e293b)'
+        };
+      case 'glass':
+        return {
+          ...baseStyle,
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          color: 'white',
+          backdropFilter: 'blur(10px)'
+        };
+      default:
+        return baseStyle;
+    }
+  };
+
   return (
     <button 
       className={classes}
       disabled={disabled || loading}
+      style={getVariantStyles()}
       {...props}
     >
       {loading ? (

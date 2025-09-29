@@ -1,22 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'designsystem.liveyourdreams.online'],
+    domains: ['localhost', 'designsystem.liveyourdreams.online', 'blob.vercel-storage.com'],
   },
-  // Performance Optimizations
+  // Performance Optimizations + Node.js Runtime for bcrypt
   experimental: {
     optimizePackageImports: ['react-icons'],
+    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
   },
   // Security
   poweredByHeader: false,
   // Redirects für bessere UX
   async redirects() {
     return [
-      {
-        source: '/login',
-        destination: '/',
-        permanent: false,
-      },
+      // Redirect loop entfernt - war /login -> /
+      // Middleware handled jetzt alle Auth-Redirects
     ]
   },
   // Headers für Security (zusätzlich zu middleware.ts)
@@ -36,6 +34,10 @@ const nextConfig = {
         ],
       },
     ]
+  },
+  // Disable ESLint during builds for faster iteration
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 }
 

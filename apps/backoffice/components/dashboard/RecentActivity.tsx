@@ -30,7 +30,7 @@ export default function RecentActivity({ limit = 10, className }: RecentActivity
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 800))
         
-        const mockActivities: ActivityItem[] = [
+        const mockActivities = [
           {
             id: '1',
             type: 'user',
@@ -85,7 +85,7 @@ export default function RecentActivity({ limit = 10, className }: RecentActivity
             user: { name: 'Editor', email: 'editor@lyd.com' },
             metadata: { postId: 'post_789', changes: ['title', 'content'] }
           }
-        ].slice(0, limit)
+        ].slice(0, limit) as ActivityItem[]
         
         setActivities(mockActivities)
       } catch (error) {

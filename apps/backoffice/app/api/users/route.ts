@@ -1,158 +1,287 @@
-import { auth } from '@/lib/nextauth'
-import { NextRequest, NextResponse } from 'next/server'
+/**
+ * Users API Routes
+ * 
+ * Provides CRUD operations for user management with RBAC enforcement and audit logging.
+ * All operations require appropriate permissions and log audit events.
+ */
 
-async function getUsersHandler(request: NextRequest, context: any): Promise<NextResponse> {
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+import { auditUserAction } from '@/lib/audit';
+import { prisma } from '@/lib/db';
+import { auth } from '@/lib/nextauth';
+import { enforcePermission } from '@/lib/permissions';
+import { NextRequest, NextResponse } from 'next/server';
+
+// ============================================================================
+// GET /api/users - List all users
+// ============================================================================
+
+export async function GET(request: NextRequest) {
   try {
-    const session = await auth()
+    const session = await auth();
+    await enforcePermission(session, 'users.read');
+
+    // Parse query parameters
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get('page') || '1');
+    const limit = Math.min(parseInt(url.searchParams.get('limit') || '20'), 100);
+    const search = url.searchParams.get('search') || '';
+    const role = url.searchParams.get('role') || '';
+    const isActive = url.searchParams.get('isActive');
+
+    const skip = (page - 1) * limit;
+
+    // Build where clause
+    const where: any = {};
     
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+        { firstName: { contains: search, mode: 'insensitive' } },
+        { lastName: { contains: search, mode: 'insensitive' } }
+      ];
     }
-
-    if (!session.user.permissions.includes('users.read')) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    
+    if (isActive !== null) {
+      where.isActive = isActive === 'true';
     }
-
-    // Initialize Prisma Client for server-side usage
-    const { PrismaClient } = await import('@prisma/client')
-    const prisma = new PrismaClient()
-
-    try {
-      const users = await prisma.user.findMany({
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          role: true,
-          createdAt: true
-        },
-        orderBy: {
-          createdAt: 'desc'
+    
+    if (role) {
+      where.roles = {
+        some: {
+          role: {
+            name: role
+          }
         }
-      })
-
-      // Map database fields to API response - simplified
-      const mappedUsers = users.map(user => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        firstName: null,
-        lastName: null,
-        role: user.role,
-        isActive: true,
-        createdAt: user.createdAt?.toISOString(),
-        lastLoginAt: null
-      }))
-
-      await prisma.$disconnect()
-      
-      return NextResponse.json(mappedUsers)
-    } catch (error) {
-      await prisma.$disconnect()
-      throw error
+      };
     }
+
+    // Get users with pagination
+    const [users, totalCount] = await Promise.all([
+      prisma.user.findMany({
+        where,
+        include: {
+          roles: {
+            include: {
+              role: {
+                select: {
+                  id: true,
+                  name: true,
+                  displayName: true,
+                  color: true
+                }
+              }
+            }
+          },
+          _count: {
+            select: {
+              createdPosts: true,
+              createdContent: true
+            }
+          }
+        },
+        orderBy: [
+          { isActive: 'desc' },
+          { createdAt: 'desc' }
+        ],
+        skip,
+        take: limit
+      }),
+      prisma.user.count({ where })
+    ]);
+
+    // Format response
+    const formattedUsers = users.map(user => ({
+      id: user.id,
+      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      image: user.image,
+      isActive: user.isActive,
+      isVerified: user.isVerified,
+      lastLoginAt: user.lastLoginAt,
+      createdAt: user.createdAt,
+      roles: user.roles.map(ur => ({
+        id: ur.role.id,
+        name: ur.role.name,
+        displayName: ur.role.displayName,
+        color: ur.role.color,
+        assignedAt: ur.assignedAt
+      })),
+      stats: {
+        postsCount: user._count.createdPosts,
+        contentCount: user._count.createdContent
+      }
+    }));
+
+    return NextResponse.json({
+      users: formattedUsers,
+      pagination: {
+        page,
+        limit,
+        total: totalCount,
+        pages: Math.ceil(totalCount / limit)
+      }
+    });
+
   } catch (error) {
-    console.error('Error fetching users:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error('Error in GET /api/users:', error);
+    
+    if (error instanceof Response) {
+      throw error; // Re-throw permission errors
+    }
+    
+    return NextResponse.json(
+      { error: 'Failed to fetch users' },
+      { status: 500 }
+    );
   }
 }
 
-async function createUserHandler(request: NextRequest, context: any): Promise<NextResponse> {
+// ============================================================================
+// POST /api/users - Create new user
+// ============================================================================
+
+export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
-    
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    const session = await auth();
+    await enforcePermission(session, 'users.write');
+
+    const body = await request.json();
+    const {
+      email,
+      name,
+      firstName,
+      lastName,
+      password,
+      roleIds = [],
+      isActive = true,
+      sendInvite = false
+    } = body;
+
+    // Validate required fields
+    if (!email || !name) {
+      return NextResponse.json(
+        { error: 'Email and name are required' },
+        { status: 400 }
+      );
     }
 
-    if (!session.user.permissions.includes('users.create')) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: 'User with this email already exists' },
+        { status: 409 }
+      );
     }
 
-    const body = await request.json()
-    
-    // Basic validation (Zod will be added later)
-    const { email, firstName, lastName, role, password } = body
-
-    if (!email || !password || !role || !firstName || !lastName) {
-      return NextResponse.json({ 
-        error: 'VALIDATION_ERROR',
-        message: 'Missing required fields',
-        details: { requiredFields: ['email', 'firstName', 'lastName', 'role', 'password'] }
-      }, { status: 422 })
+    // Hash password if provided
+    let hashedPassword = null;
+    if (password) {
+      const bcrypt = await import('bcryptjs');
+      hashedPassword = await bcrypt.hash(password, 12);
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ 
-        error: 'VALIDATION_ERROR',
-        message: 'Invalid email address'
-      }, { status: 422 })
-    }
-
-    // Password validation
-    if (password.length < 8) {
-      return NextResponse.json({ 
-        error: 'VALIDATION_ERROR',
-        message: 'Password must be at least 8 characters long'
-      }, { status: 422 })
-    }
-
-    // Initialize Prisma Client and bcrypt
-    const { PrismaClient } = await import('@prisma/client')
-    const bcrypt = await import('bcryptjs')
-    const prisma = new PrismaClient()
-
-    try {
-      // Check if user already exists
-      const existingUser = await prisma.user.findUnique({
-        where: { email }
-      })
-
-      if (existingUser) {
-        return NextResponse.json({ error: 'User already exists' }, { status: 400 })
-      }
-
-      // Hash password
-      const hashedPassword = await bcrypt.hash(password, 12)
-
-      // Create user - simplified approach
-      const newUser = await prisma.user.create({
+    // Create user with roles in transaction
+    const user = await prisma.$transaction(async (tx) => {
+      // Create user
+      const newUser = await tx.user.create({
         data: {
           email,
-          role,
+          name,
+          firstName,
+          lastName,
           password: hashedPassword,
-          name: firstName && lastName ? `${firstName} ${lastName}` : firstName || email.split('@')[0]
+          isActive,
+          isVerified: !sendInvite // Auto-verify if not sending invite
+        },
+        include: {
+          roles: {
+            include: {
+              role: true
+            }
+          }
         }
-      })
+      });
 
-      // Map response to match expected format
-      const responseUser = {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        firstName: firstName,
-        lastName: lastName,
-        role: newUser.role,
-        isActive: true,
-        createdAt: newUser.createdAt?.toISOString(),
-        lastLoginAt: null
+      // Assign roles if provided
+      if (roleIds.length > 0) {
+        // Verify roles exist and user has permission to assign them
+        const roles = await tx.role.findMany({
+          where: { id: { in: roleIds }, isActive: true }
+        });
+
+        if (roles.length !== roleIds.length) {
+          throw new Error('One or more roles not found or inactive');
+        }
+
+        // Create role assignments
+        await tx.userRole.createMany({
+          data: roleIds.map((roleId: string) => ({
+            userId: newUser.id,
+            roleId,
+            assignedBy: session?.user?.id
+          }))
+        });
+
+        // Audit role assignments
+        for (const roleId of roleIds) {
+          await auditUserAction(session, 'USER_ROLE_ASSIGN', newUser.id, {
+            roleId,
+            reason: 'Initial role assignment during user creation'
+          }, request);
+        }
       }
 
-      await prisma.$disconnect()
-      
-      return NextResponse.json(responseUser, { status: 201 })
-    } catch (error) {
-      await prisma.$disconnect()
-      throw error
+      return newUser;
+    });
+
+    // Audit user creation
+    await auditUserAction(session, 'USER_CREATE', user.id, {
+      userEmail: email,
+      userName: name,
+      rolesAssigned: roleIds.length,
+      sendInvite
+    }, request);
+
+    // TODO: Send invitation email if requested
+    if (sendInvite) {
+      // Implementation for sending invitation email
+      console.log(`TODO: Send invitation email to ${email}`);
     }
+
+    return NextResponse.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isActive: user.isActive,
+        isVerified: user.isVerified,
+        createdAt: user.createdAt,
+        roles: user.roles.map(ur => ur.role)
+      }
+    }, { status: 201 });
+
   } catch (error) {
-    console.error('Error creating user:', error)
-    return NextResponse.json({ 
-      error: 'INTERNAL_ERROR',
-      message: 'An error occurred while creating user',
-      timestamp: new Date().toISOString()
-    }, { status: 500 })
+    console.error('Error in POST /api/users:', error);
+    
+    if (error instanceof Response) {
+      throw error; // Re-throw permission errors
+    }
+    
+    return NextResponse.json(
+      { error: 'Failed to create user' },
+      { status: 500 }
+    );
   }
 }

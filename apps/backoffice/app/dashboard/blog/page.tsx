@@ -22,10 +22,8 @@ export default async function BlogPage() {
       userEmail={session.user.email ?? undefined}
     >
       {/* Blog Stats */}
-      <div style={{
-        display: 'grid',
+      <div className="lyd-grid" style={{
         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: 'var(--spacing-lg)',
         marginBottom: 'var(--spacing-2xl)'
       }}>
         <div className="lyd-card elevated">
@@ -106,10 +104,8 @@ export default async function BlogPage() {
       </div>
 
       {/* Main Content */}
-      <div style={{
-        display: 'grid',
+      <div className="lyd-grid" style={{
         gridTemplateColumns: '1fr auto',
-        gap: 'var(--spacing-xl)',
         marginBottom: 'var(--spacing-xl)'
       }}>
         <h1 style={{
@@ -132,10 +128,7 @@ export default async function BlogPage() {
 
       {/* Articles Table */}
       <div className="lyd-card elevated">
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+        <div className="flex items-center justify-between" style={{
           marginBottom: 'var(--spacing-lg)',
           paddingBottom: 'var(--spacing-md)',
           borderBottom: '1px solid var(--lyd-line)'

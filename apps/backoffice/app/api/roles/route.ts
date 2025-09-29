@@ -1,128 +1,242 @@
-import { auth } from '@/lib/nextauth'
-import { NextRequest, NextResponse } from 'next/server'
+/**
+ * Roles API Routes
+ * 
+ * Provides CRUD operations for role management with RBAC enforcement and audit logging.
+ */
 
-// Mock data for roles - in production this would come from database
-const mockRoles = [
-  {
-    id: 'role-1',
-    name: 'admin',
-    displayName: 'Administrator',
-    description: 'Vollzugriff auf alle Funktionen',
-    color: '#dc2626',
-    createdAt: new Date().toISOString(),
-    userCount: 1,
-    permissions: [
-      { id: '1', name: 'users.create', displayName: 'Benutzer erstellen', description: 'Neue Benutzer anlegen', category: 'Benutzerverwaltung' },
-      { id: '2', name: 'users.read', displayName: 'Benutzer anzeigen', description: 'Benutzer einsehen', category: 'Benutzerverwaltung' },
-      { id: '3', name: 'users.update', displayName: 'Benutzer bearbeiten', description: 'Benutzer-Daten ändern', category: 'Benutzerverwaltung' },
-      { id: '4', name: 'users.delete', displayName: 'Benutzer löschen', description: 'Benutzer entfernen', category: 'Benutzerverwaltung' },
-      { id: '5', name: 'posts.create', displayName: 'Inhalte erstellen', description: 'Neue Artikel/Posts erstellen', category: 'Inhaltsverwaltung' },
-      { id: '6', name: 'posts.read', displayName: 'Inhalte anzeigen', description: 'Artikel/Posts lesen', category: 'Inhaltsverwaltung' },
-      { id: '7', name: 'posts.update', displayName: 'Inhalte bearbeiten', description: 'Artikel/Posts ändern', category: 'Inhaltsverwaltung' },
-      { id: '8', name: 'posts.delete', displayName: 'Inhalte löschen', description: 'Artikel/Posts entfernen', category: 'Inhaltsverwaltung' },
-      { id: '9', name: 'posts.publish', displayName: 'Inhalte veröffentlichen', description: 'Artikel/Posts publizieren', category: 'Inhaltsverwaltung' },
-      { id: '10', name: 'media.upload', displayName: 'Medien hochladen', description: 'Bilder/Dateien hochladen', category: 'Medienverwaltung' },
-      { id: '11', name: 'media.read', displayName: 'Medien anzeigen', description: 'Medien-Bibliothek einsehen', category: 'Medienverwaltung' },
-      { id: '12', name: 'media.update', displayName: 'Medien bearbeiten', description: 'Medien-Metadaten ändern', category: 'Medienverwaltung' },
-      { id: '13', name: 'media.delete', displayName: 'Medien löschen', description: 'Medien entfernen', category: 'Medienverwaltung' },
-      { id: '14', name: 'settings.read', displayName: 'Einstellungen anzeigen', description: 'System-Einstellungen einsehen', category: 'System' },
-      { id: '15', name: 'settings.update', displayName: 'Einstellungen ändern', description: 'System-Einstellungen bearbeiten', category: 'System' },
-      { id: '16', name: 'roles.manage', displayName: 'Rollen verwalten', description: 'Rollen und Berechtigungen verwalten', category: 'System' }
-    ]
-  },
-  {
-    id: 'role-2',
-    name: 'editor',
-    displayName: 'Editor',
-    description: 'Kann Inhalte erstellen und bearbeiten',
-    color: '#2563eb',
-    createdAt: new Date().toISOString(),
-    userCount: 0,
-    permissions: [
-      { id: '2', name: 'users.read', displayName: 'Benutzer anzeigen', description: 'Benutzer einsehen', category: 'Benutzerverwaltung' },
-      { id: '5', name: 'posts.create', displayName: 'Inhalte erstellen', description: 'Neue Artikel/Posts erstellen', category: 'Inhaltsverwaltung' },
-      { id: '6', name: 'posts.read', displayName: 'Inhalte anzeigen', description: 'Artikel/Posts lesen', category: 'Inhaltsverwaltung' },
-      { id: '7', name: 'posts.update', displayName: 'Inhalte bearbeiten', description: 'Artikel/Posts ändern', category: 'Inhaltsverwaltung' },
-      { id: '8', name: 'posts.delete', displayName: 'Inhalte löschen', description: 'Artikel/Posts entfernen', category: 'Inhaltsverwaltung' },
-      { id: '9', name: 'posts.publish', displayName: 'Inhalte veröffentlichen', description: 'Artikel/Posts publizieren', category: 'Inhaltsverwaltung' },
-      { id: '10', name: 'media.upload', displayName: 'Medien hochladen', description: 'Bilder/Dateien hochladen', category: 'Medienverwaltung' },
-      { id: '11', name: 'media.read', displayName: 'Medien anzeigen', description: 'Medien-Bibliothek einsehen', category: 'Medienverwaltung' },
-      { id: '12', name: 'media.update', displayName: 'Medien bearbeiten', description: 'Medien-Metadaten ändern', category: 'Medienverwaltung' },
-      { id: '13', name: 'media.delete', displayName: 'Medien löschen', description: 'Medien entfernen', category: 'Medienverwaltung' },
-      { id: '14', name: 'settings.read', displayName: 'Einstellungen anzeigen', description: 'System-Einstellungen einsehen', category: 'System' }
-    ]
-  },
-  {
-    id: 'role-3',
-    name: 'viewer',
-    displayName: 'Betrachter',
-    description: 'Nur Lesezugriff',
-    color: '#16a34a',
-    createdAt: new Date().toISOString(),
-    userCount: 0,
-    permissions: [
-      { id: '2', name: 'users.read', displayName: 'Benutzer anzeigen', description: 'Benutzer einsehen', category: 'Benutzerverwaltung' },
-      { id: '6', name: 'posts.read', displayName: 'Inhalte anzeigen', description: 'Artikel/Posts lesen', category: 'Inhaltsverwaltung' },
-      { id: '11', name: 'media.read', displayName: 'Medien anzeigen', description: 'Medien-Bibliothek einsehen', category: 'Medienverwaltung' },
-      { id: '14', name: 'settings.read', displayName: 'Einstellungen anzeigen', description: 'System-Einstellungen einsehen', category: 'System' }
-    ]
-  }
-]
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-export async function GET() {
+import { auditRoleAction } from '@/lib/audit';
+import { prisma } from '@/lib/db';
+import { auth } from '@/lib/nextauth';
+import { enforcePermission } from '@/lib/permissions';
+import { ROLE_PRESETS } from '@/lib/rbac';
+import { NextRequest, NextResponse } from 'next/server';
+
+// ============================================================================
+// GET /api/roles - List all roles
+// ============================================================================
+
+export async function GET(request: NextRequest) {
   try {
-    const session = await auth()
-    
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const session = await auth();
+    await enforcePermission(session, 'roles.read');
 
-    if (!session.user.permissions.includes('roles.manage')) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
+    const url = new URL(request.url);
+    const includePermissions = url.searchParams.get('includePermissions') === 'true';
+    const includeUsers = url.searchParams.get('includeUsers') === 'true';
 
-    // In production, this would fetch from database
-    return NextResponse.json(mockRoles)
+    const roles = await prisma.role.findMany({
+      include: {
+        permissions: includePermissions ? {
+          include: {
+            permission: true
+          }
+        } : false,
+        users: includeUsers ? {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                isActive: true
+              }
+            }
+          }
+        } : { select: { id: true } }, // Always include count
+        _count: {
+          select: {
+            users: true,
+            permissions: true
+          }
+        }
+      },
+      orderBy: [
+        { isActive: 'desc' },
+        { name: 'asc' }
+      ]
+    });
+
+    const formattedRoles = roles.map(role => ({
+      id: role.id,
+      name: role.name,
+      displayName: role.displayName,
+      description: role.description,
+      color: role.color,
+      isActive: role.isActive,
+      createdAt: role.createdAt,
+      updatedAt: role.updatedAt,
+      userCount: role._count.users,
+      permissionCount: role._count.permissions,
+      ...(includePermissions && {
+        permissions: role.permissions.map((rp: any) => ({
+          id: rp.permission.id,
+          name: rp.permission.name,
+          displayName: rp.permission.displayName,
+          description: rp.permission.description,
+          module: rp.permission.module,
+          action: rp.permission.action
+        }))
+      }),
+      ...(includeUsers && {
+        users: role.users.map((ur: any) => ur.user)
+      })
+    }));
+
+    return NextResponse.json({ roles: formattedRoles });
+
   } catch (error) {
-    console.error('Error fetching roles:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error('Error in GET /api/roles:', error);
+    
+    if (error instanceof Response) {
+      throw error;
+    }
+    
+    return NextResponse.json(
+      { error: 'Failed to fetch roles' },
+      { status: 500 }
+    );
   }
 }
 
+// ============================================================================
+// POST /api/roles - Create new role
+// ============================================================================
+
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
-    
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const session = await auth();
+    await enforcePermission(session, 'roles.write');
 
-    if (!session.user.permissions.includes('roles.manage')) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    const body = await request.json()
-    const { name, displayName, description, color, permissions } = body
-
-    if (!name || !displayName || !description || !color || !permissions) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-    }
-
-    // In production, this would create in database
-    const newRole = {
-      id: `role-${Date.now()}`,
+    const body = await request.json();
+    const {
       name,
       displayName,
       description,
-      color,
-      permissions,
-      createdAt: new Date().toISOString(),
-      userCount: 0
+      color = '#6B7280',
+      permissionIds = [],
+      isActive = true,
+      usePreset
+    } = body;
+
+    // Validate required fields
+    if (!name || !displayName) {
+      return NextResponse.json(
+        { error: 'Name and display name are required' },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json(newRole, { status: 201 })
+    // Check if role already exists
+    const existingRole = await prisma.role.findUnique({
+      where: { name }
+    });
+
+    if (existingRole) {
+      return NextResponse.json(
+        { error: 'Role with this name already exists' },
+        { status: 409 }
+      );
+    }
+
+    // Determine permissions to assign
+    let finalPermissionIds = permissionIds;
+    
+    if (usePreset && ROLE_PRESETS[usePreset]) {
+      // Get permission IDs for preset
+      const presetPermissions = await prisma.permission.findMany({
+        where: { name: { in: ROLE_PRESETS[usePreset] } },
+        select: { id: true }
+      });
+      
+      finalPermissionIds = presetPermissions.map(p => p.id);
+    }
+
+    // Create role with permissions in transaction
+    const role = await prisma.$transaction(async (tx) => {
+      // Create role
+      const newRole = await tx.role.create({
+        data: {
+          name,
+          displayName,
+          description,
+          color,
+          isActive
+        }
+      });
+
+      // Assign permissions if provided
+      if (finalPermissionIds.length > 0) {
+        // Verify permissions exist
+        const permissions = await tx.permission.findMany({
+          where: { id: { in: finalPermissionIds } }
+        });
+
+        if (permissions.length !== finalPermissionIds.length) {
+          throw new Error('One or more permissions not found');
+        }
+
+        // Create role-permission assignments
+        await tx.rolePermission.createMany({
+          data: finalPermissionIds.map((permissionId: string) => ({
+            roleId: newRole.id,
+            permissionId
+          }))
+        });
+      }
+
+      // Return role with permissions
+      return await tx.role.findUnique({
+        where: { id: newRole.id },
+        include: {
+          permissions: {
+            include: {
+              permission: true
+            }
+          }
+        }
+      });
+    });
+
+    // Audit role creation
+    await auditRoleAction(session, 'ROLE_CREATE', role!.id, {
+      roleName: name,
+      displayName,
+      permissionsCount: finalPermissionIds.length,
+      usePreset: usePreset || null
+    }, request);
+
+    return NextResponse.json({
+      role: {
+        id: role!.id,
+        name: role!.name,
+        displayName: role!.displayName,
+        description: role!.description,
+        color: role!.color,
+        isActive: role!.isActive,
+        createdAt: role!.createdAt,
+        permissions: role!.permissions.map(rp => ({
+          id: rp.permission.id,
+          name: rp.permission.name,
+          displayName: rp.permission.displayName,
+          module: rp.permission.module,
+          action: rp.permission.action
+        }))
+      }
+    }, { status: 201 });
+
   } catch (error) {
-    console.error('Error creating role:', error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    console.error('Error in POST /api/roles:', error);
+    
+    if (error instanceof Response) {
+      throw error;
+    }
+    
+    return NextResponse.json(
+      { error: 'Failed to create role' },
+      { status: 500 }
+    );
   }
 }

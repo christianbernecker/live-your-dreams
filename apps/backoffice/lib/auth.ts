@@ -1,6 +1,6 @@
+import bcrypt from "bcryptjs"
 import { NextAuthConfig } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt from "bcryptjs"
 
 declare module "next-auth" {
   interface Session {
@@ -123,16 +123,65 @@ export const authConfig: NextAuthConfig = {
 
           // Note: lastLoginAt update skipped for deployment compatibility
 
-          // For now, assign basic permissions based on user role
-          // TODO: Implement proper role-permission system
-          let permissions: string[] = []
-          
-          if (user.role === 'admin') {
-            permissions = ['users.create', 'users.read', 'users.update', 'users.delete', 'posts.create', 'posts.read', 'posts.update', 'posts.delete', 'posts.publish', 'media.upload', 'media.read', 'media.update', 'media.delete', 'settings.read', 'settings.update']
-          } else if (user.role === 'editor') {
-            permissions = ['posts.create', 'posts.read', 'posts.update', 'posts.delete', 'posts.publish', 'media.upload', 'media.read', 'media.update', 'media.delete', 'users.read', 'settings.read']
-          } else {
-            permissions = ['posts.read', 'media.read', 'users.read', 'settings.read']
+          // Load user roles and permissions from RBAC system with error handling
+          let permissions: string[] = [];
+          let primaryRole = 'viewer'; // Default role
+
+          try {
+            // Simplified query - step by step to avoid complex joins
+            const userRoles = await prisma.userRole.findMany({
+              where: { userId: user.id },
+              include: {
+                role: true
+              }
+            });
+
+            if (userRoles.length > 0) {
+              // Set primary role (admin takes precedence)
+              for (const userRole of userRoles) {
+                if (userRole.role.isActive) {
+                  if (userRole.role.name === 'admin') {
+                    primaryRole = 'admin';
+                  } else if (userRole.role.name === 'editor' && primaryRole !== 'admin') {
+                    primaryRole = 'editor';
+                  } else if (userRole.role.name === 'author' && primaryRole === 'viewer') {
+                    primaryRole = 'author';
+                  }
+                }
+              }
+
+              // For admin role, give full permissions (fallback)
+              if (primaryRole === 'admin') {
+                permissions = [
+                  'users.read', 'users.write', 'users.delete', 'users.invite',
+                  'roles.read', 'roles.write', 'roles.assign',
+                  'content.read', 'content.write', 'content.publish',
+                  'media.read', 'media.write', 'media.delete',
+                  'settings.read', 'settings.write', 'settings.system',
+                  'audit.read'
+                ];
+              } else if (primaryRole === 'editor') {
+                permissions = [
+                  'users.read', 'content.read', 'content.write', 'content.publish',
+                  'media.read', 'media.write', 'settings.read'
+                ];
+              } else {
+                permissions = ['content.read', 'media.read', 'settings.read'];
+              }
+            }
+          } catch (roleError) {
+            console.error('Error loading user roles, using fallback permissions:', roleError);
+            // Fallback: if role loading fails, check if this is admin user
+            if (user.email === 'admin@liveyourdreams.online') {
+              primaryRole = 'admin';
+              permissions = [
+                'users.read', 'users.write', 'users.delete', 'users.invite',
+                'roles.read', 'roles.write', 'roles.assign',
+                'content.read', 'content.write', 'content.publish',
+                'settings.read', 'settings.write', 'settings.system',
+                'audit.read'
+              ];
+            }
           }
 
           // Cleanup
@@ -143,9 +192,9 @@ export const authConfig: NextAuthConfig = {
             email: user.email,
             name: user.name,
             image: user.image,
-            role: user.role,
+            role: primaryRole,
             isActive: isActive,
-            permissions: permissions,
+            permissions: permissions.sort(),
           }
         } catch (error) {
           console.error('Auth error:', error)

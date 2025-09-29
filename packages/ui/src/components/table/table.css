@@ -1,0 +1,74 @@
+/* Table Component - Enhances Design System .api-table */
+
+/* Additional table styling that works with .api-table from master.css */
+.api-table__header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.api-table__sort-icon {
+  opacity: 0.5;
+  font-size: 0.8em;
+  transition: opacity 0.2s ease;
+}
+
+.api-table__header-cell--sortable:hover .api-table__sort-icon {
+  opacity: 1;
+}
+
+.api-table__header-cell--sorted-asc .api-table__sort-icon,
+.api-table__header-cell--sorted-desc .api-table__sort-icon {
+  opacity: 1;
+  color: var(--lyd-color-brand-primary, #3b82f6);
+}
+
+/* Variant styles */
+.api-table--striped tbody tr:nth-child(even) {
+  background-color: var(--lyd-color-surface-subtle, #f8f9fa);
+}
+
+.api-table--bordered {
+  border: 1px solid var(--lyd-color-border, #e5e7eb);
+}
+
+.api-table--bordered th,
+.api-table--bordered td {
+  border: 1px solid var(--lyd-color-border, #e5e7eb);
+}
+
+/* Size variants */
+.api-table--sm th,
+.api-table--sm td {
+  padding: 8px 12px;
+  font-size: 0.875rem;
+}
+
+.api-table--lg th,
+.api-table--lg td {
+  padding: 16px 20px;
+  font-size: 1.125rem;
+}
+
+/* Row variants */
+.api-table__row--hover:hover {
+  background-color: var(--lyd-color-surface-hover, #f1f5f9);
+}
+
+.api-table__row--selected {
+  background-color: var(--lyd-color-brand-subtle, #dbeafe);
+}
+
+/* Cell variants */
+.api-table__cell--numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.api-table__cell--action {
+  text-align: center;
+  width: 1%;
+  white-space: nowrap;
+}
+

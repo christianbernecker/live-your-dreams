@@ -1,5 +1,6 @@
 'use client'
 
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -10,6 +11,7 @@ interface NavigationItem {
   icon: React.ReactNode
   badge?: string | number
   isActive?: boolean
+  adminOnly?: boolean
 }
 
 const navigationItems: NavigationItem[] = [
@@ -72,6 +74,18 @@ const navigationItems: NavigationItem[] = [
     )
   },
   {
+    name: 'Admin',
+    href: '/admin',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <circle cx="12" cy="11" r="2"/>
+        <path d="M12 7v4l2 2"/>
+      </svg>
+    ),
+    adminOnly: true
+  },
+  {
     name: 'Einstellungen',
     href: '/dashboard/settings',
     icon: (
@@ -85,6 +99,19 @@ const navigationItems: NavigationItem[] = [
 
 export function SidebarNavigation() {
   const pathname = usePathname()
+  const { data: session } = useSession()
+  
+  // Check if user has admin permissions
+  const isAdmin = session?.user?.permissions?.includes('users.read') && 
+                  session?.user?.permissions?.includes('roles.read')
+  
+  // Filter navigation items based on admin permissions
+  const visibleNavigationItems = navigationItems.filter(item => {
+    if (item.adminOnly) {
+      return isAdmin
+    }
+    return true
+  })
 
   return (
     <nav style={{
@@ -145,7 +172,7 @@ export function SidebarNavigation() {
         flexDirection: 'column',
         gap: 'var(--spacing-xs)'
       }}>
-        {navigationItems.map((item) => {
+        {visibleNavigationItems.map((item) => {
           const isActive = pathname === item.href
           
           return (
