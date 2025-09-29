@@ -372,12 +372,7 @@ export async function PATCH(
     console.error('❌ Error Details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
-      userId: params.id,
-      requestData: {
-        name: name || 'undefined',
-        roleIds: roleIds || 'undefined',
-        isActive: isActive || 'undefined'
-      }
+      userId: params.id
     });
     
     if (error instanceof Response) {
