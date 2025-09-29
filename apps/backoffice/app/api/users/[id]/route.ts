@@ -267,7 +267,7 @@ export async function PATCH(
       }
 
       // Return updated user with roles
-      return await tx.user.findUnique({
+      const finalUser = await tx.user.findUnique({
         where: { id: params.id },
         include: {
           roles: {
@@ -277,6 +277,12 @@ export async function PATCH(
           }
         }
       });
+
+      if (!finalUser) {
+        throw new Error('User not found after update');
+      }
+
+      return finalUser;
     });
 
     // Determine what changed for audit
