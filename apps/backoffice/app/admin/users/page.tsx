@@ -352,26 +352,7 @@ export default function UserManagementPage() {
                     </div>
                   </td>
                   <td>
-                    <span 
-                      style={{
-                        // Design System Badge: CSS Custom Properties statt hardcoded colors
-                        backgroundColor: user.emailVerified ? 'var(--lyd-success, #10b981)' : 'var(--lyd-secondary-bg, #e2e8f0)', 
-                        color: user.emailVerified ? 'var(--lyd-success-contrast, white)' : 'var(--lyd-secondary-text, #64748b)',
-                        padding: '2px 8px',
-                        borderRadius: '4px',
-                        fontSize: '11px',
-                        fontWeight: '600',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.025em',
-                        display: 'inline-block',
-                        minWidth: 'auto',
-                        textAlign: 'center',
-                        border: 'none',
-                        boxShadow: 'none',
-                        lineHeight: '1.25',
-                        fontFamily: 'system-ui, -apple-system, sans-serif'
-                      }}
-                    >
+                    <span className={`lyd-badge ${user.emailVerified ? 'success' : 'secondary'}`}>
                       {user.emailVerified ? 'AKTIV' : 'INAKTIV'}
                     </span>
                   </td>
