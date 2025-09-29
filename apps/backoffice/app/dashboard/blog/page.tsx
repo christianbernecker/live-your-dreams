@@ -9,6 +9,9 @@
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // ============================================================================
 // MICRO TYPES (inline, minimal)
@@ -40,6 +43,7 @@ interface BlogStats {
 
 export default function BlogDashboard() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [blogData, setBlogData] = useState<{posts: BlogPost[], stats: BlogStats} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,11 +83,13 @@ export default function BlogDashboard() {
 
   if (!session) {
     return (
-      <div className="lyd-card">
-        <div className="lyd-card-body">
-          <p>Authentifizierung erforderlich</p>
+      <DashboardLayout title="Blog System" userEmail={undefined}>
+        <div className="lyd-card">
+          <div className="lyd-card-body">
+            <p>Authentifizierung erforderlich</p>
+          </div>
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
@@ -92,7 +98,12 @@ export default function BlogDashboard() {
   // ============================================================================
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+    <DashboardLayout 
+      title="Blog System" 
+      subtitle="Multi-Platform Content Management (WOHNEN, MAKLER, ENERGIE)"
+      userEmail={session.user?.email ?? undefined}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       
       {/* Header */}
       <div className="lyd-card">
@@ -112,8 +123,11 @@ export default function BlogDashboard() {
       {/* Statistics */}
       {blogData && (
         <div className="lyd-card">
-          <div className="lyd-card-header">
-            <h2 className="lyd-heading-2">Statistiken</h2>
+          <div className="lyd-card-header" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <h2 className="lyd-heading-2" style={{ margin: 0 }}>Statistiken</h2>
           </div>
           <div className="lyd-card-body">
             <div style={{ 
@@ -241,11 +255,15 @@ export default function BlogDashboard() {
       {blogData && blogData.posts.length === 0 && (
         <div className="lyd-card">
           <div className="lyd-card-body" style={{ textAlign: 'center', padding: 'var(--spacing-xl)' }}>
-            <div style={{ marginBottom: 'var(--spacing-md)' }}>
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--lyd-gray-400)' }}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-              </svg>
-            </div>
+          <div style={{ marginBottom: 'var(--spacing-md)' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--lyd-gray-400)', display: 'block', margin: '0 auto' }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10,9 9,9 8,9" />
+            </svg>
+          </div>
             <h3>Keine Blog-Artikel</h3>
             <p style={{ color: 'var(--lyd-gray-500)', marginBottom: 'var(--spacing-md)' }}>
               Das Blog-System ist bereit, aber es sind noch keine Artikel vorhanden.
@@ -260,28 +278,35 @@ export default function BlogDashboard() {
         </div>
       )}
 
-      {/* Development Info */}
+      {/* Quick Actions */}
       <div className="lyd-card">
         <div className="lyd-card-header">
-          <h2 className="lyd-heading-2">Entwicklungsstatus</h2>
+          <h2 className="lyd-heading-2">Schnellaktionen</h2>
         </div>
-        <div className="lyd-card-body">
-          <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-600)' }}>
-            <div style={{ marginBottom: '8px' }}>
-              <strong>Micro-Steps Completed:</strong>
-            </div>
-            <ul style={{ margin: 0, paddingLeft: '20px' }}>
-              <li>✅ Prisma BlogPost Schema</li>
-              <li>✅ Basic API Route (/api/blog)</li>
-              <li>✅ TypeScript Types (native)</li>
-              <li>✅ Minimal Blog UI (aktuell)</li>
-              <li>⏳ HTML Sanitizer (next)</li>
-              <li>⏳ JSON Import (after sanitizer)</li>
-              <li>⏳ Enhanced UI (final)</li>
-            </ul>
-          </div>
+        <div className="lyd-card-body" style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
+          <button
+            className="lyd-button primary"
+            onClick={() => router.push('/dashboard/blog/import')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            Artikel importieren
+          </button>
+          <button
+            className="lyd-button secondary"
+            onClick={() => alert('Edit-Feature wird in nächsten Micro-Steps aktiviert')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            Artikel erstellen
+          </button>
         </div>
       </div>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

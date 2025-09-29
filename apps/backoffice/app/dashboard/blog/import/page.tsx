@@ -10,6 +10,10 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { SERPPreview } from '@/components/blog/SERPPreview';
+import { OpenGraphPreview } from '@/components/blog/OpenGraphPreview';
+import { CopyPromptPanel } from '@/components/blog/CopyPromptPanel';
 
 // ============================================================================
 // MICRO COMPONENT
@@ -81,7 +85,7 @@ export default function BlogImportPage() {
         throw new Error(result.error || 'Import failed');
       }
 
-      setResult(`✅ Artikel "${result.blogPost.title}" erfolgreich als ${result.blogPost.status} erstellt`);
+      setResult(`Artikel "${result.blogPost.title}" erfolgreich als ${result.blogPost.status} erstellt`);
       
       // Redirect after success
       setTimeout(() => {
@@ -101,11 +105,13 @@ export default function BlogImportPage() {
 
   if (!session) {
     return (
-      <div className="lyd-card">
-        <div className="lyd-card-body">
-          <p>Authentifizierung erforderlich</p>
+      <DashboardLayout title="Blog Import" userEmail={undefined}>
+        <div className="lyd-card">
+          <div className="lyd-card-body">
+            <p>Authentifizierung erforderlich</p>
+          </div>
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
@@ -114,20 +120,25 @@ export default function BlogImportPage() {
   // ============================================================================
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+    <DashboardLayout 
+      title="Blog Import" 
+      subtitle="JSON v1.1 Import von KI-Agenten"
+      userEmail={session.user?.email ?? undefined}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       
-      {/* Header */}
+      {/* Header Actions */}
       <div className="lyd-card">
-        <div className="lyd-card-header">
-          <h1 className="lyd-heading-1">Blog Import</h1>
-          <p className="lyd-text-secondary">JSON v1.1 Import von KI-Agenten (MICRO Implementation)</p>
-        </div>
         <div className="lyd-card-body">
           <button
             className="lyd-button secondary"
             onClick={() => router.push('/dashboard/blog')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
           >
-            ← Zurück zur Übersicht
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Zurück zur Übersicht
           </button>
         </div>
       </div>
@@ -170,50 +181,69 @@ export default function BlogImportPage() {
         </div>
       </div>
 
+      {/* Copy Prompt Panel - Always visible */}
+      <CopyPromptPanel platform="WOHNEN" />
+
       {/* Import Preview */}
       {importData && (
-        <div className="lyd-card">
-          <div className="lyd-card-header">
-            <h2 className="lyd-heading-2">2. Import Vorschau</h2>
-          </div>
-          <div className="lyd-card-body">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)' }}>
-              <div>
-                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Content</h3>
-                <div style={{ fontSize: '0.875rem' }}>
-                  <div><strong>Titel:</strong> {importData.content?.title || 'N/A'}</div>
-                  <div><strong>Slug:</strong> /{importData.content?.slug || 'N/A'}</div>
-                  <div><strong>Kategorie:</strong> {importData.content?.category || 'N/A'}</div>
-                  <div><strong>Format:</strong> {importData.content?.format || 'mdx'}</div>
-                </div>
-              </div>
-              <div>
-                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Plattformen</h3>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {(importData.content?.platforms || []).map((platform: string) => (
-                    <span key={platform} className="lyd-badge secondary">
-                      {platform}
-                    </span>
-                  ))}
-                </div>
-              </div>
+        <>
+          <div className="lyd-card">
+            <div className="lyd-card-header">
+              <h2 className="lyd-heading-2">2. Import Vorschau</h2>
             </div>
-            
-            {importData.content?.excerpt && (
-              <div style={{ marginTop: 'var(--spacing-md)' }}>
-                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Zusammenfassung</h3>
-                <div style={{ 
-                  padding: 'var(--spacing-md)',
-                  background: 'var(--lyd-bg-secondary)',
-                  borderRadius: 'var(--border-radius-md)',
-                  fontSize: '0.875rem'
-                }}>
-                  {importData.content.excerpt}
+            <div className="lyd-card-body">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)' }}>
+                <div>
+                  <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Content</h3>
+                  <div style={{ fontSize: '0.875rem' }}>
+                    <div><strong>Titel:</strong> {importData.content?.title || 'N/A'}</div>
+                    <div><strong>Slug:</strong> /{importData.content?.slug || 'N/A'}</div>
+                    <div><strong>Kategorie:</strong> {importData.content?.category || 'N/A'}</div>
+                    <div><strong>Format:</strong> {importData.content?.format || 'mdx'}</div>
+                  </div>
+                </div>
+                <div>
+                  <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Plattformen</h3>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {(importData.content?.platforms || []).map((platform: string) => (
+                      <span key={platform} className="lyd-badge secondary">
+                        {platform}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            )}
+              
+              {importData.content?.excerpt && (
+                <div style={{ marginTop: 'var(--spacing-md)' }}>
+                  <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Zusammenfassung</h3>
+                  <div style={{ 
+                    padding: 'var(--spacing-md)',
+                    background: 'var(--lyd-bg-secondary)',
+                    borderRadius: 'var(--border-radius-md)',
+                    fontSize: '0.875rem'
+                  }}>
+                    {importData.content.excerpt}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+
+          {/* SEO Previews */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--spacing-lg)' }}>
+            <SERPPreview
+              title={importData.content?.seo?.metaTitle || importData.content?.title || ''}
+              slug={importData.content?.slug || ''}
+              description={importData.content?.seo?.metaDescription || importData.content?.excerpt || ''}
+            />
+            <OpenGraphPreview
+              title={importData.content?.seo?.og?.title || importData.content?.title || ''}
+              description={importData.content?.seo?.og?.description || importData.content?.excerpt || ''}
+              image={importData.content?.seo?.og?.image || importData.content?.featuredImage?.src}
+            />
+          </div>
+        </>
       )}
 
       {/* Import Action */}
@@ -273,6 +303,7 @@ export default function BlogImportPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

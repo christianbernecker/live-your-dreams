@@ -22,16 +22,48 @@ export async function GET() {
     }
 
     // Simple Permission
-    if (session.user.email !== 'admin@liveyourdreams.online') {
-      return NextResponse.json({ error: 'Admin only' }, { status: 403 });
+    if (session.user.email !== 'admin@liveyourdreams.online' && 
+        session.user.role !== 'admin' && 
+        session.user.role !== 'editor') {
+      return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    // Test Database Connection
-    const count = await prisma.blogPost.count();
+    // Fetch blog posts with author information
+    const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50, // Limit to latest 50 posts
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
+
+    // Calculate statistics
+    const stats = {
+      total: await prisma.blogPost.count(),
+      published: await prisma.blogPost.count({ where: { status: 'PUBLISHED' } }),
+      draft: await prisma.blogPost.count({ where: { status: 'DRAFT' } }),
+      review: await prisma.blogPost.count({ where: { status: 'REVIEW' } }),
+      scheduled: await prisma.blogPost.count({ where: { status: 'SCHEDULED' } })
+    };
     
     return NextResponse.json({
-      status: 'Blog API v1.1 online',
-      count,
+      posts: posts.map(post => ({
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        status: post.status,
+        platforms: post.platforms,
+        category: post.category,
+        createdAt: post.createdAt.toISOString(),
+        author: post.author
+      })),
+      stats,
       timestamp: new Date().toISOString()
     });
 
