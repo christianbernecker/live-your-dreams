@@ -219,17 +219,61 @@ export default function UserManagementPage() {
         alert('Fehler: Sie haben keine Berechtigung für die Benutzerverwaltung. Bitte kontaktieren Sie einen Administrator.');
         setUsers([]);
       } else {
-        // Andere API-Fehler
-        console.error('❌ API Error:', response.status, await response.text());
-        alert('Fehler beim Laden der Benutzer. Bitte versuchen Sie es später erneut.');
-        setUsers([]);
+        // API-Fehler mit Fallback zu Demo-Daten
+        console.error('❌ API Error:', response.status);
+        console.log('🔄 Falling back to demo data for debugging...');
+        
+        // TEMPORARY FALLBACK für Debugging
+        const demoUsers: User[] = [
+          {
+            id: 'demo-1',
+            name: 'System Administrator',
+            email: 'admin@liveyourdreams.online',
+            isActive: true,
+            emailVerified: true,
+            roles: [{ id: '1', name: 'admin', displayName: 'Administrator' }]
+          },
+          {
+            id: 'demo-2',
+            name: 'Demo User',
+            email: 'demo@liveyourdreams.online',
+            isActive: true,
+            emailVerified: true,
+            roles: [{ id: '2', name: 'editor', displayName: 'Editor' }]
+          }
+        ];
+        
+        setUsers(demoUsers);
+        alert('⚠️ API nicht verfügbar - Demo-Daten geladen. Bitte prüfen Sie die Server-Logs.');
       }
       
       setLoading(false);
     } catch (error) {
       console.error('❌ Network/API Error:', error);
-      alert('Netzwerkfehler beim Laden der Benutzer. Prüfen Sie Ihre Internetverbindung.');
-      setUsers([]);
+      console.log('🔄 Loading demo data due to network error...');
+      
+      // FALLBACK zu Demo-Daten bei Netzwerk-Fehlern
+      const demoUsers: User[] = [
+        {
+          id: 'demo-1',
+          name: 'System Administrator',
+          email: 'admin@liveyourdreams.online',
+          isActive: true,
+          emailVerified: true,
+          roles: [{ id: '1', name: 'admin', displayName: 'Administrator' }]
+        },
+        {
+          id: 'demo-2',
+          name: 'Demo User',
+          email: 'demo@liveyourdreams.online',
+          isActive: true,
+          emailVerified: true,
+          roles: [{ id: '2', name: 'editor', displayName: 'Editor' }]
+        }
+      ];
+      
+      setUsers(demoUsers);
+      alert('⚠️ Netzwerkfehler - Demo-Daten geladen. Prüfen Sie Ihre Internetverbindung und Server-Status.');
       setLoading(false);
     }
   }, []);
