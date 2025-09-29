@@ -118,66 +118,12 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      {/* Quick Stats - NUR BENUTZER & ROLLEN (2 Cards) */}
-      <div className="lyd-card">
-        <div className="lyd-card-header">
-          <h2 className="lyd-heading-2">System-Übersicht</h2>
-        </div>
-        <div className="lyd-card-body">
-          <div 
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: 'var(--spacing-lg, 24px)'
-            }}
-          >
-            <div className="lyd-card">
-              <div className="lyd-card-body" style={{ textAlign: 'center', padding: 'var(--spacing-lg, 24px)' }}>
-                <div style={{ marginBottom: 'var(--spacing-sm, 8px)', color: 'var(--lyd-primary)' }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                </div>
-                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)', color: 'var(--lyd-text)', marginBottom: 'var(--spacing-xs, 4px)' }}>
-                  {stats.activeUsers}
-                </div>
-                <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--lyd-grey)' }}>
-                  Aktive Benutzer
-                </div>
-              </div>
-            </div>
-            
-            <div className="lyd-card">
-              <div className="lyd-card-body" style={{ textAlign: 'center', padding: 'var(--spacing-lg, 24px)' }}>
-                <div style={{ marginBottom: 'var(--spacing-sm, 8px)', color: 'var(--lyd-secondary)' }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <circle cx="12" cy="16" r="1"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                  </svg>
-                </div>
-                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)', color: 'var(--lyd-text)', marginBottom: 'var(--spacing-xs, 4px)' }}>
-                  {stats.totalRoles}
-                </div>
-                <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--lyd-grey)' }}>
-                  Rollen
-                </div>
-              </div>
-            </div>
-            
-            {/* INHALTE & EVENTS TEMPORÄR AUSGEBLENDET - NUR FOCUS AUF USER & ROLES */}
-          </div>
-        </div>
-      </div>
 
       {/* Admin Bereiche - DIREKTER ZUGRIFF ÜBER TAB-NAVIGATION OBEN */}
       <div className="lyd-card">
         <div className="lyd-card-header">
-          <h2 className="lyd-heading-2">Willkommen im Admin-Bereich</h2>
-          <p className="lyd-text-secondary">Verwenden Sie die Tab-Navigation oben, um zwischen den Bereichen zu wechseln</p>
+          <h2 className="lyd-heading-2">Admin-Dashboard</h2>
+          <p className="lyd-text-secondary">Zentrale Steuerung für Benutzer, Rollen und Systemkonfiguration</p>
         </div>
         <div className="lyd-card-body">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-lg, 24px)' }}>
