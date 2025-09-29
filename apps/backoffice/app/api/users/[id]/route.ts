@@ -373,7 +373,11 @@ export async function PATCH(
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       userId: params.id,
-      requestBody: body
+      requestData: {
+        name: name || 'undefined',
+        roleIds: roleIds || 'undefined',
+        isActive: isActive || 'undefined'
+      }
     });
     
     if (error instanceof Response) {
