@@ -235,13 +235,27 @@ export default function UserManagementPage() {
   }, []);
 
   const fetchRoles = useCallback(async () => {
-    const demoRoles: Role[] = [
+    try {
+      // Try API first
+      const response = await fetch('/api/roles');
+      if (response.ok) {
+        const data = await response.json();
+        setRoles(data.roles || []);
+        console.log('✅ Roles loaded from API:', data.roles?.length || 0);
+        return;
+      }
+    } catch (error) {
+      console.log('❌ Roles API not available, using fallback');
+    }
+    
+    // Fallback roles for new installs or API issues
+    const fallbackRoles: Role[] = [
       { id: '1', name: 'admin', displayName: 'Administrator' },
       { id: '2', name: 'editor', displayName: 'Editor' },
       { id: '3', name: 'author', displayName: 'Autor' },
       { id: '4', name: 'viewer', displayName: 'Betrachter' }
     ];
-    setRoles(demoRoles);
+    setRoles(fallbackRoles);
   }, []);
 
   useEffect(() => {
