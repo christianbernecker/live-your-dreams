@@ -68,6 +68,9 @@ interface ValidationResult {
   securityIssues?: string[];
   recommendations?: string[];
   summary?: {
+    totalWarnings: number;
+    totalSecurityIssues: number;
+    totalRecommendations: number;
     readyForImport: boolean;
     confidence: 'low' | 'medium' | 'high';
   };

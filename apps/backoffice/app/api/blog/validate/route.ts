@@ -6,9 +6,9 @@
  * No persistence, only validation and preview
  */
 
-import { extractAssetMetadata } from '@/lib/blog/asset-manager';
+import { extractAssetMetadata } from '@/lib/blog/asset-manager-simple';
 import { getValidationErrors, IMPORT_LIMITS, validateImport } from '@/lib/blog/import-schema';
-import { sanitizeHtmlContent, validateHtmlBlock } from '@/lib/blog/sanitizer';
+import { sanitizeHtmlContent, validateHtmlBlock } from '@/lib/blog/sanitizer-simple';
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
 import { NextRequest, NextResponse } from 'next/server';

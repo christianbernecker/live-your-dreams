@@ -7,9 +7,9 @@
  */
 
 import { auditLog } from '@/lib/audit';
-import { uploadAssets } from '@/lib/blog/asset-manager';
+import { uploadAssets } from '@/lib/blog/asset-manager-simple';
 import { getValidationErrors, IMPORT_LIMITS, validateImport } from '@/lib/blog/import-schema';
-import { sanitizeHtmlContent } from '@/lib/blog/sanitizer';
+import { sanitizeHtmlContent } from '@/lib/blog/sanitizer-simple';
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
 import { NextRequest, NextResponse } from 'next/server';
