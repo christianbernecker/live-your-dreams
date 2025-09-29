@@ -305,12 +305,13 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Blog import error:', error);
 
-    // Audit failed import
+    // Audit failed import (session might be undefined in catch)
     try {
-      if (session?.user?.id) {
+      const currentSession = await auth();
+      if (currentSession?.user?.id) {
         await auditLog({
           type: 'BLOG_IMPORT_ERROR',
-          actorUserId: session.user.id,
+          actorUserId: currentSession.user.id,
           meta: { 
             error: error instanceof Error ? error.message : 'Unknown error'
           }
