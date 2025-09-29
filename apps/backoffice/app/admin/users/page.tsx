@@ -905,7 +905,7 @@ function UserForm({ user, roles, onSubmit, onCancel }: UserFormProps) {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     isActive: user?.isActive ?? true,
-    roleIds: user?.roles.map(r => r.id) || []
+    // roleIds: user?.roles.map(r => r.id) || [] // Not used in demo mode
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
