@@ -40,7 +40,7 @@ interface Permission {
 }
 
 export default function RoleManagementPage() {
-  const { showToast } = useToast();
+  const { showSuccess, showError, showWarning } = useToast();
   
   const [roles, setRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<Record<string, Permission[]>>({});
