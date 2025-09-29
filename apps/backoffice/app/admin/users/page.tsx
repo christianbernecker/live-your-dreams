@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Toast, useToast } from '@/components/ui/Toast';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 // ============================================================================
 // TYPES
@@ -58,13 +59,19 @@ interface CustomSelectProps {
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholder, options }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [buttonRef, setButtonRef] = useState<HTMLButtonElement | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   
   const selectedOption = options.find(option => option.value === value);
   
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      if (isOpen && !target.closest('.lyd-custom-select-container')) {
+      if (isOpen && !target.closest('.lyd-custom-select-container') && !target.closest('.lyd-portal-dropdown')) {
         setIsOpen(false);
       }
     };
@@ -72,10 +79,23 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
+
+  // Calculate dropdown position
+  const getDropdownPosition = () => {
+    if (!buttonRef) return { top: 0, left: 0, width: 200 };
+    
+    const rect = buttonRef.getBoundingClientRect();
+    return {
+      top: rect.bottom + 4,
+      left: rect.left,
+      width: rect.width
+    };
+  };
   
   return (
     <div className="lyd-custom-select-container" style={{ position: 'relative', width: '100%' }}>
       <button
+        ref={setButtonRef}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="lyd-custom-select-trigger"
@@ -120,22 +140,22 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
         </svg>
       </button>
       
-      {isOpen && (
+      {isOpen && isMounted && createPortal(
         <div
-          className="lyd-custom-select-dropdown"
+          className="lyd-portal-dropdown"
           style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
+            position: 'fixed',
+            top: getDropdownPosition().top,
+            left: getDropdownPosition().left,
+            width: getDropdownPosition().width,
             backgroundColor: 'white',
             border: '1px solid var(--lyd-border, #d1d5db)',
             borderRadius: '6px',
-            marginTop: '4px',
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
-            zIndex: 99999, // FIXED: MAXIMUM Z-INDEX FOR DROPDOWN VISIBILITY
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)',
+            zIndex: 999999, // PORTAL-BASED - GUARANTEED HIGHEST Z-INDEX
             maxHeight: '200px',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            minWidth: '150px'
           }}
         >
           {options.map((option) => (
@@ -159,11 +179,18 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
                 display: 'block',
                 outline: 'none'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--lyd-gray-50, #f9fafb)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = value === option.value ? 'var(--lyd-primary-50, #eff6ff)' : 'white';
+              }}
             >
               {option.label}
             </button>
           ))}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
