@@ -93,6 +93,7 @@ export async function GET(
       locale: user.locale,
       isActive: user.isActive,
       isVerified: user.isVerified,
+      emailVerified: user.isVerified, // Frontend compatibility alias
       lastLoginAt: user.lastLoginAt,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,

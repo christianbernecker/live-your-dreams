@@ -116,6 +116,7 @@ export async function GET(request: NextRequest) {
       image: user.image,
       isActive: user.isActive,
       isVerified: user.isVerified,
+      emailVerified: user.isVerified, // Frontend compatibility alias
       lastLoginAt: user.lastLoginAt,
       createdAt: user.createdAt,
       roles: user.roles.map(ur => ({
@@ -293,6 +294,7 @@ export async function POST(request: NextRequest) {
         lastName: user.lastName,
         isActive: user.isActive,
         isVerified: user.isVerified,
+        emailVerified: user.isVerified, // Frontend compatibility alias
         createdAt: user.createdAt,
         roles: user.roles.map(ur => ur.role)
       }

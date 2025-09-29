@@ -762,7 +762,7 @@ export default function AdminUsersPage() {
         firstName: userData.firstName || '',
         lastName: userData.lastName || '',
         isActive: userData.isActive,
-        emailVerified: userData.isActive, // Set verified if active
+        isVerified: userData.isActive, // API expects isVerified, not emailVerified
         roleIds: userData.roleIds || []
       };
       
@@ -856,7 +856,7 @@ export default function AdminUsersPage() {
         user.roles.some(role => role.name === roleFilter);
       
       const matchesStatus = !statusFilter || 
-        (statusFilter === 'true' ? user.emailVerified : !user.emailVerified);
+        (statusFilter === 'true' ? user.isActive : !user.isActive);
       
       return matchesSearch && matchesRole && matchesStatus;
     });
@@ -1056,8 +1056,8 @@ export default function AdminUsersPage() {
                     </div>
                   </td>
                   <td>
-                    <span className={`lyd-badge ${user.emailVerified ? 'success' : 'secondary'}`}>
-                      {user.emailVerified ? 'AKTIV' : 'INAKTIV'}
+                    <span className={`lyd-badge ${user.isActive ? 'success' : 'secondary'}`}>
+                      {user.isActive ? 'AKTIV' : 'INAKTIV'}
                     </span>
                   </td>
                   <td>
