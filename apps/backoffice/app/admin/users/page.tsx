@@ -201,46 +201,35 @@ export default function UserManagementPage() {
     try {
       setLoading(true);
       
-      // Demo Users für sofortige Anzeige
-      const demoUsers: User[] = [
-        {
-          id: '1',
-          name: 'System Administrator',
-          email: 'admin@liveyourdreams.online',
-          isActive: true,
-          emailVerified: true,
-          roles: [{ id: '1', name: 'admin', displayName: 'Administrator' }]
-        },
-        {
-          id: '2',
-          name: 'Content Editor',
-          email: 'editor@liveyourdreams.online',
-          isActive: true,
-          emailVerified: true,
-          roles: [{ id: '2', name: 'editor', displayName: 'Editor' }]
-        },
-        {
-          id: '3',
-          name: 'Content Author',
-          email: 'author@liveyourdreams.online',
-          isActive: true,
-          emailVerified: false,
-          roles: [{ id: '3', name: 'author', displayName: 'Autor' }]
-        },
-        {
-          id: '4',
-          name: 'Content Viewer',
-          email: 'viewer@liveyourdreams.online',
-          isActive: false,
-          emailVerified: false,
-          roles: [{ id: '4', name: 'viewer', displayName: 'Betrachter' }]
-        }
-      ];
+      // API-FIRST: Versuche echte API-Daten zu laden
+      const response = await fetch('/api/users');
       
-      setUsers(demoUsers);
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data.users || []);
+        console.log('✅ Users loaded from API:', data.users?.length || 0);
+      } else if (response.status === 401) {
+        // Authentication erforderlich
+        console.log('🔐 Authentication required - redirecting to login');
+        window.location.href = '/api/auth/signin';
+        return;
+      } else if (response.status === 403) {
+        // Permissions fehlen
+        console.log('⛔ Insufficient permissions for user management');
+        alert('Fehler: Sie haben keine Berechtigung für die Benutzerverwaltung. Bitte kontaktieren Sie einen Administrator.');
+        setUsers([]);
+      } else {
+        // Andere API-Fehler
+        console.error('❌ API Error:', response.status, await response.text());
+        alert('Fehler beim Laden der Benutzer. Bitte versuchen Sie es später erneut.');
+        setUsers([]);
+      }
+      
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('❌ Network/API Error:', error);
+      alert('Netzwerkfehler beim Laden der Benutzer. Prüfen Sie Ihre Internetverbindung.');
+      setUsers([]);
       setLoading(false);
     }
   }, []);
