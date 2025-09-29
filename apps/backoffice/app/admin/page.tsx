@@ -4,11 +4,11 @@
  * Provides overview of admin functions and system status
  */
 
+import AdminTabs from '@/components/admin/AdminTabs';
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
 import { hasPermission } from '@/lib/permissions';
 import Link from 'next/link';
-import AdminTabs from '@/components/admin/AdminTabs';
 
 
 interface AdminStats {
