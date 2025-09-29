@@ -19,16 +19,15 @@ export const runtime = 'nodejs';
 
 export async function GET() {
   try {
-    // Auth Check
+    // Auth Check (consistent with /api/users)
     const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Auth required' }, { status: 401 });
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
-    // Simple Permission
-    if (session.user.email !== 'admin@liveyourdreams.online' && 
-        session.user.role !== 'admin' && 
-        session.user.role !== 'editor') {
+    // Simple Permission (consistent with /api/users)
+    const userRole = (session.user as any).role || 'viewer';
+    if (!['admin', 'editor'].includes(userRole)) {
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
