@@ -98,14 +98,16 @@ const ALLOWED_IFRAME_DOMAINS = [
 // SANITIZATION CONFIGURATION
 // ============================================================================
 
-interface SanitizationResult {
-  success: true;
-  content: string;
-  warnings?: string[];
-} | {
-  success: false;
-  errors: string[];
-}
+type SanitizationResult = 
+  | {
+      success: true;
+      content: string;
+      warnings?: string[];
+    }
+  | {
+      success: false;
+      errors: string[];
+    }
 
 interface SanitizationOptions {
   allowIframes?: boolean;

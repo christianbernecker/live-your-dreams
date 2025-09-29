@@ -29,15 +29,17 @@ const CDN_BASE_URL = process.env.CDN_BASE_URL || `https://${S3_BUCKET}.s3.eu-cen
 // ASSET PROCESSING TYPES
 // ============================================================================
 
-interface AssetUploadResult {
-  success: true;
-  assetUrls: Record<string, string>; // asset name -> final URL
-  uploadedCount: number;
-  warnings?: string[];
-} | {
-  success: false;
-  errors: string[];
-}
+type AssetUploadResult = 
+  | {
+      success: true;
+      assetUrls: Record<string, string>; // asset name -> final URL
+      uploadedCount: number;
+      warnings?: string[];
+    }
+  | {
+      success: false;
+      errors: string[];
+    }
 
 interface ProcessedAsset {
   name: string;
