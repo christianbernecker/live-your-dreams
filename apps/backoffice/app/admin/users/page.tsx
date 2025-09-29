@@ -354,9 +354,9 @@ export default function UserManagementPage() {
                   <td>
                     <span 
                       style={{
-                        // Exakte Design System Badge Spezifikation
-                        backgroundColor: user.emailVerified ? '#10b981' : '#e2e8f0', 
-                        color: user.emailVerified ? 'white' : '#64748b',
+                        // Design System Badge: CSS Custom Properties statt hardcoded colors
+                        backgroundColor: user.emailVerified ? 'var(--lyd-success, #10b981)' : 'var(--lyd-secondary-bg, #e2e8f0)', 
+                        color: user.emailVerified ? 'var(--lyd-success-contrast, white)' : 'var(--lyd-secondary-text, #64748b)',
                         padding: '2px 8px',
                         borderRadius: '4px',
                         fontSize: '11px',
