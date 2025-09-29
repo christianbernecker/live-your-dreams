@@ -2468,19 +2468,19 @@ body.modal-open {
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
-/* Checkmark Icon - DESIGN SYSTEM EXACT SPECS - KORREKTE GRÖßE */
+/* Checkmark Icon - DESIGN SYSTEM EXACT SPECS - OPTIMALE GRÖßE MIT PADDING */
 .lyd-checkbox-checkmark {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     opacity: 0;
     transition: all 0.2s ease;
     fill: none;
     stroke: white !important;
-    stroke-width: 3 !important;
+    stroke-width: 2.5 !important;
     stroke-linecap: round !important;
     stroke-linejoin: round !important;
 }
@@ -2513,9 +2513,9 @@ body.modal-open {
 }
 
 .lyd-checkbox-group.small .lyd-checkbox-checkmark {
-    width: 10px !important;
-    height: 10px !important;
-    stroke-width: 2.5 !important;
+    width: 8px !important;
+    height: 8px !important;
+    stroke-width: 2 !important;
 }
 
 .lyd-checkbox-group.large .lyd-checkbox {
@@ -2524,9 +2524,9 @@ body.modal-open {
 }
 
 .lyd-checkbox-group.large .lyd-checkbox-checkmark {
-    width: 16px !important;
-    height: 16px !important;
-    stroke-width: 3.5 !important;
+    width: 12px !important;
+    height: 12px !important;
+    stroke-width: 3 !important;
 }
 
 /* Error State */
@@ -2543,7 +2543,7 @@ body.modal-open {
 .lyd-modal-backdrop .lyd-checkbox-checkmark,
 .lyd-modal-content .lyd-checkbox-checkmark {
     stroke: white !important;
-    stroke-width: 3 !important;
+    stroke-width: 2.5 !important;
     stroke-linecap: round !important;
     stroke-linejoin: round !important;
     fill: none !important;
@@ -2552,13 +2552,13 @@ body.modal-open {
 /* Modal Small Variant Override */
 .lyd-modal .lyd-checkbox-group.small .lyd-checkbox-checkmark,
 .lyd-modal-backdrop .lyd-checkbox-group.small .lyd-checkbox-checkmark {
-    stroke-width: 2.5 !important;
+    stroke-width: 2 !important;
 }
 
 /* Modal Large Variant Override */
 .lyd-modal .lyd-checkbox-group.large .lyd-checkbox-checkmark,
 .lyd-modal-backdrop .lyd-checkbox-group.large .lyd-checkbox-checkmark {
-    stroke-width: 3.5 !important;
+    stroke-width: 3 !important;
 }
 
 /* Success State for Active Users */
