@@ -2454,18 +2454,18 @@ body.modal-open {
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
-/* Checkmark Icon - WEIß WIE DESIGN SYSTEM */
+/* Checkmark Icon - WEIß UND 25% KLEINER */
 .lyd-checkbox-checkmark {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 12px;
-    height: 12px;
+    width: 9px;
+    height: 9px;
     opacity: 0;
     transition: all 0.2s ease;
     stroke: white !important;
-    stroke-width: 3 !important;
+    stroke-width: 2.5 !important;
     stroke-linecap: round !important;
     stroke-linejoin: round !important;
     fill: none !important;
