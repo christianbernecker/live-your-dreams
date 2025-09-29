@@ -291,7 +291,7 @@ export default function UserManagementPage() {
   // ============================================================================
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       {/* Page Header */}
       <div className="lyd-card">
         <div className="lyd-card-header">
