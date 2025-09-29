@@ -304,7 +304,6 @@ export default function UserManagementPage() {
     if (!selectedUser) return;
     
     try {
-      // Try API first
       const response = await fetch(`/api/users/${selectedUser.id}`, {
         method: 'DELETE',
       });
@@ -317,31 +316,30 @@ export default function UserManagementPage() {
         setShowDeleteModal(false);
         setSelectedUser(null);
         
-        console.log('User deleted successfully via API');
-        return;
+        alert('Benutzer erfolgreich gelöscht');
+        console.log('✅ User deleted successfully via API');
+      } else if (response.status === 401) {
+        alert('Session abgelaufen. Bitte loggen Sie sich erneut ein.');
+        window.location.href = '/api/auth/signin';
+      } else if (response.status === 403) {
+        alert('Sie haben keine Berechtigung zum Löschen von Benutzern.');
+      } else {
+        const errorData = await response.text();
+        console.error('❌ Delete API Error:', response.status, errorData);
+        alert('Fehler beim Löschen des Benutzers. Bitte versuchen Sie es erneut.');
       }
       
-      // API failed - DEMO MODE: Update local state
-      console.log('API not available, using demo mode for delete');
-      setUsers(prevUsers => prevUsers.filter(u => u.id !== selectedUser.id));
-      
-      // Close modal
+      // Close modal on any outcome
       setShowDeleteModal(false);
       setSelectedUser(null);
       
-      alert('Benutzer erfolgreich gelöscht (Demo-Modus)');
     } catch (error) {
-      console.error('Error deleting user:', error);
-      
-      // FALLBACK: Demo-mode delete
-      console.log('Fallback to demo mode delete');
-      setUsers(prevUsers => prevUsers.filter(u => u.id !== selectedUser.id));
+      console.error('❌ Network error deleting user:', error);
+      alert('Netzwerkfehler beim Löschen des Benutzers. Prüfen Sie Ihre Internetverbindung.');
       
       // Close modal
       setShowDeleteModal(false);
       setSelectedUser(null);
-      
-      alert('Benutzer erfolgreich gelöscht (Demo-Modus)');
     }
   };
 
@@ -350,7 +348,6 @@ export default function UserManagementPage() {
       const url = selectedUser ? `/api/users/${selectedUser.id}` : '/api/users';
       const method = selectedUser ? 'PATCH' : 'POST';
       
-      // Try API first
       const response = await fetch(url, {
         method,
         headers: {
@@ -368,77 +365,30 @@ export default function UserManagementPage() {
         setShowEditModal(false);
         setSelectedUser(null);
         
-        console.log(`User ${selectedUser ? 'updated' : 'created'} successfully via API`);
-        return;
-      }
-      
-      // API failed - DEMO MODE: Update local state
-      console.log('API not available, using demo mode');
-      
-      if (selectedUser) {
-        // UPDATE: Update existing user in local state
-        setUsers(prevUsers => 
-          prevUsers.map(user => 
-            user.id === selectedUser.id 
-              ? { ...user, ...userData, emailVerified: userData.isActive ?? user.emailVerified }
-              : user
-          )
-        );
-        alert('Benutzer erfolgreich bearbeitet (Demo-Modus)');
+        alert(`Benutzer erfolgreich ${selectedUser ? 'bearbeitet' : 'erstellt'}`);
+        console.log(`✅ User ${selectedUser ? 'updated' : 'created'} successfully via API`);
+      } else if (response.status === 401) {
+        alert('Session abgelaufen. Bitte loggen Sie sich erneut ein.');
+        window.location.href = '/api/auth/signin';
+      } else if (response.status === 403) {
+        alert('Sie haben keine Berechtigung zum Bearbeiten von Benutzern.');
+      } else if (response.status === 409) {
+        const errorData = await response.json();
+        alert(`Fehler: ${errorData.error || 'Benutzer mit dieser E-Mail existiert bereits'}`);
       } else {
-        // CREATE: Add new user to local state
-        const newUser: User = {
-          id: String(Date.now()), // Simple ID generation for demo
-          name: userData.name || '',
-          email: userData.email || '',
-          firstName: userData.firstName || '',
-          lastName: userData.lastName || '',
-          isActive: userData.isActive ?? true,
-          emailVerified: userData.isActive ?? true,
-          roles: [{ id: '4', name: 'viewer', displayName: 'Betrachter' }] // Default role for demo
-        };
-        
-        setUsers(prevUsers => [newUser, ...prevUsers]);
-        alert('Benutzer erfolgreich erstellt (Demo-Modus)');
+        const errorData = await response.text();
+        console.error(`❌ ${method} API Error:`, response.status, errorData);
+        alert(`Fehler beim ${selectedUser ? 'Bearbeiten' : 'Erstellen'} des Benutzers. Bitte versuchen Sie es erneut.`);
       }
       
-      // Close modals
+      // Close modals on any outcome
       setShowCreateModal(false);
       setShowEditModal(false);
       setSelectedUser(null);
       
     } catch (error) {
-      console.error(`Error ${selectedUser ? 'updating' : 'creating'} user:`, error);
-      
-      // FALLBACK: Demo-mode operation
-      console.log(`Fallback to demo mode ${selectedUser ? 'update' : 'create'}`);
-      
-      if (selectedUser) {
-        // UPDATE: Update existing user in local state
-        setUsers(prevUsers => 
-          prevUsers.map(user => 
-            user.id === selectedUser.id 
-              ? { ...user, ...userData, emailVerified: userData.isActive ?? user.emailVerified }
-              : user
-          )
-        );
-        alert('Benutzer erfolgreich bearbeitet (Demo-Modus)');
-      } else {
-        // CREATE: Add new user to local state
-        const newUser: User = {
-          id: String(Date.now()), // Simple ID generation for demo
-          name: userData.name || '',
-          email: userData.email || '',
-          firstName: userData.firstName || '',
-          lastName: userData.lastName || '',
-          isActive: userData.isActive ?? true,
-          emailVerified: userData.isActive ?? true,
-          roles: [{ id: '4', name: 'viewer', displayName: 'Betrachter' }] // Default role for demo
-        };
-        
-        setUsers(prevUsers => [newUser, ...prevUsers]);
-        alert('Benutzer erfolgreich erstellt (Demo-Modus)');
-      }
+      console.error(`❌ Network error ${selectedUser ? 'updating' : 'creating'} user:`, error);
+      alert(`Netzwerkfehler beim ${selectedUser ? 'Bearbeiten' : 'Erstellen'} des Benutzers. Prüfen Sie Ihre Internetverbindung.`);
       
       // Close modals
       setShowCreateModal(false);
