@@ -216,8 +216,11 @@ const UserForm: React.FC<UserFormProps> = ({ user, roles, onSubmit, onCancel, is
   });
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log('🔥 FORM SUBMIT TRIGGERED:', { formData, isEdit, userEmail: user?.email });
     e.preventDefault();
+    console.log('🎯 CALLING onSubmit with:', formData);
     onSubmit(formData);
+    console.log('✅ onSubmit CALLED');
   };
 
   const handleRoleToggle = (roleId: string) => {
@@ -723,6 +726,8 @@ export default function AdminUsersPage() {
   };
 
   const handleSubmitUser = async (userData: UserFormData) => {
+    console.log('🚀 SUBMIT USER TRIGGERED:', { userData, selectedUser, showEditModal, showCreateModal });
+    
     if (!userData.email || !userData.name) {
       showError('Validierungsfehler', 'E-Mail und Name sind erforderlich');
       return;
@@ -733,7 +738,7 @@ export default function AdminUsersPage() {
       const url = isEdit ? `/api/users/${selectedUser.id}` : '/api/users';
       const method = isEdit ? 'PATCH' : 'POST';
 
-      console.log('🔄 CRUD Operation:', { method, url, userData });
+      console.log('🔄 CRUD Operation:', { method, url, userData, isEdit, selectedUserId: selectedUser?.id });
 
       // Prepare data for API
       const apiData = {
