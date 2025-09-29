@@ -242,34 +242,63 @@ export default function UserManagementPage() {
               </div>
             </div>
             
-            {/* Role Filter */}
+            {/* Role Filter - Native Select für garantierte Funktionalität */}
             <div style={{ minWidth: '0' }}>
-              <InputLikeSelect
-                placeholder="Alle Rollen"
+              <select
                 value={roleFilter}
-                onChange={(value) => setRoleFilter(value)}
-                options={[
-                  { value: '', label: 'Alle Rollen' },
-                  ...roles.map(role => ({
-                    value: role.name,
-                    label: role.displayName
-                  }))
-                ]}
-              />
+                onChange={(e) => setRoleFilter(e.target.value)}
+                className="lyd-select-role-filter"
+                style={{
+                  width: '100%',
+                  height: '40px',
+                  padding: '8px 32px 8px 12px',
+                  border: '1px solid var(--lyd-border, #d1d5db)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  backgroundColor: 'white',
+                  outline: 'none',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 8px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px'
+                }}
+              >
+                <option value="">Alle Rollen</option>
+                {roles.map(role => (
+                  <option key={role.name} value={role.name}>
+                    {role.displayName}
+                  </option>
+                ))}
+              </select>
             </div>
             
-            {/* Status Filter */}
+            {/* Status Filter - Native Select für garantierte Funktionalität */}
             <div style={{ minWidth: '0' }}>
-              <InputLikeSelect
-                placeholder="Alle Status"  
+              <select
                 value={statusFilter}
-                onChange={(value) => setStatusFilter(value)}
-                options={[
-                  { value: '', label: 'Alle Status' },
-                  { value: 'true', label: 'Aktiv' },
-                  { value: 'false', label: 'Inaktiv' }
-                ]}
-              />
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="lyd-select-status-filter"
+                style={{
+                  width: '100%',
+                  height: '40px',
+                  padding: '8px 32px 8px 12px',
+                  border: '1px solid var(--lyd-border, #d1d5db)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  backgroundColor: 'white',
+                  outline: 'none',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 8px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px'
+                }}
+              >
+                <option value="">Alle Status</option>
+                <option value="true">Aktiv</option>
+                <option value="false">Inaktiv</option>
+              </select>
             </div>
             
             {/* Reset Button - TOP aligned mit Input-Höhe */}
@@ -311,7 +340,7 @@ export default function UserManagementPage() {
             
           </div>
           
-          {/* Mobile Responsive - Stacked Layout */}
+          {/* CSS Styles für Native Components */}
           <style jsx>{`
             .lyd-input-search-with-icon:focus {
               border-color: var(--lyd-primary, #3b82f6) !important;
@@ -319,6 +348,15 @@ export default function UserManagementPage() {
             }
             .lyd-button-reset-custom:hover {
               background-color: var(--lyd-primary-50, #eff6ff) !important;
+            }
+            .lyd-select-role-filter:focus,
+            .lyd-select-status-filter:focus {
+              border-color: var(--lyd-primary, #3b82f6) !important;
+              box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+            }
+            .lyd-select-role-filter:hover,
+            .lyd-select-status-filter:hover {
+              border-color: var(--lyd-border-hover, #9ca3af) !important;
             }
             @media (max-width: 768px) {
               div[style*="gridTemplateColumns"] {
