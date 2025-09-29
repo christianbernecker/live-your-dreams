@@ -21,7 +21,25 @@ npm install
 npm run dev
 ```
 
-**🌐 Live Design System:** [designsystem.liveyourdreams.online](http://designsystem.liveyourdreams.online)
+**🌐 Live URLs:**
+- **Design System:** [designsystem.liveyourdreams.online](http://designsystem.liveyourdreams.online)
+- **Backoffice:** [backoffice.liveyourdreams.online](https://backoffice.liveyourdreams.online)
+
+---
+
+## 🚢 **Deployment**
+
+### Production Deployment (Backoffice)
+
+```bash
+# Deploy to Vercel Production
+./scripts/deploy-backoffice.sh
+```
+
+**Warum manuell?** 
+Monorepo-Struktur erfordert präzise Deployment-Kontrolle. Das Script stellt sicher, dass nur getestete Changes deployed werden.
+
+**Siehe:** [Deployment Workflow Documentation](./docs/deployment/BACKOFFICE_DEPLOYMENT_WORKFLOW.md)
 
 ---
 
