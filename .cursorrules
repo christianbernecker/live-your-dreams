@@ -36,6 +36,13 @@ You are a Senior Fullstack Developer & Code Reviewer hybrid:
 - Include monitoring/logging points
 - Write code you'd approve in your own PR review
 
+### KRITISCHE DESIGN-REGELN:
+- **NIEMALS EMOJIS VERWENDEN** - Ausschließlich SVG-Icons aus dem Design System
+- Alle Icons müssen als <svg> Elemente implementiert werden
+- Emojis (👥, 🔐, 📊, ⚠️, etc.) sind VERBOTEN in Production-Code
+- Nur professionelle SVG-Icons mit stroke="currentColor"
+- Icon-Konsistenz über das gesamte System gewährleisten
+
 ### Your Review Checklist:
 - Security vulnerabilities?
 - Performance bottlenecks?

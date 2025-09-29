@@ -8,6 +8,8 @@ import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
 import { hasPermission } from '@/lib/permissions';
 import Link from 'next/link';
+import AdminTabs from '@/components/admin/AdminTabs';
+
 
 interface AdminStats {
   totalUsers: number;
@@ -179,71 +181,7 @@ export default async function AdminPage() {
           <p className="lyd-text-secondary">Wählen Sie einen Bereich zur Verwaltung aus</p>
         </div>
         <div className="lyd-card-body">
-          <div className="lyd-tabs">
-            <div className="lyd-tabs-list">
-              <Link href="/admin/users" className="lyd-tab active">
-                <span className="lyd-tab-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                  Benutzer-Verwaltung
-                </span>
-              </Link>
-              <Link href="/admin/roles" className="lyd-tab">
-                <span className="lyd-tab-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <circle cx="12" cy="16" r="1"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                  </svg>
-                  Rollen & Berechtigungen
-                </span>
-              </Link>
-            </div>
-            
-            <div className="lyd-tab-panels">
-              <div className="lyd-tab-panel active">
-                <div style={{ padding: 'var(--spacing-lg, 24px) 0' }}>
-                  <h3>👥 Benutzer-Verwaltung</h3>
-                  <p style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-grey)' }}>
-                    Benutzer, Rollen und Berechtigungen verwalten
-                  </p>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--lyd-text-secondary)', marginBottom: 'var(--spacing-lg)' }}>
-                    📊 {stats.activeUsers} aktive von {stats.totalUsers} Benutzern
-                  </div>
-                  <Link 
-                    href="/admin/users" 
-                    className="lyd-button primary"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    Benutzer verwalten →
-                  </Link>
-                </div>
-              </div>
-              
-              <div className="lyd-tab-panel">
-                <div style={{ padding: 'var(--spacing-lg, 24px) 0' }}>
-                  <h3>🔐 Rollen & Berechtigungen</h3>
-                  <p style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-grey)' }}>
-                    Zugriffsrechte und Rollen konfigurieren
-                  </p>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--lyd-text-secondary)', marginBottom: 'var(--spacing-lg)' }}>
-                    📊 {stats.totalRoles} aktive Rollen
-                  </div>
-                  <Link 
-                    href="/admin/roles" 
-                    className="lyd-button primary"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    Rollen verwalten →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+          <AdminTabs stats={stats} />
         </div>
       </div>
 
