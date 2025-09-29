@@ -198,12 +198,12 @@ export default function UserManagementPage() {
             display: 'grid !important',
             gridTemplateColumns: '2fr 1fr 1fr auto',
             gap: '16px',
-            alignItems: 'end',
+            alignItems: 'start !important',
             width: '100%',
             marginBottom: '0'
           }}>
             
-            {/* Search Input - Component mit Inline Override */}
+            {/* Search Input - Manuelle Icon-Positionierung (Component API defekt) */}
             <div style={{ 
               position: 'relative',
               minWidth: '0' // Grid overflow fix
@@ -213,14 +213,23 @@ export default function UserManagementPage() {
                 placeholder="Benutzer suchen..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                icon={
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
-                  </svg>
-                }
-                iconPosition="right"
+                style={{ paddingRight: '40px !important' }}
               />
+              {/* Icon manuell RECHTS positioniert */}
+              <div style={{
+                position: 'absolute !important',
+                right: '12px !important',
+                top: '50% !important',
+                transform: 'translateY(-50%) !important',
+                color: 'var(--lyd-text-secondary, #6b7280) !important',
+                pointerEvents: 'none !important',
+                zIndex: '10 !important'
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
             </div>
             
             {/* Role Filter */}
@@ -253,7 +262,7 @@ export default function UserManagementPage() {
               />
             </div>
             
-            {/* Reset Button - Grid aligned */}
+            {/* Reset Button - TOP aligned mit Input-Höhe */}
             <button 
               type="button"
               onClick={() => {
@@ -276,7 +285,9 @@ export default function UserManagementPage() {
                 justifyContent: 'center !important',
                 gap: '8px !important',
                 whiteSpace: 'nowrap !important',
-                minWidth: '120px !important'
+                minWidth: '120px !important',
+                marginTop: '0px !important',
+                alignSelf: 'start !important'
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
