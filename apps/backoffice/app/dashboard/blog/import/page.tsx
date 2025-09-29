@@ -1,8 +1,8 @@
 /**
- * LYD Blog System v1.1 - MICRO Step 7
+ * Blog System - Artikel Import
  * 
- * Simple Import UI - nur native HTML File Input
- * KEINE react-dropzone, KEINE komplexen Dependencies
+ * Importieren Sie KI-generierte Blog-Artikel im JSON-Format
+ * Unterstützt: ChatGPT, Claude, und andere KI-Agenten
  */
 
 'use client';
@@ -16,7 +16,7 @@ import { OpenGraphPreview } from '@/components/blog/OpenGraphPreview';
 import { CopyPromptPanel } from '@/components/blog/CopyPromptPanel';
 
 // ============================================================================
-// MICRO COMPONENT
+// BLOG IMPORT COMPONENT
 // ============================================================================
 
 export default function BlogImportPage() {
@@ -105,7 +105,7 @@ export default function BlogImportPage() {
 
   if (!session) {
     return (
-      <DashboardLayout title="Blog Import" userEmail={undefined}>
+      <DashboardLayout title="Artikel importieren" subtitle="KI-generierte Blog-Artikel importieren" userEmail={undefined}>
         <div className="lyd-card">
           <div className="lyd-card-body">
             <p>Authentifizierung erforderlich</p>
@@ -121,8 +121,8 @@ export default function BlogImportPage() {
 
   return (
     <DashboardLayout 
-      title="Blog Import" 
-      subtitle="JSON v1.1 Import von KI-Agenten"
+      title="Artikel importieren" 
+      subtitle="KI-generierte Blog-Artikel importieren"
       userEmail={session.user?.email ?? undefined}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>

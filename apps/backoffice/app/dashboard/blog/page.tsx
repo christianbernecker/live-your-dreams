@@ -1,8 +1,8 @@
 /**
- * LYD Blog System v1.1 - MICRO Step 4
+ * Blog System - Multi-Platform Content Management
  * 
- * Minimal Blog UI - nur native React + Design System CSS
- * KEINE externen Components, KEINE komplexen Dependencies
+ * Hauptseite für Blog-Verwaltung mit Statistiken, Filterung und Artikelübersicht
+ * Unterstützt: WOHNEN, MAKLER, ENERGIE Plattformen
  */
 
 'use client';
@@ -47,6 +47,11 @@ export default function BlogDashboard() {
   const [blogData, setBlogData] = useState<{posts: BlogPost[], stats: BlogStats} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Filter States
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [platformFilter, setPlatformFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
   // Fetch Blog Data
   useEffect(() => {
@@ -76,6 +81,24 @@ export default function BlogDashboard() {
       fetchData();
     }
   }, [session]);
+  
+  // Filtered Posts
+  const filteredPosts = blogData?.posts.filter(post => {
+    if (statusFilter !== 'all' && post.status !== statusFilter) return false;
+    if (platformFilter !== 'all' && !post.platforms.includes(platformFilter)) return false;
+    if (categoryFilter !== 'all' && post.category !== categoryFilter) return false;
+    return true;
+  }) || [];
+  
+  // Extract unique categories for filter
+  const categories = Array.from(new Set(blogData?.posts.map(p => p.category) || []));
+  
+  // Reset Filter
+  const resetFilters = () => {
+    setStatusFilter('all');
+    setPlatformFilter('all');
+    setCategoryFilter('all');
+  };
 
   // ============================================================================
   // AUTHENTICATION CHECK
@@ -105,18 +128,12 @@ export default function BlogDashboard() {
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       
-      {/* Header */}
+      {/* Info Card */}
       <div className="lyd-card">
-        <div className="lyd-card-header">
-          <h1 className="lyd-heading-1">Blog System v1.1</h1>
-          <p className="lyd-text-secondary">Multi-Platform Content Management (MICRO Implementation)</p>
-        </div>
-        <div className="lyd-card-body">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
-            <span className="lyd-badge success">API Online</span>
-            <span className="lyd-badge info">Prisma Schema ✓</span>
-            <span className="lyd-badge secondary">Build Stable ✓</span>
-          </div>
+        <div className="lyd-card-body" style={{ padding: 'var(--spacing-md)' }}>
+          <p style={{ margin: 0, color: 'var(--lyd-gray-600)', fontSize: 'var(--font-size-sm)' }}>
+            Verwalten Sie Blog-Artikel für alle Plattformen (WOHNEN, MAKLER, ENERGIE) an einem zentralen Ort.
+          </p>
         </div>
       </div>
 
@@ -190,11 +207,94 @@ export default function BlogDashboard() {
         </div>
       )}
 
-      {/* Blog Posts (if available) */}
+      {/* Filter Section */}
       {blogData && blogData.posts.length > 0 && (
         <div className="lyd-card">
+          <div className="lyd-card-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <h2 className="lyd-heading-2" style={{ margin: 0 }}>Filter</h2>
+            <button 
+              className="lyd-button outline sm"
+              onClick={resetFilters}
+            >
+              Zur\u00fccksetzen
+            </button>
+          </div>
+          <div className="lyd-card-body">
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+              gap: 'var(--spacing-md)' 
+            }}>
+              {/* Status Filter */}
+              <div>
+                <label htmlFor="statusFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)', fontWeight: '600' }}>
+                  Status
+                </label>
+                <select
+                  id="statusFilter"
+                  className="lyd-input"
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                  <option value="all">Alle</option>
+                  <option value="DRAFT">Draft</option>
+                  <option value="REVIEW">Review</option>
+                  <option value="SCHEDULED">Geplant</option>
+                  <option value="PUBLISHED">Ver\u00f6ffentlicht</option>
+                  <option value="ARCHIVED">Archiviert</option>
+                </select>
+              </div>
+              
+              {/* Platform Filter */}
+              <div>
+                <label htmlFor="platformFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)', fontWeight: '600' }}>
+                  Plattform
+                </label>
+                <select
+                  id="platformFilter"
+                  className="lyd-input"
+                  value={platformFilter}
+                  onChange={(e) => setPlatformFilter(e.target.value)}
+                >
+                  <option value="all">Alle</option>
+                  <option value="WOHNEN">Wohnen</option>
+                  <option value="MAKLER">Makler</option>
+                  <option value="ENERGIE">Energie</option>
+                </select>
+              </div>
+              
+              {/* Category Filter */}
+              <div>
+                <label htmlFor="categoryFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)', fontWeight: '600' }}>
+                  Kategorie
+                </label>
+                <select
+                  id="categoryFilter"
+                  className="lyd-input"
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                >
+                  <option value="all">Alle</option>
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            {/* Filter Results Info */}
+            <div style={{ marginTop: 'var(--spacing-md)', fontSize: 'var(--font-size-sm)', color: 'var(--lyd-gray-600)' }}>
+              {filteredPosts.length} von {blogData.posts.length} Artikel{filteredPosts.length !== blogData.posts.length && ' (gefiltert)'}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Blog Posts (if available) */}
+      {blogData && filteredPosts.length > 0 && (
+        <div className="lyd-card">
           <div className="lyd-card-header">
-            <h2 className="lyd-heading-2">Blog Artikel ({blogData.posts.length})</h2>
+            <h2 className="lyd-heading-2">Blog Artikel ({filteredPosts.length})</h2>
           </div>
           <div className="lyd-card-body">
             <div style={{ overflowX: 'auto' }}>
@@ -210,7 +310,7 @@ export default function BlogDashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {blogData.posts.map((post) => (
+                  {filteredPosts.map((post) => (
                     <tr key={post.id}>
                       <td>
                         <div style={{ fontWeight: '600' }}>{post.title}</div>
@@ -251,6 +351,29 @@ export default function BlogDashboard() {
         </div>
       )}
 
+      {/* Filtered Empty State */}
+      {blogData && blogData.posts.length > 0 && filteredPosts.length === 0 && (
+        <div className="lyd-card">
+          <div className="lyd-card-body" style={{ textAlign: 'center', padding: 'var(--spacing-xl)' }}>
+            <div style={{ marginBottom: 'var(--spacing-md)' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--lyd-gray-400)', display: 'block', margin: '0 auto' }}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+            </div>
+            <h3>Keine Artikel gefunden</h3>
+            <p style={{ color: 'var(--lyd-gray-500)', marginBottom: 'var(--spacing-md)' }}>
+              Mit den aktuellen Filtern wurden keine Artikel gefunden. Versuchen Sie andere Filter.
+            </p>
+            <button
+              className="lyd-button outline"
+              onClick={resetFilters}
+            >
+              Filter zur\u00fccksetzen
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Empty State */}
       {blogData && blogData.posts.length === 0 && (
         <div className="lyd-card">
@@ -270,7 +393,7 @@ export default function BlogDashboard() {
             </p>
             <button
               className="lyd-button primary"
-              onClick={() => alert('Import-Feature wird in nächsten Micro-Steps aktiviert')}
+              onClick={() => router.push('/dashboard/blog/import')}
             >
               Ersten Artikel erstellen
             </button>
