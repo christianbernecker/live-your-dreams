@@ -186,6 +186,12 @@ export default function UserManagementPage() {
   const [roleFilter, setRoleFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   
+  // Modal State
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  
   // ============================================================================
   // DATA FETCHING
   // ============================================================================
@@ -278,12 +284,77 @@ export default function UserManagementPage() {
   // HANDLERS
   // ============================================================================
 
-  const handleEditUser = (user: User) => {
-    console.log('Edit user:', user);
+  const handleCreateUser = () => {
+    setSelectedUser(null);
+    setShowCreateModal(true);
   };
 
-  const handleDeleteUser = (userId: string) => {
-    console.log('Delete user:', userId);
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user);
+    setShowEditModal(true);
+  };
+
+  const handleDeleteUser = (user: User) => {
+    setSelectedUser(user);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteUser = async () => {
+    if (!selectedUser) return;
+    
+    try {
+      const response = await fetch(`/api/users/${selectedUser.id}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      }
+      
+      // Refresh users list
+      await fetchUsers();
+      
+      // Close modal
+      setShowDeleteModal(false);
+      setSelectedUser(null);
+      
+      console.log('User deleted successfully');
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('Fehler beim Löschen des Benutzers. Bitte versuchen Sie es erneut.');
+    }
+  };
+
+  const handleSubmitUser = async (userData: Partial<User>) => {
+    try {
+      const url = selectedUser ? `/api/users/${selectedUser.id}` : '/api/users';
+      const method = selectedUser ? 'PATCH' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to ${selectedUser ? 'update' : 'create'} user`);
+      }
+      
+      // Refresh users list
+      await fetchUsers();
+      
+      // Close modals
+      setShowCreateModal(false);
+      setShowEditModal(false);
+      setSelectedUser(null);
+      
+      console.log(`User ${selectedUser ? 'updated' : 'created'} successfully`);
+    } catch (error) {
+      console.error(`Error ${selectedUser ? 'updating' : 'creating'} user:`, error);
+      alert(`Fehler beim ${selectedUser ? 'Bearbeiten' : 'Erstellen'} des Benutzers. Bitte versuchen Sie es erneut.`);
+    }
   };
 
   // ============================================================================
