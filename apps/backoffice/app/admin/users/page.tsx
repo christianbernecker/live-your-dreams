@@ -13,6 +13,7 @@
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Toast, useToast } from '@/components/ui/Toast';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -1016,9 +1017,11 @@ export default function AdminUsersPage() {
       {/* Table Section */}
       <div className="lyd-card">
         {loading ? (
-          <div style={{ padding: '40px', textAlign: 'center' }}>
-            Lade Benutzer...
-          </div>
+          <LoadingSpinner 
+            size="lg" 
+            label="Benutzer laden..." 
+            variant="gradient"
+          />
         ) : (
           <table className="api-table striped">
             <thead>
