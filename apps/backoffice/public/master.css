@@ -2563,37 +2563,36 @@ body.modal-open {
     padding: var(--spacing-lg, 24px);
 }
 
-/* Gradient Spinner - HAUPTVARIANT MIT LYD GRADIENT */
+/* Gradient Spinner - HERO UI STYLE MIT LYD GRADIENT */
 .lyd-loading-spinner-gradient {
     position: relative;
     border-radius: var(--radius-full, 9999px);
-    background: linear-gradient(135deg, var(--lyd-primary, #3b82f6) 0%, var(--lyd-royal-blue, #1d4ed8) 100%);
+    background: conic-gradient(
+        from 0deg,
+        var(--lyd-primary, #3b82f6) 0deg,
+        var(--lyd-royal-blue, #1d4ed8) 120deg,
+        transparent 180deg,
+        transparent 360deg
+    );
     animation: lyd-spinner-rotate 1s linear infinite;
 }
 
 .lyd-loading-spinner-inner {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
     background: var(--lyd-bg, #ffffff);
     border-radius: var(--radius-full, 9999px);
 }
 
-.lyd-loading-spinner-gradient::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100%;
-    background: transparent;
-    border-radius: var(--radius-full, 9999px) 0 0 var(--radius-full, 9999px);
-}
-
-/* Default Spinner */
+/* Default Spinner - HERO UI CIRCULAR STYLE */
 .lyd-loading-spinner-default {
+    position: relative;
+    border-radius: var(--radius-full, 9999px);
+    border: 3px solid var(--lyd-gray-200, #e5e7eb);
+    border-top: 3px solid var(--lyd-primary, #3b82f6);
     animation: lyd-spinner-rotate 1s linear infinite;
 }
 

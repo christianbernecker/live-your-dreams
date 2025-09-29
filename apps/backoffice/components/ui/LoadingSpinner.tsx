@@ -64,34 +64,13 @@ export const LoadingSpinner = ({
     );
   }
 
-  // Default variant
+  // Default variant - Pure CSS, Hero UI Style
   return (
     <div className="lyd-loading-spinner-container">
       <div 
         className="lyd-loading-spinner-default"
         style={sizeStyles[size]}
       >
-        <svg viewBox="0 0 24 24" fill="none" style={{ width: '100%', height: '100%' }}>
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="var(--lyd-line)"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="var(--lyd-primary)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray="60"
-            strokeDashoffset="60"
-            className="lyd-loading-spinner-circle"
-          />
-        </svg>
       </div>
       {label && (
         <div 
