@@ -395,3 +395,86 @@ export function createAuditContext(request: Request | any, userId?: string) {
     actorUserAgent: getClientUserAgent(request)
   };
 }
+
+// ============================================================================
+// LEGACY COMPATIBILITY FUNCTIONS (für bestehende API Routes)
+// ============================================================================
+
+/**
+ * Legacy audit function for content actions
+ */
+export async function auditContentAction(
+  action: string,
+  contentId: string,
+  userId: string,
+  meta?: Record<string, any>
+): Promise<void> {
+  await auditLog({
+    type: action as AuditEventType,
+    actorUserId: userId,
+    contentId,
+    meta
+  });
+}
+
+/**
+ * Legacy audit function for user actions
+ */
+export async function auditUserAction(
+  action: string,
+  targetUserId: string,
+  actorUserId: string,
+  meta?: Record<string, any>
+): Promise<void> {
+  await auditLog({
+    type: action as AuditEventType,
+    actorUserId,
+    targetUserId,
+    meta
+  });
+}
+
+/**
+ * Legacy audit function for role actions
+ */
+export async function auditRoleAction(
+  action: string,
+  roleId: string,
+  userId: string,
+  meta?: Record<string, any>
+): Promise<void> {
+  await auditLog({
+    type: action as AuditEventType,
+    actorUserId: userId,
+    targetRoleId: roleId,
+    meta
+  });
+}
+
+/**
+ * Legacy function to create CRUD metadata
+ */
+export function createCrudMeta(before: any, after: any): Record<string, any> {
+  const changes: Record<string, { from: any; to: any }> = {};
+  
+  if (before && after) {
+    for (const key in after) {
+      if (before[key] !== after[key]) {
+        changes[key] = { from: before[key], to: after[key] };
+      }
+    }
+  }
+  
+  return { changes };
+}
+
+/**
+ * Legacy function to create audit from session
+ */
+export function auditFromSession(session: any, type: string, meta?: Record<string, any>) {
+  return {
+    type: type as AuditEventType,
+    actorUserId: session?.user?.id,
+    meta
+  };
+}

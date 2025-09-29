@@ -239,8 +239,8 @@ export async function POST(request: NextRequest) {
         featuredImageAlt: processedFeaturedImage?.alt,
 
         // Rich Content
-        htmlBlocks: sanitizedHtmlBlocks.length > 0 ? sanitizedHtmlBlocks : null,
-        images: processedImages && processedImages.length > 0 ? processedImages : null,
+        htmlBlocks: sanitizedHtmlBlocks.length > 0 ? sanitizedHtmlBlocks : undefined,
+        images: processedImages && processedImages.length > 0 ? processedImages : undefined,
 
         // Taxonomie & Distribution
         platforms: content.platforms,
