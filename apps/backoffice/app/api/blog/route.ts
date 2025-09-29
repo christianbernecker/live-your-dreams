@@ -9,6 +9,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/nextauth';
 import { prisma } from '@/lib/db';
 
+// Force dynamic rendering (uses auth())
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // ============================================================================
 // SIMPLE GET HANDLER
 // ============================================================================

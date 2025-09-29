@@ -11,6 +11,10 @@ import { prisma } from '@/lib/db';
 import { sanitizeHtmlContent } from '@/lib/blog/sanitizer';
 import type { Platform, BlogStatus } from '@/lib/blog/types';
 
+// Force dynamic rendering (uses auth())
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // ============================================================================
 // SIMPLE VALIDATION FUNCTIONS
 // ============================================================================
