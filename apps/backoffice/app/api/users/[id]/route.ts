@@ -338,27 +338,71 @@ export async function DELETE(
       );
     }
 
-    // Soft delete by deactivating
-    const deletedUser = await prisma.user.update({
-      where: { id: params.id },
-      data: { isActive: false }
-    });
-
-    // Audit user deletion
+    // HARD DELETE - ECHTES LÖSCHEN AUS DATENBANK
+    console.log('🗑️ DELETE API: Starting hard delete for user:', params.id, user.name, user.email);
+    
+    // Audit user deletion BEFORE deleting (da User danach weg ist)
     await auditUserAction(session, 'USER_DELETE', params.id, {
       userEmail: user.email,
       userName: user.name,
-      deletionType: 'soft_delete',
-      reason: 'User deleted via admin panel'
+      deletionType: 'hard_delete',
+      reason: 'User permanently deleted via admin panel'
     }, request);
 
-    return NextResponse.json({
-      message: 'User deactivated successfully',
-      user: {
-        id: deletedUser.id,
-        isActive: deletedUser.isActive
+    try {
+      // STEP 1: Delete related records first (foreign key constraints)
+      console.log('🗑️ DELETE API: Removing user roles...');
+      await prisma.userRole.deleteMany({
+        where: { userId: params.id }
+      });
+
+      console.log('🗑️ DELETE API: Removing audit events...');
+      await prisma.auditEvent.deleteMany({
+        where: { actorId: params.id }
+      });
+
+      // STEP 2: Delete user from database permanently
+      console.log('🗑️ DELETE API: Deleting user from database...');
+      const deletedUser = await prisma.user.delete({
+        where: { id: params.id }
+      });
+
+      console.log('✅ DELETE API: User permanently deleted:', deletedUser.id);
+
+      return NextResponse.json({
+        message: 'User permanently deleted from database',
+        success: true,
+        deletedUser: {
+          id: deletedUser.id,
+          name: deletedUser.name,
+          email: deletedUser.email
+        }
+      });
+
+    } catch (deleteError) {
+      console.error('❌ DELETE API: Error during hard delete:', deleteError);
+      
+      // If foreign key constraints prevent deletion, do soft delete as fallback
+      if (deleteError instanceof Error && deleteError.message.includes('foreign key constraint')) {
+        console.log('🔄 DELETE API: Foreign key constraint - falling back to soft delete');
+        
+        const softDeletedUser = await prisma.user.update({
+          where: { id: params.id },
+          data: { isActive: false }
+        });
+
+        return NextResponse.json({
+          message: 'User deactivated (foreign key constraints prevented hard delete)',
+          success: true,
+          deletedUser: {
+            id: softDeletedUser.id,
+            isActive: softDeletedUser.isActive
+          }
+        });
       }
-    });
+      
+      throw deleteError;
+    }
 
   } catch (error) {
     console.error('Error in DELETE /api/users/[id]:', error);

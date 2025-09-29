@@ -633,12 +633,19 @@ export default function AdminUsersPage() {
       console.log('📡 DELETE Response:', response.status, response.statusText);
 
       if (response.ok) {
-        const result = await response.text();
-        console.log('✅ DELETE Success:', result);
+        const result = await response.json();
+        console.log('✅ DELETE Success Response:', result);
         
         // CRITICAL: Store user info before state update
         const deletedUserName = selectedUser.name;
         const deletedUserId = selectedUser.id;
+        
+        // VERIFY: Check what type of delete happened
+        if (result.message?.includes('permanently deleted')) {
+          console.log('🗑️ HARD DELETE CONFIRMED:', result.deletedUser);
+        } else if (result.message?.includes('deactivated')) {
+          console.log('⚠️ SOFT DELETE (Fallback):', result);
+        }
         
         // IMMEDIATE UI UPDATE
         console.log('🔄 Removing user from UI:', deletedUserId);
@@ -652,9 +659,10 @@ export default function AdminUsersPage() {
         setShowDeleteModal(false);
         setSelectedUser(null);
         
-        // SHOW SUCCESS TOAST
-        console.log('🎉 Showing success toast for:', deletedUserName);
-        showSuccess('Benutzer gelöscht', `${deletedUserName} wurde erfolgreich aus der Datenbank entfernt.`);
+        // SHOW SUCCESS TOAST WITH SPECIFIC MESSAGE
+        const deleteType = result.message?.includes('permanently') ? 'permanent aus der Datenbank' : 'erfolgreich';
+        console.log('🎉 Showing success toast for:', deletedUserName, 'Delete type:', deleteType);
+        showSuccess('Benutzer gelöscht', `${deletedUserName} wurde ${deleteType} entfernt.`);
         
       } else if (response.status === 401) {
         showError('Sitzung abgelaufen', 'Bitte melden Sie sich erneut an.');
