@@ -7,10 +7,9 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // ============================================================================
 // TYPES
@@ -113,14 +112,67 @@ export default function BlogDashboard() {
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       
-      {/* Info Card */}
+      {/* Welcome Header */}
       <div className="lyd-card">
-        <div className="lyd-card-body" style={{ padding: 'var(--spacing-md)' }}>
-          <p style={{ margin: 0, color: 'var(--lyd-gray-600)', fontSize: 'var(--font-size-sm)' }}>
+        <div className="lyd-card-header">
+          <h1 className="lyd-heading-1">Blog System</h1>
+          <p className="lyd-text-secondary">
             Verwalten Sie Blog-Artikel für alle Plattformen (WOHNEN, MAKLER, ENERGIE) an einem zentralen Ort.
           </p>
         </div>
       </div>
+
+      {/* Platform Overview */}
+      {blogData && (
+        <div className="lyd-card">
+          <div className="lyd-card-header">
+            <h2 className="lyd-heading-2">Plattform-Übersicht</h2>
+            <p className="lyd-text-secondary">Verteilung Ihrer Artikel auf die verschiedenen Plattformen</p>
+          </div>
+          <div className="lyd-card-body">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-lg)' }}>
+              <div style={{ padding: 'var(--spacing-lg)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
+                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9,22 9,12 15,12 15,22"/>
+                  </svg>
+                </div>
+                <h3 className="lyd-heading-3">WOHNEN</h3>
+                <p style={{ color: 'var(--lyd-gray-600)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                  {blogData.posts.filter(p => p.platforms.includes('WOHNEN')).length} Artikel
+                </p>
+              </div>
+              
+              <div style={{ padding: 'var(--spacing-lg)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
+                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-secondary)' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                  </svg>
+                </div>
+                <h3 className="lyd-heading-3">MAKLER</h3>
+                <p style={{ color: 'var(--lyd-gray-600)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                  {blogData.posts.filter(p => p.platforms.includes('MAKLER')).length} Artikel
+                </p>
+              </div>
+              
+              <div style={{ padding: 'var(--spacing-lg)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
+                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-success)' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                </div>
+                <h3 className="lyd-heading-3">ENERGIE</h3>
+                <p style={{ color: 'var(--lyd-gray-600)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                  {blogData.posts.filter(p => p.platforms.includes('ENERGIE')).length} Artikel
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Statistics */}
       {blogData && (
@@ -391,27 +443,35 @@ export default function BlogDashboard() {
         <div className="lyd-card-header">
           <h2 className="lyd-heading-2">Schnellaktionen</h2>
         </div>
-        <div className="lyd-card-body" style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
-          <button
-            className="lyd-button primary"
-            onClick={() => router.push('/dashboard/blog/import')}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
-            Artikel importieren
-          </button>
-          <button
-            className="lyd-button secondary"
-            onClick={() => alert('Edit-Feature wird in nächsten Micro-Steps aktiviert')}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-            </svg>
-            Artikel erstellen
-          </button>
+        <div className="lyd-card-body">
+          <div style={{ 
+            display: 'flex', 
+            gap: 'var(--spacing-lg)', 
+            flexWrap: 'wrap',
+            alignItems: 'center'
+          }}>
+            <button
+              className="lyd-button primary"
+              onClick={() => router.push('/dashboard/blog/import')}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', textDecoration: 'none' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              Artikel importieren
+            </button>
+            <button
+              className="lyd-button outline"
+              onClick={() => router.push('/dashboard/blog')}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', textDecoration: 'none' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="1,4 1,10 7,10"/>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+              </svg>
+              Aktualisieren
+            </button>
+          </div>
         </div>
       </div>
       </div>
