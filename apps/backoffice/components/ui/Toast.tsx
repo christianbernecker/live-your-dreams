@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ToastProps {
@@ -66,10 +66,8 @@ export const Toast = ({ type, title, message, duration = 5000, onClose }: ToastP
 // Global toast manager
 let toastManager: any = null;
 
-export const useToast = () => {
-  const [toasts, setToasts] = useState<Array<ToastProps & { id: string }>>([]);
-  
-  // Initialize global manager if not exists
+// Initialize global manager once
+const initializeToastManager = () => {
   if (!toastManager) {
     toastManager = {
       toasts: [],
@@ -93,31 +91,44 @@ export const useToast = () => {
       }
     };
   }
+  return toastManager;
+};
+
+export const useToast = () => {
+  const [toasts, setToasts] = useState<Array<ToastProps & { id: string }>>([]);
+  
+  // Initialize manager only once
+  const manager = initializeToastManager();
   
   useEffect(() => {
     const updateToasts = () => {
-      setToasts([...toastManager.toasts]);
+      setToasts([...manager.toasts]);
     };
     
+    // Initial load
     updateToasts();
-    return toastManager.subscribe(updateToasts);
-  }, []);
+    
+    // Subscribe to changes
+    const unsubscribe = manager.subscribe(updateToasts);
+    return unsubscribe;
+  }, [manager]);
   
-  const showSuccess = (title: string, message: string) => {
-    toastManager.addToast({ type: 'success', title, message });
-  };
+  // Memoize toast functions to prevent re-renders
+  const showSuccess = useCallback((title: string, message: string) => {
+    manager.addToast({ type: 'success', title, message });
+  }, [manager]);
   
-  const showError = (title: string, message: string) => {
-    toastManager.addToast({ type: 'error', title, message });
-  };
+  const showError = useCallback((title: string, message: string) => {
+    manager.addToast({ type: 'error', title, message });
+  }, [manager]);
   
-  const showWarning = (title: string, message: string) => {
-    toastManager.addToast({ type: 'warning', title, message });
-  };
+  const showWarning = useCallback((title: string, message: string) => {
+    manager.addToast({ type: 'warning', title, message });
+  }, [manager]);
   
-  const showInfo = (title: string, message: string) => {
-    toastManager.addToast({ type: 'info', title, message });
-  };
+  const showInfo = useCallback((title: string, message: string) => {
+    manager.addToast({ type: 'info', title, message });
+  }, [manager]);
   
   return {
     toasts,

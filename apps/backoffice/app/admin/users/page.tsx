@@ -10,10 +10,10 @@
 
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { useToast, Toast } from '@/components/ui/Toast';
+import { Toast, useToast } from '@/components/ui/Toast';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 
 // ============================================================================
 // TYPES
@@ -203,27 +203,40 @@ const UserForm: React.FC<UserFormProps> = ({ user, roles, onSubmit, onCancel, is
   };
 
   return (
-    <div className="lyd-modal-overlay" style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000
-    }}>
-      <div className="lyd-modal" style={{
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        padding: '24px',
-        maxWidth: '500px',
-        width: '90%',
-        maxHeight: '80vh',
-        overflowY: 'auto'
-      }}>
+    <div 
+      className="lyd-modal-overlay" 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 10000
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onCancel();
+      }}
+    >
+      <div 
+        className="lyd-modal" 
+        style={{
+          backgroundColor: 'white',
+          borderRadius: 'var(--radius-lg, 8px)',
+          padding: '24px',
+          maxWidth: '500px',
+          width: 'calc(100% - 32px)',
+          maxHeight: 'calc(100vh - 64px)',
+          overflowY: 'auto',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          border: '1px solid var(--lyd-border, #e5e7eb)',
+          position: 'relative'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
           {/* MODAL ICON */}
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -375,25 +388,38 @@ interface DeleteConfirmProps {
 
 const DeleteConfirm: React.FC<DeleteConfirmProps> = ({ user, onConfirm, onCancel }) => {
   return (
-    <div className="lyd-modal-overlay" style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000
-    }}>
-      <div className="lyd-modal" style={{
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        padding: '24px',
-        maxWidth: '400px',
-        width: '90%'
-      }}>
+    <div 
+      className="lyd-modal-overlay" 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 10000
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onCancel();
+      }}
+    >
+      <div 
+        className="lyd-modal" 
+        style={{
+          backgroundColor: 'white',
+          borderRadius: 'var(--radius-lg, 8px)',
+          padding: '24px',
+          maxWidth: '400px',
+          width: 'calc(100% - 32px)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          border: '1px solid var(--lyd-border, #e5e7eb)',
+          position: 'relative'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
           {/* MODAL DELETE ICON */}
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lyd-error, #ef4444)">
@@ -539,23 +565,56 @@ export default function AdminUsersPage() {
   }, [fetchUsers, fetchRoles]);
 
   // ============================================================================
-  // CRUD FUNCTIONS
+  // CRUD FUNCTIONS (MEMOIZED TO PREVENT RE-RENDERS)
   // ============================================================================
 
-  const handleCreateUser = () => {
+  const handleCreateUser = useCallback(() => {
     setSelectedUser(null);
     setShowCreateModal(true);
-  };
+  }, []);
 
-  const handleEditUser = (user: User) => {
+  const handleEditUser = useCallback((user: User) => {
     setSelectedUser(user);
     setShowEditModal(true);
-  };
+  }, []);
 
-  const handleDeleteUser = (user: User) => {
+  const handleDeleteUser = useCallback((user: User) => {
     setSelectedUser(user);
     setShowDeleteModal(true);
-  };
+  }, []);
+
+  const handleResetFilters = useCallback(() => {
+    setSearchTerm('');
+    setRoleFilter('');
+    setStatusFilter('');
+  }, []);
+
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleRoleFilterChange = useCallback((value: string) => {
+    setRoleFilter(value);
+  }, []);
+
+  const handleStatusFilterChange = useCallback((value: string) => {
+    setStatusFilter(value);
+  }, []);
+
+  // Memoized role options to prevent re-renders
+  const roleFilterOptions = useMemo(() => [
+    { value: '', label: 'Alle Rollen' },
+    ...roles.map(role => ({
+      value: role.name,
+      label: role.displayName
+    }))
+  ], [roles]);
+
+  const statusFilterOptions = useMemo(() => [
+    { value: '', label: 'Alle Status' },
+    { value: 'true', label: 'Aktiv' },
+    { value: 'false', label: 'Inaktiv' }
+  ], []);
 
   const confirmDeleteUser = async () => {
     if (!selectedUser) return;
@@ -638,22 +697,26 @@ export default function AdminUsersPage() {
   };
 
   // ============================================================================
-  // FILTERING
+  // FILTERING (MEMOIZED TO PREVENT FLICKER)
   // ============================================================================
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = !searchTerm || 
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredUsers = useMemo(() => {
+    if (loading) return [];
     
-    const matchesRole = !roleFilter || 
-      user.roles.some(role => role.name === roleFilter);
-    
-    const matchesStatus = !statusFilter || 
-      (statusFilter === 'true' ? user.emailVerified : !user.emailVerified);
-    
-    return matchesSearch && matchesRole && matchesStatus;
-  });
+    return users.filter(user => {
+      const matchesSearch = !searchTerm || 
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesRole = !roleFilter || 
+        user.roles.some(role => role.name === roleFilter);
+      
+      const matchesStatus = !statusFilter || 
+        (statusFilter === 'true' ? user.emailVerified : !user.emailVerified);
+      
+      return matchesSearch && matchesRole && matchesStatus;
+    });
+  }, [users, searchTerm, roleFilter, statusFilter, loading]);
 
   // ============================================================================
   // RENDER
@@ -714,10 +777,10 @@ export default function AdminUsersPage() {
           {/* Search Input */}
           <div style={{ position: 'relative', minWidth: '0' }}>
             <input
-              type="text"
-              placeholder="Benutzer suchen..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+               type="text"
+               placeholder="Benutzer suchen..."
+               value={searchTerm}
+               onChange={handleSearchChange}
               style={{
                 width: '100%',
                 height: '40px',
@@ -746,40 +809,26 @@ export default function AdminUsersPage() {
           </div>
           
           {/* Role Filter */}
-          <CustomSelect
-            value={roleFilter}
-            onChange={setRoleFilter}
+           <CustomSelect
+             value={roleFilter}
+             onChange={handleRoleFilterChange}
             placeholder="Alle Rollen"
-            options={[
-              { value: '', label: 'Alle Rollen' },
-              ...roles.map(role => ({
-                value: role.name,
-                label: role.displayName
-              }))
-            ]}
+            options={roleFilterOptions}
           />
           
           {/* Status Filter */}
-          <CustomSelect
-            value={statusFilter}
-            onChange={setStatusFilter}
+           <CustomSelect
+             value={statusFilter}
+             onChange={handleStatusFilterChange}
             placeholder="Alle Status"
-            options={[
-              { value: '', label: 'Alle Status' },
-              { value: 'true', label: 'Aktiv' },
-              { value: 'false', label: 'Inaktiv' }
-            ]}
+            options={statusFilterOptions}
           />
           
           {/* Reset Button */}
-          <Button 
-            type="button"
-            variant="outline"
-            onClick={() => {
-              setSearchTerm('');
-              setRoleFilter('');
-              setStatusFilter('');
-            }}
+           <Button 
+             type="button"
+             variant="outline"
+             onClick={handleResetFilters}
             style={{
               height: '40px',
               alignSelf: 'start'
