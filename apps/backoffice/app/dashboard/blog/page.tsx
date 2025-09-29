@@ -8,13 +8,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // ============================================================================
-// MICRO TYPES (inline, minimal)
+// TYPES
 // ============================================================================
 
 interface BlogPost {
@@ -38,11 +37,10 @@ interface BlogStats {
 }
 
 // ============================================================================
-// MINIMAL COMPONENT
+// BLOG DASHBOARD COMPONENT
 // ============================================================================
 
 export default function BlogDashboard() {
-  const { data: session } = useSession();
   const router = useRouter();
   const [blogData, setBlogData] = useState<{posts: BlogPost[], stats: BlogStats} | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,15 +55,14 @@ export default function BlogDashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/blog', {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
+        const response = await fetch('/api/blog');
         
         if (!response.ok) {
+          if (response.status === 401) {
+            console.log('🔐 Authentication required - redirecting to login');
+            router.push('/api/auth/signin');
+            return;
+          }
           const errorData = await response.json().catch(() => ({}));
           throw new Error(errorData.error || `HTTP ${response.status}`);
         }
@@ -84,10 +81,8 @@ export default function BlogDashboard() {
       }
     }
 
-    if (session) {
-      fetchData();
-    }
-  }, [session]);
+    fetchData();
+  }, [router]);
   
   // Filtered Posts
   const filteredPosts = blogData?.posts.filter(post => {
@@ -108,22 +103,6 @@ export default function BlogDashboard() {
   };
 
   // ============================================================================
-  // AUTHENTICATION CHECK
-  // ============================================================================
-
-  if (!session) {
-    return (
-      <DashboardLayout title="Blog System" userEmail={undefined}>
-        <div className="lyd-card">
-          <div className="lyd-card-body">
-            <p>Authentifizierung erforderlich</p>
-          </div>
-        </div>
-      </DashboardLayout>
-    );
-  }
-
-  // ============================================================================
   // RENDER
   // ============================================================================
 
@@ -131,7 +110,6 @@ export default function BlogDashboard() {
     <DashboardLayout 
       title="Blog System" 
       subtitle="Multi-Platform Content Management (WOHNEN, MAKLER, ENERGIE)"
-      userEmail={session.user?.email ?? undefined}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       
