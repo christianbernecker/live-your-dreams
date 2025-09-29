@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinner - LYD Design System V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ZENTRALES CSS SYSTEM -->
+    <link rel="stylesheet" href="/shared/master.css">
+    
+    <!-- ZENTRALE JAVASCRIPT INTERAKTIONEN -->
+    <script src="/shared/interactions.js"></script>
+    
+    <style>
+        /* SPINNER-SEITE SPEZIFISCHE ANPASSUNGEN - Basiert auf master.css */
+        
+        /* Demo Container für Spinner */
+        .spinner-demo {
+            padding: var(--spacing-2xl);
+            background: var(--lyd-gray-50, #f9fafb);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .spinner-row {
+            display: flex;
+            gap: var(--spacing-xl);
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .spinner-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+            min-width: 120px;
+        }
+        
+        /* Dark background demo */
+        .dark-demo {
+            background: var(--lyd-gray-900, #111827);
+            color: white;
+        }
+        
+        .dark-demo .lyd-loading-spinner-label {
+            color: var(--lyd-gray-200, #e5e7eb);
+        }
+        
+        /* Size variants */
+        .size-demo {
+            display: flex;
+            gap: var(--spacing-xl);
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Loading states demo */
+        .loading-states-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .loading-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--lyd-line);
+            min-height: 120px;
+            position: relative;
+        }
+        
+        .loading-overlay-demo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/shared/lyd-logo.svg" alt="LYD" class="lyd-logo" />            <div class="logo-subtitle">Design System V2</div>
+        </div>
+        
+        <nav>
+            <div class="nav-section">
+                <div class="nav-section-title">Design Principles</div>
+                <a href="/design-principles/overview/" class="nav-item">Overview</a>
+                <a href="/design-principles/colors/" class="nav-item">Colors</a>
+                <a href="/design-principles/typography/" class="nav-item">Typography</a>
+                <a href="/design-principles/grid/" class="nav-item">Grid</a>
+                <a href="/design-principles/spacing/" class="nav-item">Spacing</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Implementation Guide</div>
+                <a href="/implementation/overview/" class="nav-item">Overview</a>
+                <a href="/implementation/css/" class="nav-item">CSS Architecture</a>
+                <a href="/implementation/nextjs/" class="nav-item">Next.js Integration</a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">Components</div>
+                <a href="/components/overview/" class="nav-item">Overview</a>
+                <a href="/components/buttons/" class="nav-item">Button</a>
+                <a href="/components/inputs/" class="nav-item">Input</a>
+                <a href="/components/cards/" class="nav-item">Card</a>
+                <a href="/components/select/" class="nav-item">Select</a>
+                <a href="/components/accordion/" class="nav-item">Accordion</a>
+                <a href="/components/modal/" class="nav-item">Modal</a>
+                <a href="/components/dropdown/" class="nav-item">Dropdown</a>
+                <a href="/components/checkbox/" class="nav-item">Checkbox</a>
+                <a href="/components/radio/" class="nav-item">Radio</a>
+                <a href="/components/toast/" class="nav-item">Toast</a>
+                <a href="/components/table/" class="nav-item">Table</a>
+                <a href="/components/textarea/" class="nav-item">Textarea</a>
+                <a href="/components/switch/" class="nav-item">Switch</a>
+                <a href="/components/slider/" class="nav-item">Slider</a>
+                <a href="/components/alert/" class="nav-item">Alert</a>
+                <a href="/components/badge/" class="nav-item">Badge</a>
+                <a href="/components/date-picker/" class="nav-item">Date Picker</a>
+                <a href="/components/avatar/" class="nav-item">Avatar</a>
+                <a href="/components/navbar/" class="nav-item">Navbar</a>
+                <a href="/components/tabs/" class="nav-item">Tabs</a>
+                <a href="/components/progress/" class="nav-item">Progress</a>
+                <a href="/components/calendar/" class="nav-item">Calendar</a>
+                <a href="/components/autocomplete/" class="nav-item">Autocomplete</a>
+                <a href="/components/pagination/" class="nav-item">Pagination</a>
+                <a href="/components/tooltip/" class="nav-item">Tooltip</a>
+                <a href="/components/spinner/" class="nav-item active">Spinner</a>
+                </div>
+        </nav>
+    </div>
+    
+    <main class="main-content">
+        <h1>Spinner</h1>
+        <p>Loading indicators and spinners with Hero UI inspired animations, featuring LYD gradient colors and premium styling for luxury applications.</p>
+        
+        <!-- Section 1: Spinner Variants -->
+        <section class="section">
+            <h2 class="section-title">Spinner Variants</h2>
+            
+            <div class="component-card">
+                <h3>Gradient Spinner</h3>
+                <p>Premium gradient spinner with LYD brand colors and conic gradient animation</p>
+                
+                <div class="spinner-demo">
+                    <div class="spinner-row">
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 32px; height: 32px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Loading...</div>
+                            </div>
+                        </div>
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 32px; height: 32px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Benutzer laden...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Default Spinner</h3>
+                <p>Clean circular spinner with border animation</p>
+                
+                <div class="spinner-demo">
+                    <div class="spinner-row">
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-default" style="width: 32px; height: 32px;"></div>
+                                <div class="lyd-loading-spinner-label">Loading...</div>
+                            </div>
+                        </div>
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-default" style="width: 32px; height: 32px;"></div>
+                                <div class="lyd-loading-spinner-label">Please wait...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>Dots Spinner</h3>
+                <p>Animated dots with bounce effect</p>
+                
+                <div class="spinner-demo">
+                    <div class="spinner-row">
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-dots">
+                                    <div class="lyd-dot"></div>
+                                    <div class="lyd-dot"></div>
+                                    <div class="lyd-dot"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Processing...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: Sizes -->
+        <section class="section">
+            <h2 class="section-title">Spinner Sizes</h2>
+            
+            <div class="component-card">
+                <h3>Size Variants</h3>
+                <p>Different sizes for various use cases</p>
+                
+                <div class="spinner-demo">
+                    <div class="size-demo">
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 16px; height: 16px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label" style="font-size: 14px;">Small</div>
+                            </div>
+                        </div>
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 32px; height: 32px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label" style="font-size: 16px;">Medium</div>
+                            </div>
+                        </div>
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 48px; height: 48px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label" style="font-size: 18px;">Large</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 3: Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Loading States</h2>
+            
+            <div class="component-card">
+                <h3>Content Loading Examples</h3>
+                <p>Real-world loading scenarios</p>
+                
+                <div class="loading-states-demo">
+                    <div class="loading-card">
+                        <h4>Data Table</h4>
+                        <p>Loading user data...</p>
+                        <div class="loading-overlay-demo">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 32px; height: 32px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Benutzer laden...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="loading-card">
+                        <h4>Form Submission</h4>
+                        <p>Processing request...</p>
+                        <div class="loading-overlay-demo">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-dots">
+                                    <div class="lyd-dot"></div>
+                                    <div class="lyd-dot"></div>
+                                    <div class="lyd-dot"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Speichern...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="loading-card">
+                        <h4>API Request</h4>
+                        <p>Fetching data...</p>
+                        <div class="loading-overlay-demo">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-default" style="width: 24px; height: 24px;"></div>
+                                <div class="lyd-loading-spinner-label" style="font-size: 14px;">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Dark Theme -->
+        <section class="section">
+            <h2 class="section-title">Dark Theme</h2>
+            
+            <div class="component-card">
+                <h3>Dark Background</h3>
+                <p>Spinners on dark backgrounds</p>
+                
+                <div class="spinner-demo dark-demo">
+                    <div class="spinner-row">
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-gradient" style="width: 32px; height: 32px;">
+                                    <div class="lyd-loading-spinner-inner"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Gradient</div>
+                            </div>
+                        </div>
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-default" style="width: 32px; height: 32px;"></div>
+                                <div class="lyd-loading-spinner-label">Default</div>
+                            </div>
+                        </div>
+                        <div class="spinner-item">
+                            <div class="lyd-loading-spinner-container">
+                                <div class="lyd-loading-spinner-dots">
+                                    <div class="lyd-dot"></div>
+                                    <div class="lyd-dot"></div>
+                                    <div class="lyd-dot"></div>
+                                </div>
+                                <div class="lyd-loading-spinner-label">Dots</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 5: Implementation -->
+        <section class="section">
+            <h2 class="section-title">Implementation</h2>
+            
+            <div class="component-card">
+                <h3>HTML Structure</h3>
+                <div class="code-block">
+                    <pre><!-- Gradient Spinner -->
+&lt;div class="lyd-loading-spinner-container"&gt;
+    &lt;div class="lyd-loading-spinner-gradient" style="width: 32px; height: 32px;"&gt;
+        &lt;div class="lyd-loading-spinner-inner"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-loading-spinner-label"&gt;Loading...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Default Spinner --&gt;
+&lt;div class="lyd-loading-spinner-container"&gt;
+    &lt;div class="lyd-loading-spinner-default" style="width: 32px; height: 32px;"&gt;&lt;/div&gt;
+    &lt;div class="lyd-loading-spinner-label"&gt;Loading...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Dots Spinner --&gt;
+&lt;div class="lyd-loading-spinner-container"&gt;
+    &lt;div class="lyd-loading-spinner-dots"&gt;
+        &lt;div class="lyd-dot"&gt;&lt;/div&gt;
+        &lt;div class="lyd-dot"&gt;&lt;/div&gt;
+        &lt;div class="lyd-dot"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lyd-loading-spinner-label"&gt;Processing...&lt;/div&gt;
+&lt;/div&gt;</pre>
+                </div>
+                
+                <h3>React/Next.js Component</h3>
+                <div class="code-block">
+                    <pre>// components/LoadingSpinner.tsx
+'use client';
+
+interface LoadingSpinnerProps {
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
+  variant?: 'default' | 'gradient' | 'dots';
+}
+
+export const LoadingSpinner = ({ 
+  size = 'md', 
+  label = 'Laden...', 
+  variant = 'gradient' 
+}: LoadingSpinnerProps) => {
+  const sizeStyles = {
+    sm: { width: '16px', height: '16px' },
+    md: { width: '32px', height: '32px' },
+    lg: { width: '48px', height: '48px' }
+  };
+
+  const labelSizeStyles = {
+    sm: { fontSize: '14px' },
+    md: { fontSize: '16px' },
+    lg: { fontSize: '18px' }
+  };
+
+  if (variant === 'gradient') {
+    return (
+      &lt;div className="lyd-loading-spinner-container"&gt;
+        &lt;div 
+          className="lyd-loading-spinner-gradient"
+          style={sizeStyles[size]}
+        &gt;
+          &lt;div className="lyd-loading-spinner-inner"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        {label && (
+          &lt;div 
+            className="lyd-loading-spinner-label"
+            style={labelSizeStyles[size]}
+          &gt;
+            {label}
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+    );
+  }
+
+  if (variant === 'dots') {
+    return (
+      &lt;div className="lyd-loading-spinner-container"&gt;
+        &lt;div className="lyd-loading-spinner-dots"&gt;
+          &lt;div className="lyd-dot"&gt;&lt;/div&gt;
+          &lt;div className="lyd-dot"&gt;&lt;/div&gt;
+          &lt;div className="lyd-dot"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        {label && (
+          &lt;div 
+            className="lyd-loading-spinner-label"
+            style={labelSizeStyles[size]}
+          &gt;
+            {label}
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+    );
+  }
+
+  // Default variant
+  return (
+    &lt;div className="lyd-loading-spinner-container"&gt;
+      &lt;div 
+        className="lyd-loading-spinner-default"
+        style={sizeStyles[size]}
+      &gt;
+      &lt;/div&gt;
+      {label && (
+        &lt;div 
+          className="lyd-loading-spinner-label"
+          style={labelSizeStyles[size]}
+        &gt;
+          {label}
+        &lt;/div&gt;
+      )}
+    &lt;/div&gt;
+  );
+};</pre>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: API Reference -->
+        <section class="section">
+            <h2 class="section-title">API Reference</h2>
+            
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>.lyd-loading-spinner-container</code></td>
+                        <td>Main container for spinner and label</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-loading-spinner-gradient</code></td>
+                        <td>Gradient spinner with conic gradient animation</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-loading-spinner-inner</code></td>
+                        <td>Inner circle for gradient spinner hollow effect</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-loading-spinner-default</code></td>
+                        <td>Default spinner with border animation</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-loading-spinner-dots</code></td>
+                        <td>Container for dots spinner</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-dot</code></td>
+                        <td>Individual animated dot</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-loading-spinner-label</code></td>
+                        <td>Loading text label</td>
+                    </tr>
+                    <tr>
+                        <td><code>.lyd-loading-overlay</code></td>
+                        <td>Overlay for full-area loading states</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

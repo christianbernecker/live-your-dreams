@@ -47,11 +47,11 @@ export default function DashboardPage() {
       userEmail={session.user.email ?? undefined}
     >
       {/* Dashboard Metrics */}
-      <DashboardMetrics style={{ marginBottom: 'var(--spacing-xl)' }} />
+      <div style={{ marginBottom: 'var(--spacing-xl)' }}>
+        <DashboardMetrics />
+      </div>
 
-      <div style={{
-        display: 'grid',
-        gap: 'var(--spacing-xl)',
+      <div className="lyd-grid" style={{
         gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
         marginBottom: 'var(--spacing-xl)'
       }}>
@@ -70,7 +70,7 @@ export default function DashboardPage() {
             Schnellaktionen
           </h3>
 
-          <div style={{ display: 'grid', gap: 'var(--spacing-md)' }}>
+          <div className="lyd-stack">
             <button 
               className="lyd-button primary"
               onClick={() => router.push('/dashboard/posts/new')}
@@ -155,9 +155,7 @@ export default function DashboardPage() {
           System Status
         </h3>
 
-        <div style={{ 
-          display: 'grid', 
-          gap: 'var(--spacing-lg)',
+        <div className="lyd-grid" style={{
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'
         }}>
           <div style={{

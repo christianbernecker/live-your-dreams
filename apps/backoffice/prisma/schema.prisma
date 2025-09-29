@@ -55,8 +55,9 @@ model Role {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  users       UserRole[]
-  permissions RolePermission[]
+  users         UserRole[]     @relation
+  permissions   RolePermission[]
+  auditEvents   AuditEvent[]   @relation("AuditTargetRole")
 
   @@map("roles")
 }
@@ -144,8 +145,20 @@ model User {
   media         Media[]
   
   // Activity tracking
-  createdPosts  Post[]    @relation("PostAuthor")
-  updatedPosts  Post[]    @relation("PostUpdatedBy")
+  createdPosts      Post[]         @relation("PostAuthor")
+  updatedPosts      Post[]         @relation("PostUpdatedBy")
+  
+  // Content management
+  createdContent    ContentEntry[] @relation("ContentAuthor")
+  updatedContent    ContentEntry[] @relation("ContentUpdatedBy")
+  deletedContent    ContentEntry[] @relation("ContentDeletedBy")
+  
+  // Blog management (v1.1)
+  blogPosts         BlogPost[]     @relation("BlogAuthor")
+  
+  // Audit trails
+  actorAuditEvents  AuditEvent[]   @relation("AuditActor")
+  targetAuditEvents AuditEvent[]   @relation("AuditTargetUser")
 
   @@map("users")
 }
@@ -211,11 +224,12 @@ model Post {
   updatedAt   DateTime   @updatedAt @map("updated_at")
 
   // Relations
-  author      User       @relation("PostAuthor", fields: [authorId], references: [id])
-  updatedBy   User?      @relation("PostUpdatedBy", fields: [updatedById], references: [id])
-  categories  PostCategory[]
-  tags        PostTag[]
-  media       PostMedia[]
+  author        User           @relation("PostAuthor", fields: [authorId], references: [id])
+  updatedBy     User?          @relation("PostUpdatedBy", fields: [updatedById], references: [id])
+  categories    PostCategory[]
+  tags          PostTag[]
+  media         PostMedia[]
+  auditEvents   AuditEvent[]   @relation("AuditTargetPost")
 
   @@map("posts")
 }
@@ -318,12 +332,182 @@ model PostMedia {
 }
 
 // ============================================================================
-// ENUMS
+// FLEXIBLE CONTENT SYSTEM (Ergänzung zu Post System)
 // ============================================================================
+
+model ContentType {
+  id          String   @id @default(cuid())
+  key         String   @unique // 'product', 'service', 'testimonial', etc.
+  name        String
+  description String?
+  fields      Json     // Schema definition for content fields
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  entries     ContentEntry[]
+
+  @@map("content_types")
+}
+
+model ContentEntry {
+  id            String        @id @default(cuid())
+  typeId        String        @map("type_id")
+  slug          String        @unique
+  title         String
+  data          Json          // Content data according to ContentType.fields
+  status        ContentStatus @default(DRAFT)
+  publishedAt   DateTime?     @map("published_at")
+  
+  // Authoring
+  authorId      String?       @map("author_id")
+  updatedById   String?       @map("updated_by_id")
+  
+  // Soft Delete
+  deletedAt     DateTime?     @map("deleted_at")
+  deletedById   String?       @map("deleted_by_id")
+  
+  // Timestamps
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  type          ContentType   @relation(fields: [typeId], references: [id])
+  author        User?         @relation("ContentAuthor", fields: [authorId], references: [id])
+  updatedBy     User?         @relation("ContentUpdatedBy", fields: [updatedById], references: [id])
+  deletedBy     User?         @relation("ContentDeletedBy", fields: [deletedById], references: [id])
+  auditEvents   AuditEvent[]  @relation("AuditContent")
+
+  @@map("content_entries")
+}
+
+// ============================================================================
+// AUDIT SYSTEM
+// ============================================================================
+
+model AuditEvent {
+  id            String   @id @default(cuid())
+  type          String   // 'USER_CREATE', 'ROLE_UPDATE', 'CONTENT_PUBLISH', 'LOGIN', etc.
+  
+  // Actor (who performed the action)
+  actorUserId   String?  @map("actor_user_id")
+  actorIP       String?  @map("actor_ip")
+  actorUserAgent String? @map("actor_user_agent")
+  
+  // Target resources
+  targetUserId  String?  @map("target_user_id")
+  targetRoleId  String?  @map("target_role_id")
+  targetPostId  String?  @map("target_post_id")
+  contentId     String?  @map("content_id")
+  blogPostId    String?  @map("blog_post_id")  // Blog System v1.1
+  
+  // Event data
+  meta          Json?    // Additional event data, diff, etc.
+  
+  // Timestamp
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // Relations
+  actorUser     User?         @relation("AuditActor", fields: [actorUserId], references: [id])
+  targetUser    User?         @relation("AuditTargetUser", fields: [targetUserId], references: [id])
+  targetRole    Role?         @relation("AuditTargetRole", fields: [targetRoleId], references: [id])
+  targetPost    Post?         @relation("AuditTargetPost", fields: [targetPostId], references: [id])
+  contentEntry  ContentEntry? @relation("AuditContent", fields: [contentId], references: [id])
+  blogPost      BlogPost?     @relation("AuditTargetBlogPost", fields: [blogPostId], references: [id])  // Blog System v1.1
+
+  @@map("audit_events")
+}
 
 enum PostStatus {
   DRAFT
+  REVIEW
   PUBLISHED
   ARCHIVED
   SCHEDULED
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+// ============================================================================
+// BLOG SYSTEM V1.1 (Multi-Platform Blog mit KI Import Support)
+// Basierend auf LYD Blog Backoffice Briefing v1.0
+// ============================================================================
+
+enum BlogStatus {
+  DRAFT
+  REVIEW
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+  REJECTED
+}
+
+enum Platform {
+  WOHNEN
+  MAKLER
+  ENERGIE
+}
+
+model BlogPost {
+  id               String      @id @default(cuid())
+  title            String      @db.VarChar(120)
+  slug             String      @unique
+  excerpt          String      @db.VarChar(200)
+  content          String      @db.Text               // Markdown/MDX/HTML (primär body)
+  format           String      @default("mdx")        // md | mdx | html
+
+  // SEO
+  metaTitle        String?     @db.VarChar(120) @map("meta_title")
+  metaDescription  String?     @db.VarChar(200) @map("meta_description")
+  focusKeyword     String?     @map("focus_keyword")
+  keywords         String[]    @default([])
+  canonicalUrl     String?     @map("canonical_url")
+  ogTitle          String?     @map("og_title")
+  ogDescription    String?     @map("og_description")
+  ogImage          String?     @map("og_image")
+
+  // Structured Data
+  jsonLd           Json?       @map("json_ld")
+
+  // Visuals
+  featuredImageUrl String?     @map("featured_image_url")
+  featuredImageAlt String?     @map("featured_image_alt")
+
+  // Blocks (HTML/SVG/Iframes) – als JSON gespeichert
+  htmlBlocks       Json?       @map("html_blocks")     // [{ id, title, html, css, js, sandbox }]
+  images           Json?                               // optionale zusätzliche Bildobjekte
+
+  // Taxonomie & Distribution
+  platforms        Platform[]  @default([])
+  category         String
+  subcategory      String?
+  tags             String[]    @default([])
+
+  // Workflow
+  status           BlogStatus  @default(DRAFT)
+  scheduledFor     DateTime?   @map("scheduled_for")
+  publishedAt      DateTime?   @map("published_at")
+
+  // Audit
+  authorId         String      @map("author_id")
+  importSource     String?     @map("import_source")   // chatgpt | claude | manual
+  importModel      String?     @map("import_model")
+  importTimestamp  DateTime?   @map("import_timestamp")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  author           User        @relation("BlogAuthor", fields: [authorId], references: [id])
+  auditEvents      AuditEvent[] @relation("AuditTargetBlogPost")
+
+  @@index([status, scheduledFor])
+  @@index([platforms])
+  @@index([title, content])  // PostgreSQL-kompatible Indexierung
+  @@map("blog_posts")
 }

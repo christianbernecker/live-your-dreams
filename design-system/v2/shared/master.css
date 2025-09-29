@@ -1824,7 +1824,132 @@ body.modal-open {
 }
 
 /* ========================================
-   15. PRINT STYLES
+   15. SPINNER / LOADING COMPONENTS
+   ======================================== */
+
+/* Container */
+.lyd-loading-spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md, 16px);
+    padding: var(--spacing-lg, 24px);
+}
+
+/* Gradient Spinner - HERO UI STYLE MIT LYD GRADIENT */
+.lyd-loading-spinner-gradient {
+    position: relative;
+    border-radius: var(--radius-full, 9999px);
+    background: conic-gradient(
+        from 0deg,
+        var(--lyd-primary, #3b82f6) 0deg,
+        var(--lyd-royal-blue, #1d4ed8) 120deg,
+        transparent 180deg,
+        transparent 360deg
+    );
+    animation: lyd-spinner-rotate 1s linear infinite;
+}
+
+.lyd-loading-spinner-inner {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background: var(--lyd-bg, #ffffff);
+    border-radius: var(--radius-full, 9999px);
+}
+
+/* Default Spinner - HERO UI CIRCULAR STYLE */
+.lyd-loading-spinner-default {
+    position: relative;
+    border-radius: var(--radius-full, 9999px);
+    border: 3px solid var(--lyd-gray-200, #e5e7eb);
+    border-top: 3px solid var(--lyd-primary, #3b82f6);
+    animation: lyd-spinner-rotate 1s linear infinite;
+}
+
+.lyd-loading-spinner-circle {
+    animation: lyd-spinner-dash 1.5s ease-in-out infinite;
+}
+
+/* Dots Spinner */
+.lyd-loading-spinner-dots {
+    display: flex;
+    gap: var(--spacing-xs, 8px);
+}
+
+.lyd-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--lyd-primary, #3b82f6);
+    border-radius: var(--radius-full, 9999px);
+    animation: lyd-dots-bounce 1.4s ease-in-out infinite both;
+}
+
+.lyd-dot:nth-child(1) { animation-delay: -0.32s; }
+.lyd-dot:nth-child(2) { animation-delay: -0.16s; }
+.lyd-dot:nth-child(3) { animation-delay: 0s; }
+
+/* Label */
+.lyd-loading-spinner-label {
+    color: var(--lyd-grey, #6b7280);
+    font-weight: var(--font-weight-medium, 500);
+    text-align: center;
+}
+
+/* Animations */
+@keyframes lyd-spinner-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes lyd-spinner-dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+@keyframes lyd-dots-bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Loading Overlay für ganze Bereiche */
+.lyd-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================================
+   16. PRINT STYLES
    ======================================== */
 @media print {
     .sidebar {

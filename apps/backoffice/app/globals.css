@@ -1,7 +1,7 @@
 /* LYD BACKOFFICE - AUTHENTIC DESIGN SYSTEM INTEGRATION */
 
-/* Import Design System Master CSS */
-@import url('https://designsystem.liveyourdreams.online/shared/master.css');
+/* Import LOCAL Design System Master CSS */
+@import '/master.css';
 
 /* Additional utilities for Next.js integration */
 .min-h-screen {
@@ -310,4 +310,25 @@
 .lyd-input-label.required::after {
   content: ' *';
   color: #ef4444;
+}
+/* Table Actions - Professional Button Container */
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.table-actions .lyd-button.icon-only {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-actions .lyd-button.icon-only svg {
+  width: 16px;
+  height: 16px;
 }

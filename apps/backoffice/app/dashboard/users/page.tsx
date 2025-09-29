@@ -194,55 +194,14 @@ export default function UsersPage() {
       {/* Users Table */}
       <div className="lyd-card elevated">
         <div style={{ overflow: 'auto' }}>
-          <table style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: 'var(--font-size-sm)',
-            fontFamily: 'var(--font-family-primary)'
-          }}>
+          <table className="api-table">
             <thead>
-              <tr style={{ borderBottom: '2px solid var(--lyd-line)' }}>
-                <th style={{
-                  padding: 'var(--spacing-md)',
-                  textAlign: 'left',
-                  fontWeight: 'var(--font-weight-bold)',
-                  color: 'var(--lyd-text)',
-                  fontSize: 'var(--font-size-sm)'
-                }}>
-                  Benutzer
-                </th>
-                <th style={{
-                  padding: 'var(--spacing-md)',
-                  textAlign: 'left',
-                  fontWeight: 'var(--font-weight-bold)',
-                  color: 'var(--lyd-text)'
-                }}>
-                  Rolle
-                </th>
-                <th style={{
-                  padding: 'var(--spacing-md)',
-                  textAlign: 'left',
-                  fontWeight: 'var(--font-weight-bold)',
-                  color: 'var(--lyd-text)'
-                }}>
-                  Status
-                </th>
-                <th style={{
-                  padding: 'var(--spacing-md)',
-                  textAlign: 'left',
-                  fontWeight: 'var(--font-weight-bold)',
-                  color: 'var(--lyd-text)'
-                }}>
-                  Letzter Login
-                </th>
-                <th style={{
-                  padding: 'var(--spacing-md)',
-                  textAlign: 'right',
-                  fontWeight: 'var(--font-weight-bold)',
-                  color: 'var(--lyd-text)'
-                }}>
-                  Aktionen
-                </th>
+              <tr>
+                <th>Benutzer</th>
+                <th>Rolle</th>
+                <th>Status</th>
+                <th>Letzter Login</th>
+                <th>Aktionen</th>
               </tr>
             </thead>
             <tbody>
@@ -292,38 +251,23 @@ export default function UsersPage() {
                       </div>
                     </div>
                   </td>
-                  <td style={{ padding: 'var(--spacing-md)' }}>
-                    <span style={{
-                      padding: 'var(--spacing-xs) var(--spacing-sm)',
-                      borderRadius: 'var(--border-radius-full)',
-                      fontSize: 'var(--font-size-xs)',
-                      fontWeight: 'var(--font-weight-medium)',
-                      backgroundColor: user.role === 'admin' ? 'rgba(239, 68, 68, 0.1)' :
-                                     user.role === 'editor' ? 'rgba(37, 99, 235, 0.1)' :
-                                     'rgba(22, 163, 74, 0.1)',
-                      color: user.role === 'admin' ? 'var(--lyd-error)' :
-                             user.role === 'editor' ? 'var(--lyd-primary)' :
-                             'var(--lyd-success)'
-                    }}>
+                  <td>
+                    <span className={`luxury-badge ${
+                      user.role === 'admin' ? 'error' :
+                      user.role === 'editor' ? 'info' :
+                      'success'
+                    }`}>
                       {user.role === 'admin' ? 'Administrator' :
                        user.role === 'editor' ? 'Editor' :
                        'Viewer'}
                     </span>
                   </td>
-                  <td style={{ padding: 'var(--spacing-md)' }}>
-                    <span style={{
-                      padding: 'var(--spacing-xs) var(--spacing-sm)',
-                      borderRadius: 'var(--border-radius-full)',
-                      fontSize: 'var(--font-size-xs)',
-                      fontWeight: 'var(--font-weight-medium)',
-                      backgroundColor: user.isActive ? 'rgba(22, 163, 74, 0.1)' : 'rgba(107, 114, 128, 0.1)',
-                      color: user.isActive ? 'var(--lyd-success)' : 'var(--lyd-grey)'
-                    }}>
+                  <td>
+                    <span className={`luxury-badge ${user.isActive ? 'success' : 'warning'}`}>
                       {user.isActive ? 'Aktiv' : 'Inaktiv'}
                     </span>
                   </td>
                   <td style={{ 
-                    padding: 'var(--spacing-md)',
                     color: 'var(--lyd-grey)',
                     fontSize: 'var(--font-size-xs)'
                   }}>
@@ -332,22 +276,12 @@ export default function UsersPage() {
                       : 'Nie'
                     }
                   </td>
-                  <td style={{ padding: 'var(--spacing-md)', textAlign: 'right' }}>
-                    <div style={{ display: 'flex', gap: 'var(--spacing-xs)', justifyContent: 'flex-end' }}>
+                  <td>
+                    <div className="table-actions">
                       {session.user.permissions.includes('users.update') && (
-                        <button
+                        <button 
+                          className="lyd-button ghost icon-only"
                           onClick={() => console.log('Edit user:', user.id)}
-                          style={{
-                            padding: 'var(--spacing-xs)',
-                            borderRadius: 'var(--border-radius-sm)',
-                            border: '1px solid var(--lyd-line)',
-                            backgroundColor: 'transparent',
-                            color: 'var(--lyd-text)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
                           title="Bearbeiten"
                         >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -358,20 +292,11 @@ export default function UsersPage() {
                       )}
                       
                       {session.user.permissions.includes('users.update') && (
-                        <button
+                        <button 
+                          className="lyd-button ghost icon-only"
                           onClick={() => toggleUserStatus(user.id, user.isActive)}
-                          style={{
-                            padding: 'var(--spacing-xs)',
-                            borderRadius: 'var(--border-radius-sm)',
-                            border: '1px solid var(--lyd-line)',
-                            backgroundColor: 'transparent',
-                            color: user.isActive ? 'var(--lyd-warning)' : 'var(--lyd-success)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
                           title={user.isActive ? 'Deaktivieren' : 'Aktivieren'}
+                          style={{ color: user.isActive ? 'var(--lyd-warning)' : 'var(--lyd-success)' }}
                         >
                           {user.isActive ? (
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -388,20 +313,11 @@ export default function UsersPage() {
                       )}
 
                       {session.user.permissions.includes('users.delete') && user.id !== session.user.id && (
-                        <button
+                        <button 
+                          className="lyd-button ghost icon-only"
                           onClick={() => handleDeleteUser(user.id)}
-                          style={{
-                            padding: 'var(--spacing-xs)',
-                            borderRadius: 'var(--border-radius-sm)',
-                            border: '1px solid var(--lyd-error)',
-                            backgroundColor: 'transparent',
-                            color: 'var(--lyd-error)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
                           title="Löschen"
+                          style={{ color: 'var(--lyd-error)', borderColor: 'var(--lyd-error)' }}
                         >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <polyline points="3,6 5,6 21,6"/>

@@ -1,37 +1,110 @@
-import { PrismaClient } from '@prisma/client'
+/**
+ * Permission Enforcement System
+ * 
+ * Provides server-side permission checking and enforcement for the RBAC system.
+ * All API routes and server actions should use these functions to ensure proper access control.
+ */
 
-const prisma = new PrismaClient()
+import type { Session } from 'next-auth';
+import { prisma } from './db';
+import type { PermissionKey } from './rbac';
 
-export interface Permission {
-  id: string
-  name: string
-  displayName: string
-  description: string
-  category: string
-}
+// ============================================================================
+// PERMISSION CHECKING
+// ============================================================================
 
-export interface Role {
-  id: string
-  name: string
-  displayName: string
-  description: string
-  color: string
-  permissions: Permission[]
-}
+/**
+ * Check if a user has a specific permission
+ */
+export async function hasPermission(
+  session: Session | null,
+  permissionKey: PermissionKey
+): Promise<boolean> {
+  if (!session?.user?.id) {
+    return false;
+  }
 
-export interface UserWithPermissions {
-  id: string
-  email: string
-  name: string | null
-  role: string
-  roles: Role[]
-  permissions: string[]
+  try {
+    // Get user with all roles and their permissions
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!user || !user.isActive) {
+      return false;
+    }
+
+    // Collect all permissions from all roles
+    const userPermissions = new Set<string>();
+    
+    for (const userRole of user.roles) {
+      if (userRole.role.isActive) {
+        for (const rolePermission of userRole.role.permissions) {
+          userPermissions.add(rolePermission.permission.name);
+        }
+      }
+    }
+
+    return userPermissions.has(permissionKey);
+  } catch (error) {
+    console.error('Error checking permission:', error);
+    return false;
+  }
 }
 
 /**
- * Get user with all roles and permissions
+ * Check if user has ANY of the provided permissions
  */
-export async function getUserWithPermissions(userId: string): Promise<UserWithPermissions | null> {
+export async function hasAnyPermission(
+  session: Session | null,
+  permissionKeys: PermissionKey[]
+): Promise<boolean> {
+  if (permissionKeys.length === 0) return true;
+  
+  for (const key of permissionKeys) {
+    if (await hasPermission(session, key)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+/**
+ * Check if user has ALL of the provided permissions
+ */
+export async function hasAllPermissions(
+  session: Session | null,
+  permissionKeys: PermissionKey[]
+): Promise<boolean> {
+  for (const key of permissionKeys) {
+    if (!(await hasPermission(session, key))) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+/**
+ * Get all permissions for a user
+ */
+export async function getUserPermissions(userId: string): Promise<string[]> {
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -50,137 +123,216 @@ export async function getUserWithPermissions(userId: string): Promise<UserWithPe
           }
         }
       }
-    })
+    });
 
-    if (!user) return null
-
-    const roles: Role[] = user.roles.map(userRole => ({
-      id: userRole.role.id,
-      name: userRole.role.name,
-      displayName: userRole.role.displayName,
-      description: userRole.role.description,
-      color: userRole.role.color,
-      permissions: userRole.role.permissions.map(rp => ({
-        id: rp.permission.id,
-        name: rp.permission.name,
-        displayName: rp.permission.displayName,
-        description: rp.permission.description,
-        category: rp.permission.category || 'General'
-      }))
-    }))
-
-    // Collect all unique permissions
-    const permissions = Array.from(new Set(
-      roles.flatMap(role => role.permissions.map(p => p.name))
-    ))
-
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      roles,
-      permissions
+    if (!user || !user.isActive) {
+      return [];
     }
+
+    const userPermissions = new Set<string>();
+    
+    for (const userRole of user.roles) {
+      if (userRole.role.isActive) {
+        for (const rolePermission of userRole.role.permissions) {
+          userPermissions.add(rolePermission.permission.name);
+        }
+      }
+    }
+
+    return Array.from(userPermissions).sort();
   } catch (error) {
-    console.error('Error fetching user permissions:', error)
-    return null
-  } finally {
-    await prisma.$disconnect()
+    console.error('Error getting user permissions:', error);
+    return [];
+  }
+}
+
+// ============================================================================
+// PERMISSION ENFORCEMENT (Throws on failure)
+// ============================================================================
+
+/**
+ * Enforce that a user has a specific permission
+ * Throws Response(403) if permission is denied
+ */
+export async function enforcePermission(
+  session: Session | null,
+  permissionKey: PermissionKey
+): Promise<void> {
+  const hasAccess = await hasPermission(session, permissionKey);
+  
+  if (!hasAccess) {
+    throw new Response(`Forbidden: Missing permission '${permissionKey}'`, { 
+      status: 403,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 }
 
 /**
- * Check if user has specific permission
+ * Enforce that a user has ANY of the provided permissions
  */
-export async function hasPermission(userId: string, permission: string): Promise<boolean> {
+export async function enforceAnyPermission(
+  session: Session | null,
+  permissionKeys: PermissionKey[]
+): Promise<void> {
+  const hasAccess = await hasAnyPermission(session, permissionKeys);
+  
+  if (!hasAccess) {
+    throw new Response(`Forbidden: Missing any of permissions [${permissionKeys.join(', ')}]`, { 
+      status: 403,
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
+}
+
+/**
+ * Enforce that a user has ALL of the provided permissions
+ */
+export async function enforceAllPermissions(
+  session: Session | null,
+  permissionKeys: PermissionKey[]
+): Promise<void> {
+  const hasAccess = await hasAllPermissions(session, permissionKeys);
+  
+  if (!hasAccess) {
+    throw new Response(`Forbidden: Missing required permissions [${permissionKeys.join(', ')}]`, { 
+      status: 403,
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
+}
+
+// ============================================================================
+// USER SESSION HELPERS
+// ============================================================================
+
+/**
+ * Get current user with roles (for server components)
+ */
+export async function getCurrentUserWithRoles(session: Session | null) {
+  if (!session?.user?.id) {
+    return null;
+  }
+
   try {
-    const user = await getUserWithPermissions(userId)
-    return user?.permissions.includes(permission) || false
+    return await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        roles: {
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
   } catch (error) {
-    console.error('Error checking permission:', error)
-    return false
+    console.error('Error getting current user:', error);
+    return null;
   }
 }
 
 /**
- * Check if user has admin role
+ * Check if user is active and verified
  */
-export async function isAdmin(userId: string): Promise<boolean> {
+export async function isUserActive(userId: string): Promise<boolean> {
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { role: true }
-    })
-
-    return user?.role === 'admin'
+      select: { isActive: true, isVerified: true }
+    });
+    
+    return user?.isActive === true;
   } catch (error) {
-    console.error('Error checking admin status:', error)
-    return false
-  } finally {
-    await prisma.$disconnect()
+    console.error('Error checking if user is active:', error);
+    return false;
   }
 }
 
 /**
- * Require permission middleware for API routes
+ * Check if user has admin privileges
  */
-export function requirePermission(permission: string) {
-  return async (userId: string) => {
-    const hasRequiredPermission = await hasPermission(userId, permission)
-    if (!hasRequiredPermission) {
-      throw new Error(`Permission required: ${permission}`)
-    }
-    return true
+export async function isAdmin(session: Session | null): Promise<boolean> {
+  return await hasPermission(session, 'settings.system');
+}
+
+/**
+ * Check if user can manage other users
+ */
+export async function canManageUsers(session: Session | null): Promise<boolean> {
+  return await hasAnyPermission(session, ['users.write', 'users.invite', 'roles.assign']);
+}
+
+/**
+ * Check if user can publish content
+ */
+export async function canPublishContent(session: Session | null): Promise<boolean> {
+  return await hasAnyPermission(session, ['posts.publish', 'content.publish']);
+}
+
+// ============================================================================
+// RESOURCE OWNERSHIP CHECKS
+// ============================================================================
+
+/**
+ * Check if user owns or can modify a specific post
+ */
+export async function canModifyPost(
+  session: Session | null, 
+  postId: string
+): Promise<boolean> {
+  if (!session?.user?.id) return false;
+
+  // Admins and editors can modify any post
+  if (await hasAnyPermission(session, ['posts.write', 'settings.system'])) {
+    return true;
+  }
+
+  // Authors can modify their own posts
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      select: { authorId: true }
+    });
+    
+    return post?.authorId === session.user.id;
+  } catch (error) {
+    console.error('Error checking post ownership:', error);
+    return false;
   }
 }
 
 /**
- * Require admin middleware for API routes
+ * Check if user owns or can modify a specific content entry
  */
-export function requireAdmin() {
-  return async (userId: string) => {
-    const userIsAdmin = await isAdmin(userId)
-    if (!userIsAdmin) {
-      throw new Error('Admin access required')
-    }
-    return true
+export async function canModifyContent(
+  session: Session | null, 
+  contentId: string
+): Promise<boolean> {
+  if (!session?.user?.id) return false;
+
+  // Admins and editors can modify any content
+  if (await hasAnyPermission(session, ['content.write', 'settings.system'])) {
+    return true;
+  }
+
+  // Authors can modify their own content
+  try {
+    const content = await prisma.contentEntry.findUnique({
+      where: { id: contentId },
+      select: { authorId: true }
+    });
+    
+    return content?.authorId === session.user.id;
+  } catch (error) {
+    console.error('Error checking content ownership:', error);
+    return false;
   }
 }
-
-/**
- * Available permissions in the system
- */
-export const AVAILABLE_PERMISSIONS = {
-  // User Management
-  USERS_CREATE: 'users:create',
-  USERS_READ: 'users:read',
-  USERS_UPDATE: 'users:update',
-  USERS_DELETE: 'users:delete',
-  
-  // Role Management
-  ROLES_CREATE: 'roles:create',
-  ROLES_READ: 'roles:read',
-  ROLES_UPDATE: 'roles:update',
-  ROLES_DELETE: 'roles:delete',
-  
-  // Content Management
-  POSTS_CREATE: 'posts:create',
-  POSTS_READ: 'posts:read',
-  POSTS_UPDATE: 'posts:update',
-  POSTS_DELETE: 'posts:delete',
-  POSTS_PUBLISH: 'posts:publish',
-  
-  // Media Management
-  MEDIA_CREATE: 'media:create',
-  MEDIA_READ: 'media:read',
-  MEDIA_UPDATE: 'media:update',
-  MEDIA_DELETE: 'media:delete',
-  
-  // Settings
-  SETTINGS_READ: 'settings:read',
-  SETTINGS_UPDATE: 'settings:update',
-} as const
-
-export type PermissionKey = keyof typeof AVAILABLE_PERMISSIONS
-export type PermissionValue = typeof AVAILABLE_PERMISSIONS[PermissionKey]

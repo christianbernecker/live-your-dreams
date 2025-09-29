@@ -1,0 +1,50 @@
+{
+  "name": "@lyd/design-system",
+  "version": "2.0.0",
+  "description": "Live Your Dreams - Design System Package (Lokale CSS Distribution)",
+  "main": "dist/master.css",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./css": "./dist/master.css",
+    "./master.css": "./dist/master.css"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:css && npm run build:types",
+    "build:css": "node scripts/build-css.js",
+    "build:types": "node scripts/build-types.js",
+    "update:master": "curl -o dist/master.css https://designsystem.liveyourdreams.online/shared/master.css",
+    "sync": "npm run update:master && npm run build",
+    "dev": "npm run build && npm run build -- --watch",
+    "clean": "rimraf dist/*"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "live-your-dreams",
+    "luxury",
+    "premium"
+  ],
+  "author": "Live Your Dreams Team",
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christianbernecker/live-your-dreams.git",
+    "directory": "packages/design-system"
+  }
+}
+
