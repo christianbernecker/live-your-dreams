@@ -57,10 +57,17 @@ export default function BlogDashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/blog');
+        const response = await fetch('/api/blog', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
         
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `HTTP ${response.status}`);
         }
 
         const data = await response.json();
