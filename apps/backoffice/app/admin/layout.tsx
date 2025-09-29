@@ -6,7 +6,7 @@
 
 import AdminSubNavigation from '@/components/admin/AdminSubNavigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { ToastProvider } from '@/components/ui/Toast';
+// Toast provider not needed - toasts are handled per-component
 import { auth } from '@/lib/nextauth';
 import { redirect } from 'next/navigation';
 
@@ -45,7 +45,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
       subtitle="System-Verwaltung und Konfiguration"
       userEmail={session.user.email}
     >
-      <ToastProvider>
+      <>
         {/* Admin Sub-Navigation */}
         <AdminSubNavigation />
         
@@ -53,7 +53,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
         <div className="lyd-stack lg">
           {children}
         </div>
-      </ToastProvider>
+      </>
     </DashboardLayout>
   );
 }

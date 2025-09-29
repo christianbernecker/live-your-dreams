@@ -63,32 +63,60 @@ export const Toast = ({ type, title, message, duration = 5000, onClose }: ToastP
 };
 
 // Toast Manager Hook
+// Global toast manager
+let toastManager: any = null;
+
 export const useToast = () => {
   const [toasts, setToasts] = useState<Array<ToastProps & { id: string }>>([]);
   
-  const addToast = (toast: Omit<ToastProps, 'onClose'>) => {
-    const id = Math.random().toString(36).substr(2, 9);
-    setToasts(prev => [...prev, { ...toast, id, onClose: () => removeToast(id) }]);
-  };
+  // Initialize global manager if not exists
+  if (!toastManager) {
+    toastManager = {
+      toasts: [],
+      listeners: new Set(),
+      
+      addToast: (toast: Omit<ToastProps, 'onClose'>) => {
+        const id = Math.random().toString(36).substr(2, 9);
+        const newToast = { ...toast, id, onClose: () => toastManager.removeToast(id) };
+        toastManager.toasts.push(newToast);
+        toastManager.listeners.forEach((listener: any) => listener());
+      },
+      
+      removeToast: (id: string) => {
+        toastManager.toasts = toastManager.toasts.filter((toast: any) => toast.id !== id);
+        toastManager.listeners.forEach((listener: any) => listener());
+      },
+      
+      subscribe: (listener: () => void) => {
+        toastManager.listeners.add(listener);
+        return () => toastManager.listeners.delete(listener);
+      }
+    };
+  }
   
-  const removeToast = (id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
-  };
+  useEffect(() => {
+    const updateToasts = () => {
+      setToasts([...toastManager.toasts]);
+    };
+    
+    updateToasts();
+    return toastManager.subscribe(updateToasts);
+  }, []);
   
   const showSuccess = (title: string, message: string) => {
-    addToast({ type: 'success', title, message });
+    toastManager.addToast({ type: 'success', title, message });
   };
   
   const showError = (title: string, message: string) => {
-    addToast({ type: 'error', title, message });
+    toastManager.addToast({ type: 'error', title, message });
   };
   
   const showWarning = (title: string, message: string) => {
-    addToast({ type: 'warning', title, message });
+    toastManager.addToast({ type: 'warning', title, message });
   };
   
   const showInfo = (title: string, message: string) => {
-    addToast({ type: 'info', title, message });
+    toastManager.addToast({ type: 'info', title, message });
   };
   
   return {
