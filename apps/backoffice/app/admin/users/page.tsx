@@ -193,24 +193,32 @@ export default function UserManagementPage() {
               Durchsuchen Sie Benutzer nach Namen oder E-Mail und filtern Sie nach Rollen und Status.
             </p>
           </div>
-          {/* Filter Layout: CSS-First Approach - Utility Klassen aus master.css */}
-          <div className="d-flex gap-md items-center" style={{ flexWrap: 'wrap' }}>
+          {/* Filter Layout: CSS-First + Component-Height Alignment */}
+          <div className="d-flex gap-md" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
             
-            {/* Search Input mit Icon - Design System Component API verwenden */}
-            <div style={{ flex: '2 1 250px', minWidth: '200px' }}>
+            {/* Search Input mit manueller Icon-Position (Component-API funktioniert nicht) */}
+            <div style={{ flex: '2 1 250px', minWidth: '200px', position: 'relative' }}>
               <Input
                 type="text"
                 placeholder="Benutzer suchen..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                icon={
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
-                  </svg>
-                }
-                iconPosition="right"
+                style={{ paddingRight: '40px' }}
               />
+              <div style={{
+                position: 'absolute',
+                right: '12px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'var(--lyd-text-secondary, #6b7280)',
+                pointerEvents: 'none',
+                zIndex: 2
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
             </div>
             
             {/* Role Filter */}
@@ -243,42 +251,46 @@ export default function UserManagementPage() {
               />
             </div>
             
-            {/* Reset Button - Design System Component */}
-            <button 
-              type="button"
-              onClick={() => {
-                setSearchTerm('');
-                setRoleFilter('');
-                setStatusFilter('');
-              }}
-              style={{
-                backgroundColor: 'transparent',
-                border: '1px solid var(--lyd-primary, #3b82f6)',
-                color: 'var(--lyd-primary, #3b82f6)',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                fontSize: '14px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--lyd-primary-50, #eff6ff)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 6h18"/>
-                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                <path d="M8 6V4c0-1 1-2 2-2h4c0 1 1 2 1 2v2"/>
-              </svg>
-              Zurücksetzen
-            </button>
+            {/* Reset Button - Height-aligned mit Input-Komponenten */}
+            <div style={{ height: '40px', display: 'flex', alignItems: 'center' }}>
+              <button 
+                type="button"
+                onClick={() => {
+                  setSearchTerm('');
+                  setRoleFilter('');
+                  setStatusFilter('');
+                }}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid var(--lyd-primary, #3b82f6)',
+                  color: 'var(--lyd-primary, #3b82f6)',
+                  borderRadius: '6px',
+                  padding: '8px 16px',
+                  height: '40px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--lyd-primary-50, #eff6ff)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 6h18"/>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c0 1 1 2 1 2v2"/>
+                </svg>
+                Zurücksetzen
+              </button>
+            </div>
             
           </div>
         </div>
