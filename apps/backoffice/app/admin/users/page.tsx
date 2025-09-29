@@ -463,11 +463,11 @@ export default function UserManagementPage() {
               background-color: var(--lyd-gray-50, #f9fafb) !important;
             }
             @media (max-width: 768px) {
-              div[style*="gridTemplateColumns"] {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 12px !important;
-              }
+            div[style*="gridTemplateColumns"] {
+              display: flex !important;
+              flex-direction: column !important;
+              gap: var(--spacing-sm) !important;
+            }
             }
           `}</style>
         </div>
