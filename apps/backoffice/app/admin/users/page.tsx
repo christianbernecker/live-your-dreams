@@ -13,7 +13,7 @@
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Toast, useToast } from '@/components/ui/Toast';
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 // ============================================================================
 // TYPES
@@ -302,67 +302,64 @@ const UserForm: React.FC<UserFormProps> = ({ user, roles, onSubmit, onCancel, is
             </div>
           </div>
 
-          {/* Roles */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-              Rollen
-            </label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {roles.map(role => (
-                <label 
-                  key={role.id} 
-                  style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '8px', 
-                    cursor: 'pointer',
-                    padding: '8px',
-                    borderRadius: '4px',
-                    backgroundColor: formData.roleIds.includes(role.id) ? 'var(--lyd-primary-50, #eff6ff)' : 'transparent'
-                  }}
-                >
-                  {/* FIXED CHECKBOX STYLING */}
-                  <input
-                    type="checkbox"
-                    checked={formData.roleIds.includes(role.id)}
-                    onChange={() => handleRoleToggle(role.id)}
-                    style={{
-                      width: '16px',
-                      height: '16px',
-                      accentColor: 'var(--lyd-primary, #3b82f6)'
-                    }}
-                  />
-                  <span style={{ fontSize: '14px' }}>{role.displayName}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+           {/* Roles - DESIGN SYSTEM CHECKBOXES */}
+           <div>
+             <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+               Rollen
+             </label>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+               {roles.map(role => (
+                 <label 
+                   key={role.id} 
+                   className={`lyd-checkbox-group ${formData.roleIds.includes(role.id) ? 'active' : ''}`}
+                 >
+                   <input
+                     type="checkbox"
+                     className="lyd-checkbox-input"
+                     checked={formData.roleIds.includes(role.id)}
+                     onChange={() => handleRoleToggle(role.id)}
+                   />
+                   <span className="lyd-checkbox">
+                     <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24">
+                       <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                     </svg>
+                   </span>
+                   <div>
+                     <div className="lyd-checkbox-label">{role.displayName}</div>
+                     <div className="lyd-checkbox-description">
+                       {role.name === 'admin' && 'Vollzugriff auf alle Funktionen'}
+                       {role.name === 'editor' && 'Kann Inhalte bearbeiten und verwalten'}
+                       {role.name === 'author' && 'Kann Inhalte erstellen und bearbeiten'}
+                       {role.name === 'viewer' && 'Nur Lesezugriff auf Inhalte'}
+                     </div>
+                   </div>
+                 </label>
+               ))}
+             </div>
+           </div>
 
-          {/* Status */}
-          <div>
-            <label style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '8px', 
-              cursor: 'pointer',
-              padding: '8px',
-              borderRadius: '4px',
-              backgroundColor: formData.isActive ? 'var(--lyd-success-50, #ecfdf5)' : 'var(--lyd-gray-50, #f9fafb)'
-            }}>
-              {/* FIXED CHECKBOX STYLING */}
-              <input
-                type="checkbox"
-                checked={formData.isActive}
-                onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  accentColor: 'var(--lyd-success, #10b981)'
-                }}
-              />
-              <span style={{ fontWeight: '500' }}>Benutzer ist aktiv</span>
-            </label>
-          </div>
+           {/* Status - DESIGN SYSTEM CHECKBOX */}
+           <div>
+             <label className={`lyd-checkbox-group success ${formData.isActive ? 'success' : ''}`}>
+               <input
+                 type="checkbox"
+                 className="lyd-checkbox-input"
+                 checked={formData.isActive}
+                 onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
+               />
+               <span className="lyd-checkbox">
+                 <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24">
+                   <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                 </svg>
+               </span>
+               <div>
+                 <div className="lyd-checkbox-label">Benutzer ist aktiv</div>
+                 <div className="lyd-checkbox-description">
+                   Aktive Benutzer können sich einloggen und das System verwenden
+                 </div>
+               </div>
+             </label>
+           </div>
 
           {/* Actions */}
           <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
@@ -620,26 +617,50 @@ export default function AdminUsersPage() {
     if (!selectedUser) return;
 
     try {
+      console.log('🗑️ DELETE Request:', { userId: selectedUser.id, name: selectedUser.name });
+      
       const response = await fetch(`/api/users/${selectedUser.id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
 
+      console.log('📡 DELETE Response:', response.status, response.statusText);
+
       if (response.ok) {
-        // CRITICAL: Update UI state immediately to remove user from list
+        const result = await response.text();
+        console.log('✅ DELETE Success:', result);
+        
+        // CRITICAL: Update UI state immediately AFTER successful API call
         setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
         setShowDeleteModal(false);
         setSelectedUser(null);
-        showSuccess('Benutzer gelöscht', `${selectedUser.name} wurde erfolgreich entfernt.`);
+        showSuccess('Benutzer gelöscht', `${selectedUser.name} wurde erfolgreich aus der Datenbank entfernt.`);
       } else if (response.status === 401) {
+        showError('Sitzung abgelaufen', 'Bitte melden Sie sich erneut an.');
         window.location.href = '/api/auth/signin';
         return;
       } else if (response.status === 403) {
         showError('Zugriff verweigert', 'Sie haben keine Berechtigung zum Löschen von Benutzern.');
+      } else if (response.status === 404) {
+        // User already deleted - remove from UI
+        setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
+        setShowDeleteModal(false);
+        setSelectedUser(null);
+        showWarning('Benutzer nicht gefunden', 'Der Benutzer wurde bereits gelöscht.');
+      } else if (response.status >= 500) {
+        const errorText = await response.text();
+        console.error('❌ DELETE Server Error:', response.status, errorText);
+        showError('Server-Fehler', `Datenbank-Fehler (${response.status}). Bitte versuchen Sie es später erneut.`);
       } else {
-        showError('Fehler beim Löschen', 'Der Benutzer konnte nicht gelöscht werden.');
+        const errorText = await response.text();
+        console.error('❌ DELETE Error:', response.status, errorText);
+        showError('Fehler beim Löschen', `HTTP ${response.status}: ${errorText}`);
       }
     } catch (error) {
-      showError('Netzwerkfehler', 'Verbindung fehlgeschlagen.');
+      console.error('❌ DELETE Network Error:', error);
+      showError('Netzwerkfehler', 'Verbindung zur Datenbank fehlgeschlagen.');
     }
   };
 
@@ -654,45 +675,86 @@ export default function AdminUsersPage() {
       const url = isEdit ? `/api/users/${selectedUser.id}` : '/api/users';
       const method = isEdit ? 'PATCH' : 'POST';
 
+      console.log('🔄 CRUD Operation:', { method, url, userData });
+
+      // Prepare data for API
+      const apiData = {
+        name: userData.name,
+        email: userData.email,
+        firstName: userData.firstName || '',
+        lastName: userData.lastName || '',
+        isActive: userData.isActive,
+        emailVerified: userData.isActive, // Set verified if active
+        roleIds: userData.roleIds || []
+      };
+
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(apiData)
       });
+
+      console.log('📡 API Response:', response.status, response.statusText);
 
       if (response.ok) {
         const result = await response.json();
+        console.log('✅ API Success:', result);
         
         if (isEdit) {
-          // Update existing user in list
+          // Update existing user in list with full user data
+          const updatedUser = {
+            ...selectedUser,
+            ...apiData,
+            roles: roles.filter(role => apiData.roleIds.includes(role.id))
+          };
+          
           setUsers(prev => prev.map(u => 
-            u.id === selectedUser.id ? { ...u, ...userData } : u
+            u.id === selectedUser.id ? updatedUser : u
           ));
           setShowEditModal(false);
           showSuccess('Benutzer aktualisiert', `${userData.name} wurde erfolgreich bearbeitet.`);
         } else {
-          // Add new user to list
-          setUsers(prev => [...prev, result.user]);
+          // Add new user to list with API response
+          const newUser = result.user || {
+            id: result.id || Math.random().toString(36).substr(2, 9),
+            ...apiData,
+            roles: roles.filter(role => apiData.roleIds.includes(role.id))
+          };
+          
+          console.log('👤 New User Added:', newUser);
+          setUsers(prev => [...prev, newUser]);
           setShowCreateModal(false);
           showSuccess('Benutzer erstellt', `${userData.name} wurde erfolgreich hinzugefügt.`);
         }
         
         setSelectedUser(null);
         
-      } else if (response.status === 401) {
-        window.location.href = '/api/auth/signin';
-        return;
-      } else if (response.status === 403) {
-        showError('Zugriff verweigert', 'Sie haben keine Berechtigung für diese Aktion.');
-      } else if (response.status === 409) {
-        showError('Benutzer existiert bereits', 'Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.');
       } else {
-        showError('Fehler bei der Benutzeroperation', 'Bitte versuchen Sie es erneut.');
+        // Handle API errors with detailed logging
+        const errorText = await response.text();
+        console.error('❌ API Error:', response.status, errorText);
+        
+        if (response.status === 401) {
+          showError('Sitzung abgelaufen', 'Bitte melden Sie sich erneut an.');
+          window.location.href = '/api/auth/signin';
+          return;
+        } else if (response.status === 403) {
+          showError('Zugriff verweigert', 'Sie haben keine Berechtigung für diese Aktion.');
+        } else if (response.status === 409) {
+          showError('Benutzer existiert bereits', 'Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.');
+        } else if (response.status === 422) {
+          showError('Validierungsfehler', 'Die eingegebenen Daten sind ungültig.');
+        } else if (response.status >= 500) {
+          showError('Server-Fehler', `API-Server nicht erreichbar (${response.status}). Bitte versuchen Sie es später erneut.`);
+        } else {
+          showError('Fehler bei der Benutzeroperation', `HTTP ${response.status}: ${errorText}`);
+        }
       }
     } catch (error) {
-      showError('Netzwerkfehler', 'Prüfen Sie Ihre Internetverbindung.');
+      console.error('❌ Network Error:', error);
+      showError('Netzwerkfehler', 'Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
     }
   };
 
