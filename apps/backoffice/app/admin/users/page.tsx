@@ -195,35 +195,45 @@ export default function UserManagementPage() {
           </div>
           {/* ROBUST FILTER LAYOUT - CSS GRID für garantierte Positionierung */}
           <div style={{
-            display: 'grid !important',
+            display: 'grid',
             gridTemplateColumns: '2fr 1fr 1fr auto',
             gap: '16px',
-            alignItems: 'start !important',
+            alignItems: 'start',
             width: '100%',
             marginBottom: '0'
           }}>
             
-            {/* Search Input - Manuelle Icon-Positionierung (Component API defekt) */}
+            {/* Search Input - NATIVE HTML für garantierte Kontrolle */}
             <div style={{ 
               position: 'relative',
               minWidth: '0' // Grid overflow fix
             }}>
-              <Input
+              <input
                 type="text"
                 placeholder="Benutzer suchen..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ paddingRight: '40px !important' }}
+                className="lyd-input-search-with-icon"
+                style={{
+                  width: '100%',
+                  height: '40px',
+                  padding: '8px 40px 8px 12px',
+                  border: '1px solid var(--lyd-border, #d1d5db)',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  backgroundColor: 'white',
+                  outline: 'none'
+                }}
               />
-              {/* Icon manuell RECHTS positioniert */}
+              {/* Icon RECHTS - Absolute Position ohne !important */}
               <div style={{
-                position: 'absolute !important',
-                right: '12px !important',
-                top: '50% !important',
-                transform: 'translateY(-50%) !important',
-                color: 'var(--lyd-text-secondary, #6b7280) !important',
-                pointerEvents: 'none !important',
-                zIndex: '10 !important'
+                position: 'absolute',
+                right: '12px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: 'var(--lyd-text-secondary, #6b7280)',
+                pointerEvents: 'none',
+                zIndex: 10
               }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8"/>
@@ -265,29 +275,30 @@ export default function UserManagementPage() {
             {/* Reset Button - TOP aligned mit Input-Höhe */}
             <button 
               type="button"
+              className="lyd-button-reset-custom"
               onClick={() => {
                 setSearchTerm('');
                 setRoleFilter('');
                 setStatusFilter('');
               }}
               style={{
-                backgroundColor: 'transparent !important',
-                border: '1px solid var(--lyd-primary, #3b82f6) !important',
-                color: 'var(--lyd-primary, #3b82f6) !important',
-                borderRadius: '6px !important',
-                padding: '8px 16px !important',
-                height: '40px !important',
-                fontSize: '14px !important',
-                fontWeight: '500 !important',
-                cursor: 'pointer !important',
-                display: 'flex !important',
-                alignItems: 'center !important',
-                justifyContent: 'center !important',
-                gap: '8px !important',
-                whiteSpace: 'nowrap !important',
-                minWidth: '120px !important',
-                marginTop: '0px !important',
-                alignSelf: 'start !important'
+                backgroundColor: 'transparent',
+                border: '1px solid var(--lyd-primary, #3b82f6)',
+                color: 'var(--lyd-primary, #3b82f6)',
+                borderRadius: '6px',
+                padding: '8px 16px',
+                height: '40px',
+                fontSize: '14px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                whiteSpace: 'nowrap',
+                minWidth: '120px',
+                marginTop: '0px',
+                alignSelf: 'start'
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -302,6 +313,13 @@ export default function UserManagementPage() {
           
           {/* Mobile Responsive - Stacked Layout */}
           <style jsx>{`
+            .lyd-input-search-with-icon:focus {
+              border-color: var(--lyd-primary, #3b82f6) !important;
+              box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+            }
+            .lyd-button-reset-custom:hover {
+              background-color: var(--lyd-primary-50, #eff6ff) !important;
+            }
             @media (max-width: 768px) {
               div[style*="gridTemplateColumns"] {
                 display: flex !important;
