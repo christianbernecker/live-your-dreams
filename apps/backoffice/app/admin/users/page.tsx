@@ -9,11 +9,144 @@
 
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { useCallback, useEffect, useState } from 'react';
 
 // ============================================================================
 // TYPES
+// ============================================================================
+
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+interface CustomSelectProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  options: SelectOption[];
+}
+
+// ============================================================================
+// CUSTOM DROPDOWN COMPONENT
+// ============================================================================
+
+const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholder, options }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const selectedOption = options.find(option => option.value === value);
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (isOpen && !target.closest('.lyd-custom-select-container')) {
+        setIsOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
+  
+  return (
+    <div className="lyd-custom-select-container" style={{ position: 'relative', width: '100%' }}>
+      {/* Trigger Button */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="lyd-custom-select-trigger"
+        style={{
+          width: '100%',
+          height: '40px',
+          padding: '8px 32px 8px 12px',
+          border: '1px solid var(--lyd-border, #d1d5db)',
+          borderRadius: '6px',
+          fontSize: '14px',
+          backgroundColor: 'white',
+          textAlign: 'left',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          outline: 'none'
+        }}
+      >
+        <span style={{ 
+          color: value ? 'var(--lyd-text, #374151)' : 'var(--lyd-text-secondary, #6b7280)' 
+        }}>
+          {selectedOption ? selectedOption.label : placeholder}
+        </span>
+        <svg 
+          width="16" 
+          height="16" 
+          viewBox="0 0 20 20" 
+          fill="none" 
+          style={{ 
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s ease'
+          }}
+        >
+          <path 
+            stroke="var(--lyd-text-secondary, #6b7280)" 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth="1.5" 
+            d="m6 8 4 4 4-4"
+          />
+        </svg>
+      </button>
+      
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div
+          className="lyd-custom-select-dropdown"
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            backgroundColor: 'white',
+            border: '1px solid var(--lyd-border, #d1d5db)',
+            borderRadius: '6px',
+            marginTop: '4px',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            zIndex: 50,
+            maxHeight: '200px',
+            overflowY: 'auto'
+          }}
+        >
+          {options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+              }}
+              className="lyd-custom-select-option"
+              style={{
+                width: '100%',
+                padding: '8px 12px',
+                fontSize: '14px',
+                textAlign: 'left',
+                border: 'none',
+                backgroundColor: value === option.value ? 'var(--lyd-primary-50, #eff6ff)' : 'white',
+                color: value === option.value ? 'var(--lyd-primary, #3b82f6)' : 'var(--lyd-text, #374151)',
+                cursor: 'pointer',
+                display: 'block',
+                outline: 'none'
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ============================================================================
 
 interface User {
@@ -224,7 +357,7 @@ export default function UserManagementPage() {
                   outline: 'none'
                 }}
               />
-              {/* Icon RECHTS - Absolute Position ohne !important */}
+              {/* Icon RECHTS - Absolute Position */}
               <div style={{
                 position: 'absolute',
                 right: '12px',
@@ -241,63 +374,34 @@ export default function UserManagementPage() {
               </div>
             </div>
             
-            {/* Role Filter - Native Select für garantierte Funktionalität */}
-            <div style={{ minWidth: '0' }}>
-              <select
+            {/* Role Filter - Custom Dropdown für Design System Styling */}
+            <div style={{ minWidth: '0', position: 'relative' }}>
+              <CustomSelect
                 value={roleFilter}
-                onChange={(e) => setRoleFilter(e.target.value)}
-                className="lyd-select-role-filter"
-                style={{
-                  width: '100%',
-                  height: '40px',
-                  padding: '8px 32px 8px 12px',
-                  border: '1px solid var(--lyd-border, #d1d5db)',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  backgroundColor: 'white',
-                  outline: 'none',
-                  appearance: 'none',
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
-                  backgroundPosition: 'right 8px center',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: '16px'
-                }}
-              >
-                <option value="">Alle Rollen</option>
-                {roles.map(role => (
-                  <option key={role.name} value={role.name}>
-                    {role.displayName}
-                  </option>
-                ))}
-              </select>
+                onChange={setRoleFilter}
+                placeholder="Alle Rollen"
+                options={[
+                  { value: '', label: 'Alle Rollen' },
+                  ...roles.map(role => ({
+                    value: role.name,
+                    label: role.displayName
+                  }))
+                ]}
+              />
             </div>
             
-            {/* Status Filter - Native Select für garantierte Funktionalität */}
-            <div style={{ minWidth: '0' }}>
-              <select
+            {/* Status Filter - Custom Dropdown für Design System Styling */}
+            <div style={{ minWidth: '0', position: 'relative' }}>
+              <CustomSelect
                 value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="lyd-select-status-filter"
-                style={{
-                  width: '100%',
-                  height: '40px',
-                  padding: '8px 32px 8px 12px',
-                  border: '1px solid var(--lyd-border, #d1d5db)',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  backgroundColor: 'white',
-                  outline: 'none',
-                  appearance: 'none',
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
-                  backgroundPosition: 'right 8px center',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: '16px'
-                }}
-              >
-                <option value="">Alle Status</option>
-                <option value="true">Aktiv</option>
-                <option value="false">Inaktiv</option>
-              </select>
+                onChange={setStatusFilter}
+                placeholder="Alle Status"
+                options={[
+                  { value: '', label: 'Alle Status' },
+                  { value: 'true', label: 'Aktiv' },
+                  { value: 'false', label: 'Inaktiv' }
+                ]}
+              />
             </div>
             
             {/* Reset Button - TOP aligned mit Input-Höhe */}
@@ -339,7 +443,7 @@ export default function UserManagementPage() {
             
           </div>
           
-          {/* CSS Styles für Native Components */}
+          {/* CSS Styles für Custom Components */}
           <style jsx>{`
             .lyd-input-search-with-icon:focus {
               border-color: var(--lyd-primary, #3b82f6) !important;
@@ -348,14 +452,15 @@ export default function UserManagementPage() {
             .lyd-button-reset-custom:hover {
               background-color: var(--lyd-primary-50, #eff6ff) !important;
             }
-            .lyd-select-role-filter:focus,
-            .lyd-select-status-filter:focus {
+            .lyd-custom-select-trigger:focus {
               border-color: var(--lyd-primary, #3b82f6) !important;
               box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
             }
-            .lyd-select-role-filter:hover,
-            .lyd-select-status-filter:hover {
+            .lyd-custom-select-trigger:hover {
               border-color: var(--lyd-border-hover, #9ca3af) !important;
+            }
+            .lyd-custom-select-option:hover {
+              background-color: var(--lyd-gray-50, #f9fafb) !important;
             }
             @media (max-width: 768px) {
               div[style*="gridTemplateColumns"] {
