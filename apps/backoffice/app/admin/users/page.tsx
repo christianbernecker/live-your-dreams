@@ -395,11 +395,7 @@ export default function UserManagementPage() {
           lastName: userData.lastName || '',
           isActive: userData.isActive ?? true,
           emailVerified: userData.isActive ?? true,
-          roles: userData.roleIds ? 
-            userData.roleIds.map(roleId => 
-              roles.find(r => r.id === roleId) || { id: roleId, name: 'unknown', displayName: 'Unknown' }
-            ) : 
-            [{ id: '4', name: 'viewer', displayName: 'Betrachter' }]
+          roles: [{ id: '4', name: 'viewer', displayName: 'Betrachter' }] // Default role for demo
         };
         
         setUsers(prevUsers => [newUser, ...prevUsers]);
@@ -437,11 +433,7 @@ export default function UserManagementPage() {
           lastName: userData.lastName || '',
           isActive: userData.isActive ?? true,
           emailVerified: userData.isActive ?? true,
-          roles: userData.roleIds ? 
-            userData.roleIds.map(roleId => 
-              roles.find(r => r.id === roleId) || { id: roleId, name: 'unknown', displayName: 'Unknown' }
-            ) : 
-            [{ id: '4', name: 'viewer', displayName: 'Betrachter' }]
+          roles: [{ id: '4', name: 'viewer', displayName: 'Betrachter' }] // Default role for demo
         };
         
         setUsers(prevUsers => [newUser, ...prevUsers]);
