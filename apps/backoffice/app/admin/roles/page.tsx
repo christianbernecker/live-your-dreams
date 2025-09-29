@@ -312,7 +312,7 @@ const RoleForm: React.FC<RoleFormProps> = ({ role, permissions, onSubmit, onCanc
                 onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
               />
               <span className="lyd-checkbox">
-                <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24" fill="none" strokeWidth="3">
+                <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                   <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>

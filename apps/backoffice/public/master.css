@@ -2478,10 +2478,7 @@ body.modal-open {
     height: 12px;
     opacity: 0;
     transition: all 0.2s ease;
-    stroke: var(--lyd-bg, #ffffff) !important;
-    stroke-width: 3;
     fill: none;
-    color: var(--lyd-bg, #ffffff) !important;
 }
 
 /* CRITICAL: Checkmark Show State - USES ~ SELECTOR */
@@ -2514,7 +2511,6 @@ body.modal-open {
 .lyd-checkbox-group.small .lyd-checkbox-checkmark {
     width: 10px;
     height: 10px;
-    stroke-width: 2.5;
 }
 
 .lyd-checkbox-group.large .lyd-checkbox {
@@ -2525,7 +2521,6 @@ body.modal-open {
 .lyd-checkbox-group.large .lyd-checkbox-checkmark {
     width: 16px;
     height: 16px;
-    stroke-width: 3.5;
 }
 
 /* Error State */
