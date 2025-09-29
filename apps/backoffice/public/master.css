@@ -1911,36 +1911,41 @@ body.modal-open {
    TOAST COMPONENTS - Live Your Dreams Design System
    ======================================== */
 
-/* Toast Container */
+/* Toast Container - ENHANCED VISIBILITY */
 .lyd-toast-container {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 10000;
+    z-index: 99999;
     display: flex;
     flex-direction: column;
     gap: 12px;
     max-width: 400px;
     pointer-events: none;
+    width: auto;
+    height: auto;
 }
 
-/* Base Toast Styling */
+/* Base Toast Styling - CONTAINER BASED */
 .lyd-toast {
-    display: flex;
+    display: flex !important;
     align-items: flex-start;
     gap: 12px;
     padding: 16px;
-    background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    border-left: 4px solid var(--lyd-gray-300);
+    background: white !important;
+    border-radius: var(--radius-lg, 8px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--lyd-gray-300) !important;
     min-width: 320px;
     max-width: 400px;
+    width: 100%;
     pointer-events: auto;
     position: relative;
     transform: translateX(0);
     opacity: 1;
     transition: all 0.3s ease;
+    margin: 0;
 }
 
 .lyd-toast.hiding {
@@ -2196,113 +2201,130 @@ body.modal-open {
 
 /* ========================================
    CHECKBOX COMPONENTS - Live Your Dreams Design System
+   AUTHENTIC IMPLEMENTATION - EXACT MATCH
    ======================================== */
 
-/* Checkbox Group Container */
+/* Checkbox Group Container - FIXED STRUCTURE */
 .lyd-checkbox-group {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: var(--spacing-sm, 12px);
+    margin-bottom: var(--spacing-md, 16px);
     cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
     padding: 8px;
     border-radius: var(--radius-md, 6px);
-    transition: background-color 0.2s ease;
-    user-select: none;
 }
 
 .lyd-checkbox-group:hover {
     background-color: var(--lyd-gray-50, #f9fafb);
 }
 
-/* Hidden Native Input */
+/* Hidden Native Input - CORRECTED POSITIONING */
 .lyd-checkbox-input {
     position: absolute;
     opacity: 0;
+    cursor: pointer;
     width: 0;
     height: 0;
 }
 
-/* Custom Checkbox Visual */
+/* Custom Checkbox Visual - ORIGINAL DESIGN SYSTEM SPECS */
 .lyd-checkbox {
     position: relative;
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--lyd-border, #d1d5db);
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 2px solid var(--lyd-line, #d1d5db);
     border-radius: var(--radius-sm, 4px);
-    background-color: white;
     transition: all 0.2s ease;
     flex-shrink: 0;
-    margin-top: 2px;
 }
 
-/* Checkbox States */
-.lyd-checkbox-input:checked + .lyd-checkbox {
-    background-color: var(--lyd-primary, #3b82f6);
+/* CRITICAL: Hover State - DESIGN SYSTEM AUTHENTIC */
+.lyd-checkbox-group:hover .lyd-checkbox {
     border-color: var(--lyd-primary, #3b82f6);
 }
 
-.lyd-checkbox-input:disabled + .lyd-checkbox {
-    opacity: 0.5;
+/* CRITICAL: Checked State - USES ~ NOT + SELECTOR */
+.lyd-checkbox-input:checked ~ .lyd-checkbox {
+    background: linear-gradient(135deg, var(--lyd-primary, #3b82f6) 0%, var(--lyd-royal-blue, #1d4ed8) 100%);
+    border-color: var(--lyd-primary, #3b82f6);
+}
+
+/* Disabled State */
+.lyd-checkbox-input:disabled ~ .lyd-checkbox {
+    background: var(--lyd-gray-100, #f3f4f6);
+    border-color: var(--lyd-gray-300, #d1d5db);
     cursor: not-allowed;
 }
 
-.lyd-checkbox-input:focus + .lyd-checkbox {
+.lyd-checkbox-input:disabled ~ .lyd-checkbox-label {
+    color: var(--lyd-gray-500, #6b7280);
+    cursor: not-allowed;
+}
+
+/* Focus State */
+.lyd-checkbox-input:focus ~ .lyd-checkbox {
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
-/* Checkmark Icon */
+/* Checkmark Icon - DESIGN SYSTEM EXACT SPECS */
 .lyd-checkbox-checkmark {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    stroke: white;
-    stroke-width: 2;
-    fill: none;
+    transform: translate(-50%, -50%) scale(0);
+    width: 12px;
+    height: 12px;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
+    stroke: white;
+    stroke-width: 3;
+    fill: none;
 }
 
-.lyd-checkbox-input:checked + .lyd-checkbox .lyd-checkbox-checkmark {
+/* CRITICAL: Checkmark Show State - USES ~ SELECTOR */
+.lyd-checkbox-input:checked ~ .lyd-checkbox .lyd-checkbox-checkmark {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
 
-/* Label Text */
+/* Label Text - DESIGN SYSTEM TYPOGRAPHY */
 .lyd-checkbox-label {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: var(--font-size-base, 16px);
     color: var(--lyd-text, #374151);
-    line-height: 1.4;
+    line-height: 1.5;
+    font-weight: 400;
 }
 
 .lyd-checkbox-description {
-    font-size: 12px;
-    color: var(--lyd-text-secondary, #6b7280);
-    margin-top: 2px;
-    line-height: 1.3;
+    font-size: var(--font-size-sm, 14px);
+    color: var(--lyd-grey, #6b7280);
+    margin-top: var(--spacing-xs, 4px);
+    line-height: 1.4;
 }
 
-/* Size Variants */
+/* Size Variants - DESIGN SYSTEM AUTHENTIC */
 .lyd-checkbox-group.small .lyd-checkbox {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
 }
 
 .lyd-checkbox-group.small .lyd-checkbox-checkmark {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
 }
 
 .lyd-checkbox-group.large .lyd-checkbox {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
 }
 
 .lyd-checkbox-group.large .lyd-checkbox-checkmark {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
 }
 
 /* Error State */
@@ -2314,9 +2336,9 @@ body.modal-open {
     color: var(--lyd-error, #ef4444);
 }
 
-/* Special Success/Active State for Status Checkboxes */
-.lyd-checkbox-group.success .lyd-checkbox-input:checked + .lyd-checkbox {
-    background-color: var(--lyd-success, #10b981);
+/* Success State for Active Users */
+.lyd-checkbox-group.success .lyd-checkbox-input:checked ~ .lyd-checkbox {
+    background: linear-gradient(135deg, var(--lyd-success, #10b981) 0%, #059669 100%);
     border-color: var(--lyd-success, #10b981);
 }
 
@@ -2326,4 +2348,26 @@ body.modal-open {
 
 .lyd-checkbox-group.active {
     background-color: var(--lyd-primary-50, #eff6ff);
+}
+
+/* Indeterminate State - DESIGN SYSTEM COMPLETE */
+.lyd-checkbox-input:indeterminate ~ .lyd-checkbox {
+    background: linear-gradient(135deg, var(--lyd-primary, #3b82f6) 0%, var(--lyd-royal-blue, #1d4ed8) 100%);
+    border-color: var(--lyd-primary, #3b82f6);
+}
+
+.lyd-checkbox-input:indeterminate ~ .lyd-checkbox .lyd-checkbox-indeterminate {
+    opacity: 1;
+}
+
+.lyd-checkbox-indeterminate {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 2px;
+    background: white;
+    opacity: 0;
+    transition: all 0.2s ease;
 }

@@ -320,7 +320,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, roles, onSubmit, onCancel, is
                      onChange={() => handleRoleToggle(role.id)}
                    />
                    <span className="lyd-checkbox">
-                     <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24">
+                     <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                        <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>
                    </span>
@@ -348,7 +348,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, roles, onSubmit, onCancel, is
                  onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
                />
                <span className="lyd-checkbox">
-                 <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24">
+                 <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                    <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                  </svg>
                </span>
@@ -617,7 +617,11 @@ export default function AdminUsersPage() {
     if (!selectedUser) return;
 
     try {
-      console.log('🗑️ DELETE Request:', { userId: selectedUser.id, name: selectedUser.name });
+      console.log('🗑️ DELETE Request:', { 
+        userId: selectedUser.id, 
+        name: selectedUser.name,
+        currentUsersCount: users.length 
+      });
       
       const response = await fetch(`/api/users/${selectedUser.id}`, {
         method: 'DELETE',
@@ -632,11 +636,26 @@ export default function AdminUsersPage() {
         const result = await response.text();
         console.log('✅ DELETE Success:', result);
         
-        // CRITICAL: Update UI state immediately AFTER successful API call
-        setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
+        // CRITICAL: Store user info before state update
+        const deletedUserName = selectedUser.name;
+        const deletedUserId = selectedUser.id;
+        
+        // IMMEDIATE UI UPDATE
+        console.log('🔄 Removing user from UI:', deletedUserId);
+        setUsers(prev => {
+          const newUsers = prev.filter(u => u.id !== deletedUserId);
+          console.log('📊 Users before delete:', prev.length, '-> after:', newUsers.length);
+          return newUsers;
+        });
+        
+        // CLOSE MODAL IMMEDIATELY
         setShowDeleteModal(false);
         setSelectedUser(null);
-        showSuccess('Benutzer gelöscht', `${selectedUser.name} wurde erfolgreich aus der Datenbank entfernt.`);
+        
+        // SHOW SUCCESS TOAST
+        console.log('🎉 Showing success toast for:', deletedUserName);
+        showSuccess('Benutzer gelöscht', `${deletedUserName} wurde erfolgreich aus der Datenbank entfernt.`);
+        
       } else if (response.status === 401) {
         showError('Sitzung abgelaufen', 'Bitte melden Sie sich erneut an.');
         window.location.href = '/api/auth/signin';
@@ -644,7 +663,8 @@ export default function AdminUsersPage() {
       } else if (response.status === 403) {
         showError('Zugriff verweigert', 'Sie haben keine Berechtigung zum Löschen von Benutzern.');
       } else if (response.status === 404) {
-        // User already deleted - remove from UI
+        // User already deleted - STILL remove from UI for consistency
+        console.log('⚠️ User not found in DB, removing from UI anyway');
         setUsers(prev => prev.filter(u => u.id !== selectedUser.id));
         setShowDeleteModal(false);
         setSelectedUser(null);
@@ -653,14 +673,17 @@ export default function AdminUsersPage() {
         const errorText = await response.text();
         console.error('❌ DELETE Server Error:', response.status, errorText);
         showError('Server-Fehler', `Datenbank-Fehler (${response.status}). Bitte versuchen Sie es später erneut.`);
+        // DO NOT remove from UI on server errors - user might still exist
       } else {
         const errorText = await response.text();
         console.error('❌ DELETE Error:', response.status, errorText);
         showError('Fehler beim Löschen', `HTTP ${response.status}: ${errorText}`);
+        // DO NOT remove from UI on unknown errors
       }
     } catch (error) {
       console.error('❌ DELETE Network Error:', error);
       showError('Netzwerkfehler', 'Verbindung zur Datenbank fehlgeschlagen.');
+      // DO NOT remove from UI on network errors - user might still exist
     }
   };
 
@@ -786,10 +809,33 @@ export default function AdminUsersPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
-      {/* TOAST NOTIFICATIONS */}
-      {toasts.map(toast => (
-        <Toast key={toast.id} {...toast} />
-      ))}
+      {/* TOAST NOTIFICATIONS - FIXED POSITIONING */}
+      {toasts.length > 0 && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            zIndex: 99999,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            maxWidth: '400px',
+            pointerEvents: 'none'
+          }}
+        >
+          {toasts.map((toast, index) => (
+            <Toast 
+              key={toast.id} 
+              {...toast} 
+              style={{
+                position: 'relative',
+                top: `${index * 12}px`
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Page Header */}
       <div className="lyd-card">

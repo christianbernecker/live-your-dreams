@@ -9,9 +9,10 @@ interface ToastProps {
   message: string;
   duration?: number;
   onClose: () => void;
+  style?: React.CSSProperties;
 }
 
-export const Toast = ({ type, title, message, duration = 5000, onClose }: ToastProps) => {
+export const Toast = ({ type, title, message, duration = 5000, onClose, style }: ToastProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   
@@ -40,7 +41,10 @@ export const Toast = ({ type, title, message, duration = 5000, onClose }: ToastP
   if (!isMounted) return null;
   
   return createPortal(
-    <div className={`lyd-toast ${type} ${!isVisible ? 'hiding' : ''}`}>
+    <div 
+      className={`lyd-toast ${type} ${!isVisible ? 'hiding' : ''}`}
+      style={style}
+    >
       <svg className="lyd-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icons[type]} />
       </svg>
