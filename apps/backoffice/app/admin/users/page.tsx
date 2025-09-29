@@ -193,15 +193,17 @@ export default function UserManagementPage() {
               Durchsuchen Sie Benutzer nach Namen oder E-Mail und filtern Sie nach Rollen und Status.
             </p>
           </div>
-          <div className="lyd-grid" style={{ gridTemplateColumns: '2fr 1fr 1fr auto', alignItems: 'center' }}>
+          {/* Filter Layout: CSS-First Approach - Utility Klassen aus master.css */}
+          <div className="d-flex gap-md items-center" style={{ flexWrap: 'wrap' }}>
             
-            {/* Search Input - Design System Component */}
-            <div style={{ position: 'relative' }}>
+            {/* Search Input mit Icon - Design System Component */}
+            <div style={{ position: 'relative', flex: '2 1 250px', minWidth: '200px' }}>
               <Input
                 type="text"
                 placeholder="Benutzer suchen..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ paddingRight: '36px' }}
               />
               <div style={{
                 position: 'absolute',
@@ -211,7 +213,7 @@ export default function UserManagementPage() {
                 color: 'var(--lyd-text-secondary, #6b7280)',
                 pointerEvents: 'none'
               }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8"/>
                   <path d="m21 21-4.35-4.35"/>
                 </svg>
@@ -219,30 +221,34 @@ export default function UserManagementPage() {
             </div>
             
             {/* Role Filter */}
-            <InputLikeSelect
-              placeholder="Alle Rollen"
-              value={roleFilter}
-              onChange={(value) => setRoleFilter(value)}
-              options={[
-                { value: '', label: 'Alle Rollen' },
-                ...roles.map(role => ({
-                  value: role.name,
-                  label: role.displayName
-                }))
-              ]}
-            />
+            <div style={{ flex: '1 1 180px', minWidth: '150px' }}>
+              <InputLikeSelect
+                placeholder="Alle Rollen"
+                value={roleFilter}
+                onChange={(value) => setRoleFilter(value)}
+                options={[
+                  { value: '', label: 'Alle Rollen' },
+                  ...roles.map(role => ({
+                    value: role.name,
+                    label: role.displayName
+                  }))
+                ]}
+              />
+            </div>
             
             {/* Status Filter */}
-            <InputLikeSelect
-              placeholder="Alle Status"
-              value={statusFilter}
-              onChange={(value) => setStatusFilter(value)}
-              options={[
-                { value: '', label: 'Alle Status' },
-                { value: 'true', label: 'Aktiv' },
-                { value: 'false', label: 'Inaktiv' }
-              ]}
-            />
+            <div style={{ flex: '1 1 180px', minWidth: '150px' }}>
+              <InputLikeSelect
+                placeholder="Alle Status"
+                value={statusFilter}
+                onChange={(value) => setStatusFilter(value)}
+                options={[
+                  { value: '', label: 'Alle Status' },
+                  { value: 'true', label: 'Aktiv' },
+                  { value: 'false', label: 'Inaktiv' }
+                ]}
+              />
+            </div>
             
             {/* Reset Button - Design System Component */}
             <button 
