@@ -4,7 +4,6 @@
  * Provides overview of admin functions and system status
  */
 
-import AdminTabs from '@/components/admin/AdminTabs';
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
 import { hasPermission } from '@/lib/permissions';
@@ -174,14 +173,43 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      {/* Admin Bereiche - DESIGN SYSTEM TABS MIT ICONS */}
+      {/* Admin Bereiche - DIREKTER ZUGRIFF ÜBER TAB-NAVIGATION OBEN */}
       <div className="lyd-card">
         <div className="lyd-card-header">
-          <h2 className="lyd-heading-2">Admin-Bereiche</h2>
-          <p className="lyd-text-secondary">Wählen Sie einen Bereich zur Verwaltung aus</p>
+          <h2 className="lyd-heading-2">Willkommen im Admin-Bereich</h2>
+          <p className="lyd-text-secondary">Verwenden Sie die Tab-Navigation oben, um zwischen den Bereichen zu wechseln</p>
         </div>
         <div className="lyd-card-body">
-          <AdminTabs stats={stats} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-lg, 24px)' }}>
+            <div style={{ padding: 'var(--spacing-lg, 24px)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+              <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <h3>Benutzer-Verwaltung</h3>
+              <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                {stats.activeUsers} aktive von {stats.totalUsers} Benutzern
+              </p>
+            </div>
+            
+            <div style={{ padding: 'var(--spacing-lg, 24px)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+              <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <circle cx="12" cy="16" r="1"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <h3>Rollen & Berechtigungen</h3>
+              <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                {stats.totalRoles} aktive Rollen
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
