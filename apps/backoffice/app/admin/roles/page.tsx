@@ -602,7 +602,7 @@ export default function AdminRolesPage() {
   ], []);
 
   const moduleFilterOptions = useMemo(() => {
-    const modules = [...new Set(permissions.map(p => p.module))];
+    const modules = Array.from(new Set(permissions.map(p => p.module)));
     return [
       { value: '', label: 'Alle Module' },
       ...modules.map(module => ({ 
