@@ -193,8 +193,14 @@ export default function UserManagementPage() {
               Durchsuchen Sie Benutzer nach Namen oder E-Mail und filtern Sie nach Rollen und Status.
             </p>
           </div>
-          {/* Filter Layout: CSS-First + Component-Height Alignment */}
-          <div className="d-flex gap-md" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+          {/* Filter Layout: INLINE-STYLES für garantierte Spezifität */}
+          <div style={{ 
+            display: 'flex', 
+            gap: '16px', 
+            flexWrap: 'wrap', 
+            alignItems: 'flex-end',
+            width: '100%'
+          }}>
             
             {/* Search Input mit manueller Icon-Position (Component-API funktioniert nicht) */}
             <div style={{ flex: '2 1 250px', minWidth: '200px', position: 'relative' }}>
