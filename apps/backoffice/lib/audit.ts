@@ -414,8 +414,12 @@ export async function auditContentAction(
     let session: any, action: string, contentId: string, type: string, meta: any;
     
     if (args.length >= 4) {
-      [session, action, contentId, type, ...rest] = args;
-      meta = rest.length > 0 ? rest[0] : {};
+      const [sessionArg, actionArg, contentIdArg, typeArg, ...restArgs] = args;
+      session = sessionArg;
+      action = actionArg;
+      contentId = contentIdArg;
+      type = typeArg;
+      meta = restArgs.length > 0 ? restArgs[0] : {};
     } else if (args.length === 3) {
       [action, contentId, meta] = args;
     } else {
