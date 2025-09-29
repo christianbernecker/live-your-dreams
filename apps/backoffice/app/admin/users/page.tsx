@@ -196,28 +196,21 @@ export default function UserManagementPage() {
           {/* Filter Layout: CSS-First Approach - Utility Klassen aus master.css */}
           <div className="d-flex gap-md items-center" style={{ flexWrap: 'wrap' }}>
             
-            {/* Search Input mit Icon - Design System Component */}
-            <div style={{ position: 'relative', flex: '2 1 250px', minWidth: '200px' }}>
+            {/* Search Input mit Icon - Design System Component API verwenden */}
+            <div style={{ flex: '2 1 250px', minWidth: '200px' }}>
               <Input
                 type="text"
                 placeholder="Benutzer suchen..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ paddingRight: '36px' }}
+                icon={
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                  </svg>
+                }
+                iconPosition="right"
               />
-              <div style={{
-                position: 'absolute',
-                right: '12px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'var(--lyd-text-secondary, #6b7280)',
-                pointerEvents: 'none'
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.35-4.35"/>
-                </svg>
-              </div>
             </div>
             
             {/* Role Filter */}
