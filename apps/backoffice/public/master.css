@@ -48,6 +48,12 @@
     --lyd-gray-500: #6b7280;
     --lyd-gray-600: #4b5563;
     --lyd-gray-700: #374151;
+    
+    /* Badge Typography */
+    --font-size-xs: 11px;
+    --font-size-sm: 14px;
+    --font-weight-semibold: 600;
+    --radius-full: 9999px;
     --lyd-gray-800: #1f2937;
     --lyd-gray-900: #111827;
     
@@ -1844,4 +1850,53 @@ body.modal-open {
         box-shadow: none;
         border: 1px solid var(--lyd-line);
     }
+}
+
+/* ========================================
+   BADGE COMPONENTS - Live Your Dreams Design System
+   ======================================== */
+
+/* Base Badge Styling */
+.lyd-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* Badge Variants */
+.lyd-badge.primary {
+    background: linear-gradient(135deg, var(--lyd-primary) 0%, var(--lyd-royal-blue) 100%);
+    color: white;
+}
+
+.lyd-badge.secondary {
+    background: var(--lyd-gray-200);
+    color: var(--lyd-gray-700);
+}
+
+.lyd-badge.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--lyd-success);
+}
+
+.lyd-badge.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--lyd-warning);
+}
+
+.lyd-badge.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--lyd-error);
+}
+
+.lyd-badge.info {
+    background: rgba(0, 102, 255, 0.1);
+    color: var(--lyd-primary);
 }
