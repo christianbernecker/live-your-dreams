@@ -373,11 +373,15 @@ export default function UserManagementPage() {
                 Benutzer, Rollen und Berechtigungen verwalten
               </p>
             </div>
-            <Button variant="primary" icon={
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 5v14m-7-7h14"/>
-              </svg>
-            }>
+            <Button 
+              variant="primary" 
+              onClick={handleCreateUser}
+              icon={
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 5v14m-7-7h14"/>
+                </svg>
+              }
+            >
               Neuer Benutzer
             </Button>
           </div>
@@ -639,7 +643,7 @@ export default function UserManagementPage() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleDeleteUser(user.id)}
+                        onClick={() => handleDeleteUser(user)}
                         title="Löschen"
                         style={{
                           background: 'transparent',
@@ -665,6 +669,323 @@ export default function UserManagementPage() {
           </tbody>
         </table>
       </div>
+
+      {/* ============================================================================ */}
+      {/* MODALS */}
+      {/* ============================================================================ */}
+      
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && selectedUser && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            padding: 'var(--spacing-xl)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            maxWidth: '400px',
+            width: '90%',
+            margin: 'var(--spacing-lg)'
+          }}>
+            <h3 style={{
+              fontSize: '18px',
+              fontWeight: '600',
+              margin: '0 0 var(--spacing-md) 0',
+              color: 'var(--lyd-text, #374151)'
+            }}>
+              Benutzer löschen
+            </h3>
+            <p style={{
+              color: 'var(--lyd-text-secondary, #6b7280)',
+              margin: '0 0 var(--spacing-lg) 0',
+              lineHeight: '1.5'
+            }}>
+              Sind Sie sicher, dass Sie <strong>{selectedUser.name}</strong> ({selectedUser.email}) löschen möchten? 
+              Diese Aktion kann nicht rückgängig gemacht werden.
+            </p>
+            <div style={{
+              display: 'flex',
+              gap: 'var(--spacing-md)',
+              justifyContent: 'flex-end'
+            }}>
+              <button 
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setSelectedUser(null);
+                }}
+                style={{
+                  backgroundColor: 'transparent',
+                  border: '1px solid var(--lyd-border, #d1d5db)',
+                  color: 'var(--lyd-text, #374151)',
+                  borderRadius: '6px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer'
+                }}
+              >
+                Abbrechen
+              </button>
+              <button 
+                onClick={confirmDeleteUser}
+                style={{
+                  backgroundColor: 'var(--lyd-error, #ef4444)',
+                  border: 'none',
+                  color: 'white',
+                  borderRadius: '6px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer'
+                }}
+              >
+                Löschen
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Simple User Form Modal (Create/Edit) */}
+      {(showCreateModal || showEditModal) && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            padding: 'var(--spacing-xl)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            maxWidth: '500px',
+            width: '90%',
+            margin: 'var(--spacing-lg)',
+            maxHeight: '80vh',
+            overflowY: 'auto'
+          }}>
+            <h3 style={{
+              fontSize: '18px',
+              fontWeight: '600',
+              margin: '0 0 var(--spacing-lg) 0',
+              color: 'var(--lyd-text, #374151)'
+            }}>
+              {selectedUser ? 'Benutzer bearbeiten' : 'Neuen Benutzer erstellen'}
+            </h3>
+            
+            <UserForm 
+              user={selectedUser}
+              roles={roles}
+              onSubmit={handleSubmitUser}
+              onCancel={() => {
+                setShowCreateModal(false);
+                setShowEditModal(false);
+                setSelectedUser(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+// ============================================================================
+// USER FORM COMPONENT
+// ============================================================================
+
+interface UserFormProps {
+  user: User | null;
+  roles: Role[];
+  onSubmit: (userData: Partial<User>) => Promise<void>;
+  onCancel: () => void;
+}
+
+function UserForm({ user, roles, onSubmit, onCancel }: UserFormProps) {
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    isActive: user?.isActive ?? true,
+    roleIds: user?.roles.map(r => r.id) || []
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name.trim() || !formData.email.trim()) {
+      alert('Name und E-Mail sind erforderlich.');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      await onSubmit(formData);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+        <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
+          Name *
+        </label>
+        <input
+          type="text"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+          style={{
+            padding: 'var(--spacing-sm)',
+            border: '1px solid var(--lyd-border, #d1d5db)',
+            borderRadius: '6px',
+            fontSize: '14px',
+            outline: 'none'
+          }}
+        />
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+        <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
+          E-Mail *
+        </label>
+        <input
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+          disabled={!!user}
+          style={{
+            padding: 'var(--spacing-sm)',
+            border: '1px solid var(--lyd-border, #d1d5db)',
+            borderRadius: '6px',
+            fontSize: '14px',
+            outline: 'none',
+            backgroundColor: user ? 'var(--lyd-gray-50, #f9fafb)' : 'white'
+          }}
+        />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+          <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
+            Vorname
+          </label>
+          <input
+            type="text"
+            value={formData.firstName}
+            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+            style={{
+              padding: 'var(--spacing-sm)',
+              border: '1px solid var(--lyd-border, #d1d5db)',
+              borderRadius: '6px',
+              fontSize: '14px',
+              outline: 'none'
+            }}
+          />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+          <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
+            Nachname
+          </label>
+          <input
+            type="text"
+            value={formData.lastName}
+            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+            style={{
+              padding: 'var(--spacing-sm)',
+              border: '1px solid var(--lyd-border, #d1d5db)',
+              borderRadius: '6px',
+              fontSize: '14px',
+              outline: 'none'
+            }}
+          />
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+        <label style={{ fontSize: '14px', fontWeight: '500', color: 'var(--lyd-text, #374151)' }}>
+          Status
+        </label>
+        <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            checked={formData.isActive}
+            onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+            style={{ cursor: 'pointer' }}
+          />
+          <span style={{ fontSize: '14px', color: 'var(--lyd-text, #374151)' }}>
+            Benutzer ist aktiv
+          </span>
+        </label>
+      </div>
+
+      <div style={{
+        display: 'flex',
+        gap: 'var(--spacing-md)',
+        justifyContent: 'flex-end',
+        paddingTop: 'var(--spacing-md)',
+        borderTop: '1px solid var(--lyd-border, #e5e7eb)'
+      }}>
+        <button 
+          type="button"
+          onClick={onCancel}
+          disabled={isSubmitting}
+          style={{
+            backgroundColor: 'transparent',
+            border: '1px solid var(--lyd-border, #d1d5db)',
+            color: 'var(--lyd-text, #374151)',
+            borderRadius: '6px',
+            padding: '8px 16px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: isSubmitting ? 'not-allowed' : 'pointer',
+            opacity: isSubmitting ? 0.6 : 1
+          }}
+        >
+          Abbrechen
+        </button>
+        <button 
+          type="submit"
+          disabled={isSubmitting}
+          style={{
+            backgroundColor: 'var(--lyd-primary, #3b82f6)',
+            border: 'none',
+            color: 'white',
+            borderRadius: '6px',
+            padding: '8px 16px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: isSubmitting ? 'not-allowed' : 'pointer',
+            opacity: isSubmitting ? 0.6 : 1
+          }}
+        >
+          {isSubmitting ? 'Speichere...' : (user ? 'Aktualisieren' : 'Erstellen')}
+        </button>
+      </div>
+    </form>
   );
 }
