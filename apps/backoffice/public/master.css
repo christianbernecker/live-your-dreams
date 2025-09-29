@@ -409,7 +409,7 @@ p {
 }
 
 .showcase-item {
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     padding: 24px;
     border-radius: 12px;
     border: 1px solid var(--lyd-line);
@@ -549,7 +549,7 @@ p {
 }
 
 .lyd-button.secondary:hover {
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     border-color: var(--lyd-primary);
     transform: translateY(-1px);
 }
@@ -733,7 +733,7 @@ button.lyd-button.large {
     outline: none;
     border-color: var(--lyd-primary);
     box-shadow: 0 0 0 3px rgba(0, 0, 102, 0.1), var(--shadow-md);
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     transform: translateY(-1px);
 }
 
@@ -762,7 +762,7 @@ button.lyd-button.large {
     width: 100%;
     border-collapse: collapse;
     margin: var(--spacing-lg) 0;
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--lyd-line);
@@ -782,7 +782,7 @@ button.lyd-button.large {
     padding: var(--spacing-md);
     border-bottom: 1px solid var(--lyd-line);
     color: var(--lyd-text);
-    background: white;
+    background: var(--lyd-bg, #ffffff);
 }
 
 .api-table tr:last-child td {
@@ -831,7 +831,7 @@ button.lyd-button.large {
    10. IMPLEMENTATION GUIDE
    ======================================== */
 .implementation-section {
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
     border: 1px solid var(--lyd-line);
@@ -874,7 +874,7 @@ button.lyd-button.large {
 }
 
 .accessibility-item {
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     padding: 20px;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -966,7 +966,7 @@ button.lyd-button.large {
     }
     
     .lyd-button.secondary {
-        background: white;
+        background: var(--lyd-bg, #ffffff);
         color: #000066;
         border: 2px solid #000066;
     }
@@ -2235,7 +2235,7 @@ body.modal-open {
     position: relative;
     width: 20px;
     height: 20px;
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     border: 2px solid var(--lyd-line, #d1d5db);
     border-radius: var(--radius-sm, 4px);
     transition: all 0.2s ease;
@@ -2280,9 +2280,10 @@ body.modal-open {
     height: 12px;
     opacity: 0;
     transition: all 0.2s ease;
-    stroke: white;
+    stroke: var(--lyd-bg, #ffffff) !important;
     stroke-width: 3;
     fill: none;
+    color: var(--lyd-bg, #ffffff) !important;
 }
 
 /* CRITICAL: Checkmark Show State - USES ~ SELECTOR */
@@ -2367,7 +2368,7 @@ body.modal-open {
     transform: translate(-50%, -50%);
     width: 10px;
     height: 2px;
-    background: white;
+    background: var(--lyd-bg, #ffffff);
     opacity: 0;
     transition: all 0.2s ease;
 }
