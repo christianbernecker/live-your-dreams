@@ -244,6 +244,7 @@ export default function UserManagementPage() {
         ];
         
         setUsers(demoUsers);
+        setLoading(false); // Ensure loading state is properly cleared
         alert('⚠️ API nicht verfügbar - Demo-Daten geladen. Bitte prüfen Sie die Server-Logs.');
       }
       
@@ -273,8 +274,8 @@ export default function UserManagementPage() {
       ];
       
       setUsers(demoUsers);
+      setLoading(false); // Clear loading first to ensure state update
       alert('⚠️ Netzwerkfehler - Demo-Daten geladen. Prüfen Sie Ihre Internetverbindung und Server-Status.');
-      setLoading(false);
     }
   }, []);
 
