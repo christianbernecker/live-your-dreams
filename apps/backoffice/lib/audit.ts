@@ -1,173 +1,106 @@
 /**
- * Audit System
+ * LYD System - Audit Logging
  * 
- * Provides comprehensive audit trail functionality for all system actions.
- * All mutations (create, update, delete) should be logged through this system.
+ * Comprehensive audit trail for all system activities
+ * Supports User, Role, Content, and Blog operations
  */
 
-import type { Session } from 'next-auth';
 import { prisma } from './db';
 
 // ============================================================================
 // AUDIT EVENT TYPES
 // ============================================================================
 
-export type AuditEventType =
+export type AuditEventType = 
   // Authentication Events
-  | 'AUTH_LOGIN'
-  | 'AUTH_LOGOUT' 
-  | 'AUTH_LOGIN_FAILED'
-  | 'AUTH_PASSWORD_CHANGE'
-  | 'AUTH_PASSWORD_RESET'
+  | 'LOGIN' | 'LOGOUT' | 'LOGIN_FAILED' | 'PASSWORD_RESET' | 'EMAIL_VERIFY'
   
   // User Management
-  | 'USER_CREATE'
-  | 'USER_UPDATE'
-  | 'USER_DELETE'
-  | 'USER_ACTIVATE'
-  | 'USER_DEACTIVATE'
-  | 'USER_INVITE'
-  | 'USER_ROLE_ASSIGN'
-  | 'USER_ROLE_REMOVE'
+  | 'USER_CREATE' | 'USER_UPDATE' | 'USER_DELETE' | 'USER_ACTIVATE' | 'USER_DEACTIVATE'
   
   // Role & Permission Management
-  | 'ROLE_CREATE'
-  | 'ROLE_UPDATE'
-  | 'ROLE_DELETE'
-  | 'ROLE_PERMISSION_ADD'
-  | 'ROLE_PERMISSION_REMOVE'
+  | 'ROLE_CREATE' | 'ROLE_UPDATE' | 'ROLE_DELETE' | 'ROLE_ASSIGN' | 'ROLE_UNASSIGN'
+  | 'PERMISSION_GRANT' | 'PERMISSION_REVOKE'
   
-  // Content Management - Posts
-  | 'POST_CREATE'
-  | 'POST_UPDATE'
-  | 'POST_DELETE'
-  | 'POST_RESTORE'
-  | 'POST_PUBLISH'
-  | 'POST_UNPUBLISH'
-  | 'POST_SUBMIT_REVIEW'
-  | 'POST_APPROVE_REVIEW'
-  | 'POST_REJECT_REVIEW'
+  // Content Management (Legacy Posts)
+  | 'POST_CREATE' | 'POST_UPDATE' | 'POST_DELETE' | 'POST_PUBLISH' | 'POST_UNPUBLISH'
   
-  // Content Management - Generic
-  | 'CONTENT_CREATE'
-  | 'CONTENT_UPDATE'
-  | 'CONTENT_DELETE'
-  | 'CONTENT_RESTORE'
-  | 'CONTENT_PUBLISH'
-  | 'CONTENT_UNPUBLISH'
-  | 'CONTENT_SUBMIT_REVIEW'
-  | 'CONTENT_APPROVE_REVIEW'
-  | 'CONTENT_REJECT_REVIEW'
-  | 'CONTENT_TYPE_CREATE'
-  | 'CONTENT_TYPE_UPDATE'
-  | 'CONTENT_TYPE_DELETE'
+  // Blog System v1.1
+  | 'BLOG_IMPORT_SUCCESS' | 'BLOG_IMPORT_VALIDATION_FAILED' | 'BLOG_IMPORT_ERROR'
+  | 'BLOG_POST_CREATE' | 'BLOG_POST_UPDATE' | 'BLOG_POST_DELETE'
+  | 'BLOG_POST_PUBLISH' | 'BLOG_POST_SCHEDULE' | 'BLOG_POST_ARCHIVE'
+  | 'BLOG_ASSET_UPLOAD' | 'BLOG_ASSET_DELETE'
+  | 'BLOG_HTML_BLOCK_SANITIZE' | 'BLOG_CONTENT_SANITIZE'
   
-  // Media Management
-  | 'MEDIA_UPLOAD'
-  | 'MEDIA_UPDATE'
-  | 'MEDIA_DELETE'
-  | 'MEDIA_MOVE'
-  
-  // System Settings
-  | 'SETTINGS_UPDATE'
-  | 'SETTINGS_SYSTEM_UPDATE'
+  // System Events
+  | 'SYSTEM_CONFIG_CHANGE' | 'BACKUP_CREATE' | 'BACKUP_RESTORE'
+  | 'DATABASE_MIGRATION' | 'CACHE_CLEAR'
   
   // Security Events
-  | 'PERMISSION_DENIED'
-  | 'SUSPICIOUS_ACTIVITY'
-  | 'DATA_EXPORT'
-  | 'BULK_OPERATION';
+  | 'SECURITY_BREACH' | 'RATE_LIMIT_EXCEEDED' | 'SUSPICIOUS_ACTIVITY'
+  | 'XSS_ATTEMPT_BLOCKED' | 'SQL_INJECTION_ATTEMPT';
 
 // ============================================================================
-// AUDIT METADATA INTERFACES
+// AUDIT EVENT INTERFACE
 // ============================================================================
 
-export interface AuditMeta {
-  // Request context
-  userAgent?: string;
-  ip?: string;
-  method?: string;
-  path?: string;
+interface AuditEventData {
+  type: AuditEventType;
   
-  // Change tracking
-  previousValue?: any;
-  newValue?: any;
-  changedFields?: string[];
+  // Actor (who performed the action)
+  actorUserId?: string;
+  actorIP?: string;
+  actorUserAgent?: string;
   
-  // Additional context
-  resourceType?: string;
-  resourceName?: string;
-  reason?: string;
-  bulkCount?: number;
+  // Target resources
+  targetUserId?: string;
+  targetRoleId?: string;
+  targetPostId?: string;
+  contentId?: string;
+  blogPostId?: string;  // Blog System v1.1
   
-  // Custom metadata
-  [key: string]: any;
+  // Event metadata
+  meta?: Record<string, any>;
 }
 
 // ============================================================================
-// CORE AUDIT FUNCTIONS
+// AUDIT LOGGING FUNCTION
 // ============================================================================
 
 /**
- * Log an audit event with full context
+ * Log audit event to database
  */
-export async function audit(
-  type: AuditEventType,
-  meta: AuditMeta,
-  actorUserId?: string,
-  options?: {
-    targetUserId?: string;
-    targetRoleId?: string;
-    targetPostId?: string;
-    contentId?: string;
-    ip?: string;
-    userAgent?: string;
-  }
-): Promise<void> {
+export async function auditLog(eventData: AuditEventData): Promise<void> {
   try {
     await prisma.auditEvent.create({
       data: {
-        type,
-        meta,
-        actorUserId,
-        actorIP: options?.ip,
-        actorUserAgent: options?.userAgent,
-        targetUserId: options?.targetUserId,
-        targetRoleId: options?.targetRoleId,
-        targetPostId: options?.targetPostId,
-        contentId: options?.contentId
+        type: eventData.type,
+        
+        // Actor
+        actorUserId: eventData.actorUserId || null,
+        actorIP: eventData.actorIP || null,
+        actorUserAgent: eventData.actorUserAgent || null,
+        
+        // Targets
+        targetUserId: eventData.targetUserId || null,
+        targetRoleId: eventData.targetRoleId || null,
+        targetPostId: eventData.targetPostId || null,
+        contentId: eventData.contentId || null,
+        blogPostId: eventData.blogPostId || null,
+        
+        // Metadata
+        meta: eventData.meta || null,
+        
+        // Timestamp is auto-generated
       }
     });
+    
   } catch (error) {
-    // Audit logging should never break the main application
-    console.error('Failed to create audit event:', error);
-    console.error('Audit details:', { type, meta, actorUserId, options });
+    // Don't throw errors for audit logging failures
+    // Log to console and continue
+    console.error('Audit logging failed:', error);
+    console.error('Event data:', eventData);
   }
-}
-
-/**
- * Log audit event from session context (common pattern)
- */
-export async function auditFromSession(
-  session: Session | null,
-  type: AuditEventType,
-  meta: AuditMeta,
-  request?: Request,
-  options?: {
-    targetUserId?: string;
-    targetRoleId?: string;
-    targetPostId?: string;
-    contentId?: string;
-  }
-): Promise<void> {
-  const ip = getClientIP(request);
-  const userAgent = request?.headers.get('user-agent') || undefined;
-  
-  await audit(type, meta, session?.user?.id, {
-    ...options,
-    ip,
-    userAgent
-  });
 }
 
 // ============================================================================
@@ -178,189 +111,122 @@ export async function auditFromSession(
  * Audit authentication events
  */
 export async function auditAuth(
-  type: 'AUTH_LOGIN' | 'AUTH_LOGOUT' | 'AUTH_LOGIN_FAILED' | 'AUTH_PASSWORD_CHANGE' | 'AUTH_PASSWORD_RESET',
-  email: string,
-  meta: Partial<AuditMeta> = {},
-  request?: Request
+  type: 'LOGIN' | 'LOGOUT' | 'LOGIN_FAILED' | 'PASSWORD_RESET' | 'EMAIL_VERIFY',
+  userId?: string,
+  ip?: string,
+  userAgent?: string,
+  meta?: Record<string, any>
 ): Promise<void> {
-  const ip = getClientIP(request);
-  const userAgent = request?.headers.get('user-agent') || undefined;
-  
-  await audit(type, {
-    ...meta,
-    email,
-    ip,
-    userAgent,
-    method: request?.method,
-    path: request ? new URL(request.url).pathname : undefined
-  }, undefined, { ip, userAgent });
+  await auditLog({
+    type,
+    actorUserId: userId,
+    targetUserId: userId,
+    actorIP: ip,
+    actorUserAgent: userAgent,
+    meta
+  });
 }
 
 /**
- * Audit user management actions
+ * Audit user management events
  */
-export async function auditUserAction(
-  session: Session | null,
-  type: AuditEventType,
+export async function auditUserManagement(
+  type: 'USER_CREATE' | 'USER_UPDATE' | 'USER_DELETE' | 'USER_ACTIVATE' | 'USER_DEACTIVATE',
+  actorUserId: string,
   targetUserId: string,
-  meta: Partial<AuditMeta> = {},
-  request?: Request
+  changes?: Record<string, { from: any; to: any }>,
+  ip?: string
 ): Promise<void> {
-  await auditFromSession(session, type, {
-    ...meta,
-    resourceType: 'user',
-    targetUserId
-  }, request, { targetUserId });
+  await auditLog({
+    type,
+    actorUserId,
+    targetUserId,
+    actorIP: ip,
+    meta: changes ? { changes } : undefined
+  });
 }
 
 /**
- * Audit role/permission changes
+ * Audit role management events
  */
-export async function auditRoleAction(
-  session: Session | null,
+export async function auditRoleManagement(
+  type: 'ROLE_CREATE' | 'ROLE_UPDATE' | 'ROLE_DELETE' | 'ROLE_ASSIGN' | 'ROLE_UNASSIGN',
+  actorUserId: string,
+  targetRoleId?: string,
+  targetUserId?: string,
+  meta?: Record<string, any>
+): Promise<void> {
+  await auditLog({
+    type,
+    actorUserId,
+    targetRoleId,
+    targetUserId,
+    meta
+  });
+}
+
+/**
+ * Audit blog system events
+ */
+export async function auditBlog(
   type: AuditEventType,
-  targetRoleId: string,
-  meta: Partial<AuditMeta> = {},
-  request?: Request
+  actorUserId: string,
+  blogPostId?: string,
+  meta?: Record<string, any>
 ): Promise<void> {
-  await auditFromSession(session, type, {
-    ...meta,
-    resourceType: 'role'
-  }, request, { targetRoleId });
+  await auditLog({
+    type,
+    actorUserId,
+    blogPostId,
+    meta
+  });
 }
 
 /**
- * Audit content changes (posts and generic content)
+ * Audit security events
  */
-export async function auditContentAction(
-  session: Session | null,
-  type: AuditEventType,
-  contentId: string,
-  contentType: 'post' | 'content',
-  meta: Partial<AuditMeta> = {},
-  request?: Request
+export async function auditSecurity(
+  type: 'SECURITY_BREACH' | 'RATE_LIMIT_EXCEEDED' | 'SUSPICIOUS_ACTIVITY' | 'XSS_ATTEMPT_BLOCKED' | 'SQL_INJECTION_ATTEMPT',
+  ip?: string,
+  userAgent?: string,
+  userId?: string,
+  meta?: Record<string, any>
 ): Promise<void> {
-  const options = contentType === 'post' 
-    ? { targetPostId: contentId }
-    : { contentId };
-    
-  await auditFromSession(session, type, {
-    ...meta,
-    resourceType: contentType
-  }, request, options);
-}
-
-/**
- * Audit bulk operations
- */
-export async function auditBulkOperation(
-  session: Session | null,
-  type: AuditEventType,
-  resourceType: string,
-  count: number,
-  meta: Partial<AuditMeta> = {},
-  request?: Request
-): Promise<void> {
-  await auditFromSession(session, type, {
-    ...meta,
-    resourceType,
-    bulkCount: count,
-    operationType: 'bulk'
-  }, request);
+  await auditLog({
+    type,
+    actorUserId: userId,
+    actorIP: ip,
+    actorUserAgent: userAgent,
+    meta
+  });
 }
 
 // ============================================================================
-// CHANGE TRACKING HELPERS
+// AUDIT RETRIEVAL FUNCTIONS
 // ============================================================================
 
 /**
- * Generate diff between old and new values
+ * Get audit events for a user
  */
-export function generateDiff(oldValue: any, newValue: any): AuditMeta {
-  const changedFields: string[] = [];
-  
-  if (typeof oldValue === 'object' && typeof newValue === 'object') {
-    // Compare objects field by field
-    const allKeys = new Set([
-      ...Object.keys(oldValue || {}), 
-      ...Object.keys(newValue || {})
-    ]);
-    
-    Array.from(allKeys).forEach(key => {
-      if (oldValue?.[key] !== newValue?.[key]) {
-        changedFields.push(key);
-      }
-    });
-  } else if (oldValue !== newValue) {
-    changedFields.push('value');
-  }
-  
-  return {
-    previousValue: oldValue,
-    newValue,
-    changedFields
-  };
-}
-
-/**
- * Create audit metadata for CRUD operations
- */
-export function createCrudMeta(
-  operation: 'create' | 'update' | 'delete',
-  resourceName: string,
-  oldValue?: any,
-  newValue?: any
-): AuditMeta {
-  const meta: AuditMeta = {
-    resourceName,
-    operationType: operation
-  };
-  
-  if (operation === 'update' && oldValue && newValue) {
-    Object.assign(meta, generateDiff(oldValue, newValue));
-  } else if (operation === 'create' && newValue) {
-    meta.newValue = newValue;
-  } else if (operation === 'delete' && oldValue) {
-    meta.previousValue = oldValue;
-  }
-  
-  return meta;
-}
-
-// ============================================================================
-// AUDIT QUERY FUNCTIONS
-// ============================================================================
-
-/**
- * Get audit events for a specific user (as actor)
- */
-export async function getAuditEventsForUser(
+export async function getUserAuditTrail(
   userId: string,
-  options?: {
-    limit?: number;
-    offset?: number;
-    eventTypes?: AuditEventType[];
-    dateFrom?: Date;
-    dateTo?: Date;
-  }
-): Promise<any[]> {
-  const { limit = 50, offset = 0, eventTypes, dateFrom, dateTo } = options || {};
-  
+  limit: number = 50,
+  offset: number = 0
+) {
   return await prisma.auditEvent.findMany({
     where: {
-      actorUserId: userId,
-      type: eventTypes ? { in: eventTypes } : undefined,
-      createdAt: {
-        gte: dateFrom,
-        lte: dateTo
-      }
+      OR: [
+        { actorUserId: userId },
+        { targetUserId: userId }
+      ]
     },
     include: {
-      actorUser: { select: { id: true, name: true, email: true } },
-      targetUser: { select: { id: true, name: true, email: true } },
-      targetRole: { select: { id: true, name: true } },
-      targetPost: { select: { id: true, title: true } },
-      contentEntry: { select: { id: true, title: true } }
+      actorUser: {
+        select: { id: true, name: true, email: true }
+      },
+      targetUser: {
+        select: { id: true, name: true, email: true }
+      }
     },
     orderBy: { createdAt: 'desc' },
     take: limit,
@@ -369,89 +235,163 @@ export async function getAuditEventsForUser(
 }
 
 /**
- * Get audit events for a specific resource
+ * Get audit events for a blog post
  */
-export async function getResourceAuditHistory(
-  resourceType: 'user' | 'role' | 'post' | 'content',
-  resourceId: string,
-  limit = 50
-): Promise<any[]> {
-  const where = {
-    [resourceType === 'user' ? 'targetUserId' : 
-     resourceType === 'role' ? 'targetRoleId' :
-     resourceType === 'post' ? 'targetPostId' : 'contentId']: resourceId
-  };
-  
+export async function getBlogPostAuditTrail(
+  blogPostId: string,
+  limit: number = 20
+) {
   return await prisma.auditEvent.findMany({
-    where,
+    where: { blogPostId },
     include: {
-      actorUser: { select: { id: true, name: true, email: true } }
+      actorUser: {
+        select: { id: true, name: true, email: true }
+      }
     },
     orderBy: { createdAt: 'desc' },
     take: limit
   });
 }
 
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
-
 /**
- * Extract client IP from request (considering proxies)
+ * Get recent system audit events
  */
-function getClientIP(request?: Request): string | undefined {
-  if (!request) return undefined;
-  
-  // Check various headers for real IP (in order of preference)
-  const headers = [
-    'x-forwarded-for',
-    'x-real-ip', 
-    'x-client-ip',
-    'cf-connecting-ip', // Cloudflare
-    'x-forwarded',
-    'forwarded'
-  ];
-  
-  for (const header of headers) {
-    const value = request.headers.get(header);
-    if (value) {
-      // x-forwarded-for can contain multiple IPs, take the first one
-      return value.split(',')[0].trim();
-    }
-  }
-  
-  return undefined;
+export async function getSystemAuditTrail(
+  eventTypes?: AuditEventType[],
+  limit: number = 100,
+  offset: number = 0
+) {
+  return await prisma.auditEvent.findMany({
+    where: eventTypes ? {
+      type: { in: eventTypes }
+    } : undefined,
+    include: {
+      actorUser: {
+        select: { id: true, name: true, email: true }
+      },
+      targetUser: {
+        select: { id: true, name: true, email: true }
+      },
+      targetRole: {
+        select: { id: true, name: true, displayName: true }
+      },
+      blogPost: {
+        select: { id: true, title: true, slug: true }
+      }
+    },
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+    skip: offset
+  });
 }
 
 /**
- * Sanitize audit metadata (remove sensitive information)
+ * Get audit statistics
  */
-export function sanitizeMeta(meta: AuditMeta): AuditMeta {
-  const sanitized = { ...meta };
-  
-  // Remove sensitive fields
-  const sensitiveFields = ['password', 'token', 'secret', 'key', 'credential'];
-  
-  function removeSensitiveFields(obj: any): any {
-    if (obj && typeof obj === 'object') {
-      const cleaned = { ...obj };
-      for (const field of sensitiveFields) {
-        if (field in cleaned) {
-          cleaned[field] = '[REDACTED]';
-        }
-      }
-      return cleaned;
+export async function getAuditStatistics(
+  fromDate?: Date,
+  toDate?: Date
+): Promise<Record<AuditEventType, number>> {
+  const where = {
+    createdAt: {
+      ...(fromDate && { gte: fromDate }),
+      ...(toDate && { lte: toDate })
     }
-    return obj;
-  }
+  };
+
+  const stats = await prisma.auditEvent.groupBy({
+    by: ['type'],
+    where,
+    _count: {
+      type: true
+    }
+  });
+
+  const result: Partial<Record<AuditEventType, number>> = {};
+  stats.forEach(stat => {
+    result[stat.type as AuditEventType] = stat._count.type;
+  });
+
+  return result as Record<AuditEventType, number>;
+}
+
+// ============================================================================
+// AUDIT CLEANUP FUNCTIONS
+// ============================================================================
+
+/**
+ * Clean up old audit events (for GDPR compliance)
+ */
+export async function cleanupAuditEvents(
+  olderThanDays: number = 365
+): Promise<{ deletedCount: number }> {
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - olderThanDays);
+
+  const result = await prisma.auditEvent.deleteMany({
+    where: {
+      createdAt: {
+        lt: cutoffDate
+      },
+      // Keep critical security events longer
+      type: {
+        notIn: [
+          'SECURITY_BREACH',
+          'XSS_ATTEMPT_BLOCKED', 
+          'SQL_INJECTION_ATTEMPT',
+          'SUSPICIOUS_ACTIVITY'
+        ]
+      }
+    }
+  });
+
+  // Log the cleanup operation
+  await auditLog({
+    type: 'SYSTEM_CONFIG_CHANGE',
+    meta: {
+      operation: 'AUDIT_CLEANUP',
+      deletedCount: result.count,
+      cutoffDate: cutoffDate.toISOString()
+    }
+  });
+
+  return { deletedCount: result.count };
+}
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Extract IP address from request
+ */
+export function getClientIP(request: Request | any): string | undefined {
+  if (!request) return undefined;
   
-  if (sanitized.previousValue) {
-    sanitized.previousValue = removeSensitiveFields(sanitized.previousValue);
-  }
+  // Try various headers for IP detection
+  const headers = request.headers;
   
-  if (sanitized.newValue) {
-    sanitized.newValue = removeSensitiveFields(sanitized.newValue);
-  }
-  
-  return sanitized;
+  return headers.get?.('x-forwarded-for')?.split(',')[0]?.trim() ||
+         headers.get?.('x-real-ip') ||
+         headers.get?.('cf-connecting-ip') ||  // Cloudflare
+         headers.get?.('x-client-ip') ||
+         undefined;
+}
+
+/**
+ * Extract user agent from request
+ */
+export function getClientUserAgent(request: Request | any): string | undefined {
+  return request?.headers?.get?.('user-agent') || undefined;
+}
+
+/**
+ * Create audit context from request
+ */
+export function createAuditContext(request: Request | any, userId?: string) {
+  return {
+    actorUserId: userId,
+    actorIP: getClientIP(request),
+    actorUserAgent: getClientUserAgent(request)
+  };
 }

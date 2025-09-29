@@ -2549,6 +2549,303 @@ body.modal-open {
 
 
 /* ========================================
+   BLOG SYSTEM V1.1 - COMPONENTS & STYLES
+   ======================================== */
+
+/* Stat Cards für Blog Statistics */
+.lyd-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-md, 16px);
+    background: var(--lyd-bg-secondary, #f8fafc);
+    border-radius: var(--border-radius-md, 8px);
+    border: 1px solid var(--lyd-border, #e2e8f0);
+    text-align: center;
+}
+
+.lyd-stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--lyd-primary, #3b82f6);
+    line-height: 1;
+    margin-bottom: var(--spacing-xs, 8px);
+}
+
+.lyd-stat-label {
+    font-size: 0.875rem;
+    color: var(--lyd-gray-600, #4b5563);
+    font-weight: 500;
+}
+
+/* Empty State für Blog */
+.lyd-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-xl, 32px);
+    text-align: center;
+    color: var(--lyd-gray-500, #6b7280);
+}
+
+.lyd-empty-state svg {
+    margin-bottom: var(--spacing-md, 16px);
+    color: var(--lyd-gray-400, #9ca3af);
+}
+
+.lyd-empty-state h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--lyd-gray-700, #374151);
+    margin-bottom: var(--spacing-xs, 8px);
+}
+
+.lyd-empty-state p {
+    margin-bottom: var(--spacing-md, 16px);
+    max-width: 400px;
+}
+
+/* Alert Component für Error Messages */
+.lyd-alert {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md, 16px);
+    border-radius: var(--border-radius-md, 8px);
+    border: 1px solid;
+    font-size: 0.875rem;
+    gap: var(--spacing-sm, 12px);
+}
+
+.lyd-alert.error {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+.lyd-alert.warning {
+    background-color: #fffbeb;
+    border-color: #fed7aa;
+    color: #d97706;
+}
+
+.lyd-alert.info {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    color: #2563eb;
+}
+
+.lyd-alert.success {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #16a34a;
+}
+
+/* Platform Badge Variations */
+.lyd-badge.platform-wohnen {
+    background-color: #10b98120;
+    color: #10b981;
+    border: 1px solid #10b98140;
+}
+
+.lyd-badge.platform-makler {
+    background-color: #3b82f620;
+    color: #3b82f6;
+    border: 1px solid #3b82f640;
+}
+
+.lyd-badge.platform-energie {
+    background-color: #f59e0b20;
+    color: #f59e0b;
+    border: 1px solid #f59e0b40;
+}
+
+/* Status Badge Variations */
+.lyd-badge.status-draft {
+    background-color: #6b728020;
+    color: #6b7280;
+    border: 1px solid #6b728040;
+}
+
+.lyd-badge.status-review {
+    background-color: #f59e0b20;
+    color: #f59e0b;
+    border: 1px solid #f59e0b40;
+}
+
+.lyd-badge.status-scheduled {
+    background-color: #3b82f620;
+    color: #3b82f6;
+    border: 1px solid #3b82f640;
+}
+
+.lyd-badge.status-published {
+    background-color: #10b98120;
+    color: #10b981;
+    border: 1px solid #10b98140;
+}
+
+.lyd-badge.status-archived {
+    background-color: #6b728020;
+    color: #6b7280;
+    border: 1px solid #6b728040;
+}
+
+.lyd-badge.status-rejected {
+    background-color: #ef444420;
+    color: #ef4444;
+    border: 1px solid #ef444440;
+}
+
+/* Table Responsive Improvements */
+.lyd-table {
+    font-size: 0.875rem;
+}
+
+.lyd-table th {
+    font-weight: 600;
+    color: var(--lyd-gray-700, #374151);
+    background-color: var(--lyd-bg-secondary, #f8fafc);
+}
+
+.lyd-table td {
+    vertical-align: top;
+}
+
+@media (max-width: 768px) {
+    .lyd-table {
+        font-size: 0.8125rem;
+    }
+    
+    .lyd-table th,
+    .lyd-table td {
+        padding: var(--spacing-sm, 12px) var(--spacing-xs, 8px);
+    }
+}
+
+/* Blog Import UI Styles */
+.lyd-dropzone {
+    border: 2px dashed var(--lyd-border, #e2e8f0);
+    border-radius: var(--border-radius-lg, 12px);
+    padding: var(--spacing-xl, 32px);
+    text-align: center;
+    background: var(--lyd-bg, #ffffff);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.lyd-dropzone:hover,
+.lyd-dropzone.dragover {
+    border-color: var(--lyd-primary, #3b82f6);
+    background-color: var(--lyd-primary, #3b82f6)05;
+}
+
+.lyd-dropzone.error {
+    border-color: var(--lyd-error, #ef4444);
+    background-color: var(--lyd-error, #ef4444)05;
+}
+
+.lyd-dropzone-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--lyd-gray-400, #9ca3af);
+    margin-bottom: var(--spacing-md, 16px);
+}
+
+.lyd-dropzone.dragover .lyd-dropzone-icon {
+    color: var(--lyd-primary, #3b82f6);
+}
+
+/* Copy Prompt Panel */
+.lyd-copy-prompt {
+    background: var(--lyd-bg-secondary, #f8fafc);
+    border: 1px solid var(--lyd-border, #e2e8f0);
+    border-radius: var(--border-radius-md, 8px);
+    padding: var(--spacing-lg, 24px);
+}
+
+.lyd-copy-prompt pre {
+    background: var(--lyd-bg, #ffffff);
+    border: 1px solid var(--lyd-border, #e2e8f0);
+    border-radius: var(--border-radius-sm, 6px);
+    padding: var(--spacing-md, 16px);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* SERP Preview Component */
+.lyd-serp-preview {
+    background: var(--lyd-bg, #ffffff);
+    border: 1px solid var(--lyd-border, #e2e8f0);
+    border-radius: var(--border-radius-md, 8px);
+    padding: var(--spacing-lg, 24px);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.lyd-serp-title {
+    color: #1a0dab;
+    font-size: 18px;
+    font-weight: normal;
+    text-decoration: none;
+    margin-bottom: 4px;
+    display: block;
+    line-height: 1.3;
+}
+
+.lyd-serp-url {
+    color: #006621;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.lyd-serp-description {
+    color: #545454;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* OG Preview Component */
+.lyd-og-preview {
+    border: 1px solid var(--lyd-border, #e2e8f0);
+    border-radius: var(--border-radius-md, 8px);
+    overflow: hidden;
+    max-width: 500px;
+    background: var(--lyd-bg, #ffffff);
+}
+
+.lyd-og-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: var(--lyd-gray-100, #f3f4f6);
+}
+
+.lyd-og-content {
+    padding: var(--spacing-md, 16px);
+}
+
+.lyd-og-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs, 8px);
+    color: var(--lyd-text, #111827);
+}
+
+.lyd-og-description {
+    font-size: 0.875rem;
+    color: var(--lyd-gray-600, #4b5563);
+    line-height: 1.4;
+    margin-bottom: var(--spacing-xs, 8px);
+}
+
+.lyd-og-url {
+    font-size: 0.75rem;
+    color: var(--lyd-gray-500, #6b7280);
+    text-transform: uppercase;
+}
+
+/* ========================================
    LOADING SPINNER - LYD DESIGN SYSTEM
    INSPIRIERT VON HEROUI - MIT LYD GRADIENT
    ======================================== */
