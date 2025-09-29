@@ -10,7 +10,6 @@ export const dynamic = 'force-dynamic';
 import { auditUserAction } from '@/lib/audit';
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
-import { enforcePermission } from '@/lib/permissions';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface RouteContext {
@@ -358,7 +357,7 @@ export async function DELETE(
 
       console.log('🗑️ DELETE API: Removing audit events...');
       await prisma.auditEvent.deleteMany({
-        where: { actorId: params.id }
+        where: { actorUserId: params.id }
       });
 
       // STEP 2: Delete user from database permanently

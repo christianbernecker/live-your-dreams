@@ -132,8 +132,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
             border: '1px solid var(--lyd-border, #d1d5db)',
             borderRadius: '6px',
             marginTop: '4px',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-            zIndex: 50,
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+            zIndex: 99999, // FIXED: MAXIMUM Z-INDEX FOR DROPDOWN VISIBILITY
             maxHeight: '200px',
             overflowY: 'auto'
           }}
