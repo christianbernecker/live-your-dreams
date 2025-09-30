@@ -21,7 +21,12 @@ export function renderMediaInContent(
         color: var(--lyd-gray-600);
         font-family: monospace;
       ">
-        <div style="font-size: 2rem; margin-bottom: var(--spacing-xs);">${type === 'image' ? '📸' : '📊'}</div>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style="color: ${type === 'image' ? 'var(--lyd-primary)' : 'var(--lyd-success)'}; display: block; margin: 0 auto var(--spacing-xs) auto;">
+          ${type === 'image' 
+            ? '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>'
+            : '<path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>'
+          }
+        </svg>
         <div style="font-weight: 600;">{{${type}:${id}}}</div>
         <div style="font-size: 0.875rem; margin-top: var(--spacing-xs);">Media fehlt oder nicht hochgeladen</div>
       </div>`;
@@ -44,7 +49,11 @@ export function renderMediaInContent(
         color: var(--lyd-warning);
         font-family: monospace;
       ">
-        <div style="font-size: 2rem; margin-bottom: var(--spacing-xs);">⚠️</div>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style="color: var(--lyd-warning); display: block; margin: 0 auto var(--spacing-xs) auto;">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
         <div style="font-weight: 600;">{{${type}:${id}}}</div>
         <div style="font-size: 0.875rem; margin-top: var(--spacing-xs);">Media-ID nicht gefunden</div>
       </div>`;
