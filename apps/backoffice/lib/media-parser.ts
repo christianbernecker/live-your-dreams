@@ -74,7 +74,12 @@ function renderImageMedia(item: ImageMediaItem): string {
       text-align: center;
       color: var(--lyd-gray-700);
     ">
-      <div style="font-size: 3rem; margin-bottom: var(--spacing-sm);">📸</div>
+      <div style="margin-bottom: var(--spacing-sm);">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style="color: var(--lyd-primary); display: block; margin: 0 auto;">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+      </div>
       <div style="font-weight: 700; font-size: 1rem; margin-bottom: var(--spacing-xs); color: var(--lyd-primary);">
         Bild-Platzhalter: ${item.id}
       </div>
@@ -117,7 +122,13 @@ function renderHTMLMedia(item: HTMLMediaItem): string {
       text-align: center;
       color: var(--lyd-gray-700);
     ">
-      <div style="font-size: 3rem; margin-bottom: var(--spacing-sm);">📊</div>
+      <div style="margin-bottom: var(--spacing-sm);">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style="color: var(--lyd-success); display: block; margin: 0 auto;">
+          <path d="M18 20V10"/>
+          <path d="M12 20V4"/>
+          <path d="M6 20v-6"/>
+        </svg>
+      </div>
       <div style="font-weight: 700; font-size: 1rem; margin-bottom: var(--spacing-xs); color: var(--lyd-success);">
         HTML-Embed-Platzhalter: ${item.id}
       </div>

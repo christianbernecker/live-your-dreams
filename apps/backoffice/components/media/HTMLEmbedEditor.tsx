@@ -55,7 +55,11 @@ export function HTMLEmbedEditor({
           alignItems: 'center',
           gap: 'var(--spacing-xs)'
         }}>
-          <span style={{ fontSize: '1.25rem' }}>📊</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0 }}>
+            <path d="M18 20V10"/>
+            <path d="M12 20V4"/>
+            <path d="M6 20v-6"/>
+          </svg>
           HTML Embed: {description}
         </h4>
         <p style={{ 
@@ -118,7 +122,7 @@ export function HTMLEmbedEditor({
         color: 'var(--lyd-gray-700)',
         marginBottom: 'var(--spacing-md)'
       }}>
-        <strong>🔒 Sicherheit:</strong> Nur iframes von whitelisted Domains erlaubt:
+        <strong>Sicherheit:</strong> Nur iframes von whitelisted Domains erlaubt:
         <br/>
         YouTube, Vimeo, Datawrapper, Google Maps, liveyourdreams.online
       </div>

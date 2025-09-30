@@ -101,7 +101,12 @@ export function FileUpload({
         
         {uploading ? (
           <div>
-            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>⏳</div>
+            <div style={{ marginBottom: 'var(--spacing-sm)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--lyd-primary)', display: 'block', margin: '0 auto' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
             <div style={{ fontWeight: '600', marginBottom: 'var(--spacing-xs)' }}>
               Lädt hoch... {progress}%
             </div>
@@ -123,14 +128,25 @@ export function FileUpload({
           </div>
         ) : isDragActive ? (
           <div>
-            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>📥</div>
+            <div style={{ marginBottom: 'var(--spacing-sm)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--lyd-primary)', display: 'block', margin: '0 auto' }}>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </div>
             <div style={{ fontWeight: '600', color: 'var(--lyd-primary)' }}>
               Loslassen zum Hochladen
             </div>
           </div>
         ) : currentUrl ? (
           <div>
-            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>✅</div>
+            <div style={{ marginBottom: 'var(--spacing-sm)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--lyd-success)', display: 'block', margin: '0 auto' }}>
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
             <div style={{ fontWeight: '600', color: 'var(--lyd-success)' }}>
               Bild hochgeladen
             </div>
@@ -140,7 +156,12 @@ export function FileUpload({
           </div>
         ) : (
           <div>
-            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>📸</div>
+            <div style={{ marginBottom: 'var(--spacing-sm)' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--lyd-gray-400)', display: 'block', margin: '0 auto' }}>
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+            </div>
             <div style={{ fontWeight: '600', marginBottom: 'var(--spacing-xs)' }}>
               {label}
             </div>
