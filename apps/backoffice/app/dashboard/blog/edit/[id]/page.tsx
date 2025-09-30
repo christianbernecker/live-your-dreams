@@ -212,26 +212,62 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
       console.log(`📝 [PREVIEW] Processing embed: ${embedId}`);
 
       // Find all script tags within this embed
-      const scriptTags = container.querySelectorAll('script');
+      const scriptTags = Array.from(container.querySelectorAll('script'));
       
-      scriptTags.forEach((oldScript) => {
-        // Create new script element (scripts inserted via innerHTML don't execute)
-        const newScript = document.createElement('script');
-        
-        // Copy attributes
-        Array.from(oldScript.attributes).forEach((attr) => {
-          newScript.setAttribute(attr.name, attr.value);
+      // Separate external and inline scripts
+      const externalScripts = scriptTags.filter(s => s.hasAttribute('src'));
+      const inlineScripts = scriptTags.filter(s => !s.hasAttribute('src'));
+      
+      console.log(`📦 [PREVIEW] Found ${externalScripts.length} external, ${inlineScripts.length} inline scripts in ${embedId}`);
+
+      // Execute external scripts first
+      const loadPromises = externalScripts.map((oldScript) => {
+        return new Promise<void>((resolve, reject) => {
+          const newScript = document.createElement('script');
+          
+          // Copy attributes
+          Array.from(oldScript.attributes).forEach((attr) => {
+            newScript.setAttribute(attr.name, attr.value);
+          });
+          
+          // Add load event listener
+          newScript.onload = () => {
+            console.log(`✅ [PREVIEW] External script loaded: ${newScript.src}`);
+            resolve();
+          };
+          
+          newScript.onerror = () => {
+            console.error(`❌ [PREVIEW] Failed to load: ${newScript.src}`);
+            reject();
+          };
+          
+          // Replace and trigger load
+          oldScript.parentNode?.replaceChild(newScript, oldScript);
         });
+      });
+
+      // After all external scripts loaded, execute inline scripts
+      Promise.all(loadPromises).then(() => {
+        console.log(`⏳ [PREVIEW] All external scripts loaded for ${embedId}, executing inline scripts...`);
         
-        // Copy inline script content
-        if (oldScript.textContent) {
-          newScript.textContent = oldScript.textContent;
-        }
-        
-        // Replace old script with new one (this triggers execution)
-        oldScript.parentNode?.replaceChild(newScript, oldScript);
-        
-        console.log(`✅ [PREVIEW] Script executed in ${embedId}`);
+        // Small delay to ensure Chart.js is fully initialized
+        setTimeout(() => {
+          inlineScripts.forEach((oldScript) => {
+            const newScript = document.createElement('script');
+            
+            // Copy inline script content
+            if (oldScript.textContent) {
+              newScript.textContent = oldScript.textContent;
+            }
+            
+            // Replace old script with new one
+            oldScript.parentNode?.replaceChild(newScript, oldScript);
+            
+            console.log(`✅ [PREVIEW] Inline script executed in ${embedId}`);
+          });
+        }, 100);
+      }).catch((error) => {
+        console.error(`❌ [PREVIEW] Script loading failed for ${embedId}:`, error);
       });
     });
   }, [formData.content, formData.media]); // Re-run when content or media changes
