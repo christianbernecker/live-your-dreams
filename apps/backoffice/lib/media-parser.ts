@@ -174,7 +174,6 @@ function renderHTMLMedia(item: HTMLMediaItem): string {
   return `
     <div class="html-embed" id="${embedId}" data-embed-id="${item.id}" style="margin: var(--spacing-lg) 0;">
       ${item.html}
-      ${item.description ? `<div style="margin-top: var(--spacing-sm); font-size: 0.875rem; color: var(--lyd-gray-600); text-align: center; font-style: italic;">${item.description}</div>` : ''}
     </div>
   `;
 }

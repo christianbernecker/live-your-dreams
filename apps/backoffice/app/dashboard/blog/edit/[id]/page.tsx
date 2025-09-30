@@ -424,7 +424,7 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
       if (level === 1) topMargin = 'var(--spacing-lg)';
       if (level >= 3) topMargin = 'var(--spacing-lg)';  // H3+ brauchen mehr Abstand
       const bottomMargin = 'var(--spacing-sm)';
-      return `<h${level} style="font-weight: 600; margin-top: ${topMargin}; margin-bottom: ${bottomMargin}; color: var(--lyd-primary);">${p1}</h${level}>`;
+      return `<h${level} style="font-weight: 600; margin-top: ${topMargin}; margin-bottom: ${bottomMargin}; color: var(--lyd-primary); text-align: left;">${p1}</h${level}>`;
     });
 
     // 5. BOLD & ITALIC
