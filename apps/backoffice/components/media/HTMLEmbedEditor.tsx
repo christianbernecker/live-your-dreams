@@ -18,11 +18,14 @@ export function HTMLEmbedEditor({
 }: HTMLEmbedEditorProps) {
   const [code, setCode] = useState(html || '');
   const [error, setError] = useState<string | null>(null);
+  const [isValid, setIsValid] = useState(false);
+  const [sanitizedHTML, setSanitizedHTML] = useState<string | null>(null);
   const [validating, setValidating] = useState(false);
 
   const handleValidate = () => {
     setValidating(true);
     setError(null);
+    setIsValid(false);
 
     const validation = validateHTMLEmbed(code);
     
@@ -32,11 +35,18 @@ export function HTMLEmbedEditor({
       return;
     }
 
-    // Save sanitized HTML
+    // Validation erfolgreich
     setTimeout(() => {
-      onSave(validation.sanitized || code);
+      setSanitizedHTML(validation.sanitized || code);
+      setIsValid(true);
       setValidating(false);
     }, 300);
+  };
+
+  const handleSave = () => {
+    if (isValid && sanitizedHTML) {
+      onSave(sanitizedHTML);
+    }
   };
 
   return (
@@ -86,6 +96,7 @@ export function HTMLEmbedEditor({
           onChange={(e) => {
             setCode(e.target.value);
             setError(null);
+            setIsValid(false); // Bei Änderung Validierung zurücksetzen
           }}
           rows={8}
           className="lyd-input"
@@ -105,9 +116,41 @@ export function HTMLEmbedEditor({
             border: '1px solid var(--lyd-error)',
             borderRadius: 'var(--border-radius-sm)',
             fontSize: '0.875rem',
-            color: 'var(--lyd-error)'
+            color: 'var(--lyd-error)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'var(--spacing-xs)'
           }}>
-            <strong>⚠️ Validation Fehler:</strong> {error}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0 }}>
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div>
+              <strong>Validation Fehler:</strong> {error}
+            </div>
+          </div>
+        )}
+        {isValid && !error && (
+          <div style={{
+            marginTop: 'var(--spacing-xs)',
+            padding: 'var(--spacing-sm)',
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            border: '1px solid var(--lyd-success)',
+            borderRadius: 'var(--border-radius-sm)',
+            fontSize: '0.875rem',
+            color: 'var(--lyd-success)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'var(--spacing-xs)'
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0 }}>
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <div>
+              <strong>Validierung erfolgreich!</strong> Sie können jetzt speichern.
+            </div>
           </div>
         )}
       </div>
@@ -125,6 +168,10 @@ export function HTMLEmbedEditor({
         <strong>Sicherheit:</strong> Nur iframes von whitelisted Domains erlaubt:
         <br/>
         YouTube, Vimeo, Datawrapper, Google Maps, liveyourdreams.online
+        <br/><br/>
+        <strong>Scripts:</strong> Chart.js, D3.js und andere CDN-Scripts (cdn.jsdelivr.net, cdnjs.cloudflare.com, unpkg.com) sind erlaubt.
+        <br/>
+        Inline Scripts werden auf gefährliche Patterns (eval, document.write, localStorage) geprüft.
       </div>
 
       {/* Actions */}
@@ -142,15 +189,32 @@ export function HTMLEmbedEditor({
         </button>
         <button
           onClick={handleValidate}
-          className="lyd-button primary"
+          className="lyd-button secondary"
           disabled={!code.trim() || validating}
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-xs)' }}
         >
-          {validating ? 'Validiere...' : 'Speichern & Validieren'}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          {validating ? 'Validiere...' : 'Validieren'}
+        </button>
+        <button
+          onClick={handleSave}
+          className="lyd-button primary"
+          disabled={!isValid}
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-xs)' }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Speichern
         </button>
       </div>
 
-      {/* Preview (wenn HTML vorhanden) */}
-      {html && !error && (
+      {/* Preview (validiertes HTML) */}
+      {isValid && sanitizedHTML && !error && (
         <div style={{ marginTop: 'var(--spacing-md)' }}>
           <div style={{
             fontSize: '0.875rem',
@@ -158,7 +222,7 @@ export function HTMLEmbedEditor({
             marginBottom: 'var(--spacing-xs)',
             color: 'var(--lyd-gray-700)'
           }}>
-            Aktuelle Vorschau:
+            Vorschau (validiertes HTML):
           </div>
           <div 
             style={{
@@ -168,7 +232,7 @@ export function HTMLEmbedEditor({
               backgroundColor: 'var(--lyd-accent)',
               overflow: 'auto'
             }}
-            dangerouslySetInnerHTML={{ __html: html }}
+            dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
           />
         </div>
       )}
