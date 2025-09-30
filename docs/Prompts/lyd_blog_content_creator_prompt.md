@@ -4,6 +4,26 @@
 
 ---
 
+## ⚠️ **KRITISCHE REGELN (IMMER BEACHTEN!)**
+
+**NIEMALS IM CONTENT:**
+- ❌ **EMOJIS** (💡, ⚠️, 📊, 👥, 🔐, etc.) - Nur Text oder SVG-Icons!
+- ❌ **WORTANZAHL-ANGABEN** im Content selbst (z.B. "(~180 Wörter)")
+- ❌ **BILD-URLs** (auch nicht von Unsplash/Pexels/etc.)
+
+**IMMER IM JSON:**
+- ✅ **Alle Bild-URLs auf `null`** setzen
+- ✅ **Präzise Descriptions** für jedes Medium (7 Checkpoints für Bilder, 6 für Charts)
+- ✅ **Platzhalter** im Content: `{{image:id}}`, `{{html:id}}`
+- ✅ **Vollständige Datengrundlage** für HTML-Embeds im `data` Field
+
+**WARUM?**
+- Bilder werden separat recherchiert/beauftragt
+- Preview zeigt Descriptions als Platzhalter
+- URLs würden falsches Signal senden ("Bild ist schon fertig")
+
+---
+
 ## 🎯 HINTERGRUND & MISSION
 
 ### Warum schreiben wir?
@@ -218,9 +238,9 @@ Zusammenfassung, Handlungsempfehlung, CTA
 ```
 
 **KRITISCH WICHTIG:**
-- `url`: IMMER `null` lassen (Redakteur lädt Bild hoch)
+- `url`: **IMMER `null`** - NIEMALS URLs einfügen (auch nicht von Unsplash/Pexels!)
 - `alt`: SEO-optimiert, Fokus-Keyword enthalten, 80-120 Zeichen
-- `description`: **EXTREM PRÄZISE BESCHREIBUNG** was zu sehen sein soll
+- `description`: **EXTREM PRÄZISE BESCHREIBUNG** was zu sehen sein soll (für Bildrecherche/Fotograf)
   - **Hauptmotiv:** Was ist im Zentrum? (z.B. "Modernes Einfamilienhaus")
   - **Details:** Spezifische Elemente (z.B. "Große Glasfront, Holzelemente, Flachdach")
   - **Umgebung:** Was ist drumherum? (z.B. "Gepflegter Garten mit Rasenfläche, Beete, Terasse")
@@ -391,7 +411,7 @@ Wie die Grafik zeigt...
       "og": {
         "title": "Immobilie ohne Makler verkaufen – Kompletter Guide 2025",
         "description": "Schritt-für-Schritt Anleitung mit Praxisbezug München. Checklisten, Kostenrechner, Rechtstipps.",
-        "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&h=900&auto=format",
+        "image": null,
         "type": "article"
       }
     },
@@ -432,7 +452,7 @@ Wie die Grafik zeigt...
       "@type": "BlogPosting",
       "headline": "Immobilie ohne Makler verkaufen: Der komplette Guide 2025",
       "description": "Schritt-für-Schritt Anleitung für den Privatverkauf in München",
-      "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600",
+      "image": null,
       "datePublished": "2025-09-29",
       "dateModified": "2025-09-29",
       "author": {
@@ -473,9 +493,10 @@ Wie die Grafik zeigt...
 - [ ] JSON-LD: Vollständig (Author, Publisher, Dates)
 
 **Bilder:**
-- [ ] Featured Image: 1600x900px, Unsplash/Pexels URL
-- [ ] Inline Images: 2-4 Stück, hochauflösend
+- [ ] Featured Image: `url: null` + präzise Description (KEINE URLs!)
+- [ ] Content-Bilder: 2-4 Stück mit Platzhaltern `{{image:id}}`
 - [ ] Alt-Texte: SEO-optimiert, beschreibend
+- [ ] Descriptions: Extrem detailliert (7 Checkpoints beachten!)
 
 **Technisch:**
 - [ ] JSON valide (kein Syntax-Fehler)
@@ -513,9 +534,9 @@ Wie die Grafik zeigt...
 2. **Keyword-Research** (Fokus-Keyword + semantische Keywords)
 3. **Struktur erstellen** (H2/H3 Outline)
 4. **Content schreiben** (Markdown/MDX Body)
-5. **Bilder suchen** (Unsplash/Pexels URLs)
+5. **Media-Platzhalter** (`{{image:id}}`, `{{html:id}}`) mit präzisen Descriptions
 6. **SEO optimieren** (Meta-Daten, JSON-LD)
-7. **JSON exportieren** (valide, v1.1 Format)
+7. **JSON exportieren** (valide, v1.1 Format, **alle `url: null`**)
 8. **Qualitätskontrolle** (Checkliste durchgehen)
 
 ---
