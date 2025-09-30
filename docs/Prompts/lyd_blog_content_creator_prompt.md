@@ -106,11 +106,16 @@ Zusammenfassung, Handlungsempfehlung, CTA
 ### Content-Regeln
 
 **Struktur:**
-- H2/H3 alle ~150-200 Wörter
+- H2/H3 für logische Abschnitte (KEINE Wortanzahl-Angaben im Content!)
 - Kurze Absätze (3-4 Zeilen max.)
 - Bullet Points für Listen
 - Tabellen für Vergleiche
 - FAQ-Block am Ende (mind. 3 Fragen)
+
+**KRITISCH - NIEMALS:**
+- ❌ Wortanzahl-Angaben im Content selbst (z.B. "(~180 Wörter)")
+- ❌ Emojis (nur SVG-Icons erlaubt)
+- ❌ Generische Bild-Beschreibungen
 
 **SEO-Optimierung:**
 - Fokus-Keyword in H1, erster Absatz, H2
@@ -141,13 +146,17 @@ Zusammenfassung, Handlungsempfehlung, CTA
 **Hinweis-Boxen (via HTML):**
 ```html
 <div class="lyd-info-box">
-  <strong>💡 Tipp:</strong> Nutzen Sie unseren kostenlosen Bewertungsrechner
+  <strong>Tipp:</strong> Nutzen Sie unseren kostenlosen Bewertungsrechner
 </div>
 
 <div class="lyd-warning-box">
-  <strong>⚠️ Wichtig:</strong> Energieausweis ist Pflicht seit 2014
+  <strong>Wichtig:</strong> Energieausweis ist Pflicht seit 2014
 </div>
 ```
+
+**KRITISCH:** 
+- ❌ **NIEMALS EMOJIS** (💡, ⚠️, 📊, etc.)
+- ✅ Nur Text oder SVG-Icons aus dem Design System
 
 **Call-to-Action:**
 ```html
@@ -177,42 +186,179 @@ Zusammenfassung, Handlungsempfehlung, CTA
 
 ---
 
-## 📸 BILDER & MEDIEN
+## 🖼️ MEDIEN & VISUALS – KI-FRIENDLY MEDIA SYSTEM
 
-### Featured Image (Pflicht)
+### Warum Medien wichtig sind
+- **SEO:** Bilder mit Alt-Text verbessern Rankings
+- **Engagement:** Visuelle Inhalte erhöhen Verweildauer um 40%
+- **Verständnis:** Komplexe Daten werden greifbar (Diagramme, Karten)
+- **Conversion:** Featured Images erhöhen Click-Through-Rate
 
-**Anforderungen:**
-- **Quelle:** Unsplash, Pexels (lizenzfrei, hochauflösend)
-- **Format:** WebP > JPG (für Performance)
-- **Größe:** 1600x900px (16:9 Ratio)
-- **Dateigröße:** <500 KB
-- **Alt-Text:** Beschreibend + Location (z.B. "Modernes Einfamilienhaus München Bogenhausen")
+---
 
-**URL-Parameter:**
+### 1. FEATURED IMAGE (Pflicht für jeden Artikel)
+
+**Zweck:** Haupt-Bild für Artikel-Header, Social Media Previews, Blog-Übersicht
+
+**JSON-Struktur:**
+```json
+{
+  "media": [
+    {
+      "id": "featured",
+      "type": "image",
+      "url": null,
+      "alt": "München Immobilienmarkt Übersicht 2025",
+      "description": "Luftaufnahme von München mit Hervorhebung von Stadtteilen wie Schwabing, Maxvorstadt und Haidhausen. Moderne Architektur im Vordergrund, Alpen im Hintergrund. Sonniger Tag, professionelle Architekturfotografie.",
+      "isFeatured": true,
+      "position": "header"
+    }
+  ]
+}
 ```
-https://images.unsplash.com/photo-XXXXX?w=1600&h=900&auto=format&fit=crop
-```
 
-### Inline Images (Optional, 2-4 pro Artikel)
+**KRITISCH WICHTIG:**
+- `url`: IMMER `null` lassen (Redakteur lädt Bild hoch)
+- `alt`: SEO-optimiert, Fokus-Keyword enthalten, 80-120 Zeichen
+- `description`: **EXTREM PRÄZISE BESCHREIBUNG** was zu sehen sein soll
+  - **Hauptmotiv:** Was ist im Zentrum? (z.B. "Modernes Einfamilienhaus")
+  - **Details:** Spezifische Elemente (z.B. "Große Glasfront, Holzelemente, Flachdach")
+  - **Umgebung:** Was ist drumherum? (z.B. "Gepflegter Garten mit Rasenfläche, Beete, Terasse")
+  - **Perspektive:** Wie aufgenommen? (z.B. "Frontale Außenansicht, leicht von rechts")
+  - **Lichtstimmung:** Tageszeit/Wetter (z.B. "Blaue Stunde, warmes Licht aus Fenstern")
+  - **Stil:** Fotografieart (z.B. "Professionelle Architekturfotografie, hochauflösend")
+  - **Farben:** Dominante Töne (z.B. "Warme Braun-/Beigetöne, grüne Akzente")
+  
+**Ziel:** Fotograf/Designer kann SOFORT passendes Bild finden/erstellen!
 
-**Verwendung:**
-- Illustrationen für komplexe Konzepte
-- Vorher/Nachher Vergleiche
-- Infografiken (extern hosten)
-- Diagramme für Statistiken
+**Beispiel-Beschreibungen:**
+- ✅ PRÄZISE: "Modernes Einfamilienhaus in München-Grünwald. Hauptmotiv: Zweistöckiges Haus mit großer Glasfront, Holzverkleidung, Flachdach. Vordergrund: Gepflegter Rasen, Beete mit Lavendel, steinerne Terrasse. Perspektive: Frontale Außenansicht, leicht von rechts. Lichtstimmung: Blaue Stunde (nach Sonnenuntergang), warmes Licht aus Fenstern. Stil: Professionelle Architekturfotografie, hochauflösend, dezente Farbkorrektur. Stimmung: Einladend, hochwertig, modern-elegant."
+- ✅ PRÄZISE: "Energieberater im Beratungsgespräch. Hauptmotiv: Mann (40-50 Jahre, Hemd, Brille) zeigt Hausbesitzer-Paar (45-60 Jahre, casual) ein Tablet mit Heizungsschema. Setting: Helles Wohnzimmer, Holztisch, Sofas im Hintergrund. Perspektive: Über-Schulter-Perspektive, Fokus auf Tablet und Gesichter. Lichtstimmung: Tageslicht durch Fenster, warm, freundlich. Stil: Moderne Reportage-Fotografie, authentisch, nicht gestellt. Farben: Warme Beige-/Brauntöne, natürliche Hauttöne."
+- ❌ UNZUREICHEND: "Bild von einem Haus" (viel zu unspezifisch!)
+- ❌ UNZUREICHEND: "Energieberater erklärt Wärmepumpe" (keine Details!)
 
-**Markdown Syntax:**
+---
+
+### 2. CONTENT-BILDER (Inline im Artikel)
+
+**Wann einsetzen:**
+- Nach H2-Überschriften (visueller Anker)
+- Vor komplexen Erklärungen (Konzept-Illustration)
+- Bei lokalen Themen (Karten, Stadtteil-Fotos)
+- Für Produkt-Vergleiche (Objekt-Fotos)
+
+**Syntax im Content:**
 ```markdown
-![Alt-Text beschreibend und SEO-optimiert](https://images.unsplash.com/photo-XXXXX?w=1200)
+## H2: Münchner Stadtteile im Vergleich
+
+{{image:stadtteile-karte}}
+
+Die Preisspanne reicht von...
+```
+
+**JSON-Struktur:**
+```json
+{
+  "media": [
+    {
+      "id": "stadtteile-karte",
+      "type": "image",
+      "url": null,
+      "alt": "Interaktive Karte München Immobilienpreise nach Stadtteilen 2025",
+      "description": "Farbcodierte Karte von München mit Preissegmenten (grün=günstig, gelb=mittel, rot=teuer). Schwabing, Maxvorstadt, Haidhausen, Giesing deutlich markiert. Legende mit €/m² Angaben. Moderner Kartendesign-Stil.",
+      "position": "content"
+    }
+  ]
+}
 ```
 
 **Best Practices:**
-- Alt-Text: Aussagekräftig, Fokus-Keyword (wenn relevant)
-- Bilder pro Artikel: 3-5 (Featured + 2-4 Inline)
-- Platzierung: Nach jedem 2. H2-Abschnitt
-- Caption: Optional, aber empfohlen für Kontext
+- Max. 3-5 Content-Bilder pro Artikel
+- ID: sprechend & kurz (z.B. `stadtteile-karte`, `waermepumpe-schema`)
+- Description: So detailliert, dass Designer/Fotograf genau weiß was zu tun ist
 
 ---
+
+### 3. HTML-EMBEDS & INTERAKTIVE GRAFIKEN
+
+**Wann einsetzen:**
+- Statistiken (Datawrapper, Flourish)
+- YouTube-Videos (Erklärvideos, Tutorials)
+- Interaktive Tools (Rechner, Konfiguratoren)
+- Google Maps (Standort-Markierungen)
+
+**Syntax im Content:**
+```markdown
+## H2: Courtage-Entwicklung in München
+
+{{html:courtage-chart}}
+
+Wie die Grafik zeigt...
+```
+
+**JSON-Struktur:**
+```json
+{
+  "media": [
+    {
+      "id": "courtage-chart",
+      "type": "html",
+      "html": null,
+      "description": "Interaktives Liniendiagramm: Entwicklung der Makler-Courtage in München von 1990-2025. Y-Achse: Prozentsatz (0-7%), X-Achse: Jahre. Markante Punkte: 50/50-Regelung 2020, aktuelle 3.57%. Farben: LYD-Blau für Linie, grau für Hintergrund.",
+      "data": "1990: 6.0%, 2000: 5.95%, 2010: 5.5%, 2015: 5.0%, 2020: 3.57% (nach Gesetz), 2025: 3.57%",
+      "position": "content"
+    }
+  ]
+}
+```
+
+**KRITISCH WICHTIG:**
+- `html`: IMMER `null` lassen (Redakteur fügt Code ein)
+- `description`: **EXTREM PRÄZISE BESCHREIBUNG** der Grafik
+  - **Chart-Typ:** Welcher Typ? (Linien-, Balken-, Kreis-, Flächendiagramm)
+  - **Achsen:** X-Achse zeigt was? Y-Achse zeigt was? (z.B. "X: Jahre 2020-2025, Y: €/m²")
+  - **Datenserien:** Welche Linien/Balken? (z.B. "Linie A: Käufer-Anteil, Linie B: Verkäufer-Anteil")
+  - **Key-Insights:** Markante Punkte (z.B. "2020: Gesetzesänderung markiert, Sprung von 6% auf 3.57%")
+  - **Farben:** LYD-Branding (z.B. "Linie A: LYD-Blau (#3B82F6), Linie B: LYD-Teal (#14B8A6)")
+  - **Styling:** Grid, Legende, Beschriftung (z.B. "Graues Grid, Legende oben rechts, Werte als Tooltips")
+- `data`: **VOLLSTÄNDIGE TABELLARISCHE DATENGRUNDLAGE**
+  - Strukturierte Liste ALLER Datenpunkte
+  - Format: "Jahr: Wert1, Wert2" oder CSV
+  - **Quelle angeben!** (z.B. "Quelle: IVD München, eigene Erhebung")
+  - Für KI Assistant 2 (DataViz Creator)
+  
+**Ziel:** DataViz-Spezialist kann SOFORT Chart erstellen ohne Rückfragen!
+
+**Whitelisted Embed-Quellen:**
+- YouTube (Erklärvideos)
+- Datawrapper (Diagramme, Karten)
+- Flourish (Interaktive Dataviz)
+- Google Maps (Standorte)
+- liveyourdreams.online (Custom Tools)
+
+---
+
+### 4. MEDIEN-CHECKLISTE PRO ARTIKEL
+
+**Minimal (Jeder Artikel):**
+- ✅ 1x Featured Image mit präziser Description
+- ✅ Alt-Texte SEO-optimiert
+
+**Optimal (High-Value Content):**
+- ✅ 1x Featured Image
+- ✅ 2-3 Content-Bilder an strategischen Stellen
+- ✅ 1x Interaktive Grafik (wenn Daten vorhanden)
+- ✅ Alle IDs sprechend & kurz
+- ✅ Descriptions so detailliert, dass Bild-Recherche trivial wird
+
+**Tabu:**
+- ❌ **EMOJIS IM CONTENT** (💡, ⚠️, 📊, 👥, 🔐 etc. - NIEMALS!)
+- ❌ **WORTANZAHL-ANGABEN** im Content selbst (z.B. "(~180 Wörter)")
+- ❌ Stockfoto-Klischees (Handschlag-Fotos, generische Business-Szenen)
+- ❌ Unspezifische Descriptions ("Bild von X", "Grafik zeigt Entwicklung")
+- ❌ Fehlende Alt-Texte
+- ❌ Zu viele Bilder (Ladezeit! Max. 1 Featured + 3-5 Content)
+
 
 ## 📤 OUTPUT FORMAT – JSON v1.1
 
@@ -251,23 +397,33 @@ https://images.unsplash.com/photo-XXXXX?w=1600&h=900&auto=format&fit=crop
     },
     
     "format": "mdx",
-    "body": "# Immobilie ohne Makler verkaufen: Der komplette Guide 2025\n\n> Sie überlegen, Ihre Immobilie in München ohne Makler zu verkaufen? Mit der richtigen Vorbereitung und unseren Schritt-für-Schritt Anleitungen gelingt der Privatverkauf rechtssicher – und Sie sparen die Maklerprovision von bis zu 7,14% des Kaufpreises.\n\n## Warum ohne Makler verkaufen?\n\n![Kosteneinsparung Privatverkauf](https://images.unsplash.com/photo-xyz?w=1200)\n\nDer Verkauf ohne Makler bietet drei entscheidende Vorteile:\n\n- **Kosteneinsparung:** Bei einem Verkaufspreis von 500.000€ sparen Sie bis zu 35.700€ Provision\n- **Volle Kontrolle:** Sie bestimmen Besichtigungstermine, Verhandlungsstrategie und Zeitplan\n- **Direkter Kontakt:** Persönlicher Austausch mit Kaufinteressenten\n\n### Für wen eignet sich der Privatverkauf?\n\n...\n\n## Fazit\n\nDer Verkauf ohne Makler ist machbar – mit der richtigen Vorbereitung...\n\n<div class=\"lyd-cta-box\">\n  <h3>Kostenlose Immobilienbewertung</h3>\n  <p>Ermitteln Sie den Marktwert Ihrer Immobilie in 24 Stunden</p>\n  <a href=\"/bewertung\" class=\"lyd-button primary\">Jetzt bewerten lassen</a>\n</div>",
+    "body": "# Immobilie ohne Makler verkaufen: Der komplette Guide 2025\n\n> Sie überlegen, Ihre Immobilie in München ohne Makler zu verkaufen? Mit der richtigen Vorbereitung und unseren Schritt-für-Schritt Anleitungen gelingt der Privatverkauf rechtssicher – und Sie sparen die Maklerprovision von bis zu 7,14% des Kaufpreises.\n\n## Warum ohne Makler verkaufen?\n\n{{image:kostenvergleich}}\n\nDer Verkauf ohne Makler bietet drei entscheidende Vorteile:\n\n- **Kosteneinsparung:** Bei einem Verkaufspreis von 500.000€ sparen Sie bis zu 35.700€ Provision\n- **Volle Kontrolle:** Sie bestimmen Besichtigungstermine, Verhandlungsstrategie und Zeitplan\n- **Direkter Kontakt:** Persönlicher Austausch mit Kaufinteressenten\n\n### Für wen eignet sich der Privatverkauf?\n\n...\n\n## Kosten & Einsparungen im Detail\n\n{{html:kosten-chart}}\n\nWie die Grafik zeigt...\n\n## Fazit\n\nDer Verkauf ohne Makler ist machbar – mit der richtigen Vorbereitung...\n\n<div class=\"lyd-cta-box\">\n  <h3>Kostenlose Immobilienbewertung</h3>\n  <p>Ermitteln Sie den Marktwert Ihrer Immobilie in 24 Stunden</p>\n  <a href=\"/bewertung\" class=\"lyd-button primary\">Jetzt bewerten lassen</a>\n</div>",
     
-    "featuredImage": {
-      "src": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&h=900&auto=format&fit=crop",
-      "alt": "Modernes Einfamilienhaus München Außenansicht Garten",
-      "width": 1600,
-      "height": 900
-    },
-    
-    "images": [
+    "media": [
       {
-        "id": "img-kostenvergleich",
-        "src": "https://images.unsplash.com/photo-1554224311-beee1c7c3c39?w=1200",
-        "alt": "Kostenvergleich Makler vs Privatverkauf Diagramm",
-        "width": 1200,
-        "height": 800,
-        "caption": "Potenzielle Kosteneinsparung beim Privatverkauf"
+        "id": "featured",
+        "type": "image",
+        "url": null,
+        "alt": "Modernes Einfamilienhaus München Außenansicht Garten Sonnenuntergang",
+        "description": "Modernes Einfamilienhaus in München-Grünwald, Außenansicht mit gepflegtem Garten im Vordergrund. Aufnahme während der blauen Stunde (Sonnenuntergang), warmes Licht aus den Fenstern. Professionelle Architekturfotografie, hochauflösend.",
+        "isFeatured": true,
+        "position": "header"
+      },
+      {
+        "id": "kostenvergleich",
+        "type": "image",
+        "url": null,
+        "alt": "Kostenvergleich Immobilienverkauf mit und ohne Makler München 2025",
+        "description": "Balkendiagramm-Vergleich: Linke Säule 'Mit Makler' (dunkelblau) zeigt 7.14% Provision bei 500k€ = 35.700€. Rechte Säule 'Privatverkauf' (grün) zeigt 0€ Provision. Moderne Infografik im LYD-Design mit klarer Typografie. Hintergrund hell, Zahlen prominent.",
+        "position": "content"
+      },
+      {
+        "id": "kosten-chart",
+        "type": "html",
+        "html": null,
+        "description": "Interaktives Liniendiagramm: Entwicklung der durchschnittlichen Makler-Courtage in München 1990-2025. Y-Achse: Prozentsatz (0-8%), X-Achse: Jahre. Markante Punkte: 2015 (6.0%), 2020 (3.57% nach Gesetz), 2025 (3.57%). Farben: LYD-Blau (#3B82F6) für Linie, graue Achsen, weiß Hintergrund.",
+        "data": "1990: 6.0%, 2000: 5.95%, 2010: 5.8%, 2015: 6.0%, 2020: 3.57% (Gesetzesänderung), 2021: 3.57%, 2022: 3.57%, 2023: 3.57%, 2024: 3.57%, 2025: 3.57%. Quelle: IVD München, eigene Erhebung.",
+        "position": "content"
       }
     ],
     
