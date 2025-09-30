@@ -46,6 +46,7 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   
   // Form state
   const [formData, setFormData] = useState<Partial<BlogPostData>>({});
@@ -153,6 +154,8 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
       const result = await response.json();
       console.log('✅ [SAVE] API Response:', result);
 
+      setHasUnsavedChanges(false); // Reset unsaved changes flag
+      
       showSuccess(
         'Gespeichert',
         `Artikel "${formData.title}" wurde erfolgreich aktualisiert.`
@@ -174,6 +177,11 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
 
   const updateField = (field: keyof BlogPostData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Track unsaved changes for media updates
+    if (field === 'media') {
+      setHasUnsavedChanges(true);
+    }
   };
   
   // Auto-generate slug from title
@@ -478,6 +486,35 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
         }}>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
             
+            {/* Unsaved Changes Warning */}
+            {hasUnsavedChanges && (
+              <div style={{
+                padding: 'var(--spacing-md)',
+                background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+                border: '2px solid #f59e0b',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--spacing-sm)',
+                boxShadow: '0 2px 4px rgba(245, 158, 11, 0.1)'
+              }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, color: '#92400e', marginBottom: 'var(--spacing-xs)' }}>
+                    Nicht gespeicherte Änderungen
+                  </div>
+                  <div style={{ fontSize: '0.875rem', color: '#78350f' }}>
+                    Ihre Media-Änderungen wurden vorgenommen, aber noch nicht in der Datenbank gespeichert. 
+                    Klicken Sie auf <strong>"Veröffentlichen"</strong> oder <strong>"Als Entwurf speichern"</strong> unten, um die Änderungen dauerhaft zu speichern.
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Actions Bar */}
             <div className="lyd-card">
           <div className="lyd-card-body">

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courtage-Entwicklung München – LYD DS v2</title>
+  <style>
+    :root {}
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--lyd-text, #111111);
+      background: #fff;
+    }
+    .wrap {
+      width: 100%;
+      max-width: 800px;
+      margin: 24px auto;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid var(--lyd-line, #e5e7eb);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    h3 {
+      margin: 0 0 20px 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--lyd-text, #111111);
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+    .legend {
+      margin-top: 20px;
+      padding: 16px;
+      background: var(--lyd-gray-100, #f3f4f6);
+      border-left: 4px solid var(--lyd-royal-blue, #3366cc);
+      border-radius: 6px;
+    }
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      font-size: 0.875rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      color: var(--lyd-gray-700, #374151);
+    }
+    .legend-swatch {
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      margin-right: 8px;
+      border-radius: 2px;
+    }
+    .key-events {
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--lyd-accent, #e8f0fe);
+      border-radius: 8px;
+      text-align: center;
+      color: var(--lyd-gray-600, #4b5563);
+      font-size: 0.9rem;
+    }
+    .key-events strong {
+      color: var(--lyd-royal-blue, #3366cc);
+    }
+    .source {
+      margin-top: 16px;
+      font-size: 0.75rem;
+      color: var(--lyd-gray-500, #6b7280);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h3>
+      Provisionsmodelle in München: Von der Käufer-Alleinzahlung zur fairen 50/50-Teilung
+    </h3>
+    <canvas id="courtage-chart" width="800" height="400" aria-label="Courtage-Entwicklung in % für Käufer- und Verkäuferanteil" role="img"></canvas>
+    <div class="legend" role="note">
+      <div class="legend-row">
+        <div class="legend-item">
+          <span class="legend-swatch" style="background: var(--lyd-royal-blue, #3366cc);"></span>
+          <span>Käuferanteil</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch" style="background: var(--lyd-success, #10b981);"></span>
+          <span>Verkäuferanteil</span>
+        </div>
+      </div>
+    </div>
+    <div class="key-events">
+      <strong>2015:</strong> Bestellerprinzip bei Miete eingeführt |
+      <strong>2020:</strong> 50/50-Regel bei Kauf beschlossen
+    </div>
+    <div class="source">
+      Quelle: IVD München, eigene Erhebung | © 2025 LYD Makler
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1"></script>
+  <script>
+    // ✅ IIFE für Scope-Isolation - verhindert duplicate variable errors!
+    (function() {
+      var css = getComputedStyle(document.documentElement);
+      var token = function(name, fallback) { 
+        return (css.getPropertyValue(name) || '').trim() || fallback; 
+      };
+
+      var cRoyal = token('--lyd-royal-blue', '#3366cc');
+      var cSuccess = token('--lyd-success', '#10b981');
+      var cGrid = token('--lyd-gray-200', '#e5e7eb');
+      var cTick = token('--lyd-gray-700', '#374151');
+      var cAxisTitle = token('--lyd-gray-700', '#374151');
+
+      function hexToRGBA(hex, alpha) {
+        alpha = alpha || 1;
+        var h = hex.replace('#','');
+        var bigint = parseInt(h.length === 3 ? h.split('').map(function(ch) { return ch+ch; }).join('') : h, 16);
+        var r = (bigint >> 16) & 255;
+        var g = (bigint >> 8) & 255;
+        var b = bigint & 255;
+        return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+      }
+
+      var canvas = document.getElementById('courtage-chart');
+      var ctx = canvas.getContext('2d');
+
+      var gradBuyer = ctx.createLinearGradient(0, 0, 0, 400);
+      gradBuyer.addColorStop(0, hexToRGBA(cRoyal, 0.22));
+      gradBuyer.addColorStop(1, hexToRGBA(cRoyal, 0.06));
+
+      var gradSeller = ctx.createLinearGradient(0, 0, 0, 400);
+      gradSeller.addColorStop(0, hexToRGBA(cSuccess, 0.22));
+      gradSeller.addColorStop(1, hexToRGBA(cSuccess, 0.06));
+
+      if (window['chartjs-plugin-annotation']) {
+        Chart.register(window['chartjs-plugin-annotation']);
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025'],
+          datasets: [
+            {
+              label: 'Käuferanteil',
+              data: [6.0, 6.0, 5.95, 5.9, 5.8, 5.8, 3.57, 3.57],
+              borderColor: cRoyal,
+              backgroundColor: gradBuyer,
+              borderWidth: 3,
+              tension: 0.3,
+              fill: true,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              pointBackgroundColor: cRoyal,
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2
+            },
+            {
+              label: 'Verkäuferanteil',
+              data: [0, 0, 0, 0, 0, 0, 3.57, 3.57],
+              borderColor: cSuccess,
+              backgroundColor: gradSeller,
+              borderWidth: 3,
+              tension: 0.3,
+              fill: true,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              pointBackgroundColor: cSuccess,
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.9)',
+              titleColor: '#fff',
+              bodyColor: '#fff',
+              padding: 14,
+              cornerRadius: 6,
+              titleFont: { size: 14, weight: 'bold' },
+              bodyFont: { size: 13 },
+              displayColors: true,
+              callbacks: {
+                title: function(ctx) {
+                  var year = ctx[0].label;
+                  if (year === '2015') return year + ' (Bestellerprinzip Miete)';
+                  if (year === '2020') return year + ' (50/50-Reform Kauf)';
+                  return 'Jahr ' + year;
+                },
+                label: function(ctx) { 
+                  return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '%'; 
+                },
+                afterLabel: function(ctx) { 
+                  return (ctx.dataIndex === 6 && ctx.datasetIndex === 0) ? 'Reform: Faire Aufteilung' : ''; 
+                }
+              }
+            },
+            annotation: {
+              annotations: {
+                line2015: {
+                  type: 'line',
+                  xMin: 5,
+                  xMax: 5,
+                  borderColor: hexToRGBA(cRoyal, 0.35),
+                  borderWidth: 2,
+                  borderDash: [5, 5],
+                  label: {
+                    display: true,
+                    content: '2015: Bestellerprinzip',
+                    position: 'start',
+                    color: cTick,
+                    backgroundColor: '#ffffff'
+                  }
+                },
+                line2020: {
+                  type: 'line',
+                  xMin: 6,
+                  xMax: 6,
+                  borderColor: hexToRGBA(cRoyal, 0.55),
+                  borderWidth: 2,
+                  borderDash: [5, 5],
+                  label: {
+                    display: true,
+                    content: '2020: 50/50-Reform',
+                    position: 'start',
+                    color: cTick,
+                    backgroundColor: '#ffffff'
+                  }
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 8,
+              grid: { color: cGrid, lineWidth: 1 },
+              ticks: {
+                font: { size: 12, family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' },
+                color: cTick,
+                callback: function(v) { return v.toFixed(1) + '%'; },
+                stepSize: 1
+              },
+              title: {
+                display: true,
+                text: 'Provisionsanteil',
+                font: { size: 13, weight: '600' },
+                color: cAxisTitle
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: {
+                font: { size: 12, family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', weight: '500' },
+                color: cTick
+              },
+              title: {
+                display: true,
+                text: 'Jahr',
+                font: { size: 13, weight: '600' },
+                color: cAxisTitle
+              }
+            }
+          }
+        }
+      });
+    })(); // ← IIFE Ende - Scope ist isoliert!
+  </script>
+</body>
+</html>

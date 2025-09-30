@@ -307,6 +307,30 @@ Die Preisspanne reicht von...
 - Interaktive Tools (Rechner, Konfiguratoren)
 - Google Maps (Standort-Markierungen)
 
+**KRITISCH - JavaScript Scope-Isolation:**
+- **ALLE** JavaScript-Variablen MÜSSEN in einer IIFE (Immediately Invoked Function Expression) wrapped werden
+- Verhindert Duplicate Variable Errors bei Re-Execution
+- Nutze `var` statt `const`/`let` innerhalb der IIFE für maximale Kompatibilität
+
+**Beispiel (KORREKT):**
+```javascript
+<script>
+  (function() {
+    var canvas = document.getElementById('my-chart');
+    var ctx = canvas.getContext('2d');
+    new Chart(ctx, { /* config */ });
+  })();
+</script>
+```
+
+**Beispiel (FALSCH - wird fehlschlagen!):**
+```javascript
+<script>
+  const canvas = document.getElementById('my-chart'); // ❌ Duplicate Variable Error!
+  const ctx = canvas.getContext('2d');
+</script>
+```
+
 **Syntax im Content:**
 ```markdown
 ## H2: Courtage-Entwicklung in München
