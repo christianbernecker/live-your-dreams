@@ -211,8 +211,25 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
 
       console.log(`📝 [PREVIEW] Processing embed: ${embedId}`);
 
+      // CLEANUP: Remove old scripts first to avoid duplicate variable errors
+      const oldScripts = container.querySelectorAll('script[data-executed="true"]');
+      oldScripts.forEach(script => script.remove());
+
+      // CLEANUP: Destroy old Chart.js instances (if any)
+      const canvases = container.querySelectorAll('canvas');
+      canvases.forEach(canvas => {
+        const canvasId = canvas.getAttribute('id');
+        if (canvasId && (window as any).Chart) {
+          const existingChart = (window as any).Chart.getChart(canvasId);
+          if (existingChart) {
+            console.log(`🧹 [PREVIEW] Destroying old Chart instance: ${canvasId}`);
+            existingChart.destroy();
+          }
+        }
+      });
+
       // Find all script tags within this embed
-      const scriptTags = Array.from(container.querySelectorAll('script'));
+      const scriptTags = Array.from(container.querySelectorAll('script:not([data-executed="true"])'));
       
       // Separate external and inline scripts
       const externalScripts = scriptTags.filter(s => s.hasAttribute('src'));
@@ -229,6 +246,9 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
           Array.from(oldScript.attributes).forEach((attr) => {
             newScript.setAttribute(attr.name, attr.value);
           });
+          
+          // Mark as executed
+          newScript.setAttribute('data-executed', 'true');
           
           // Add load event listener
           newScript.onload = () => {
@@ -259,6 +279,9 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
             if (oldScript.textContent) {
               newScript.textContent = oldScript.textContent;
             }
+            
+            // Mark as executed
+            newScript.setAttribute('data-executed', 'true');
             
             // Replace old script with new one
             oldScript.parentNode?.replaceChild(newScript, oldScript);
