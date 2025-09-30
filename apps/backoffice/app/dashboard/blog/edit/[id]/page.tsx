@@ -8,7 +8,7 @@ import { useToast } from '@/components/ui/Toast';
 import { renderMediaInContent } from '@/lib/media-parser';
 import { MediaItem } from '@/types/media';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface BlogPostData {
   id: string;
@@ -49,6 +49,9 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
   
   // Form state
   const [formData, setFormData] = useState<Partial<BlogPostData>>({});
+
+  // Preview container ref for executing scripts
+  const previewRef = useRef<HTMLDivElement>(null);
 
   // Resolve params (handle both Promise and direct object for Next.js 15 compatibility)
   useEffect(() => {
@@ -192,6 +195,46 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
       updateField('slug', generateSlug(title));
     }
   };
+
+  // Execute scripts in preview after content changes
+  useEffect(() => {
+    if (!previewRef.current || !formData.content || !formData.media) return;
+
+    console.log('🔧 [PREVIEW] Executing embedded scripts...');
+
+    // Find all html-embed containers
+    const embedContainers = previewRef.current.querySelectorAll('.html-embed');
+    
+    embedContainers.forEach((container) => {
+      const embedId = container.getAttribute('data-embed-id');
+      if (!embedId) return;
+
+      console.log(`📝 [PREVIEW] Processing embed: ${embedId}`);
+
+      // Find all script tags within this embed
+      const scriptTags = container.querySelectorAll('script');
+      
+      scriptTags.forEach((oldScript) => {
+        // Create new script element (scripts inserted via innerHTML don't execute)
+        const newScript = document.createElement('script');
+        
+        // Copy attributes
+        Array.from(oldScript.attributes).forEach((attr) => {
+          newScript.setAttribute(attr.name, attr.value);
+        });
+        
+        // Copy inline script content
+        if (oldScript.textContent) {
+          newScript.textContent = oldScript.textContent;
+        }
+        
+        // Replace old script with new one (this triggers execution)
+        oldScript.parentNode?.replaceChild(newScript, oldScript);
+        
+        console.log(`✅ [PREVIEW] Script executed in ${embedId}`);
+      });
+    });
+  }, [formData.content, formData.media]); // Re-run when content or media changes
 
   // Enhanced Markdown Parser für Preview
   const parseMarkdownToHTML = (markdown: string): string => {
@@ -736,11 +779,14 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
                 )}
 
                 {/* Content Preview */}
-                <div style={{ 
-                  fontSize: '1rem',
-                  color: 'var(--lyd-text)',
-                  lineHeight: 1.6
-                }}>
+                <div 
+                  ref={previewRef}
+                  style={{ 
+                    fontSize: '1rem',
+                    color: 'var(--lyd-text)',
+                    lineHeight: 1.6
+                  }}
+                >
                   {formData.content ? (
                     <div dangerouslySetInnerHTML={{ 
                       __html: renderMediaInContent(
