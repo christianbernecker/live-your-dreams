@@ -31,7 +31,7 @@ async function main() {
         module: permInfo.module,
         action: permInfo.action
       },
-      update: {
+    update: {
         displayName: permInfo.displayName,
         description: permInfo.description,
         module: permInfo.module,
@@ -60,7 +60,7 @@ async function main() {
     // Create role
     const role = await prisma.role.upsert({
       where: { name: roleName },
-      create: {
+    create: {
         name: roleName,
         displayName: roleName.charAt(0).toUpperCase() + roleName.slice(1),
         description: `${roleName.charAt(0).toUpperCase() + roleName.slice(1)} role with predefined permissions`,

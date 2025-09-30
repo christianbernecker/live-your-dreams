@@ -1,0 +1,205 @@
+'use client';
+
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+
+interface FileUploadProps {
+  onUpload: (url: string) => void;
+  onError: (error: string) => void;
+  accept?: string;
+  maxSize?: number;
+  label?: string;
+  currentUrl?: string | null;
+  disabled?: boolean;
+}
+
+export function FileUpload({
+  onUpload,
+  onError,
+  accept = 'image/jpeg,image/jpg,image/png,image/webp,image/gif',
+  maxSize = 5 * 1024 * 1024, // 5MB
+  label = 'Bild hochladen',
+  currentUrl,
+  disabled = false
+}: FileUploadProps) {
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) return;
+    
+    const file = acceptedFiles[0];
+    setUploading(true);
+    setProgress(0);
+
+    try {
+      // Simulate progress (Vercel Blob doesn't provide real progress)
+      const progressInterval = setInterval(() => {
+        setProgress(prev => Math.min(prev + 10, 90));
+      }, 100);
+
+      // Upload to Vercel Blob
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/media/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      clearInterval(progressInterval);
+      setProgress(100);
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Upload fehlgeschlagen');
+      }
+
+      const data = await response.json();
+      onUpload(data.url);
+
+    } catch (error) {
+      console.error('Upload error:', error);
+      onError(error instanceof Error ? error.message : 'Upload fehlgeschlagen');
+    } finally {
+      setUploading(false);
+      setProgress(0);
+    }
+  }, [onUpload, onError]);
+
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+    onDrop,
+    accept: accept.split(',').reduce((acc, mime) => ({ ...acc, [mime]: [] }), {}),
+    maxSize,
+    multiple: false,
+    disabled: disabled || uploading,
+  });
+
+  return (
+    <div>
+      {/* Dropzone */}
+      <div
+        {...getRootProps()}
+        style={{
+          border: `2px dashed ${
+            isDragReject 
+              ? 'var(--lyd-error)' 
+              : isDragActive 
+                ? 'var(--lyd-primary)' 
+                : 'var(--lyd-line)'
+          }`,
+          borderRadius: 'var(--border-radius-md)',
+          padding: 'var(--spacing-lg)',
+          textAlign: 'center',
+          cursor: disabled || uploading ? 'not-allowed' : 'pointer',
+          backgroundColor: isDragActive ? 'var(--lyd-accent)' : 'transparent',
+          transition: 'all 0.2s ease',
+          opacity: disabled || uploading ? 0.6 : 1,
+        }}
+      >
+        <input {...getInputProps()} />
+        
+        {uploading ? (
+          <div>
+            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>⏳</div>
+            <div style={{ fontWeight: '600', marginBottom: 'var(--spacing-xs)' }}>
+              Lädt hoch... {progress}%
+            </div>
+            <div style={{
+              width: '100%',
+              height: '4px',
+              backgroundColor: 'var(--lyd-line)',
+              borderRadius: '2px',
+              overflow: 'hidden',
+              marginTop: 'var(--spacing-sm)'
+            }}>
+              <div style={{
+                width: `${progress}%`,
+                height: '100%',
+                background: 'linear-gradient(90deg, var(--lyd-primary), var(--lyd-deep-blue))',
+                transition: 'width 0.3s ease'
+              }} />
+            </div>
+          </div>
+        ) : isDragActive ? (
+          <div>
+            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>📥</div>
+            <div style={{ fontWeight: '600', color: 'var(--lyd-primary)' }}>
+              Loslassen zum Hochladen
+            </div>
+          </div>
+        ) : currentUrl ? (
+          <div>
+            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>✅</div>
+            <div style={{ fontWeight: '600', color: 'var(--lyd-success)' }}>
+              Bild hochgeladen
+            </div>
+            <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-600)', marginTop: 'var(--spacing-xs)' }}>
+              Klicken oder ziehen für neues Bild
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div style={{ fontSize: '2rem', marginBottom: 'var(--spacing-sm)' }}>📸</div>
+            <div style={{ fontWeight: '600', marginBottom: 'var(--spacing-xs)' }}>
+              {label}
+            </div>
+            <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-600)' }}>
+              Klicken oder Drag & Drop
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--lyd-gray-500)', marginTop: 'var(--spacing-xs)' }}>
+              Max {Math.round(maxSize / 1024 / 1024)}MB • JPG, PNG, WebP, GIF
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* URL Input Alternative */}
+      <div style={{ 
+        marginTop: 'var(--spacing-sm)',
+        padding: 'var(--spacing-sm)',
+        backgroundColor: 'var(--lyd-accent)',
+        borderRadius: 'var(--border-radius-md)'
+      }}>
+        <label style={{ 
+          display: 'block', 
+          fontSize: '0.75rem', 
+          fontWeight: '600', 
+          marginBottom: 'var(--spacing-xs)',
+          color: 'var(--lyd-gray-700)'
+        }}>
+          Oder URL eingeben (Unsplash, Pexels, etc.):
+        </label>
+        <div style={{ display: 'flex', gap: 'var(--spacing-xs)' }}>
+          <input
+            type="url"
+            className="lyd-input"
+            placeholder="https://images.unsplash.com/..."
+            disabled={disabled || uploading}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.currentTarget.value) {
+                onUpload(e.currentTarget.value);
+                e.currentTarget.value = '';
+              }
+            }}
+            style={{ flex: 1, fontSize: '0.875rem' }}
+          />
+          <button
+            type="button"
+            className="lyd-button secondary sm"
+            disabled={disabled || uploading}
+            onClick={(e) => {
+              const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+              if (input.value) {
+                onUpload(input.value);
+                input.value = '';
+              }
+            }}
+          >
+            Übernehmen
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

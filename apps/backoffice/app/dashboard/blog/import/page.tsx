@@ -7,13 +7,13 @@
 
 'use client';
 
-import { useState } from 'react';
+import { CopyPromptPanel } from '@/components/blog/CopyPromptPanel';
+import { OpenGraphPreview } from '@/components/blog/OpenGraphPreview';
+import { SERPPreview } from '@/components/blog/SERPPreview';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { SERPPreview } from '@/components/blog/SERPPreview';
-import { OpenGraphPreview } from '@/components/blog/OpenGraphPreview';
-import { CopyPromptPanel } from '@/components/blog/CopyPromptPanel';
+import { useState } from 'react';
 
 // ============================================================================
 // BLOG IMPORT COMPONENT
@@ -82,7 +82,11 @@ export default function BlogImportPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Import failed');
+        // Show detailed error information
+        const errorMsg = result.error || 'Import failed';
+        const details = result.details || result.message || '';
+        const issues = result.issues ? `\n\nDetails:\n${result.issues.join('\n')}` : '';
+        throw new Error(`${errorMsg}${details ? `: ${details}` : ''}${issues}`);
       }
 
       setResult(`Artikel "${result.blogPost.title}" erfolgreich als ${result.blogPost.status} erstellt`);
@@ -93,6 +97,7 @@ export default function BlogImportPage() {
       }, 2000);
 
     } catch (error) {
+      console.error('Import error details:', error);
       setError(error instanceof Error ? error.message : 'Import fehlgeschlagen');
     } finally {
       setImporting(false);
@@ -125,7 +130,7 @@ export default function BlogImportPage() {
       subtitle="KI-generierte Blog-Artikel importieren"
       userEmail={session.user?.email ?? undefined}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
       
       {/* Header Actions */}
       <div className="lyd-card">

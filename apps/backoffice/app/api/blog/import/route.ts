@@ -5,11 +5,11 @@
  * KEINE Zod, KEINE komplexen Dependencies
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/nextauth';
-import { prisma } from '@/lib/db';
 import { sanitizeHtmlContent } from '@/lib/blog/sanitizer';
-import type { Platform, BlogStatus } from '@/lib/blog/types';
+import type { Platform } from '@/lib/blog/types';
+import { prisma } from '@/lib/db';
+import { auth } from '@/lib/nextauth';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Force dynamic rendering (uses auth())
 export const dynamic = 'force-dynamic';
@@ -76,12 +76,30 @@ function validateBasicImport(data: any): { valid: true; cleaned: any } | { valid
     subcategory: data.content.subcategory ? String(data.content.subcategory) : undefined,
     tags: Array.isArray(data.content.tags) ? data.content.tags.map(String).slice(0, 10) : [],
     
-    // SEO (optional)
+    // SEO (full support)
     metaTitle: data.content.seo?.metaTitle ? String(data.content.seo.metaTitle).substring(0, 120) : undefined,
     metaDescription: data.content.seo?.metaDescription ? String(data.content.seo.metaDescription).substring(0, 200) : undefined,
+    focusKeyword: data.content.seo?.focusKeyword ? String(data.content.seo.focusKeyword) : undefined,
+    keywords: Array.isArray(data.content.seo?.keywords) ? data.content.seo.keywords.map(String) : [],
+    canonicalUrl: data.content.seo?.canonicalUrl ? String(data.content.seo.canonicalUrl) : undefined,
+    
+    // OpenGraph
+    ogTitle: data.content.seo?.og?.title ? String(data.content.seo.og.title) : undefined,
+    ogDescription: data.content.seo?.og?.description ? String(data.content.seo.og.description) : undefined,
+    ogImage: data.content.seo?.og?.image ? String(data.content.seo.og.image) : undefined,
+    
+    // Featured Image
+    featuredImageUrl: data.content.featuredImage?.src ? String(data.content.featuredImage.src) : undefined,
+    featuredImageAlt: data.content.featuredImage?.alt ? String(data.content.featuredImage.alt) : undefined,
+    
+    // Additional Data (JSON fields)
+    images: data.content.images || null,
+    jsonLd: data.content.jsonLd || null,
+    htmlBlocks: data.content.htmlBlocks || null,
+    media: data.content.media || null, // NEW: Media System v1.1
     
     // Source tracking
-    importSource: data.source?.agent ? String(data.source.agent) : 'unknown',
+    importSource: data.content.agent ? String(data.source.agent) : 'unknown',
     importModel: data.source?.model ? String(data.source.model) : undefined
   };
 
@@ -159,16 +177,31 @@ export async function POST(request: NextRequest) {
         content: sanitizationResult.content,
         format: cleaned.format,
         
-        // SEO
+        // SEO (full)
         metaTitle: cleaned.metaTitle,
         metaDescription: cleaned.metaDescription,
-        keywords: cleaned.tags, // Use tags as keywords for now
+        focusKeyword: cleaned.focusKeyword,
+        keywords: cleaned.keywords.length > 0 ? cleaned.keywords : cleaned.tags,
+        canonicalUrl: cleaned.canonicalUrl,
+        ogTitle: cleaned.ogTitle,
+        ogDescription: cleaned.ogDescription,
+        ogImage: cleaned.ogImage,
+        
+        // Featured Image
+        featuredImageUrl: cleaned.featuredImageUrl,
+        featuredImageAlt: cleaned.featuredImageAlt,
         
         // Multi-Platform
         platforms: cleaned.platforms,
         category: cleaned.category,
         subcategory: cleaned.subcategory,
         tags: cleaned.tags,
+        
+        // Structured Data
+      images: cleaned.images,
+      jsonLd: cleaned.jsonLd,
+      htmlBlocks: cleaned.htmlBlocks,
+      media: cleaned.media, // NEW: Media System v1.1
         
         // Status
         status: 'DRAFT',

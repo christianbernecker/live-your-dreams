@@ -8,6 +8,7 @@
 'use client';
 
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 // ============================================================================
 // CUSTOM SELECT COMPONENT
@@ -70,6 +71,12 @@ export const CustomSelect = forwardRef<HTMLDivElement, CustomSelectProps>(({
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Client-side only rendering
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Find selected option
   const selectedOption = options.find(opt => opt.value === value);
@@ -78,7 +85,11 @@ export const CustomSelect = forwardRef<HTMLDivElement, CustomSelectProps>(({
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      // Check if click is outside both trigger and dropdown
+      if (
+        triggerRef.current && !triggerRef.current.contains(event.target as Node) &&
+        dropdownRef.current && !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
         setFocusedIndex(-1);
       }
@@ -259,22 +270,25 @@ export const CustomSelect = forwardRef<HTMLDivElement, CustomSelectProps>(({
           </div>
         </div>
 
-        {/* Dropdown Options - FIXED positioning to escape stacking context */}
-        {isOpen && (
+        {/* Dropdown Options - REACT PORTAL to render outside DOM tree */}
+        {isOpen && isMounted && createPortal(
           <div
+            ref={dropdownRef}
             role="listbox"
+            className="lyd-custom-select-portal-dropdown"
             style={{
               position: 'fixed',
               top: `${dropdownPosition.top}px`,
               left: `${dropdownPosition.left}px`,
               width: `${dropdownPosition.width}px`,
-              zIndex: 2147483647, // MAXIMUM possible z-index value
+              zIndex: 2147483647, // MAXIMUM 32-bit integer z-index
               backgroundColor: 'white',
               border: '1px solid var(--lyd-border, #d1d5db)',
               borderRadius: '6px',
               boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
               maxHeight: '200px',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              isolation: 'isolate'
             }}
           >
             {options.length === 0 ? (
@@ -320,7 +334,8 @@ export const CustomSelect = forwardRef<HTMLDivElement, CustomSelectProps>(({
                 </div>
               ))
             )}
-          </div>
+          </div>,
+          document.body
         )}
 
         {/* Loading Spinner */}

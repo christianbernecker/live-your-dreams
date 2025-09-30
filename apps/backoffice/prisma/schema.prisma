@@ -481,7 +481,10 @@ model BlogPost {
 
   // Blocks (HTML/SVG/Iframes) – als JSON gespeichert
   htmlBlocks       Json?       @map("html_blocks")     // [{ id, title, html, css, js, sandbox }]
-  images           Json?                               // optionale zusätzliche Bildobjekte
+  images           Json?                               // optionale zusätzliche Bildobjekte (DEPRECATED)
+  
+  // NEW: Unified Media System (Images + HTML Embeds)
+  media            Json?                               // [{ id, type, url?, html?, isFeatured, alt, caption }]
 
   // Taxonomie & Distribution
   platforms        Platform[]  @default([])
@@ -508,6 +511,6 @@ model BlogPost {
 
   @@index([status, scheduledFor])
   @@index([platforms])
-  @@index([title, content])  // PostgreSQL-kompatible Indexierung
+  @@index([title])  // Nur Titel indexieren, Content zu groß für Index
   @@map("blog_posts")
 }

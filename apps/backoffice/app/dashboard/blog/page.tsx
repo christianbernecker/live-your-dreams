@@ -8,6 +8,9 @@
 'use client';
 
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { CustomSelect } from '@/components/ui/CustomSelect';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { useToast } from '@/components/ui/Toast';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -41,6 +44,7 @@ interface BlogStats {
 
 export default function BlogDashboard() {
   const router = useRouter();
+  const { showSuccess, showError } = useToast();
   const [blogData, setBlogData] = useState<{posts: BlogPost[], stats: BlogStats} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -127,7 +131,8 @@ export default function BlogDashboard() {
       });
       
       if (!response.ok) {
-        throw new Error('Delete failed');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Delete failed');
       }
       
       // Remove post from UI
@@ -136,11 +141,19 @@ export default function BlogDashboard() {
         posts: prev.posts.filter(p => p.id !== deletePostId)
       } : null);
       
+      showSuccess(
+        'Gelöscht',
+        `Artikel "${deletePostTitle}" wurde erfolgreich gelöscht.`
+      );
+      
       setDeletePostId(null);
       setDeletePostTitle('');
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Fehler beim Löschen des Artikels');
+      showError(
+        'Fehler beim Löschen',
+        error instanceof Error ? error.message : 'Unbekannter Fehler'
+      );
     } finally {
       setDeleting(false);
     }
@@ -155,13 +168,18 @@ export default function BlogDashboard() {
       title="Blog System" 
       subtitle="Multi-Platform Content Management (WOHNEN, MAKLER, ENERGIE)"
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
       
       {/* Welcome Header */}
       <div className="lyd-card">
         <div className="lyd-card-header">
-          <h1 className="lyd-heading-1">Blog System</h1>
-          <p className="lyd-text-secondary">
+          <h1 style={{ 
+            fontSize: '1.5rem', 
+            fontWeight: '700',
+            color: 'var(--lyd-text)',
+            margin: 0
+          }}>Blog System</h1>
+          <p className="lyd-text-secondary" style={{ fontSize: '0.875rem', marginTop: 'var(--spacing-xs)' }}>
             Verwalten Sie Blog-Artikel für alle Plattformen (WOHNEN, MAKLER, ENERGIE) an einem zentralen Ort.
           </p>
         </div>
@@ -171,45 +189,49 @@ export default function BlogDashboard() {
       {blogData && (
         <div className="lyd-card">
           <div className="lyd-card-header">
-            <h2 className="lyd-heading-2">Plattform-Übersicht</h2>
-            <p className="lyd-text-secondary">Verteilung Ihrer Artikel auf die verschiedenen Plattformen</p>
+            <h2 style={{ 
+              fontSize: '1.125rem', 
+              fontWeight: '600',
+              margin: 0
+            }}>Plattform-Übersicht</h2>
+            <p className="lyd-text-secondary" style={{ fontSize: '0.875rem', marginTop: 'var(--spacing-xs)' }}>Verteilung Ihrer Artikel auf die verschiedenen Plattformen</p>
           </div>
           <div className="lyd-card-body">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-lg)' }}>
-              <div style={{ padding: 'var(--spacing-lg)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
-                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-sm)' }}>
+              <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
+                <div style={{ marginBottom: 'var(--spacing-xs)', color: 'var(--lyd-primary)' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     <polyline points="9,22 9,12 15,12 15,22"/>
                   </svg>
                 </div>
-                <h3 className="lyd-heading-3">WOHNEN</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: '600', margin: '0 0 var(--spacing-xs) 0' }}>WOHNEN</h3>
                 <p style={{ color: 'var(--lyd-gray-600)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
                   {blogData.posts.filter(p => p.platforms.includes('WOHNEN')).length} Artikel
                 </p>
               </div>
               
-              <div style={{ padding: 'var(--spacing-lg)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
-                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-secondary)' }}>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+              <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
+                <div style={{ marginBottom: 'var(--spacing-xs)', color: 'var(--lyd-secondary)' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                     <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
                     <line x1="12" y1="22.08" x2="12" y2="12"/>
                   </svg>
                 </div>
-                <h3 className="lyd-heading-3">MAKLER</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: '600', margin: '0 0 var(--spacing-xs) 0' }}>MAKLER</h3>
                 <p style={{ color: 'var(--lyd-gray-600)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
                   {blogData.posts.filter(p => p.platforms.includes('MAKLER')).length} Artikel
                 </p>
               </div>
               
-              <div style={{ padding: 'var(--spacing-lg)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
-                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-success)' }}>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+              <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--border-radius-lg)', textAlign: 'center' }}>
+                <div style={{ marginBottom: 'var(--spacing-xs)', color: 'var(--lyd-success)' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                   </svg>
                 </div>
-                <h3 className="lyd-heading-3">ENERGIE</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: '600', margin: '0 0 var(--spacing-xs) 0' }}>ENERGIE</h3>
                 <p style={{ color: 'var(--lyd-gray-600)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
                   {blogData.posts.filter(p => p.platforms.includes('ENERGIE')).length} Artikel
                 </p>
@@ -222,20 +244,20 @@ export default function BlogDashboard() {
       {/* Statistics */}
       {blogData && (
         <div className="lyd-card">
-          <div className="lyd-card-header" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <div className="lyd-card-header" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-xs)' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
-            <h2 className="lyd-heading-2" style={{ margin: 0 }}>Statistiken</h2>
+            <h2 style={{ fontSize: '1.125rem', fontWeight: '600', margin: 0 }}>Statistiken</h2>
           </div>
           <div className="lyd-card-body">
             <div style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(3, 1fr)', 
-              gap: 'var(--spacing-lg)' 
+              gap: 'var(--spacing-sm)' 
             }}>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--lyd-primary)' }}>
+                <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--lyd-primary)' }}>
                   {blogData.stats.total}
                 </div>
                 <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-600)' }}>
@@ -243,7 +265,7 @@ export default function BlogDashboard() {
                 </div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--lyd-success)' }}>
+                <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--lyd-success)' }}>
                   {blogData.stats.published}
                 </div>
                 <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-600)' }}>
@@ -251,7 +273,7 @@ export default function BlogDashboard() {
                 </div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--lyd-warning)' }}>
+                <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--lyd-warning)' }}>
                   {blogData.stats.draft}
                 </div>
                 <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-600)' }}>
@@ -293,12 +315,16 @@ export default function BlogDashboard() {
       {blogData && blogData.posts.length > 0 && (
         <div className="lyd-card">
           <div className="lyd-card-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h2 className="lyd-heading-2" style={{ margin: 0 }}>Filter</h2>
+            <h2 style={{ fontSize: '1.125rem', fontWeight: '600', margin: 0 }}>Filter</h2>
             <button 
-              className="lyd-button outline sm"
+              className="lyd-button secondary sm"
               onClick={resetFilters}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
             >
-              Zur\u00fccksetzen
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Filter zurücksetzen
             </button>
           </div>
           <div className="lyd-card-body">
@@ -309,63 +335,58 @@ export default function BlogDashboard() {
             }}>
               {/* Status Filter */}
               <div>
-                <label htmlFor="statusFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)', fontWeight: '600' }}>
+                <label htmlFor="statusFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: '0.875rem', fontWeight: '600' }}>
                   Status
                 </label>
-                <select
-                  id="statusFilter"
-                  className="lyd-input"
+                <CustomSelect
                   value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                >
-                  <option value="all">Alle</option>
-                  <option value="DRAFT">Draft</option>
-                  <option value="REVIEW">Review</option>
-                  <option value="SCHEDULED">Geplant</option>
-                  <option value="PUBLISHED">Ver\u00f6ffentlicht</option>
-                  <option value="ARCHIVED">Archiviert</option>
-                </select>
+                  onChange={setStatusFilter}
+                  options={[
+                    { value: 'all', label: 'Alle' },
+                    { value: 'DRAFT', label: 'Draft' },
+                    { value: 'REVIEW', label: 'Review' },
+                    { value: 'SCHEDULED', label: 'Geplant' },
+                    { value: 'PUBLISHED', label: 'Veröffentlicht' },
+                    { value: 'ARCHIVED', label: 'Archiviert' }
+                  ]}
+                />
               </div>
               
               {/* Platform Filter */}
               <div>
-                <label htmlFor="platformFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)', fontWeight: '600' }}>
+                <label htmlFor="platformFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: '0.875rem', fontWeight: '600' }}>
                   Plattform
                 </label>
-                <select
-                  id="platformFilter"
-                  className="lyd-input"
+                <CustomSelect
                   value={platformFilter}
-                  onChange={(e) => setPlatformFilter(e.target.value)}
-                >
-                  <option value="all">Alle</option>
-                  <option value="WOHNEN">Wohnen</option>
-                  <option value="MAKLER">Makler</option>
-                  <option value="ENERGIE">Energie</option>
-                </select>
+                  onChange={setPlatformFilter}
+                  options={[
+                    { value: 'all', label: 'Alle' },
+                    { value: 'WOHNEN', label: 'Wohnen' },
+                    { value: 'MAKLER', label: 'Makler' },
+                    { value: 'ENERGIE', label: 'Energie' }
+                  ]}
+                />
               </div>
               
               {/* Category Filter */}
               <div>
-                <label htmlFor="categoryFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)', fontWeight: '600' }}>
+                <label htmlFor="categoryFilter" style={{ display: 'block', marginBottom: 'var(--spacing-xs)', fontSize: '0.875rem', fontWeight: '600' }}>
                   Kategorie
                 </label>
-                <select
-                  id="categoryFilter"
-                  className="lyd-input"
+                <CustomSelect
                   value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                >
-                  <option value="all">Alle</option>
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
+                  onChange={setCategoryFilter}
+                  options={[
+                    { value: 'all', label: 'Alle' },
+                    ...categories.map(cat => ({ value: cat, label: cat }))
+                  ]}
+                />
               </div>
             </div>
             
             {/* Filter Results Info */}
-            <div style={{ marginTop: 'var(--spacing-md)', fontSize: 'var(--font-size-sm)', color: 'var(--lyd-gray-600)' }}>
+            <div style={{ marginTop: 'var(--spacing-md)', fontSize: '0.875rem', color: 'var(--lyd-gray-600)' }}>
               {filteredPosts.length} von {blogData.posts.length} Artikel{filteredPosts.length !== blogData.posts.length && ' (gefiltert)'}
             </div>
           </div>
@@ -375,12 +396,24 @@ export default function BlogDashboard() {
       {/* Blog Posts (if available) */}
       {blogData && filteredPosts.length > 0 && (
         <div className="lyd-card">
+          {loading ? (
+            <LoadingSpinner 
+              size="lg" 
+              label="Blog-Artikel laden..." 
+              variant="gradient"
+            />
+          ) : (
+            <>
           <div className="lyd-card-header">
-            <h2 className="lyd-heading-2">Blog Artikel ({filteredPosts.length})</h2>
+            <h2 style={{ 
+              fontSize: '1.125rem', 
+              fontWeight: '600',
+              margin: 0
+            }}>Blog Artikel ({filteredPosts.length})</h2>
           </div>
           <div className="lyd-card-body">
             <div style={{ overflowX: 'auto' }}>
-              <table className="lyd-table striped">
+              <table className="api-table striped">
                 <thead>
                   <tr>
                     <th>Titel</th>
@@ -397,12 +430,15 @@ export default function BlogDashboard() {
                     <tr key={post.id}>
                       <td>
                         <div style={{ fontWeight: '600' }}>{post.title}</div>
-                        <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-500)' }}>
-                          /{post.slug}
-                        </div>
                       </td>
                       <td>
-                        <span className={`lyd-badge ${post.status.toLowerCase()}`}>
+                        <span className={`lyd-badge ${
+                          post.status === 'DRAFT' ? 'warning' :
+                          post.status === 'PUBLISHED' ? 'success' :
+                          post.status === 'REVIEW' ? 'info' :
+                          post.status === 'SCHEDULED' ? 'info' :
+                          'secondary'
+                        }`}>
                           {post.status}
                         </span>
                       </td>
@@ -418,7 +454,7 @@ export default function BlogDashboard() {
                       <td>{post.category}</td>
                       <td>
                         <div>{post.author.name}</div>
-                        <div style={{ fontSize: '0.875rem', color: 'var(--lyd-gray-500)' }}>
+                        <div style={{ fontSize: '14px', color: 'var(--lyd-text-secondary)' }}>
                           {post.author.email}
                         </div>
                       </td>
@@ -426,26 +462,38 @@ export default function BlogDashboard() {
                         {new Date(post.createdAt).toLocaleDateString('de-DE')}
                       </td>
                       <td>
-                        <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '8px' }}>
                           <button
                             onClick={() => handleEdit(post.id)}
-                            className="lyd-button outline sm"
+                            className="lyd-button ghost icon-only"
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              padding: '4px',
+                              color: 'var(--lyd-text-secondary)'
+                            }}
                             title="Bearbeiten"
                           >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                              <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                           </button>
+                          
                           <button
                             onClick={() => confirmDelete(post.id, post.title)}
-                            className="lyd-button outline sm"
+                            className="lyd-button ghost icon-only"
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              padding: '4px',
+                              color: 'var(--lyd-error)'
+                            }}
                             title="Löschen"
-                            style={{ color: 'var(--lyd-error)', borderColor: 'var(--lyd-error)' }}
                           >
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <polyline points="3 6 5 6 21 6"/>
-                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                              <polyline points="3,6 5,6 21,6"/>
+                              <path d="m19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
                               <line x1="10" y1="11" x2="10" y2="17"/>
                               <line x1="14" y1="11" x2="14" y2="17"/>
                             </svg>
@@ -458,6 +506,8 @@ export default function BlogDashboard() {
               </table>
             </div>
           </div>
+            </>
+          )}
         </div>
       )}
 
@@ -475,10 +525,14 @@ export default function BlogDashboard() {
               Mit den aktuellen Filtern wurden keine Artikel gefunden. Versuchen Sie andere Filter.
             </p>
             <button
-              className="lyd-button outline"
+              className="lyd-button secondary sm"
               onClick={resetFilters}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
             >
-              Filter zur\u00fccksetzen
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Filter zurücksetzen
             </button>
           </div>
         </div>
@@ -502,7 +556,7 @@ export default function BlogDashboard() {
               Das Blog-System ist bereit, aber es sind noch keine Artikel vorhanden.
             </p>
             <button
-              className="lyd-button primary"
+              className="lyd-button primary sm"
               onClick={() => router.push('/dashboard/blog/import')}
             >
               Ersten Artikel erstellen
@@ -514,35 +568,34 @@ export default function BlogDashboard() {
       {/* Quick Actions */}
       <div className="lyd-card">
         <div className="lyd-card-header">
-          <h2 className="lyd-heading-2">Schnellaktionen</h2>
+          <h2 style={{ fontSize: '1.125rem', fontWeight: '600', margin: 0 }}>Schnellaktionen</h2>
         </div>
         <div className="lyd-card-body">
           <div style={{ 
             display: 'flex', 
-            gap: 'var(--spacing-lg)', 
+            gap: 'var(--spacing-sm)', 
             flexWrap: 'wrap',
             alignItems: 'center'
           }}>
             <button
-              className="lyd-button primary"
+              className="lyd-button primary sm"
+              onClick={() => router.push('/dashboard/blog/new')}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              Neuer Artikel
+            </button>
+            <button
+              className="lyd-button secondary sm"
               onClick={() => router.push('/dashboard/blog/import')}
-              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', textDecoration: 'none' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
-              Artikel importieren
-            </button>
-            <button
-              className="lyd-button outline"
-              onClick={() => router.push('/dashboard/blog')}
-              style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', textDecoration: 'none' }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="1,4 1,10 7,10"/>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-              </svg>
-              Aktualisieren
+              JSON importieren
             </button>
           </div>
         </div>

@@ -1,15 +1,17 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface DashboardHeaderProps {
   title?: string
   subtitle?: string
   userEmail?: string
+  breadcrumbLink?: string
+  breadcrumbLabel?: string
 }
 
-export function DashboardHeader({ title = "Dashboard", subtitle, userEmail }: DashboardHeaderProps) {
+export function DashboardHeader({ title = "Dashboard", subtitle, userEmail, breadcrumbLink, breadcrumbLabel }: DashboardHeaderProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   const handleSignOut = async () => {
@@ -43,22 +45,37 @@ export function DashboardHeader({ title = "Dashboard", subtitle, userEmail }: Da
           fontSize: 'var(--font-size-sm)',
           color: 'var(--lyd-grey)'
         }}>
-          <Link 
-            href="/dashboard"
-            style={{ 
-              color: 'var(--lyd-primary)', 
-              textDecoration: 'none',
-              fontWeight: 'var(--font-weight-medium)'
-            }}
-          >
-            Dashboard
-          </Link>
-          {title !== "Dashboard" && (
+          {breadcrumbLink && breadcrumbLabel ? (
+            <Link 
+              href={breadcrumbLink}
+              style={{ 
+                color: 'var(--lyd-primary)', 
+                textDecoration: 'none',
+                fontWeight: 'var(--font-weight-medium)'
+              }}
+            >
+              {breadcrumbLabel}
+            </Link>
+          ) : (
             <>
-              <svg width="4" height="8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
-              <span style={{ color: 'var(--lyd-text)' }}>{title}</span>
+              <Link 
+                href="/dashboard"
+                style={{ 
+                  color: 'var(--lyd-primary)', 
+                  textDecoration: 'none',
+                  fontWeight: 'var(--font-weight-medium)'
+                }}
+              >
+                Dashboard
+              </Link>
+              {title !== "Dashboard" && (
+                <>
+                  <svg width="4" height="8" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                  <span style={{ color: 'var(--lyd-text)' }}>{title}</span>
+                </>
+              )}
             </>
           )}
         </nav>

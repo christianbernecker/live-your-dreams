@@ -5,9 +5,9 @@
  * PATCH /api/blog/[id] - Update a blog post
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/nextauth';
 import { prisma } from '@/lib/db';
+import { auth } from '@/lib/nextauth';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -18,7 +18,7 @@ export const runtime = 'nodejs';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Auth Check
@@ -33,7 +33,7 @@ export async function GET(
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Fetch the post
     const post = await prisma.blogPost.findUnique({
@@ -53,7 +53,34 @@ export async function GET(
       return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
     }
 
-    return NextResponse.json(post);
+    // Return clean response for edit page (ensure ALL fields are primitive types)
+    return NextResponse.json({
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      content: post.content,
+      format: post.format,
+      status: post.status,
+      platforms: Array.isArray(post.platforms) ? post.platforms : [],
+      category: post.category,
+      subcategory: post.subcategory,
+      tags: Array.isArray(post.tags) ? post.tags : [],
+      metaTitle: post.metaTitle,
+      metaDescription: post.metaDescription,
+      focusKeyword: post.focusKeyword,
+      keywords: Array.isArray(post.keywords) ? post.keywords : [],
+      canonicalUrl: post.canonicalUrl,
+      ogTitle: post.ogTitle,
+      ogDescription: post.ogDescription,
+      ogImage: post.ogImage,
+      featuredImageUrl: post.featuredImageUrl,
+      featuredImageAlt: post.featuredImageAlt,
+      scheduledFor: post.scheduledFor ? post.scheduledFor.toISOString() : null,
+      publishedAt: post.publishedAt ? post.publishedAt.toISOString() : null,
+      // Only return author name, not the entire object
+      authorName: post.author?.name || 'Unbekannt'
+    });
 
   } catch (error) {
     console.error('Blog fetch error:', error);
@@ -70,7 +97,7 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Auth Check
@@ -85,7 +112,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Check if post exists
     const post = await prisma.blogPost.findUnique({
@@ -121,7 +148,7 @@ export async function DELETE(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Auth Check
@@ -136,7 +163,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
 
     // Check if post exists
@@ -174,6 +201,9 @@ export async function PATCH(
         category: body.category,
         subcategory: body.subcategory,
         tags: body.tags || [],
+        
+        // Media (NEW)
+        media: body.media || null,
         
         // Workflow
         status: body.status || existingPost.status,

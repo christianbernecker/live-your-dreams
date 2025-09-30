@@ -1,15 +1,18 @@
 import { ReactNode } from 'react'
-import { SidebarNavigation } from './SidebarNavigation'
 import { DashboardHeader } from './DashboardHeader'
+import { SidebarNavigation } from './SidebarNavigation'
 
 interface DashboardLayoutProps {
   children: ReactNode
   title?: string
   subtitle?: string
   userEmail?: string
+  breadcrumbLink?: string
+  breadcrumbLabel?: string
+  fullWidth?: boolean
 }
 
-export function DashboardLayout({ children, title, subtitle, userEmail }: DashboardLayoutProps) {
+export function DashboardLayout({ children, title, subtitle, userEmail, breadcrumbLink, breadcrumbLabel, fullWidth = false }: DashboardLayoutProps) {
   return (
     <div style={{
       display: 'grid',
@@ -57,25 +60,29 @@ export function DashboardLayout({ children, title, subtitle, userEmail }: Dashbo
           zIndex: 100
         }}
       >
-        <DashboardHeader title={title} subtitle={subtitle} userEmail={userEmail} />
+        <DashboardHeader title={title} subtitle={subtitle} userEmail={userEmail} breadcrumbLink={breadcrumbLink} breadcrumbLabel={breadcrumbLabel} />
       </header>
 
       {/* Main Content Area */}
       <main 
         style={{ 
           gridArea: 'main',
-          padding: 'var(--spacing-xl)',
+          padding: fullWidth ? 'var(--spacing-md)' : 'var(--spacing-xl)',
           overflowY: 'auto',
           background: 'transparent'
         }}
       >
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          width: '100%'
-        }}>
-          {children}
-        </div>
+        {fullWidth ? (
+          children
+        ) : (
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            width: '100%'
+          }}>
+            {children}
+          </div>
+        )}
       </main>
 
       <style dangerouslySetInnerHTML={{
