@@ -5,12 +5,49 @@ import { ALLOWED_EMBED_DOMAINS } from '@/types/media';
  * Only allows safe iframe embeds from whitelisted domains
  */
 export function validateHTMLEmbed(html: string): { valid: boolean; error?: string; sanitized?: string } {
-  // Remove script tags (security)
-  if (/<script[\s\S]*?>[\s\S]*?<\/script>/gi.test(html)) {
-    return {
-      valid: false,
-      error: 'Script tags are not allowed. Use iframe embeds instead.'
-    };
+  // Validate script tags (allow whitelisted CDNs only)
+  const scriptTags = html.match(/<script[\s\S]*?>[\s\S]*?<\/script>/gi) || [];
+  
+  for (const script of scriptTags) {
+    // Allow external scripts from whitelisted CDNs
+    const externalScriptMatch = script.match(/<script[^>]+src=["']([^"']+)["']/i);
+    
+    if (externalScriptMatch) {
+      const src = externalScriptMatch[1];
+      const allowedScriptDomains = [
+        'cdn.jsdelivr.net',
+        'cdnjs.cloudflare.com',
+        'unpkg.com'
+      ];
+      
+      const isAllowedScript = allowedScriptDomains.some(domain => src.includes(domain));
+      
+      if (!isAllowedScript) {
+        return {
+          valid: false,
+          error: `External script domain not whitelisted. Allowed: ${allowedScriptDomains.join(', ')}`
+        };
+      }
+    } else {
+      // Inline script - check for dangerous patterns
+      const dangerousPatterns = [
+        /eval\s*\(/gi,
+        /document\.write\s*\(/gi,
+        /window\.location\s*=/gi,
+        /document\.cookie/gi,
+        /localStorage/gi,
+        /sessionStorage/gi
+      ];
+      
+      for (const pattern of dangerousPatterns) {
+        if (pattern.test(script)) {
+          return {
+            valid: false,
+            error: `Dangerous JavaScript detected (${pattern.source}). Not allowed for security reasons.`
+          };
+        }
+      }
+    }
   }
 
   // Check for inline event handlers (XSS protection)
