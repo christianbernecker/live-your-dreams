@@ -79,7 +79,9 @@ export async function GET(
       scheduledFor: post.scheduledFor ? post.scheduledFor.toISOString() : null,
       publishedAt: post.publishedAt ? post.publishedAt.toISOString() : null,
       // Only return author name, not the entire object
-      authorName: post.author?.name || 'Unbekannt'
+      authorName: post.author?.name || 'Unbekannt',
+      // Media field (NEW - required for MediaManager)
+      media: post.media || null
     });
 
   } catch (error) {
