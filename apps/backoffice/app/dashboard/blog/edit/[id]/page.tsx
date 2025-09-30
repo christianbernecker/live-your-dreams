@@ -200,10 +200,13 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
   useEffect(() => {
     if (!previewRef.current || !formData.content || !formData.media) return;
 
-    console.log('🔧 [PREVIEW] Executing embedded scripts...');
+    // Debounce to prevent multiple rapid executions
+    const timer = setTimeout(() => {
+      console.log('🔧 [PREVIEW] Executing embedded scripts...');
 
-    // Find all html-embed containers
-    const embedContainers = previewRef.current.querySelectorAll('.html-embed');
+      // Find all html-embed containers
+      const embedContainers = previewRef.current?.querySelectorAll('.html-embed');
+      if (!embedContainers) return;
     
     embedContainers.forEach((container) => {
       const embedId = container.getAttribute('data-embed-id');
@@ -293,6 +296,10 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
         console.error(`❌ [PREVIEW] Script loading failed for ${embedId}:`, error);
       });
     });
+    }, 300); // 300ms debounce
+
+    // Cleanup timer on unmount or dependency change
+    return () => clearTimeout(timer);
   }, [formData.content, formData.media]); // Re-run when content or media changes
 
   // Enhanced Markdown Parser für Preview
