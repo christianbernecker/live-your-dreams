@@ -27,20 +27,21 @@ export function HTMLEmbedEditor({
     setError(null);
     setIsValid(false);
 
-    const validation = validateHTMLEmbed(code);
-    
-    if (!validation.valid) {
-      setError(validation.error || 'Validation fehlgeschlagen');
-      setValidating(false);
-      return;
-    }
-
-    // Validation erfolgreich
+    // Kleine Verzögerung für visuelles Feedback
     setTimeout(() => {
+      const validation = validateHTMLEmbed(code);
+      
+      if (!validation.valid) {
+        setError(validation.error || 'Validation fehlgeschlagen');
+        setValidating(false);
+        return;
+      }
+
+      // Validation erfolgreich
       setSanitizedHTML(validation.sanitized || code);
       setIsValid(true);
       setValidating(false);
-    }, 300);
+    }, 100);
   };
 
   const handleSave = () => {
@@ -181,6 +182,7 @@ export function HTMLEmbedEditor({
         justifyContent: 'flex-end' 
       }}>
         <button
+          type="button"
           onClick={onCancel}
           className="lyd-button outline"
           disabled={validating}
@@ -188,6 +190,7 @@ export function HTMLEmbedEditor({
           Abbrechen
         </button>
         <button
+          type="button"
           onClick={handleValidate}
           className="lyd-button secondary"
           disabled={!code.trim() || validating}
@@ -199,6 +202,7 @@ export function HTMLEmbedEditor({
           {validating ? 'Validiere...' : 'Validieren'}
         </button>
         <button
+          type="button"
           onClick={handleSave}
           className="lyd-button primary"
           disabled={!isValid}
