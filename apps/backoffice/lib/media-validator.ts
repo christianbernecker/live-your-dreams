@@ -51,11 +51,15 @@ export function validateHTMLEmbed(html: string): { valid: boolean; error?: strin
   }
 
   // Check for inline event handlers (XSS protection)
-  const dangerousAttributes = /on\w+\s*=/gi;
-  if (dangerousAttributes.test(html)) {
+  // Only match event handlers in HTML tags, not in scripts or strings
+  // Remove script content first to avoid false positives
+  const scriptContentRemoved = html.replace(/<script[\s\S]*?<\/script>/gi, '<!-- script removed -->');
+  const tagWithEventHandler = /<[^>]+\s(on\w+)\s*=/i;
+  
+  if (tagWithEventHandler.test(scriptContentRemoved)) {
     return {
       valid: false,
-      error: 'Inline event handlers (onclick, onerror, etc.) are not allowed.'
+      error: 'Inline event handlers (onclick, onerror, etc.) are not allowed in HTML tags.'
     };
   }
 
