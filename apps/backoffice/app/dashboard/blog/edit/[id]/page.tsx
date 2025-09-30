@@ -78,6 +78,9 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
 
         const data = await response.json();
         
+        // DEBUG: Log API response
+        console.log('📥 [LOAD] API Response media field:', data.media);
+        
         // EXPLICIT field mapping (NO SPREAD to avoid objects from JSON fields)
         const cleanData: BlogPostData = {
           id: data.id,
@@ -103,8 +106,12 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
           featuredImageAlt: data.featuredImageAlt || null,
           scheduledFor: data.scheduledFor || null,
           publishedAt: data.publishedAt || null,
-          authorName: data.authorName || 'Unbekannt'
+          authorName: data.authorName || 'Unbekannt',
+          // CRITICAL: Media field was missing! This is why data wasn't loaded
+          media: Array.isArray(data.media) ? data.media : (data.media ? [data.media] : null)
         };
+        
+        console.log('📦 [LOAD] Cleaned data media field:', cleanData.media);
         
         setPost(cleanData);
         setFormData(cleanData);
@@ -125,6 +132,10 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
     setSaving(true);
 
     try {
+      // DEBUG: Log media field before sending
+      console.log('🔍 [SAVE] FormData media field:', formData.media);
+      console.log('🔍 [SAVE] Full FormData:', JSON.stringify(formData, null, 2));
+
       const response = await fetch(`/api/blog/${postId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -136,6 +147,9 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
         throw new Error(errorData.message || 'Update failed');
       }
 
+      const result = await response.json();
+      console.log('✅ [SAVE] API Response:', result);
+
       showSuccess(
         'Gespeichert',
         `Artikel "${formData.title}" wurde erfolgreich aktualisiert.`
@@ -145,7 +159,7 @@ export default function EditBlogPost({ params }: { params: Promise<{ id: string 
         router.push('/dashboard/blog');
       }, 500);
     } catch (error) {
-      console.error('Save error:', error);
+      console.error('❌ [SAVE] Save error:', error);
       showError(
         'Fehler beim Speichern',
         error instanceof Error ? error.message : 'Unbekannter Fehler'
