@@ -22,7 +22,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@liveyourdreams/design-tokens": "workspace:*",
+    "@liveyourdreams/design-tokens": "^1.0.0",
     "clsx": "^2.1.0"
   },
   "devDependencies": {
