@@ -36,6 +36,27 @@
       "command": "npx",
       "args": ["chrome-devtools-mcp@latest"],
       "description": "Chrome DevTools integration for debugging"
+    },
+    "vercel": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-vercel"],
+      "env": {
+        "VERCEL_ACCESS_TOKEN": "${env.VERCEL_ACCESS_TOKEN}"
+      },
+      "description": "Vercel deployments, logs, env vars, preview URLs"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${workspaceFolder}"],
+      "description": "Enhanced file operations, batch processing, safe refactoring"
+    },
+    "prisma": {
+      "command": "node",
+      "args": ["./tooling/mcp/prisma/index.mjs"],
+      "env": {
+        "DATABASE_URL": "${env.DATABASE_URL}"
+      },
+      "description": "Prisma schema management, migrations, database operations"
     }
   }
 }
