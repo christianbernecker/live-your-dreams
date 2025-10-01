@@ -1,5 +1,6 @@
+import type { ReactNode } from 'react'
 import { ErrorBoundary } from './components/ErrorBoundary'
-import { SessionProvider } from 'next-auth/react'
+import { Providers } from './components/Providers'
 import './globals.css'
 
 export const metadata = {
@@ -10,7 +11,7 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <html lang="de">
@@ -20,11 +21,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body style={{ fontFamily: 'var(--font-family-primary)' }}>
-        <SessionProvider>
+        <Providers>
           <ErrorBoundary>
             {children}
           </ErrorBoundary>
-        </SessionProvider>
+        </Providers>
       </body>
     </html>
   )
