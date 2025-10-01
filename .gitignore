@@ -83,4 +83,18 @@ docs/Credentials/
 # Screenshot directories (keep organized)
 /screenshots/*/
 !/screenshots/README.md
+
+# Backups und Temporary Files
+/backup/
+/test-*.json
+/test-*.html
+*-FIXED.html
+*-fixed.html
+*-backup.*
+
+# Content (should be in CMS or docs)
+/blog/articles/
+/blog/**/*.json
+
+# Vercel
 .vercel
