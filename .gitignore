@@ -29,6 +29,12 @@ Thumbs.db
 *.swp
 *.swo
 
+# AI Tools (Config ist in .aiconfig/, Symlinks werden getrackt)
+.cursor/
+!.cursor/rules/
+.claude/
+*.local.json
+
 # Temporary files
 *.tmp
 *.temp

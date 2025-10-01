@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "node",
+      "args": ["./tooling/mcp/github/index.mjs"],
+      "env": {
+        "GITHUB_TOKEN": "${env.GITHUB_TOKEN}",
+        "GITHUB_REPOSITORY": "christianbernecker/live-your-dreams"
+      },
+      "description": "GitHub API operations (issues, PRs, commits)"
+    },
+    "neon": {
+      "command": "node",
+      "args": ["./tooling/mcp/neon/index.mjs"],
+      "env": {
+        "NEON_API_KEY": "${env.NEON_API_KEY}",
+        "NEON_PROJECT_ID": "${env.NEON_PROJECT_ID}",
+        "NEON_DATABASE_NAME": "${env.NEON_DATABASE_NAME}",
+        "NEON_DEFAULT_ROLE": "${env.NEON_DEFAULT_ROLE}",
+        "NEON_DEFAULT_USER": "${env.NEON_DEFAULT_USER}",
+        "NEON_DEFAULT_PASSWORD": "${env.NEON_DEFAULT_PASSWORD}"
+      },
+      "description": "Neon PostgreSQL database queries and management"
+    },
+    "ds-linter": {
+      "command": "node",
+      "args": ["./tooling/mcp/ds-linter/index.mjs"],
+      "description": "Design System compliance checker"
+    },
+    "docs": {
+      "command": "node",
+      "args": ["./tooling/mcp/docs/index.mjs"],
+      "description": "Documentation management and updates"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"],
+      "description": "Chrome DevTools integration for debugging"
+    }
+  }
+}
+

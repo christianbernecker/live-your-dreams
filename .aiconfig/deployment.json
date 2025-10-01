@@ -1,0 +1,69 @@
+{
+  "projects": {
+    "backoffice": {
+      "name": "Live Your Dreams Backoffice",
+      "workingDirectory": "apps/backoffice/",
+      "vercelProject": "christianberneckers-projects/backoffice",
+      "domain": "backoffice.liveyourdreams.online",
+      "deploymentURL": "https://backoffice-ybygqz5mx-christianberneckers-projects.vercel.app",
+      "framework": "Next.js 14",
+      "runtime": "Node.js 20",
+      "commands": {
+        "link": "cd apps/backoffice && vercel link --yes",
+        "deploy": "cd apps/backoffice && vercel --prod",
+        "preview": "cd apps/backoffice && vercel"
+      },
+      "notes": "KRITISCH: Immer aus apps/backoffice/ deployen! NICHT aus Root wegen Yarn Workspace-Konflikten!"
+    },
+    "designSystem": {
+      "name": "Live Your Dreams Design System",
+      "workingDirectory": "design-system/v2/",
+      "vercelProject": "christianberneckers-projects/lyd-design-system",
+      "domain": "designsystem.liveyourdreams.online",
+      "framework": "Static HTML/CSS",
+      "notes": "Separates Projekt für Design System Demos und Dokumentation"
+    }
+  },
+  "commonIssues": {
+    "yarnWorkspaceError": {
+      "error": "error Workspaces can only be enabled in private projects",
+      "solution": "Deployment aus spezifischem app/* Directory, NICHT aus Root",
+      "prevention": "Immer 'vercel link' im richtigen Directory vor Deployment",
+      "commands": [
+        "cd apps/backoffice",
+        "vercel link --yes",
+        "vercel --prod"
+      ]
+    },
+    "adminPermissions": {
+      "error": "Redirect zu /dashboard?error=insufficient_permissions bei /admin Zugriff",
+      "diagnosis": "RBAC-System funktioniert, aber User hat keine Admin-Permissions in Database",
+      "solution": "Database-Seed prüfen oder User-Rollen manuell zuweisen",
+      "check": "SELECT * FROM user_roles WHERE user_id = '<user_id>';"
+    },
+    "prerenderError": {
+      "error": "TypeError: Cannot read properties of null (reading 'useContext')",
+      "diagnosis": "Error Pages versuchen SessionProvider beim Pre-rendering zu nutzen",
+      "solution": "Custom Error Pages ohne Layout (app/not-found.tsx, pages/_error.tsx)",
+      "fixed": "2025-10-01"
+    }
+  },
+  "environments": {
+    "production": {
+      "DATABASE_URL": "${env.DATABASE_URL}",
+      "NEXTAUTH_URL": "https://backoffice.liveyourdreams.online",
+      "NEXTAUTH_SECRET": "${env.NEXTAUTH_SECRET}"
+    },
+    "preview": {
+      "DATABASE_URL": "${env.DATABASE_URL}",
+      "NEXTAUTH_URL": "auto-detected by Vercel",
+      "NEXTAUTH_SECRET": "${env.NEXTAUTH_SECRET}"
+    }
+  },
+  "monitoring": {
+    "vercel": "https://vercel.com/christianberneckers-projects/backoffice",
+    "github": "https://github.com/christianbernecker/live-your-dreams",
+    "database": "Neon Dashboard"
+  }
+}
+
