@@ -33,6 +33,9 @@ export function FileUpload({
     setUploading(true);
     setProgress(0);
 
+    // CRITICAL: Track interval to clear in catch block (Codex Finding #3)
+    let progressInterval: NodeJS.Timeout | null = null;
+
     try {
       // Schritt 1: WebP-Transformation (0-30%)
       setProgress(10);
@@ -51,7 +54,7 @@ export function FileUpload({
       console.log('WebP file:', webpFile.name, webpFile.type, `${(webpFile.size / 1024 / 1024).toFixed(2)}MB`);
 
       // Schritt 2: Upload (30-100%)
-      const progressInterval = setInterval(() => {
+      progressInterval = setInterval(() => {
         setProgress(prev => Math.min(prev + 10, 90));
       }, 100);
 
@@ -65,7 +68,7 @@ export function FileUpload({
         body: formData,
       });
 
-      clearInterval(progressInterval);
+      if (progressInterval) clearInterval(progressInterval);
       setProgress(100);
 
       if (!response.ok) {
@@ -77,6 +80,8 @@ export function FileUpload({
       onUpload(data.url);
 
     } catch (error) {
+      // FIX: Clear interval auch bei Fehler um Interval-Leak zu verhindern
+      if (progressInterval) clearInterval(progressInterval);
       console.error('Upload error:', error);
       onError(error instanceof Error ? error.message : 'Upload fehlgeschlagen');
     } finally {

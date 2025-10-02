@@ -1,8 +1,9 @@
 import { auth } from '@/lib/nextauth';
 import { put } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, mkdir, unlink } from 'fs/promises';
 import { join } from 'path';
+import { existsSync } from 'fs';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -36,11 +37,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file type (akzeptiere auch WebP von Client-Transformation)
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
-    if (!allowedTypes.includes(file.type)) {
+    // CRITICAL: Enforce WebP-only storage (Codex Finding #1)
+    // Reject non-WebP uploads - Client MUST transform to WebP before upload
+    if (file.type !== 'image/webp') {
+      console.error('❌ Non-WebP upload rejected:', file.type, file.name);
       return NextResponse.json(
-        { error: 'Invalid file type. Allowed: JPEG, PNG, WebP, GIF' },
+        {
+          error: 'Only WebP images allowed. Client must transform to WebP before upload.',
+          received: file.type
+        },
         { status: 400 }
       );
     }
@@ -119,7 +124,7 @@ export async function POST(request: NextRequest) {
 
 /**
  * DELETE /api/media/upload?url=...
- * Deletes an image from Vercel Blob Storage
+ * Deletes an image from Vercel Blob Storage or local filesystem (Codex Finding #2)
  */
 export async function DELETE(request: NextRequest) {
   try {
@@ -142,14 +147,40 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Delete from Vercel Blob (requires @vercel/blob del function)
-    const { del } = await import('@vercel/blob');
-    await del(url);
+    // Detect storage type: Local filesystem (starts with /) vs Vercel Blob (https://)
+    const isLocalFile = url.startsWith('/uploads/');
 
-    return NextResponse.json({
-      success: true,
-      message: 'File deleted successfully'
-    });
+    if (isLocalFile) {
+      // Delete from local filesystem
+      const localPath = join(process.cwd(), 'public', url);
+
+      if (!existsSync(localPath)) {
+        return NextResponse.json(
+          { error: 'File not found', path: url },
+          { status: 404 }
+        );
+      }
+
+      await unlink(localPath);
+      console.log('🗑️  Deleted local file:', url);
+
+      return NextResponse.json({
+        success: true,
+        message: 'File deleted from local filesystem',
+        storage: 'local-filesystem'
+      });
+    } else {
+      // Delete from Vercel Blob
+      const { del } = await import('@vercel/blob');
+      await del(url);
+      console.log('🗑️  Deleted blob file:', url);
+
+      return NextResponse.json({
+        success: true,
+        message: 'File deleted from Vercel Blob',
+        storage: 'vercel-blob'
+      });
+    }
 
   } catch (error) {
     console.error('Delete error:', error);
