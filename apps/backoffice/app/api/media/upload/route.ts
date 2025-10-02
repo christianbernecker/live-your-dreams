@@ -1,14 +1,16 @@
 import { auth } from '@/lib/nextauth';
 import { put } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /**
  * POST /api/media/upload
- * Uploads an image to Vercel Blob Storage
- * 
+ * Uploads an image to Vercel Blob Storage (or local filesystem in development)
+ *
  * Body: FormData with 'file' field
  * Returns: { url: string, pathname: string }
  */
@@ -34,7 +36,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file type
+    // Validate file type (akzeptiere auch WebP von Client-Transformation)
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
@@ -43,7 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file size (max 5MB)
+    // Validate file size (max 5MB original, aber WebP komprimiert sollte kleiner sein)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
       return NextResponse.json(
@@ -57,19 +59,54 @@ export async function POST(request: NextRequest) {
     const sanitizedName = file.name.replace(/[^a-z0-9.-]/gi, '-').toLowerCase();
     const filename = `blog/${timestamp}-${sanitizedName}`;
 
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, {
-      access: 'public',
-      addRandomSuffix: true,
-    });
+    // Check if BLOB_READ_WRITE_TOKEN exists
+    const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
-    return NextResponse.json({
-      success: true,
-      url: blob.url,
-      pathname: blob.pathname,
-      size: file.size,
-      type: file.type,
-    });
+    if (hasBlobToken) {
+      // Production: Upload to Vercel Blob
+      const blob = await put(filename, file, {
+        access: 'public',
+        addRandomSuffix: true,
+      });
+
+      return NextResponse.json({
+        success: true,
+        url: blob.url,
+        pathname: blob.pathname,
+        size: file.size,
+        type: file.type,
+        storage: 'vercel-blob'
+      });
+    } else {
+      // Development Fallback: Save to local filesystem
+      console.warn('⚠️  BLOB_READ_WRITE_TOKEN not found. Using local filesystem fallback.');
+      console.warn('📝 See BLOB_SETUP.md for production setup instructions.');
+
+      // Erstelle uploads Verzeichnis
+      const uploadsDir = join(process.cwd(), 'public', 'uploads', 'blog');
+      await mkdir(uploadsDir, { recursive: true });
+
+      // Speichere Datei lokal
+      const localFilename = `${timestamp}-${sanitizedName}`;
+      const localPath = join(uploadsDir, localFilename);
+
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      await writeFile(localPath, buffer);
+
+      // Erstelle Public URL
+      const publicUrl = `/uploads/blog/${localFilename}`;
+
+      return NextResponse.json({
+        success: true,
+        url: publicUrl,
+        pathname: localFilename,
+        size: file.size,
+        type: file.type,
+        storage: 'local-filesystem',
+        warning: 'Using local filesystem. Configure BLOB_READ_WRITE_TOKEN for production.'
+      });
+    }
 
   } catch (error) {
     console.error('Upload error:', error);

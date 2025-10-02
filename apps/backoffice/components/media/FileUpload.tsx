@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import imageCompression from 'browser-image-compression';
 
 interface FileUploadProps {
   onUpload: (url: string) => void;
@@ -27,20 +28,37 @@ export function FileUpload({
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) return;
-    
+
     const file = acceptedFiles[0];
     setUploading(true);
     setProgress(0);
 
     try {
-      // Simulate progress (Vercel Blob doesn't provide real progress)
+      // Schritt 1: WebP-Transformation (0-30%)
+      setProgress(10);
+      console.log('Original file:', file.name, file.type, `${(file.size / 1024 / 1024).toFixed(2)}MB`);
+
+      // Konvertiere alle Bilder zu WebP mit optimaler Kompression
+      const webpFile = await imageCompression(file, {
+        maxSizeMB: 1, // Maximale Größe 1MB
+        maxWidthOrHeight: 2400, // Max 2400px Breite/Hööhe
+        useWebWorker: true,
+        fileType: 'image/webp', // Force WebP output
+        initialQuality: 0.85, // Hohe Qualität für Blog-Bilder
+      });
+
+      setProgress(30);
+      console.log('WebP file:', webpFile.name, webpFile.type, `${(webpFile.size / 1024 / 1024).toFixed(2)}MB`);
+
+      // Schritt 2: Upload (30-100%)
       const progressInterval = setInterval(() => {
         setProgress(prev => Math.min(prev + 10, 90));
       }, 100);
 
-      // Upload to Vercel Blob
       const formData = new FormData();
-      formData.append('file', file);
+      // Stelle sicher dass die Datei .webp Extension hat
+      const webpFileName = file.name.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '.webp');
+      formData.append('file', webpFile, webpFileName);
 
       const response = await fetch('/api/media/upload', {
         method: 'POST',
