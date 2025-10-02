@@ -30,15 +30,7 @@ export const authConfig: NextAuthConfig = {
     error: "/auth/error",
   },
   callbacks: {
-    async jwt({ token, user, trigger }) {
-      // DEBUG: Log JWT callback execution
-      console.log('[JWT Callback]', { 
-        trigger, 
-        hasUser: !!user, 
-        userRole: user?.role,
-        tokenRole: token.role 
-      })
-      
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id
         token.email = user.email
@@ -47,24 +39,10 @@ export const authConfig: NextAuthConfig = {
         token.role = (user as any).role
         token.isActive = (user as any).isActive
         token.permissions = (user as any).permissions
-        
-        // DEBUG: Log what we're setting
-        console.log('[JWT] Setting token fields:', {
-          role: token.role,
-          isActive: token.isActive,
-          permissionCount: token.permissions?.length
-        })
       }
       return token
     },
     async session({ session, token }) {
-      // DEBUG: Log session callback execution
-      console.log('[Session Callback]', {
-        hasToken: !!token,
-        tokenRole: token.role,
-        tokenPermissions: token.permissions
-      })
-      
       if (token && session.user) {
         session.user.id = token.id as string
         session.user.email = token.email as string
@@ -73,13 +51,6 @@ export const authConfig: NextAuthConfig = {
         session.user.role = (token as any).role
         session.user.isActive = (token as any).isActive
         session.user.permissions = (token as any).permissions
-        
-        // DEBUG: Log final session
-        console.log('[Session] Final session.user:', {
-          role: session.user.role,
-          isActive: session.user.isActive,
-          permissionCount: session.user.permissions?.length
-        })
       }
       return session
     },

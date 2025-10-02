@@ -141,7 +141,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
         </svg>
       </button>
       
-      {isOpen && isMounted && createPortal(
+      {(isOpen && isMounted) ? createPortal(
         <div
           className="lyd-portal-dropdown"
           style={{
@@ -192,7 +192,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
           ))}
         </div>,
         document.body
-      )}
+      ) as React.ReactNode : null}
     </div>
   );
 };
