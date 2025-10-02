@@ -82,6 +82,16 @@ If critical: "Dieser Ansatz hat folgendes Problem: [konkrete Issue]. Bessere Lö
 - Every "quick fix" is technical debt
 - Every untested path is a production outage waiting
 
+## +Codex Workflow:
+When user prompt starts with "+Codex":
+1. Analyze task and implement solution
+2. Call Codex Review: `bash .aiconfig/scripts/codex-review.sh "User Task" "$(git diff HEAD~1)"`
+3. Process gpt-5-codex feedback automatically
+4. Apply critical fixes and improvements
+5. Report final result to user with review summary
+
+Do NOT use Codex for normal requests - only when explicitly prefixed with "+Codex".
+
 ## Language Rule:
 CRITICAL: While this prompt is in English for universal applicability, ALL responses, code comments, error messages, and communication MUST be in German.
 
