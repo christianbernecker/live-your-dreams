@@ -226,6 +226,10 @@ export class ApiUsageService {
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
 
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    // Monthly Stats
     const monthlyStats = await prisma.apiUsageLog.aggregate({
       where: {
         createdAt: { gte: startOfMonth },
@@ -233,25 +237,41 @@ export class ApiUsageService {
       _sum: {
         totalCost: true,
         totalTokens: true,
+        inputTokens: true,
+        outputTokens: true,
       },
       _count: true,
     });
 
-    const errorCount = await prisma.apiUsageLog.count({
+    // Today Stats
+    const todayStats = await prisma.apiUsageLog.aggregate({
       where: {
-        createdAt: { gte: startOfMonth },
-        status: { in: ['ERROR', 'RATE_LIMITED', 'TIMEOUT'] },
+        createdAt: { gte: startOfToday },
       },
+      _sum: {
+        totalCost: true,
+        totalTokens: true,
+        inputTokens: true,
+        outputTokens: true,
+      },
+      _count: true,
     });
 
-    const totalCalls = monthlyStats._count || 0;
-    const errorRate = totalCalls > 0 ? (errorCount / totalCalls) * 100 : 0;
-
     return {
-      totalCost: monthlyStats._sum.totalCost ? Number(monthlyStats._sum.totalCost) : 0,
-      totalCalls,
-      totalTokens: monthlyStats._sum.totalTokens || 0,
-      errorRate: Math.round(errorRate * 10) / 10, // 1 Dezimalstelle
+      today: {
+        totalCost: todayStats._sum.totalCost ? Number(todayStats._sum.totalCost) : 0,
+        totalCalls: todayStats._count || 0,
+        totalTokens: todayStats._sum.totalTokens || 0,
+        inputTokens: todayStats._sum.inputTokens || 0,
+        outputTokens: todayStats._sum.outputTokens || 0,
+      },
+      month: {
+        totalCost: monthlyStats._sum.totalCost ? Number(monthlyStats._sum.totalCost) : 0,
+        totalCalls: monthlyStats._count || 0,
+        totalTokens: monthlyStats._sum.totalTokens || 0,
+        inputTokens: monthlyStats._sum.inputTokens || 0,
+        outputTokens: monthlyStats._sum.outputTokens || 0,
+      },
     };
   }
 }
