@@ -322,7 +322,7 @@ export const InputLikeSelect = React.forwardRef<HTMLInputElement, InputLikeSelec
       )}
 
       {/* PORTAL DROPDOWN - Rendered at document.body level */}
-      {isOpen && portalContainer && createPortal(
+      {isOpen && portalContainer ? createPortal(
         <div
           role="listbox"
           style={{
@@ -384,7 +384,7 @@ export const InputLikeSelect = React.forwardRef<HTMLInputElement, InputLikeSelec
           )}
         </div>,
         portalContainer
-      )}
+      ) as React.ReactNode : null}
 
       {/* CSS Animation */}
       <style jsx>{`
