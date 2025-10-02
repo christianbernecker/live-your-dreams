@@ -10,10 +10,16 @@ export default function AdminPage() {
 
   useEffect(() => {
     // Client-side auth check
-    fetch('/api/debug/user-roles')
-      .then(res => res.json())
+    fetch('/api/auth/session')
+      .then(res => {
+        if (res.status === 401) {
+          router.push('/dashboard');
+          return null;
+        }
+        return res.json();
+      })
       .then(data => {
-        if (data.user?.email !== 'christianbernecker@gmail.com') {
+        if (!data || !data.user?.isAdmin) {
           router.push('/dashboard');
         } else {
           setIsLoading(false);
