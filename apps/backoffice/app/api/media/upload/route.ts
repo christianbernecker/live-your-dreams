@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir, unlink } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
+import sharp from 'sharp';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -37,20 +38,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // CRITICAL: Enforce WebP-only storage (Codex Finding #1)
-    // Reject non-WebP uploads - Client MUST transform to WebP before upload
-    if (file.type !== 'image/webp') {
-      console.error('❌ Non-WebP upload rejected:', file.type, file.name);
+    // Validate file type - accept common image formats
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        {
-          error: 'Only WebP images allowed. Client must transform to WebP before upload.',
-          received: file.type
-        },
+        { error: 'Invalid file type. Allowed: JPEG, PNG, WebP, GIF' },
         { status: 400 }
       );
     }
 
-    // Validate file size (max 5MB original, aber WebP komprimiert sollte kleiner sein)
+    // Validate file size (max 5MB original)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
       return NextResponse.json(
@@ -59,27 +56,52 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique filename
+    // SERVER-SIDE WebP TRANSFORMATION (transparent für User)
+    // Client kann optional pre-transform, Server garantiert WebP-Output
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    let webpBuffer: Buffer;
+    let wasTransformed = false;
+
+    if (file.type === 'image/webp') {
+      // Bereits WebP - direkt verwenden
+      webpBuffer = buffer;
+    } else {
+      // Transformiere zu WebP (Sharp - serverseitig)
+      console.log(`🔄 Transforming ${file.type} to WebP...`);
+      webpBuffer = await sharp(buffer)
+        .webp({ quality: 85, effort: 4 })
+        .toBuffer();
+      wasTransformed = true;
+      console.log(`✅ Transformed: ${(buffer.length / 1024 / 1024).toFixed(2)}MB → ${(webpBuffer.length / 1024 / 1024).toFixed(2)}MB WebP`);
+    }
+
+    // Generate unique filename with .webp extension
     const timestamp = Date.now();
-    const sanitizedName = file.name.replace(/[^a-z0-9.-]/gi, '-').toLowerCase();
-    const filename = `blog/${timestamp}-${sanitizedName}`;
+    const sanitizedName = file.name.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '').replace(/[^a-z0-9.-]/gi, '-').toLowerCase();
+    const filename = `blog/${timestamp}-${sanitizedName}.webp`;
 
     // Check if BLOB_READ_WRITE_TOKEN exists
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
     if (hasBlobToken) {
       // Production: Upload to Vercel Blob
-      const blob = await put(filename, file, {
+      const blob = await put(filename, webpBuffer, {
         access: 'public',
         addRandomSuffix: true,
+        contentType: 'image/webp',
       });
 
       return NextResponse.json({
         success: true,
         url: blob.url,
         pathname: blob.pathname,
-        size: file.size,
-        type: file.type,
+        size: webpBuffer.length,
+        originalSize: file.size,
+        type: 'image/webp',
+        originalType: file.type,
+        wasTransformed,
         storage: 'vercel-blob'
       });
     } else {
@@ -91,23 +113,22 @@ export async function POST(request: NextRequest) {
       const uploadsDir = join(process.cwd(), 'public', 'uploads', 'blog');
       await mkdir(uploadsDir, { recursive: true });
 
-      // Speichere Datei lokal
-      const localFilename = `${timestamp}-${sanitizedName}`;
-      const localPath = join(uploadsDir, localFilename);
-
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-      await writeFile(localPath, buffer);
+      // Speichere WebP-Datei lokal
+      const localPath = join(uploadsDir, `${timestamp}-${sanitizedName}.webp`);
+      await writeFile(localPath, webpBuffer);
 
       // Erstelle Public URL
-      const publicUrl = `/uploads/blog/${localFilename}`;
+      const publicUrl = `/uploads/blog/${timestamp}-${sanitizedName}.webp`;
 
       return NextResponse.json({
         success: true,
         url: publicUrl,
-        pathname: localFilename,
-        size: file.size,
-        type: file.type,
+        pathname: `${timestamp}-${sanitizedName}.webp`,
+        size: webpBuffer.length,
+        originalSize: file.size,
+        type: 'image/webp',
+        originalType: file.type,
+        wasTransformed,
         storage: 'local-filesystem',
         warning: 'Using local filesystem. Configure BLOB_READ_WRITE_TOKEN for production.'
       });
