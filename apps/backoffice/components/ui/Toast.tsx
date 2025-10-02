@@ -12,7 +12,7 @@ interface ToastProps {
   style?: React.CSSProperties;
 }
 
-export const Toast = ({ type, title, message, duration = 5000, onClose, style }: ToastProps) => {
+export const Toast = ({ type, title, message, duration = 5000, onClose, style }: ToastProps): React.ReactNode => {
   const [isVisible, setIsVisible] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   
