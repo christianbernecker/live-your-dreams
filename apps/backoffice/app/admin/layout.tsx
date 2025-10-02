@@ -1,59 +1,26 @@
-/**
- * Admin Layout - Uses DashboardLayout Framework
- * 
- * Integrates Admin section with the main Dashboard layout system
- */
-
-import AdminSubNavigation from '@/components/admin/AdminSubNavigation';
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-// Toast provider not needed - toasts are handled per-component
 import { auth } from '@/lib/nextauth';
 import { redirect } from 'next/navigation';
 
-interface AdminLayoutProps {
+export default async function AdminLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export default async function AdminLayout({ children }: AdminLayoutProps) {
+}) {
   const session = await auth();
-  
-  // Permission check: Only allow users with admin permissions
-  if (!session?.user) {
-    redirect('/dashboard?error=insufficient_permissions');
-  }
 
-  // DEBUG: Log session for troubleshooting
-  console.log('Admin Layout Debug:', {
-    user: session.user.email,
-    permissions: session.user.permissions,
-    hasUsersRead: session.user.permissions?.includes('users.read'),
-    hasRolesRead: session.user.permissions?.includes('roles.read')
-  });
-
-  // TEMPORARY: More lenient admin check - user needs at least one admin permission
-  const isAdmin = session.user.permissions?.includes('users.read') || 
-                  session.user.permissions?.includes('roles.read') ||
-                  session.user.email === 'admin@liveyourdreams.online'
-
-  if (!isAdmin) {
-    redirect('/dashboard?error=insufficient_permissions');
+  // Admin-Check (nur christianbernecker@gmail.com hat Zugriff)
+  if (!session?.user || session.user.email !== 'christianbernecker@gmail.com') {
+    redirect('/dashboard');
   }
 
   return (
-    <DashboardLayout 
-      title="Administration"
-      subtitle="System-Verwaltung und Konfiguration"
-      userEmail={session.user.email}
-    >
-      <>
-        {/* Admin Sub-Navigation */}
-        <AdminSubNavigation />
-        
-        {/* Admin Content with DS Grid */}
-        <div className="lyd-stack lg">
-          {children}
-        </div>
-      </>
-    </DashboardLayout>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--lyd-bg)' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: 'var(--spacing-xl)' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: 'var(--spacing-lg)' }}>
+          API Key & Cost Monitoring
+        </h1>
+        {children}
+      </div>
+    </div>
   );
 }

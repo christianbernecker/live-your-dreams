@@ -143,19 +143,22 @@ model User {
   sessions      Session[]
   roles         UserRole[]
   media         Media[]
-  
+
   // Activity tracking
   createdPosts      Post[]         @relation("PostAuthor")
   updatedPosts      Post[]         @relation("PostUpdatedBy")
-  
+
   // Content management
   createdContent    ContentEntry[] @relation("ContentAuthor")
   updatedContent    ContentEntry[] @relation("ContentUpdatedBy")
   deletedContent    ContentEntry[] @relation("ContentDeletedBy")
-  
+
   // Blog management (v1.1)
   blogPosts         BlogPost[]     @relation("BlogAuthor")
-  
+
+  // API Management
+  apiUsageLogs      ApiUsageLog[]
+
   // Audit trails
   actorAuditEvents  AuditEvent[]   @relation("AuditActor")
   targetAuditEvents AuditEvent[]   @relation("AuditTargetUser")
@@ -513,4 +516,83 @@ model BlogPost {
   @@index([platforms])
   @@index([title])  // Nur Titel indexieren, Content zu groß für Index
   @@map("blog_posts")
+}
+
+// ============================================================================
+// API KEY MANAGEMENT & MONITORING SYSTEM
+// ============================================================================
+
+enum ApiProvider {
+  ANTHROPIC
+  OPENAI
+}
+
+enum ApiCallStatus {
+  SUCCESS
+  ERROR
+  RATE_LIMITED
+  TIMEOUT
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  provider    ApiProvider
+  name        String   // z.B. "Claude Sonnet 4.5 Production"
+  keyHash     String   // Verschlüsselter API Key
+  isActive    Boolean  @default(true) @map("is_active")
+
+  // Metadata
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  lastUsedAt  DateTime? @map("last_used_at")
+
+  // Limits
+  monthlyLimit Decimal? @db.Decimal(10, 2) @map("monthly_limit") // Max € pro Monat
+
+  // Relations
+  usageLogs   ApiUsageLog[]
+
+  @@index([provider, isActive])
+  @@map("api_keys")
+}
+
+model ApiUsageLog {
+  id            String   @id @default(cuid())
+  apiKeyId      String   @map("api_key_id")
+
+  // Request Info
+  feature       String   // z.B. "blog-assistant", "image-analysis"
+  endpoint      String   // z.B. "messages", "chat/completions"
+  model         String   // z.B. "claude-sonnet-4.5", "gpt-4-turbo"
+
+  // Usage Metrics
+  inputTokens   Int      @default(0) @map("input_tokens")
+  outputTokens  Int      @default(0) @map("output_tokens")
+  totalTokens   Int      @default(0) @map("total_tokens")
+
+  // Cost Tracking (in €)
+  inputCost     Decimal  @db.Decimal(10, 6) @map("input_cost")
+  outputCost    Decimal  @db.Decimal(10, 6) @map("output_cost")
+  totalCost     Decimal  @db.Decimal(10, 6) @map("total_cost")
+
+  // Status & Timing
+  status        ApiCallStatus
+  durationMs    Int      @map("duration_ms")
+  errorMessage  String?  @map("error_message")
+
+  // Context
+  userId        String?  @map("user_id")
+  metadata      Json?    // Zusätzliche Infos
+
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // Relations
+  apiKey        ApiKey   @relation(fields: [apiKeyId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
+
+  @@index([apiKeyId, createdAt])
+  @@index([feature, createdAt])
+  @@index([model, createdAt])
+  @@index([userId])
+  @@map("api_usage_logs")
 }
