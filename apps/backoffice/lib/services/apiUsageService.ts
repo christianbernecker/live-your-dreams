@@ -183,9 +183,9 @@ export class ApiUsageService {
     return Array.from(dailyMap.entries())
       .map(([date, stats]) => ({
         date,
-        cost: stats.cost,
+        totalCost: stats.cost,
         tokens: stats.tokens,
-        calls: stats.calls,
+        totalCalls: stats.calls,
       }))
       .sort((a, b) => a.date.localeCompare(b.date));
   }
