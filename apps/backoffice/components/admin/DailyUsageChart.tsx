@@ -17,13 +17,13 @@ export function DailyUsageChart({ data }: { data: DailyUsageData[] }) {
         return (
           <div key={day.date} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
             <div
-              title={`${day.date}: ¬${day.totalCost.toFixed(2)} (${day.totalCalls} calls)`}
+              title={day.date + ': EUR' + day.totalCost.toFixed(2) + ' (' + day.totalCalls + ' calls)'}
               style={{
                 width: '100%',
                 backgroundColor: 'var(--lyd-primary)',
                 opacity: 0.8,
                 borderRadius: '4px 4px 0 0',
-                height: `${height}%`,
+                height: height + '%',
                 minHeight: day.totalCost > 0 ? '2px' : '0',
                 transition: 'opacity 0.2s',
                 cursor: 'pointer'
