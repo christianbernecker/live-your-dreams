@@ -271,7 +271,7 @@ export const CustomSelect = forwardRef<HTMLDivElement, CustomSelectProps>(({
         </div>
 
         {/* Dropdown Options - REACT PORTAL to render outside DOM tree */}
-        {isOpen && isMounted && createPortal(
+        {(isOpen && isMounted) ? createPortal(
           <div
             ref={dropdownRef}
             role="listbox"
@@ -336,7 +336,7 @@ export const CustomSelect = forwardRef<HTMLDivElement, CustomSelectProps>(({
             )}
           </div>,
           document.body
-        )}
+        ) as React.ReactNode : null}
 
         {/* Loading Spinner */}
         {loading && (

@@ -83,7 +83,7 @@ export default function MediaUpload({
   return (
     <div className="lyd-card">
       <div 
-        {...getRootProps()} 
+        {...(getRootProps() as any)} 
         className={`
           p-8 border-2 border-dashed rounded-lg cursor-pointer transition-colors
           ${isDragActive 
