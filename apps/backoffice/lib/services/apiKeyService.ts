@@ -45,6 +45,10 @@ export class ApiKeyService {
    * @returns Array von API Keys mit maskierten Keys
    */
   static async listKeys() {
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
     const keys = await prisma.apiKey.findMany({
       orderBy: { createdAt: 'desc' },
       include: {
@@ -54,17 +58,35 @@ export class ApiKeyService {
       },
     });
 
-    return keys.map((key) => ({
-      id: key.id,
-      provider: key.provider,
-      name: key.name,
-      maskedKey: EncryptionService.mask(EncryptionService.decrypt(key.keyHash)),
-      isActive: key.isActive,
-      createdAt: key.createdAt,
-      lastUsedAt: key.lastUsedAt,
-      monthlyLimit: key.monthlyLimit ? Number(key.monthlyLimit) : null,
-      callCount: key._count.usageLogs,
-    }));
+    // Fetch monthly costs for all keys in parallel
+    const keysWithCosts = await Promise.all(
+      keys.map(async (key) => {
+        const monthlyCostData = await prisma.apiUsageLog.aggregate({
+          where: {
+            apiKeyId: key.id,
+            createdAt: { gte: startOfMonth },
+          },
+          _sum: {
+            totalCost: true,
+          },
+        });
+
+        return {
+          id: key.id,
+          provider: key.provider,
+          name: key.name,
+          maskedKey: EncryptionService.mask(EncryptionService.decrypt(key.keyHash)),
+          isActive: key.isActive,
+          createdAt: key.createdAt,
+          lastUsedAt: key.lastUsedAt,
+          monthlyLimit: key.monthlyLimit ? Number(key.monthlyLimit) : null,
+          callCount: key._count.usageLogs,
+          monthlyCost: monthlyCostData._sum.totalCost ? Number(monthlyCostData._sum.totalCost) : 0,
+        };
+      })
+    );
+
+    return keysWithCosts;
   }
 
   /**
