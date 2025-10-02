@@ -57,19 +57,37 @@ export const authConfig: NextAuthConfig = {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
+      const isOnAdmin = nextUrl.pathname.startsWith('/admin')
+      const isOnAuth = nextUrl.pathname.startsWith('/auth')
       
-      if (isOnDashboard) {
-        if (isLoggedIn) {
-          // Check if user is active
-          if (!auth.user.isActive) {
-            return Response.redirect(new URL('/auth/error?error=AccountDeactivated', nextUrl))
-          }
-          return true
+      // Protected routes: dashboard und admin
+      if (isOnDashboard || isOnAdmin) {
+        if (!isLoggedIn) {
+          return false // Redirect to login
         }
-        return false // Redirect to login page
-      } else if (isLoggedIn) {
+        
+        // Check if user is active
+        if (!auth.user.isActive) {
+          return Response.redirect(new URL('/auth/error?error=AccountDeactivated', nextUrl))
+        }
+        
+        // Admin-Routen: Prüfe admin Role
+        if (isOnAdmin) {
+          const isAdmin = auth.user.role === 'admin'
+          if (!isAdmin) {
+            return Response.redirect(new URL('/dashboard', nextUrl))
+          }
+        }
+        
+        return true
+      }
+      
+      // Login-Seite: Redirect eingeloggte User zu Dashboard
+      if (nextUrl.pathname === '/' && isLoggedIn) {
         return Response.redirect(new URL('/dashboard', nextUrl))
       }
+      
+      // Alle anderen Routen erlauben
       return true
     },
   },

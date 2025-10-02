@@ -2,7 +2,6 @@
 
 import { DailyUsageChart } from '@/components/admin/DailyUsageChart';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface ApiStats {
   keys: any[];
@@ -15,29 +14,23 @@ interface ApiStats {
 }
 
 export default function AdminDashboard() {
-  const router = useRouter();
   const [data, setData] = useState<ApiStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Auth wird über authorized() Callback in lib/auth.ts gehandelt
+    // Hier nur noch Daten laden
     fetch('/api/admin/api-stats')
-      .then(res => {
-        if (res.status === 401) {
-          router.push('/dashboard');
-          return null;
-        }
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
-        if (data) {
-          setData(data);
-          setIsLoading(false);
-        }
+        setData(data);
+        setIsLoading(false);
       })
-      .catch(() => {
-        router.push('/dashboard');
+      .catch(error => {
+        console.error('Failed to load API stats:', error);
+        setIsLoading(false);
       });
-  }, [router]);
+  }, []);
 
   if (isLoading || !data) {
     return (

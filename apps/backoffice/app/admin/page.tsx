@@ -1,45 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Client-side auth check
-    fetch('/api/auth/session')
-      .then(res => {
-        if (res.status === 401) {
-          router.push('/dashboard');
-          return null;
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (!data || !data.user?.isAdmin) {
-          router.push('/dashboard');
-        } else {
-          setIsLoading(false);
-        }
-      })
-      .catch(() => router.push('/dashboard'));
-  }, [router]);
-
-  if (isLoading) {
-    return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh' 
-      }}>
-        Loading...
-      </div>
-    );
-  }
+  // Auth wird jetzt über authorized() Callback in lib/auth.ts gehandelt
+  // Keine Client-side Checks mehr nötig
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--lyd-bg)', padding: 'var(--spacing-xl)' }}>
