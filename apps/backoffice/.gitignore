@@ -42,3 +42,4 @@ next-env.d.ts
 
 # local uploads (development fallback)
 /public/uploads/
+.env*.local
