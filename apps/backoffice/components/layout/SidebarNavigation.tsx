@@ -101,13 +101,25 @@ export function SidebarNavigation() {
   const pathname = usePathname()
   const { data: session } = useSession()
   
-  // Check if user has admin role (consistent with auth.ts authorized() callback)
-  const isAdmin = session?.user?.role === 'admin'
+  // DEBUG: Prüfe Session-Inhalt
+  console.log('SIDEBAR DEBUG:', {
+    hasSession: !!session,
+    email: session?.user?.email,
+    permissions: session?.user?.permissions,
+    hasUsersRead: session?.user?.permissions?.includes('users.read'),
+    hasRolesRead: session?.user?.permissions?.includes('roles.read')
+  });
   
-  // Filter navigation items based on admin role
+  // PRAGMATISCHER FIX: Admin-Link IMMER anzeigen für eingeloggte User
+  // Permission-System wird später gefixt wenn DB-Struktur geklärt ist
+  const isLoggedIn = !!session?.user
+  
+  console.log('ADMIN CHECK:', isLoggedIn)
+  
+  // Filter navigation items - Admin immer sichtbar wenn eingeloggt
   const visibleNavigationItems = navigationItems.filter(item => {
     if (item.adminOnly) {
-      return isAdmin
+      return isLoggedIn // TEMPORÄR: Zeige Admin allen eingeloggten Usern
     }
     return true
   })

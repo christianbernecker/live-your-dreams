@@ -8,9 +8,11 @@ export function LogoutButton() {
 
   const handleLogout = async () => {
     try {
+      // KRITISCH: Explizite Production URL um Preview-URL Redirects zu vermeiden
+      const productionUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://backoffice.liveyourdreams.online'
       await signOut({ 
         redirect: false,
-        callbackUrl: '/' 
+        callbackUrl: productionUrl
       })
       router.push('/')
       router.refresh()

@@ -1,6 +1,9 @@
 'use client';
 
 import { DailyUsageChart } from '@/components/admin/DailyUsageChart';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { AdminTabs } from '@/components/ui/AdminTabs';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 interface ApiStats {
@@ -14,6 +17,7 @@ interface ApiStats {
 }
 
 export default function AdminDashboard() {
+  const { data: session } = useSession();
   const [data, setData] = useState<ApiStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,25 +38,47 @@ export default function AdminDashboard() {
 
   if (isLoading || !data) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh'
-      }}>
-        Loading...
-      </div>
+      <DashboardLayout
+        title="API Keys & Monitoring"
+        subtitle="API-Nutzung und Kosten überwachen"
+        userEmail={session?.user?.email ?? undefined}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+          <AdminTabs />
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '60vh'
+          }}>
+            <div className="lyd-loading-spinner">Laden...</div>
+          </div>
+        </div>
+      </DashboardLayout>
     );
   }
 
   const { keys, stats, dailyUsage, recentCalls } = data;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--lyd-bg)', padding: 'var(--spacing-xl)' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: 'var(--spacing-xl)' }}>
-          API Key & Cost Monitoring
-        </h1>
+    <DashboardLayout
+      title="API Keys & Monitoring"
+      subtitle="Überwache API-Nutzung, Kosten und Performance"
+      userEmail={session?.user?.email ?? undefined}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+        {/* Tab Navigation */}
+        <AdminTabs />
+        
+        {/* Quick Stats Header */}
+        <div className="lyd-card" style={{ marginBottom: 'var(--spacing-lg)' }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: 'var(--spacing-xs)' }}>
+            API Monitoring Dashboard
+          </h2>
+          <p style={{ color: 'var(--lyd-text-secondary)', fontSize: '0.875rem', margin: 0 }}>
+            Echtzeit-Überwachung Ihrer API-Nutzung und Kosten
+          </p>
+        </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
           {/* Cost Overview Cards */}
@@ -260,6 +286,6 @@ export default function AdminDashboard() {
           </section>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

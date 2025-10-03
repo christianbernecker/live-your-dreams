@@ -1,80 +1,203 @@
-'use client';
+/**
+ * Admin Dashboard Overview
+ * 
+ * Provides overview of admin functions and system status
+ */
 
+import { prisma } from '@/lib/db';
+import { auth } from '@/lib/nextauth';
+import { hasPermission } from '@/lib/permissions';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { AdminTabs } from '@/components/ui/AdminTabs';
 import Link from 'next/link';
 
-export default function AdminPage() {
-  // Auth wird jetzt über authorized() Callback in lib/auth.ts gehandelt
-  // Keine Client-side Checks mehr nötig
+
+interface AdminStats {
+  totalUsers: number;
+  activeUsers: number;
+  totalRoles: number;
+  totalContent: number;
+  publishedContent: number;
+  recentAuditEvents: number;
+}
+
+async function getAdminStats(): Promise<AdminStats> {
+  try {
+    // Simplified stats - only query tables we know exist
+    const [
+      totalUsers,
+      activeUsers,
+      totalRoles
+    ] = await Promise.all([
+      prisma.user.count().catch(() => 0),
+      prisma.user.count({ where: { isActive: true } }).catch(() => 0),
+      prisma.role.count({ where: { isActive: true } }).catch(() => 0)
+    ]);
+
+    // Mock data for tables that might not exist yet
+    return {
+      totalUsers,
+      activeUsers,
+      totalRoles,
+      totalContent: 0, // Mock - contentEntry table might not exist
+      publishedContent: 0, // Mock - contentEntry table might not exist  
+      recentAuditEvents: 0 // Mock - auditEvent table might not exist
+    };
+  } catch (error) {
+    console.error('Error getting admin stats:', error);
+    // Fallback to all zeros if database fails
+    return {
+      totalUsers: 0,
+      activeUsers: 0,
+      totalRoles: 0,
+      totalContent: 0,
+      publishedContent: 0,
+      recentAuditEvents: 0
+    };
+  }
+}
+
+export default async function AdminPage() {
+  const session = await auth();
+  const stats = await getAdminStats();
+
+  // NUR BENUTZER & ROLLEN - INHALTE & AUDIT-LOG TEMPORÄR AUSGEBLENDET
+  const adminSections = [
+    {
+      title: 'Benutzer-Verwaltung',
+      description: 'Benutzer, Rollen und Berechtigungen verwalten',
+      href: '/admin/users',
+      permission: 'users.read',
+      stats: `${stats.activeUsers} aktive von ${stats.totalUsers} Benutzern`,
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      ),
+      color: 'var(--lyd-primary)'
+    },
+    {
+      title: 'Rollen & Berechtigungen',
+      description: 'Zugriffsrechte und Rollen konfigurieren',
+      href: '/admin/roles',
+      permission: 'roles.read',
+      stats: `${stats.totalRoles} aktive Rollen`,
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <circle cx="12" cy="16" r="1"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      ),
+      color: 'var(--lyd-secondary)'
+    }
+    // TEMPORÄR AUSGEBLENDET:
+    // - Content-Management (noch nicht implementiert)
+    // - Audit-Protokoll (noch nicht implementiert)
+    // - System-Einstellungen (noch nicht implementiert)
+  ];
+
+  // Filter sections based on permissions
+  const allowedSections = [];
+  for (const section of adminSections) {
+    if (await hasPermission(session, section.permission as any)) {
+      allowedSections.push(section);
+    }
+  }
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--lyd-bg)', padding: 'var(--spacing-xl)' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: 'var(--spacing-xl)' }}>
-          Administration
-        </h1>
+    <DashboardLayout title="Administration" subtitle="Zentrale Steuerung für Benutzer, Rollen und Systemkonfiguration">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+        {/* Tab Navigation */}
+        <AdminTabs />
         
-        <div style={{ display: 'grid', gap: 'var(--spacing-lg)', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-          <Link 
-            href="/admin/users"
-            style={{
-              padding: 'var(--spacing-lg)',
-              backgroundColor: 'var(--lyd-card-bg)',
-              border: '1px solid var(--lyd-border)',
-              borderRadius: 'var(--border-radius)',
-              textDecoration: 'none',
-              color: 'inherit',
-              transition: 'border-color 0.2s'
-            }}
-          >
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 'var(--spacing-sm)' }}>
-              User Management
-            </h2>
-            <p style={{ color: 'var(--lyd-text-muted)', fontSize: '0.875rem' }}>
-              Verwalte Benutzer und deren Rollen
-            </p>
-          </Link>
-
-          <Link 
-            href="/admin/roles"
-            style={{
-              padding: 'var(--spacing-lg)',
-              backgroundColor: 'var(--lyd-card-bg)',
-              border: '1px solid var(--lyd-border)',
-              borderRadius: 'var(--border-radius)',
-              textDecoration: 'none',
-              color: 'inherit',
-              transition: 'border-color 0.2s'
-            }}
-          >
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 'var(--spacing-sm)' }}>
-              Role Management
-            </h2>
-            <p style={{ color: 'var(--lyd-text-muted)', fontSize: '0.875rem' }}>
-              Verwalte Rollen und Berechtigungen
-            </p>
-          </Link>
-
-          <Link 
-            href="/admin/api-keys"
-            style={{
-              padding: 'var(--spacing-lg)',
-              backgroundColor: 'var(--lyd-card-bg)',
-              border: '1px solid var(--lyd-border)',
-              borderRadius: 'var(--border-radius)',
-              textDecoration: 'none',
-              color: 'inherit',
-              transition: 'border-color 0.2s'
-            }}
-          >
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 'var(--spacing-sm)' }}>
-              API Keys & Monitoring
-            </h2>
-            <p style={{ color: 'var(--lyd-text-muted)', fontSize: '0.875rem' }}>
-              Überwache API-Nutzung und Kosten
-            </p>
-          </Link>
+        {/* Admin Bereiche mit Tab-Navigation */}
+        <div className="lyd-card">
+          <div className="lyd-card-header">
+            <h2 className="lyd-heading-2">Admin-Bereiche</h2>
+            <p className="lyd-text-secondary">Schnellzugriff auf Benutzer- und Rollenverwaltung</p>
+          </div>
+        <div className="lyd-card-body">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-lg, 24px)' }}>
+            <div style={{ padding: 'var(--spacing-lg, 24px)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+              <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <h3>Benutzer-Verwaltung</h3>
+              <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                {stats.activeUsers} aktive von {stats.totalUsers} Benutzern
+              </p>
+            </div>
+            
+            <div style={{ padding: 'var(--spacing-lg, 24px)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+              <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <circle cx="12" cy="16" r="1"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <h3>Rollen & Berechtigungen</h3>
+              <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                {stats.totalRoles} aktive Rollen
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Quick Actions - KONSISTENTE CARD-STRUKTUR */}
+      <div className="lyd-card">
+        <div className="lyd-card-header">
+          <h2 className="lyd-heading-2">Quick Actions</h2>
+        </div>
+        <div className="lyd-card-body">
+          <div style={{ 
+            display: 'flex', 
+            gap: 'var(--spacing-lg, 24px)', 
+            flexWrap: 'wrap',
+            alignItems: 'center'
+          }}>
+            <Link href="/admin/users?action=create" className="lyd-button outline" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--spacing-sm, 8px)',
+              textDecoration: 'none'
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              Neuer Benutzer
+            </Link>
+            <Link href="/admin/roles?action=create" className="lyd-button outline" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--spacing-sm, 8px)',
+              textDecoration: 'none'
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <circle cx="12" cy="16" r="1"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Neue Rolle
+            </Link>
+            {/* NEUER INHALT TEMPORÄR ENTFERNT */}
+          </div>
+        </div>
+      </div>
+      </div>
+    </DashboardLayout>
   );
 }

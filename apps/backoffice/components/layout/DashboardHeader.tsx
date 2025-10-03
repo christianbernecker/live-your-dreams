@@ -16,9 +16,11 @@ export function DashboardHeader({ title = "Dashboard", subtitle, userEmail, brea
 
   const handleSignOut = async () => {
     const { signOut } = await import('next-auth/react')
+    // KRITISCH: Explizite Production URL um Preview-URL Redirects zu vermeiden
+    const productionUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://backoffice.liveyourdreams.online'
     await signOut({ 
       redirect: true,
-      callbackUrl: '/'
+      callbackUrl: productionUrl
     })
   }
 
