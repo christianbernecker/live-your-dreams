@@ -1,0 +1,54 @@
+name: Deploy Backoffice to Vercel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/backoffice/**'
+      - '.github/workflows/deploy-backoffice.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: 'apps/backoffice/package-lock.json'
+
+      - name: Install Dependencies
+        run: |
+          cd apps/backoffice
+          npm install
+
+      - name: Build
+        run: |
+          cd apps/backoffice
+          npm run build
+
+      - name: Deploy to Vercel Production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          cd apps/backoffice
+
+          # Install Vercel CLI
+          npm install -g vercel@latest
+
+          # Deploy to Production
+          vercel --prod --token=$VERCEL_TOKEN --yes \
+            --scope=christianberneckers-projects
+
+      - name: Deployment Success
+        run: |
+          echo "✅ Backoffice deployed successfully!"
+          echo "🌐 Production URL: https://backoffice.liveyourdreams.online"
