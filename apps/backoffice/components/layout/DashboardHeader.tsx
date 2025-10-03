@@ -16,10 +16,17 @@ export function DashboardHeader({ title = "Dashboard", subtitle, userEmail, brea
 
   const handleSignOut = async () => {
     const { signOut } = await import('next-auth/react')
-    await signOut({ 
-      redirect: true,
-      callbackUrl: '/'
-    })
+    try {
+      // KRITISCH: Explizite Production-URL um Preview-URL Redirects zu vermeiden
+      await signOut({ 
+        redirect: true,
+        callbackUrl: 'https://backoffice.liveyourdreams.online'
+      })
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Fallback: Manueller Redirect zur Production-URL
+      window.location.href = 'https://backoffice.liveyourdreams.online'
+    }
   }
 
   return (
