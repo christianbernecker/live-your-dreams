@@ -6,7 +6,7 @@
 
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
-import { hasPermission } from '@/lib/permissions';
+import { redirect } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { AdminTabs } from '@/components/ui/AdminTabs';
 import Link from 'next/link';
@@ -89,15 +89,48 @@ async function getAdminStats(): Promise<AdminStats> {
 
 export default async function AdminPage() {
   const session = await auth();
+
+  // Admin-only access check with live DB validation
+  if (!session?.user) {
+    redirect('/api/auth/signin?callbackUrl=/admin');
+  }
+
+  // Live DB check: Verify user is active and has admin role
+  // This prevents stale JWT tokens from granting access after revocation
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: {
+        isActive: true,
+        roles: {
+          include: {
+            role: {
+              select: { name: true, isActive: true }
+            }
+          }
+        }
+      }
+    });
+
+    const isActiveAdmin = user?.isActive &&
+      user.roles.some(ur => ur.role.name === 'admin' && ur.role.isActive);
+
+    if (!isActiveAdmin) {
+      redirect('/dashboard?error=insufficient_permissions');
+    }
+  } catch (error) {
+    console.error('Error verifying admin access:', error);
+    redirect('/dashboard?error=server_error');
+  }
+
   const stats = await getAdminStats();
 
-  // NUR BENUTZER & ROLLEN - INHALTE & AUDIT-LOG TEMPORÄR AUSGEBLENDET
+  // Admin sections - no permission filtering needed (already admin-only)
   const adminSections = [
     {
       title: 'Benutzer-Verwaltung',
       description: 'Benutzer, Rollen und Berechtigungen verwalten',
       href: '/admin/users',
-      permission: 'users.read',
       stats: `${stats.activeUsers} aktive von ${stats.totalUsers} Benutzern`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -113,7 +146,6 @@ export default async function AdminPage() {
       title: 'Rollen & Berechtigungen',
       description: 'Zugriffsrechte und Rollen konfigurieren',
       href: '/admin/roles',
-      permission: 'roles.read',
       stats: `${stats.totalRoles} aktive Rollen`,
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -124,19 +156,7 @@ export default async function AdminPage() {
       ),
       color: 'var(--lyd-secondary)'
     }
-    // TEMPORÄR AUSGEBLENDET:
-    // - Content-Management (noch nicht implementiert)
-    // - Audit-Protokoll (noch nicht implementiert)
-    // - System-Einstellungen (noch nicht implementiert)
   ];
-
-  // Filter sections based on permissions
-  const allowedSections = [];
-  for (const section of adminSections) {
-    if (await hasPermission(session, section.permission as any)) {
-      allowedSections.push(section);
-    }
-  }
 
   return (
     <DashboardLayout title="Administration" subtitle="Zentrale Steuerung für Benutzer, Rollen und Systemkonfiguration">
