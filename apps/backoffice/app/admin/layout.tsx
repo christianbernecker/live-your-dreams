@@ -4,7 +4,6 @@
  * Integrates Admin section with the main Dashboard layout system
  */
 
-import AdminSubNavigation from '@/components/admin/AdminSubNavigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 // Toast provider not needed - toasts are handled per-component
 import { auth } from '@/lib/nextauth';
@@ -45,15 +44,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
       subtitle="System-Verwaltung und Konfiguration"
       userEmail={session.user.email}
     >
-      <>
-        {/* Admin Sub-Navigation */}
-        <AdminSubNavigation />
-        
-        {/* Admin Content with DS Grid */}
-        <div className="lyd-stack lg">
-          {children}
-        </div>
-      </>
+      {children}
     </DashboardLayout>
   );
 }
