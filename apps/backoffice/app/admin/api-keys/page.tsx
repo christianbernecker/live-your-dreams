@@ -1,125 +1,136 @@
 /**
  * API Key Monitoring & Cost Management Dashboard
  * 
- * DUMMY VERSION - UI Only, keine Backend-Anbindung
+ * PRODUCTION VERSION - Echte DB-Anbindung
  * 
  * Features:
- * - Quick Stats (Heute/Monat/Tokens)
- * - API Keys Table mit Provider/Status/Kosten
- * - Recent Activity Log (letzte 10 Calls)
+ * - Quick Stats (Heute/Monat/Tokens) - Live from DB
+ * - API Keys Table mit Provider/Status/Kosten - Live from DB
+ * - Recent Activity Log (letzte 10 Calls) - Live from DB
  * 
  * Design: Harmonisch mit /admin/users
  */
 
 'use client';
 
-import React from 'react';
 import { AdminTabs } from '@/components/ui/AdminTabs';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { useEffect, useState } from 'react';
 
 // ============================================================================
-// DUMMY DATA
+// TYPES
 // ============================================================================
 
-const DUMMY_STATS = {
-  todayCost: 12.47,
-  todayCalls: 342,
-  monthCost: 487.92,
-  monthCalls: 12458,
-  monthTokens: 24_567_891
-};
+interface ApiStats {
+  today: {
+    cost: number;
+    calls: number;
+  };
+  month: {
+    cost: number;
+    calls: number;
+    tokens: number;
+  };
+}
 
-const DUMMY_API_KEYS = [
-  {
-    id: '1',
-    provider: 'ANTHROPIC',
-    name: 'Claude Sonnet 4.5 Production',
-    keyMasked: 'sk-ant-****5k3p',
-    isActive: true,
-    calls: 8234,
-    monthlyCost: 312.45,
-    lastUsedAt: '03.10.2025 14:32'
-  },
-  {
-    id: '2',
-    provider: 'OPENAI',
-    name: 'GPT-5 Mini Fallback',
-    keyMasked: 'sk-proj-****9x2q',
-    isActive: true,
-    calls: 4224,
-    monthlyCost: 175.47,
-    lastUsedAt: '03.10.2025 14:28'
-  },
-  {
-    id: '3',
-    provider: 'ANTHROPIC',
-    name: 'Claude Opus 4 Testing',
-    keyMasked: 'sk-ant-****7m4c',
-    isActive: false,
-    calls: 0,
-    monthlyCost: 0,
-    lastUsedAt: 'Nie'
-  }
-];
+interface ApiKey {
+  id: string;
+  provider: 'ANTHROPIC' | 'OPENAI';
+  name: string;
+  keyMasked: string;
+  isActive: boolean;
+  calls: number;
+  monthlyCost: number;
+  lastUsedAt: string;
+}
 
-const DUMMY_RECENT_CALLS = [
-  {
-    id: '1',
-    timestamp: '03.10. 14:32',
-    feature: 'blog-generator',
-    model: 'claude-sonnet-4.5',
-    tokens: 4521,
-    cost: 0.0342,
-    status: 'SUCCESS',
-    durationMs: 2345
-  },
-  {
-    id: '2',
-    timestamp: '03.10. 14:28',
-    feature: 'image-analyzer',
-    model: 'gpt-5-mini',
-    tokens: 1234,
-    cost: 0.0089,
-    status: 'SUCCESS',
-    durationMs: 1876
-  },
-  {
-    id: '3',
-    timestamp: '03.10. 14:15',
-    feature: 'content-optimizer',
-    model: 'claude-sonnet-4.5',
-    tokens: 3456,
-    cost: 0.0267,
-    status: 'SUCCESS',
-    durationMs: 2112
-  },
-  {
-    id: '4',
-    timestamp: '03.10. 13:58',
-    feature: 'blog-generator',
-    model: 'gpt-5-mini',
-    tokens: 2345,
-    cost: 0.0178,
-    status: 'ERROR',
-    durationMs: 456,
-    errorMessage: 'Rate limit exceeded'
-  },
-  {
-    id: '5',
-    timestamp: '03.10. 13:42',
-    feature: 'seo-optimizer',
-    model: 'claude-sonnet-4.5',
-    tokens: 1987,
-    cost: 0.0156,
-    status: 'SUCCESS',
-    durationMs: 1934
-  }
-];
+interface ApiCall {
+  id: string;
+  timestamp: string;
+  feature: string;
+  model: string;
+  tokens: number;
+  cost: number;
+  status: 'SUCCESS' | 'ERROR';
+  durationMs: number;
+  errorMessage?: string;
+}
 
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 
 export default function AdminApiKeysPage() {
+  const [stats, setStats] = useState<ApiStats | null>(null);
+  const [keys, setKeys] = useState<ApiKey[]>([]);
+  const [recentCalls, setRecentCalls] = useState<ApiCall[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Parallel fetching für bessere Performance
+        const [statsRes, keysRes, callsRes] = await Promise.all([
+          fetch('/api/admin/api-stats'),
+          fetch('/api/admin/api-keys'),
+          fetch('/api/admin/api-usage/recent')
+        ]);
+
+        if (!statsRes.ok || !keysRes.ok || !callsRes.ok) {
+          throw new Error('API Request failed');
+        }
+
+        const [statsData, keysData, callsData] = await Promise.all([
+          statsRes.json(),
+          keysRes.json(),
+          callsRes.json()
+        ]);
+
+        setStats(statsData);
+        setKeys(keysData.keys || []);
+        setRecentCalls(callsData.calls || []);
+      } catch (err) {
+        console.error('❌ Data Fetch Error:', err);
+        setError(err instanceof Error ? err.message : 'Unbekannter Fehler');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+        <AdminTabs />
+        <div className="lyd-card" style={{ minHeight: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <LoadingSpinner size="lg" label="Lade API Key Daten..." variant="gradient" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+        <AdminTabs />
+        <div className="lyd-card" style={{ padding: '32px', textAlign: 'center' }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--lyd-error)" strokeWidth="2" style={{ margin: '0 auto 16px' }}>
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <h2 style={{ margin: '0 0 8px 0', color: 'var(--lyd-error)' }}>Fehler beim Laden</h2>
+          <p style={{ color: 'var(--lyd-text-secondary)' }}>{error}</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
       {/* Admin Tab Navigation */}
@@ -163,15 +174,15 @@ export default function AdminApiKeysPage() {
               <circle cx="12" cy="12" r="10"/>
               <polyline points="12,6 12,12 16,14"/>
             </svg>
-            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'white' }}>
               Heute
             </h3>
           </div>
           <div style={{ fontSize: '36px', fontWeight: '700', marginBottom: '8px', lineHeight: '1' }}>
-            €{DUMMY_STATS.todayCost.toFixed(2)}
+            €{stats?.today.cost.toFixed(2) || '0.00'}
           </div>
           <div style={{ fontSize: '14px', opacity: 0.9 }}>
-            {DUMMY_STATS.todayCalls.toLocaleString('de-DE')} API Calls
+            {stats?.today.calls.toLocaleString('de-DE') || 0} API Calls
           </div>
         </div>
 
@@ -189,15 +200,15 @@ export default function AdminApiKeysPage() {
               <line x1="8" y1="2" x2="8" y2="6"/>
               <line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
-            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'white' }}>
               Laufender Monat
             </h3>
           </div>
           <div style={{ fontSize: '36px', fontWeight: '700', marginBottom: '8px', lineHeight: '1' }}>
-            €{DUMMY_STATS.monthCost.toFixed(2)}
+            €{stats?.month.cost.toFixed(2) || '0.00'}
           </div>
           <div style={{ fontSize: '14px', opacity: 0.9 }}>
-            {DUMMY_STATS.monthCalls.toLocaleString('de-DE')} API Calls
+            {stats?.month.calls.toLocaleString('de-DE') || 0} API Calls
           </div>
         </div>
 
@@ -212,12 +223,12 @@ export default function AdminApiKeysPage() {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
             </svg>
-            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <h3 style={{ margin: 0, fontSize: '14px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'white' }}>
               Tokens (Monat)
             </h3>
           </div>
           <div style={{ fontSize: '36px', fontWeight: '700', marginBottom: '8px', lineHeight: '1' }}>
-            {(DUMMY_STATS.monthTokens / 1_000_000).toFixed(2)}M
+            {((stats?.month.tokens || 0) / 1_000_000).toFixed(2)}M
           </div>
           <div style={{ fontSize: '14px', opacity: 0.9 }}>
             Input + Output kombiniert
@@ -234,7 +245,16 @@ export default function AdminApiKeysPage() {
           Übersicht aller konfigurierten API Keys mit Nutzungsstatistiken und Kosten.
         </p>
 
-        <table className="api-table striped">
+        {keys.length === 0 ? (
+          <div style={{ padding: '48px', textAlign: 'center', color: 'var(--lyd-text-secondary)' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto 16px', opacity: 0.5 }}>
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+            </svg>
+            <p style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px' }}>Keine API Keys gefunden</p>
+            <p style={{ fontSize: '14px' }}>Fügen Sie API Keys über CLI hinzu: <code>npm run add-api-key</code></p>
+          </div>
+        ) : (
+          <table className="api-table striped">
           <thead>
             <tr>
               <th>Provider</th>
@@ -247,7 +267,7 @@ export default function AdminApiKeysPage() {
             </tr>
           </thead>
           <tbody>
-            {DUMMY_API_KEYS.map((key) => (
+            {keys.map((key) => (
               <tr key={key.id}>
                 <td>
                   <span className={`lyd-badge ${key.provider === 'ANTHROPIC' ? 'info' : 'success'}`}>
@@ -282,6 +302,7 @@ export default function AdminApiKeysPage() {
             ))}
           </tbody>
         </table>
+        )}
 
         {/* Info-Box unter Tabelle */}
         <div style={{
@@ -334,7 +355,7 @@ export default function AdminApiKeysPage() {
             </tr>
           </thead>
           <tbody>
-            {DUMMY_RECENT_CALLS.map((call) => (
+            {recentCalls.map((call) => (
               <tr key={call.id}>
                 <td style={{ fontSize: '14px', color: 'var(--lyd-text-secondary)' }}>
                   {call.timestamp}
