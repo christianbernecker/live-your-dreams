@@ -1,14 +1,14 @@
 #!/bin/bash
-# Deploy Backoffice to Vercel Production
-# Usage: ./scripts/deploy-backoffice.sh
+# Deploy Design System to Vercel Production
+# Usage: ./scripts/deploy-design-system.sh
 
 set -e
 
-echo "🚀 Deploying Backoffice to Production..."
+echo "🎨 Deploying Design System to Production..."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# Navigate to backoffice directory
-cd "$(dirname "$0")/../apps/backoffice" || exit 1
+# Navigate to design-system directory
+cd "$(dirname "$0")/../design-system" || exit 1
 
 # Run build test first
 echo "📦 Testing build..."
@@ -23,7 +23,7 @@ if [ $? -eq 0 ]; then
   if [ $? -eq 0 ]; then
     echo ""
     echo "✅ Deployment successful!"
-    echo "🌐 Production URL: https://backoffice.liveyourdreams.online"
+    echo "🌐 Production URL: https://designsystem.liveyourdreams.online"
     echo ""
     echo "📝 Next steps:"
     echo "   1. Verify deployment works"
