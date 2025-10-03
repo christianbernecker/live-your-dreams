@@ -192,7 +192,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
           ))}
         </div>,
         document.body
-      )}
+      ) as React.ReactNode}
     </div>
   );
 };

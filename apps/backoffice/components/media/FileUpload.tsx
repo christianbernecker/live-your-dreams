@@ -102,7 +102,7 @@ export function FileUpload({
     <div>
       {/* Dropzone */}
       <div
-        {...getRootProps()}
+        {...(getRootProps() as any)}
         style={{
           border: `2px dashed ${
             isDragReject 

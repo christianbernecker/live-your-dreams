@@ -384,7 +384,7 @@ export const InputLikeSelect = React.forwardRef<HTMLInputElement, InputLikeSelec
           )}
         </div>,
         portalContainer
-      )}
+      ) as React.ReactNode}
 
       {/* CSS Animation */}
       <style jsx>{`
