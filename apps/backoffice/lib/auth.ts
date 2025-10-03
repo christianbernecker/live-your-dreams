@@ -11,14 +11,12 @@ declare module "next-auth" {
       image?: string | null
       role: string
       isActive: boolean
-      permissions: string[]
     }
   }
 
   interface User {
     role: string
     isActive: boolean
-    permissions: string[]
   }
 }
 
@@ -32,64 +30,23 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        console.log('🔑 JWT CALLBACK - User from authorize():', {
-          id: user.id,
-          email: user.email,
-          role: (user as any).role,
-          permissions: (user as any).permissions
-        });
-        
         token.id = user.id
         token.email = user.email
         token.name = user.name
         token.image = user.image
         token.role = (user as any).role
         token.isActive = (user as any).isActive
-        token.permissions = (user as any).permissions
-        
-        console.log('🎫 JWT TOKEN after assignment:', {
-          role: token.role,
-          permissions: token.permissions
-        });
       }
       return token
     },
     async session({ session, token }) {
       if (token && session.user) {
-        console.log('📋 SESSION CALLBACK - Token data:', {
-          role: (token as any).role,
-          permissions: (token as any).permissions,
-          permissionsType: typeof (token as any).permissions
-        });
-        
         session.user.id = token.id as string
         session.user.email = token.email as string
         session.user.name = token.name as string
         session.user.image = token.image as string
         session.user.role = (token as any).role
         session.user.isActive = (token as any).isActive
-        session.user.permissions = (token as any).permissions
-        
-        // KRITISCHER FALLBACK: Wenn permissions undefined, aber Admin-Email
-        if (!session.user.permissions && session.user.email === 'admin@liveyourdreams.online') {
-          console.warn('⚠️ SESSION FALLBACK: No permissions from token, using email-based admin fallback');
-          session.user.role = 'admin';
-          session.user.permissions = [
-            'users.read', 'users.write', 'users.delete', 'users.invite',
-            'roles.read', 'roles.write', 'roles.assign',
-            'content.read', 'content.write', 'content.publish',
-            'media.read', 'media.write', 'media.delete',
-            'settings.read', 'settings.write', 'settings.system',
-            'audit.read'
-          ];
-        }
-        
-        console.log('✅ SESSION after assignment:', {
-          email: session.user.email,
-          role: session.user.role,
-          permissions: session.user.permissions,
-          permissionsCount: session.user.permissions?.length || 0
-        });
       }
       return session
     },
@@ -180,14 +137,10 @@ export const authConfig: NextAuthConfig = {
 
           // Note: lastLoginAt update skipped for deployment compatibility
 
-          // Load user roles and permissions from RBAC system with error handling
-          let permissions: string[] = [];
+          // Load user role from RBAC system (simplified - no permissions)
           let primaryRole = 'viewer'; // Default role
 
-          console.log('🔐 AUTHORIZE() - Loading permissions for:', user.email);
-
           try {
-            // Simplified query - step by step to avoid complex joins
             const userRoles = await prisma.userRole.findMany({
               where: { userId: user.id },
               include: {
@@ -195,16 +148,9 @@ export const authConfig: NextAuthConfig = {
               }
             });
 
-            console.log('📊 AUTHORIZE() - Found user roles:', userRoles.length);
-
             if (userRoles.length > 0) {
               // Set primary role (admin takes precedence)
               for (const userRole of userRoles) {
-                console.log('🔍 AUTHORIZE() - Checking role:', {
-                  roleName: userRole.role.name,
-                  isActive: userRole.role.isActive
-                });
-                
                 if (userRole.role.isActive) {
                   if (userRole.role.name === 'admin') {
                     primaryRole = 'admin';
@@ -215,58 +161,17 @@ export const authConfig: NextAuthConfig = {
                   }
                 }
               }
-
-              console.log('✅ AUTHORIZE() - Primary role determined:', primaryRole);
-
-              // For admin role, give full permissions (fallback)
-              if (primaryRole === 'admin') {
-                permissions = [
-                  'users.read', 'users.write', 'users.delete', 'users.invite',
-                  'roles.read', 'roles.write', 'roles.assign',
-                  'content.read', 'content.write', 'content.publish',
-                  'media.read', 'media.write', 'media.delete',
-                  'settings.read', 'settings.write', 'settings.system',
-                  'audit.read'
-                ];
-              } else if (primaryRole === 'editor') {
-                permissions = [
-                  'users.read', 'content.read', 'content.write', 'content.publish',
-                  'media.read', 'media.write', 'settings.read'
-                ];
-              } else {
-                permissions = ['content.read', 'media.read', 'settings.read'];
-              }
-              
-              console.log('🎯 AUTHORIZE() - Permissions assigned:', permissions.length);
-            } else {
-              console.warn('⚠️ AUTHORIZE() - No user roles found for user');
             }
           } catch (roleError) {
-            console.error('❌ AUTHORIZE() - Error loading user roles:', roleError);
+            console.error('Error loading user roles:', roleError);
             // Fallback: if role loading fails, check if this is admin user
             if (user.email === 'admin@liveyourdreams.online') {
-              console.log('🆘 AUTHORIZE() - Using email fallback for admin');
               primaryRole = 'admin';
-              permissions = [
-                'users.read', 'users.write', 'users.delete', 'users.invite',
-                'roles.read', 'roles.write', 'roles.assign',
-                'content.read', 'content.write', 'content.publish',
-                'settings.read', 'settings.write', 'settings.system',
-                'audit.read'
-              ];
             }
           }
 
           // Cleanup
           await prisma.$disconnect()
-
-          console.log('🚀 AUTHORIZE() - Returning user object:', {
-            id: user.id,
-            email: user.email,
-            role: primaryRole,
-            permissionsCount: permissions.length,
-            permissions: permissions.slice(0, 3) // First 3 for brevity
-          });
 
           return {
             id: user.id,
@@ -275,7 +180,6 @@ export const authConfig: NextAuthConfig = {
             image: user.image,
             role: primaryRole,
             isActive: isActive,
-            permissions: permissions.sort(),
           }
         } catch (error) {
           console.error('Auth error:', error)

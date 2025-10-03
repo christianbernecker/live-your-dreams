@@ -14,17 +14,14 @@ export async function GET() {
       sessionData: session,
       user: session?.user || null,
       role: session?.user?.role || 'NO_ROLE',
-      permissions: session?.user?.permissions || [],
       email: session?.user?.email || 'NO_EMAIL',
       isActive: session?.user?.isActive,
-      // Check Admin Status
+      // Check Admin Status (simplified - role-based only)
       checks: {
         hasUser: !!session?.user,
         hasRole: !!session?.user?.role,
         roleValue: session?.user?.role,
-        isAdminRole: session?.user?.role === 'admin',
-        hasPermissions: !!session?.user?.permissions,
-        permissionCount: session?.user?.permissions?.length || 0
+        isAdminRole: session?.user?.role === 'admin'
       }
     })
   } catch (error) {

@@ -19,29 +19,55 @@ interface AdminStats {
   totalContent: number;
   publishedContent: number;
   recentAuditEvents: number;
+  // API-Keys Statistics
+  totalApiKeys: number;
+  activeApiKeys: number;
+  todayCost: number;
+  todayCalls: number;
 }
 
 async function getAdminStats(): Promise<AdminStats> {
   try {
-    // Simplified stats - only query tables we know exist
+    // Get start of today for today's stats
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    // Query all stats in parallel
     const [
       totalUsers,
       activeUsers,
-      totalRoles
+      totalRoles,
+      totalApiKeys,
+      activeApiKeys,
+      todayUsage
     ] = await Promise.all([
       prisma.user.count().catch(() => 0),
       prisma.user.count({ where: { isActive: true } }).catch(() => 0),
-      prisma.role.count({ where: { isActive: true } }).catch(() => 0)
+      prisma.role.count({ where: { isActive: true } }).catch(() => 0),
+      prisma.apiKey.count().catch(() => 0),
+      prisma.apiKey.count({ where: { isActive: true } }).catch(() => 0),
+      prisma.apiUsageLog.aggregate({
+        where: {
+          createdAt: { gte: startOfToday }
+        },
+        _sum: {
+          totalCost: true
+        },
+        _count: true
+      }).catch(() => ({ _sum: { totalCost: null }, _count: 0 }))
     ]);
 
-    // Mock data for tables that might not exist yet
     return {
       totalUsers,
       activeUsers,
       totalRoles,
       totalContent: 0, // Mock - contentEntry table might not exist
-      publishedContent: 0, // Mock - contentEntry table might not exist  
-      recentAuditEvents: 0 // Mock - auditEvent table might not exist
+      publishedContent: 0, // Mock - contentEntry table might not exist
+      recentAuditEvents: 0, // Mock - auditEvent table might not exist
+      totalApiKeys,
+      activeApiKeys,
+      todayCost: todayUsage._sum.totalCost ? Number(todayUsage._sum.totalCost) : 0,
+      todayCalls: todayUsage._count
     };
   } catch (error) {
     console.error('Error getting admin stats:', error);
@@ -52,7 +78,11 @@ async function getAdminStats(): Promise<AdminStats> {
       totalRoles: 0,
       totalContent: 0,
       publishedContent: 0,
-      recentAuditEvents: 0
+      recentAuditEvents: 0,
+      totalApiKeys: 0,
+      activeApiKeys: 0,
+      todayCost: 0,
+      todayCalls: 0
     };
   }
 }
@@ -113,43 +143,206 @@ export default async function AdminPage() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
         {/* Tab Navigation */}
         <AdminTabs />
-        
+
+        {/* Quick Stats Grid - Übersicht Key Metrics */}
+        <div className="lyd-card">
+          <div className="lyd-card-header">
+            <h2 className="lyd-heading-2">System-Übersicht</h2>
+            <p className="lyd-text-secondary">Aktuelle Kennzahlen auf einen Blick</p>
+          </div>
+          <div className="lyd-card-body">
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: 'var(--spacing-lg, 24px)'
+            }}>
+              {/* Active Users */}
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--lyd-primary)',
+                  marginBottom: 'var(--spacing-xs)'
+                }}>
+                  {stats.activeUsers}
+                </div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--lyd-text-secondary)' }}>
+                  Aktive Benutzer
+                </div>
+              </div>
+
+              {/* Active Roles */}
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--lyd-secondary)',
+                  marginBottom: 'var(--spacing-xs)'
+                }}>
+                  {stats.totalRoles}
+                </div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--lyd-text-secondary)' }}>
+                  Aktive Rollen
+                </div>
+              </div>
+
+              {/* Active API Keys */}
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--lyd-warning)',
+                  marginBottom: 'var(--spacing-xs)'
+                }}>
+                  {stats.activeApiKeys}
+                </div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--lyd-text-secondary)' }}>
+                  Aktive API-Keys
+                </div>
+              </div>
+
+              {/* Today's API Calls */}
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--lyd-success)',
+                  marginBottom: 'var(--spacing-xs)'
+                }}>
+                  {stats.todayCalls}
+                </div>
+                <div style={{ fontSize: '0.875rem', color: 'var(--lyd-text-secondary)' }}>
+                  API-Calls (Heute)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Admin Bereiche mit Tab-Navigation */}
         <div className="lyd-card">
           <div className="lyd-card-header">
             <h2 className="lyd-heading-2">Admin-Bereiche</h2>
-            <p className="lyd-text-secondary">Schnellzugriff auf Benutzer- und Rollenverwaltung</p>
+            <p className="lyd-text-secondary">Schnellzugriff auf Verwaltung von Benutzern, Rollen und API-Keys</p>
           </div>
         <div className="lyd-card-body">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-lg, 24px)' }}>
-            <div style={{ padding: 'var(--spacing-lg, 24px)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
-              <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-lg, 24px)' }}>
+            {/* Benutzer-Verwaltung */}
+            <Link href="/admin/users" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--lyd-primary)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--lyd-line)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}>
+                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <h3>Benutzer-Verwaltung</h3>
+                <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                  {stats.activeUsers} aktive von {stats.totalUsers} Benutzern
+                </p>
               </div>
-              <h3>Benutzer-Verwaltung</h3>
-              <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
-                {stats.activeUsers} aktive von {stats.totalUsers} Benutzern
-              </p>
-            </div>
-            
-            <div style={{ padding: 'var(--spacing-lg, 24px)', border: '1px solid var(--lyd-line)', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
-              <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-primary)' }}>
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <circle cx="12" cy="16" r="1"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
+            </Link>
+
+            {/* Rollen & Berechtigungen */}
+            <Link href="/admin/roles" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--lyd-secondary)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--lyd-line)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}>
+                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-secondary)' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <circle cx="12" cy="16" r="1"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
+                <h3>Rollen & Berechtigungen</h3>
+                <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                  {stats.totalRoles} aktive Rollen
+                </p>
               </div>
-              <h3>Rollen & Berechtigungen</h3>
-              <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
-                {stats.totalRoles} aktive Rollen
-              </p>
-            </div>
+            </Link>
+
+            {/* API-Keys Verwaltung */}
+            <Link href="/admin/api-keys" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{
+                padding: 'var(--spacing-lg, 24px)',
+                border: '1px solid var(--lyd-line)',
+                borderRadius: 'var(--radius-lg)',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--lyd-warning)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--lyd-line)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}>
+                <div style={{ marginBottom: 'var(--spacing-md)', color: 'var(--lyd-warning)' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto' }}>
+                    <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/>
+                    <path d="m21 2-9.6 9.6"/>
+                    <circle cx="7.5" cy="15.5" r="5.5"/>
+                  </svg>
+                </div>
+                <h3>API-Keys</h3>
+                <p style={{ color: 'var(--lyd-grey)', fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
+                  {stats.activeApiKeys} aktive, €{stats.todayCost.toFixed(2)} heute
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

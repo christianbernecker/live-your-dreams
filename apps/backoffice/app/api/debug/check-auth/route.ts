@@ -23,19 +23,12 @@ export async function GET() {
         image: session.user.image,
         role: session.user.role,
         isActive: session.user.isActive,
-        permissions: session.user.permissions,
       } : null,
-      
-      // Admin Checks (wie in SidebarNavigation.tsx)
+
+      // Admin Checks (simplified - role-based only)
       adminChecks: {
         roleField: session?.user?.role,
         roleIsAdmin: session?.user?.role === 'admin',
-        
-        // Old permission-based check (was causing the bug)
-        hasUsersRead: session?.user?.permissions?.includes('users.read'),
-        hasRolesRead: session?.user?.permissions?.includes('roles.read'),
-        permissionBasedAdmin: session?.user?.permissions?.includes('users.read') && 
-                               session?.user?.permissions?.includes('roles.read'),
       },
       
       // What Sidebar should see
