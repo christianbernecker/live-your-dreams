@@ -11,10 +11,9 @@
 
 'use client';
 
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { AdminTabs } from '@/components/ui/AdminTabs';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { useToast } from '@/components/ui/Toast';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -163,7 +162,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
         </svg>
       </button>
       
-      {(isOpen && isMounted) ? createPortal(
+      {isOpen && isMounted && createPortal(
         <div
           className="lyd-portal-dropdown"
           style={{
@@ -214,7 +213,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
           ))}
         </div>,
         document.body
-      ) as React.ReactNode : null}
+      )}
     </div>
   );
 };
@@ -314,7 +313,7 @@ const RoleForm: React.FC<RoleFormProps> = ({ role, permissions, onSubmit, onCanc
                 onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
               />
               <span className="lyd-checkbox">
-                <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24" fill="none" strokeWidth="3">
+                <svg className="lyd-checkbox-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
                   <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
@@ -637,51 +636,47 @@ export default function AdminRolesPage() {
   // ============================================================================
 
   return (
-    <DashboardLayout title="Rollen-Verwaltung" subtitle="Rollen und Berechtigungen konfigurieren">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
-        {/* Tab Navigation */}
-        <AdminTabs />
-        
-        {/* Page Header */}
-        <div className="lyd-card">
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '8px'
-          }}>
-            <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      {/* Page Header */}
+      <div className="lyd-card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '600', marginBottom: '4px' }}>
               Rollen-Verwaltung
             </h1>
-            <Button 
-              type="button"
-              variant="primary"
-              onClick={handleCreateRole}
-              icon={
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <circle cx="12" cy="16" r="1"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-              }
-            >
-              Neue Rolle
-            </Button>
+            <p style={{ margin: 0, color: 'var(--lyd-text-secondary)', fontSize: '14px' }}>
+              Rollen und Berechtigungen konfigurieren
+            </p>
           </div>
-          <p style={{ margin: 0, color: 'var(--lyd-text-secondary)' }}>
-            Rollen und Berechtigungen konfigurieren
-          </p>
+          
+          <Button 
+            type="button"
+            variant="primary"
+            onClick={handleCreateRole}
+            icon={
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <circle cx="12" cy="16" r="1"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            }
+          >
+            Neue Rolle
+          </Button>
         </div>
+      </div>
 
       {/* Filter Section */}
       <div className="lyd-card">
-        <h2 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '600' }}>
-          Suchen und Filtern
-        </h2>
-        <p style={{ margin: '0 0 16px 0', color: 'var(--lyd-text-secondary)', fontSize: '14px' }}>
-          Durchsuchen Sie Rollen nach Namen und filtern Sie nach Status und Modulen.
-        </p>
-
+        <div style={{ marginBottom: '16px' }}>
+          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+            Suchen und Filtern
+          </h2>
+          <p style={{ margin: 0, color: 'var(--lyd-text-secondary)', fontSize: '14px' }}>
+            Durchsuchen Sie Rollen nach Namen und filtern Sie nach Status und Modulen.
+          </p>
+        </div>
+        
         <div style={{
           display: 'grid',
           gridTemplateColumns: '2fr 1fr 1fr auto',
@@ -772,9 +767,11 @@ export default function AdminRolesPage() {
       {/* Table Section */}
       <div className="lyd-card">
         {loading ? (
-          <div style={{ padding: '40px', textAlign: 'center' }}>
-            Lade Rollen...
-          </div>
+          <LoadingSpinner 
+            size="lg" 
+            label="Rollen laden..." 
+            variant="gradient"
+          />
         ) : (
           <table className="api-table striped">
             <thead>
@@ -917,7 +914,6 @@ export default function AdminRolesPage() {
           onCancel={() => setShowDeleteModal(false)}
         />
       )}
-      </div>
-    </DashboardLayout>
+    </div>
   );
 }

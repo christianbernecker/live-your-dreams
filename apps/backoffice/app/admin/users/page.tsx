@@ -10,8 +10,6 @@
 
 'use client';
 
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { AdminTabs } from '@/components/ui/AdminTabs';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
@@ -143,7 +141,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
         </svg>
       </button>
       
-      {(isOpen && isMounted) ? createPortal(
+      {isOpen && isMounted && createPortal(
         <div
           className="lyd-portal-dropdown"
           style={{
@@ -194,7 +192,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, placeholde
           ))}
         </div>,
         document.body
-      ) as React.ReactNode : null}
+      )}
     </div>
   );
 };
@@ -870,44 +868,37 @@ export default function AdminUsersPage() {
   // ============================================================================
 
   return (
-    <DashboardLayout
-      title="Benutzer-Verwaltung"
-      subtitle="Benutzer, Rollen und Berechtigungen verwalten"
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
-        {/* TOAST NOTIFICATIONS - FIXED POSITIONING */}
-        {toasts.length > 0 && (
-          <div 
-            style={{
-              position: 'fixed',
-              top: '20px',
-              right: '20px',
-              zIndex: 99999,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px',
-              maxWidth: '400px',
-              pointerEvents: 'none'
-            }}
-          >
-            {toasts.map((toast, index) => (
-              <Toast 
-                key={toast.id} 
-                {...toast} 
-                style={{
-                  position: 'relative',
-                  top: `${index * 12}px`
-                }}
-              />
-            ))}
-          </div>
-        )}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      {/* TOAST NOTIFICATIONS - FIXED POSITIONING */}
+      {toasts.length > 0 && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            zIndex: 99999,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            maxWidth: '400px',
+            pointerEvents: 'none'
+          }}
+        >
+          {toasts.map((toast, index) => (
+            <Toast 
+              key={toast.id} 
+              {...toast} 
+              style={{
+                position: 'relative',
+                top: `${index * 12}px`
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-        {/* Tab Navigation */}
-        <AdminTabs />
-
-        {/* Page Header */}
-        <div className="lyd-card">
+      {/* Page Header */}
+      <div className="lyd-card">
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -1141,7 +1132,6 @@ export default function AdminUsersPage() {
           onCancel={() => setShowDeleteModal(false)}
         />
       )}
-      </div>
-    </DashboardLayout>
+    </div>
   );
 }

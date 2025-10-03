@@ -57,13 +57,10 @@ export default function AdminSubNavigation() {
   const { data: session } = useSession()
   const router = useRouter()
 
-  // Filter admin nav items based on role (simplified - role-based authorization)
+  // Filter admin nav items based on permissions
   const allowedNavItems = adminNavItems.filter(item => {
-    // Admin role has access to all tabs
-    if (session?.user?.role === 'admin') return true
-    // Overview always visible for logged-in users
-    if (item.permission === 'admin.read') return true
-    return false
+    if (item.permission === 'admin.read') return true // Overview always visible
+    return session?.user?.permissions?.includes(item.permission)
   })
 
   const handleTabClick = (href: string) => {

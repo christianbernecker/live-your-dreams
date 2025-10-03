@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import imageCompression from 'browser-image-compression';
 
 interface FileUploadProps {
   onUpload: (url: string) => void;
@@ -32,18 +33,35 @@ export function FileUpload({
     setUploading(true);
     setProgress(0);
 
+    // CRITICAL: Track interval to clear in catch block (Codex Finding #3)
     let progressInterval: NodeJS.Timeout | null = null;
 
     try {
-      // Server übernimmt WebP-Transformation transparent
-      console.log('📤 Uploading:', file.name, file.type, `${(file.size / 1024 / 1024).toFixed(2)}MB`);
+      // Schritt 1: WebP-Transformation (0-30%)
+      setProgress(10);
+      console.log('Original file:', file.name, file.type, `${(file.size / 1024 / 1024).toFixed(2)}MB`);
 
+      // Konvertiere alle Bilder zu WebP mit optimaler Kompression
+      const webpFile = await imageCompression(file, {
+        maxSizeMB: 1, // Maximale Größe 1MB
+        maxWidthOrHeight: 2400, // Max 2400px Breite/Hööhe
+        useWebWorker: true,
+        fileType: 'image/webp', // Force WebP output
+        initialQuality: 0.85, // Hohe Qualität für Blog-Bilder
+      });
+
+      setProgress(30);
+      console.log('WebP file:', webpFile.name, webpFile.type, `${(webpFile.size / 1024 / 1024).toFixed(2)}MB`);
+
+      // Schritt 2: Upload (30-100%)
       progressInterval = setInterval(() => {
         setProgress(prev => Math.min(prev + 10, 90));
       }, 100);
 
       const formData = new FormData();
-      formData.append('file', file);
+      // Stelle sicher dass die Datei .webp Extension hat
+      const webpFileName = file.name.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '.webp');
+      formData.append('file', webpFile, webpFileName);
 
       const response = await fetch('/api/media/upload', {
         method: 'POST',
@@ -59,15 +77,10 @@ export function FileUpload({
       }
 
       const data = await response.json();
-
-      // Log transformation info
-      if (data.wasTransformed) {
-        console.log(`✅ Server transformed to WebP: ${(data.originalSize / 1024 / 1024).toFixed(2)}MB → ${(data.size / 1024 / 1024).toFixed(2)}MB`);
-      }
-
       onUpload(data.url);
 
     } catch (error) {
+      // FIX: Clear interval auch bei Fehler um Interval-Leak zu verhindern
       if (progressInterval) clearInterval(progressInterval);
       console.error('Upload error:', error);
       onError(error instanceof Error ? error.message : 'Upload fehlgeschlagen');
@@ -83,14 +96,13 @@ export function FileUpload({
     maxSize,
     multiple: false,
     disabled: disabled || uploading,
-    // @ts-ignore - react-dropzone type mismatch with React 18
-  } as any);
+  });
 
   return (
     <div>
       {/* Dropzone */}
       <div
-        {...(getRootProps() as any)}
+        {...getRootProps()}
         style={{
           border: `2px dashed ${
             isDragReject 

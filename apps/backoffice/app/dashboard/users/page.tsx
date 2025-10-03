@@ -38,8 +38,11 @@ export default function UsersPage() {
       return
     }
 
-    // Note: Permission system removed - all active users can view users list
-    // Write operations (create/update/delete) restricted to admin role below
+    // Check permissions
+    if (!session.user.permissions.includes('users.read')) {
+      router.push('/dashboard?error=NoPermission')
+      return
+    }
 
     loadUsers()
   }, [session, status, router])
@@ -167,7 +170,7 @@ export default function UsersPage() {
           </div>
         </div>
 
-        {session.user.role === 'admin' && (
+        {session.user.permissions.includes('users.create') && (
           <button 
             onClick={() => setShowCreateModal(true)}
             className="lyd-button primary"
@@ -275,7 +278,7 @@ export default function UsersPage() {
                   </td>
                   <td>
                     <div className="table-actions">
-                      {session.user.role === 'admin' && (
+                      {session.user.permissions.includes('users.update') && (
                         <button 
                           className="lyd-button ghost icon-only"
                           onClick={() => console.log('Edit user:', user.id)}
@@ -288,7 +291,7 @@ export default function UsersPage() {
                         </button>
                       )}
                       
-                      {session.user.role === 'admin' && (
+                      {session.user.permissions.includes('users.update') && (
                         <button 
                           className="lyd-button ghost icon-only"
                           onClick={() => toggleUserStatus(user.id, user.isActive)}
@@ -309,7 +312,7 @@ export default function UsersPage() {
                         </button>
                       )}
 
-                      {session.user.role === 'admin' && user.id !== session.user.id && (
+                      {session.user.permissions.includes('users.delete') && user.id !== session.user.id && (
                         <button 
                           className="lyd-button ghost icon-only"
                           onClick={() => handleDeleteUser(user.id)}

@@ -8,15 +8,14 @@ export function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      // KRITISCH: Explizite Production URL für Logout-Redirect
       await signOut({ 
-        redirect: true,
-        callbackUrl: 'https://backoffice.liveyourdreams.online'
+        redirect: false,
+        callbackUrl: '/' 
       })
+      router.push('/')
+      router.refresh()
     } catch (error) {
       console.error('Logout error:', error)
-      // Fallback: Manueller Redirect
-      window.location.href = 'https://backoffice.liveyourdreams.online'
     }
   }
 

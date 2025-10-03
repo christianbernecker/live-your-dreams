@@ -101,13 +101,14 @@ export function SidebarNavigation() {
   const pathname = usePathname()
   const { data: session } = useSession()
   
-  // Check if user is admin (role-based, not permission-based)
-  const isAdmin = session?.user?.role === 'admin'
-
-  // Filter navigation items - Admin nur für Admins sichtbar
+  // Check if user has admin permissions
+  const isAdmin = session?.user?.permissions?.includes('users.read') && 
+                  session?.user?.permissions?.includes('roles.read')
+  
+  // Filter navigation items based on admin permissions
   const visibleNavigationItems = navigationItems.filter(item => {
     if (item.adminOnly) {
-      return isAdmin // Nur für role === 'admin'
+      return isAdmin
     }
     return true
   })

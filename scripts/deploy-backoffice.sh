@@ -1,39 +1,73 @@
 #!/bin/bash
-# Deploy Backoffice to Vercel Production
-# Usage: ./scripts/deploy-backoffice.sh
+#
+# Backoffice Production Deployment Script
+# 
+# Deployed das Backoffice zu Vercel Production
+# Verwendung: ./scripts/deploy-backoffice.sh
 
 set -e
 
-echo "🚀 Deploying Backoffice to Production..."
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "🚀 Backoffice Production Deployment"
+echo "===================================="
+echo ""
 
-# Navigate to backoffice directory
-cd "$(dirname "$0")/../apps/backoffice" || exit 1
-
-# Run build test first
-echo "📦 Testing build..."
-npm run build
-
-if [ $? -eq 0 ]; then
-  echo "✅ Build successful!"
-  echo ""
-  echo "🌍 Deploying to Vercel Production..."
-  vercel --prod
-
-  if [ $? -eq 0 ]; then
-    echo ""
-    echo "✅ Deployment successful!"
-    echo "🌐 Production URL: https://backoffice.liveyourdreams.online"
-    echo ""
-    echo "📝 Next steps:"
-    echo "   1. Verify deployment works"
-    echo "   2. git add -A && git commit -m '...'"
-    echo "   3. git push origin main"
-  else
-    echo "❌ Deployment failed!"
+# Check if we're in the correct directory
+if [ ! -f "package.json" ]; then
+    echo "❌ Fehler: Muss aus dem Repository Root ausgeführt werden!"
     exit 1
-  fi
-else
-  echo "❌ Build failed! Fix errors before deploying."
-  exit 1
 fi
+
+# Check for uncommitted changes
+if ! git diff-index --quiet HEAD --; then
+    echo "⚠️  Warnung: Du hast uncommitted changes!"
+    read -p "Trotzdem fortfahren? (y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+fi
+
+# Get current branch
+BRANCH=$(git branch --show-current)
+echo "📍 Current Branch: $BRANCH"
+
+# Confirm if not on main
+if [ "$BRANCH" != "main" ]; then
+    echo "⚠️  Du bist nicht auf 'main' Branch!"
+    read -p "Trotzdem deployen? (y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+fi
+
+# Show last commit
+echo ""
+echo "📝 Letzter Commit:"
+git log --oneline -1
+echo ""
+
+# Confirm deployment
+read -p "🎯 Production Deployment starten? (y/N) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Deployment abgebrochen."
+    exit 1
+fi
+
+echo ""
+echo "⏳ Deploying..."
+echo ""
+
+# Deploy to production
+cd apps/backoffice
+vercel --prod --yes
+
+echo ""
+echo "✅ Deployment abgeschlossen!"
+echo ""
+echo "🌐 URLs:"
+echo "   Production: https://backoffice.liveyourdreams.online"
+echo "   Vercel Dashboard: https://vercel.com/christianberneckers-projects/backoffice"
+echo ""
+echo "💡 Tipp: Prüfe die Live-URL in 1-2 Minuten"

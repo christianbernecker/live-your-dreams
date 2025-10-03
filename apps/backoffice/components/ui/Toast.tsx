@@ -12,7 +12,7 @@ interface ToastProps {
   style?: React.CSSProperties;
 }
 
-export const Toast = ({ type, title, message, duration = 5000, onClose, style }: ToastProps): React.ReactNode => {
+export const Toast = ({ type, title, message, duration = 5000, onClose, style }: ToastProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   
@@ -63,7 +63,7 @@ export const Toast = ({ type, title, message, duration = 5000, onClose, style }:
       {duration > 0 && <div className="lyd-toast-progress" />}
     </div>,
     document.body
-  ) as React.ReactNode;
+  );
 };
 
 // Toast Manager Hook

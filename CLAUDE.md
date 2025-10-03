@@ -82,16 +82,8 @@ Details: [.aiconfig/context.md](.aiconfig/context.md)
 # ❌ NIEMALS aus Root deployen (Yarn Workspace Error!)
 cd / && vercel --prod  # ❌ FALSCH
 
-# ✅ Deployment via Helper Scripts (empfohlen)
-./scripts/deploy-backoffice.sh        # Backoffice deployen
-./scripts/deploy-design-system.sh     # Design System deployen
-
-# ✅ Oder manuell aus Subdirectory
-cd apps/backoffice && vercel --prod   # Backoffice
-cd design-system && vercel --prod     # Design System
-
-# ⚠️ Git Auto-Deploy DEAKTIVIERT (verhindert Monorepo-Errors)
-# Workflow: 1) Vercel CLI Deploy → 2) Git Commit → 3) Git Push
+# ✅ IMMER aus apps/backoffice/
+cd apps/backoffice && vercel --prod  # ✅ RICHTIG
 ```
 
 ### Code-Qualität
@@ -103,7 +95,7 @@ cd design-system && vercel --prod     # Design System
 ### Testing
 - ✅ Build-Test nach jeder Änderung
 - ✅ Pre-commit Hooks laufen automatisch
-- ❌ **KEIN** Auto-Deploy bei Git Push (manueller CLI Deploy required)
+- ✅ Vercel Preview Deploy bei Push
 
 Vollständige Rules: [.aiconfig/rules.md](.aiconfig/rules.md)
 

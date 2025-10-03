@@ -11,12 +11,14 @@ declare module "next-auth" {
       image?: string | null
       role: string
       isActive: boolean
+      permissions: string[]
     }
   }
 
   interface User {
     role: string
     isActive: boolean
+    permissions: string[]
   }
 }
 
@@ -36,6 +38,7 @@ export const authConfig: NextAuthConfig = {
         token.image = user.image
         token.role = (user as any).role
         token.isActive = (user as any).isActive
+        token.permissions = (user as any).permissions
       }
       return token
     },
@@ -47,43 +50,26 @@ export const authConfig: NextAuthConfig = {
         session.user.image = token.image as string
         session.user.role = (token as any).role
         session.user.isActive = (token as any).isActive
+        session.user.permissions = (token as any).permissions
       }
       return session
     },
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
-      const isOnAdmin = nextUrl.pathname.startsWith('/admin')
-      const isOnAuth = nextUrl.pathname.startsWith('/auth')
       
-      // Protected routes: dashboard und admin
-      if (isOnDashboard || isOnAdmin) {
-        if (!isLoggedIn) {
-          return false // Redirect to login
-        }
-        
-        // Check if user is active
-        if (!auth.user.isActive) {
-          return Response.redirect(new URL('/auth/error?error=AccountDeactivated', nextUrl))
-        }
-        
-        // Admin-Routen: Prüfe admin Role
-        if (isOnAdmin) {
-          const isAdmin = auth.user.role === 'admin'
-          if (!isAdmin) {
-            return Response.redirect(new URL('/dashboard', nextUrl))
+      if (isOnDashboard) {
+        if (isLoggedIn) {
+          // Check if user is active
+          if (!auth.user.isActive) {
+            return Response.redirect(new URL('/auth/error?error=AccountDeactivated', nextUrl))
           }
+          return true
         }
-        
-        return true
-      }
-      
-      // Login-Seite: Redirect eingeloggte User zu Dashboard
-      if (nextUrl.pathname === '/' && isLoggedIn) {
+        return false // Redirect to login page
+      } else if (isLoggedIn) {
         return Response.redirect(new URL('/dashboard', nextUrl))
       }
-      
-      // Alle anderen Routen erlauben
       return true
     },
   },
@@ -137,10 +123,12 @@ export const authConfig: NextAuthConfig = {
 
           // Note: lastLoginAt update skipped for deployment compatibility
 
-          // Load user role from RBAC system (simplified - no permissions)
+          // Load user roles and permissions from RBAC system with error handling
+          let permissions: string[] = [];
           let primaryRole = 'viewer'; // Default role
 
           try {
+            // Simplified query - step by step to avoid complex joins
             const userRoles = await prisma.userRole.findMany({
               where: { userId: user.id },
               include: {
@@ -161,12 +149,38 @@ export const authConfig: NextAuthConfig = {
                   }
                 }
               }
+
+              // For admin role, give full permissions (fallback)
+              if (primaryRole === 'admin') {
+                permissions = [
+                  'users.read', 'users.write', 'users.delete', 'users.invite',
+                  'roles.read', 'roles.write', 'roles.assign',
+                  'content.read', 'content.write', 'content.publish',
+                  'media.read', 'media.write', 'media.delete',
+                  'settings.read', 'settings.write', 'settings.system',
+                  'audit.read'
+                ];
+              } else if (primaryRole === 'editor') {
+                permissions = [
+                  'users.read', 'content.read', 'content.write', 'content.publish',
+                  'media.read', 'media.write', 'settings.read'
+                ];
+              } else {
+                permissions = ['content.read', 'media.read', 'settings.read'];
+              }
             }
           } catch (roleError) {
-            console.error('Error loading user roles:', roleError);
+            console.error('Error loading user roles, using fallback permissions:', roleError);
             // Fallback: if role loading fails, check if this is admin user
             if (user.email === 'admin@liveyourdreams.online') {
               primaryRole = 'admin';
+              permissions = [
+                'users.read', 'users.write', 'users.delete', 'users.invite',
+                'roles.read', 'roles.write', 'roles.assign',
+                'content.read', 'content.write', 'content.publish',
+                'settings.read', 'settings.write', 'settings.system',
+                'audit.read'
+              ];
             }
           }
 
@@ -180,6 +194,7 @@ export const authConfig: NextAuthConfig = {
             image: user.image,
             role: primaryRole,
             isActive: isActive,
+            permissions: permissions.sort(),
           }
         } catch (error) {
           console.error('Auth error:', error)

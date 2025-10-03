@@ -11,6 +11,7 @@ export interface RequestContext {
     id: string
     email: string
     role: string
+    permissions: string[]
     isActive: boolean
   }
   requestId: string
@@ -108,32 +109,41 @@ export function requireAuth(): MiddlewareHandler {
       id: session.user.id,
       email: session.user.email,
       role: session.user.role,
+      permissions: session.user.permissions,
       isActive: session.user.isActive
     }
   }
 }
 
 // ============================================================================
-// ROLE-BASED MIDDLEWARE (Permission system removed)
+// PERMISSION MIDDLEWARE
 // ============================================================================
 
-/**
- * @deprecated Permission system removed - use requireRole() instead
- * This function is deprecated and will throw an error if called.
- */
 export function requirePermission(permission: string): MiddlewareHandler {
   return async (request: NextRequest, context: RequestContext) => {
-    throw new Error('Permission system deprecated - use requireRole() or requireAdmin() instead')
+    if (!context.user) {
+      throw new UnauthorizedError('Authentication required')
+    }
+
+    if (!context.user.permissions.includes(permission)) {
+      throw new ForbiddenError(`Permission '${permission}' required`)
+    }
   }
 }
 
-/**
- * @deprecated Permission system removed - use requireRole() instead
- * This function is deprecated and will throw an error if called.
- */
 export function requireAnyPermission(permissions: string[]): MiddlewareHandler {
   return async (request: NextRequest, context: RequestContext) => {
-    throw new Error('Permission system deprecated - use requireRole() or requireAdmin() instead')
+    if (!context.user) {
+      throw new UnauthorizedError('Authentication required')
+    }
+
+    const hasPermission = permissions.some(permission => 
+      context.user!.permissions.includes(permission)
+    )
+
+    if (!hasPermission) {
+      throw new ForbiddenError(`One of these permissions required: ${permissions.join(', ')}`)
+    }
   }
 }
 

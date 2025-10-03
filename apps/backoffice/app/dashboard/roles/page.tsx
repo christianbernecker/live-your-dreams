@@ -71,8 +71,8 @@ export default function RolesPage() {
       return
     }
 
-    // Check role - only admins can manage roles
-    if (session.user.role !== 'admin') {
+    // Check permissions
+    if (!session.user.permissions.includes('roles.manage')) {
       router.push('/dashboard?error=NoPermission')
       return
     }

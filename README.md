@@ -259,4 +259,4 @@ vercel logs <deployment-url>
 
 ---
 
-*Built with ❤️ for premium real estate experiences*# Test Auto-Deploy
+*Built with ❤️ for premium real estate experiences*
