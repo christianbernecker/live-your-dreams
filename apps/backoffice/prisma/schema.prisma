@@ -49,15 +49,15 @@ model Role {
   name        String   @unique // "admin", "editor", "viewer"
   displayName String   @map("display_name") // "Administrator", "Editor", "Viewer"
   description String?
-  color       String?  // Hex color for UI
+  color       String? // Hex color for UI
   isActive    Boolean  @default(true) @map("is_active")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  users         UserRole[]     @relation
-  permissions   RolePermission[]
-  auditEvents   AuditEvent[]   @relation("AuditTargetRole")
+  users       UserRole[]       @relation
+  permissions RolePermission[]
+  auditEvents AuditEvent[]     @relation("AuditTargetRole")
 
   @@map("roles")
 }
@@ -67,40 +67,40 @@ model Permission {
   name        String   @unique // "users.create", "posts.publish", "media.upload"
   displayName String   @map("display_name")
   description String?
-  module      String   // "users", "posts", "media", "settings"
-  action      String   // "create", "read", "update", "delete", "publish"
+  module      String // "users", "posts", "media", "settings"
+  action      String // "create", "read", "update", "delete", "publish"
   createdAt   DateTime @default(now()) @map("created_at")
 
   // Relations  
-  roles       RolePermission[]
+  roles RolePermission[]
 
   @@map("permissions")
 }
 
 model RolePermission {
-  id           String     @id @default(cuid())
-  roleId       String     @map("role_id")
-  permissionId String     @map("permission_id")
-  createdAt    DateTime   @default(now()) @map("created_at")
+  id           String   @id @default(cuid())
+  roleId       String   @map("role_id")
+  permissionId String   @map("permission_id")
+  createdAt    DateTime @default(now()) @map("created_at")
 
   // Relations
-  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, permissionId])
   @@map("role_permissions")
 }
 
 model UserRole {
-  id        String   @id @default(cuid())
-  userId    String   @map("user_id")
-  roleId    String   @map("role_id")
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  roleId     String   @map("role_id")
   assignedAt DateTime @default(now()) @map("assigned_at")
   assignedBy String?  @map("assigned_by") // Who assigned this role
 
   // Relations
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([userId, roleId])
   @@map("user_roles")
@@ -115,50 +115,50 @@ model User {
   name          String?
   email         String    @unique
   emailVerified DateTime? @map("email_verified")
-  password      String?   // For credentials provider
+  password      String? // For credentials provider
   image         String?
-  
+
   // Extended Profile Fields
-  firstName     String?   @map("first_name")
-  lastName      String?   @map("last_name")
-  phone         String?
-  bio           String?
-  location      String?
-  website       String?
-  timezone      String?   @default("Europe/Berlin")
-  locale        String?   @default("de")
-  
+  firstName String? @map("first_name")
+  lastName  String? @map("last_name")
+  phone     String?
+  bio       String?
+  location  String?
+  website   String?
+  timezone  String? @default("Europe/Berlin")
+  locale    String? @default("de")
+
   // Status & Metadata
-  isActive      Boolean   @default(true) @map("is_active")
-  isVerified    Boolean   @default(false) @map("is_verified")
-  lastLoginAt   DateTime? @map("last_login_at")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-  
+  isActive    Boolean   @default(true) @map("is_active")
+  isVerified  Boolean   @default(false) @map("is_verified")
+  lastLoginAt DateTime? @map("last_login_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
   // Legacy role field (will be deprecated)
-  role          String    @default("user")
+  role String @default("user")
 
   // Relations
-  accounts      Account[]
-  sessions      Session[]
-  roles         UserRole[]
-  media         Media[]
-  
+  accounts Account[]
+  sessions Session[]
+  roles    UserRole[]
+  media    Media[]
+
   // Activity tracking
-  createdPosts      Post[]         @relation("PostAuthor")
-  updatedPosts      Post[]         @relation("PostUpdatedBy")
-  
+  createdPosts Post[] @relation("PostAuthor")
+  updatedPosts Post[] @relation("PostUpdatedBy")
+
   // Content management
-  createdContent    ContentEntry[] @relation("ContentAuthor")
-  updatedContent    ContentEntry[] @relation("ContentUpdatedBy")
-  deletedContent    ContentEntry[] @relation("ContentDeletedBy")
-  
+  createdContent ContentEntry[] @relation("ContentAuthor")
+  updatedContent ContentEntry[] @relation("ContentUpdatedBy")
+  deletedContent ContentEntry[] @relation("ContentDeletedBy")
+
   // Blog management (v1.1)
-  blogPosts         BlogPost[]     @relation("BlogAuthor")
-  
+  blogPosts BlogPost[] @relation("BlogAuthor")
+
   // Audit trails
-  actorAuditEvents  AuditEvent[]   @relation("AuditActor")
-  targetAuditEvents AuditEvent[]   @relation("AuditTargetUser")
+  actorAuditEvents  AuditEvent[] @relation("AuditActor")
+  targetAuditEvents AuditEvent[] @relation("AuditTargetUser")
 
   @@map("users")
 }
@@ -181,55 +181,55 @@ model Category {
   name        String   @unique
   slug        String   @unique
   description String?
-  color       String?  // Hex color for UI
-  image       String?  // Category image
+  color       String? // Hex color for UI
+  image       String? // Category image
   isActive    Boolean  @default(true) @map("is_active")
   sortOrder   Int      @default(0) @map("sort_order")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  posts       PostCategory[]
+  posts PostCategory[]
 
   @@map("categories")
 }
 
 model Post {
-  id          String     @id @default(cuid())
-  title       String
-  slug        String     @unique
-  excerpt     String?
-  content     String
-  
+  id      String  @id @default(cuid())
+  title   String
+  slug    String  @unique
+  excerpt String?
+  content String
+
   // Content metadata
-  metaTitle   String?    @map("meta_title")
+  metaTitle       String? @map("meta_title")
   metaDescription String? @map("meta_description")
-  featuredImage String?  @map("featured_image")
-  
+  featuredImage   String? @map("featured_image")
+
   // Publishing
   status      PostStatus @default(DRAFT)
   publishedAt DateTime?  @map("published_at")
-  
+
   // SEO & Social
-  readingTime Int?       @map("reading_time") // in minutes
-  viewCount   Int        @default(0) @map("view_count")
-  likeCount   Int        @default(0) @map("like_count")
-  
+  readingTime Int? @map("reading_time") // in minutes
+  viewCount   Int  @default(0) @map("view_count")
+  likeCount   Int  @default(0) @map("like_count")
+
   // Authoring
-  authorId    String     @map("author_id")
-  updatedById String?    @map("updated_by_id")
-  
+  authorId    String  @map("author_id")
+  updatedById String? @map("updated_by_id")
+
   // Timestamps
-  createdAt   DateTime   @default(now()) @map("created_at")
-  updatedAt   DateTime   @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  author        User           @relation("PostAuthor", fields: [authorId], references: [id])
-  updatedBy     User?          @relation("PostUpdatedBy", fields: [updatedById], references: [id])
-  categories    PostCategory[]
-  tags          PostTag[]
-  media         PostMedia[]
-  auditEvents   AuditEvent[]   @relation("AuditTargetPost")
+  author      User           @relation("PostAuthor", fields: [authorId], references: [id])
+  updatedBy   User?          @relation("PostUpdatedBy", fields: [updatedById], references: [id])
+  categories  PostCategory[]
+  tags        PostTag[]
+  media       PostMedia[]
+  auditEvents AuditEvent[]   @relation("AuditTargetPost")
 
   @@map("posts")
 }
@@ -238,11 +238,11 @@ model Tag {
   id        String   @id @default(cuid())
   name      String   @unique
   slug      String   @unique
-  color     String?  // Hex color for UI
+  color     String? // Hex color for UI
   createdAt DateTime @default(now()) @map("created_at")
 
   // Relations
-  posts     PostTag[]
+  posts PostTag[]
 
   @@map("tags")
 }
@@ -254,8 +254,8 @@ model PostCategory {
   createdAt  DateTime @default(now()) @map("created_at")
 
   // Relations
-  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@unique([postId, categoryId])
   @@map("post_categories")
@@ -268,8 +268,8 @@ model PostTag {
   createdAt DateTime @default(now()) @map("created_at")
 
   // Relations
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([postId, tagId])
   @@map("post_tags")
@@ -280,38 +280,38 @@ model PostTag {
 // ============================================================================
 
 model Media {
-  id           String    @id @default(cuid())
+  id           String @id @default(cuid())
   filename     String
-  originalName String    @map("original_name")
+  originalName String @map("original_name")
   mimetype     String
-  size         Int       // in bytes
-  width        Int?      // for images
-  height       Int?      // for images
-  
+  size         Int // in bytes
+  width        Int? // for images
+  height       Int? // for images
+
   // Storage
-  path         String    // relative path
-  url          String    // full URL
-  thumbnailUrl String?   @map("thumbnail_url")
-  
+  path         String // relative path
+  url          String // full URL
+  thumbnailUrl String? @map("thumbnail_url")
+
   // Metadata
-  alt          String?   // Alt text for accessibility
-  caption      String?
-  description  String?
-  
+  alt         String? // Alt text for accessibility
+  caption     String?
+  description String?
+
   // Organization
-  folder       String?   @default("/") // virtual folder structure
-  isPublic     Boolean   @default(true) @map("is_public")
-  
+  folder   String? @default("/") // virtual folder structure
+  isPublic Boolean @default(true) @map("is_public")
+
   // Authoring
-  uploadedById String    @map("uploaded_by_id")
-  
+  uploadedById String @map("uploaded_by_id")
+
   // Timestamps
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  uploadedBy   User      @relation(fields: [uploadedById], references: [id])
-  posts        PostMedia[]
+  uploadedBy User        @relation(fields: [uploadedById], references: [id])
+  posts      PostMedia[]
 
   @@map("media")
 }
@@ -324,8 +324,8 @@ model PostMedia {
   createdAt DateTime @default(now()) @map("created_at")
 
   // Relations
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  post  Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  media Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
 
   @@unique([postId, mediaId])
   @@map("post_media")
@@ -340,44 +340,44 @@ model ContentType {
   key         String   @unique // 'product', 'service', 'testimonial', etc.
   name        String
   description String?
-  fields      Json     // Schema definition for content fields
+  fields      Json // Schema definition for content fields
   isActive    Boolean  @default(true) @map("is_active")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  entries     ContentEntry[]
+  entries ContentEntry[]
 
   @@map("content_types")
 }
 
 model ContentEntry {
-  id            String        @id @default(cuid())
-  typeId        String        @map("type_id")
-  slug          String        @unique
-  title         String
-  data          Json          // Content data according to ContentType.fields
-  status        ContentStatus @default(DRAFT)
-  publishedAt   DateTime?     @map("published_at")
-  
+  id          String        @id @default(cuid())
+  typeId      String        @map("type_id")
+  slug        String        @unique
+  title       String
+  data        Json // Content data according to ContentType.fields
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?     @map("published_at")
+
   // Authoring
-  authorId      String?       @map("author_id")
-  updatedById   String?       @map("updated_by_id")
-  
+  authorId    String? @map("author_id")
+  updatedById String? @map("updated_by_id")
+
   // Soft Delete
-  deletedAt     DateTime?     @map("deleted_at")
-  deletedById   String?       @map("deleted_by_id")
-  
+  deletedAt   DateTime? @map("deleted_at")
+  deletedById String?   @map("deleted_by_id")
+
   // Timestamps
-  createdAt     DateTime      @default(now()) @map("created_at")
-  updatedAt     DateTime      @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  type          ContentType   @relation(fields: [typeId], references: [id])
-  author        User?         @relation("ContentAuthor", fields: [authorId], references: [id])
-  updatedBy     User?         @relation("ContentUpdatedBy", fields: [updatedById], references: [id])
-  deletedBy     User?         @relation("ContentDeletedBy", fields: [deletedById], references: [id])
-  auditEvents   AuditEvent[]  @relation("AuditContent")
+  type        ContentType  @relation(fields: [typeId], references: [id])
+  author      User?        @relation("ContentAuthor", fields: [authorId], references: [id])
+  updatedBy   User?        @relation("ContentUpdatedBy", fields: [updatedById], references: [id])
+  deletedBy   User?        @relation("ContentDeletedBy", fields: [deletedById], references: [id])
+  auditEvents AuditEvent[] @relation("AuditContent")
 
   @@map("content_entries")
 }
@@ -387,34 +387,34 @@ model ContentEntry {
 // ============================================================================
 
 model AuditEvent {
-  id            String   @id @default(cuid())
-  type          String   // 'USER_CREATE', 'ROLE_UPDATE', 'CONTENT_PUBLISH', 'LOGIN', etc.
-  
+  id   String @id @default(cuid())
+  type String // 'USER_CREATE', 'ROLE_UPDATE', 'CONTENT_PUBLISH', 'LOGIN', etc.
+
   // Actor (who performed the action)
-  actorUserId   String?  @map("actor_user_id")
-  actorIP       String?  @map("actor_ip")
+  actorUserId    String? @map("actor_user_id")
+  actorIP        String? @map("actor_ip")
   actorUserAgent String? @map("actor_user_agent")
-  
+
   // Target resources
-  targetUserId  String?  @map("target_user_id")
-  targetRoleId  String?  @map("target_role_id")
-  targetPostId  String?  @map("target_post_id")
-  contentId     String?  @map("content_id")
-  blogPostId    String?  @map("blog_post_id")  // Blog System v1.1
-  
+  targetUserId String? @map("target_user_id")
+  targetRoleId String? @map("target_role_id")
+  targetPostId String? @map("target_post_id")
+  contentId    String? @map("content_id")
+  blogPostId   String? @map("blog_post_id") // Blog System v1.1
+
   // Event data
-  meta          Json?    // Additional event data, diff, etc.
-  
+  meta Json? // Additional event data, diff, etc.
+
   // Timestamp
-  createdAt     DateTime @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   // Relations
-  actorUser     User?         @relation("AuditActor", fields: [actorUserId], references: [id])
-  targetUser    User?         @relation("AuditTargetUser", fields: [targetUserId], references: [id])
-  targetRole    Role?         @relation("AuditTargetRole", fields: [targetRoleId], references: [id])
-  targetPost    Post?         @relation("AuditTargetPost", fields: [targetPostId], references: [id])
-  contentEntry  ContentEntry? @relation("AuditContent", fields: [contentId], references: [id])
-  blogPost      BlogPost?     @relation("AuditTargetBlogPost", fields: [blogPostId], references: [id])  // Blog System v1.1
+  actorUser    User?         @relation("AuditActor", fields: [actorUserId], references: [id])
+  targetUser   User?         @relation("AuditTargetUser", fields: [targetUserId], references: [id])
+  targetRole   Role?         @relation("AuditTargetRole", fields: [targetRoleId], references: [id])
+  targetPost   Post?         @relation("AuditTargetPost", fields: [targetPostId], references: [id])
+  contentEntry ContentEntry? @relation("AuditContent", fields: [contentId], references: [id])
+  blogPost     BlogPost?     @relation("AuditTargetBlogPost", fields: [blogPostId], references: [id]) // Blog System v1.1
 
   @@map("audit_events")
 }
@@ -455,62 +455,117 @@ enum Platform {
 }
 
 model BlogPost {
-  id               String      @id @default(cuid())
-  title            String      @db.VarChar(120)
-  slug             String      @unique
-  excerpt          String      @db.VarChar(200)
-  content          String      @db.Text               // Markdown/MDX/HTML (primär body)
-  format           String      @default("mdx")        // md | mdx | html
+  id      String @id @default(cuid())
+  title   String @db.VarChar(120)
+  slug    String @unique
+  excerpt String @db.VarChar(200)
+  content String @db.Text // Markdown/MDX/HTML (primär body)
+  format  String @default("mdx") // md | mdx | html
 
   // SEO
-  metaTitle        String?     @db.VarChar(120) @map("meta_title")
-  metaDescription  String?     @db.VarChar(200) @map("meta_description")
-  focusKeyword     String?     @map("focus_keyword")
-  keywords         String[]    @default([])
-  canonicalUrl     String?     @map("canonical_url")
-  ogTitle          String?     @map("og_title")
-  ogDescription    String?     @map("og_description")
-  ogImage          String?     @map("og_image")
+  metaTitle       String?  @map("meta_title") @db.VarChar(120)
+  metaDescription String?  @map("meta_description") @db.VarChar(200)
+  focusKeyword    String?  @map("focus_keyword")
+  keywords        String[] @default([])
+  canonicalUrl    String?  @map("canonical_url")
+  ogTitle         String?  @map("og_title")
+  ogDescription   String?  @map("og_description")
+  ogImage         String?  @map("og_image")
 
   // Structured Data
-  jsonLd           Json?       @map("json_ld")
+  jsonLd Json? @map("json_ld")
 
   // Visuals
-  featuredImageUrl String?     @map("featured_image_url")
-  featuredImageAlt String?     @map("featured_image_alt")
+  featuredImageUrl String? @map("featured_image_url")
+  featuredImageAlt String? @map("featured_image_alt")
 
   // Blocks (HTML/SVG/Iframes) – als JSON gespeichert
-  htmlBlocks       Json?       @map("html_blocks")     // [{ id, title, html, css, js, sandbox }]
-  images           Json?                               // optionale zusätzliche Bildobjekte (DEPRECATED)
-  
+  htmlBlocks Json? @map("html_blocks") // [{ id, title, html, css, js, sandbox }]
+  images     Json? // optionale zusätzliche Bildobjekte (DEPRECATED)
+
   // NEW: Unified Media System (Images + HTML Embeds)
-  media            Json?                               // [{ id, type, url?, html?, isFeatured, alt, caption }]
+  media Json? // [{ id, type, url?, html?, isFeatured, alt, caption }]
 
   // Taxonomie & Distribution
-  platforms        Platform[]  @default([])
-  category         String
-  subcategory      String?
-  tags             String[]    @default([])
+  platforms   Platform[] @default([])
+  category    String
+  subcategory String?
+  tags        String[]   @default([])
 
   // Workflow
-  status           BlogStatus  @default(DRAFT)
-  scheduledFor     DateTime?   @map("scheduled_for")
-  publishedAt      DateTime?   @map("published_at")
+  status       BlogStatus @default(DRAFT)
+  scheduledFor DateTime?  @map("scheduled_for")
+  publishedAt  DateTime?  @map("published_at")
 
   // Audit
-  authorId         String      @map("author_id")
-  importSource     String?     @map("import_source")   // chatgpt | claude | manual
-  importModel      String?     @map("import_model")
-  importTimestamp  DateTime?   @map("import_timestamp")
-  createdAt        DateTime    @default(now()) @map("created_at")
-  updatedAt        DateTime    @updatedAt @map("updated_at")
+  authorId        String    @map("author_id")
+  importSource    String?   @map("import_source") // chatgpt | claude | manual
+  importModel     String?   @map("import_model")
+  importTimestamp DateTime? @map("import_timestamp")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
 
   // Relations
-  author           User        @relation("BlogAuthor", fields: [authorId], references: [id])
-  auditEvents      AuditEvent[] @relation("AuditTargetBlogPost")
+  author      User         @relation("BlogAuthor", fields: [authorId], references: [id])
+  auditEvents AuditEvent[] @relation("AuditTargetBlogPost")
 
   @@index([status, scheduledFor])
   @@index([platforms])
-  @@index([title])  // Nur Titel indexieren, Content zu groß für Index
+  @@index([title]) // Nur Titel indexieren, Content zu groß für Index
   @@map("blog_posts")
+}
+
+// ============================================================================
+// API KEY MANAGEMENT & USAGE TRACKING
+// ============================================================================
+
+enum ApiProvider {
+  ANTHROPIC
+  OPENAI
+}
+
+enum ApiStatus {
+  SUCCESS
+  ERROR
+}
+
+model ApiKey {
+  id           String      @id @default(cuid())
+  provider     ApiProvider // ANTHROPIC oder OPENAI
+  name         String // Beschreibender Name (z.B. "Claude Sonnet 4.5 Production")
+  keyHash      String // AES-256-GCM verschlüsselt
+  isActive     Boolean     @default(true) @map("is_active")
+  monthlyLimit Decimal?    @map("monthly_limit") @db.Decimal(10, 2) // Optional: EUR Limit
+  createdAt    DateTime    @default(now()) @map("created_at")
+  lastUsedAt   DateTime?   @map("last_used_at")
+
+  // Relations
+  usageLogs ApiUsageLog[]
+
+  @@index([provider, isActive])
+  @@map("api_keys")
+}
+
+model ApiUsageLog {
+  id           String      @id @default(cuid())
+  apiKeyId     String      @map("api_key_id")
+  provider     ApiProvider // ANTHROPIC oder OPENAI
+  model        String // z.B. "claude-sonnet-4.5", "gpt-4o-mini"
+  feature      String // Feature-Identifier (z.B. "blog-generator", "image-analyzer")
+  inputTokens  Int         @map("input_tokens")
+  outputTokens Int         @map("output_tokens")
+  totalTokens  Int         @map("total_tokens") // Input + Output
+  totalCost    Decimal     @map("total_cost") @db.Decimal(10, 4) // EUR, 4 Dezimalstellen
+  status       ApiStatus // SUCCESS oder ERROR
+  errorMessage String?     @map("error_message")
+  durationMs   Int         @map("duration_ms") // API Call Dauer in Millisekunden
+  createdAt    DateTime    @default(now()) @map("created_at")
+
+  // Relations
+  apiKey ApiKey @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+
+  @@index([apiKeyId, createdAt])
+  @@index([feature, createdAt])
+  @@index([createdAt]) // Für Recent Calls
+  @@map("api_usage_logs")
 }
