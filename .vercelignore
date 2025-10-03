@@ -1,0 +1,15 @@
+# Vercel Deployment Configuration
+#
+# This repository uses a MONOREPO structure with separate Vercel projects:
+# - apps/backoffice/ → deployed as "backoffice" project
+# - design-system/ → deployed as "design-system" project
+#
+# DO NOT deploy from repository root (Yarn Workspaces incompatible)
+# See: docs/deployment/VERCEL_DEPLOYMENT.md
+
+# Ignore everything at root level
+*
+!.vercelignore
+
+# Root vercel.json is disabled (renamed to vercel.json.disabled)
+# Each sub-project has its own vercel.json configuration
