@@ -83,7 +83,8 @@ export function FileUpload({
     maxSize,
     multiple: false,
     disabled: disabled || uploading,
-  });
+    // @ts-ignore - react-dropzone type mismatch with React 18
+  } as any);
 
   return (
     <div>
