@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { useToast } from '@/components/ui/Toast';
+import { AdminTabs } from '@/components/ui/AdminTabs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -637,6 +638,9 @@ export default function AdminRolesPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      {/* Admin Tab Navigation */}
+      <AdminTabs />
+
       {/* Page Header */}
       <div className="lyd-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

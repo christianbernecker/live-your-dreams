@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Toast, useToast } from '@/components/ui/Toast';
+import { AdminTabs } from '@/components/ui/AdminTabs';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -869,6 +870,9 @@ export default function AdminUsersPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      {/* Admin Tab Navigation */}
+      <AdminTabs />
+
       {/* TOAST NOTIFICATIONS - FIXED POSITIONING */}
       {toasts.length > 0 && (
         <div 

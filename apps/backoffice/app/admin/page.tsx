@@ -7,6 +7,7 @@
 import { prisma } from '@/lib/db';
 import { auth } from '@/lib/nextauth';
 import { hasPermission } from '@/lib/permissions';
+import { AdminTabs } from '@/components/ui/AdminTabs';
 import Link from 'next/link';
 
 
@@ -108,6 +109,9 @@ export default async function AdminPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+      {/* Admin Tab Navigation */}
+      <AdminTabs />
+
       {/* Welcome Header - KONSISTENTE CARD-STRUKTUR */}
       <div className="lyd-card">
         <div className="lyd-card-header">
